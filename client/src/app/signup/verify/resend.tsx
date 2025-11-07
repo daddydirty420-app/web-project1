@@ -1,12 +1,17 @@
 'use client';
 
 import styles from '@/styles/login.module.css';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Resend() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setToken(params.get('token'));
+    }, []);
 
     const handleResend = async () => {
         try {
