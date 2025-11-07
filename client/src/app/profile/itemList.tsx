@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from 'styles/components-style/itemList.module.css';
+import styles from '@/styles/components-style/itemList.module.css';
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Items } from '@/types/itemListTypes';
 
