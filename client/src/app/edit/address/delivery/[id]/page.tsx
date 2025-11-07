@@ -8,7 +8,7 @@ type Props = {
     params: { id: string };
 };
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
     return {
         title: "住所の設定・変更 | FLEX OUTDOOR",
         description: "配送情報に記載する住所を設定・変更できます。",
