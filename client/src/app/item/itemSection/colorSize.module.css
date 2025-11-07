@@ -1,0 +1,57 @@
+.csList {
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+    overflow: auto;
+    border-top: solid 1px var(--gray-line);
+    border-bottom: solid 1px var(--gray-line);
+}
+
+.csDiv {
+    width: 160px;
+    padding: 5px 5px 0;
+    flex-shrink: 0;
+}
+
+.csImage {
+    display: block;
+    width: 80px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.csTextDiv {
+    display: flex;
+    align-items: center;
+}
+
+.csText {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+.csSold {
+    display: block;
+    width: max-content;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.5;
+    background: var(--alert);
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 0 5px;
+}
+
+.wazuka {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--alert);
+    text-align: center;
+}

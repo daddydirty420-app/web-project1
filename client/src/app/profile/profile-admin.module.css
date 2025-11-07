@@ -1,0 +1,70 @@
+.adButton {
+    width: 180px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba( 0, 0, 0, 0.6);
+    z-index: 4000;
+}
+
+.popup {
+    position: fixed;
+    width: 400px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 5000;
+    padding: 20px;
+    text-align: center;
+}
+
+.popupClose {
+    color: var(--gray-50);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.popupTitle {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.input {
+    font-size: 14px;
+    width: 300px;
+    height: 48px;
+    padding: 6px;
+    border: solid 1px var(--gray-25);
+    border-radius: 5px;
+}
+
+.popupButton {
+    width: 150px;
+    height: 36px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    border-radius: 5px;
+    cursor: pointer;
+}

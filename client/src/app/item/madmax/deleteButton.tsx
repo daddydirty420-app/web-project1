@@ -1,0 +1,75 @@
+"use client";
+
+import { useState } from "react";
+import { Item } from "../itemPageTypes";
+import styles from "./admin.module.css";
+import { X } from "lucide-react";
+import { Session } from "next-auth";
+
+type Props = {
+    id: string;
+    item: Item;
+    session: Session | null;
+}
+
+export default function DeleteButton({ id, item, session }: Props) {
+    const [popup, setPopup] = useState(false);
+    const [deleteReason, setDeleteReason] = useState("");
+
+    const deleteItem = async () => {
+        if (!deleteReason || deleteReason === "") return;
+
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-admin/delete-item/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                },
+                body: JSON.stringify({ deleteReason }),
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                alert(data.message);
+                setPopup(false);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    return (
+        <>
+        <p className={styles.title}>{item.name}</p>
+        <button type="button" className={styles.deleteButton} onClick={() => setPopup(true)}>item削除</button>
+
+        {popup && (
+            <>
+            <div className={styles.overlay} onClick={() => setPopup(false)} />
+            
+            <div className={styles.popup}>
+                <X className={styles.x} onClick={() => setPopup(false)} />
+                
+                <p className={styles.popupTitle}>本当に削除しますか？</p>
+                <p className={styles.text13}>※本当にこの商品を削除しますか？削除した場合、商品のデータがすべて無くなってしまいます。</p>
+
+                <label>
+                    <input
+                    type="text"
+                    name="deleteReason"
+                    value={deleteReason}
+                    onChange={(e) => setDeleteReason(e.target.value)}
+                    placeholder="削除理由"
+                    className={styles.input}
+                    required
+                    />
+                </label>
+
+                <button type="button" className={styles.popupButton} onClick={deleteItem}>削除する</button>
+            </div>
+            </>
+        )}
+        </>
+    );
+}

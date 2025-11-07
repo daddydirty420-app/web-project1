@@ -1,0 +1,28 @@
+.heading {
+    margin: 0px auto;
+    border: solid 3px rgba(54, 134, 6, 0.6);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    transition: height 0.3s ease;
+    height: auto;
+}
+
+.link {
+    font-size: var(--small-heading2);
+    outline: revert;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    padding: 1em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.icon {
+    color: var(--gray-25);
+    font-size: 1.1em;
+    transition: transform 0.5s;
+}

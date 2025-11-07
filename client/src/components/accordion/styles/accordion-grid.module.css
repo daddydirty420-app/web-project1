@@ -1,0 +1,22 @@
+.flexGrid {
+    display: flex;
+    flex-direction: column;
+    column-gap: 1.5rem;
+    row-gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .flexGrid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .flexGrid > * {
+        flex: 1 1 calc(50% - 0.75rem);
+        min-width: 300px;
+        box-sizing: border-box;
+    }
+}

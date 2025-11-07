@@ -1,0 +1,120 @@
+.inputDiv {
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: solid 1px var(--gray-line);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.imageInputDiv {
+    margin: 1rem auto;
+    width: max-content;
+}
+
+.imageInput {
+    border: solid 1px var(--gray-line);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.previewProfile {
+    margin: 0.5rem auto;
+    border-radius: 100%;
+    width: 90px;
+    height: 90px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    cursor: pointer;
+}
+
+.text14 {
+    font-size: 14px;
+}
+
+.nameFlex {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    width: 100%;
+    max-width: 768px;
+    margin: 0.5rem auto;
+}
+
+.textBottomSmall {
+    margin: 3rem auto;
+    font-size: 12px;
+}
+
+.text12 {
+    font-size: 12px;
+}
+
+.searchUl {
+    position: absolute;
+    z-index: 10;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    overflow-y: auto;
+}
+
+.select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: solid 1px var(--gray-line);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.preview {
+    margin: 0.5rem auto;
+    width: 120px;
+    height: 120px;
+}
+
+.centerSmall {
+    font-size: 12px;
+    text-align: center;
+}
+
+.genderDiv {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem auto;
+    width: max-content;
+}
+
+.genderRadioDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.genderRadio {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.campaignText {
+    font-size: 14px;
+    margin: 1rem auto;
+    text-align: center;
+}

@@ -1,0 +1,84 @@
+.itemListWrapper {
+    display: flex;
+    width: 100%;
+    border-top: solid 1px var(--gray-line);
+    border-bottom: solid 1px var(--gray-line);
+    overflow: auto;
+}
+
+.itemListSection {
+    width: 110px;
+    height: 150px;
+    padding: 5px 5px 0;
+    flex-shrink: 0;
+}
+
+.imageDiv {
+    width: 100%;
+    position: relative;
+}
+
+.itemImage {
+    border-radius: 10px;
+}
+
+.sold {
+    display: flex;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    width: 55px;
+    height: 55px;
+    background-color: var(--alert);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-top-left-radius: 10px;
+}
+
+.soldP {
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    margin: 12px 0 0 4px;
+    transform: rotate(-45deg);
+}
+
+.sale {
+    position: absolute;
+    bottom: 25px;
+    right: 5px;
+}
+
+.saleP {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    background-color: var(--alert);
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.price {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+    padding: 5px 8px;
+    border-radius: 10px;
+}
+
+.itemName {
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-top: 5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}

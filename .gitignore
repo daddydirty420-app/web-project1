@@ -1,0 +1,25 @@
+# 動画
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+
+# Next.js build
+client/.next/
+server/.next/
+
+# node_modules
+client/node_modules/
+server/node_modules/
+node_modules/
+
+# dist
+dist/
+
+# env
+.env
+.env.local
+
+# tmp
+tmp/

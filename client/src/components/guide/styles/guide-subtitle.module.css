@@ -1,0 +1,11 @@
+.subtitle {
+    font-size: var(--small-heading);
+    color: var(--gray-50);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.mTop {
+    margin-top: 3rem;
+}

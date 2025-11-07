@@ -1,0 +1,94 @@
+.buy {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cartDiv {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cartIcon {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+    color: var(--theme);
+}
+
+.cartText {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--theme);
+}
+
+.buyButton {
+    display: block;
+    width: 80%;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.buy2026 {
+    font-size: var(--heading2);
+    font-weight: 700;
+    color: var(--theme);
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.buyFloat {
+    display: block;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 80px;
+    right: 0;
+    border: solid 1px #ddd;
+    border-radius: 10px;
+    background-color: var(--background);
+    width: max-content;
+    padding: 15px 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.floatButton {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    margin: 0 auto 0.5rem;
+    cursor: pointer;
+}
+
+.floatCartIcon {
+    width: 18px;
+    height: 18px;
+    padding: 5px;
+    color: var(--theme);
+}
+
+.floatCartText {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--theme);
+}
+
+@media (min-width: 768px) {
+    .buyFloat {
+        display: none;
+    }
+}

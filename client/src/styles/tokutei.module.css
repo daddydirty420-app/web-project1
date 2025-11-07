@@ -1,0 +1,30 @@
+.container {
+    margin: 0 auto 3rem;
+    max-width: 768px;
+}
+
+.header {
+    margin-top: 1rem;
+    font-size: var(--body);
+    font-weight: 600;
+    color: var(--gray-50);
+}
+
+.secondHeader {
+    margin: 0.5rem 0;
+    font-size: var(--body);
+    font-weight: 600;
+    color: var(--gray-50);
+}
+
+.content {
+    margin: 0.5rem 0 0 1rem;
+}
+
+.content p {
+    font-size: var(--mid-text);
+}
+
+.innerContent {
+    margin-left: 1rem;
+}

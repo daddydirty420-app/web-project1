@@ -1,0 +1,121 @@
+import { Router, Request, Response } from "express";
+import { authenticateToken } from "../middleware/index.js";
+import fetchAddressFromZip from "../services/addressService.js";
+import { Address, TodouhukenOption } from "../models/index.js";
+
+const router = Router();
+
+router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const todouhuken = req.body.todouhuken;
+
+    try {
+        const address = await Address.findByPk(req.params.id, {
+            include: [
+                {
+                    model: TodouhukenOption,
+                    as: "AddressTodouhuken",
+                }
+            ]
+        });
+        if (!address) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        const todouhukenData = await TodouhukenOption.findOne({
+            where: {
+                name: todouhuken,
+            },
+        });
+        const todouhukenId = todouhukenData.id;
+        if (!todouhukenData || (todouhukenId < 1 || todouhukenId > 47)) {
+            res.status(404).json({ message: "都道府県データが見つかりません。" });
+            return;
+        }
+
+        await address.update({
+            post_number: req.body.postNumber,
+            todouhuken_id: todouhukenId,
+            shikutyouson: req.body.shikutyouson,
+            banchi: req.body.banchi,
+            building: req.body.building,
+        });
+
+        res.status(200).json({ message: "住所を更新しました。" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get('/myaddress', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const data = await Address.findOne({
+            attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
+            where: { user_id: req.user!.id },
+            include: [
+                {
+                    model: TodouhukenOption,
+                    as: 'AddressTodouhuken',
+                    attributes: ['id', 'name'],
+                    required: false
+                }
+            ]
+        });
+
+        if (!data) {
+            res.status(404).json({ message: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/delivery-address/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const data = await Address.findOne({
+            attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building', 'delivery_id', 'user_id'],
+            where: { delivery_id: req.params.id },
+            include: [
+                {
+                    model: TodouhukenOption,
+                    as: 'AddressTodouhuken',
+                    attributes: ['id', 'name'],
+                }
+            ]
+        });
+
+        if (!data) {
+            res.status(404).json({ message: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/get-address', async (req: Request, res: Response): Promise<void> => {
+    const { zipcode } = req.query;
+
+    if (!zipcode) {
+        res.status(400).json({ message: '郵便番号が必要です。' });
+        return;
+    }
+
+    try {
+        const address = await fetchAddressFromZip(zipcode as string);
+        res.json({ address });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: '住所の取得に失敗しました。' });
+    }
+});
+
+export default router;

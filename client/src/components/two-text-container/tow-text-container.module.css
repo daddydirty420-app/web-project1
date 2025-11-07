@@ -1,0 +1,10 @@
+.container p{
+    display: block;
+    font-size: var(--mid-text);
+}
+
+.heading {
+    font-weight: 600;
+    width: max-content;
+    max-width: 150px;
+}

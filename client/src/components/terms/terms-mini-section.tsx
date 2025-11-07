@@ -1,0 +1,17 @@
+import { ReactNode } from 'react'
+import styles from 'styles/terms.module.css'
+
+type TeamsMiniSectionProps = {
+    number: number,
+    heading: string,
+    children: ReactNode
+}
+
+export default function TeamsMiniSection ({ number, heading, children }: TeamsMiniSectionProps) {
+    return (
+        <div className={styles.miniSectionBox}>
+            <h3 className={styles.miniSectionTitle}>第 {number} 条　{heading}</h3>
+            {children}
+        </div>
+    )
+}

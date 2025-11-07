@@ -1,0 +1,42 @@
+import { Router, Request, Response } from "express";
+import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { Op } from "sequelize";
+import { Journal, JournalReasonOption } from "../models/index.js";
+import { subDays } from "date-fns";
+
+const router = Router();
+
+router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { startDate, endDate } = req.query;
+
+        const start = startDate ? new Date(String(startDate)) : subDays(new Date(), 7);
+        const end = endDate ? new Date(String(endDate)) : new Date();
+
+        const dataList = await Journal.findAll({
+            where: {
+                createdAt: {
+                    [Op.between]: [start, end]
+                }
+            },
+            order: [['createdAt', 'DESC']],
+            include: [
+                {
+                    model: JournalReasonOption,
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
+         if (!dataList) {
+            res.status(404).json({ error: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json(dataList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+export default router;

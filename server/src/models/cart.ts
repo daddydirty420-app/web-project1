@@ -1,0 +1,55 @@
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
+
+import Item from "./item.js";
+import User from "./user.js";
+
+export class Cart extends Model {
+    declare id: number;
+    declare item_id: number;
+    declare addtocart_user_id: number;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+
+    static associate() {
+        Cart.belongsTo(Item, {
+            foreignKey: "item_id",
+        });
+        Cart.belongsTo(User, {
+            foreignKey: "addtocart_user_id",
+        });
+    }
+
+    static associations: {
+        Item: Association<Cart, Item>;
+        User: Association<Cart, User>;
+    };
+}
+
+Cart.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        item_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        addtocart_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+    },
+    {
+        sequelize,
+        modelName: "Cart",
+        tableName: "cart",
+        freezeTableName: true,
+        timestamps: true,
+    }
+);
+
+export default Cart;

@@ -1,0 +1,53 @@
+import { Router, Request, Response } from "express";
+import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { Op } from "sequelize";
+import { UriagekinHistory, User, BankAccount } from "../models/index.js";
+import { subDays } from "date-fns";
+
+const router = Router();
+
+router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const halfYearAgo = subDays(new Date(), 180);
+
+        const uriagekinList = await UriagekinHistory.findAll({
+            where: {
+                createdAt: {
+                    [Op.lt]: halfYearAgo
+                }
+            },
+            order: [['createdAt', 'ASC']],
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'user_name', 'email'],
+                    include: [
+                        {
+                            model: BankAccount,
+                            attributes: ['id']
+                        }
+                    ]
+                }
+            ]
+        });
+
+        const totalUriagekin = uriagekinList.reduce((sum: number, data: any) => {
+            return sum + (data.uriagekin || 0);
+        }, 0);
+
+        if (!uriagekinList || !totalUriagekin) {
+            res.status(404).json({ message: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json({
+            uriagekinList,
+            totalUriagekin
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+export default router;

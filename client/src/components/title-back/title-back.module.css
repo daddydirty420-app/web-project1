@@ -1,0 +1,13 @@
+.title {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.back {
+    width: 24px;
+    height: 24px;
+    color: var(--theme);
+    padding: 5px 5px 5px 0;
+    cursor: pointer;
+}

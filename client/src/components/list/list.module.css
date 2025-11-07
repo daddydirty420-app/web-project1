@@ -1,0 +1,9 @@
+.listText {
+    font-size: var(--mid-text);
+    line-height: 1.7;
+}
+
+.listTextSecond {
+    font-size: var(--caption);
+    font-weight: 600;
+}

@@ -1,0 +1,420 @@
+.headerDiv {
+    position: relative;
+    width: 100%;
+    height: clamp(300px, 300px + (200 * ((100vw - 320px) / 680)), 500px);
+    aspect-ratio: 16 / 9;
+}
+
+.headerText {
+    font-size: clamp(0.9375rem, 4vw, 2rem);
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.88);
+    padding: 0 1%;
+}
+
+.headerFlexDiv {
+    position: absolute;
+    top: 75%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+.headerText2 {
+    font-size: clamp(0.875rem, 3vw, 2rem);
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.88);
+    padding: 0 1%;
+}
+
+.headerGreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 85px;
+    margin-bottom: 30px;
+    background-color: var(--theme);
+}
+
+.headerh1 {
+    font-size: clamp(
+        13px,
+        calc(13px + (5 * ((100vw - 320px) / 700))),
+        17px
+    );
+    font-weight: 500;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.greenButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    margin: 0 auto;
+}
+.greenButton:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.brownButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 44px;
+    border: solid 2px var(--theme-sub);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--theme-sub);
+    background-color: #fff;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.buttonText {
+    font-size: 14px;
+    margin: 10px 0 20px;
+    text-align: center;
+}
+
+.twoColumnContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.pamphletLink {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto 0;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.linkIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.pamphletP {
+    flex: 1;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.mainP {
+    font-size: 15px;
+    margin-bottom: 1.2em;
+    text-align: justify;
+}
+
+.mainH3 {
+    font-size: 21px;
+    text-align: center;
+    margin-bottom: 1.2em;
+}
+
+.mainH2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    color: #fff;
+    opacity: .9;
+    margin: 50px 0;
+    background-color: var(--theme);
+}
+
+.mainSec {
+    margin-top: 2.5rem;
+}
+
+.dl {
+    width: max-content;
+    margin: 0 auto;
+}
+.dt {
+    font-size: 15px;
+    margin-bottom: 0.5em;
+}
+.exampleAll {
+    display: flex;
+    margin: 0 0 1rem 1rem;
+}
+.dd {
+    font-size: 13px;
+    line-height: 1.7;
+    padding-right: 1em;
+}
+.nado {
+    font-size: 13px;
+    line-height: 1.7;
+    align-self: flex-end;
+}
+
+.image {
+    margin: 0 auto;
+}
+
+.small {
+    display: block;
+    font-size: 12px;
+    color: var(--gray-50);
+    margin-bottom: 1em;
+}
+
+.syuppinIconFlex {
+    display: flex;
+    justify-content: space-around;
+}
+.syuppinIconDiv {
+    width: 70px;
+    text-align: center;
+}
+.syuppinIconP {
+    font-size: 14px;
+}
+.syuppinIcon {
+    width: 22px;
+    height: 22px;
+    padding: 4px;
+    color: var(--theme);
+}
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 44px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    margin: 0 auto 1rem;
+}
+.uploadButton:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.lpListUl {
+    margin-left: 1rem;
+}
+.lpList {
+    display: flex;
+    margin-bottom: 0.2rem;
+}
+.lpList p {
+    font-size: 14px;
+}
+
+.shopStep {
+    font-size: 15px;
+    margin: 1.2em 0 0.6em;
+}
+.shopFlowP {
+    font-size: 15px;
+    text-align: justify;
+}
+
+.questionDiv {
+    display: flex;
+    margin-bottom: 0.5em;
+}
+.questionDiv p {
+    font-size: 15px;
+    text-align: justify;
+}
+
+.answerDiv {
+    display: flex;
+    margin-bottom: 1.5em;
+}
+.answerDiv p {
+    font-size: 15px;
+    text-align: justify;
+}
+
+.inquiryButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 36px;
+    border: solid 2px var(--theme);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--theme);
+    background-color: #fff;
+    margin: 0 auto 2rem;
+    cursor: pointer;
+}
+
+.campaignTitleDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 2rem;
+}
+.campaignNumber {
+    width: 3rem;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    background-color: var(--theme-sub);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.campaignTitle {
+    flex: 1;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--theme);
+    text-align: center;
+    border: solid 2px var(--theme-sub);
+    line-height: 36px;
+}
+
+.tentIcon {
+    display: block;
+    margin: 0 auto;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    color: var(--theme);
+}
+
+.footerImageNav {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    z-index: 0;
+}
+.footerImageNav.normal {
+    height: 350px;
+}
+.footerImageNav.shopPage {
+    height: 300px;
+}
+.bottomP1 {
+    position: relative;
+    display: block;
+    margin-top: 50px;
+    font-size: var(--heading3);
+    font-weight: 700;
+    z-index: 1;
+}
+.bottomP2 {
+    position: relative;
+    display: block;
+    margin-top: 20px;
+    font-size: var(--heading2);
+    font-weight: 700;
+    color: var(--theme);
+    z-index: 1;
+}
+.footerGreenB {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
+    height: 60px;
+    margin: 40px auto 0;
+    background-color: var(--theme);
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 1;
+}
+.footerGreenB:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+.footerBrownB {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 44px;
+    margin: 30px auto 0;
+    background-color: var(--theme-sub);
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 1;
+}
+.footerBrownB:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.footer {
+    background-color: #dcd7cf;
+}
+.footerSitemap {
+    width: 300px;
+    margin: 0 auto;
+    padding: 40px 0 80px;
+}
+.sitemapNav {
+    border-top: solid 1px #b3b3b3;
+}
+.sitemapText {
+    display: block;
+    width: 100%;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+    padding-left: 1em;
+    border-bottom: solid 1px #b3b3b3;
+}
+.sitemapText:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .twoColumnContainer {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+
+    .main {
+        order: 1;
+    }
+
+    .sidebar {
+        order: 2;
+    }
+}

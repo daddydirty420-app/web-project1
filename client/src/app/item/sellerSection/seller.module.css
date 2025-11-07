@@ -1,0 +1,166 @@
+.linkP {
+    font-size: 12px;
+    text-align: center;
+}
+
+.urlText {
+    margin: 0.25em 1em;
+    font-size: 14px;
+    text-align: center;
+    word-break: break-all;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin: 1rem auto;
+}
+
+.saleButton {
+    height: 30px;
+    background-color: var(--background);
+    border: solid 2px var(--theme);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme);
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.blackButton {
+    height: 30px;
+    background-color: var(--background);
+    border: solid 1px #999;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 10px;
+    cursor: pointer;
+}
+.edit {
+    display: flex;
+    align-items: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9000;
+}
+
+.popup {
+    position: fixed;
+    width: 100%;
+    max-width: 350px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 10000;
+    padding: 1rem;
+}
+
+.x {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--gray-50);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.popupTitle {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin: 1em 0;
+}
+
+.labelDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.labelColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-left: 0.4rem;
+}
+
+.radio {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+}
+
+.labelText {
+    font-size: 14px;
+}
+
+.popupSmall {
+    display: block;
+    width: 100%;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 0.25rem;
+}
+
+.input {
+    width: 150px;
+    height: 36px;
+    border: solid 1px var(--gray-line);
+    border-radius: 5px;
+    background: var(--background);
+    padding: 5px;
+    margin: 0.25rem;
+}
+
+.priceText {
+    margin: 1rem 0 0 1rem;
+    font-size: 14px;
+}
+
+.popupButton {
+    display: block;
+    margin: 1rem auto;
+    width: 150px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.text13 {
+    font-size: 13px;
+}
+
+.sellerSectionBottom {
+    margin: 60px auto 150px;
+}
+
+.deleteText {
+    margin-top: 1rem;
+    font-size: 14px;
+    color: var(--accent);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 150px;
+}

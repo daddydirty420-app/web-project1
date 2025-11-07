@@ -1,0 +1,17 @@
+.default {
+    width: 92%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.headerContainer {
+    width: 92%;
+    max-width: 1280px;
+    margin: 85px auto;
+}
+
+@media (min-width: 768px) {
+    .headerContainer {
+        margin: 95px auto 50px;
+    }
+}

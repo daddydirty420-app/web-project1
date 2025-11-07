@@ -1,0 +1,24 @@
+.PHeading {
+    font-size: var(--small-heading2);
+    font-weight: 700;
+    color: var(--h-color);
+}
+
+.checkIcon {
+    display: block;
+    margin: 0 auto;
+    font-size: 20px;
+    color: var(--theme);
+}
+
+.sectionChild {
+    display: block;
+    font-size: var(--mid-text);
+    margin-left: 1rem;
+    line-height: 1.7;
+}
+
+.sectionChildP {
+    display: block;
+    font-size: var(--mid-text);
+}

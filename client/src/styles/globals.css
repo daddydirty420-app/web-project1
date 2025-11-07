@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+:root {
+  /* カラー */
+  --background: #f4f2ef;
+  --foreground: rgba(44, 44, 44, 0.92);
+  --h-color: rgba(26, 26, 26, 0.95);
+  --theme: rgba(54, 134, 6, 0.95);
+  --theme-sub: rgba(180, 113, 66, 0.95);
+  --white: #ffffff;
+  --gray-10: #eeeeee;
+  --gray-25: #aaaaaa;
+  --gray-50: #707070;
+  --gray-75: #444444;
+  --gray-line: rgba(44, 44, 44, 0.12);
+  --black: #222222;
+  --accent: #0d87e0;
+  --alert: rgba(237, 26, 61, 0.9);
+
+  /* タイポグラフィ（フォントサイズ） */
+  --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
+  --display: clamp(3rem, 1.5rem + 10vw, 6.25rem); /* 48-100px */
+  --heading1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); /* 24-32px */
+  --heading2: clamp(1.25rem, 1.1rem + 1vw, 1.5rem); /* 20-24px */
+  --heading3: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); /* 18-21px */
+  --small-heading: clamp(1rem, 0.9rem + 0.6vw, 1.1875rem); /* 16-19px */
+  --small-heading2: clamp(0.9375rem, 0.85rem + 0.6vw, 1.0625rem); /* 15-17px */
+  --caption: clamp(0.75rem, 0.65rem + 0.5vw, 0.875rem); /* 12-14px */
+  --mid-text: clamp(0.8125rem, 0.7125rem + 0.6vw, 0.9375rem); /* 13-15px */
+  --fixed-p: 14px;
+
+  /* スペース（余白・間隔） */
+  --space-xs: clamp(1.25rem, 1rem + 0.98rem, 1.875rem); /* 20-30px */
+  --space-sm: calc(var(--space-xs) * 1.5); /*30-45px */
+  --space-md: calc(var(--space-xs) * 2); /* 40-60px */
+  --space-lg: calc(var(--space-xs) * 3); /* 60-90px */
+  --space-xl: calc(var(--space-xs) * 4); /* 80-120px */
+  --space-jump: clamp(1.25rem, 0.35rem + 3.8vw, 3.75rem); /* 20-60px */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
+  font-size: var(--body);
+  letter-spacing: 0.05em;
+}
+
+h1, h2, h3 {
+  color: var(--h-color);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: var(--heading2);
+}
+
+h2 {
+  font-size: var(--heading2);
+}
+
+h3 {
+  font-size: var(--heading3);
+}
+
+p {
+  font-size: var(--body);
+}
+
+p {
+  line-height: 1.7;
+}
+
+small {
+  line-height: 1.5;
+}
+
+/* next/image */
+span > img {
+  transition: 0.2s;
+}
+
+/* input */
+input:focus {
+  outline: 0;
+  background-color: rgba(254, 190, 32, 0.06);
+}

@@ -1,0 +1,25 @@
+import styles from "./itemCommon.module.css";
+import { Items } from "types/itemListTypes";
+import { ItemListRow } from "components";
+
+type Props = {
+    itemList?: Items[];
+    sellerMe?: boolean;
+};
+
+export default function ItemListSection({ itemList, sellerMe }: Props) {
+    if (!itemList) {
+        console.error("itemListがありません。", itemList);
+        return;
+    }
+    
+    return (
+        <>
+        {sellerMe
+        ? <p className={styles.itemListText}>他の商品</p>
+        : <p className={styles.itemListText}>関連する商品</p>}
+
+        <ItemListRow itemList={itemList} />
+        </>
+    );
+};

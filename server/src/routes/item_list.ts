@@ -1,0 +1,798 @@
+import { Router, Request, Response } from "express";
+import { authenticateToken, authenticateOptional } from "../middleware/index.js";
+import { Op, literal, WhereOptions } from "sequelize";
+import { Item, User, Video, Sale, Follow, Search } from "../models/index.js";
+
+const router = Router();
+
+router.get('/index-item-list/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    type FollowInstance = InstanceType<typeof Follow>;
+
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const category = req.query.category || null;
+
+        const categoryMap = {
+            camp: '%キャンプ・BBQ%',
+            hike: '%登山・ハイキング%',
+            wear: '%ウェア・シューズ・アクセサリー%'
+        };
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 6;
+        const offset = (page - 1) * limit;
+
+        let whereCondition: WhereOptions = {
+            public: true,
+            sold_out: false,
+            ...(currentUserId && { seller_id: { [Op.ne]: currentUserId } }),
+        };
+
+        if (typeof category === "string" && category in categoryMap) {
+            whereCondition = {
+                ...whereCondition,
+                category_text: { [Op.iLike]: categoryMap[category as keyof typeof categoryMap] },
+            };
+        }
+
+        if (category === 'follow' && currentUserId) {
+            const followings = await Follow.findAll({
+                where: { follow_user_id: currentUserId },
+                attributes: ['follower_user_id'],
+            }) as FollowInstance[];
+
+            const followedUserIds = followings.map(f => f.follower_user_id);
+
+            whereCondition = {
+                ...whereCondition,
+                seller_id: { [Op.in]: followedUserIds },
+            };
+        }
+
+        const items = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id'],
+            where: whereCondition,
+            limit,
+            offset,
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Video,
+                    attributes: ['thumbnail_url', 'title', 'duration']
+                },
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                },
+                {
+                    model: User,
+                    attributes: ['user_name', 'profile_image']
+                }
+            ]
+        });
+
+        const hasItemCount = await Item.count({
+            where: whereCondition,
+        });
+        
+        const totalPages = Math.ceil(hasItemCount / limit);
+
+        if (!items) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json({ items, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/index-item-list/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    type FollowInstance = InstanceType<typeof Follow>;
+
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const category = req.query.category || null;
+
+        const categoryMap = {
+            camp: '%キャンプ・BBQ%',
+            hike: '%登山・ハイキング%',
+            wear: '%ウェア・シューズ・アクセサリー%'
+        };
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 18;
+        const offset = (page - 1) * limit;
+
+        let whereCondition: WhereOptions = {
+            public: true,
+            sold_out: false,
+            ...(currentUserId && { seller_id: { [Op.ne]: currentUserId } }),
+        };
+
+        if (typeof category === "string" && category in categoryMap) {
+            whereCondition = {
+                ...whereCondition,
+                category_text: { [Op.iLike]: categoryMap[category as keyof typeof categoryMap] },
+            };
+        }
+
+        if (category === 'follow' && currentUserId) {
+            const followings = await Follow.findAll({
+                where: { follow_user_id: currentUserId },
+                attributes: ['follower_user_id'],
+            }) as FollowInstance[];
+
+            const followedUserIds = followings.map(f => f.follower_user_id);
+
+            whereCondition = {
+                ...whereCondition,
+                seller_id: { [Op.in]: followedUserIds },
+            };
+        }
+
+        const items = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id', 'first_image_url'],
+            where: whereCondition,
+            limit,
+            offset,
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
+                }
+            ]
+        });
+
+        const hasItemCount = await Item.count({
+            where: whereCondition,
+        });
+
+        const totalPages = Math.ceil(hasItemCount / limit);
+
+        if (!items) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json({ items, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/profile-item-list/video-list/:id', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const pageUserId = req.params.id;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 6;
+        const offset = (page - 1) * limit;
+
+        const items = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id'],
+            where: {
+                public: true,
+                seller_id: pageUserId
+            },
+            limit,
+            offset,
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Video,
+                    attributes: ['thumbnail_url', 'title', 'duration']
+                },
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                }
+            ]
+        });
+
+        const hasItemCount = await Item.count({
+            where: {
+                public: true,
+                seller_id: pageUserId
+            }
+        });
+        
+        const totalPages = Math.ceil(hasItemCount / limit);
+
+        if (!items) {
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json({ items, hasItemCount, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/profile-item-list/item-list/:id', async (req: Request, res: Response): Promise<void> => {
+    try {
+        const pageUserId = req.params.id;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 18;
+        const offset = (page - 1) * limit;
+
+        const items = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id', 'first_image_url'],
+            where: {
+                public: true,
+                seller_id: pageUserId
+            },
+            limit,
+            offset,
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
+                }
+            ]
+        });
+
+        const hasItemCount = await Item.count({
+            where: {
+                public: true,
+                seller_id: pageUserId
+            }
+        });
+
+        const totalPages = Math.ceil(hasItemCount / limit);
+
+        if (!items) {
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json({ items, hasItemCount, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/draft', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user!.id;
+
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'seller_id', 'updatedAt', 'first_image_url'],
+            where: {
+                seller_id: currentUserId,
+                draft: true,
+                public: false
+            },
+            order: [['updatedAt', 'DESC']],
+            include: [
+                {
+                    model: Video,
+                    attributes: ['title']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/item-money-management/item-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const itemId = req.params.id;
+        const currentUserId = req.user!.id;
+
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'first_image_url'],
+            where: {
+                seller_id: currentUserId,
+                public: true,
+                id: { [Op.ne]: itemId }
+            },
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/money-management/item-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user!.id;
+
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'first_image_url'],
+            where: {
+                seller_id: currentUserId,
+                public: true
+            },
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/number-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user!.id;
+
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'sold_out', 'stock_all', 'stock_now', 'first_image_url'],
+            where: { 
+                seller_id: currentUserId,
+                public: true
+            },
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/search/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = 12;
+        const offset = (page - 1) * limit;
+
+        const searchId = req.query.search_id;
+
+        let latestSearch;
+
+        if (searchId) {
+            latestSearch = await Search.findOne({
+                where: {
+                    id: searchId,
+                    user_id: currentUserId
+                }
+            });
+        } else {
+            latestSearch = await Search.findOne({
+                where: {
+                    user_id: currentUserId,
+                    search_text: { [Op.ne]: null }
+                },
+                order: [['createdAt', 'DESC']]
+            });
+        }
+
+        const searchWord = latestSearch?.search_text || '';
+
+        const escapeWord = searchWord.replace(/'/g,"''");
+
+        const itemList = await Item.findAll({
+            attributes: [
+                'id', 
+                'name', 
+                'price', 
+                'sold_out',
+                'search_text',
+                'sort_number', 
+                [literal(`(
+                    sort_number * (
+                    SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
+                    )
+                    )`), 'score']
+            ],
+            where: {
+                seller_id: { [Op.ne]: currentUserId },
+                public: true,
+                search_text: { [Op.iLike]: `%${searchWord}%` }
+            },
+            order: [
+                [literal(`(
+                    sort_number * (
+                    SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
+                    )
+                    )`), 'DESC'
+                ]
+            ],
+            limit,
+            offset,
+            include: [
+                {
+                    model: Video,
+                    attributes: ['thumbnail_url', 'duration', 'title']
+                },
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                },
+                {
+                    model: User,
+                    attributes: ['user_name', 'profile_image']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/search/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 18;
+        const offset = (page - 1) * limit;
+
+        const searchId = req.query.search_id;
+
+        let latestSearch;
+
+        if (searchId) {
+            latestSearch = await Search.findOne({
+                where: {
+                    id: searchId,
+                    user_id: currentUserId
+                }
+            });
+        } else {
+            latestSearch = await Search.findOne({
+                where: {
+                    user_id: currentUserId,
+                    search_text: { [Op.ne]: null }
+                },
+                order: [['createdAt', 'DESC']]
+            });
+        }
+
+        const searchWord = latestSearch?.search_text || '';
+
+        const escapeWord = searchWord.replace(/'/g,"''");
+
+        const itemList = await Item.findAll({
+            attributes: [
+                'id', 
+                'name', 
+                'price', 
+                'sold_out',
+                'search_text',
+                'first_image_url',
+                'sort_number', 
+                [literal(`(
+                    sort_number * (
+                    SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
+                    )
+                    )`), 'score']
+            ],
+            where: {
+                seller_id: { [Op.ne]: currentUserId },
+                public: true,
+                search_text: { [Op.iLike]: `%${searchWord}%` }
+            },
+            order: [
+                [literal(`(
+                    sort_number * (
+                    SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
+                    )
+                    )`), 'DESC'
+                ]
+            ],
+            limit,
+            offset,
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/search2/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = 12;
+        const offset = (page - 1) * limit;
+
+        const searchId = req.query.search_id;
+
+        if (!searchId) {
+            res.status(400).json({ error: 'search_idが指定されていません。' });
+            return;
+        }
+
+        const search = await Search.findOne({
+            where: { id: searchId }
+        });
+
+        if (!search) {
+            res.status(404).json({ error: '検索情報が見つかりません。' });
+            return;
+        }
+
+        const categoryText = search.category_text;
+        let categoryCondition = {};
+
+        const parts = categoryText.split(' - ').map((p: string) => p.trim());
+
+        if (parts.length === 1) {
+            categoryCondition = {
+                category_text: {
+                    [Op.iLike]: `%${parts[0]}%`
+                }
+            };
+        } else {
+            categoryCondition = {
+                category_text: categoryText
+            };
+        }
+
+        const itemList = await Item.findAll({
+            attributes: [
+                'id',
+                'name',
+                'price',
+                'sold_out',
+                'category_text',
+                'sort_number'
+            ],
+            where: {
+                seller_id: { [Op.ne]: currentUserId },
+                public: true,
+                ...categoryCondition
+            },
+            order: [['sort_number', 'DESC']],
+            limit,
+            offset,
+            include: [
+                {
+                    model: Video,
+                    attributes: ['thumbnail_url', 'duration', 'title']
+                },
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                },
+                {
+                    model: User,
+                    attributes: ['user_name', 'profile_image']
+                }
+            ] 
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/search2/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 18;
+        const offset = (page - 1) * limit;
+
+        const searchId = req.query.search_id;
+
+        if (!searchId) {
+            res.status(400).json({ error: 'search_idが指定されていません 。' });
+            return;
+        }
+
+        const search = await Search.findOne({
+            where: { id: searchId }
+        });
+
+        if (!search) {
+            res.status(404).json({ error: '検索情報が見つかりません。' });
+            return;
+        }
+
+        const categoryText = search.category_text;
+        let categoryCondition = {};
+
+        const parts = categoryText.split(' - ').map((p: string) => p.trim());
+
+        if (parts.length === 1) {
+            categoryCondition = {
+                category_text: {
+                    [Op.iLike]: `%${parts[0]}%`
+                }
+            };
+        } else {
+            categoryCondition = {
+                category_text: categoryText
+            };
+        }
+
+        const itemList = await Item.findAll({
+            attributes: [
+                'id',
+                'name',
+                'price',
+                'sold_out',
+                'category_text',
+                'sort_number',
+                'first_image_url',
+            ],
+            where: {
+                seller_id: { [Op.ne]: currentUserId },
+                public: true,
+                ...categoryCondition
+            },
+            order: [['sort_number', 'DESC']],
+            limit,
+            offset,
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
+                },
+            ] 
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'データが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/uploaded-list-all', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'stock_all', 'stock_now', 'first_image_url'],
+            where: { 
+                seller_id: req.user!.id,
+                public: true
+            },
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                },
+                {
+                    model: Video,
+                    attributes: ['title']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/uploaded-list-selling', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'stock_all', 'stock_now', 'first_image_url'],
+            where: { 
+                seller_id: req.user!.id,
+                public: true,
+                sold_out: false
+            },
+            order: [['uploaded_date', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                },
+                {
+                    model: Video,
+                    attributes: ['title']
+                }
+            ]
+        });
+
+        if (!itemList) {
+            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json(itemList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+export default router;

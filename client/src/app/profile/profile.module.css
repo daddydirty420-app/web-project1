@@ -1,0 +1,149 @@
+.profileBlock {
+    display: flex;
+    align-items: center;
+}
+
+.userDiv {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.profileImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 8px;
+}
+
+.userName {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--theme);
+}
+
+.honninIcon {
+    width: 13px;
+    height: 13px;
+    color: var(--theme-sub);
+    margin-left: 4px;
+}
+.honninIcon path {
+    stroke: currentColor;
+    stroke-width: 15;
+}
+
+.earlyIcon {
+    width: 16px;
+    height: 16px;
+    color: var(--theme);
+    margin-left: 4px;
+}
+
+.shopIcon {
+    width: 16px;
+    height: 16px;
+    color: var(--theme-sub);
+    margin-left: 4px;
+}
+
+.introductionDiv {
+    margin: 1rem auto;
+}
+
+.introduction {
+    min-height: 45px;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.clamp {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+}
+
+.moreButton {
+    font-size: 13px;
+    color: var(--gray-50);
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.shopButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 36px;
+    margin: 1em auto;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--theme);
+    background-color: #fff;
+    border: solid 3px var(--theme);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.followDiv {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    margin: 12px auto;
+    gap: 12px;
+}
+
+.followCountDiv {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+}
+
+.followNumber {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.followText {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.small {
+    font-size: 11px;
+}
+
+.itemTitle {
+    font-size: var(--small-heading);
+    font-weight: 700;
+}
+
+.editButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px var(--theme);
+    border-radius: 13px;
+    width: 60px;
+    height: 26px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .profileImage {
+        width: 60px;
+        height: 60px;
+    }
+
+    .userName {
+        font-size: 16px;
+    }
+
+    .introduction {
+        font-size: 14px;
+    }
+}
