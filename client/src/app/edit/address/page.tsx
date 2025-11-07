@@ -4,7 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import AddressEditForm from "./addressEditForm";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
     return {
         title: "住所の設定・変更 | FLEX OUTDOOR",
         description: "住所を設定・変更できます。",

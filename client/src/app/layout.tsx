@@ -4,9 +4,6 @@ import "../styles/globals.css";
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 config.autoAddCss = false
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { SessionProviderCustom } from "@/providers/session-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
