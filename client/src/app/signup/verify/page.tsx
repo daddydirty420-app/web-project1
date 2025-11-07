@@ -1,11 +1,11 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { Container } from "@/components";
 import VerifyForm from './verify-form';
 import Resend from "./resend";
 import styles from '@/styles/login.module.css';
-
-export const dynamic = "force-dynamic";
 
 export default function Page() {
     return (
