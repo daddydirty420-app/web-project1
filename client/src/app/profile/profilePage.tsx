@@ -1,4 +1,4 @@
-import { Back, Container, Header, Footer } from 'components';
+import { Back, Container, Header, Footer } from '@/components';
 import { Res } from './profileTypes';
 import ProfileMain from './profileMain';
 import ShopButton from './shopButton';

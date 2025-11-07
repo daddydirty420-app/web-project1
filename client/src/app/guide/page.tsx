@@ -1,5 +1,5 @@
-import { TitleAndBack, Container, AccordionGrid, Header, Footer } from 'components'
-import { GuideLink } from 'components/guide'
+import { TitleAndBack, Container, AccordionGrid, Header, Footer } from '@/components'
+import { GuideLink } from '@/components/guide'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

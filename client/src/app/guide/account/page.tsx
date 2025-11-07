@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from 'components'
-import { GuideSubTitle, GuideSmall, GuideLink } from 'components/guide'
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado, ListUlSecond, ListDiscSecond } from 'components/list'
-import styles from 'styles/guide.module.css'
+import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
+import { GuideSubTitle, GuideSmall, GuideLink } from '@/components/guide'
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado, ListUlSecond, ListDiscSecond } from '@/components/list'
+import styles from '@/styles/guide.module.css'
 import clsx from 'clsx'
 import { Metadata } from 'next'
 

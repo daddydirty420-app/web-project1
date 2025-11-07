@@ -1,6 +1,6 @@
-import { TitleAndBack, Container, Header, Footer } from 'components'
-import { TermsSection, TermsMiniSection, TermsKakko, TermsList, TermsListDiv, TermsListSecond } from 'components/terms'
-import styles from 'styles/terms.module.css'
+import { TitleAndBack, Container, Header, Footer } from '@/components'
+import { TermsSection, TermsMiniSection, TermsKakko, TermsList, TermsListDiv, TermsListSecond } from '@/components/terms'
+import styles from '@/styles/terms.module.css'
 import clsx from 'clsx'
 import { Metadata } from 'next'
 

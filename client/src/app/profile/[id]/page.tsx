@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import ProfilePage from '../profilePage';
 import { Res } from '../profileTypes';
 import { getServerSession } from 'next-auth';
-import { authOptions } from 'app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 
 type Props = {
     params: { id: string };

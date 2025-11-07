@@ -1,5 +1,5 @@
 import useSWR, { mutate } from "swr";
-import { fetcher } from "lib/fetcher";
+import { fetcher } from "@/lib/fetcher";
 
 type GoodCountResponce = { count: number };
 

@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import { ReactNode } from "react"
-import styles from 'styles/guide.module.css'
+import styles from '@/styles/guide.module.css'
 
 type GuideSectionProps = {
     heading: string,

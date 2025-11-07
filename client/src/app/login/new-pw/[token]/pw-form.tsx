@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import styles from 'styles/login.module.css'
+import styles from '@/styles/login.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons"
 

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from 'styles/components-style/itemList.module.css';
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { Items } from 'types/itemListTypes';
+import { Items } from '@/types/itemListTypes';
 
 type Res = {
     items: Items[] | null;

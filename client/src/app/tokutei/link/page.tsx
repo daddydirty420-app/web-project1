@@ -1,5 +1,5 @@
-import { TitleAndBack, Container, Header, Footer } from 'components'
-import { NormalLink, NormalLinkContainer } from 'components/link'
+import { TitleAndBack, Container, Header, Footer } from '@/components'
+import { NormalLink, NormalLinkContainer } from '@/components/link'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

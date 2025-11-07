@@ -1,6 +1,6 @@
 "use client";
 
-import { InputStr, Button, Textarea } from "components/inputForm";
+import { InputStr, Button, Textarea } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
 import { Session } from "next-auth";

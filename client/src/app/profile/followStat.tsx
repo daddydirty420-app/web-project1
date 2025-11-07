@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from './profile.module.css';
-import { useFollowCount } from "hooks/useFollow";
+import { useFollowCount } from "@/hooks/useFollow";
 import { Session } from "next-auth";
 
 type Props = {

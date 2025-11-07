@@ -1,7 +1,7 @@
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from 'components'
-import { GuideSubTitle, GuideSection } from 'components/guide'
-import { ListDiscSecond } from 'components/list'
-import { TermsList, TermsListDiv } from 'components/terms'
+import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
+import { GuideSubTitle, GuideSection } from '@/components/guide'
+import { ListDiscSecond } from '@/components/list'
+import { TermsList, TermsListDiv } from '@/components/terms'
 import Link from 'next/link'
 import { Metadata } from 'next'
 

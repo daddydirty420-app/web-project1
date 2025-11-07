@@ -1,6 +1,6 @@
 'use client';
 
-import styles from 'styles/login.module.css';
+import styles from '@/styles/login.module.css';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Resend() {

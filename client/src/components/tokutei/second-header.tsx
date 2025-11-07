@@ -1,4 +1,4 @@
-import styles from 'styles/tokutei.module.css'
+import styles from '@/styles/tokutei.module.css'
 
 type SecondHeaderProps = {
     text: string,

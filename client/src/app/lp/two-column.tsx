@@ -9,7 +9,7 @@ import Button from "./button/button";
 import MainAllUser from "./main/mainAllUser";
 import MainShopUtil from "./main/mainShopUtil";
 import MainCampaign from "./main/mainCampaign";
-import { Items } from "types/itemListTypes";
+import { Items } from "@/types/itemListTypes";
 import { Session } from "next-auth";
 
 type Res = {

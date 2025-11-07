@@ -1,6 +1,6 @@
 "use client";
 
-import { InputStr, Button } from "components/inputForm";
+import { InputStr, Button } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

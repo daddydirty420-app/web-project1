@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import Image from 'next/image';
-import Logo from '../../../public/logo.png';
+import Logo from 'public/logo.png';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import ProfileEditForm from "./profileEditForm";
 import { getServerSession } from "next-auth";
-import { authOptions } from "app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { User } from "../type";
 

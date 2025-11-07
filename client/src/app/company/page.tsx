@@ -1,5 +1,5 @@
-import { TitleAndBack, Container, Header, Footer } from 'components'
-import { TokuteiContainer, TokuteiSection } from 'components/tokutei'
+import { TitleAndBack, Container, Header, Footer } from '@/components'
+import { TokuteiContainer, TokuteiSection } from '@/components/tokutei'
 import { Metadata } from 'next'
 import Link from 'next/link'
 

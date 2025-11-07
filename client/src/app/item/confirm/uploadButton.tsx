@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./confirm.module.css";
 import { useState } from "react";
 import { X } from "lucide-react";
-import { TermsList } from "components/terms";
+import { TermsList } from "@/components/terms";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 

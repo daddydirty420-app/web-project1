@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import { Comment } from "../itemPageTypes";
-import { updateGoodCommentCache, useGoodCount, useGoodStatus } from "hooks/useGoodComment";
+import { updateGoodCommentCache, useGoodCount, useGoodStatus } from "@/hooks/useGoodComment";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 

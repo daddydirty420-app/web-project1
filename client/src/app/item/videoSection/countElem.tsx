@@ -1,7 +1,7 @@
 import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
 import Good from "./good";
-import { formatRelativeTime } from "lib/formatRelativeTime";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { Session } from "next-auth";
 
 type Props = {

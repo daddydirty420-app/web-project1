@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import styles from 'styles/terms.module.css'
+import styles from '@/styles/terms.module.css'
 
 type TermsSectionProps = {
     number: number,

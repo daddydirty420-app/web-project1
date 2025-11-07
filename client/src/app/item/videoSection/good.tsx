@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./video.module.css";
-import { useGoodStatus, useGoodCount, updateGoodItemCache } from "hooks/useGoodItem";
+import { useGoodStatus, useGoodCount, updateGoodItemCache } from "@/hooks/useGoodItem";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";

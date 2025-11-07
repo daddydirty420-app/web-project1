@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import styles from 'styles/login.module.css'
+import styles from '@/styles/login.module.css'
 import { signIn } from "next-auth/react";
 
 export default function VerifyForm() {

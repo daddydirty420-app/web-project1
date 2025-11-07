@@ -1,5 +1,5 @@
 import { User } from './profileTypes';
-import { Star } from '../../components';
+import { Star } from '@/components';
 import styles from './profile.module.css';
 import clsx from 'clsx';
 

@@ -1,6 +1,6 @@
-import { TitleAndBack, Container, Header, Footer } from 'components'
-import { TokuteiContainer, TokuteiSection, SecondHeader } from 'components/tokutei'
-import styles from 'styles/tokutei.module.css'
+import { TitleAndBack, Container, Header, Footer } from '@/components'
+import { TokuteiContainer, TokuteiSection, SecondHeader } from '@/components/tokutei'
+import styles from '@/styles/tokutei.module.css'
 import { Metadata } from 'next'
 import Link from 'next/link'
 

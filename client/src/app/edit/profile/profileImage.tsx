@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../edit.module.css";
-import InputTitle from "../../../components/inputForm/inputTitle";
+import InputTitle from "@/components/inputForm/inputTitle";
 import React, { useEffect, useRef, useState } from "react";
 import { User } from "../type";
 import Image from "next/image";

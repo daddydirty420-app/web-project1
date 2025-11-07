@@ -1,16 +1,16 @@
-import { Back, Container, Header, Footer } from 'components';
+import { Back, Container, Header, Footer } from '@/components';
 import { Metadata } from 'next';
 import ReferenceCode from './referenceCode';
 import Logout from './logout';
 import styles from './mypage.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NormalLink, NormalLinkContainer, MypageLinkHeader, ChildrenLink } from 'components/link';
+import { NormalLink, NormalLinkContainer, MypageLinkHeader, ChildrenLink } from '@/components/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCampground, faStore } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { getServerSession } from 'next-auth';
-import { authOptions } from 'app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 

@@ -1,8 +1,8 @@
-import { Container } from "components";
+import { Container } from "@/components";
 import VerifyForm from './verify-form';
 import Resend from "./resend";
 import { Metadata } from "next";
-import styles from 'styles/login.module.css'
+import styles from '@/styles/login.module.css'
 
 export const metadata: Metadata = {
     title: "メール認証 | FLEX OUTDOOR",

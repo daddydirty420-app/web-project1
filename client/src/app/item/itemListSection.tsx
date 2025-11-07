@@ -1,6 +1,6 @@
 import styles from "./itemCommon.module.css";
-import { Items } from "types/itemListTypes";
-import { ItemListRow } from "components";
+import { Items } from "@/types/itemListTypes";
+import { ItemListRow } from "@/components";
 
 type Props = {
     itemList?: Items[];

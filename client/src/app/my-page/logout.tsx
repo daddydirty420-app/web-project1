@@ -1,6 +1,6 @@
 'use client';
 
-import { NormalLinkContainer } from "components/link";
+import { NormalLinkContainer } from "@/components/link";
 import styles from './mypage.module.css';
 import { useRouter } from 'next/navigation';
 import { signOut } from "next-auth/react";

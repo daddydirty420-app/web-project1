@@ -1,6 +1,6 @@
 'use client';
 
-import { useFollowStatus, updateFollowCache } from 'hooks/useFollow';
+import { useFollowStatus, updateFollowCache } from '@/hooks/useFollow';
 import styles from './followButton.module.css';
 import clsx from 'clsx';
 import { Session } from 'next-auth';

@@ -1,7 +1,7 @@
 import styles from "./video.module.css";
 import commonS from "../itemCommon.module.css";
 import { Item } from "../itemPageTypes";
-import { FollowButton, Star } from "components";
+import { FollowButton, Star } from "@/components";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";

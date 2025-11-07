@@ -7,7 +7,7 @@ import styles from "./lpItemList.module.css";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { Items } from "types/itemListTypes";
+import { Items } from "@/types/itemListTypes";
 import { Session } from "next-auth";
 
 type Res = {

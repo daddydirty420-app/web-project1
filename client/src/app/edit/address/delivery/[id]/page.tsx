@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../../lib/auth";
+import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import AddressEditForm from "../../addressEditForm";
 
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page({ params }: Props) {
-    const { id } = await params;
+    const { id } = params;
     const session = await getServerSession(authOptions);
     const user = session?.user;
     if (!session || !user) {

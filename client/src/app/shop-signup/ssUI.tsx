@@ -1,4 +1,4 @@
-import { Container, Title } from "components";
+import { Container, Title } from "@/components";
 import { ReactNode } from "react";
 
 type Props = {

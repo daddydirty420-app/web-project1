@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Lp from "../lp";
-import { Items } from "types/itemListTypes";
+import { Items } from "@/types/itemListTypes";
 import { getServerSession } from "next-auth";
-import { authOptions } from "app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 type Res = {
     items: Items[];

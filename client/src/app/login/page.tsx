@@ -1,8 +1,8 @@
-import { Container } from "components";
+import { Container } from "@/components";
 import LoginForm from './login-form';
 import { Metadata } from "next";
 import Link from "next/link";
-import styles from 'styles/login.module.css'
+import styles from '@/styles/login.module.css'
 
 export const metadata: Metadata = {
     title: "ログイン | FLEX OUTDOOR",

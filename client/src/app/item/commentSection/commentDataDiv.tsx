@@ -1,7 +1,7 @@
 import styles from "./comment.module.css";
 import { Comment } from "../itemPageTypes";
 import clsx from "clsx";
-import { formatRelativeTime } from "lib/formatRelativeTime";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
 
 type Props = {
     comment: Comment;

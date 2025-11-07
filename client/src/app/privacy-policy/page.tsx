@@ -1,6 +1,6 @@
-import { TitleAndBack, Container, Header, Footer } from 'components'
-import { TermsMiniSection, TermsList, TermsListDiv } from 'components/terms'
-import styles from 'styles/terms.module.css'
+import { TitleAndBack, Container, Header, Footer } from '@/components'
+import { TermsMiniSection, TermsList, TermsListDiv } from '@/components/terms'
+import styles from '@/styles/terms.module.css'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 import { Res } from './profileTypes';
 import EditButton from './editButton';
-import { FollowButton } from 'components';
+import { FollowButton } from '@/components';
 import styles from './profile.module.css';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
