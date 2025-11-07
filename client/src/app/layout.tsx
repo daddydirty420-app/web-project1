@@ -37,22 +37,19 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
 
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProviderCustom session={session}>
-          {children}
-        </SessionProviderCustom>
+        {children}
       </body>
     </html>
   );
-}
+};
