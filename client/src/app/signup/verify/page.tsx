@@ -13,7 +13,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function Verify() {
     return (
@@ -25,5 +25,5 @@ export default function Verify() {
                 <Resend />
             </section>
         </Container>
-    )
-}
+    );
+};
