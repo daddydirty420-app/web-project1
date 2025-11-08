@@ -97,8 +97,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true
+  origin: [
+    "http://localhost:3000",
+    "https://web-project1-fawn.vercel.app",
+    "https://indoor-calendar-cooperative-deck.trycloudflare.com",
+  ],
+  credentials: true,
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
