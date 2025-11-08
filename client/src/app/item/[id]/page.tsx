@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 };
 
 export default async function Page({ params }: Props) {
+    console.log(process.env.NEXT_PUBLIC_API_URL);
     const { id } = await params;
     const session = await getServerSession(authOptions);
     
