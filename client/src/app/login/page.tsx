@@ -1,17 +1,9 @@
+"use client";
+
 import { Container } from "@/components";
 import LoginForm from './login-form';
-import { Metadata } from "next";
 import Link from "next/link";
-import styles from '@/styles/login.module.css'
-
-export const metadata: Metadata = {
-    title: "ログイン | FLEX OUTDOOR",
-    description: "FLEX OUTDOORのログインはこちら！",
-    robots: {
-        index: false,
-        follow: false
-    }
-}
+import styles from '@/styles/login.module.css';
 
 export default function Login() {
     console.log(process.env.NEXT_PUBLIC_API_URL);
