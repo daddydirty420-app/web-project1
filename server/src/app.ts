@@ -100,7 +100,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "https://web-project1-fawn.vercel.app",
-    "https://indoor-calendar-cooperative-deck.trycloudflare.com",
+    "https://sound-prescription-dec-learned.trycloudflare.com",
   ],
   credentials: true,
 }));
