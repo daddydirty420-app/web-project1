@@ -4,6 +4,27 @@ import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount
 
 const router = Router();
 
+router.post("/signup1-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+    const optionId = req.body.optionId || null;
+    if (!optionId || optionId === null || optionId > 2) {
+        res.status(400).json({ message: "事業形態が未入力です。" });
+        return;
+    }
+
+    try {
+        const data = await ShopInfo.create({
+            user_id: userId,
+            com_or_free_id: optionId,
+        });
+
+        res.status(200).json({ id: data.id });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.get('/signup2/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {

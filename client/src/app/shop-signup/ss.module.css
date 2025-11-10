@@ -1,0 +1,30 @@
+.buttonNav {
+    width: 100%;
+    max-width: 350px;
+    margin: 2rem auto 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.backButton {
+    width: 140px;
+    height: 36px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--theme);
+    background-color: #f5f5f5;
+    border: solid 2rem var(--theme);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.nextButton {
+    width: 140px;
+    height: 36px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #f5f5f5;
+    background-color: var(--theme);
+    border-radius: 10px;
+    cursor: pointer;
+}

@@ -1,7 +1,3 @@
-"use client";
-
-export const dynamic = "force-dynamic";
-
 import { Container } from "@/components";
 import VerifyForm from './verify-form';
 import Resend from "./resend";
