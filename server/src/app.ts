@@ -99,8 +99,9 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:3000",
+    /\.vercel\.app$/,
     "https://web-project1-fawn.vercel.app",
-    "https://sound-prescription-dec-learned.trycloudflare.com",
+    /trycloudflare\.com$/,
   ],
   credentials: true,
 }));
