@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 }
 
 export default function Login() {
-    console.log(process.env.NEXT_PUBLIC_API_URL);
     return (
         <Container>
             <h1 className={styles.title}>ログイン</h1>
