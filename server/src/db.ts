@@ -7,7 +7,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL!, {
   logging: false,
   dialectOptions: {
     ssl: process.env.NODE_ENV === 'production'
-    ? { rejectUnauthorized: false }
+    ? {
+      require: true,
+      rejectUnauthorized: false
+    }
     : false
   }
 });
