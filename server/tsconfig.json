@@ -14,12 +14,13 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "baseUrl": "./src",
+        "typeRoots": ["./node_modules/@types", "./src/types"],
         "paths": {
             "@models/*": ["models/*"],
             "@routes/*": ["routes/*"],
             "@config/*": ["config/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/db.ts"],
+    "include": ["src/**/*.ts", "src/db.ts", "src/types/**/*.d.ts"],
     "exclude": ["node_modules", "dist"]
 }
