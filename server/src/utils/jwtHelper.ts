@@ -1,31 +1,32 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export interface JwtUserPayload extends JwtPayload {
+export interface JwtUserPayload {
   id: number | string;
   email: string;
-};
-
-const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET as string;
-if (!NEXTAUTH_SECRET) {
-  throw new Error("JWT_REFRESH_SECRETが設定されていません。");
+  iat?: number;
+  exp?: number;
 }
 
-export function generateAccessToken(user: { id: number | string; email: string }): string {
-  return jwt.sign(
-    { id: user.id, email: user.email },
-    NEXTAUTH_SECRET,
-    { expiresIn: '1h' }
-  );
-};
+const rawSecret = process.env.NEXTAUTH_SECRET;
 
-export function generateRefreshToken(user: { id: number | string; email: string }, rememberMe: boolean): string {
-  const expiresIn = rememberMe ? '30d' : '3d';
-  return jwt.sign(
-    { id: user.id, email: user.email },
-    NEXTAUTH_SECRET,
-    { expiresIn }
-  );
+if (!rawSecret) {
+  throw new Error("NEXTAUTH_SECRET が設定されていません。");
+}
+
+const NEXTAUTH_SECRET: string = rawSecret; // ✅ ここで TS が絶対 string と判断する
+
+export function generateAccessToken(user: { id: number | string; email: string }): string {
+  const payload: JwtUserPayload = { id: user.id, email: user.email };
+  return jwt.sign(payload, NEXTAUTH_SECRET, { expiresIn: "1h" });
+}
+
+export function generateRefreshToken(
+  user: { id: number | string; email: string },
+  rememberMe: boolean
+): string {
+  const payload: JwtUserPayload = { id: user.id, email: user.email };
+  return jwt.sign(payload, NEXTAUTH_SECRET, { expiresIn: rememberMe ? "30d" : "3d" });
 };
