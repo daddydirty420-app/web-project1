@@ -1,4 +1,6 @@
 {
+  "private": true,
+  "workspaces": ["client", "server"],
   "devDependencies": {
     "concurrently": "^9.2.1",
     "next": "^15.5.4",
@@ -7,7 +9,8 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm ./src/bin/www.ts\"",
-    "client": "next dev client"
+    "client": "next dev client",
+    "build": "cd client && npm run build"
   },
   "dependencies": {
     "next-auth": "^4.24.13"

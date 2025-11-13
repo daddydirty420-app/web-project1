@@ -15,10 +15,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack: (config) => {
-    config.resolve.modules.push(path.resolve(__dirname, "../node_modules"));
-    return config;
-  },
 };
 
 module.exports = nextConfig;
