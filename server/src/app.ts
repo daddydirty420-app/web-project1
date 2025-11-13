@@ -101,7 +101,6 @@ app.use(cors({
     "http://localhost:3000",
     /\.vercel\.app$/,
     "https://web-project1-fawn.vercel.app",
-    /trycloudflare\.com$/,
   ],
   credentials: true,
 }));
