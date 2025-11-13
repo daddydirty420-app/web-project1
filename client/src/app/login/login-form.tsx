@@ -12,12 +12,12 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-
-    console.log("ログインページ");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         
         const res = await signIn("credentials", {
             redirect: false,
@@ -26,10 +26,12 @@ export default function LoginForm() {
             rememberMe: rememberMe ? "true" : "false",
         });
 
-        if (res?.ok) {
-            router.push('/my-page');
-        } else {
+        setLoading(false);
+
+        if (res?.error) {
             alert("メールアドレスまたはパスワードが正しくありません。");
+        } else if (res?.ok) {
+            router.push('/my-page');
         }
     };
 
@@ -78,7 +80,13 @@ export default function LoginForm() {
                 <p className={styles.formText}>ログイン状態を保持する</p>
             </label>
 
-            <button type="submit" className={styles.green}>ログインする</button>
+            <button
+            type="submit"
+            className={styles.green}
+            disabled={loading}
+            >
+                {loading ? "ログイン中..." : "ログインする"}
+            </button>
         </form>
     );
 };

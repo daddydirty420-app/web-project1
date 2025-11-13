@@ -9,29 +9,31 @@ export default function VerifyForm() {
     const [code, setCode] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [referenceVisible, setReferenceVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-        const code = formData.get('verify-code') as string;
-        const rememberMeValue = rememberMe;
-        const referenceCode = formData.get('reference-code');
+        setLoading(true);
 
         try {
+            const formData = new FormData(e.currentTarget);
+            const code = formData.get('verify-code') as string;
+            const referenceCode = formData.get('reference-code');
+
             const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup-verify`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     verificationCode: code,
-                    rememberMe: rememberMeValue
+                    rememberMe,
                 }),
             });
 
             if (!verifyRes.ok) {
                 const errorData = await verifyRes.json();
-                return alert(errorData.message);
+                alert(errorData.message || "認証コードが正しくありません。");
+                return;
             }
 
             const verifyData = await verifyRes.json();
@@ -45,7 +47,8 @@ export default function VerifyForm() {
 
             if (!createRes.ok) {
                 const errorData = await createRes.json();
-                return alert(errorData.message);
+                alert(errorData.message || "ユーザー作成に失敗しました。");
+                return;
             }
 
             if (typeof referenceCode === 'string' && referenceCode.trim() !== '') {
@@ -57,7 +60,8 @@ export default function VerifyForm() {
 
                 if (!refRes.ok) {
                     const errorData = await refRes.json();
-                    return alert(errorData.message);
+                    alert(errorData.message || "紹介コードが正しくありません。");
+                    return;
                 }
             }
 
@@ -66,7 +70,7 @@ export default function VerifyForm() {
                 email: verifyData.email,
                 accessToken: verifyData.accessToken,
                 refreshToken: verifyData.refreshToken,
-                rememberMe: rememberMeValue,
+                rememberMe: rememberMe ? "true" : "false",
             });
 
             if (res?.ok) {
@@ -75,7 +79,7 @@ export default function VerifyForm() {
                 alert("認証に失敗しました。");
             }
         } catch (err) {
-            console.error(err);
+            console.error("Verify error:", err);
             alert('通信エラーが発生しました。');
         }
     };
@@ -105,7 +109,13 @@ export default function VerifyForm() {
                 <p className={styles.formText}>ログイン状態を保持する</p>
             </label>
 
-            <button type="submit" className={styles.green}>認証する</button>
+            <button
+            type="submit"
+            className={styles.green}
+            disabled={loading}
+            >
+                {loading ? "認証中..." : "認証する"}
+            </button>
 
             <p className={styles.referenceP} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
 

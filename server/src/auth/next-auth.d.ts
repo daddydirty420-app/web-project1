@@ -19,7 +19,7 @@ declare module "next-auth" {
         email: string;
         user_name?: string;
         admin?: boolean;
-        rememberMe?: string;
+        rememberMe?: boolean;
         accessToken?: string;
         refreshToken?: string;
     }
