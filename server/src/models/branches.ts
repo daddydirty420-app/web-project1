@@ -21,6 +21,12 @@ export class Branches extends Model {
 
 Branches.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         bank_code: {
             type: DataTypes.TEXT,
             allowNull: false,
