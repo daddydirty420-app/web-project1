@@ -14,6 +14,8 @@ export default function LoginForm() {
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
 
+    console.log("ログインページ");
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         

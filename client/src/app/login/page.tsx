@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 }
 
 export default function Login() {
-    console.log("ログインページ");
     return (
         <Container>
             <h1 className={styles.title}>ログイン</h1>
