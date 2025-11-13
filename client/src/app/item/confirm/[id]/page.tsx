@@ -3,7 +3,7 @@ import ItemPage from "../../itemPage";
 import { Item } from "../../itemPageTypes";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/../../server/src/auth/auth";
 
 type Props = {
     params: { id: string };

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Lp from "../lp";
 import { Items } from "@/types/itemListTypes";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/../../server/src/auth/auth";
 
 type Res = {
     items: Items[];

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/../../server/src/auth/auth";
 import Image from 'next/image';
 import Logo from 'public/logo.png';
 import styles from './header.module.css';

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import ProfilePage from '../../profilePage';
 import type { Res } from '../../profileTypes';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/../../server/src/auth/auth';
 import { redirect } from 'next/navigation';
 
 type Props = {

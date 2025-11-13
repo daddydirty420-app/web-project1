@@ -20,6 +20,6 @@
             "@config/*": ["config/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/db.ts", "src/types/**/*.d.ts"],
+    "include": ["src/**/*.ts", "src/db.ts", "src/types/**/*.d.ts", "../shared/types/**/*.d.ts"],
     "exclude": ["node_modules", "dist"]
 }
