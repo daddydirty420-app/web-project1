@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/../../server/src/auth/auth";
+import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
+import { fetchRefreshToken } from "@/lib/refreshToken";
 import NameEditForm from "./nameEditForm";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,9 +18,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    const user = session?.user;
-    if (!session || !user) {
-        notFound();
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+            notFound();
+        }
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/myname`, {

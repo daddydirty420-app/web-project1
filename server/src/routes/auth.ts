@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateAccessToken, generateRefreshToken, JwtUserPayload } from "../utils/jwtHelper.js";
 import { authenticateToken } from "../middleware/index.js";
-import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens } from "../models/index.js";
+import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens } from "../models/index.js";
 import sequelize from "../db.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Op } from "sequelize";
@@ -16,45 +16,21 @@ const oneHour = 60 * 60 * 1000;
 
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
   console.log("fetch成功！");
-  const { email, password, rememberMe, accessToken, refreshToken } = req.body;
+  const { email, password, rememberMe } = req.body;
+
+  if (!email || !password) {
+    res.status(400).json({ message: "メールアドレスまたはパスワードがありません。" });
+    return;
+  }
 
   try {
-    if (accessToken && refreshToken) {
-      try {
-        const decoded = jwt.verify(accessToken, process.env.NEXTAUTH_SECRET!) as JwtUserPayload;
-        const user = await User.findByPk(decoded.id);
-
-        if (!user) {
-          res.status(404).json({ message: 'ユーザーが見つかりません。' });
-          return;
-        }
-
-        res.json({
-          id: user.id,
-          email: user.email,
-          user_name: user.user_name,
-          rememberMe,
-          accessToken,
-          refreshToken,
-        });
-        return;
-      } catch (err) {
-        console.error("トークン検証エラー:", err);
-        res.status(401).json({ message: "トークンが無効です。" });
-        return;
-      }
-    }
-
-    if (!email || !password) {
-      res.status(400).json({ message: "メールアドレスまたはパスワードがありません。" });
-      return;
-    }
-
     const user = await User.findOne({ where: { email } });
     if (!user) {
       res.status(401).json({ message: 'ユーザーが見つかりません。' });
       return;
     }
+
+    const userId = user.id;
 
     if (!user.email_verified) {
       res.status(403).json({ message: 'このアカウントは有効ではありません。' });
@@ -70,8 +46,18 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     const newAccessToken = generateAccessToken(user);
     const newRefreshToken = generateRefreshToken(user, rememberMe);
 
+    await RefreshTokens.destroy({ where: { user_id: userId } });
+
+    await RefreshTokens.create({
+      token: newRefreshToken,
+      user_id: userId,
+      expires_at: rememberMe
+      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+    });
+
     res.json({
-      id: user.id,
+      id: userId,
       email: user.email,
       user_name: user.user_name,
       admin: user.admin,
@@ -337,6 +323,52 @@ router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+  }
+});
+
+router.post("/refresh-token", async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    res.status(400).json({ message: "refreshTokenがありません。" });
+    return;
+  }
+
+  try {
+    const storedToken = await RefreshTokens.findOne({ where: { token: refreshToken } });
+    if (!storedToken) {
+      res.status(401).json({ message: "無効なトークンです。" });
+      return;
+    }
+
+    if (new Date() > storedToken.expires_at) {
+      res.status(401).json({ message: "トークンの有効期限が切れています。" });
+      return;
+    }
+
+    let decoded: any;
+    try {
+      decoded = jwt.verify(refreshToken, process.env.NEXTAUTH_SECRET!);
+    } catch (err) {
+      await storedToken.destroy();
+      res.status(401).json({ message: "無効なトークンです。" });
+      return;
+    }
+
+    const user = await User.findByPk(decoded.id);
+    if (!user) {
+      res.status(404).json({ message: "ユーザーが見つかりません。" });
+      return;
+    }
+
+    const newAccessToken = generateAccessToken(user);
+
+    res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: storedToken.token,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "サーバーエラーが発生しました。" });
   }
 });
 

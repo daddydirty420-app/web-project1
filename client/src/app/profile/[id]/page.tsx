@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import ProfilePage from '../profilePage';
 import { Res } from '../profileTypes';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/../../server/src/auth/auth';
+import { authOptions } from '@/lib/auth';
+import { fetchRefreshToken } from '@/lib/refreshToken';
 
 type Props = {
     params: { id: string };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-
     const { id } = await params;
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/user/profile/metadata/${id}`,
@@ -32,10 +32,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 };
 
 export default async function Profile({ params }: Props) {
-    const defaultLimit = 15;
     const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const { id: userId } = await params;
+    const defaultLimit = 15;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile/${userId}?limit=${defaultLimit}`, {
         method: 'GET',

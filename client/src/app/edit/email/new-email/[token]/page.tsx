@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/../../server/src/auth/auth";
+import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
+import { fetchRefreshToken } from "@/lib/refreshToken";
 import FetchClient from "./fetch";
 
 type Props = {
@@ -10,9 +11,16 @@ type Props = {
 export default async function Page({ params }: Props) {
     const { token } = await params;
     const session = await getServerSession(authOptions);
-    const user = session?.user;
-    if (!session || !user) {
-        notFound();
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+            notFound();
+        }
     }
 
     return (

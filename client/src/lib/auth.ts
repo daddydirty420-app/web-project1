@@ -1,21 +1,15 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
-import { User } from "../models";
-import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper";
 
 interface AuthUser {
     id: string;
     email: string;
     user_name?: string;
+    admin?: boolean;
     rememberMe?: boolean;
     accessToken: string;
     refreshToken?: string;
 };
-
-type LoginBody = 
-| { email: string; password: string; } 
-| { accessToken: string; refreshToken: string; };
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -30,24 +24,30 @@ export const authOptions: NextAuthOptions = {
                 if (!credentials?.email || !credentials?.password) return null;
 
                 const rememberMe = credentials.rememberMe === "true";
-                    
-                const user = await User.findOne({ where: { email: credentials.email } });
-                if (!user) return null;
-                if (!user.email_verified) return null;
 
-                const isMatch = await bcrypt.compare(credentials.password, user.password);
-                if (!isMatch) return null;
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: credentials.email,
+                        password: credentials.password,
+                        rememberMe,
+                    }),
+                });
 
-                const accessToken = generateAccessToken(user);
-                const refreshToken = generateRefreshToken(user, rememberMe);
+                if (!res.ok) return null;
+
+                const data = await res.json();
 
                 return {
-                    id: user.id,
-                    email: user.email,
-                    user_name: user.user_name,
+                    id: data.user.id,
+                    email: data.user.email,
+                    user_name: data.user.user_name,
                     rememberMe,
-                    accessToken,
-                    refreshToken,
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
                 };
             },
         }),
@@ -89,9 +89,5 @@ export const authOptions: NextAuthOptions = {
 
     pages: {
         signIn: "/login",
-    },
-
-    jwt: {
-        maxAge: 3 * 24 * 60 * 60,
     },
 };

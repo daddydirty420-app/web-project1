@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import ProfilePage from '../../profilePage';
 import type { Res } from '../../profileTypes';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/../../server/src/auth/auth';
+import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { fetchRefreshToken } from '@/lib/refreshToken';
 
 type Props = {
     params: { id: string };
@@ -31,10 +32,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 };
 
 export default async function Profile({ params }: Props) {
-    const defaultLimit = 15;
-    const session = await getServerSession(authOptions);
-
     const { id: userId } = await params;
+
+    const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+            redirect(`/profile/${userId}`);
+        }
+    }
+
+    const defaultLimit = 15;
 
     const admin = session?.user.admin;
     if (!admin) {

@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/../../server/src/auth/auth";
+import { authOptions } from "@/lib/auth";
+import { fetchRefreshToken } from "@/lib/refreshToken";
 import styles from './footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faShoppingBag, faBell } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,17 @@ import Link from 'next/link';
 
 export default async function Footer() {
     const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    
     const loggedIn = !!session?.user;
 
     let unreadCount = 0;

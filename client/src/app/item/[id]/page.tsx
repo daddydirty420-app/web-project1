@@ -4,7 +4,8 @@ import { Item } from "../itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/../../server/src/auth/auth";
+import { authOptions } from "@/lib/auth";
+import { fetchRefreshToken } from "@/lib/refreshToken";
 
 type Props = {
     params: { id: string };
@@ -32,6 +33,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
     const { id } = await params;
     const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
     
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/${id}`, {
         method: 'GET',

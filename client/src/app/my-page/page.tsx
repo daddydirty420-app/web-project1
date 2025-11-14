@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCampground, faStore } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/../../server/src/auth/auth';
+import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { fetchRefreshToken } from '@/lib/refreshToken';
 
 
 export const metadata: Metadata = {
@@ -46,9 +47,15 @@ type Res = {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    if (!session || !session.accessToken) {
-        console.error("ログインセッションが無効です。");
-        redirect("/login");
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            redirect("/login");
+        }
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/my-page/ssr`, {
@@ -71,7 +78,7 @@ export default async function Page() {
         redirect("/login");
     }
 
-    const profileLink = `/profile/${session.user?.id}`;
+    const profileLink = `/profile/${session?.user?.id}`;
 
     return (
         <>

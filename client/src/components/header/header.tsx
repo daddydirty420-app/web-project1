@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/../../server/src/auth/auth";
+import { authOptions } from "@/lib/auth";
+import { fetchRefreshToken } from "@/lib/refreshToken";
 import Image from 'next/image';
 import Logo from 'public/logo.png';
 import styles from './header.module.css';
@@ -11,6 +12,17 @@ import SearchInput from "./searchInput";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
+    if (!session?.accessToken) {
+        try {
+            const newAccessToken = await fetchRefreshToken();
+            if (session) {
+                session.accessToken = newAccessToken;
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     const loggedIn = !!session?.user;
 
     return (

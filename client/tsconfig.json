@@ -38,6 +38,7 @@
     ".next/types/**/*.ts",
     "app/index-test/page.tsx",
     "../shared/types/**/*.d.ts",
+    "src/types/**/*.d.ts",
   ],
   "exclude": [
     "node_modules"
