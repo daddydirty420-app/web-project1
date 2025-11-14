@@ -44,9 +44,9 @@ export const authOptions: NextAuthOptions = {
                     }),
                 });
 
-                if (!res.ok) return null;
-
                 const data = await res.json();
+
+                if (!res.ok || !data) return null;
 
                 return {
                     id: data.user.id,
