@@ -25,6 +25,13 @@ export const authOptions: NextAuthOptions = {
 
                 const rememberMe = credentials.rememberMe === "true";
 
+                const body = {
+                    email: credentials.email,
+                    password: credentials.password,
+                    rememberMe,
+                };
+                console.log("送信body:", body);
+
                 const res = await fetch(`${process.env.API_URL}/auth/login`, {
                     method: "POST",
                     headers: {
