@@ -17,7 +17,8 @@ const oneHour = 60 * 60 * 1000;
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
   console.log("fetch成功！");
   const { email, password, rememberMe } = req.body;
-
+  console.log("受け取った email:", email);
+  console.log("受け取った password:", password);
 
   if (!email || !password) {
     res.status(400).json({ message: "メールアドレスまたはパスワードがありません。" });
@@ -27,8 +28,6 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findOne({ where: { email } });
     console.log("user.id:", user.id);
-    console.log("受け取った email:", email);
-    console.log("受け取った password:", password);
     console.log("DB にあるハッシュ:", user.password);
 
     if (!user) {
