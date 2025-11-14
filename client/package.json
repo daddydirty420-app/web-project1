@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@smastrom/react-rating": "^1.5.0",
+    "@tailwindcss/postcss": "^4.1.17",
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
@@ -36,7 +37,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.17",
     "@types/bcrypt": "^6.0.0",
     "@types/hls.js": "^0.13.3",
     "@types/node": "^20",
