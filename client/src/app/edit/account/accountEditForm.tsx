@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../edit.module.css";
-import { InputStr, Button, InputTitle } from "@/components/inputForm";
+import { InputStr, Button, InputTitle } from "@/components/inputForm/index";
 import EditUI from "../editUI";
 import { Session } from "next-auth";
 import { BankAccount } from "./type";
