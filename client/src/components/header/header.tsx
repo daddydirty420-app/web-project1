@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { fetchRefreshToken } from "@/lib/refreshToken";
 import Image from 'next/image';
-import Logo from 'public/logo.png';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +29,7 @@ export default async function Header() {
             <section className={styles.headerConteiner}>
                 <Link href='/' className={styles.logo}>
                     <Image
-                    src={Logo}
+                    src="/logo.png"
                     alt='FLEX OUTDOORロゴ　トップページへ'
                     layout='intrinsic'
                     width={102}
