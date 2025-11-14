@@ -49,10 +49,10 @@ export const authOptions: NextAuthOptions = {
                 if (!res.ok || !data) return null;
 
                 return {
-                    id: data.user.id,
-                    email: data.user.email,
-                    user_name: data.user.user_name,
-                    rememberMe,
+                    id: data.id,
+                    email: data.email,
+                    user_name: data.user_name,
+                    rememberMe: data.rememberMe,
                     accessToken: data.accessToken,
                     refreshToken: data.refreshToken,
                 };
