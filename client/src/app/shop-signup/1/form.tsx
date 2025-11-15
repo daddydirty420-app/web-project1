@@ -58,7 +58,7 @@ export default function Form({ session, ComOrFreeOption }: Props) {
 
             <div className={styles.radioFlex}>
                 <p className={styles.text14}>事業形態を選択</p>
-                <div className={styles.radioBlock}>
+                <div className={styles.radioColumn}>
                     {ComOrFreeOption.map((option) => (
                         <label key={option.id} className={styles.radio}>
                             <input

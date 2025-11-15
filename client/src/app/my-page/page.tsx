@@ -134,7 +134,7 @@ export default async function Page() {
                         <>
                         <NormalLink url='/personal-infomation' text='個人情報設定' />
                         <NormalLink url='/edit/account' text='振込口座設定' />
-                        <NormalLink url='/flexshop-signup/1' text='FLEX Shop登録' />
+                        <NormalLink url='/shop-signup/1' text='FLEX Shop登録' />
                         {!data.userData.user.honnin_verified && (
                             <ChildrenLink url='/edit/honnin'>本人確認 <span className='text-[var(--alert)]'>※300ptプレゼント中</span></ChildrenLink>
                         )}
