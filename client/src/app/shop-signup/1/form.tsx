@@ -91,7 +91,7 @@ export default function Form({ session, ComOrFreeOption }: Props) {
                 checked={check}
                 onChange={() => setCheck(!check)}
                 />
-                <p className={styles.text14}>利用規約およびプライバシーポリシーに同意します。</p>
+                利用規約およびプライバシーポリシーに同意します。
             </label>
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />
