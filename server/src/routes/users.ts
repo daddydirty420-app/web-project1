@@ -5,22 +5,6 @@ import { Op } from "sequelize";
 
 const router = Router();
 
-router.post('/signup-create', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-  const currentUserId = req.user!.id;
-
-  try {
-    await Address.create({ user_id: currentUserId });
-    await Name.create({ user_id: currentUserId });
-    await BankAccount.create({ user_id: currentUserId });
-    await IdCard.create({ user_id: currentUserId });
-
-    res.status(200).json({ message: 'ユーザーデータを作成しました。' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-  }
-});
-
 router.get('/me', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
   res.json({ currentUserId: req.user?.id ?? null });
 });

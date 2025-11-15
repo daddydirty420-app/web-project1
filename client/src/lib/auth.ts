@@ -14,6 +14,7 @@ interface AuthUser {
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
+            id: "credentials",
             name: "Credentials",
             credentials: {
                 email: { label: "email", type: "text" },
@@ -24,13 +25,6 @@ export const authOptions: NextAuthOptions = {
                 if (!credentials?.email || !credentials?.password) return null;
 
                 const rememberMe = credentials.rememberMe === "true";
-
-                const body = {
-                    email: credentials.email,
-                    password: credentials.password,
-                    rememberMe,
-                };
-                console.log("送信body:", body);
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                     method: "POST",
@@ -47,6 +41,41 @@ export const authOptions: NextAuthOptions = {
                 const data = await res.json();
 
                 if (!res.ok || !data) return null;
+
+                return {
+                    id: data.id,
+                    email: data.email,
+                    user_name: data.user_name,
+                    rememberMe: data.rememberMe,
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                };
+            },
+        }),
+
+        CredentialsProvider({
+            id: "verify",
+            name: "SingupVerify",
+            credentials: {
+                verificationCode: { label: "verificationCode", type: "text" },
+                rememberMe: { label: "RememberMe", type: "checkbox" },
+            },
+            async authorize(credentials): Promise<AuthUser | null> {
+                if (!credentials?.verificationCode) return null;
+
+                const rememberMe = credentials.rememberMe === "true";
+
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup-verify`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        verificationCode: credentials.verificationCode,
+                        rememberMe,
+                    }),
+                });
+
+                const data = await res.json();
+                if (!res.ok) return null;
 
                 return {
                     id: data.id,

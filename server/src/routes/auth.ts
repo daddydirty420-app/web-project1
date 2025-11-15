@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateAccessToken, generateRefreshToken, JwtUserPayload } from "../utils/jwtHelper.js";
 import { authenticateToken } from "../middleware/index.js";
-import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens } from "../models/index.js";
+import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard } from "../models/index.js";
 import sequelize from "../db.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Op } from "sequelize";
@@ -15,10 +15,7 @@ const threeDays = 3 * 24 * 60 * 60 * 1000;
 const oneHour = 60 * 60 * 1000;
 
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
-  console.log("fetch成功！");
   const { email, password, rememberMe } = req.body;
-  console.log("受け取った email:", email);
-  console.log("受け取った password:", password);
 
   if (!email || !password) {
     res.status(400).json({ message: "メールアドレスまたはパスワードがありません。" });
@@ -27,8 +24,6 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 
   try {
     const user = await User.findOne({ where: { email } });
-    console.log("user.id:", user.id);
-    console.log("DB にあるハッシュ:", user.password);
 
     if (!user) {
       res.status(401).json({ message: 'ユーザーが見つかりません。' });
@@ -61,7 +56,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     });
 
-    res.json({
+    res.status(200).json({
       id: userId,
       email: user.email,
       user_name: user.user_name,
@@ -225,34 +220,41 @@ router.post('/signup-verify', async (req: Request, res: Response): Promise<void>
       return;
     }
 
+    const userId = user.id;
+
     await user.update({ email_verified: true }, { transaction: t });
+
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user, rememberMe);
+
+    await RefreshTokens.create({
+      token: newRefreshToken,
+      user_id: userId,
+      expires_at: rememberMe
+      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+    }, { transaction: t });
+
+    await Address.create({ user_id: userId }, { transaction: t });
+    await Name.create({ user_id: userId }, { transaction: t });
+    await BankAccount.create({ user_id: userId }, { transaction: t });
+    await IdCard.create({ user_id: userId }, { transaction: t });
+
+    await tokenRecord.destroy({ transaction: t });
 
     await t.commit();
 
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user, rememberMe);
-
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: oneHour
-    });
-
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: rememberMe ? thirtyDays : threeDays
-    });
-
-    res.status(201).json({
-      message: "認証成功！",
+    res.status(200).json({
+      id: userId,
       email: user.email,
-      accessToken,
-      refreshToken,
+      user_name: user.user_name,
+      admin: user.admin,
+      rememberMe,
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
     });
   } catch (err) {
+    await t.rollback();
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
   }
@@ -399,36 +401,6 @@ router.post('/rehash-password', async (req: Request, res: Response): Promise<voi
   res.json({ message: 'パスワードをハッシュ化して保存しました！' });
 });
 
-router.post('/refresh-token', async (req: Request, res: Response): Promise<void> => {
-  const refreshToken = req.cookies.refreshToken;
-  if (!refreshToken) {
-    res.status(401).json({ message: 'リフレッシュトークンがありません。' });
-    return;
-  }
-
-  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET as string, (err: jwt.VerifyErrors | null, decoded: string | JwtPayload | undefined) => {
-    if (err) return res.status(403).json({ message: 'トークンが無効です。' });
-
-    if (!decoded || typeof decoded === "string") {
-      return res.status(403).json({ message: "ユーザー情報が取得できません。" });
-    }
-
-    if (!("id" in decoded) || !("email" in decoded)) {
-      return res.status(403).json({ message: "無効なトークン形式です。" });
-    }
-
-    const newAccessToken = generateAccessToken(decoded as { id: string | number; email: string });
-    res.cookie('token', newAccessToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: "strict"
-    });
-
-    res.json({ message: '新しいアクセストークンを発行しました。' });
-  });
-});
-
 router.post("/email-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
   const newEmail = req.body.email;
@@ -495,6 +467,13 @@ router.post("/new-email-change", authenticateToken, async (req: Request, res: Re
     console.error(err);
     res.status(500).json({ message: "サーバーエラーが発生しました。" });
   }
+});
+
+router.post("/check-token", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+  res.status(200).json({
+    valid: true,
+    userId: req.user!.id,
+  });
 });
 
 router.get('/check-cookies', (req: Request, res: Response): void => {

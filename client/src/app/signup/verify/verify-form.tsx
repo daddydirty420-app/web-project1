@@ -14,6 +14,10 @@ export default function VerifyForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!code || code === "") {
+            alert("認証コードを入力してください。");
+            return;
+        }
         setLoading(true);
 
         try {
@@ -21,35 +25,11 @@ export default function VerifyForm() {
             const code = formData.get('verify-code') as string;
             const referenceCode = formData.get('reference-code');
 
-            const verifyRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup-verify`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    verificationCode: code,
-                    rememberMe,
-                }),
+            const res = await signIn("verify", {
+                verificationCode: code,
+                rememberMe,
+                redirect: false,
             });
-
-            if (!verifyRes.ok) {
-                const errorData = await verifyRes.json();
-                alert(errorData.message || "認証コードが正しくありません。");
-                return;
-            }
-
-            const verifyData = await verifyRes.json();
-
-            const createRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/signup-create`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${verifyData.accessToken}`,
-                },
-            });
-
-            if (!createRes.ok) {
-                const errorData = await createRes.json();
-                alert(errorData.message || "ユーザー作成に失敗しました。");
-                return;
-            }
 
             if (typeof referenceCode === 'string' && referenceCode.trim() !== '') {
                 const refRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference_code/input`, {
@@ -65,18 +45,12 @@ export default function VerifyForm() {
                 }
             }
 
-            const res = await signIn("credentials", {
-                redirect: false,
-                email: verifyData.email,
-                accessToken: verifyData.accessToken,
-                refreshToken: verifyData.refreshToken,
-                rememberMe: rememberMe ? "true" : "false",
-            });
+            setLoading(false);
 
-            if (res?.ok) {
-                router.push('/my-page');
-            } else {
+            if (res?.error) {
                 alert("認証に失敗しました。");
+            } else if (res?.ok) {
+                router.push('/my-page');
             }
         } catch (err) {
             console.error("Verify error:", err);
