@@ -35,7 +35,7 @@
 
 .subtitle {
     font-size: 18px;
-    margin: 1rem auto;
+    margin: 2rem auto 1rem;
     text-align: center;
 }
 
@@ -62,13 +62,16 @@
 }
 
 .linkText {
-    font-size: 13px;
+    font-size: var(--mid-text);
     text-align: center;
 }
 
 .link {
     color: var(--accent);
     cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline;
 }
 
 .checkbox {
@@ -77,6 +80,6 @@
     justify-content: center;
     gap: 0.25rem;
     margin: 1rem;
-    font-size: 13px;
+    font-size: var(--mid-text);
     cursor: pointer;
 }

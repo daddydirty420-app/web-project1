@@ -57,7 +57,7 @@ export default function Form({ session, ComOrFreeOption }: Props) {
             <h2 className={styles.subtitle}>事業形態</h2>
 
             <div className={styles.radioFlex}>
-                <p className={styles.text14}>事業形態を選択</p>
+                <p className={styles.text14}>事業形態を選択：</p>
                 <div className={styles.radioColumn}>
                     {ComOrFreeOption.map((option) => (
                         <label key={option.id} className={styles.radio}>
@@ -90,6 +90,7 @@ export default function Form({ session, ComOrFreeOption }: Props) {
                 name="checkbox"
                 checked={check}
                 onChange={() => setCheck(!check)}
+                className="cursor-pointer"
                 />
                 利用規約およびプライバシーポリシーに同意します。
             </label>
