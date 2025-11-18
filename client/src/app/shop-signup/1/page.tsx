@@ -30,7 +30,7 @@ export default async function Page() {
         }
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-singup/signup1`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
         method: "GET",
         cache: "no-store",
         headers: {
