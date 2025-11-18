@@ -29,20 +29,24 @@ export default async function Page() {
                 session.accessToken = newAccessToken;
             }
 
-            accessToken = newAccessToken
+            accessToken = newAccessToken;
         } catch (err) {
             console.log(err);
             notFound();
         }
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
+    const fetchData = async (accessToken: string | null) => {
+        return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
+            method: "GET",
+            cache: "no-store",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+    };
+
+    const res = await fetchData(accessToken);
 
     const data = await res.json();
 
