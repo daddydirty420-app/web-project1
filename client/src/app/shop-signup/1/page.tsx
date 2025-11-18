@@ -19,34 +19,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
-    let accessToken = session?.accessToken ?? null;
-
-    if (!accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-
-            accessToken = newAccessToken;
-        } catch (err) {
-            console.log(err);
-            notFound();
-        }
-    }
-
-    const fetchData = async (accessToken: string | null) => {
-        return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
-            method: "GET",
-            cache: "no-store",
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-    };
-
-    const res = await fetchData(accessToken);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+        },
+    });
 
     const data = await res.json();
 

@@ -107,8 +107,39 @@ export const authOptions: NextAuthOptions = {
                 const now = Math.floor(Date.now() / 1000);
                 const days = token.rememberMe ? 30 : 3;
                 token.exp = now + days * 24 * 60 * 60;
+
+                return token;
             };
-            return token;
+
+            const now = Math.floor(Date.now() / 1000);
+
+            const expNum = typeof token.exp === "number" ? token.exp : Number(token.exp);
+
+            if (token.exp && now < expNum) {
+                return token;
+            }
+
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token.refreshToken}`,
+                    },
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.accessToken) {
+                    token.accessToken = data.accessToken;
+                    token.exp = now + 60 * 30;
+                    return token;
+                } else {
+                    throw new Error("refresh failed");
+                }
+            } catch (err) {
+                console.error("JWT Refresh error:", err);
+                return token;
+            }
         },
         async session({ session, token }) {
             if (token?.id) {
