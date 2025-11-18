@@ -18,12 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
+
+    let accessToken = session?.accessToken ?? null;
+
+    if (!accessToken) {
         try {
             const newAccessToken = await fetchRefreshToken();
+
             if (session) {
                 session.accessToken = newAccessToken;
             }
+
+            accessToken = newAccessToken
         } catch (err) {
             console.log(err);
             notFound();
@@ -34,7 +40,7 @@ export default async function Page() {
         method: "GET",
         cache: "no-store",
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
