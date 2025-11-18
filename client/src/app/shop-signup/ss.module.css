@@ -109,3 +109,10 @@
     max-width: 768px;
     margin: 0.5rem auto;
 }
+
+.inputFlex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

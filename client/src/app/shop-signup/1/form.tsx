@@ -311,6 +311,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                         value={capital || ""}
                         onChange={() => setCapital(capital)}
                         placeholder="3,000,000"
+                        className={styles.input}
                         required
                         />
                     </div>
@@ -318,7 +319,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                 </>
             )}
 
-            <h2 className={styles.subTitle}>代表者氏名</h2>
+            <h2 className={styles.subtitle}>代表者氏名</h2>
 
             <div className={styles.nameFlex}>
                 <InputStr
@@ -358,7 +359,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                 />
             </div>
 
-            <h2 className={styles.subTitle}>住所</h2>
+            <h2 className={styles.subtitle}>住所</h2>
 
             <InputStr
             title="郵便番号 ※ハイフン無し"
