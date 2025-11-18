@@ -74,3 +74,15 @@
         font-size: 11px;
     }
 }
+
+@media (max-width: 480px) {
+    .wrapper {
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+    }
+
+    .wrapper::-webkit-scrollbar {
+        display: none;
+    }
+}
