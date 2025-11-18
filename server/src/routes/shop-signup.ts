@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
-import sequelize from "db.js";
+import sequelize from "../db.js";
 
 const router = Router();
 
