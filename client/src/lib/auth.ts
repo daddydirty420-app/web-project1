@@ -95,6 +95,12 @@ export const authOptions: NextAuthOptions = {
 
     callbacks: {
         async jwt({ token, user }) {
+
+            const now = Math.floor(Date.now() / 1000);
+
+            if (!user && (!token.accessToken || !token.refreshToken)) {
+                return {};
+            }
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -110,8 +116,6 @@ export const authOptions: NextAuthOptions = {
 
                 return token;
             };
-
-            const now = Math.floor(Date.now() / 1000);
 
             const expNum = typeof token.exp === "number" ? token.exp : Number(token.exp);
 
