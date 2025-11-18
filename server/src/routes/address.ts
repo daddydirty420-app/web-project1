@@ -27,11 +27,11 @@ router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Re
                 name: todouhuken,
             },
         });
-        const todouhukenId = todouhukenData.id;
-        if (!todouhukenData || (todouhukenId < 1 || todouhukenId > 47)) {
+        if (!todouhukenData || (todouhukenData.id < 1 || todouhukenData.id > 47)) {
             res.status(404).json({ message: "都道府県データが見つかりません。" });
             return;
         }
+        const todouhukenId = todouhukenData.id;
 
         await address.update({
             post_number: req.body.postNumber,

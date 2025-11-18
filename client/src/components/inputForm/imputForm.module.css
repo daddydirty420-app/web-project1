@@ -50,3 +50,9 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+.small {
+    display: block;
+    font-size: 12px;
+    margin: 0.25rem auto 0;
+}

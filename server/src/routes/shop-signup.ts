@@ -1,63 +1,170 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption } from "../models/index.js";
+import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
+import sequelize from "db.js";
 
 const router = Router();
 
 router.post("/signup1-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
-    const optionId = req.body.optionId || null;
-    if (!optionId || optionId === null || optionId > 2) {
-        res.status(400).json({ message: "事業形態が未入力です。" });
+    const {
+        selectOption,
+        companyName,
+        shopName,
+        phoneNumber,
+        email,
+        openDateTime,
+        foundedDate,
+        memberCount,
+        homepage,
+        sei,
+        mei,
+        seiKana,
+        meiKana,
+        postNumber,
+        todouhuken,
+        shikutyouson,
+        banchi,
+        building,
+        companyNumber,
+        capital,
+    } = req.body;
+
+    const requiredBody = [
+        selectOption,
+        companyName,
+        shopName,
+        phoneNumber,
+        email,
+        openDateTime,
+        foundedDate,
+        memberCount,
+        sei,
+        mei,
+        seiKana,
+        meiKana,
+        postNumber,
+        todouhuken,
+        shikutyouson,
+        banchi,
+        ...(selectOption === 1 ? [companyNumber, capital] : []),
+    ];
+
+    if (requiredBody.some(v => v === "" || v === undefined || v === null)) {
+        res.status(400).json({ message: "必須項目が未入力です。" });
         return;
     }
 
+    const t = await sequelize.transaction();
+
     try {
-        const data = await ShopInfo.create({
-            user_id: userId,
-            com_or_free_id: optionId,
+        const todouhukenData = await TodouhukenOption.findOne({
+            where: {
+                name: todouhuken,
+            },
         });
+        if (!todouhukenData || (todouhukenData.id < 1 || todouhukenData.id > 47)) {
+            res.status(404).json({ message: "都道府県データが見つかりません。" });
+            return;
+        }
+
+        const data = await ShopInfo.create({
+            company_name: companyName,
+            shop_name: shopName,
+            phone_number: phoneNumber,
+            homepage_url: homepage,
+            open_date_time: openDateTime,
+            company_number: companyNumber,
+            capital,
+            member_count: memberCount,
+            user_id: userId,
+            com_or_free_id: selectOption,
+            founded_date: foundedDate,
+        }, { transaction: t });
+
+        await Address.create({
+            post_number: postNumber,
+            todouhuken_id: todouhukenData.id,
+            shikutyouson,
+            banchi,
+            building,
+            shop_info_id: data.id,
+        }, { transaction: t });
+
+        await Name.create({
+            sei,
+            mei,
+            sei_kana: seiKana,
+            mei_kana: meiKana,
+            shop_info_id: data.id,
+        }, { transaction: t });
+
+        await t.commit();
 
         res.status(200).json({ id: data.id });
     } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
 });
 
-router.get('/signup2/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/signup1', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+    const shopId = req.query?.shopId ?? null;
     try {
-        const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
+        const data = await User.findByPk(userId, {
+            attributes: ["id", "user_name", "email", "phone_number"],
             include: [
                 {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                },
-                {
                     model: Address,
-                    attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                    attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                     include: [
                         {
                             model: TodouhukenOption,
-                            as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                            as: "AddressTodouhuken",
+                            attributes: ["id", "name"],
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
-                }
-            ]
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                },
+            ],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "ユーザーが見つかりません。" });
             return;
         }
 
-        res.json(data);
+        let shopData = null;
+        if (shopId) {
+            const shopData = await ShopInfo.findByPk(shopId, {
+                attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
+                include: [
+                    {
+                        model: ComOrFreeOption,
+                        attributes: ['id', 'name']
+                    },
+                ]
+            });
+
+            if (!shopData) {
+                res.status(404).json({ message: 'データが見つかりません。' });
+                return;
+            }
+        }
+
+        const comOrFree = await ComOrFreeOption.findAll();
+        if (!comOrFree) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            console.error("comOrFreeOption not found!!!");
+            return;
+        }
+
+        res.json({ data, shopData, comOrFree });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

@@ -30,7 +30,13 @@ export default async function Page() {
         }
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/com-or-free`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-singup/signup1`, {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+        },
+    });
 
     const data = await res.json();
 
@@ -42,7 +48,9 @@ export default async function Page() {
     return (
         <Form
         session={session}
-        ComOrFreeOption={data.data}
+        user={data.data}
+        shopInfo={data.shopData}
+        ComOrFreeOption={data.comOrFree}
         />
     );
 }

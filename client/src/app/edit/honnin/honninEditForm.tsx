@@ -101,6 +101,12 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
     };
 
     const submit = async () => {
+        const normalizedPostNumber = postNumber?.replace(/-/g, "");
+        if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
+            alert("郵便番号は半角数字7桁で入力してください。");
+            return;
+        }
+
         let frontFileName: string | undefined;
         let frontFileType: string | undefined;
         let rearFileName: string | undefined;
@@ -147,7 +153,6 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
             todouhuken,
             shikutyouson,
             banchi,
-            building,
             phoneNumber,
             selectedGender,
             idFrontUpload,
@@ -273,6 +278,7 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
                 showYearDropdown
                 showMonthDropdown
                 dropdownMode="select"
+                required
                 />
             </div>
 
@@ -302,6 +308,7 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
                 className={styles.imageInput}
                 placeholder="プロフィール画像をアップロード"
                 ref={idRearRef}
+                required
                 />
                 <Image
                 src={idRearPreview || "/no-image(1x1).png"}
@@ -382,6 +389,7 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
                             checked={selectedGender === option.id}
                             onChange={() => setSelectedGender(option.id)}
                             className="cursor-pointer"
+                            required
                             />
                             {option.name}
                         </label>
