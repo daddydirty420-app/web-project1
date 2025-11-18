@@ -12,6 +12,7 @@ declare module "next-auth" {
         } & DefaultSession["user"];
         accessToken?: string;
         refreshToken?: string;
+        error?: string;
     }
 
     interface User extends DefaultUser {
@@ -22,6 +23,7 @@ declare module "next-auth" {
         rememberMe?: boolean;
         accessToken?: string;
         refreshToken?: string;
+        error?: string;
     }
 }
 
@@ -34,5 +36,6 @@ declare module "next-auth/jwt" {
         rememberMe?: boolean;
         accessToken?: string;
         refreshToken?: string;
+        error?: string;
     }
 }

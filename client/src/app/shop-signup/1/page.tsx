@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
-import { fetchRefreshToken } from "@/lib/refreshToken";
 import Form from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,6 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
+    const isRefreshing = session?.error === "RefreshAccessTokenError";
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
         method: "GET",
         cache: "no-store",
@@ -27,19 +28,26 @@ export default async function Page() {
         },
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
+    if (res.ok) {
+        const data = await res.json();
+        return (
+            <Form
+            session={session}
+            user={data.data}
+            shopInfo={data.shopData}
+            ComOrFreeOption={data.comOrFree}
+            />
+        );
     }
 
-    return (
-        <Form
-        session={session}
-        user={data.data}
-        shopInfo={data.shopData}
-        ComOrFreeOption={data.comOrFree}
-        />
-    );
-}
+    if (isRefreshing) {
+        console.warn("accessToken更新中、notFound()スキップ");
+        return (
+            <div></div>
+        );
+    }
+
+    const data = await res.json();
+    console.error(data.message);
+    notFound();
+};

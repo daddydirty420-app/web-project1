@@ -95,12 +95,8 @@ export const authOptions: NextAuthOptions = {
 
     callbacks: {
         async jwt({ token, user }) {
-
             const now = Math.floor(Date.now() / 1000);
 
-            if (!user && (!token.accessToken || !token.refreshToken)) {
-                return {};
-            }
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -116,6 +112,11 @@ export const authOptions: NextAuthOptions = {
 
                 return token;
             };
+
+            if (!token.accessToken || !token.refreshToken) {
+                token.error = "MissingTokens";
+                return token;
+            }
 
             const expNum = typeof token.exp === "number" ? token.exp : Number(token.exp);
 
@@ -136,24 +137,30 @@ export const authOptions: NextAuthOptions = {
                 if (res.ok && data.accessToken) {
                     token.accessToken = data.accessToken;
                     token.exp = now + 60 * 30;
+                    token.error = undefined;
                     return token;
                 } else {
-                    throw new Error("refresh failed");
+                    token.error = "RefreshAccessTokenError";
+                    return token;
                 }
             } catch (err) {
                 console.error("JWT Refresh error:", err);
+                token.error = "RefreshAccessTokenError";
                 return token;
             }
         },
         async session({ session, token }) {
-            if (token?.id) {
-                session.user.id = token.id as string;
-                session.user.email = token.email as string;
-                session.user.user_name = token.user_name as string;
-                session.user.admin = token.admin as boolean;
-                session.accessToken = token.accessToken as string;
-                session.refreshToken = token.refreshToken as string;
-            };
+            session.user.id = token.id as string;
+            session.user.email = token.email as string;
+            session.user.user_name = token.user_name as string;
+            session.user.admin = token.admin as boolean;
+            session.accessToken = token.accessToken as string;
+            session.refreshToken = token.refreshToken as string;
+
+            if (token.error) {
+                session.error = token.error;
+            }
+
             return session;
         },
     },
