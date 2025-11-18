@@ -12,6 +12,11 @@
     position: relative;
 }
 
+.stepInner {
+    display: flex;
+    align-items: center;
+}
+
 .circle {
     width: 26px;
     height: 26px;
@@ -56,7 +61,7 @@
 }
 
 @media (max-width: 768px) {
-    .stepItem {
+    .stepInner {
         display: flex;
         flex-direction: column;
         align-items: center;

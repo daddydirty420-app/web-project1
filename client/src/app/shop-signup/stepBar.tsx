@@ -22,18 +22,20 @@ export default function StepBar() {
 
                 return (
                     <div key={step.label} className={styles.stepItem}>
-                        <div className={`${styles.circle} ${
-                            isActive ? styles.active : ""
-                        } ${isCompleted ? styles.completed : ""}`}
-                        >
-                            {isCompleted ? "✓" : index + 1}
-                        </div>
+                        <div className={styles.stepInner}>
+                            <div className={`${styles.circle} ${
+                                isActive ? styles.active : ""
+                            } ${isCompleted ? styles.completed : ""}`}
+                            >
+                                {isCompleted ? "✓" : index + 1}
+                            </div>
 
-                        <span className={`${styles.label} ${
-                            isActive ? styles.labelActive : ""
-                        }`}>
-                            {step.label}
-                        </span>
+                            <span className={`${styles.label} ${
+                                isActive ? styles.labelActive : ""
+                            }`}>
+                                {step.label}
+                            </span>
+                        </div>
 
                         {index < steps.length - 1 && <div className={styles.line} />}
                     </div>
