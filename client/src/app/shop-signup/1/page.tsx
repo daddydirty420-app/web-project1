@@ -25,6 +25,7 @@ export default async function Page() {
         try {
             const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
                 method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ refreshToken: session.refreshToken }),
             });
 

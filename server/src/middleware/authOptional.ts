@@ -18,13 +18,14 @@ declare module "express-serve-static-core" {
 export function authenticateOptional(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers["authorization"];
   const token = authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+
   if (!token) {
     req.user = undefined;
     return next();
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string) as AuthUser;
+    const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string, { ignoreExpiration: true }) as AuthUser;
     req.user = decoded;
   } catch (err) {
     console.warn("JWT検証エラー（authenticateOptional）:", err);

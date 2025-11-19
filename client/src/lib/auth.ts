@@ -127,9 +127,8 @@ export const authOptions: NextAuthOptions = {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
                     method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token.refreshToken}`,
-                    },
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ refreshToken: token.refreshToken }),
                 });
 
                 const data = await res.json();
