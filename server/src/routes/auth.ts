@@ -369,9 +369,12 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
 
     const newAccessToken = generateAccessToken(user);
 
+    const newDecoded = jwt.decode(newAccessToken) as jwt.JwtPayload | null;;
+
     res.status(200).json({
       accessToken: newAccessToken,
       refreshToken: storedToken.token,
+      exp: newDecoded?.exp,
     });
   } catch (err) {
     console.error(err);

@@ -31,7 +31,12 @@ export async function middleware(req) {
 
         const response = NextResponse.next();
 
-        response.cookies.set("next-auth.session-token", data.accessToken);
+        response.cookies.set("next-auth.session-token", data.accessToken, {
+            path: "/",
+        });
+        response.cookies.set("next-auth.session-exp", data.exp, {
+            path: "/",
+        });
 
         return response;
     }

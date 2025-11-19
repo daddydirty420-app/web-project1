@@ -107,8 +107,7 @@ export const authOptions: NextAuthOptions = {
                 token.refreshToken = user.refreshToken;
 
                 const now = Math.floor(Date.now() / 1000);
-                const days = token.rememberMe ? 30 : 3;
-                token.exp = now + days * 24 * 60 * 60;
+                token.exp = now + 1 * 60 * 60;
 
                 return token;
             };
