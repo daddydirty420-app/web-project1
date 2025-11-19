@@ -17,10 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("next-auth.session-token")?.value;
+    const session = await getServerSession(authOptions);
 
-    console.log(accessToken);
+    console.log("session.accessToken:", session?.accessToken);
+
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    console.log("cookieのaccessToken:", accessToken);
 
     if (!accessToken) {
         redirect("/login");
@@ -46,7 +50,7 @@ export default async function Page() {
 
     return (
         <Form
-        session={null}
+        session={session}
         user={data.data}
         shopInfo={data.shopData}
         ComOrFreeOption={data.comOrFree}
