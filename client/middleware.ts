@@ -55,7 +55,7 @@ export const config = {
         "/personal-infomation/:path*",
         "/profile/madmax/:path*", 
         "/reccomend/:path*", 
-        "/shop-signup/:path*", 
+        "/shop-signup(.*)", 
         "/transfar/:path*", 
         "/upload/:path*",
   ],
