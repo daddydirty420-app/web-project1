@@ -2,16 +2,28 @@
 
 import { usePathname } from "next/navigation";
 import styles from "./stepBar.module.css";
-
-const steps = [
-    { label: "事業者情報", path: "/shop-signup/1" },
-    { label: "口座登録", path: "/shop-signup/2" },
-    { label: "身分証・証明書", path: "/shop-signup/3" },
-    { label: "オプション", path: "/shop-signup/4" },
-];
+import { useEffect, useState } from "react";
 
 export default function StepBar() {
+    const [width, setWidth] = useState(0);
     const pathname = usePathname();
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const steps = [
+        { label: "事業者情報", path: "/shop-signup/1" },
+        { label: "口座登録", path: "/shop-signup/2" },
+        { label: width <= 480 ? "身分証" : "身分証・証明書", path: "/shop-signup/3" },
+        { label: "オプション", path: "/shop-signup/4" },
+    ];
+
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
 
     return (

@@ -3,13 +3,16 @@
     align-items: center;
     gap: 0.5rem;
     margin: 1.5rem auto;
-    width: max-content;
+    box-sizing: border-box;
+    padding: 0 auto;
+    width: 100%;
 }
 
 .stepItem {
     display: flex;
     align-items: center;
     position: relative;
+    flex: 0 0 auto;
 }
 
 .stepInner {
@@ -78,8 +81,11 @@
 @media (max-width: 480px) {
     .wrapper {
         overflow-x: auto;
-        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        -ms-touch-action: pan-x;
         scrollbar-width: none;
+        padding-bottom: 8px;
     }
 
     .wrapper::-webkit-scrollbar {
