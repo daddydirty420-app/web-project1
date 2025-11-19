@@ -18,6 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
+    console.log("accessToken:", session?.accessToken);
+    console.log("refreshToken:", session?.refreshToken);
+
     if (!session?.accessToken && session?.refreshToken) {
         try {
             const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
