@@ -334,7 +334,7 @@ router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
 });
 
 router.post("/refresh-token", async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.body.refreshToken || req.cookies.refreshToken;
   if (!refreshToken) {
     res.status(400).json({ message: "refreshTokenがありません。" });
     return;

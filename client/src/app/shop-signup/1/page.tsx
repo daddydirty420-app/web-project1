@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Form from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -18,29 +18,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
-    console.log("accessToken:", session?.accessToken);
-    console.log("refreshToken:", session?.refreshToken);
-
-    if (!session?.accessToken && session?.refreshToken) {
-        try {
-            const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ refreshToken: session.refreshToken }),
-            });
-
-            const data = await refreshRes.json();
-
-            if (refreshRes.ok && data.accessToken) {
-                session.accessToken = data.accessToken;
-            } else {
-                console.error("Refresh failed:", data);
-                notFound();
-            }
-        } catch (err) {
-            console.error("Refresh fetch error:", err);
-            notFound();
-        }
+    if (!session?.accessToken) {
+        redirect("/login");
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
@@ -54,6 +33,9 @@ export default async function Page() {
     const data = await res.json();
 
     if (!res.ok) {
+        if (res.status === 401) {
+            redirect("/shop-signup/1"); 
+        }
         console.error(data.message);
         notFound();
     }
