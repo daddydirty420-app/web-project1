@@ -29,6 +29,8 @@ export async function middleware(req) {
 
         const data = await res.json();
 
+        console.log("refreshData:", data);
+
         if (!res.ok || !data.accessToken) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
