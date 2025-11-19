@@ -92,11 +92,12 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
+    jwt: {
+        maxAge: 60 * 60,
+    },
 
     callbacks: {
         async jwt({ token, user }) {
-            const now = Math.floor(Date.now() / 1000);
-
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
