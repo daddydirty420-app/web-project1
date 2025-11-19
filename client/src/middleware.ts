@@ -16,6 +16,10 @@ export async function middleware(req) {
 
     const expNum = Number(token.exp);
 
+    console.log("🔍 token.exp:", token.exp);
+    console.log("🔍 now:", now);
+    console.log("🔍 exp - now =", Number(token.exp) - now);
+
     if (token.exp && expNum < now) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
             method: "POST",
