@@ -26,7 +26,7 @@ export default async function Page() {
 
     console.log("cookieのaccessToken:", accessToken);
 
-    if (!session?.accessToken) {
+    if (accessToken) {
         redirect("/login");
     }
 
@@ -34,7 +34,7 @@ export default async function Page() {
         method: "GET",
         cache: "no-store",
         headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 

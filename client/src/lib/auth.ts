@@ -107,45 +107,17 @@ export const authOptions: NextAuthOptions = {
                 token.refreshToken = user.refreshToken;
 
                 const now = Math.floor(Date.now() / 1000);
-                token.exp = now + 1 * 60 * 60;
+                token.exp = now * 60 * 60;
 
                 return token;
             };
 
-            if (!token.accessToken || !token.refreshToken) {
-                token.error = "MissingTokens";
+            if (token.accessToken && token.refreshToken) {
                 return token;
             }
 
-            const expNum = typeof token.exp === "number" ? token.exp : Number(token.exp);
-
-            if (token.exp && now < expNum) {
-                return token;
-            }
-
-            try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ refreshToken: token.refreshToken }),
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.accessToken) {
-                    token.accessToken = data.accessToken;
-                    token.exp = now + 60 * 30;
-                    token.error = undefined;
-                    return token;
-                } else {
-                    token.error = "RefreshAccessTokenError";
-                    return token;
-                }
-            } catch (err) {
-                console.error("JWT Refresh error:", err);
-                token.error = "RefreshAccessTokenError";
-                return token;
-            }
+            token.error = "MissingTokens";
+            return token;
         },
         async session({ session, token }) {
             session.user.id = token.id as string;
