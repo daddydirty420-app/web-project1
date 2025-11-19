@@ -18,7 +18,26 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
-    const isRefreshing = session?.error === "RefreshAccessTokenError";
+    if (!session?.accessToken && session?.refreshToken) {
+        try {
+            const refreshRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
+                method: "POST",
+                body: JSON.stringify({ refreshToken: session.refreshToken }),
+            });
+
+            const data = await refreshRes.json();
+
+            if (refreshRes.ok && data.accessToken) {
+                session.accessToken = data.accessToken;
+            } else {
+                console.error("Refresh failed:", data);
+                notFound();
+            }
+        } catch (err) {
+            console.error("Refresh fetch error:", err);
+            notFound();
+        }
+    }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
         method: "GET",
@@ -28,26 +47,19 @@ export default async function Page() {
         },
     });
 
-    if (res.ok) {
-        const data = await res.json();
-        return (
-            <Form
-            session={session}
-            user={data.data}
-            shopInfo={data.shopData}
-            ComOrFreeOption={data.comOrFree}
-            />
-        );
-    }
-
-    if (isRefreshing) {
-        console.warn("accessToken更新中、notFound()スキップ");
-        return (
-            <div></div>
-        );
-    }
-
     const data = await res.json();
-    console.error(data.message);
-    notFound();
+
+    if (!res.ok) {
+        console.error(data.message);
+        notFound();
+    }
+
+    return (
+        <Form
+        session={session}
+        user={data.data}
+        shopInfo={data.shopData}
+        ComOrFreeOption={data.comOrFree}
+        />
+    );
 };
