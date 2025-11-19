@@ -20,6 +20,8 @@ export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("next-auth.session-token")?.value;
 
+    console.log(accessToken);
+
     if (!accessToken) {
         redirect("/login");
     }
