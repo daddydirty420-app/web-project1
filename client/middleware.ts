@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req) {
+    console.log("🔥 MIDDLEWARE FIRED:", req.url);
     const token = await getToken({
         req,
         secret: process.env.NNEXTAUTH_SECRET,
