@@ -26,7 +26,7 @@ export async function middleware(req) {
     console.log("token.accessToken:", token.accessToken);
     console.log("token.refreshToken:", token.refreshToken);
 
-    if (token.exp && expNum < now) {
+    if (decoded?.exp && expNum < now) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
