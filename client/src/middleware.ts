@@ -41,7 +41,7 @@ export async function middleware(req) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
-        await fetch(`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/session?update`, {
+        await fetch("/api/auth/session?update", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
