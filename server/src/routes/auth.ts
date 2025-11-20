@@ -334,11 +334,13 @@ router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
 });
 
 router.post("/refresh-token", async (req: Request, res: Response): Promise<void> => {
-  const { refreshToken } = req.body.refreshToken || req.cookies.refreshToken;
+  const refreshToken = req.body?.refreshToken || req.cookies?.refreshToken;
   if (!refreshToken) {
     res.status(400).json({ message: "refreshTokenがありません。" });
     return;
   }
+
+  console.log("🔥 API側で受け取った refreshToken:", refreshToken);
 
   try {
     const storedToken = await RefreshTokens.findOne({ where: { token: refreshToken } });
