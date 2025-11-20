@@ -29,11 +29,11 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
     const [email, setEmail] = useState(`${shopInfo ? shopInfo.email : user.email}`);
     const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time || "");
     const [foundedDate, setFoundedDate] = useState(shopInfo?.founded_date || null);
-    const [memberCount, setMemberCount] = useState(shopInfo?.member_count.toLocaleString() || 1);
+    const [memberCount, setMemberCount] = useState(shopInfo?.member_count || 1);
     const [homepage, setHomepage] = useState(shopInfo?.homepage_url || "");
 
     const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number || "");
-    const [capital, setCapital] = useState(shopInfo?.capital.toLocaleString() || null);
+    const [capital, setCapital] = useState(shopInfo?.capital || null);
 
     const [sei, setSei] = useState(user.Name?.sei);
     const [mei, setMei] = useState(user.Name?.mei);
@@ -274,7 +274,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                 <input
                 type="number"
                 value={memberCount}
-                onChange={() => setMemberCount(memberCount)}
+                onChange={(e) => setMemberCount(Number(e.target.value))}
                 className={styles.input}
                 placeholder="50"
                 required
@@ -309,7 +309,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                         <input
                         type="number"
                         value={capital || ""}
-                        onChange={() => setCapital(capital)}
+                        onChange={(e) => setCapital(Number(e.target.value))}
                         placeholder="3,000,000"
                         className={styles.input}
                         required
