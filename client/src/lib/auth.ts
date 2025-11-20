@@ -97,7 +97,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -113,11 +113,18 @@ export const authOptions: NextAuthOptions = {
                 return token;
             };
 
-            if (token.accessToken && token.refreshToken) {
+            if (trigger === "update" && session?.accessToken) {
+                token.accessToken = session.accessToken;
+
+                const now = Math.floor(Date.now() / 1000);
+                token.exp = now + 60 * 60;
+            }
+
+            if (!token.accessToken || !token.refreshToken) {
+                token.error = "MissingTokens";
                 return token;
             }
 
-            token.error = "MissingTokens";
             return token;
         },
         async session({ session, token }) {
