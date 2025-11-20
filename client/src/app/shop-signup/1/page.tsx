@@ -17,14 +17,22 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page() {
+    const cookieStore = await cookies();
+    const newToken = cookieStore.get("new-token")?.value;
+
+    console.log("cookieのaccessToken:", newToken);
+
+    if (newToken) {
+        await fetch("/api/auth/session?update", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ accessToken: newToken }),
+        });
+    }
+
     const session = await getServerSession(authOptions);
 
     console.log("session.accessToken:", session?.accessToken);
-
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("accessToken")?.value;
-
-    console.log("cookieのaccessToken:", accessToken);
 
     if (!session?.accessToken) {
         redirect("/login");

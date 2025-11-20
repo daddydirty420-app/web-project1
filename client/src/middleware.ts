@@ -41,17 +41,11 @@ export async function middleware(req) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
-        await fetch("/api/auth/session?update", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                accessToken: data.accessToken
-            }),
-        });
+        const response = NextResponse.next();
 
-        return NextResponse.next();
+        response.cookies.set("new-token", data.accessToken, { path: "/" })
+
+        return response;
     }
 
     return NextResponse.next();
