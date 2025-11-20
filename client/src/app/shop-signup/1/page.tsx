@@ -32,7 +32,8 @@ export default async function Page() {
         });
     }
 
-    const session = await getServerSession(authOptions);
+    const sessionRes = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`);
+    const session = await sessionRes.json();
 
     console.log("session.accessToken:", session?.accessToken);
 
