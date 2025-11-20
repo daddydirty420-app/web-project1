@@ -21,9 +21,11 @@ export default async function Page() {
     const newToken = cookieStore.get("new-token")?.value;
 
     console.log("cookieのaccessToken:", newToken);
+    console.log("NEXT_PUBLIC_NEXTAUTH_URL:", process.env.NEXT_PUBLIC_NEXTAUTH_URL);
+    console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL);
 
     if (newToken) {
-        await fetch(`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/session?update`, {
+        await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session?update`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ accessToken: newToken }),
