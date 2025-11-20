@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import jwt from "jsonwebtoken";
+import { JwtPayload } from "jsonwebtoken";
 
 export async function middleware(req) {
     console.log("🔥 MIDDLEWARE FIRED:", req.url);
@@ -12,13 +14,15 @@ export async function middleware(req) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
+    const decoded = jwt.decode(token.accessToken || "") as JwtPayload | null;
+
     const now = Math.floor(Date.now() / 1000);
 
-    const expNum = Number(token.exp);
+    const expNum = Number(decoded?.exp);
 
-    console.log("🔍 token.exp:", token.exp);
+    console.log("🔍 token.exp:", decoded?.exp);
     console.log("🔍 now:", now);
-    console.log("🔍 exp - now =", Number(token.exp) - now);
+    console.log("🔍 exp - now =", expNum - now);
     console.log("token.accessToken:", token.accessToken);
     console.log("token.refreshToken:", token.refreshToken);
 
