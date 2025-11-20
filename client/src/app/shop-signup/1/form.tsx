@@ -273,7 +273,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
 
                 <input
                 type="number"
-                value={memberCount}
+                value={memberCount || ""}
                 onChange={(e) => setMemberCount(Number(e.target.value))}
                 className={styles.input}
                 placeholder="50"
