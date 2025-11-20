@@ -73,7 +73,7 @@ ShopInfo.init(
         homepage_url: DataTypes.TEXT,
         open_date_time: DataTypes.TEXT,
         company_number: DataTypes.TEXT,
-        capital: DataTypes.INTEGER,
+        capital: DataTypes.DECIMAL,
         menber_count: DataTypes.INTEGER,
         id_card_front: DataTypes.TEXT,
         id_card_rear: DataTypes.TEXT,

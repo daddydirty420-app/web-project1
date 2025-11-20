@@ -150,6 +150,11 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
             return;
         }
 
+        if (memberCount > 100000000) {
+            alert("従業員数が不正な値です。");
+            return;
+        }
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1-create`, {
                 method: "POST",
