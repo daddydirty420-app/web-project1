@@ -23,7 +23,7 @@ export default async function Page() {
     console.log("cookieのaccessToken:", newToken);
 
     if (newToken) {
-        await fetch("/api/auth/session?update", {
+        await fetch(`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/session?update`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ accessToken: newToken }),
