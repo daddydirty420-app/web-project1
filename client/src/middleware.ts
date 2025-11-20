@@ -20,6 +20,8 @@ export async function middleware(req) {
 
     const expNum = Number(decoded?.exp);
 
+    let accessTokenToUse = token.accessToken;
+
     console.log("🔍 token.exp:", decoded?.exp);
     console.log("🔍 now:", now);
     console.log("🔍 exp - now =", expNum - now);
@@ -41,14 +43,19 @@ export async function middleware(req) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
-        const response = NextResponse.next();
-
-        response.cookies.set("new-token", data.accessToken, { path: "/" })
-
-        return response;
+        accessTokenToUse = data.accessToken;
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+
+    if (accessTokenToUse) {
+        response.cookies.set("access-token", accessTokenToUse, { 
+            path: "/" ,
+            httpOnly: false,
+        });
+    }
+
+    return response;
 }
 
 export const config = {

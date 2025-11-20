@@ -1,6 +1,5 @@
 "use client";
 
-import { Session } from "next-auth";
 import styles from "../ss.module.css";
 import SSUIBack from "../ssUiBack";
 import { ComOrFreeOption, ShopInfo, User } from "../type";
@@ -15,13 +14,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import StepBar from "../stepBar";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     user: User;
     shopInfo: ShopInfo | null;
     ComOrFreeOption: ComOrFreeOption[];
 };
 
-export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props) {
+export default function Form({ accessToken, user, shopInfo, ComOrFreeOption }: Props) {
     const [selectOption, setSelectOption] = useState<number | null>(null);
     const [companyName, setCompanyName] = useState(shopInfo?.conpany_name || "");
     const [shopName, setShopName] = useState(user.user_name);
@@ -160,7 +159,7 @@ export default function Form({ session, user, shopInfo, ComOrFreeOption }: Props
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
             });
