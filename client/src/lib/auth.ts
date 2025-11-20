@@ -93,7 +93,7 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
     jwt: {
-        maxAge: 60 * 60,
+        maxAge: 30 * 24 * 60 * 60,
     },
 
     callbacks: {
