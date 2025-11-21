@@ -54,6 +54,16 @@ export default async function Page() {
 
     if (!accessToken) redirect("/login");
 
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/set-cookie`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            refreshToken: session?.refreshToken,
+            rememberMe: session?.rememberMe,
+        }),
+    });
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/my-page/ssr`, {
         method: "GET",
         headers: {
