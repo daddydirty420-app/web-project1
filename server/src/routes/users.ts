@@ -54,6 +54,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
       include: [
         {
           model: ShopInfo,
+          where: { verified: true },
           attributes: ['id']
         }
       ]
@@ -146,6 +147,7 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
       include: [
         {
           model: ShopInfo,
+          where: { verified: true },
           attributes: ['id'],
         }
       ]
