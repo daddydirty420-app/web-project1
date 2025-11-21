@@ -10,10 +10,6 @@ import { Op } from "sequelize";
 
 const router = Router();
 
-const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-const threeDays = 3 * 24 * 60 * 60 * 1000;
-const oneHour = 60 * 60 * 1000;
-
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
   const { email, password, rememberMe } = req.body;
 
@@ -58,9 +54,12 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
 
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       path: "/",
+      maxAge: rememberMe
+      ? 30 * 24 * 60 * 60 * 1000
+      : 3 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
