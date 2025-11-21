@@ -23,6 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
+    const refreshToken = cookieStore.get("refreshToken")?.value;
+
+    console.log("cookies.refreshToken:", refreshToken);
 
     if (!accessToken) redirect("/login");
 
