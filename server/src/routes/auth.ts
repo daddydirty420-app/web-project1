@@ -57,6 +57,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       path: "/",
+      domain: ".fuckintesting.com",
       maxAge: rememberMe
       ? 30 * 24 * 60 * 60 * 1000
       : 3 * 24 * 60 * 60 * 1000,

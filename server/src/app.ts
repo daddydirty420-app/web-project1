@@ -101,11 +101,18 @@ app.use(cors({
     "http://localhost:3000",
     /\.vercel\.app$/,
     "https://web-project1-fawn.vercel.app",
+    "https://app.fuckintesting.com",
   ],
   credentials: true,
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 
 app.use('/api/user', usersRouter);
 app.use('/api/auth', authRouter);
