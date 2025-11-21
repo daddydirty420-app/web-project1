@@ -1,6 +1,8 @@
-import { TitleAndBack, Container, AccordionGrid, Header, Footer } from '@/components'
-import { GuideLink } from '@/components/guide'
-import { Metadata } from 'next'
+import { TitleAndBack, Container, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { GuideLink } from '@/components/guide';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド | FLEX OUTDOOR",

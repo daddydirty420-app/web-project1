@@ -1,9 +1,11 @@
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
-import { GuideSubTitle, GuideSection } from '@/components/guide'
-import { ListDiscSecond } from '@/components/list'
-import { TermsList, TermsListDiv } from '@/components/terms'
-import Link from 'next/link'
-import { Metadata } from 'next'
+import { TitleAndBack, Container, Accordion, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { GuideSubTitle, GuideSection } from '@/components/guide';
+import { ListDiscSecond } from '@/components/list';
+import { TermsList, TermsListDiv } from '@/components/terms';
+import Link from 'next/link';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 禁止行為・ペナルティ | FLEX OUTDOOR",
@@ -12,7 +14,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function GuidePenalty() {
     return (

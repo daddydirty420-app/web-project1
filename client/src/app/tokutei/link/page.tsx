@@ -1,6 +1,8 @@
-import { TitleAndBack, Container, Header, Footer } from '@/components'
-import { NormalLink, NormalLinkContainer } from '@/components/link'
-import { Metadata } from 'next'
+import { TitleAndBack, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { NormalLink, NormalLinkContainer } from '@/components/link';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "特定商取引法に基づく表記 - リンク | FLEX OUTDOOR",
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function Tokutei() {
     return (

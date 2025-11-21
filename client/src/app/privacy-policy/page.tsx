@@ -1,7 +1,9 @@
-import { TitleAndBack, Container, Header, Footer } from '@/components'
-import { TermsMiniSection, TermsList, TermsListDiv } from '@/components/terms'
-import styles from '@/styles/terms.module.css'
-import { Metadata } from 'next'
+import { TitleAndBack, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { TermsMiniSection, TermsList, TermsListDiv } from '@/components/terms';
+import styles from '@/styles/terms.module.css';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "プライバシーポリシー | FLEX OUTDOOR",
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function PrivacyPolicy() {
     return (

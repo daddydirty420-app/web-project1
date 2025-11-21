@@ -1,15 +1,17 @@
-import { Metadata } from 'next'
-import UseClient from './useClient'
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
-import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide'
-import { ListUl, ListFlow, ListFlowArrow, ListCheck } from '@/components/list'
-import { TermsList, TermsListDiv } from '@/components/terms'
-import RowTextContainer from '@/components/two-text-container/tow-text-container'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquarePlus } from '@fortawesome/free-regular-svg-icons'
-import styles from '@/styles/guide.module.css'
-import clsx from 'clsx'
-import Link from 'next/link'
+import { Metadata } from 'next';
+import UseClient from './useClient';
+import { TitleAndBack, Container, Accordion, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide';
+import { ListUl, ListFlow, ListFlowArrow, ListCheck } from '@/components/list';
+import { TermsList, TermsListDiv } from '@/components/terms';
+import RowTextContainer from '@/components/two-text-container/tow-text-container';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import styles from '@/styles/guide.module.css';
+import clsx from 'clsx';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 出品者の方 | FLEX OUTDOOR",
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function GuideSeller() {
     return (

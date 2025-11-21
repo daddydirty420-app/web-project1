@@ -1,4 +1,6 @@
-import { Container, Header, Footer, Back } from "@/components";
+import { Container, Back } from "@/components";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 import { Item } from "./itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import Main from "./main";

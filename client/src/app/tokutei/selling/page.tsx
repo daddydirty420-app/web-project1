@@ -1,8 +1,10 @@
-import { TitleAndBack, Container, Header, Footer } from '@/components'
-import { TokuteiContainer, TokuteiSection, SecondHeader } from '@/components/tokutei'
-import styles from '@/styles/tokutei.module.css'
-import { Metadata } from 'next'
-import Link from 'next/link'
+import { TitleAndBack, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { TokuteiContainer, TokuteiSection, SecondHeader } from '@/components/tokutei';
+import styles from '@/styles/tokutei.module.css';
+import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: "特定商取引法に基づく表記 | FLEX OUTDOOR",
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function TokuteiSelling() {
     return (

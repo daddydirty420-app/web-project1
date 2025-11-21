@@ -1,8 +1,10 @@
-import { TitleAndBack, Container, Header, Footer } from '@/components'
-import { TermsSection, TermsMiniSection, TermsKakko, TermsList, TermsListDiv, TermsListSecond } from '@/components/terms'
-import styles from '@/styles/terms.module.css'
-import clsx from 'clsx'
-import { Metadata } from 'next'
+import { TitleAndBack, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { TermsSection, TermsMiniSection, TermsKakko, TermsList, TermsListDiv, TermsListSecond } from '@/components/terms';
+import styles from '@/styles/terms.module.css';
+import clsx from 'clsx';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "利用規約 | FLEX OUTDOOR",
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function TermsAndConditions() {
     return (

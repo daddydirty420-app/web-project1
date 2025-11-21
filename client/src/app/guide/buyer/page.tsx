@@ -1,13 +1,15 @@
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
-import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide'
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list'
-import RowTextContainer from '@/components/two-text-container/tow-text-container'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFlag } from '@fortawesome/free-solid-svg-icons'
-import styles from '@/styles/guide.module.css'
-import clsx from 'clsx'
-import Link from 'next/link'
-import { Metadata } from 'next'
+import { TitleAndBack, Container, Accordion, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide';
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list';
+import RowTextContainer from '@/components/two-text-container/tow-text-container';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFlag } from '@fortawesome/free-solid-svg-icons';
+import styles from '@/styles/guide.module.css';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 購入者の方 | FLEX OUTDOOR",
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function GuideBuyer() {
     return (

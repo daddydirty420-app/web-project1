@@ -1,7 +1,9 @@
-import { TitleAndBack, Container, Header, Footer } from '@/components'
-import { TokuteiContainer, TokuteiSection } from '@/components/tokutei'
-import { Metadata } from 'next'
-import Link from 'next/link'
+import { TitleAndBack, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { TokuteiContainer, TokuteiSection } from '@/components/tokutei';
+import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: "事業概要 | FLEX OUTDOOR",

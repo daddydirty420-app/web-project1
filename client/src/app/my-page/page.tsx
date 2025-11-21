@@ -1,4 +1,6 @@
-import { Back, Container, Header, Footer } from '@/components';
+import { Back, Container } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 import { Metadata } from 'next';
 import ReferenceCode from './referenceCode';
 import Logout from './logout';

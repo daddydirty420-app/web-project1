@@ -1,10 +1,12 @@
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list'
-import { GuideSmall } from '@/components/guide'
-import styles from '@/styles/guide.module.css'
-import clsx from 'clsx'
-import Link from 'next/link'
-import { Metadata } from 'next'
+import { TitleAndBack, Container, Accordion, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list';
+import { GuideSmall } from '@/components/guide';
+import styles from '@/styles/guide.module.css';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 会員登録について | FLEX OUTDOOR",
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function GuideAcSign() {
     return (

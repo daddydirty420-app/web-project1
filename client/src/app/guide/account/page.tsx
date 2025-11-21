@@ -1,11 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
-import { TitleAndBack, Container, Accordion, AccordionGrid, Header, Footer } from '@/components'
-import { GuideSubTitle, GuideSmall, GuideLink } from '@/components/guide'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { TitleAndBack, Container, Accordion, AccordionGrid } from '@/components';
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { GuideSubTitle, GuideSmall, GuideLink } from '@/components/guide';
 import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado, ListUlSecond, ListDiscSecond } from '@/components/list'
-import styles from '@/styles/guide.module.css'
-import clsx from 'clsx'
-import { Metadata } from 'next'
+import styles from '@/styles/guide.module.css';
+import clsx from 'clsx';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - アカウントについて | FLEX OUTDOOR",
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function GuideAc() {
     return (
