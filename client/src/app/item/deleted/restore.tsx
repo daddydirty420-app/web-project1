@@ -1,6 +1,5 @@
 "use client";
 
-import { Session } from "next-auth";
 import { Item } from "../itemPageTypes";
 import styles from "./deleted.module.css";
 import { useState } from "react";
@@ -10,10 +9,10 @@ import { useRouter } from "next/navigation";
 type Props = {
     id: string;
     item: Item;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function Restore({ id, item, session }: Props) {
+export default function Restore({ id, item, accessToken }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
@@ -23,7 +22,7 @@ export default function Restore({ id, item, session }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

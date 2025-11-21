@@ -22,12 +22,6 @@ export async function middleware(req) {
 
     let accessTokenToUse = token.accessToken;
 
-    console.log("🔍 token.exp:", decoded?.exp);
-    console.log("🔍 now:", now);
-    console.log("🔍 exp - now =", expNum - now);
-    console.log("token.accessToken:", token.accessToken);
-    console.log("token.refreshToken:", token.refreshToken);
-
     if (decoded?.exp && expNum < now) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
             method: "POST",
@@ -36,8 +30,6 @@ export async function middleware(req) {
         });
 
         const data = await res.json();
-
-        console.log("refreshData:", data);
 
         if (!res.ok || !data.accessToken) {
             return NextResponse.redirect(new URL("/login", req.url));

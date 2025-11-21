@@ -4,16 +4,15 @@ import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
 import { useEffect, useRef } from "react";
 import Hls from "hls.js";
-import { Session } from "next-auth";
 
 type Props = {
     item: Item;
     sellerMe?: boolean;
-    session: Session | null;
+    accessToken: string | null;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function VideoElem({ item, sellerMe, session, page }: Props) {
+export default function VideoElem({ item, sellerMe, accessToken, page }: Props) {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
@@ -41,7 +40,7 @@ export default function VideoElem({ item, sellerMe, session, page }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });
         } catch (err) {

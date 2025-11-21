@@ -4,17 +4,16 @@ import { InputStr, Button } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 import { User } from "../type";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     user: User;
     page: "normal" | "delivery";
     deliveryId?: string;
 };
 
-export default function PhoneNumberEdit({ session, user, page, deliveryId }: Props) {
+export default function PhoneNumberEdit({ accessToken, user, page, deliveryId }: Props) {
     const [value, setValue] = useState(user.phone_number);
     const router = useRouter();
 
@@ -33,7 +32,7 @@ export default function PhoneNumberEdit({ session, user, page, deliveryId }: Pro
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     phoneNumber: value,

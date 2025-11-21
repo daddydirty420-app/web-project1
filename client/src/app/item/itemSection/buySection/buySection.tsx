@@ -14,23 +14,24 @@ type Props = {
     id: string;
     item: Item;
     session: Session | null;
+    accessToken: string | null;
 };
 
-export default function BuySection({ id, item, session }: Props) {
+export default function BuySection({ id, item, session, accessToken }: Props) {
     const [cartIn, setCartIn] = useState(false);
     const router = useRouter();
 
-    const loggedIn = !!session?.user;
+    const loggedIn = session?.user;
 
     useEffect(() => {
-        if (loggedIn) {
+        if (accessToken) {
             const fetchData = async () => {
                 try {
                     const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-status?itemId=${id}`, {
                         method: 'GET',
                         cache: 'no-store',
                         headers: {
-                            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                            Authorization: `Bearer ${accessToken ?? ""}`,
                         },
                     });
 
@@ -45,7 +46,7 @@ export default function BuySection({ id, item, session }: Props) {
 
             fetchData();
         };
-    }, [id, loggedIn, session]);
+    }, [id, accessToken]);
 
     const add = async () => {
         try {
@@ -53,7 +54,7 @@ export default function BuySection({ id, item, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });
 
@@ -74,7 +75,7 @@ export default function BuySection({ id, item, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });
 
@@ -100,7 +101,7 @@ export default function BuySection({ id, item, session }: Props) {
                 cache: 'no-store',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });
 

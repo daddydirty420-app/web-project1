@@ -5,15 +5,14 @@ import styles from "./confirm.module.css";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { TermsList } from "@/components/terms";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 type Props = {
     id: string;
-    session: Session | null;
+    accessToken: string;
 }
 
-export default function UploadButton({ id, session }: Props) {
+export default function UploadButton({ id, accessToken }: Props) {
     const [popup, setPopup] = useState(false);
     const [check, setCheck] = useState(false);
     const router = useRouter();
@@ -29,7 +28,7 @@ export default function UploadButton({ id, session }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

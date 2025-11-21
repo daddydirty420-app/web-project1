@@ -22,13 +22,14 @@ type Props = {
     hasShop?: boolean;
     itemList: Res;
     session: Session | null;
+    accessToken: string | null;
 };
 
-export default function TwoColumn({ shopPage, hasShop, itemList, session }: Props) {
+export default function TwoColumn({ shopPage, hasShop, itemList, session, accessToken }: Props) {
     return (
         <section className={styles.twoColumnContainer}>
             <aside className={styles.sidebar}>
-                <LpItemList defaultVideoList={itemList} session={session} />
+                <LpItemList defaultVideoList={itemList} accessToken={accessToken} />
             </aside>
             <main className={styles.main}>
                 <MainAbout shopPage={shopPage} />

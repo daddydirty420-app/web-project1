@@ -4,7 +4,7 @@ import type { Res } from '../../profileTypes';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import { fetchRefreshToken } from '@/lib/refreshToken';
+import { cookies } from 'next/headers';
 
 type Props = {
     params: { id: string };
@@ -35,24 +35,15 @@ export default async function Profile({ params }: Props) {
     const { id: userId } = await params;
 
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-            redirect(`/profile/${userId}`);
-        }
-    }
+
+    if (!session?.user.admin) redirect(`/profile/${userId}`);
+        
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
+    
+    if (!accessToken) redirect(`/profile/${userId}`);
 
     const defaultLimit = 15;
-
-    const admin = session?.user.admin;
-    if (!admin) {
-        redirect(`/profile/${userId}`);
-    }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile/${userId}?limit=${defaultLimit}`, {
         method: 'GET',
@@ -61,5 +52,5 @@ export default async function Profile({ params }: Props) {
 
     const data: Res = await res.json();
 
-    return <ProfilePage data={data} userId={userId} adminPage session={session} />;
+    return <ProfilePage data={data} userId={userId} adminPage session={session} accessToken={accessToken || ""} />;
 };

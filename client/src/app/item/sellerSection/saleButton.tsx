@@ -5,14 +5,13 @@ import { Item } from "../itemPageTypes";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 
 type Props = {
     item: Item;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function SaleButton({ item, session }: Props) {
+export default function SaleButton({ item, accessToken }: Props) {
     const [salePopup, setSalePopup] = useState(false);
     const [selected, setSelected] = useState("rate");
     const [discountRate, setDiscountRate] = useState(0);
@@ -61,7 +60,7 @@ export default function SaleButton({ item, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ discountRate, discountAmount, finalPrice }),
             });
@@ -86,7 +85,7 @@ export default function SaleButton({ item, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

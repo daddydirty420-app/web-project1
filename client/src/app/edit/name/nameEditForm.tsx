@@ -4,18 +4,17 @@ import styles from "../edit.module.css";
 import { InputStr, Button } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { Name } from "../type";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     name: Name;
     page: "normal" | "delivery";
     deliveryId?: string;
 };
 
-export default function NameEditForm({ session, name, page, deliveryId }: Props) {
+export default function NameEditForm({ accessToken, name, page, deliveryId }: Props) {
     const [seiValue, setSeiValue] = useState(name.sei);
     const [meiValue, setMeiValue] = useState(name.mei);
     const [seiKanaValue, setSeiKanaValue] = useState(name.sei_kana);
@@ -33,7 +32,7 @@ export default function NameEditForm({ session, name, page, deliveryId }: Props)
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     sei: seiValue,

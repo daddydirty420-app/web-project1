@@ -4,20 +4,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./comment.module.css";
 import { useEffect, useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
-import { Session } from "next-auth";
 import CommentForm from "./commentForm";
 import CommentList from "./commentList";
 import { Comment } from "../itemPageTypes";
+import { Session } from "next-auth";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     session: Session | null;
+    accessToken: string | null;
     commentCount?: number;
     page: "normal" | "admin";
 };
 
-export default function CommentSection({ id, sellerMe, session, commentCount, page }: Props) {
+export default function CommentSection({ id, sellerMe, session, accessToken, commentCount, page }: Props) {
     const [visible, setVisible] = useState(false);
     const [comments, setComments] = useState<Comment[]>([]);
 
@@ -29,7 +30,7 @@ export default function CommentSection({ id, sellerMe, session, commentCount, pa
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/all-comment/${id}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                        Authorization: `Bearer ${accessToken ?? ""}`,
                     },
                     cache: "no-store",
                 });
@@ -49,7 +50,7 @@ export default function CommentSection({ id, sellerMe, session, commentCount, pa
         }
 
         fetchComment();
-    }, [visible, id, session, page]);
+    }, [visible, id, accessToken, page]);
 
 
     return (
@@ -61,8 +62,8 @@ export default function CommentSection({ id, sellerMe, session, commentCount, pa
 
         {visible && (
             <>
-            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} session={session} />}
-            <CommentList id={id} sellerMe={sellerMe} session={session} comments={comments} page={page} />
+            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} />}
+            <CommentList id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} comments={comments} page={page} />
             </>
         )}
         </>

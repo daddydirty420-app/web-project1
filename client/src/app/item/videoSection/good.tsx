@@ -6,21 +6,18 @@ import { useGoodStatus, useGoodCount, updateGoodItemCache } from "@/hooks/useGoo
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
-    session: Session | null;
+    accessToken: string | null;
     initialGood?: boolean;
     initialCount?: number;
     page: "normal" | "admin";
 };
 
-export default function Good({ id, sellerMe, session, initialGood, initialCount, page }: Props) {
-    const loggedIn = session?.user;
-    const accessToken = session?.accessToken;
+export default function Good({ id, sellerMe, accessToken, initialGood, initialCount, page }: Props) {
     const { data: goodStatus } = useGoodStatus(id, accessToken ?? "");
     const { data: goodCount } = useGoodCount(id, accessToken ?? "");
     const router = useRouter();
@@ -33,7 +30,7 @@ export default function Good({ id, sellerMe, session, initialGood, initialCount,
             method: 'POST',
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateGoodItemCache(id, true);
@@ -44,7 +41,7 @@ export default function Good({ id, sellerMe, session, initialGood, initialCount,
             method: 'POST',
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateGoodItemCache(id, false);
@@ -54,7 +51,7 @@ export default function Good({ id, sellerMe, session, initialGood, initialCount,
 
     return (
         <>
-        {loggedIn && !sellerMe && page === "normal" && (
+        {accessToken && !sellerMe && page === "normal" && (
             <>
             {good ? (
                 <FontAwesomeIcon
@@ -72,7 +69,7 @@ export default function Good({ id, sellerMe, session, initialGood, initialCount,
             </>
         )}
 
-        {(!loggedIn || sellerMe || page !== "normal") && (
+        {(!accessToken || sellerMe || page !== "normal") && (
             <FontAwesomeIcon icon={faThumbUpRegular} className={styles.goodIcon} onClick={userList} />
         )}
 

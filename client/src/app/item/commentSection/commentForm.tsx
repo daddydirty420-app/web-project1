@@ -9,10 +9,11 @@ type Props = {
     id: string;
     sellerMe?: boolean;
     session: Session | null;
+    accessToken: string | null;
     parentId?: string;
 }
 
-export default function CommentForm({ id, sellerMe, session, parentId }: Props) {
+export default function CommentForm({ id, sellerMe, session, accessToken, parentId }: Props) {
     const [inputComment, setInputComment] = useState<string>("");
     const router = useRouter();
     const loggedIn = !!session?.user;
@@ -28,7 +29,7 @@ export default function CommentForm({ id, sellerMe, session, parentId }: Props) 
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify({ inputComment }),
             });

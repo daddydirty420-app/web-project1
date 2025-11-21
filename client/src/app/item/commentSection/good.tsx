@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "./comment.module.css";
-import { Session } from "next-auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
@@ -12,16 +11,14 @@ import { useRouter } from "next/navigation";
 
 type Props = {
     comment: Comment;
-    session: Session | null;
+    accessToken: string | null;
 }
 
-export default function Good({ comment, session }: Props) {
+export default function Good({ comment, accessToken }: Props) {
     const id = comment.id;
     const initialGood = comment.isGoodByMe;
     const initialCount = comment.goodCount;
     const isMyComment = comment.isMyComment;
-    const loggedIn = !!session?.user;
-    const accessToken = session?.accessToken;
     const { data: goodStatus } = useGoodStatus(id, accessToken ?? "");
     const { data: goodCount } = useGoodCount(id, accessToken ?? "");
     const router = useRouter();
@@ -34,7 +31,7 @@ export default function Good({ comment, session }: Props) {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateGoodCommentCache(id, true);
@@ -45,7 +42,7 @@ export default function Good({ comment, session }: Props) {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateGoodCommentCache(id, false);
@@ -55,7 +52,7 @@ export default function Good({ comment, session }: Props) {
 
     return (
         <div className={styles.goodDiv} onClick={userList}>
-            {loggedIn && !isMyComment && (
+            {accessToken && !isMyComment && (
                 <>
                 {good ? (
                     <FontAwesomeIcon
@@ -73,7 +70,7 @@ export default function Good({ comment, session }: Props) {
                 </>
             )}
 
-            {(!loggedIn || isMyComment) && (
+            {(!accessToken || isMyComment) && (
                 <FontAwesomeIcon icon={faThumbUpRegular} className={styles.goodIcon} />
             )}
 

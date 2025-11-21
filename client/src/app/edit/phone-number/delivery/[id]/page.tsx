@@ -1,9 +1,7 @@
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { notFound } from "next/navigation";
-import { fetchRefreshToken } from "@/lib/refreshToken";
+import { notFound, redirect } from "next/navigation";
 import PhoneNumberEdit from "../../phoneNumberEdit";
+import { cookies } from "next/headers";
 
 type Props = {
     params: { id: string };
@@ -22,24 +20,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
-    const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-            notFound();
-        }
-    }
+
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
+    
+    if (!accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/phone-number`, {
         method: "GET",
         cache: "no-store",
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -54,7 +45,7 @@ export default async function Page({ params }: Props) {
 
     return (
         <PhoneNumberEdit
-        session={session}
+        accessToken={accessToken}
         user={phoneNumber}
         page="normal"
         deliveryId={id}

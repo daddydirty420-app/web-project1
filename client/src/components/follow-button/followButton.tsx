@@ -9,10 +9,10 @@ type Props = {
     targetUserId: string;
     withCount?: boolean;
     session: Session | null;
+    accessToken: string | null;
 };
 
-export default function FollowButton({ targetUserId, withCount, session }: Props) {
-    const accessToken = session?.accessToken;
+export default function FollowButton({ targetUserId, withCount, session, accessToken }: Props) {
     const currentUserId = session?.user?.id;
 
     const { data: status } = useFollowStatus(targetUserId, accessToken ?? "");
@@ -24,7 +24,7 @@ export default function FollowButton({ targetUserId, withCount, session }: Props
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/add/${targetUserId}`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateFollowCache(targetUserId, currentUserId, true, withCount ?? true);
@@ -34,7 +34,7 @@ export default function FollowButton({ targetUserId, withCount, session }: Props
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${targetUserId}`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
         });
         updateFollowCache(targetUserId, currentUserId, false, withCount ?? true);

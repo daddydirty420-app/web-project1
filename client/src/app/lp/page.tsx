@@ -3,7 +3,7 @@ import Lp from "./lp";
 import { Items } from "@/types/itemListTypes";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { fetchRefreshToken } from "@/lib/refreshToken";
+import { cookies } from "next/headers";
 
 type Res = {
     items: Items[];
@@ -21,28 +21,21 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
+        
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
 
     const defaultLimit = 15;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/video-list?page=1&limit=${defaultLimit}`, {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken ?? ""}`,
         },
         next: { revalidate: 300 },
     });
 
     const data: Res = await res.json();
 
-    return <Lp itemList={data} session={session} />;
+    return <Lp itemList={data} session={session} accessToken={accessToken || ""} />;
 };

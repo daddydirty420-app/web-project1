@@ -4,17 +4,16 @@ import { InputStr, Button } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 import { Address } from "../type";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     address: Address;
     page: "normal" | "delivery";
     deliveryId?: string;
 };
 
-export default function AddressEditForm({ session, address, page, deliveryId }: Props) {
+export default function AddressEditForm({ accessToken, address, page, deliveryId }: Props) {
     const [postNumber, setPostNumber] = useState(address.post_number);
     const [todouhuken, setTodouhuken] = useState(address.AddressTodouhuken.name);
     const [shikutyouson, setShikutyouson] = useState(address.shikutyouson);
@@ -72,7 +71,7 @@ export default function AddressEditForm({ session, address, page, deliveryId }: 
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     postNumber,

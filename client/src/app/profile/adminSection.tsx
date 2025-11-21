@@ -6,15 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import { Session } from 'next-auth';
 
 type Props = {
     userId: string;
     adminPage: boolean;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function AdminSection({ userId, adminPage, session }: Props) {
+export default function AdminSection({ userId, adminPage, accessToken }: Props) {
     const [data, setData] = useState<User | null>(null);
     const [popup, setPopup] = useState(false);
     const [addPenalty, setAddPenalty] = useState(0);
@@ -23,13 +22,17 @@ export default function AdminSection({ userId, adminPage, session }: Props) {
     const router = useRouter();
 
     useEffect(() => {
-        if (!adminPage) return;
+        if (!adminPage || !accessToken) {
+            router.push(`/profile/${userId}`);
+            return;
+        }
+
         const fetchData = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
                     cache: 'no-store',
                     headers: {
-                        Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                        Authorization: `Bearer ${accessToken}`,
                     },
                 });
 
@@ -48,7 +51,7 @@ export default function AdminSection({ userId, adminPage, session }: Props) {
         }
 
         fetchData();
-    }, [userId, adminPage, session, router]);
+    }, [userId, adminPage, accessToken, router]);
 
     const submitPenalty = async (e: React.FormEvent) => {
         e.preventDefault();

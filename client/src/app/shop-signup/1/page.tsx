@@ -18,8 +18,6 @@ export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    console.log("cookieのaccessToken:", accessToken);
-
     if (!accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1`, {
@@ -33,9 +31,6 @@ export default async function Page() {
     const data = await res.json();
 
     if (!res.ok) {
-        if (res.status === 401) {
-            redirect("/shop-signup/1"); 
-        }
         console.error(data.message);
         notFound();
     }

@@ -4,15 +4,14 @@ import { useState } from "react";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
 import { X } from "lucide-react";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
     item: Item;
-    session: Session | null;
+    accessToken: string;
 }
 
-export default function DeleteButton({ id, item, session }: Props) {
+export default function DeleteButton({ id, item, accessToken }: Props) {
     const [popup, setPopup] = useState(false);
     const [deleteReason, setDeleteReason] = useState("");
 
@@ -24,7 +23,7 @@ export default function DeleteButton({ id, item, session }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ deleteReason }),
             });

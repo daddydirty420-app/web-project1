@@ -340,8 +340,6 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
     return;
   }
 
-  console.log("🔥 API側で受け取った refreshToken:", refreshToken);
-
   try {
     const storedToken = await RefreshTokens.findOne({ where: { token: refreshToken } });
     if (!storedToken) {
@@ -442,15 +440,13 @@ router.post("/email-edit", authenticateToken, async (req: Request, res: Response
   }
 });
 
-router.post("/new-email-change", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-  const userId = req.user!.id;
+router.post("/new-email-change", async (req: Request, res: Response): Promise<void> => {
   const token = req.query.token;
 
   try {
     const emailTokenData = await EmailChangeTokens.findOne({
       where: {
         token_hash: token,
-        user_id: userId,
         expires_at: { [Op.gt]: new Date() },
       },
     });
@@ -458,6 +454,8 @@ router.post("/new-email-change", authenticateToken, async (req: Request, res: Re
       res.status(404).json({ message: "新しいメールアドレスデータが見つかりません。" });
       return;
     }
+
+    const userId = emailTokenData.user_id;
 
     const user = await User.findByPk(userId);
     if (!user) {

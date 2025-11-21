@@ -6,20 +6,19 @@ import EditUI from "../editUI";
 import { GenderOption, User } from "../type";
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     user: User;
     genderOptions: GenderOption[];
     campaign?: boolean;
 };
 
-export default function HonninEditForm({ session, user, genderOptions, campaign }: Props) {
+export default function HonninEditForm({ accessToken, user, genderOptions, campaign }: Props) {
     const [sei, setSei] = useState(user.Name?.sei);
     const [mei, setMei] = useState(user.Name?.mei);
     const [seiKana, setSeiKana] = useState(user.Name?.sei_kana);
@@ -172,7 +171,7 @@ export default function HonninEditForm({ session, user, genderOptions, campaign 
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
             });

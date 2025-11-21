@@ -4,14 +4,13 @@ import styles from "./seller.module.css";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function DeleteItem({ id, session }: Props) {
+export default function DeleteItem({ id, accessToken }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
@@ -21,7 +20,7 @@ export default function DeleteItem({ id, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

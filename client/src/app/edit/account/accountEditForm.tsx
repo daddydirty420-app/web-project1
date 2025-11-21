@@ -3,18 +3,17 @@
 import styles from "../edit.module.css";
 import { InputStr, Button, InputTitle } from "@/components/inputForm/index";
 import EditUI from "../editUI";
-import { Session } from "next-auth";
 import { BankAccount } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     account: BankAccount;
     page: "normal" | "transfar";
 };
 
-export default function AccountEditForm({ session, account, page }: Props) {
+export default function AccountEditForm({ accessToken, account, page }: Props) {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;
@@ -163,7 +162,7 @@ export default function AccountEditForm({ session, account, page }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
             });

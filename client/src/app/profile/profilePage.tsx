@@ -13,9 +13,10 @@ type Props = {
     userId: string;
     adminPage?: boolean;
     session: Session | null;
+    accessToken: string | null;
 };
 
-export default function ProfilePage({ data, userId, adminPage, session }: Props) {
+export default function ProfilePage({ data, userId, adminPage, session, accessToken }: Props) {
     return (
         <>
         <Header />
@@ -23,10 +24,10 @@ export default function ProfilePage({ data, userId, adminPage, session }: Props)
         <Container header>
             <Back />
 
-            {adminPage && <AdminSection userId={userId} adminPage session={session} />}
-            <ProfileMain data={data} userId={userId} session={session} adminPage={adminPage} />
+            {adminPage && <AdminSection userId={userId} adminPage accessToken={accessToken || ""} />}
+            <ProfileMain data={data} userId={userId} session={session} accessToken={accessToken} adminPage={adminPage} />
             {data.hasShop && <ShopButton shopId={String(data.user.ShopInfo?.id)} />}
-            <FollowSection userId={userId} session={session} />
+            <FollowSection userId={userId} accessToken={accessToken} />
             <StarSection user={data.user} userId={userId} />
             {data.itemList.hasItemCount > 0 && <ItemSection userId={userId} defaultVideoList={data.itemList} adminPage={adminPage} />}
         </Container>

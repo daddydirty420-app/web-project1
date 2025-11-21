@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "./comment.module.css";
-import { Session } from "next-auth";
 import ProfileImage from "./profileImage";
 import { Comment } from "../itemPageTypes";
 import { useEffect, useState } from "react";
@@ -14,11 +13,11 @@ import DeleteComment from "./deleteComment";
 
 type Props = {
     parentId: string;
-    session: Session | null;
+    accessToken: string | null;
     page: "normal" | "admin";
 }
 
-export default function ReplyList({ parentId, session, page }: Props) {
+export default function ReplyList({ parentId, accessToken, page }: Props) {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
@@ -27,7 +26,7 @@ export default function ReplyList({ parentId, session, page }: Props) {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/reply-comment/${parentId}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                        Authorization: `Bearer ${accessToken ?? ""}`,
                     },
                     cache: "no-store",
                 });
@@ -45,7 +44,7 @@ export default function ReplyList({ parentId, session, page }: Props) {
         }
 
         fetchComment();
-    }, [parentId, session, page]);
+    }, [parentId, accessToken, page]);
 
     return (
         <>
@@ -63,10 +62,10 @@ export default function ReplyList({ parentId, session, page }: Props) {
                             <CommentText comment={comment} page={page} />
 
                             <div className={styles.commentEditDiv}>
-                                <Good comment={comment} session={session} />
+                                <Good comment={comment} accessToken={accessToken} />
                                 <ReportFloat comment={comment} page={page} />
 
-                                {comment.isMyComment && <DeleteComment comment={comment} session={session} page={page} />}
+                                {comment.isMyComment && <DeleteComment comment={comment} accessToken={accessToken} page={page} />}
                             </div>
                         </div>
                     </section>

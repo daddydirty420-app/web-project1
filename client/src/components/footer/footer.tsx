@@ -1,33 +1,26 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { fetchRefreshToken } from "@/lib/refreshToken";
 import styles from './footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faShoppingBag, faBell } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus, faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import Link from 'next/link';
+import { cookies } from "next/headers";
 
 export default async function Footer() {
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
     
     const loggedIn = !!session?.user;
+        
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
 
     let unreadCount = 0;
 
     if (loggedIn) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notification/unread-count`, {
             headers: {
-                Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ""}`,
             },
             cache: 'no-store',
         });

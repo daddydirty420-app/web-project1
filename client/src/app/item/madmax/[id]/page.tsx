@@ -4,7 +4,7 @@ import { Item } from "../../itemPageTypes";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { fetchRefreshToken } from "@/lib/refreshToken";
+import { cookies } from "next/headers";
 
 type Props = {
     params: { id: string };
@@ -30,24 +30,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
+
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-            redirect(`/item/${id}`);
-        }
-    }
+
+    if (!session?.user.admin) redirect(`/item/${id}`);
+        
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
+    
+    if (!accessToken) redirect(`/item/${id}`);
     
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page-admin/${id}`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -66,6 +63,7 @@ export default async function Page({ params }: Props) {
     item={item}
     page="admin"
     session={session}
+    accessToken={accessToken}
     commentCount={commentCount}
     goodCount={goodCount}
     reportCount={reportCount}

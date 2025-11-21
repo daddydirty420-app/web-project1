@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { Items } from "@/types/itemListTypes";
-import { Session } from "next-auth";
 
 type Res = {
     items: Items[];
@@ -17,10 +16,10 @@ type Res = {
 
 type Props = {
     defaultVideoList: Res;
-    session: Session | null;
+    accessToken: string | null;
 };
 
-export default function LpItemList({ defaultVideoList, session }: Props) {
+export default function LpItemList({ defaultVideoList, accessToken }: Props) {
     const [visibleIL, setVisibleIL] = useState(false);
     const [videoList, setVideoList] = useState<Items[] | null>(defaultVideoList.items);
     const [itemList, setItemList] = useState<Items[] | null>(null);
@@ -47,7 +46,7 @@ export default function LpItemList({ defaultVideoList, session }: Props) {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/video-list?page=${page}&limit=${limit}`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 cache: 'no-store'
             });
@@ -68,7 +67,9 @@ export default function LpItemList({ defaultVideoList, session }: Props) {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/item-list?limit=${limit}&page=${page}`, {
                 method: 'GET',
-                credentials: 'include',
+                headers: {
+                    Authorization: `Bearer ${accessToken ?? ""}`,
+                },
                 cache: 'no-store'
             });
 

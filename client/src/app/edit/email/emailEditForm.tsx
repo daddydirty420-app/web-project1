@@ -8,9 +8,10 @@ import { Session } from "next-auth";
 
 type Props = {
     session: Session | null;
+    accessToken: string;
 };
 
-export default function EmailEditForm({ session }: Props) {
+export default function EmailEditForm({ session, accessToken }: Props) {
     const [value, setValue] = useState(session?.user.email || "");
 
     const submit = async () => {
@@ -25,7 +26,7 @@ export default function EmailEditForm({ session }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     email: value,

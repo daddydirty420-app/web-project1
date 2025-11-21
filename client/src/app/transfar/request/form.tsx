@@ -2,19 +2,18 @@
 
 import styles from "../transfar.module.css";
 import TransfarUI from "../transfarUI";
-import { Session } from "next-auth";
 import { User } from "../types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     user: User;
     reccomendPayValue: number;
 };
 
-export default function Form({ session, user, reccomendPayValue }: Props) {
+export default function Form({ accessToken, user, reccomendPayValue }: Props) {
     const [value, setValue] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
     const [popup, setPopup] = useState(false);
@@ -40,7 +39,7 @@ export default function Form({ session, user, reccomendPayValue }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     transValue: value,

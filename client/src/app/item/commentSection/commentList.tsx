@@ -1,6 +1,5 @@
 "use client";
 
-import { Session } from "next-auth";
 import styles from "./comment.module.css";
 import { Comment } from "../itemPageTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,16 +14,18 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import Pin from "./pin";
 import CommentForm from "./commentForm";
 import ReplyList from "./replyList";
+import { Session } from "next-auth";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     session: Session | null;
+    accessToken: string | null;
     comments: Comment[];
     page: "normal" | "admin";
 }
 
-export default function CommentList({ id, sellerMe, session, comments, page }: Props) {
+export default function CommentList({ id, sellerMe, session, accessToken, comments, page }: Props) {
     const [replyVisible, setReplyVisible] = useState<{ [key: string]: boolean }>({});
 
     const toggleReplyVisible = (commentId: string) => {
@@ -57,18 +58,18 @@ export default function CommentList({ id, sellerMe, session, comments, page }: P
                                         <FontAwesomeIcon icon={faCommentDots} className={styles.replyIcon} />
                                         <p className={styles.replyCount}>{comment.replyCount.toLocaleString()}件の返信</p>
                                     </div>
-                                    <Good comment={comment} session={session} />
+                                    <Good comment={comment} accessToken={accessToken} />
                                     <ReportFloat comment={comment} page={page} />
 
-                                    {(comment.isMyComment || page === "admin") && <DeleteComment comment={comment} session={session} page={page} />}
+                                    {(comment.isMyComment || page === "admin") && <DeleteComment comment={comment} accessToken={accessToken} page={page} />}
                                 </div>
                             </div>
                         </section>
 
                         {isVisibleReply && (
                             <section className={styles.replySection}>
-                                {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} session={session} parentId={commentId} />}
-                                <ReplyList parentId={commentId} session={session} page={page} />
+                                {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} parentId={commentId} />}
+                                <ReplyList parentId={commentId} accessToken={accessToken} page={page} />
                             </section>
                         )}
                     </section>

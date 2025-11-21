@@ -3,9 +3,9 @@ import ItemPage from "../itemPage";
 import { Item } from "../itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { fetchRefreshToken } from "@/lib/refreshToken";
 
 type Props = {
     params: { id: string };
@@ -32,23 +32,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
+
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
+
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
     
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/${id}`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -68,7 +62,7 @@ export default async function Page({ params }: Props) {
         method: 'POST',
         headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken ?? ""}`,
         },
     });
 
@@ -83,6 +77,7 @@ export default async function Page({ params }: Props) {
     sellerMe={sellerMe}
     page="normal"
     session={session}
+    accessToken={accessToken || ""}
     commentCount={commentCount}
     goodCount={goodCount}
     isGood={isGood}

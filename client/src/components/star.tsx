@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import { Rating, Star as RatingStar } from '@smastrom/react-rating'
-import '@smastrom/react-rating/style.css'
+import '@smastrom/react-rating/style.css';
 import { useEffect, useState } from 'react';
 
 type Props = {
-    userId: string
+    userId: string;
 };
 
 export default function Star({ userId }: Props) {
@@ -42,5 +42,5 @@ export default function Star({ userId }: Props) {
                 inactiveFillColor: "#d5d7dc",
             }}
         />
-    )
+    );
 }

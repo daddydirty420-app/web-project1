@@ -16,15 +16,16 @@ type Props = {
     hasShop?: boolean;
     itemList: Res;
     session: Session | null;
+    accessToken: string | null;
 };
 
-export default function Lp({ shopPage, hasShop, itemList, session }: Props) {
+export default function Lp({ shopPage, hasShop, itemList, session, accessToken }: Props) {
     return (
         <>
         <HeaderSection shopPage={shopPage} session={session} />
         
         <Container>
-            <TwoColumn shopPage={shopPage} itemList={itemList} session={session} />
+            <TwoColumn shopPage={shopPage} itemList={itemList} session={session} accessToken={accessToken} />
         </Container>
 
         <FooterImage shopPage={shopPage} hasShop={hasShop} session={session} />

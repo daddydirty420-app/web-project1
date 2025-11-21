@@ -1,6 +1,5 @@
 "use client";
 
-import { Session } from "next-auth";
 import styles from "./deleted.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,10 +7,10 @@ import { X } from "lucide-react";
 
 type Props = {
     id: string;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function PerfectDelete({ id, session }: Props) {
+export default function PerfectDelete({ id, accessToken }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
     
@@ -21,7 +20,7 @@ export default function PerfectDelete({ id, session }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

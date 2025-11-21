@@ -13,10 +13,11 @@ type Props = {
     data: Res;
     userId: string;
     session: Session | null;
+    accessToken: string | null;
     adminPage?: boolean;
 };
 
-export default function ProfileMain({ data, userId, session, adminPage }: Props) {
+export default function ProfileMain({ data, userId, session, accessToken, adminPage }: Props) {
     const loggedIn = !!session?.user;
     const currentUserId = session?.user?.id;
     const sameId = userId === currentUserId?.toString();
@@ -45,7 +46,7 @@ export default function ProfileMain({ data, userId, session, adminPage }: Props)
                     <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
                 )}
             </div>
-            {loggedIn && !sameId && !adminPage && <FollowButton targetUserId={userId} session={session} />}
+            {loggedIn && !sameId && !adminPage && <FollowButton targetUserId={userId} session={session} accessToken={accessToken} />}
             {loggedIn && sameId && !adminPage && <EditButton />}
         </section>
 

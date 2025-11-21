@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { fetchRefreshToken } from "@/lib/refreshToken";
 import Image from 'next/image';
 import styles from './header.module.css';
 import Link from 'next/link';
@@ -8,21 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import SearchInput from "./searchInput";
+import { cookies } from "next/headers";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
     const loggedIn = !!session?.user;
+        
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
 
     return (
         <header className={styles.header}>

@@ -3,17 +3,16 @@
 import { InputStr, Button, Textarea } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
-import { Session } from "next-auth";
 import { User } from "../type";
 import ProfileImage from "./profileImage";
 import { useRouter } from "next/navigation";
 
 type Props = {
-    session: Session | null;
+    accessToken: string;
     user: User;
 };
 
-export default function ProfileEditForm({ session, user }: Props) {
+export default function ProfileEditForm({ accessToken, user }: Props) {
     const [file, setFile] = useState<File | null>(null);
     const [userNameValue, setUserNameValue] = useState(user.user_name);
     const [introductionValue, setIntroductionValue] = useState(user.user_introduction);
@@ -33,7 +32,7 @@ export default function ProfileEditForm({ session, user }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     fileName: file?.name,

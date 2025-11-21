@@ -12,17 +12,7 @@ import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-import { fetchRefreshToken } from '@/lib/refreshToken';
-
-
-export const metadata: Metadata = {
-    title: "マイページ | FLEX OUTDOOR",
-    description: "FLEX OUTDOORのマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
-    robots: {
-        index: false,
-        follow: false
-    }
-}
+import { cookies } from 'next/headers';
 
 type User = {
     id: number;
@@ -45,23 +35,27 @@ type Res = {
     referenceCount: number;
 }
 
+export const metadata: Metadata = {
+    title: "マイページ | FLEX OUTDOOR",
+    description: "FLEX OUTDOORのマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
+    robots: {
+        index: false,
+        follow: false
+    }
+}
+
 export default async function Page() {
     const session = await getServerSession(authOptions);
-    if (!session?.accessToken) {
-        try {
-            const newAccessToken = await fetchRefreshToken();
-            if (session) {
-                session.accessToken = newAccessToken;
-            }
-        } catch (err) {
-            redirect("/login");
-        }
-    }
+
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
+
+    if (!accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/my-page/ssr`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
         cache: "no-store",
     });
@@ -141,7 +135,7 @@ export default async function Page() {
                         </>
                     )}
                     <NormalLink url='/reccomend' text='FLEXレコメンド月額プラン加入・変更' />
-                    <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} session={session} />
+                    <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} accessToken={accessToken} />
                     <Link href='/notification' className={styles.linkElem}>
                         <p>お知らせ</p>
                         {data.unreadCount >= 1 && (

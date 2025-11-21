@@ -12,22 +12,23 @@ type Props = {
     item: Item;
     sellerMe?: boolean;
     session: Session | null;
+    accessToken: string | null;
     goodCount?: number;
     isGood?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     reportCount?: number;
 };
 
-export default function VideoSection({ id, item, sellerMe, session, goodCount, isGood, page, reportCount }: Props) {
+export default function VideoSection({ id, item, sellerMe, session, accessToken, goodCount, isGood, page, reportCount }: Props) {
     return (
         <section className={styles.videoSection}>
-            <VideoElem item={item} sellerMe={sellerMe} session={session} page={page} />
+            <VideoElem item={item} sellerMe={sellerMe} accessToken={accessToken} page={page} />
             <h3 className={styles.title}>{item.Video?.title}</h3>
-            <CountElem id={id} item={item} sellerMe={sellerMe} session={session} goodCount={goodCount} isGood={isGood} page={page} />
+            <CountElem id={id} item={item} sellerMe={sellerMe} accessToken={accessToken} goodCount={goodCount} isGood={isGood} page={page} />
             <Summary id={id} item={item} sellerMe={sellerMe} page={page} />
             {["normal", "admin"].includes(page) && (
                 <>
-                <UserSection item={item} sellerMe={sellerMe} session={session} page={page as "normal" | "admin"} />
+                <UserSection item={item} sellerMe={sellerMe} session={session} accessToken={accessToken} page={page as "normal" | "admin"} />
                 <Report id={id} itemReport={true} page={page as "normal" | "admin"} reportCount={reportCount} />
                 </>
             )}

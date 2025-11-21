@@ -3,17 +3,15 @@
 import Link from "next/link";
 import styles from './profile.module.css';
 import { useFollowCount } from "@/hooks/useFollow";
-import { Session } from "next-auth";
 
 type Props = {
     userId: string;
     type: "follow" | "follower";
     initialCount: number;
-    session: Session | null;
+    accessToken: string | null;
 };
 
-export default function FollowStat({ userId, type, initialCount, session }: Props) {
-    const accessToken = session?.accessToken;
+export default function FollowStat({ userId, type, initialCount, accessToken }: Props) {
     const { data } = useFollowCount(userId, accessToken ?? "");
     if (!accessToken) return null;
 

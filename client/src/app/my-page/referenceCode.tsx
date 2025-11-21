@@ -3,7 +3,6 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import styles from './mypage.module.css';
-import { Session } from 'next-auth';
 
 type ReferenceCode = {
     output: string;
@@ -12,10 +11,10 @@ type ReferenceCode = {
 type Props = {
     itemCount: number;
     referenceCount: number;
-    session: Session | null;
+    accessToken: string;
 }
 
-export default function ReferenceCode({ itemCount, referenceCount, session }: Props) {
+export default function ReferenceCode({ itemCount, referenceCount, accessToken }: Props) {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [referenceCodeOutput, setReferenceCodeOutput] = useState<ReferenceCode | null>(null);
 
@@ -24,7 +23,7 @@ export default function ReferenceCode({ itemCount, referenceCount, session }: Pr
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference-code/output`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

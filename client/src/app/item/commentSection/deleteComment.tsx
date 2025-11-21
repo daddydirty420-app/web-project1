@@ -6,16 +6,15 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { X } from "lucide-react";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 type Props = {
     comment: Comment;
-    session: Session | null;
+    accessToken: string | null;
     page: "normal" | "admin";
 }
 
-export default function DeleteComment({ comment, session, page }: Props) {
+export default function DeleteComment({ comment, accessToken, page }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
@@ -25,7 +24,7 @@ export default function DeleteComment({ comment, session, page }: Props) {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });
 

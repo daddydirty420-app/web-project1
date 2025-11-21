@@ -4,14 +4,13 @@ import styles from "./seller.module.css";
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
-    session: Session | null;
+    accessToken: string;
 };
 
-export default function UploadButton({ id, session }: Props) {
+export default function UploadButton({ id, accessToken }: Props) {
     const router = useRouter();
 
     const copy = async () => {
@@ -20,7 +19,7 @@ export default function UploadButton({ id, session }: Props) {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 
