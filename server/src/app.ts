@@ -102,6 +102,7 @@ app.use(cors({
     /\.vercel\.app$/,
     "https://web-project1-fawn.vercel.app",
     "https://app.fuckintesting.com",
+    "https://api.fuckintesting.com",
   ],
   credentials: true,
 }));
