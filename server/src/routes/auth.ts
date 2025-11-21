@@ -56,6 +56,13 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     });
 
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
+
     res.status(200).json({
       id: userId,
       email: user.email,
