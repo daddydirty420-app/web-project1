@@ -78,6 +78,25 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
+router.post("/set-cookie", async (req: Request, res: Response): Promise<void> => {
+  const { refreshToken, rememberMe } = req.body;
+  if (!refreshToken) {
+    res.status(400).json({ message: "refreshToken がありません" });
+    return;
+  }
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+    domain: ".fuckintesting.com",
+    maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 3 * 24 * 60 * 60 * 1000,
+  });
+
+  res.status(200).json({ message: "Cookie をセットしました" });
+});
+
 function generateRandomUserName(length: number = 12): string {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = '';

@@ -2,10 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from "next-auth/react";
+import { signIn, SignInResponse } from "next-auth/react";
 import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+
+interface CustomSignInResponse extends SignInResponse {
+  refreshToken?: string;
+}
 
 export default function LoginForm() {
     const [visible, setVisible] = useState(false);
@@ -24,13 +28,23 @@ export default function LoginForm() {
             email,
             password,
             rememberMe: rememberMe ? "true" : "false",
-        });
+        }) as CustomSignInResponse;
 
         setLoading(false);
 
         if (res?.error) {
             alert("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/set-cookie`, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    refreshToken: res?.refreshToken,
+                    rememberMe,
+                }),
+            });
+
             router.push('/my-page');
         }
     };
