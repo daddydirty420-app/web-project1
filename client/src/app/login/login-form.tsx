@@ -6,7 +6,6 @@ import { signIn, SignInResponse } from "next-auth/react";
 import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import { useSession } from "next-auth/react";
 
 interface CustomSignInResponse extends SignInResponse {
   refreshToken?: string;
@@ -36,17 +35,6 @@ export default function LoginForm() {
         if (res?.error) {
             alert("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
-            const { data: session } = useSession();
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/set-cookie`, {
-                method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    refreshToken: res?.refreshToken,
-                    rememberMe,
-                }),
-            });
-
             router.push('/my-page');
         }
     };
