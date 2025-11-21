@@ -55,7 +55,8 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
         {
           model: ShopInfo,
           where: { verified: true },
-          attributes: ['id']
+          attributes: ['id'],
+          required: false,
         }
       ]
     });
@@ -149,6 +150,7 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
           model: ShopInfo,
           where: { verified: true },
           attributes: ['id'],
+          required: false,
         }
       ]
     });
