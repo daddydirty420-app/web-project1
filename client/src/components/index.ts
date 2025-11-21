@@ -1,8 +1,6 @@
 export { default as Accordion } from './accordion/accordion';
 export { default as AccordionGrid } from './accordion/accordion-grid';
 export { default as Container } from './container/container';
-export { default as Footer } from './footer/footer';
-export { default as Header } from './header/header';
 export { default as TitleAndBack } from './title-back/title-back';
 export { default as Title } from "./title-back/title";
 export { default as Back } from './title-back/back';
