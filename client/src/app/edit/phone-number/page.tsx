@@ -39,7 +39,6 @@ export default async function Page() {
 
     return (
         <PhoneNumberEdit
-        accessToken={accessToken}
         user={phoneNumber}
         page="normal"
         />

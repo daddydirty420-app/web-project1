@@ -10,15 +10,15 @@ import Image from "next/image";
 import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     user: User;
     genderOptions: GenderOption[];
     campaign?: boolean;
 };
 
-export default function HonninEditForm({ accessToken, user, genderOptions, campaign }: Props) {
+export default function HonninEditForm({ user, genderOptions, campaign }: Props) {
     const [sei, setSei] = useState(user.Name?.sei);
     const [mei, setMei] = useState(user.Name?.mei);
     const [seiKana, setSeiKana] = useState(user.Name?.sei_kana);
@@ -167,11 +167,13 @@ export default function HonninEditForm({ accessToken, user, genderOptions, campa
         }
 
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/honnin-submit`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify(body),
             });

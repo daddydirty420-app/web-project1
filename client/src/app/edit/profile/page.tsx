@@ -44,6 +44,6 @@ export default async function Page() {
     const userData: User = data.userData;
 
     return (
-        <ProfileEditForm accessToken={accessToken} user={userData} />
+        <ProfileEditForm user={userData} />
     );
 };

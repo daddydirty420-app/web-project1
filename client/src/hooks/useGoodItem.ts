@@ -3,10 +3,10 @@ import { fetcher } from "@/lib/fetcher";
 
 type GoodCountResponce = { count: number };
 
-export function useGoodStatus(itemId: string, accessToken: string) {
+export function useGoodStatus(itemId: string) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/status/${itemId}`,
-        fetcher(accessToken), {
+        fetcher(), {
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,
@@ -14,10 +14,10 @@ export function useGoodStatus(itemId: string, accessToken: string) {
     );
 };
 
-export function useGoodCount(itemId: string, accessToken: string) {
+export function useGoodCount(itemId: string) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/count/${itemId}`,
-        fetcher(accessToken), {
+        fetcher(), {
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,

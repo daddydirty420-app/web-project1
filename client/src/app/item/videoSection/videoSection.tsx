@@ -24,7 +24,7 @@ export default function VideoSection({ id, item, sellerMe, session, accessToken,
         <section className={styles.videoSection}>
             <VideoElem item={item} sellerMe={sellerMe} accessToken={accessToken} page={page} />
             <h3 className={styles.title}>{item.Video?.title}</h3>
-            <CountElem id={id} item={item} sellerMe={sellerMe} accessToken={accessToken} goodCount={goodCount} isGood={isGood} page={page} />
+            <CountElem id={id} item={item} sellerMe={sellerMe} session={session} goodCount={goodCount} isGood={isGood} page={page} />
             <Summary id={id} item={item} sellerMe={sellerMe} page={page} />
             {["normal", "admin"].includes(page) && (
                 <>

@@ -6,14 +6,14 @@ import EditUI from "../editUI";
 import { BankAccount } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     account: BankAccount;
     page: "normal" | "transfar";
 };
 
-export default function AccountEditForm({ accessToken, account, page }: Props) {
+export default function AccountEditForm({ account, page }: Props) {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;
@@ -158,11 +158,13 @@ export default function AccountEditForm({ accessToken, account, page }: Props) {
         };
 
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/account-edit/${account.id}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify(body),
             });

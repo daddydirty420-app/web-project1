@@ -46,7 +46,6 @@ export default async function Page({ params }: Props) {
 
     return (
         <NameEditForm
-        accessToken={accessToken}
         name={name}
         page="delivery"
         deliveryId={id}

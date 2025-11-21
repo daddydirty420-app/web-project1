@@ -39,7 +39,6 @@ export default async function Page() {
 
     return (
         <NameEditForm
-        accessToken={accessToken}
         name={name}
         page="normal"
         />

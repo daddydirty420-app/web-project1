@@ -27,7 +27,6 @@ export default async function Page() {
     return (
         <EmailEditForm
         session={session}
-        accessToken={accessToken}
         />
     );
 };

@@ -5,15 +5,15 @@ import EditUI from "../editUI";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "../type";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     user: User;
     page: "normal" | "delivery";
     deliveryId?: string;
 };
 
-export default function PhoneNumberEdit({ accessToken, user, page, deliveryId }: Props) {
+export default function PhoneNumberEdit({ user, page, deliveryId }: Props) {
     const [value, setValue] = useState(user.phone_number);
     const router = useRouter();
 
@@ -28,11 +28,13 @@ export default function PhoneNumberEdit({ accessToken, user, page, deliveryId }:
         }
         
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/phone-number-edit`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify({
                     phoneNumber: value,

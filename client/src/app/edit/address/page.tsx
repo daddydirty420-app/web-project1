@@ -39,7 +39,6 @@ export default async function Page() {
 
     return (
         <AddressEditForm
-        accessToken={accessToken}
         address={address}
         page="normal"
         />

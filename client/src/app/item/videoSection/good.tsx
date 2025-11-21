@@ -7,25 +7,31 @@ import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
+import { Session } from "next-auth";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
-    accessToken: string | null;
+    session: Session | null;
     initialGood?: boolean;
     initialCount?: number;
     page: "normal" | "admin";
 };
 
-export default function Good({ id, sellerMe, accessToken, initialGood, initialCount, page }: Props) {
-    const { data: goodStatus } = useGoodStatus(id, accessToken ?? "");
-    const { data: goodCount } = useGoodCount(id, accessToken ?? "");
+export default function Good({ id, sellerMe, session, initialGood, initialCount, page }: Props) {
+    const { data: goodStatus } = useGoodStatus(id);
+    const { data: goodCount } = useGoodCount(id);
     const router = useRouter();
 
     const good = goodStatus?.isGood ?? initialGood ?? false;
     const count = goodCount?.count ?? initialCount ?? 0;
 
+    const loggedIn = session?.user;
+
     const add = async () => {
+        const accessToken = await refreshToken();
+
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/add/${id}`, {
             method: 'POST',
             headers: {
@@ -37,6 +43,8 @@ export default function Good({ id, sellerMe, accessToken, initialGood, initialCo
     };
 
     const remove = async () => {
+        const accessToken = await refreshToken();
+
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/remove/${id}`, {
             method: 'POST',
             headers: {
@@ -51,7 +59,7 @@ export default function Good({ id, sellerMe, accessToken, initialGood, initialCo
 
     return (
         <>
-        {accessToken && !sellerMe && page === "normal" && (
+        {loggedIn && !sellerMe && page === "normal" && (
             <>
             {good ? (
                 <FontAwesomeIcon
@@ -69,7 +77,7 @@ export default function Good({ id, sellerMe, accessToken, initialGood, initialCo
             </>
         )}
 
-        {(!accessToken || sellerMe || page !== "normal") && (
+        {(!loggedIn || sellerMe || page !== "normal") && (
             <FontAwesomeIcon icon={faThumbUpRegular} className={styles.goodIcon} onClick={userList} />
         )}
 

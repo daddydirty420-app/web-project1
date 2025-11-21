@@ -6,15 +6,15 @@ import EditUI from "../editUI";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Name } from "../type";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     name: Name;
     page: "normal" | "delivery";
     deliveryId?: string;
 };
 
-export default function NameEditForm({ accessToken, name, page, deliveryId }: Props) {
+export default function NameEditForm({ name, page, deliveryId }: Props) {
     const [seiValue, setSeiValue] = useState(name.sei);
     const [meiValue, setMeiValue] = useState(name.mei);
     const [seiKanaValue, setSeiKanaValue] = useState(name.sei_kana);
@@ -28,11 +28,13 @@ export default function NameEditForm({ accessToken, name, page, deliveryId }: Pr
         }
 
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/name-edit/${name.id}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify({
                     sei: seiValue,

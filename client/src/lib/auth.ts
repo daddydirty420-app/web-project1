@@ -108,7 +108,7 @@ export const authOptions: NextAuthOptions = {
                 token.refreshToken = user.refreshToken;
 
                 const now = Math.floor(Date.now() / 1000);
-                token.exp = now + 60 * 60;
+                token.exp = now + 15 * 60;
 
                 return token;
             };
@@ -117,7 +117,7 @@ export const authOptions: NextAuthOptions = {
                 token.accessToken = session.accessToken;
 
                 const now = Math.floor(Date.now() / 1000);
-                token.exp = now + 60 * 60;
+                token.exp = now + 15 * 60;
             }
 
             if (!token.accessToken || !token.refreshToken) {

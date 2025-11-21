@@ -5,13 +5,13 @@ import { InputStr, Button } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
 import { Session } from "next-auth";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     session: Session | null;
-    accessToken: string;
 };
 
-export default function EmailEditForm({ session, accessToken }: Props) {
+export default function EmailEditForm({ session }: Props) {
     const [value, setValue] = useState(session?.user.email || "");
 
     const submit = async () => {
@@ -22,11 +22,13 @@ export default function EmailEditForm({ session, accessToken }: Props) {
         }
         
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/email-edit`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken ?? ""}`,
                 },
                 body: JSON.stringify({
                     email: value,

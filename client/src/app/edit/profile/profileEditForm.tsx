@@ -6,13 +6,13 @@ import { useState } from "react";
 import { User } from "../type";
 import ProfileImage from "./profileImage";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     user: User;
 };
 
-export default function ProfileEditForm({ accessToken, user }: Props) {
+export default function ProfileEditForm({ user }: Props) {
     const [file, setFile] = useState<File | null>(null);
     const [userNameValue, setUserNameValue] = useState(user.user_name);
     const [introductionValue, setIntroductionValue] = useState(user.user_introduction);
@@ -20,13 +20,15 @@ export default function ProfileEditForm({ accessToken, user }: Props) {
     const router = useRouter();
 
     const submit = async () => {
-        try {
-            if (!userNameValue) {
-                alert("必須項目が空になっています。");
-                return;
-            }
+        if (!userNameValue) {
+            alert("必須項目が空になっています。");
+            return;
+        }
             
-            const query = (file || defaultImage) ? "?imageEdit=true" : "";
+        const query = (file || defaultImage) ? "?imageEdit=true" : "";
+        
+        try {
+            const accessToken = await refreshToken();
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/profile-update${query}`, {
                 method: "POST",

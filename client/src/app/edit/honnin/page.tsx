@@ -37,7 +37,6 @@ export default async function Page() {
 
     return (
         <HonninEditForm
-        accessToken={accessToken}
         user={data.data}
         genderOptions={data.genderAllOptions}
         campaign

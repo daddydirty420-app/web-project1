@@ -39,7 +39,6 @@ export default async function Page() {
 
     return (
         <AccountEditForm
-        accessToken={accessToken}
         account={account}
         page="transfar"
         />

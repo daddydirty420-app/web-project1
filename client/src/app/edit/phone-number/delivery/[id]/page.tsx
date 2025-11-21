@@ -45,7 +45,6 @@ export default async function Page({ params }: Props) {
 
     return (
         <PhoneNumberEdit
-        accessToken={accessToken}
         user={phoneNumber}
         page="normal"
         deliveryId={id}
