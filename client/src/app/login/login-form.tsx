@@ -35,7 +35,7 @@ export default function LoginForm() {
         if (res?.error) {
             alert("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/set-cookie`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/set-cookie`, {
                 method: "POST",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
