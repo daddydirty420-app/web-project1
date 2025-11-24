@@ -3,7 +3,6 @@ import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
 import sequelize from "../db.js";
 import fetchAddressFromZip from "../services/addressService.js";
-import { Request, Response } from "aws-sdk";
 
 const router = Router();
 
