@@ -55,6 +55,10 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
         }
     }, [postNumber]);
 
+    console.log("DB値:", user.Address?.banchi);
+    console.log("state初期値:", banchi);
+
+
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
             alert("7桁の郵便番号を入力してください。");
@@ -91,6 +95,11 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
         const normalizedPostNumber = postNumber?.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
             alert("郵便番号は半角数字7桁で入力してください。");
+            return;
+        }
+
+        if (memberCount > 100000000 || memberCount === 0) {
+            alert("従業員数が不正な値です。");
             return;
         }
 
@@ -146,11 +155,6 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
 
         if (requiredBody.some(v => v === "" || v === undefined || v === null)) {
             alert("未入力の項目があります。");
-            return;
-        }
-
-        if (memberCount > 100000000) {
-            alert("従業員数が不正な値です。");
             return;
         }
 
