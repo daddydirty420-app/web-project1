@@ -47,9 +47,13 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
 
     const [check, setCheck] = useState(false);
 
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+
     const router = useRouter();
 
     useEffect(() => {
+        if (!user) return;
+
         setCompanyName(shopInfo?.conpany_name ?? "");
         setShopName(user.user_name);
         setPhoneNumber(user.phone_number);
@@ -58,7 +62,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
         setFoundedDate(shopInfo?.founded_date ?? null);
         setMemberCount(shopInfo?.member_count ?? 0);
         setHomepage(shopInfo?.homepage_url ?? "");
-        
+
         setCompanyNumber(shopInfo?.company_number ?? "");
         setCapital(shopInfo?.capital ?? 0);
 
@@ -75,13 +79,15 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     }, [user, shopInfo]);
 
     useEffect(() => {
+        if (isInitialLoad) {
+            setIsInitialLoad(false);
+            return;
+        }
+
         if (postNumber && postNumber.length === 7) {
             handleZipSearch();
         }
     }, [postNumber]);
-
-    console.log("DB値:", user.Address?.banchi);
-    console.log("state初期値:", banchi);
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
