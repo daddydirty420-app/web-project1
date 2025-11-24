@@ -22,61 +22,34 @@ type Props = {
 
 export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [selectOption, setSelectOption] = useState<number | null>(null);
-    const [companyName, setCompanyName] = useState("");
-    const [shopName, setShopName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [openDateTime, setOpenDateTime] = useState("");
-    const [foundedDate, setFoundedDate] = useState<Date | null>(null);
-    const [memberCount, setMemberCount] = useState(0);
-    const [homepage, setHomepage] = useState<string | null>(null);
+    const [companyName, setCompanyName] = useState(shopInfo?.conpany_name ?? "");
+    const [shopName, setShopName] = useState(user.user_name);
+    const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
+    const [email, setEmail] = useState(shopInfo?.email ?? user.email ?? "");
+    const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time ?? "");
+    const [foundedDate, setFoundedDate] = useState<Date | null>(shopInfo?.founded_date ?? null);
+    const [memberCount, setMemberCount] = useState(shopInfo?.member_count ?? 0);
+    const [homepage, setHomepage] = useState<string | null>(shopInfo?.homepage_url ?? "");
 
-    const [companyNumber, setCompanyNumber] = useState("");
-    const [capital, setCapital] = useState<number | null>(null);
+    const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? "");
+    const [capital, setCapital] = useState<number | null>(shopInfo?.capital ?? null);
 
-    const [sei, setSei] = useState("");
-    const [mei, setMei] = useState("");
-    const [seiKana, setSeiKana] = useState("");
-    const [meiKana, setMeiKana] = useState("");
+    const [sei, setSei] = useState(user.Name?.sei ?? "");
+    const [mei, setMei] = useState(user.Name?.mei ?? "");
+    const [seiKana, setSeiKana] = useState(user.Name?.sei_kana ?? "");
+    const [meiKana, setMeiKana] = useState(user.Name?.mei_kana ?? "");
     
-    const [postNumber, setPostNumber] = useState("");
-    const [todouhuken, setTodouhuken] = useState("");
-    const [shikutyouson, setShikutyouson] = useState("");
-    const [banchi, setBanchi] = useState("");
-    const [building, setBuilding] = useState("");
+    const [postNumber, setPostNumber] = useState(user.Address?.post_number ?? "");
+    const [todouhuken, setTodouhuken] = useState(user.Address?.AddressTodouhuken?.name ?? "");
+    const [shikutyouson, setShikutyouson] = useState(user.Address?.shikutyouson ?? "");
+    const [banchi, setBanchi] = useState(user.Address?.banchi ?? "");
+    const [building, setBuilding] = useState(user.Address?.building ?? "");
 
     const [check, setCheck] = useState(false);
 
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
     const router = useRouter();
-
-    useEffect(() => {
-        if (!user) return;
-
-        setCompanyName(shopInfo?.conpany_name ?? "");
-        setShopName(user.user_name);
-        setPhoneNumber(user.phone_number);
-        setEmail(shopInfo?.email ?? user.email ?? "");
-        setOpenDateTime(shopInfo?.open_date_time ?? "");
-        setFoundedDate(shopInfo?.founded_date ?? null);
-        setMemberCount(shopInfo?.member_count ?? 0);
-        setHomepage(shopInfo?.homepage_url ?? "");
-
-        setCompanyNumber(shopInfo?.company_number ?? "");
-        setCapital(shopInfo?.capital ?? 0);
-
-        setSei(user.Name?.sei ?? "");
-        setMei(user.Name?.mei ?? "");
-        setSeiKana(user.Name?.sei_kana ?? "");
-        setMeiKana(user.Name?.mei_kana ?? "");
-
-        setPostNumber(user.Address?.post_number ?? "");
-        setTodouhuken(user.Address?.AddressTodouhuken?.name ?? "");
-        setShikutyouson(user.Address?.shikutyouson ?? "");
-        setBanchi(user.Address?.banchi ?? "");
-        setBuilding(user.Address?.building ?? "");
-    }, [user, shopInfo]);
 
     useEffect(() => {
         if (isInitialLoad) {
