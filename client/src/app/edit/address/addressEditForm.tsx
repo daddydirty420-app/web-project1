@@ -98,8 +98,8 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
+                alert(data.message);
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
                 return;
             }
 

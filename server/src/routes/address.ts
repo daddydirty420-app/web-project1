@@ -7,6 +7,8 @@ const router = Router();
 
 router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const todouhuken = req.body.todouhuken;
+    const postNumber = req.body.postNumber;
+    const shikutyouson = req.body.shikutyouson;
 
     try {
         const address = await Address.findByPk(req.params.id, {
@@ -31,12 +33,29 @@ router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Re
             res.status(404).json({ message: "都道府県が不正な値です。" });
             return;
         }
-        const todouhukenId = todouhukenData.id;
+
+        try {
+            const fromZip = await fetchAddressFromZip(postNumber);
+
+            if (fromZip.todouhuken_name !== todouhuken) {
+                res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
+                return;
+            }
+
+            if (fromZip.shikutyouson !== shikutyouson) {
+                res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
+                return;
+            }
+        } catch (err) {
+            console.error("住所チェックエラー：", err);
+            res.status(400).json({ message: "郵便番号が不正です。" });
+            return;
+        }
 
         await address.update({
-            post_number: req.body.postNumber,
-            todouhuken_id: todouhukenId,
-            shikutyouson: req.body.shikutyouson,
+            post_number: postNumber,
+            todouhuken_id: todouhukenData.id,
+            shikutyouson: shikutyouson,
             banchi: req.body.banchi,
             building: req.body.building,
         });

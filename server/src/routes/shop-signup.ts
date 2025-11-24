@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
 import sequelize from "../db.js";
+import fetchAddressFromZip from "../services/addressService.js";
 
 const router = Router();
 
@@ -64,7 +65,25 @@ router.post("/signup1-create", authenticateToken, async (req: Request, res: Resp
             },
         });
         if (!todouhukenData || (todouhukenData.id < 1 || todouhukenData.id > 47)) {
-            res.status(404).json({ message: "都道府県データが見つかりません。" });
+            res.status(404).json({ message: "都道府県が不正な値です。" });
+            return;
+        }
+
+        try {
+            const fromZip = await fetchAddressFromZip(postNumber);
+
+            if (fromZip.todouhuken_name !== todouhuken) {
+                res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
+                return;
+            }
+
+            if (fromZip.shikutyouson !== shikutyouson) {
+                res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
+                return;
+            }
+        } catch (err) {
+            console.error("住所チェックエラー：", err);
+            res.status(400).json({ message: "郵便番号が不正です。" });
             return;
         }
 
