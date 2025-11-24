@@ -139,7 +139,7 @@ export default async function Page() {
                         )}
                         </>
                     )}
-                    <NormalLink url='/reccomend' text='FLEXレコメンド月額プラン加入・変更' />
+                    <NormalLink url='/reccomend' text='レコメンド月額プラン加入・変更' />
                     <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} />
                     <Link href='/notification' className={styles.linkElem}>
                         <p>お知らせ</p>

@@ -55,6 +55,7 @@
 }
 
 .textBottomSmall {
+    max-width: 600px;
     margin: 3rem auto;
     font-size: 12px;
 }
