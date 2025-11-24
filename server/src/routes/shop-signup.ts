@@ -3,6 +3,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
 import sequelize from "../db.js";
 import fetchAddressFromZip from "../services/addressService.js";
+import { Request, Response } from "aws-sdk";
 
 const router = Router();
 
@@ -187,6 +188,47 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+    const shopId = req.params.id;
+
+    try {
+        let data = await BankAccount.findOne({
+            attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
+            where: { shop_info_id: shopId },
+            include: [
+                {
+                    model: AccountTypeOption,
+                    attributes: ['id', 'name'],
+                },
+            ],
+        });
+
+        if (!data) {
+            data = await BankAccount.findOne({
+                attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
+                where: { user_id: userId },
+                include: [
+                    {
+                        model: AccountTypeOption,
+                        attributes: ['id', 'name'],
+                    },
+                ],
+            });
+        }
+
+        if (!data) {
+            res.status(404).json({ message: "口座情報が見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
 });
 

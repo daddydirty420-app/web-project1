@@ -8,6 +8,23 @@ export type TodouhukenOption = {
     name: string;
 };
 
+export type AccountTypeOption = {
+    id: string;
+    name: string;
+};
+
+export type BankAccount = {
+    id: string;
+    bank_name: string;
+    bank_code: string;
+    branch: string;
+    branch_code: string;
+    account_type_id: number;
+    account_number: string;
+    meigi: string;
+    AccountTypeOption: AccountTypeOption;
+};
+
 export type Address = {
     id: string;
     post_number: string;
@@ -38,6 +55,9 @@ export type ShopInfo = {
     member_count: number;
     founded_date: Date;
     ComOrFreeOption?: ComOrFreeOption | null;
+    Address?: Address | null;
+    Name?: Name | null;
+    BankAccount?: BankAccount | null;
 };
 
 export type User = {
@@ -47,4 +67,5 @@ export type User = {
     phone_number: string;
     Address?: Address;
     Name?: Name;
+    BankAccount?: BankAccount | null;
 };

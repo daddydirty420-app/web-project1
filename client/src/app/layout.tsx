@@ -17,14 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FLEX OUTDOOR",
-  description: "動画で魅力を伝える！アウトドア専門フリマ「FLEX OUTDOOR」。新品からヴィンテージ品まで、あらゆる自慢のギアを動画で紹介＆販売！動画だから、商品の状態や使い方も一目瞭然。自慢のギアで、アウトドア好き同士がつながる、新しい売買体験を！",
-  applicationName: "FLEX OUTDOOR",
+  title: "テスト用サイト（仮）",
+  description: "テストテストテスト",
+  applicationName: "テスト用サイト（仮）",
   generator: "Next.js",
-  keywords: ['アウトドア', 'フリマ', '動画投稿', '動画配信', 'ネットショップ', 'ギア販売', 'キャンプ', '登山', 'ハイキング', 'ウェア', 'アウトドア用品', 'バーベキュー', 'ノースフェイス', 'コールマン'],
+  keywords: ["テスト"],
   openGraph: {
     type: 'website',
-    siteName: 'FLEX OUTDOOR',
+    siteName: 'テスト用サイト（仮）',
     locale: 'ja_JP'
   },
   robots: {

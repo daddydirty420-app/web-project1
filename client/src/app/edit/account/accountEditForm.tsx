@@ -67,8 +67,6 @@ export default function AccountEditForm({ account, page }: Props) {
                     return;
                 }
 
-                console.log("銀行検索結果:", data);
-
                 const suggestions = data?.banks?.map((b: any) => ({
                     name: b.name,
                     code: b.code,
@@ -105,7 +103,6 @@ export default function AccountEditForm({ account, page }: Props) {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/search-branch?keyword=${branchQuery}&bankCode=${bankCode || account.bank_code}`);
                 
                 const data = await res.json();
-                console.log("支店名検索結果:", data);
 
                 if (!res.ok) {
                     console.error("支店名検索エラー：", data.message);
