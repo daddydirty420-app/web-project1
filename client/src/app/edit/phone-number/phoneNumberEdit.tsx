@@ -30,11 +30,16 @@ export default function PhoneNumberEdit({ user, page, deliveryId }: Props) {
         try {
             const accessToken = await refreshToken();
 
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/phone-number-edit`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     phoneNumber: value,

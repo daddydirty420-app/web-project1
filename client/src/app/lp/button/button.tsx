@@ -1,16 +1,13 @@
-import { Session } from "next-auth";
 import styles from "../lp.module.css";
 import Link from "next/link";
 
 type Props = {
     shopPage?: boolean;
     hasShop?: boolean;
-    session: Session | null;
+    loggedIn: boolean;
 };
 
-export default async function Button({ shopPage, hasShop, session }: Props) {
-    const loggedIn = !!session?.user;
-
+export default async function Button({ shopPage, hasShop, loggedIn }: Props) {
     const signupPage = '/signup';
     const loginPage = '/login';
     const uploadPage = '/upload/before';

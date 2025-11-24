@@ -3,11 +3,10 @@ import styles from './profile.module.css';
 
 type Props = {
     userId: string;
-    accessToken: string | null;
 };
 
-export default async function FollowSection({ userId, accessToken }: Props) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`, { cache: 'no-store'});
+export default async function FollowSection({ userId }: Props) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`, { cache: 'no-store' });
 
     if (!res.ok) {
         const errorData = await res.json();
@@ -19,8 +18,8 @@ export default async function FollowSection({ userId, accessToken }: Props) {
 
     return (
         <section className={styles.followDiv}>
-            <FollowStat userId={userId} type="follow" initialCount={followCount} accessToken={accessToken} />
-            <FollowStat userId={userId} type="follower" initialCount={followerCount} accessToken={accessToken} />
+            <FollowStat userId={userId} type="follow" initialCount={followCount} />
+            <FollowStat userId={userId} type="follower" initialCount={followerCount} />
         </section>
     )
 }

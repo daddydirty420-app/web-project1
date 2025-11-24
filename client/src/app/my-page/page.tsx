@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
@@ -140,7 +140,7 @@ export default async function Page() {
                         </>
                     )}
                     <NormalLink url='/reccomend' text='FLEXレコメンド月額プラン加入・変更' />
-                    <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} accessToken={accessToken} />
+                    <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} />
                     <Link href='/notification' className={styles.linkElem}>
                         <p>お知らせ</p>
                         {data.unreadCount >= 1 && (
@@ -208,5 +208,5 @@ export default async function Page() {
 
         <Footer />
         </>
-    )
+    );
 }

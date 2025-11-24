@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
+    const loggedIn = !!session?.user;
         
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
@@ -37,5 +38,5 @@ export default async function Page() {
 
     const data: Res = await res.json();
 
-    return <Lp itemList={data} session={session} accessToken={accessToken || ""} />;
+    return <Lp itemList={data || null} loggedIn={loggedIn} />;
 };

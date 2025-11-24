@@ -6,20 +6,17 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCampground, faStore } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { Session } from 'next-auth';
 import Introduction from './introduction';
 
 type Props = {
     data: Res;
     userId: string;
-    session: Session | null;
-    accessToken: string | null;
+    currentUserId: string | null;
     adminPage?: boolean;
+    loggedIn: boolean;
 };
 
-export default function ProfileMain({ data, userId, session, accessToken, adminPage }: Props) {
-    const loggedIn = !!session?.user;
-    const currentUserId = session?.user?.id;
+export default function ProfileMain({ data, userId, currentUserId, adminPage, loggedIn }: Props) {
     const sameId = userId === currentUserId?.toString();
 
     return (
@@ -46,7 +43,7 @@ export default function ProfileMain({ data, userId, session, accessToken, adminP
                     <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
                 )}
             </div>
-            {loggedIn && !sameId && !adminPage && <FollowButton targetUserId={userId} session={session} accessToken={accessToken} />}
+            {loggedIn && !sameId && !adminPage && <FollowButton targetUserId={userId} currentUserId={currentUserId} />}
             {loggedIn && sameId && !adminPage && <EditButton />}
         </section>
 

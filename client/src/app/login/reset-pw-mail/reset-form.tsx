@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import styles from '@/styles/login.module.css'
+import { useState } from 'react';
+import styles from '@/styles/login.module.css';
 
 export default function ResetForm() {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ export default function ResetForm() {
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
             });
 
@@ -41,5 +41,5 @@ export default function ResetForm() {
 
             <button type="submit" className={styles.green}>メールを送信する</button>
         </form>
-    )
+    );
 }

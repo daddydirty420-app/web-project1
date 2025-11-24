@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import styles from '@/styles/login.module.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from '@/styles/login.module.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignupForm() {
     const [visible, setVisible] = useState(false);
@@ -110,5 +110,5 @@ export default function SignupForm() {
 
             <button type="submit" className={styles.green}>認証メールを送る</button>
         </form>
-    )
+    );
 }

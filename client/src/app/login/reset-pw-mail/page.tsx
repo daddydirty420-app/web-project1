@@ -1,7 +1,7 @@
 import { Container } from "@/components";
 import ResetForm from './reset-form';
 import { Metadata } from "next";
-import styles from '@/styles/login.module.css'
+import styles from '@/styles/login.module.css';
 
 export const metadata: Metadata = {
     title: "パスワードリセット | FLEX OUTDOOR",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function PasswordReset() {
     return (
@@ -21,5 +21,5 @@ export default function PasswordReset() {
                 <ResetForm />
             </section>
         </Container>
-    )
+    );
 }

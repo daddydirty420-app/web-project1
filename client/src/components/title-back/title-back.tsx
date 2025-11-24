@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { useRouter } from 'next/navigation'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import styles from './title-back.module.css'
+import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import styles from './title-back.module.css';
 
 type pageTitleProps = {
     title: string,
-}
+};
 
 export default function TitleAndBack({ title }: pageTitleProps) {
     const router = useRouter();
@@ -22,5 +22,5 @@ export default function TitleAndBack({ title }: pageTitleProps) {
             className={styles.back}
             />
         </div>
-    )
+    );
 }

@@ -69,11 +69,16 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
         try {
             const accessToken = await refreshToken();
 
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/address-edit/${address.id}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
                     postNumber,

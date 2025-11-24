@@ -6,15 +6,14 @@ import UploadButton from "./uploadButton";
 type Props = {
     id: string;
     item: Item;
-    accessToken: string;
 };
 
-export default function SellerSectionTop({ id, item, accessToken }: Props) {
+export default function SellerSectionTop({ id, item }: Props) {
     return (
         <nav>
             <UrlText />
-            <SaleButton item={item} accessToken={accessToken} />
-            <UploadButton id={id} accessToken={accessToken} />
+            <SaleButton item={item} />
+            <UploadButton id={id} />
         </nav>
     );
 };

@@ -37,7 +37,6 @@ export default async function Page() {
 
     return (
         <Form
-        accessToken={accessToken}
         user={data.user}
         reccomendPayValue={data.minValue}
         />

@@ -4,19 +4,18 @@ import { useState } from "react";
 import styles from "./comment.module.css";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
-    session: Session | null;
-    accessToken: string | null;
     parentId?: string;
+    loggedIn: boolean;
 }
 
-export default function CommentForm({ id, sellerMe, session, accessToken, parentId }: Props) {
+export default function CommentForm({ id, sellerMe, parentId, loggedIn }: Props) {
     const [inputComment, setInputComment] = useState<string>("");
     const router = useRouter();
-    const loggedIn = !!session?.user;
 
     const upload = async () => {
         if (inputComment.length === 0) {
@@ -25,11 +24,18 @@ export default function CommentForm({ id, sellerMe, session, accessToken, parent
         }
 
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/upload/${id}?sellerMe=${sellerMe}&parentId=${parentId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ inputComment }),
             });

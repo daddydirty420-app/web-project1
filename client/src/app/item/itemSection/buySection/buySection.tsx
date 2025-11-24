@@ -8,30 +8,34 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { Session } from "next-auth";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
     item: Item;
-    session: Session | null;
-    accessToken: string | null;
+    loggedIn: boolean;
 };
 
-export default function BuySection({ id, item, session, accessToken }: Props) {
+export default function BuySection({ id, item, loggedIn }: Props) {
     const [cartIn, setCartIn] = useState(false);
     const router = useRouter();
 
-    const loggedIn = session?.user;
-
     useEffect(() => {
-        if (accessToken) {
+        if (loggedIn) {
             const fetchData = async () => {
                 try {
+                    const accessToken = await refreshToken();
+                
+                    if (!accessToken) {
+                        alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                        return;
+                    }
+
                     const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-status?itemId=${id}`, {
                         method: 'GET',
                         cache: 'no-store',
                         headers: {
-                            Authorization: `Bearer ${accessToken ?? ""}`,
+                            Authorization: `Bearer ${accessToken}`,
                         },
                     });
 
@@ -45,16 +49,23 @@ export default function BuySection({ id, item, session, accessToken }: Props) {
             }
 
             fetchData();
-        };
-    }, [id, accessToken]);
+        }
+    }, [id, loggedIn]);
 
     const add = async () => {
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-add?itemId=${id}`, {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 
@@ -71,11 +82,18 @@ export default function BuySection({ id, item, session, accessToken }: Props) {
 
     const remove = async () => {
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-remove?itemId=${id}`, {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 
@@ -96,12 +114,18 @@ export default function BuySection({ id, item, session, accessToken }: Props) {
         }
 
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/buy/${id}`, {
                 method: 'POST',
                 cache: 'no-store',
                 headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

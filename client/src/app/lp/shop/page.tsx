@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
+    const loggedIn = !!session?.user;
         
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
@@ -40,7 +41,7 @@ export default async function Page() {
     const shopRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/has-shop/me`, {
         method: 'GET',
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken ?? ""}`,
         },
         cache: 'no-store',
     });
@@ -51,5 +52,5 @@ export default async function Page() {
         hasShop = data.hasShop;
     }
 
-    return <Lp shopPage hasShop={hasShop} itemList={data} session={session} accessToken={accessToken || ""} />;
+    return <Lp shopPage hasShop={hasShop} itemList={data} loggedIn={loggedIn} />;
 };

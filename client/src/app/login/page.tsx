@@ -11,7 +11,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function Login() {
     return (
@@ -26,5 +26,5 @@ export default function Login() {
                 <Link href='/login/reset-pw-mail' className={styles.reset}>パスワードを忘れた方</Link>
             </section>
         </Container>
-    )
+    );
 }

@@ -7,15 +7,14 @@ import { Item } from "../itemPageTypes";
 type Props = {
     id: string;
     item: Item;
-    accessToken: string;
 };
 
-export default function SellerSectionBottom({ id, item, accessToken }: Props) {
+export default function SellerSectionBottom({ id, item }: Props) {
     return (
         <nav className={styles.sellerSectionBottom}>
-            <UploadButton id={id} accessToken={accessToken} />
-            <SaleButton item={item} accessToken={accessToken} />
-            <DeleteItem id={id} accessToken={accessToken} />
+            <UploadButton id={id} />
+            <SaleButton item={item} />
+            <DeleteItem id={id} />
         </nav>
     );
 };

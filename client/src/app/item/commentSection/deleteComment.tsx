@@ -7,24 +7,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     comment: Comment;
-    accessToken: string | null;
     page: "normal" | "admin";
 }
 
-export default function DeleteComment({ comment, accessToken, page }: Props) {
+export default function DeleteComment({ comment, page }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
     const deleteComment = async () => {
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/delete/${comment.id}?page=${page}`, {
                 method: "POST",
                 headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 

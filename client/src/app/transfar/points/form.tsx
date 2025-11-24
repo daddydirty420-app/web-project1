@@ -6,14 +6,14 @@ import { User } from "../types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string | null;
     user: User;
     reccomendPayValue: number;
 };
 
-export default function Form({ accessToken, user, reccomendPayValue }: Props) {
+export default function Form({ user, reccomendPayValue }: Props) {
     const [value, setValue] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
     const [popup, setPopup] = useState(false);
@@ -35,6 +35,13 @@ export default function Form({ accessToken, user, reccomendPayValue }: Props) {
         }
 
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfar/points-create`, {
                 method: "POST",
                 headers: {

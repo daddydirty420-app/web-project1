@@ -10,19 +10,22 @@ import CommentText from "./commentText";
 import Good from "./good";
 import ReportFloat from "./reportFloat";
 import DeleteComment from "./deleteComment";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     parentId: string;
-    accessToken: string | null;
     page: "normal" | "admin";
+    loggedIn: boolean;
 }
 
-export default function ReplyList({ parentId, accessToken, page }: Props) {
+export default function ReplyList({ parentId, page, loggedIn }: Props) {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
         const fetchComment = async () => {
             try {
+                const accessToken = await refreshToken();
+
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/reply-comment/${parentId}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",
                     headers: {
@@ -44,7 +47,7 @@ export default function ReplyList({ parentId, accessToken, page }: Props) {
         }
 
         fetchComment();
-    }, [parentId, accessToken, page]);
+    }, [parentId, page]);
 
     return (
         <>
@@ -62,10 +65,10 @@ export default function ReplyList({ parentId, accessToken, page }: Props) {
                             <CommentText comment={comment} page={page} />
 
                             <div className={styles.commentEditDiv}>
-                                <Good comment={comment} accessToken={accessToken} />
+                                <Good comment={comment} loggedIn={loggedIn} />
                                 <ReportFloat comment={comment} page={page} />
 
-                                {comment.isMyComment && <DeleteComment comment={comment} accessToken={accessToken} page={page} />}
+                                {comment.isMyComment && <DeleteComment comment={comment} page={page} />}
                             </div>
                         </div>
                     </section>

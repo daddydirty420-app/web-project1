@@ -10,7 +10,6 @@ import MainAllUser from "./main/mainAllUser";
 import MainShopUtil from "./main/mainShopUtil";
 import MainCampaign from "./main/mainCampaign";
 import { Items } from "@/types/itemListTypes";
-import { Session } from "next-auth";
 
 type Res = {
     items: Items[];
@@ -21,23 +20,22 @@ type Props = {
     shopPage?: boolean;
     hasShop?: boolean;
     itemList: Res;
-    session: Session | null;
-    accessToken: string | null;
+    loggedIn: boolean;
 };
 
-export default function TwoColumn({ shopPage, hasShop, itemList, session, accessToken }: Props) {
+export default function TwoColumn({ shopPage, hasShop, itemList, loggedIn }: Props) {
     return (
         <section className={styles.twoColumnContainer}>
             <aside className={styles.sidebar}>
-                <LpItemList defaultVideoList={itemList} accessToken={accessToken} />
+                <LpItemList defaultVideoList={itemList} />
             </aside>
             <main className={styles.main}>
                 <MainAbout shopPage={shopPage} />
-                <MainUploadFlow session={session} />
+                <MainUploadFlow loggedIn={loggedIn} />
                 {shopPage && <MainShopFlow />}
                 <MainQA />
                 {shopPage && <InquiryButton />}
-                <Button shopPage={shopPage} hasShop={hasShop} session={session} />
+                <Button shopPage={shopPage} hasShop={hasShop} loggedIn={loggedIn} />
                 {!shopPage && <MainAllUser />}
                 {shopPage && <MainShopUtil />}
                 <MainCampaign />

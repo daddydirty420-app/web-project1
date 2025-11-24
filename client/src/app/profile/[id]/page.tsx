@@ -33,9 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Profile({ params }: Props) {
     const session = await getServerSession(authOptions);
-        
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const loggedIn = !!session?.user;
+    const currentUserId = session?.user.id;
 
     const { id: userId } = await params;
     const defaultLimit = 15;
@@ -47,5 +46,5 @@ export default async function Profile({ params }: Props) {
 
     const data: Res = await res.json();
 
-    return <ProfilePage data={data} userId={userId} session={session} accessToken={accessToken || ""} />;
+    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId || ""} loggedIn={loggedIn} />;
 };

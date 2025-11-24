@@ -8,12 +8,10 @@ type Props = {
     userId: string;
     type: "follow" | "follower";
     initialCount: number;
-    accessToken: string | null;
 };
 
-export default function FollowStat({ userId, type, initialCount, accessToken }: Props) {
-    const { data } = useFollowCount(userId, accessToken ?? "");
-    if (!accessToken) return null;
+export default function FollowStat({ userId, type, initialCount }: Props) {
+    const { data } = useFollowCount(userId);
 
     const count = type === "follow" 
     ? data?.followCount ?? initialCount ?? 0

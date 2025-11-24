@@ -7,18 +7,17 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import CommentForm from "./commentForm";
 import CommentList from "./commentList";
 import { Comment } from "../itemPageTypes";
-import { Session } from "next-auth";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
-    session: Session | null;
-    accessToken: string | null;
     commentCount?: number;
     page: "normal" | "admin";
+    loggedIn: boolean;
 };
 
-export default function CommentSection({ id, sellerMe, session, accessToken, commentCount, page }: Props) {
+export default function CommentSection({ id, sellerMe, commentCount, page, loggedIn }: Props) {
     const [visible, setVisible] = useState(false);
     const [comments, setComments] = useState<Comment[]>([]);
 
@@ -27,6 +26,8 @@ export default function CommentSection({ id, sellerMe, session, accessToken, com
 
         const fetchComment = async () => {
             try {
+                const accessToken = await refreshToken();
+                
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/all-comment/${id}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",
                     headers: {
@@ -50,7 +51,7 @@ export default function CommentSection({ id, sellerMe, session, accessToken, com
         }
 
         fetchComment();
-    }, [visible, id, accessToken, page]);
+    }, [visible, id, page]);
 
 
     return (
@@ -62,8 +63,8 @@ export default function CommentSection({ id, sellerMe, session, accessToken, com
 
         {visible && (
             <>
-            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} />}
-            <CommentList id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} comments={comments} page={page} />
+            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} loggedIn={loggedIn} />}
+            <CommentList id={id} sellerMe={sellerMe} comments={comments} page={page} loggedIn={loggedIn} />
             </>
         )}
         </>

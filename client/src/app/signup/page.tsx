@@ -1,7 +1,7 @@
 import { Container } from "@/components";
 import SignupForm from './signup-form';
 import { Metadata } from "next";
-import styles from '@/styles/login.module.css'
+import styles from '@/styles/login.module.css';
 
 export const metadata: Metadata = {
     title: "会員登録 | FLEX OUTDOOR",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function Signup() {
     return (
@@ -21,5 +21,5 @@ export default function Signup() {
                 <SignupForm />
             </section>
         </Container>
-    )
+    );
 }

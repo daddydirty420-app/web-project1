@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import styles from './list.module.css'
+import styles from './list.module.css';
 import { ReactNode } from "react";
 
 type ListCheckProps = {
     children: ReactNode
-}
+};
 
 export default function ListCheck({ children }: ListCheckProps) {
     return (
@@ -13,5 +13,5 @@ export default function ListCheck({ children }: ListCheckProps) {
             <FontAwesomeIcon icon={faCheck} className="text-(--theme) text-base font-medium" />
             <div className={styles.listText}>{children}</div>
         </li>
-    )
+    );
 }

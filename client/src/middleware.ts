@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { JwtPayload } from "jsonwebtoken";
 
 export async function middleware(req) {
-    console.log("🔥 MIDDLEWARE FIRED:", req.url);
+    console.log("MIDDLEWARE FIRED:", req.url);
     const token = await getToken({
         req,
         secret: process.env.NEXTAUTH_SECRET,

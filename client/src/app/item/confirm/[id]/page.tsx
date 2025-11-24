@@ -43,7 +43,7 @@ export default async function Page({ params }: Props) {
         method: 'GET',
         cache: 'no-store',
         headers: {
-            Authorization: `Bearer ${session?.accessToken ?? ""}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -54,10 +54,10 @@ export default async function Page({ params }: Props) {
     const data = await res.json();
     const item: Item = data.item;
 
-    const sessionId = String(session?.user?.id).trim();
+    const userId = String(session?.user?.id).trim();
     const sellerId = String(item.seller_id).trim();
 
-    if (sessionId !== sellerId) {
+    if (userId !== sellerId) {
         redirect(`/item/${id}`);
     }
 
@@ -65,8 +65,8 @@ export default async function Page({ params }: Props) {
     id={id}
     item={item}
     page="confirm"
-    session={session}
-    accessToken={accessToken}
     sellerMe
+    loggedIn
+    userId={userId || ""}
     />
 };

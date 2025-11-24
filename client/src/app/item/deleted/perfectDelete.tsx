@@ -4,18 +4,25 @@ import styles from "./deleted.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
-    accessToken: string;
 };
 
-export default function PerfectDelete({ id, accessToken }: Props) {
+export default function PerfectDelete({ id }: Props) {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
     
     const deleteItem = async () => {
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/perfect-delete/${id}`, {
                 method: "POST",
                 headers: {

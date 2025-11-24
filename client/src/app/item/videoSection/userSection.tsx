@@ -8,17 +8,15 @@ import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { faCampground, faStore } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
 import Link from "next/link";
-import { Session } from "next-auth";
 
 type Props = {
     item: Item;
     sellerMe?: boolean;
-    session: Session | null;
-    accessToken: string | null;
     page: "normal" | "admin";
+    userId: string | null;
 };
 
-export default function UserSection({ item, sellerMe, session, accessToken, page }: Props) {
+export default function UserSection({ item, sellerMe, page, userId }: Props) {
     const user = item.User ?? null;
     const sellerId = user?.id;
     const profileUrl = `/profile/${sellerId}`;
@@ -41,7 +39,7 @@ export default function UserSection({ item, sellerMe, session, accessToken, page
                     {user?.early_seller && <FontAwesomeIcon icon={faCampground} className={styles.earlyIcon} />}
                     {user?.ShopInfo && <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />}
                 </Link>
-                {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} session={session} accessToken={accessToken} />}
+                {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} currentUserId={userId} />}
             </div>
 
             <div className="flex items-center ml-4 mt-1">

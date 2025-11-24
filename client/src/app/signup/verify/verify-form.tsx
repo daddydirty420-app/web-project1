@@ -35,7 +35,7 @@ export default function VerifyForm() {
                 const refRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference_code/input`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ input: referenceCode })
+                    body: JSON.stringify({ input: referenceCode }),
                 });
 
                 if (!refRes.ok) {
@@ -106,5 +106,5 @@ export default function VerifyForm() {
                 </div>
             )}
         </form>
-    )
+    );
 }

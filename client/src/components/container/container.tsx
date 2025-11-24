@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
-import styles from './container.module.css'
+import { ReactNode } from 'react';
+import styles from './container.module.css';
 
 type ContainerProps = {
     children: ReactNode,
     header?: boolean
-}
+};
 
 export default function Container({ children, header = false }: ContainerProps) {
     const classNames = header
@@ -15,5 +15,5 @@ export default function Container({ children, header = false }: ContainerProps) 
         <div className={classNames}>
             {children}
         </div>
-    )
+    );
 }

@@ -2,25 +2,24 @@ import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
 import Good from "./good";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
     item: Item;
     sellerMe?: boolean;
-    session: Session | null;
     goodCount?: number;
     isGood?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
+    loggedIn: boolean;
 };
 
-export default function CountElem({ id, item, sellerMe, session, goodCount, isGood, page }: Props) {
+export default function CountElem({ id, item, sellerMe, goodCount, isGood, page, loggedIn }: Props) {
     return (
         <section className={styles.countElem}>
             {["normal", "admin"].includes(page) && (
                 <>
                 <div className={styles.goodDiv}>
-                    <Good id={id} sellerMe={sellerMe} session={session} initialCount={goodCount} initialGood={isGood} page={page as "normal" | "admin"} />
+                    <Good id={id} sellerMe={sellerMe} initialCount={goodCount} initialGood={isGood} page={page as "normal" | "admin"} loggedIn={loggedIn} />
                 </div>
 
                 <div className="block text-center">

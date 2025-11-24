@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         index: false,
         follow: false
     }
-}
+};
 
 export default function Company() {
     return (
@@ -23,7 +23,7 @@ export default function Company() {
 
             <TokuteiContainer>
                 <TokuteiSection header='事業者名'>
-                    <p>FLEX OUTDOOR</p>
+                    <p>sex</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='代表者'>
@@ -31,7 +31,7 @@ export default function Company() {
                 </TokuteiSection>
 
                 <TokuteiSection header='創業'>
-                    <p>2025年○○月○○日</p>
+                    <p>2026年○○月○○日</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='所在地'>
@@ -75,5 +75,5 @@ export default function Company() {
 
         <Footer />
         </>
-    )
+    );
 }

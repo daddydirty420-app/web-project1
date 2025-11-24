@@ -39,9 +39,9 @@ export default function Resend() {
             console.error(err)
             alert('サーバーエラーが発生しました。')
         }
-    }
+    };
 
     return (
         <p className={styles.referenceP} onClick={handleResend}>認証コードを再発行する</p>
-    )
+    );
 }

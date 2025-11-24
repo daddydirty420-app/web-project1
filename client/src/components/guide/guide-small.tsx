@@ -1,12 +1,12 @@
-import clsx from "clsx"
-import { ReactNode } from "react"
-import styles from './styles/guide-small.module.css'
+import clsx from "clsx";
+import { ReactNode } from "react";
+import styles from './styles/guide-small.module.css';
 
 type GuideSmallProps = {
     children: ReactNode,
     className?: string
-}
+};
 
 export default function GuideSmall({ children, className }: GuideSmallProps) {
-    return <small className={clsx('block text-gray-500 mt-2', styles.small, className)}>{children}</small>
+    return <small className={clsx('block text-gray-500 mt-2', styles.small, className)}>{children}</small>;
 }

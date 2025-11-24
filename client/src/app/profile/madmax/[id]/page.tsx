@@ -52,5 +52,7 @@ export default async function Profile({ params }: Props) {
 
     const data: Res = await res.json();
 
-    return <ProfilePage data={data} userId={userId} adminPage session={session} accessToken={accessToken || ""} />;
+    const currentUserId = session?.user.id;
+
+    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId} adminPage loggedIn />;
 };

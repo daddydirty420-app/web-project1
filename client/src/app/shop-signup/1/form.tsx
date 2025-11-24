@@ -12,15 +12,15 @@ import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import StepBar from "../stepBar";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    accessToken: string;
     user: User;
     shopInfo: ShopInfo | null;
     ComOrFreeOption: ComOrFreeOption[];
 };
 
-export default function Form({ accessToken, user, shopInfo, ComOrFreeOption }: Props) {
+export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [selectOption, setSelectOption] = useState<number | null>(null);
     const [companyName, setCompanyName] = useState(shopInfo?.conpany_name || "");
     const [shopName, setShopName] = useState(user.user_name);
@@ -155,6 +155,13 @@ export default function Form({ accessToken, user, shopInfo, ComOrFreeOption }: P
         }
 
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1-create`, {
                 method: "POST",
                 headers: {

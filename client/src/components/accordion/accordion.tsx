@@ -1,23 +1,23 @@
-'use client'
+'use client';
 
-import React, { useState, useRef, useEffect } from 'react'
-import AcStyle from './styles/accordion.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { ReactNode } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
+import AcStyle from './styles/accordion.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { ReactNode } from 'react';
 
 type accordionProps = {
     heading: string,
     children: ReactNode
-}
+};
 
 export default function Accordion({ heading, children }: accordionProps) {
-    const [textIsOpen, setTextIsOpen] = useState(false)
-    const refText = useRef<HTMLDivElement>(null)
+    const [textIsOpen, setTextIsOpen] = useState(false);
+    const refText = useRef<HTMLDivElement>(null);
 
     const toggleText = () => {
         setTextIsOpen((prev) => !prev)
-    }
+    };
 
     useEffect(() => {
         const el = refText.current
@@ -35,7 +35,7 @@ export default function Accordion({ heading, children }: accordionProps) {
                 el.style.height = '0px'
             })
         }
-    }, [textIsOpen])
+    }, [textIsOpen]);
 
     return (
         <div className={textIsOpen ? AcStyle.open : AcStyle.close}>
@@ -52,5 +52,5 @@ export default function Accordion({ heading, children }: accordionProps) {
                 <div className={AcStyle.textInner}>{children}</div>
             </div>
         </div>
-    )
+    );
 }

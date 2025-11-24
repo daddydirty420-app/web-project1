@@ -37,7 +37,6 @@ export default async function Page() {
 
     return (
         <Form
-        accessToken={accessToken}
         user={data.data}
         shopInfo={data.shopData}
         ComOrFreeOption={data.comOrFree}

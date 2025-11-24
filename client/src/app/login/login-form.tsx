@@ -7,10 +7,6 @@ import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 
-interface CustomSignInResponse extends SignInResponse {
-  refreshToken?: string;
-}
-
 export default function LoginForm() {
     const [visible, setVisible] = useState(false);
     const [email, setEmail] = useState('');
@@ -28,7 +24,7 @@ export default function LoginForm() {
             email,
             password,
             rememberMe: rememberMe ? "true" : "false",
-        }) as CustomSignInResponse;
+        });
 
         setLoading(false);
 

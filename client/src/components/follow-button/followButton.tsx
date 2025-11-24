@@ -3,38 +3,48 @@
 import { useFollowStatus, updateFollowCache } from '@/hooks/useFollow';
 import styles from './followButton.module.css';
 import clsx from 'clsx';
-import { Session } from 'next-auth';
+import { refreshToken } from '@/lib/refreshToken';
 
 type Props = {
     targetUserId: string;
     withCount?: boolean;
-    session: Session | null;
-    accessToken: string | null;
+    currentUserId: string | null;
 };
 
-export default function FollowButton({ targetUserId, withCount, session, accessToken }: Props) {
-    const currentUserId = session?.user?.id;
-
-    const { data: status } = useFollowStatus(targetUserId, accessToken ?? "");
-    if (!accessToken) return null;
+export default function FollowButton({ targetUserId, withCount, currentUserId }: Props) {
+    const { data: status } = useFollowStatus(targetUserId);
 
     if (!currentUserId || !targetUserId) return null;
 
     const add = async () => {
+        const accessToken = await refreshToken();
+        
+        if (!accessToken) {
+            alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+            return;
+        }
+
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/add/${targetUserId}`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken}`,
             },
         });
         updateFollowCache(targetUserId, currentUserId, true, withCount ?? true);
     }
 
     const remove = async () => {
+        const accessToken = await refreshToken();
+        
+        if (!accessToken) {
+            alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+            return;
+        }
+
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${targetUserId}`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken}`,
             },
         });
         updateFollowCache(targetUserId, currentUserId, false, withCount ?? true);

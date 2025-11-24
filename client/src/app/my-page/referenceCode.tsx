@@ -3,6 +3,7 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import styles from './mypage.module.css';
+import { refreshToken } from '@/lib/refreshToken';
 
 type ReferenceCode = {
     output: string;
@@ -11,15 +12,21 @@ type ReferenceCode = {
 type Props = {
     itemCount: number;
     referenceCount: number;
-    accessToken: string;
 }
 
-export default function ReferenceCode({ itemCount, referenceCount, accessToken }: Props) {
+export default function ReferenceCode({ itemCount, referenceCount }: Props) {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [referenceCodeOutput, setReferenceCodeOutput] = useState<ReferenceCode | null>(null);
 
     const outputReferenceCode = async () => {
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference-code/output`, {
                 method: 'POST',
                 headers: {

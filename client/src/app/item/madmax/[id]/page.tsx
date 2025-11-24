@@ -58,14 +58,16 @@ export default async function Page({ params }: Props) {
     const goodCount: number = data.goodCount;
     const reportCount: number = data.reportCount;
 
+    const userId = session?.user.id;
+
     return <ItemPage
     id={id}
     item={item}
     page="admin"
-    session={session}
-    accessToken={accessToken}
     commentCount={commentCount}
     goodCount={goodCount}
     reportCount={reportCount}
+    userId={userId || ""}
+    loggedIn
     />;
 };

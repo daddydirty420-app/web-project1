@@ -30,6 +30,11 @@ export default function ProfileEditForm({ user }: Props) {
         try {
             const accessToken = await refreshToken();
 
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/profile-update${query}`, {
                 method: "POST",
                 headers: {
@@ -67,7 +72,7 @@ export default function ProfileEditForm({ user }: Props) {
                 }
             }
 
-            router.push("/my-page");
+            router.push(`/profile/${user.id}`);
         } catch (err) {
             console.error(err);
         }

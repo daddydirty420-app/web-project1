@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
 import { X } from "lucide-react";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
     item: Item;
-    accessToken: string;
 }
 
-export default function DeleteButton({ id, item, accessToken }: Props) {
+export default function DeleteButton({ id, item }: Props) {
     const [popup, setPopup] = useState(false);
     const [deleteReason, setDeleteReason] = useState("");
 
@@ -19,6 +19,13 @@ export default function DeleteButton({ id, item, accessToken }: Props) {
         if (!deleteReason || deleteReason === "") return;
 
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-admin/delete-item/${id}`, {
                 method: "POST",
                 headers: {

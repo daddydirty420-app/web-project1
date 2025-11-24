@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
         method: 'GET',
         cache: 'no-store',
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken ?? ""}`,
         },
     });
 
@@ -57,6 +57,9 @@ export default async function Page({ params }: Props) {
     const commentCount: number = data.commentCount;
     const goodCount: number = data.goodCount;
     const isGood: boolean = data.isGoodByMe;
+
+    const loggedIn = !!session?.user;
+    const userId = session?.user.id;
 
     const accessRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/access-normal/${id}`, {
         method: 'POST',
@@ -76,10 +79,10 @@ export default async function Page({ params }: Props) {
     itemList={itemList}
     sellerMe={sellerMe}
     page="normal"
-    session={session}
-    accessToken={accessToken || ""}
     commentCount={commentCount}
     goodCount={goodCount}
     isGood={isGood}
+    userId={userId || ""}
+    loggedIn={loggedIn}
     />;
 };

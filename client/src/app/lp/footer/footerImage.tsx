@@ -4,17 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import InquiryButton from "../button/inquiryButton";
 import clsx from "clsx";
-import { Session } from "next-auth";
 
 type Props = {
     shopPage?: boolean;
     hasShop?: boolean;
-    session: Session | null;
+    loggedIn: boolean;
 };
 
-export default async function FooterImage({ shopPage, hasShop, session }: Props) {
-    const loggedIn = !!session?.user;
-
+export default async function FooterImage({ shopPage, hasShop, loggedIn }: Props) {
     const signup = "/signup";
     const login = "/login";
     const shopSign = "/shop-signup/1";

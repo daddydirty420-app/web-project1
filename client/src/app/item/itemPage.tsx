@@ -16,7 +16,6 @@ import UploadButton from "./confirm/uploadButton";
 import DeleteItem from "./sellerSection/deleteItem";
 import Restore from "./deleted/restore";
 import PerfectDelete from "./deleted/perfectDelete";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
@@ -24,15 +23,15 @@ type Props = {
     itemList?: Items[];
     sellerMe?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
-    session: Session | null;
-    accessToken: string | null;
     commentCount?: number;
     goodCount?: number;
     isGood?: boolean;
     reportCount?: number;
+    userId: string | null;
+    loggedIn: boolean;
 };
 
-export default function ItemPage({ id, item, itemList, sellerMe, page, session, accessToken, commentCount, goodCount, isGood, reportCount }: Props) {
+export default function ItemPage({ id, item, itemList, sellerMe, page, commentCount, goodCount, isGood, reportCount, userId, loggedIn }: Props) {
     if (!["normal", "admin", "draft", "confirm", "deleted"].includes(page)) {
         console.error("ページ信号が正しくありません。page：", page);
         return;
@@ -53,34 +52,34 @@ export default function ItemPage({ id, item, itemList, sellerMe, page, session, 
         {page === "normal" && <Header />}
 
         <Container header={page === "normal"}>
-            {page === "deleted" && <Restore id={id} item={item} accessToken={accessToken || ""} />}
+            {page === "deleted" && <Restore id={id} item={item} />}
             {page === "confirm" && <Title />}
             {page === "draft" && <EditButton id={id} />}
-            {page === "admin" && <DeleteButton id={id} item={item} accessToken={accessToken || ""} />}
+            {page === "admin" && <DeleteButton id={id} item={item} />}
             {["normal", "admin", "draft"].includes(page) && <Back />}
 
-            <Main id={id} item={item} sellerMe={sellerMe} page={page} session={session} accessToken={accessToken} goodCount={goodCount} isGood={isGood} reportCount={reportCount} />
+            <Main id={id} item={item} sellerMe={sellerMe} page={page} goodCount={goodCount} isGood={isGood} reportCount={reportCount} userId={userId} loggedIn={loggedIn} />
             {["normal", "admin"].includes(page) && (
                 <>
                 {page === "normal" && <ItemListSection itemList={itemList} sellerMe={sellerMe} />}
                 {(page === "admin" || sellerMe) && <Link href={buttonLink} className={styles.uriageButton}>{buttonText}</Link>}
 
-                <CommentSection id={id} sellerMe={sellerMe} session={session} accessToken={accessToken} commentCount={commentCount} page={page as "normal" | "admin"} />
-                {sellerMe && page === "normal" && <SellerSectionBottom id={id} item={item} accessToken={accessToken || ""} />}
+                <CommentSection id={id} sellerMe={sellerMe} loggedIn={loggedIn} commentCount={commentCount} page={page as "normal" | "admin"} />
+                {sellerMe && page === "normal" && <SellerSectionBottom id={id} item={item} />}
                 </>
             )}
                 
             {page === "draft" && (
                 <>
                 <EditButton id={id} />
-                <DeleteItem id={id} accessToken={accessToken || ""} />
+                <DeleteItem id={id} />
                 </>
             )}
-            {page === "confirm" && <UploadButton id={id} accessToken={accessToken || ""} />}
+            {page === "confirm" && <UploadButton id={id} />}
             {page === "deleted" && (
                 <>
-                <Restore id={id} item={item} accessToken={accessToken || ""} />
-                <PerfectDelete id={id} accessToken={accessToken || ""} />
+                <Restore id={id} item={item} />
+                <PerfectDelete id={id} />
                 </>
             )}
         </Container>

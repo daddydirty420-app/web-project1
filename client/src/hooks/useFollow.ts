@@ -10,10 +10,10 @@ type FollowCountResponse = {
     followerCount: number;
 }
 
-export function useFollowStatus(targetUserId: string, accessToken: string) {
+export function useFollowStatus(targetUserId: string) {
     return useSWR<FollowStatus>(
         `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`,
-        fetcher(accessToken), {
+        fetcher(), {
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,
@@ -21,10 +21,10 @@ export function useFollowStatus(targetUserId: string, accessToken: string) {
     );
 }
 
-export function useFollowCount(userId: string, accessToken: string) {
+export function useFollowCount(userId: string) {
     return useSWR<FollowCountResponse>(
         `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`,
-        fetcher(accessToken), {
+        fetcher(), {
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,

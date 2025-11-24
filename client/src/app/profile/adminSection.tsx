@@ -6,14 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
+import { refreshToken } from '@/lib/refreshToken';
 
 type Props = {
     userId: string;
     adminPage: boolean;
-    accessToken: string;
 };
 
-export default function AdminSection({ userId, adminPage, accessToken }: Props) {
+export default function AdminSection({ userId, adminPage }: Props) {
     const [data, setData] = useState<User | null>(null);
     const [popup, setPopup] = useState(false);
     const [addPenalty, setAddPenalty] = useState(0);
@@ -22,13 +22,20 @@ export default function AdminSection({ userId, adminPage, accessToken }: Props) 
     const router = useRouter();
 
     useEffect(() => {
-        if (!adminPage || !accessToken) {
+        if (!adminPage) {
             router.push(`/profile/${userId}`);
             return;
         }
 
         const fetchData = async () => {
             try {
+                const accessToken = await refreshToken();
+                
+                if (!accessToken) {
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    return;
+                }
+
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
                     cache: 'no-store',
                     headers: {
@@ -51,16 +58,25 @@ export default function AdminSection({ userId, adminPage, accessToken }: Props) 
         }
 
         fetchData();
-    }, [userId, adminPage, accessToken, router]);
+    }, [userId, adminPage, router]);
 
     const submitPenalty = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
+            const accessToken = await refreshToken();
+                
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/add-penalty/${userId}`, {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
                 body: JSON.stringify({ addPenalty }),
             });
 
@@ -83,10 +99,19 @@ export default function AdminSection({ userId, adminPage, accessToken }: Props) 
         e.preventDefault();
 
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-uriage/${userId}`, {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                credentials: 'include',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
                 body: JSON.stringify({ deleteUriage }),
             });
 
@@ -108,10 +133,19 @@ export default function AdminSection({ userId, adminPage, accessToken }: Props) 
         e.preventDefault();
 
         try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-user/${userId}`, {
                 method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                credentials: 'include',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
                 body: JSON.stringify({ deleteReason }),
             });
 

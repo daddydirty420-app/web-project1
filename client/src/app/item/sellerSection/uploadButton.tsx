@@ -4,21 +4,27 @@ import styles from "./seller.module.css";
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
-    accessToken: string;
 };
 
-export default function UploadButton({ id, accessToken }: Props) {
+export default function UploadButton({ id }: Props) {
     const router = useRouter();
 
     const copy = async () => {
         try {
+            const accessToken = await refreshToken();
+            
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+            
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/copy-upload/${id}`, {
                 method: 'POST',
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

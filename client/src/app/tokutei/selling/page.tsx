@@ -136,5 +136,5 @@ export default function TokuteiSelling() {
         
         <Footer />
         </>
-    )
+    );
 }

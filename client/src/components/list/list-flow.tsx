@@ -1,11 +1,11 @@
-import clsx from "clsx"
-import { ReactNode } from "react"
-import styles from './list.module.css'
+import clsx from "clsx";
+import { ReactNode } from "react";
+import styles from './list.module.css';
 
 type ListFrowProps = {
     children: ReactNode,
     number: number,
-}
+};
 
 export default function ListFlow({ children, number }: ListFrowProps) {
     return (
@@ -13,5 +13,5 @@ export default function ListFlow({ children, number }: ListFrowProps) {
             <span className="text-(--theme) text-base font-medium">{number}.</span>
             <div className={clsx('break-words w-full', styles.listText)}>{children}</div>
         </li>
-    )
+    );
 }

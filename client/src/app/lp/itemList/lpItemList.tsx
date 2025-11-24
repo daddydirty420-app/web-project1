@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { Items } from "@/types/itemListTypes";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Res = {
     items: Items[];
@@ -16,10 +17,9 @@ type Res = {
 
 type Props = {
     defaultVideoList: Res;
-    accessToken: string | null;
 };
 
-export default function LpItemList({ defaultVideoList, accessToken }: Props) {
+export default function LpItemList({ defaultVideoList }: Props) {
     const [visibleIL, setVisibleIL] = useState(false);
     const [videoList, setVideoList] = useState<Items[] | null>(defaultVideoList.items);
     const [itemList, setItemList] = useState<Items[] | null>(null);
@@ -43,12 +43,14 @@ export default function LpItemList({ defaultVideoList, accessToken }: Props) {
 
     const setVL = async (page: number, limit: number) => {
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/video-list?page=${page}&limit=${limit}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,
                 },
-                cache: 'no-store'
+                cache: 'no-store',
             });
 
             if (res.ok) {
@@ -65,12 +67,14 @@ export default function LpItemList({ defaultVideoList, accessToken }: Props) {
 
     const setIL = async (page: number, limit: number) => {
         try {
+            const accessToken = await refreshToken();
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/item-list?limit=${limit}&page=${page}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,
                 },
-                cache: 'no-store'
+                cache: 'no-store',
             });
 
             if (res.ok) {

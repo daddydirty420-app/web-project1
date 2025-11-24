@@ -4,7 +4,6 @@ import HeaderSection from "./header/headerSection";
 import FooterImage from "./footer/footerImage";
 import FooterSitemap from "./footer/footerSitemap";
 import { Items } from "@/types/itemListTypes";
-import { Session } from "next-auth";
 
 type Res = {
     items: Items[];
@@ -15,20 +14,19 @@ type Props = {
     shopPage?: boolean;
     hasShop?: boolean;
     itemList: Res;
-    session: Session | null;
-    accessToken: string | null;
+    loggedIn: boolean;
 };
 
-export default function Lp({ shopPage, hasShop, itemList, session, accessToken }: Props) {
+export default function Lp({ shopPage, hasShop, itemList, loggedIn }: Props) {
     return (
         <>
-        <HeaderSection shopPage={shopPage} session={session} />
+        <HeaderSection shopPage={shopPage} loggedIn={loggedIn} />
         
         <Container>
-            <TwoColumn shopPage={shopPage} itemList={itemList} session={session} accessToken={accessToken} />
+            <TwoColumn shopPage={shopPage} itemList={itemList} loggedIn={loggedIn} />
         </Container>
 
-        <FooterImage shopPage={shopPage} hasShop={hasShop} session={session} />
+        <FooterImage shopPage={shopPage} hasShop={hasShop} loggedIn={loggedIn} />
         <FooterSitemap />
         </>
     )

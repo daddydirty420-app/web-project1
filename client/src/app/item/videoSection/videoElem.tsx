@@ -4,15 +4,15 @@ import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
 import { useEffect, useRef } from "react";
 import Hls from "hls.js";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     item: Item;
     sellerMe?: boolean;
-    accessToken: string | null;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function VideoElem({ item, sellerMe, accessToken, page }: Props) {
+export default function VideoElem({ item, sellerMe, page }: Props) {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
@@ -36,10 +36,11 @@ export default function VideoElem({ item, sellerMe, accessToken, page }: Props) 
     const playCount = async () => {
         if (sellerMe || page !== "normal") return;
         try {
+            const accessToken = await refreshToken();
+
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/onplay/${item.Video?.id}`, {
                 method: 'POST',
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken ?? ""}`,
                 },
             });

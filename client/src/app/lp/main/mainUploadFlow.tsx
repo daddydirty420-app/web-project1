@@ -5,13 +5,12 @@ import MainH2 from "./mainComponent/mainh2";
 import UploadButton from "../button/uploadButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen, faCamera, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
-import { Session } from "next-auth";
 
 type Props = {
-    session: Session | null;
-}
+    loggedIn: boolean;
+};
 
-export default function MainUploadFlow({ session }: Props) {
+export default function MainUploadFlow({ loggedIn }: Props) {
     return (
         <>
         <MainH2>出品の流れ</MainH2>
@@ -37,7 +36,7 @@ export default function MainUploadFlow({ session }: Props) {
 
         <section className={styles.mainSec}>
             <MainH3><span className="text-[var(--theme)]">STEP 2</span></MainH3>
-            <UploadButton session={session} />
+            <UploadButton loggedIn={loggedIn} />
             <MainP>「出品する」ボタンを押して、動画や商品画像、商品説明などを入力して、商品をアップロード。これで、出品完了！</MainP>
         </section>
 

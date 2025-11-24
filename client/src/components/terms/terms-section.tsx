@@ -1,11 +1,11 @@
-import { ReactNode } from "react"
-import styles from '@/styles/terms.module.css'
+import { ReactNode } from "react";
+import styles from '@/styles/terms.module.css';
 
 type TermsSectionProps = {
     number: number,
     heading: string,
     children: ReactNode
-}
+};
 
 export default function TermsSection({ number, heading, children }:TermsSectionProps) {
     return (
@@ -13,5 +13,5 @@ export default function TermsSection({ number, heading, children }:TermsSectionP
             <h2 className={styles.sectionTitle}>第 {number} 章　{heading}</h2>
             {children}
         </section>
-    )
+    );
 }

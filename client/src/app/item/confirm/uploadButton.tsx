@@ -6,13 +6,13 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { TermsList } from "@/components/terms";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
-    accessToken: string;
 }
 
-export default function UploadButton({ id, accessToken }: Props) {
+export default function UploadButton({ id }: Props) {
     const [popup, setPopup] = useState(false);
     const [check, setCheck] = useState(false);
     const router = useRouter();
@@ -24,6 +24,13 @@ export default function UploadButton({ id, accessToken }: Props) {
         };
 
         try {
+            const accessToken = await refreshToken();
+        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/upload-confirm/${id}`, {
                 method: "POST",
                 headers: {

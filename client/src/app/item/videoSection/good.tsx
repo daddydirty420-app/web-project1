@@ -8,18 +8,17 @@ import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-ic
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
-import { Session } from "next-auth";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
-    session: Session | null;
     initialGood?: boolean;
     initialCount?: number;
     page: "normal" | "admin";
+    loggedIn: boolean;
 };
 
-export default function Good({ id, sellerMe, session, initialGood, initialCount, page }: Props) {
+export default function Good({ id, sellerMe, initialGood, initialCount, page, loggedIn }: Props) {
     const { data: goodStatus } = useGoodStatus(id);
     const { data: goodCount } = useGoodCount(id);
     const router = useRouter();
@@ -27,32 +26,46 @@ export default function Good({ id, sellerMe, session, initialGood, initialCount,
     const good = goodStatus?.isGood ?? initialGood ?? false;
     const count = goodCount?.count ?? initialCount ?? 0;
 
-    const loggedIn = session?.user;
-
     const add = async () => {
-        const accessToken = await refreshToken();
+        try {
+            const accessToken = await refreshToken();
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/add/${id}`, {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${accessToken ?? ""}`,
-            },
-        });
-        updateGoodItemCache(id, true);
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/add/${id}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            updateGoodItemCache(id, true);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const remove = async () => {
-        const accessToken = await refreshToken();
+        try {
+            const accessToken = await refreshToken();
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/remove/${id}`, {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${accessToken ?? ""}`,
-            },
-        });
-        updateGoodItemCache(id, false);
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/remove/${id}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            updateGoodItemCache(id, false);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const userList = () => (sellerMe || page === "admin") && router.push(`/user-list/good-item/${id}`);
