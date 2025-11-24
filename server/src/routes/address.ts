@@ -28,7 +28,7 @@ router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Re
             },
         });
         if (!todouhukenData || (todouhukenData.id < 1 || todouhukenData.id > 47)) {
-            res.status(404).json({ message: "都道府県データが見つかりません。" });
+            res.status(404).json({ message: "都道府県が不正な値です。" });
             return;
         }
         const todouhukenId = todouhukenData.id;

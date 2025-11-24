@@ -51,7 +51,6 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
             };
 
             setTodouhuken(data.address.todouhuken_name);
@@ -100,6 +99,7 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
+                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
                 return;
             }
 
