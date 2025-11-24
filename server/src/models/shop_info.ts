@@ -17,7 +17,7 @@ export class ShopInfo extends Model {
     declare open_date_time: string | null;
     declare company_number: string | null;
     declare capital: number | null;
-    declare menber_count: number | null;
+    declare member_count: number | null;
     declare id_card_front: string | null;
     declare id_card_rear: string | null;
     declare request_all: boolean;
@@ -74,7 +74,7 @@ ShopInfo.init(
         open_date_time: DataTypes.TEXT,
         company_number: DataTypes.TEXT,
         capital: DataTypes.DECIMAL,
-        menber_count: DataTypes.INTEGER,
+        member_count: DataTypes.INTEGER,
         id_card_front: DataTypes.TEXT,
         id_card_rear: DataTypes.TEXT,
         request_all: {

@@ -29,7 +29,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time || "");
     const [foundedDate, setFoundedDate] = useState(shopInfo?.founded_date || null);
     const [memberCount, setMemberCount] = useState(shopInfo?.member_count || 1);
-    const [homepage, setHomepage] = useState(shopInfo?.homepage_url || "");
+    const [homepage, setHomepage] = useState(shopInfo?.homepage_url || null);
 
     const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number || "");
     const [capital, setCapital] = useState(shopInfo?.capital || null);
@@ -295,7 +295,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
             <InputStr
             title="ホームページURL（任意）"
             type="text"
-            value={homepage}
+            value={homepage || ""}
             onChange={setHomepage}
             placeholder="http://*******.***"
             hissu={false}
