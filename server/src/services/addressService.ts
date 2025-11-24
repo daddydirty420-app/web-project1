@@ -8,10 +8,8 @@ interface ZipCloudResponce {
         prefcode: string;
         address1: string;
         address2: string;
-        address3: string;
         kana1: string;
         kana2: string;
-        kana3: string;
     }[] | null;
     status: number;
 }
@@ -20,7 +18,6 @@ export interface AddressResult {
     todouhuken_id: number;
     todouhuken_name: string;
     shikutyouson: string;
-    banchi: string;
 }
 
 async function fetchAddressFromZip(zipcode: string): Promise<AddressResult> {
@@ -44,7 +41,6 @@ async function fetchAddressFromZip(zipcode: string): Promise<AddressResult> {
                 todouhuken_id: todouhuken.id,
                 todouhuken_name: todouhuken.name,
                 shikutyouson: result.address2,
-                banchi: result.address3,
             };
         } else {
             throw new Error("住所が見つかりません。");

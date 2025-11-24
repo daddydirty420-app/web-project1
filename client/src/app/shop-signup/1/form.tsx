@@ -60,7 +60,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
         if (postNumber && postNumber.length === 7) {
             handleZipSearch();
         }
-    }, [postNumber]);
+    }, [postNumber, isInitialLoad]);
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
@@ -83,7 +83,6 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
 
             setTodouhuken(data.address.todouhuken_name);
             setShikutyouson(data.address.shikutyouson);
-            setBanchi(data.address.banchi);
         } catch (err) {
             console.error(err);
         }

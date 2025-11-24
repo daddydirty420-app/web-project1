@@ -19,13 +19,21 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
     const [shikutyouson, setShikutyouson] = useState(address.shikutyouson);
     const [banchi, setBanchi] = useState(address.banchi);
     const [building, setBuilding] = useState(address.building);
+
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+
     const router = useRouter();
 
     useEffect(() => {
+        if (isInitialLoad) {
+            setIsInitialLoad(false);
+            return;
+        }
+
         if (postNumber.length === 7) {
             handleZipSearch();
         }
-    }, [postNumber]);
+    }, [postNumber, isInitialLoad]);
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
@@ -48,7 +56,6 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
 
             setTodouhuken(data.address.todouhuken_name);
             setShikutyouson(data.address.shikutyouson);
-            setBanchi(data.address.banchi);
         } catch (err) {
             console.error(err);
         }
