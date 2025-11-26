@@ -189,7 +189,10 @@ export default function Form({ shopId, account }: Props) {
         }
     };
 
-    const backSubmit = () => router.push(`/shop-signup/1?shopId=${shopId}`);
+    const backSubmit = () => {
+        const params = new URLSearchParams({ shopId });
+        router.push(`/shop-signup/1?${params}`);
+    };
 
     return (
         <SSUI title="ショップ口座登録">
