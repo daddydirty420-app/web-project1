@@ -116,3 +116,14 @@
     justify-content: center;
     width: 100%;
 }
+
+.select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: solid 1px var(--gray-line);
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
