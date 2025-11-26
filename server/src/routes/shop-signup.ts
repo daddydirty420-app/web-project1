@@ -129,7 +129,7 @@ router.post("/signup1-create", authenticateToken, async (req: Request, res: Resp
     }
 });
 
-router.post("/signup2-create/id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/signup2-create/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
     if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
