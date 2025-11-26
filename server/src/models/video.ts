@@ -52,7 +52,10 @@ Video.init(
             defaultValue: 0
         },
         user_id: DataTypes.INTEGER,
-        item_id: DataTypes.INTEGER,
+        item_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
         original_url: DataTypes.TEXT,
         converted_url: DataTypes.TEXT,
         status: DataTypes.TEXT,

@@ -57,9 +57,18 @@ BankAccount.init(
         account_type_id: DataTypes.INTEGER,
         account_number: DataTypes.TEXT,
         meigi: DataTypes.TEXT,
-        user_id: DataTypes.INTEGER,
-        shop_info_id: DataTypes.INTEGER,
-        transfar_id: DataTypes.INTEGER,
+        user_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        shop_info_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        transfar_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
         bank_code: DataTypes.TEXT,
         branch_code: DataTypes.TEXT,
     },

@@ -38,7 +38,10 @@ ReferenceCode.init(
             autoIncrement: true,
         },
         input: DataTypes.TEXT,
-        output: DataTypes.TEXT,
+        output: {
+            type: DataTypes.TEXT,
+            unique: true,
+        },
         input_user_id: DataTypes.INTEGER,
         output_user_id: DataTypes.INTEGER,
         checked: {

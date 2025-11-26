@@ -40,7 +40,10 @@ Sale.init(
             allowNull: false,
             defaultValue: false
         },
-        item_id: DataTypes.INTEGER,
+        item_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,

@@ -8,6 +8,10 @@ const router = Router();
 
 router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
+    if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
+        res.status(400).json({ message: "入力されていない項目があります。" });
+        return;
+    }
 
     try {
         const matchedBank = await Banks.findOne({

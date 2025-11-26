@@ -50,7 +50,10 @@ ReccomendPaidInfo.init(
             allowNull: false,
         },
         reccomend_item_id: DataTypes.INTEGER,
-        pay_id: DataTypes.CHAR(20),
+        pay_id: {
+            type: DataTypes.CHAR(20),
+            unique: true,
+        },
     },
     {
         sequelize,

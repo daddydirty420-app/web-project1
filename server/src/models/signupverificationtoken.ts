@@ -35,6 +35,7 @@ SignupVerificationTokens.init(
         verification_code: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         verification_code_expires: {
             type: DataTypes.DATE,
@@ -43,6 +44,7 @@ SignupVerificationTokens.init(
         reissue_token: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
         },
         reissue_token_expires: {
             type: DataTypes.DATE,

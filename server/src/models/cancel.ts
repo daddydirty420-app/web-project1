@@ -47,7 +47,10 @@ Cancel.init(
             defaultValue: false,
         },
         cancel_fee_return_id: DataTypes.INTEGER,
-        paid_info_id: DataTypes.INTEGER,
+        paid_info_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,

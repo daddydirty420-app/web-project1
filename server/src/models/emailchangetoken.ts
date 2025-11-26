@@ -33,7 +33,8 @@ EmailChangeTokens.init(
         },
         token_hash: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         expires_at: {
             type: DataTypes.DATE,

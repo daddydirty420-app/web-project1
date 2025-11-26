@@ -40,7 +40,10 @@ ReccomendMonth.init(
             allowNull: false,
             defaultValue: false
         },
-        user_id: DataTypes.INTEGER,
+        user_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,

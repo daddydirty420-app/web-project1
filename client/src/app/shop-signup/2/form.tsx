@@ -5,6 +5,10 @@ import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { BankAccount } from "../type";
 import { useEffect, useRef, useState } from "react";
+import StepBar from "../stepBar";
+import { InputStr, InputTitle } from "@/components/inputForm";
+import ButtonDiv from "../buttonDiv";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     shopId: string;
@@ -39,7 +43,9 @@ export default function Form({ shopId, account }: Props) {
     const [accountType, setAccountType] = useState(account.AccountTypeOption?.name || "");
     const [accountNumber, setAccountNumber] = useState(account.account_number || "");
     const [meigi, setMeigi] = useState(account.meigi || "");
+
     const router = useRouter();
+
     const suggestTimeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -131,9 +137,178 @@ export default function Form({ shopId, account }: Props) {
         };
     }, [branchQuery, bankCode, account, isSelectingBranch]);
 
-    const submit = async () => {};
+    const submit = async () => {
+        if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
+            alert("空の項目があります。");
+            return;
+        }
+
+        if (!/^[0-9]{5,7}$/.test(accountNumber)) {
+            alert("口座番号は5〜7桁の半角数字で入力してください。");
+            return;
+        }
+
+        const body = {
+            bankName: bankQuery.trim(),
+            bankCode: bankCode,
+            branch: branchQuery.trim(),
+            branchCode: branchCode,
+            accountType: accountType,
+            accountNumber: accountNumber.padStart(7, "0"),
+            meigi: meigi.trim(),
+        };
+
+        try {
+            const accessToken = await refreshToken();
+
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup-create/${shopId}`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(body),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.message);
+                alert(data.message || "口座情報を登録できませんでした。");
+                return;
+            }
+
+            router.push(`/shop-signup/3/${shopId}`);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const backSubmit = () => router.push(`/shop-signup/1?shopId=${shopId}`);
 
     return (
-        <SSUI title="ショップ口座登録"></SSUI>
+        <SSUI title="ショップ口座登録">
+            <StepBar />
+
+            <h2 className={styles.subtitle}>口座情報の登録</h2>
+
+            <div className={styles.inputDiv}>
+                <InputTitle title="銀行名" hissu />
+                <input
+                type="text"
+                value={bankQuery}
+                onChange={(e) => setBankQuery(e.target.value)}
+                onFocus={() => {
+                    setShowBankSuggest(true);
+                    setShowBranchSuggest(false);
+                }}
+                onBlur={() => setTimeout(() => setShowBankSuggest(false), 150)}
+                placeholder="〇〇銀行"
+                className={styles.input}
+                required
+                />
+                {showBankSuggest && bankSuggestions.length > 0 && (
+                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                        {bankSuggestions.map((bank, i) => (
+                            <li
+                            key={i}
+                            onMouseDown={() => {
+                                setIsSelectingBank(true);
+                                setBankQuery(bank.name);
+                                setBankCode(bank.code);
+                                setShowBankSuggest(false);
+                                account.bank_name = bank.name;
+
+                                setTimeout(() => setIsSelectingBank(false), 500);
+                            }}
+                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            >
+                                {bank.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div className={styles.inputDiv}>
+                <InputTitle title="支店名" hissu />
+                <input
+                type="text"
+                value={branchQuery}
+                onChange={(e) => setBranchQuery(e.target.value)}
+                onFocus={() => {
+                    setShowBranchSuggest(true);
+                    setShowBankSuggest(false);
+                }}
+                onBlur={() => setTimeout(() => setShowBranchSuggest(false), 150)}
+                placeholder="〇〇支店"
+                className={styles.input}
+                required
+                />
+                {showBranchSuggest && branchSuggestions.length > 0 && (
+                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                        {branchSuggestions.map((branch, i) => (
+                            <li
+                            key={i}
+                            onMouseDown={() => {
+                                setIsSelectingBranch(true);
+                                setBranchQuery(branch.name);
+                                setBranchCode(branch.code);
+                                setShowBranchSuggest(false);
+                                account.branch = branch.name;
+
+                                setTimeout(() => setIsSelectingBranch(false), 500);
+                            }}
+                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            >
+                                {branch.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div className={styles.inputDiv}>
+                <InputTitle title="口座種別" hissu />
+                <select
+                aria-label="口座種別"
+                value={accountType}
+                onChange={(e) => setAccountType(e.target.value)}
+                className={styles.select}
+                >
+                    <option value="" disabled>--1つ選択してください。--</option>
+                    <option value="普通預金">普通預金</option>
+                    <option value="当座預金">当座預金</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+            
+            <InputStr
+            title="口座番号"
+            type="text"
+            value={accountNumber}
+            onChange={(v) => setAccountNumber(v.replace(/[^0-9]/g, ""))}
+            placeholder="0000000（半角数字のみ）"
+            hissu
+            numeric
+            patternNum
+            />
+            
+            <InputStr
+            title="口座名義"
+            type="text"
+            value={meigi}
+            onChange={setMeigi}
+            placeholder="〇〇　〇〇"
+            hissu
+            />
+            
+            <ButtonDiv nextClick={submit} backClick={backSubmit} />
+        </SSUI>
     );
 };

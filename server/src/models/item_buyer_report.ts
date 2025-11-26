@@ -63,12 +63,13 @@ ItemBuyerReport.init(
         detail_text: DataTypes.TEXT,
         paid_info_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         checked: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false
+            defaultValue: false,
         },
     },
     {

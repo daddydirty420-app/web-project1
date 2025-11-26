@@ -109,7 +109,10 @@ Delivery.init(
         delivery_status_id: DataTypes.INTEGER,
         shipping_place_id: DataTypes.INTEGER,
         parent_data_id: DataTypes.INTEGER,
-        paid_info_id: DataTypes.INTEGER,
+        paid_info_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
         item_id: DataTypes.INTEGER,
         color_size_id: DataTypes.INTEGER,
         seller_user_id: DataTypes.INTEGER,

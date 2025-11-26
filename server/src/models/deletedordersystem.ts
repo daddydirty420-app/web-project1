@@ -47,10 +47,12 @@ DeletedOrderSystems.init(
         paid_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
         },
         delivery_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
         },
         cancel_reason: {
             type: DataTypes.TEXT,

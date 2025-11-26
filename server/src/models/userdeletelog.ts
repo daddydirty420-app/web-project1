@@ -38,7 +38,8 @@ UserDeleteLogs.init(
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         delete_reason: DataTypes.TEXT,
         deleted_by_admin: {

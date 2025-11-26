@@ -62,10 +62,22 @@ Address.init(
         shikutyouson: DataTypes.TEXT,
         banchi: DataTypes.TEXT,
         building: DataTypes.TEXT,
-        shop_info_id: DataTypes.INTEGER,
-        shop_info_edit_id: DataTypes.INTEGER,
-        delivery_id: DataTypes.INTEGER,
-        user_id: DataTypes.INTEGER,
+        shop_info_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        shop_info_edit_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        delivery_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,

@@ -39,6 +39,7 @@ ItemDeleteLogs.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
         },
         delete_user_id: {
             type: DataTypes.INTEGER,

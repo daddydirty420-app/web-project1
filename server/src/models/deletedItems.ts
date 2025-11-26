@@ -53,6 +53,7 @@ DeletedItems.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            unique: true,
         },
         seller_id: {
             type: DataTypes.INTEGER,
@@ -81,7 +82,10 @@ DeletedItems.init(
         thumbnail_url: DataTypes.TEXT,
         video_title: DataTypes.TEXT,
         video_summary: DataTypes.TEXT,
-        parent_delivery_id: DataTypes.INTEGER,
+        parent_delivery_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
         deleted_reason: {
             type: DataTypes.TEXT,
             allowNull: false,

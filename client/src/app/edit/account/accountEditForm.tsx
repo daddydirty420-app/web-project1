@@ -41,7 +41,9 @@ export default function AccountEditForm({ account, page }: Props) {
     const [accountType, setAccountType] = useState(account.AccountTypeOption?.name || "");
     const [accountNumber, setAccountNumber] = useState(account.account_number || "");
     const [meigi, setMeigi] = useState(account.meigi || "");
+
     const router = useRouter();
+    
     const suggestTimeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -300,7 +302,7 @@ export default function AccountEditForm({ account, page }: Props) {
             type="text"
             value={meigi}
             onChange={setMeigi}
-            placeholder="アユノ　シオヤキ"
+            placeholder="〇〇　〇〇"
             hissu
             />
 
