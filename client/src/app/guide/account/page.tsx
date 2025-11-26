@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - アカウントについて | FLEX OUTDOOR",
+    title: "ご利用ガイド - アカウントについて",
     description: "FLEX OUTDOORのログインやマイページ、プロフィール、個人情報など、アカウントの基本操作等についてわかりやすく解説しています。",
     robots: {
         index: false,

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const item: Item = await res.json();
 
     return {
-        title: `${item.name} | FLEX OUTDOOR`,
+        title: `${item.name}`,
         description: `${item.name}: ${item.price}, ${item.Video?.title}: ${item.Video?.summary}`,
         robots: {
             index: false,

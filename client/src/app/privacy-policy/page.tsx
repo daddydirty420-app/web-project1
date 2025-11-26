@@ -6,8 +6,8 @@ import styles from '@/styles/terms.module.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "プライバシーポリシー | FLEX OUTDOOR",
-    description: "FLEX OUTDOORのプライバシーポリシーはこちら！",
+    title: "プライバシーポリシー",
+    description: "プライバシーポリシーはこちら！",
     robots: {
         index: false,
         follow: false

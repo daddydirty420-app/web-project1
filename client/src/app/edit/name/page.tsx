@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "氏名の設定・変更 | FLEX OUTDOOR",
+        title: "氏名の設定・変更",
         description: "氏名を設定・変更できます。（ユーザーネーム等プロフィールの変更ではございません。）",
         robots: {
             index: false,

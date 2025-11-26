@@ -10,7 +10,7 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "氏名の設定・変更 | FLEX OUTDOOR",
+        title: "氏名の設定・変更",
         description: "配送情報に記載する氏名の変更ができます。",
         robots: {
             index: false,

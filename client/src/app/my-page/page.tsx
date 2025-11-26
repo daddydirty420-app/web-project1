@@ -39,7 +39,7 @@ type Res = {
 }
 
 export const metadata: Metadata = {
-    title: "マイページ | FLEX OUTDOOR",
+    title: "マイページ",
     description: "FLEX OUTDOORのマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
     robots: {
         index: false,
@@ -172,7 +172,7 @@ export default async function Page() {
 
                 {data.userData.hasShop && (
                     <>
-                    <MypageLinkHeader text='FLEX Shop' />
+                    <MypageLinkHeader text='〇〇ショップ' />
                     <NormalLinkContainer>
                         <NormalLink url='/money-management' text='売上管理（売上データの確認）' />
                         <NormalLink url='/item-list/stock' text='在庫管理' />
@@ -188,10 +188,10 @@ export default async function Page() {
                     <NormalLink url='/transfar/history' text='振込申請履歴' />
                     <NormalLink url='/transfar/points' text='ポイント変換' />
                     <NormalLink url='/history/points' text='ポイント履歴' />
-                    <NormalLink url='/reccomend/history' text='FLEXレコメンド支払い履歴' />
+                    <NormalLink url='/reccomend/history' text='レコメンド支払い履歴' />
                 </NormalLinkContainer>
 
-                <MypageLinkHeader text='FLEX OUTDOORについて' />
+                <MypageLinkHeader text='〇〇について' />
                 <NormalLinkContainer>
                     <NormalLink url='/guide' text='使い方ガイド' />
                     <NormalLink url='/terms-and-conditions' text='利用規約' />
@@ -199,7 +199,7 @@ export default async function Page() {
                     <NormalLink url='/tokutei/link' text='特定商取引法に基づく表記' />
                     <NormalLink url='/company' text='会社概要' />
                     <NormalLink url='/inquiry' text='お問い合わせ' />
-                    <NormalLink url='/blog/list' text='FLEX OUTDOORブログ' />
+                    <NormalLink url='/blog/list' text='〇〇ブログ' />
                 </NormalLinkContainer>
 
                 <Logout />

@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 会員登録について | FLEX OUTDOOR",
+    title: "ご利用ガイド - 会員登録について",
     description: "FLEX OUTDOORの会員登録に関する基本操作等についてわかりやすく解説しています。",
     robots: {
         index: false,

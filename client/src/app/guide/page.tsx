@@ -5,7 +5,7 @@ import { GuideLink } from '@/components/guide';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド | FLEX OUTDOOR",
+    title: "ご利用ガイド",
     description: "ご不明な点などあればこちら！FLEX OUTDOORについてわかりやすく解説しています。",
     robots: {
         index: false,
@@ -25,7 +25,7 @@ export default function GuideHome() {
                     <GuideLink heading='会員登録やログイン、マイページについて' url='guide/account' />
                     <GuideLink heading='購入者の方' url='guide/buyer' />
                     <GuideLink heading='出品者の方' url='guide/seller' />
-                    <GuideLink heading='FLEX Shop' url='guide/shop' />
+                    <GuideLink heading='ショップ' url='guide/shop' />
                     <GuideLink heading='禁止行為・ペナルティ' url='guide/penalty' />
                 </AccordionGrid>
             </Container>

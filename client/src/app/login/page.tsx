@@ -5,8 +5,8 @@ import styles from '@/styles/login.module.css';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "ログイン | FLEX OUTDOOR",
-    description: "FLEX OUTDOORのログインはこちら！",
+    title: "ログイン",
+    description: "ログインはこちら！",
     robots: {
         index: false,
         follow: false

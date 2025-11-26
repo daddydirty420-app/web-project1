@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "ポイントに変換 | FLEX OUTDOOR",
+        title: "ポイント変換",
         description: "売上金をポイントに変換できます。ポイントの有効期限は、変換日から180日後になります。",
         robots: {
             index: false,

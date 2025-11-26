@@ -7,8 +7,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: "特定商取引法に基づく表記（FLEXレコメンド編） | FLEX OUTDOOR",
-    description: "FLEX OUTDOORの特定商取引法に基づく表記はこちら！",
+    title: "特定商取引法に基づく表記（FLEXレコメンド編）",
+    description: "特定商取引法に基づく表記はこちら！",
     robots: {
         index: false,
         follow: false

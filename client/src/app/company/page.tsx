@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: "事業概要 | FLEX OUTDOOR",
+    title: "事業概要",
     description: "FLEX OUTDOORの事業概要はこちら！",
     robots: {
         index: false,

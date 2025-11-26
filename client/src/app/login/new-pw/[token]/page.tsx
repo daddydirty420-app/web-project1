@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import styles from '@/styles/login.module.css';
 
 export const metadata: Metadata = {
-    title: "新しいパスワード | FLEX OUTDOOR",
+    title: "新しいパスワード",
     description: "新しいパスワードの設定",
     robots: {
         index: false,

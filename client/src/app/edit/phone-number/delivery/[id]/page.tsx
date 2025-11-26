@@ -9,7 +9,7 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "電話番号の設定・変更 | FLEX OUTDOOR",
+        title: "電話番号の設定・変更",
         description: "配送情報に記載する電話番号を設定・変更できます。",
         robots: {
             index: false,

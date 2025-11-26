@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 禁止行為・ペナルティ | FLEX OUTDOOR",
+    title: "ご利用ガイド - 禁止行為・ペナルティ",
     description: "FLEX OUTDOORのユーザーの禁止行為とペナルティ等の処分についてわかりやすく解説しています。",
     robots: {
         index: false,

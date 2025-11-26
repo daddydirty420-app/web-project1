@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 購入者の方 | FLEX OUTDOOR",
+    title: "ご利用ガイド - 購入者の方",
     description: "FLEX OUTDOORの商品の閲覧から購入、取引、受け取りまで、わかりやすく解説しています。",
     robots: {
         index: false,

@@ -7,8 +7,8 @@ import clsx from 'clsx';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "利用規約 | FLEX OUTDOOR",
-    description: "FLEX OUTDOORの利用規約はこちら！",
+    title: "利用規約",
+    description: "利用規約はこちら！",
     robots: {
         index: false,
         follow: false

@@ -3,7 +3,6 @@ import ProfilePage from '../profilePage';
 import { Res } from '../profileTypes';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { cookies } from 'next/headers';
 
 type Props = {
     params: { id: string };
@@ -22,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const user = await res.json();
 
     return {
-        title: `${user.user_name} | FLEX OUTDOOR`,
+        title: `${user.user_name}`,
         description: user.user_introduction ?? `${user.user_name}のプロフィールと出品した商品をご覧いただけます。`,
         robots: {
             index: false,

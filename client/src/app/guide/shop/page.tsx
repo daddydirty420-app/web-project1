@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - FLEX Shopガイド | FLEX OUTDOOR",
+    title: "ご利用ガイド - ショップガイド",
     description: "「FLEX Shop」の限定機能や登録方法についてわかりやすく解説しています。",
     robots: {
         index: false,
@@ -23,15 +23,15 @@ export default function GuideShop() {
             <Header />
 
             <Container header>
-                <TitleAndBack title='FLEX Shopガイド' />
+                <TitleAndBack title='ショップガイド' />
 
                 <p className={clsx('mb-2', styles.sectionChildP)}>※出品、売上金、振込申請については、「<Link href='seller' className='text-blue-600 hover:text-blue-800 hover:cursor-pointer'>ガイド-出品者の方</Link>」をご覧ください。</p>
 
-                <GuideSubTitle text='Shop登録' />
+                <GuideSubTitle text='ショップ登録' />
                 <AccordionGrid>
-                    <Accordion heading='Shop登録方法'>
+                    <Accordion heading='ショップ登録方法'>
                         <ListUl>
-                            <ListFlow number={1}>マイページから「<strong className='text-[var(--theme)]'>FLEX Shop登録</strong>」をクリック</ListFlow>
+                            <ListFlow number={1}>マイページから「<strong className='text-[var(--theme)]'>ショップ登録</strong>」をクリック</ListFlow>
                             <ListFlowArrow />
                             <ListFlow number={2}>事業区分（法人、個人事業主）を選択</ListFlow>
                             <ListFlowArrow />
@@ -51,14 +51,14 @@ export default function GuideShop() {
                             <ListFlowArrow />
                             <ListFlow number={6}>オプションを選択</ListFlow>
                             <ListFlowArrow />
-                            <ListFlow number={7}>FLEX Shop登録お申し込み完了、審査開始（1~2週間ほど頂戴いたしております）</ListFlow>
+                            <ListFlow number={7}>ショップ登録お申し込み完了、審査開始（1~2週間ほど頂戴いたしております）</ListFlow>
                             <ListFlowArrow />
-                            <ListFlow number={8}>審査完了、メールが届いたらFLEX Shop登録完了です！</ListFlow>
+                            <ListFlow number={8}>審査完了、メールが届いたらショップ登録完了です！</ListFlow>
                         </ListUl>
                     </Accordion>
 
-                    <Accordion heading='Shop登録条件'>
-                        <p className='mt-4'><strong className='text-[var(--theme)]'>FLEX Shop</strong>登録には、以下の条件を満たしている必要があります。</p>
+                    <Accordion heading='ショップ登録条件'>
+                        <p className='mt-4'><strong className='text-[var(--theme)]'>ショップ登録</strong>には、以下の条件を満たしている必要があります。</p>
 
                         <ListUl>
                             <ListCheck>法人または個人事業主の方</ListCheck>
@@ -71,14 +71,14 @@ export default function GuideShop() {
                     <Accordion heading='オプションについて'>
                         <p className='mt-4'>Shop登録時に、以下のオプションの選択ができます。</p>
                         <GuideSection heading='自動振込'>毎月10日に、前月分の売上金を自動的にお振込みいたします。これにより、振込申請の手間が省ける、申請し忘れが無くなるといったメリットがあります。（金融機関が休業日の場合、その翌営業日）</GuideSection>
-                        <GuideSection heading='運営者情報を公開する'>プロフィールのショップ情報に、FLEX Shop登録時にご入力いただいた会社情報（事業者情報）が公開されます。</GuideSection>
+                        <GuideSection heading='運営者情報を公開する'>プロフィールのショップ情報に、ショップ登録時にご入力いただいた会社情報（事業者情報）が公開されます。</GuideSection>
 
                         <GuideSection heading='レコメンド機能（有料）'>
-                            <p className='font-bold mt-4'>FLEXレコメンド（月額880円）</p>
+                            <p className='font-bold mt-4'>レコメンド（月額880円）</p>
                             <div className='mt-2 ml-[0.5rem]'>
                                 <p className={styles.sectionChildP}>トップページのおすすめおすすめ商品一覧に表示されます。また、商品ページおよび検索ページにも、「おすすめ商品」と記載されます。</p>
                                 <GuideSmall>※商品が利用規約に違反する、または違反している可能性のある商品は、「おすすめ商品」から除外されます。</GuideSmall>
-                                <GuideSmall>※FLEXレコメンドを申し込んでいないユーザーの商品も、ごくまれに「おすすめ商品」になることがあります。</GuideSmall>
+                                <GuideSmall>※レコメンドを申し込んでいないユーザーの商品も、ごくまれに「おすすめ商品」になることがあります。</GuideSmall>
                                 <GuideSmall>※ショップ会員ではない通常会員も利用可能</GuideSmall>
                                 <GuideSmall>※商品単品での申込み可能！（1点300円）</GuideSmall>
                             </div>
@@ -86,10 +86,10 @@ export default function GuideShop() {
                     </Accordion>
                 </AccordionGrid>
 
-                <GuideSubTitle text='FLEX Shopについて' />
+                <GuideSubTitle text='ショップについて' />
                 <AccordionGrid>
-                    <Accordion heading='FLEX Shopとは'>
-                        <p className='mt-4 mb-2'><strong className='text-[var(--theme)]'>FLEX Shop</strong>とは、<strong>法人、個人事業主向け</strong>のショップ運用サービスです。通常のFLEX Outdoorと使い勝手は同じですが、内容は異なり、一つの商品につき<strong>複数点出品</strong>や専用の<strong>在庫管理システム</strong>、毎月の<strong>自動振込</strong>など、事業者にとってうれしい機能が盛りだくさんのサービスです！</p>
+                    <Accordion heading='ショップとは'>
+                        <p className='mt-4 mb-2'><strong className='text-[var(--theme)]'>FLEX Shop</strong>とは、<strong>法人、個人事業主向け</strong>のショップ運用サービスです。通常の〇〇と使い勝手は同じですが、内容は異なり、一つの商品につき<strong>複数点出品</strong>や専用の<strong>在庫管理システム</strong>、毎月の<strong>自動振込</strong>など、事業者にとってうれしい機能が盛りだくさんのサービスです！</p>
                     </Accordion>
 
                     <Accordion heading='在庫登録について'>
@@ -117,7 +117,7 @@ export default function GuideShop() {
                     </Accordion>
 
                     <Accordion heading='カラー、サイズ等種類の選択'>
-                        <p className='mt-4 mb-2'>FLEX Shopユーザーで、複数点出品した商品に限り、カラー・サイズ等種類の選択ができます。</p>
+                        <p className='mt-4 mb-2'>ショップユーザーで、複数点出品した商品に限り、カラー・サイズ等種類の選択ができます。</p>
 
                         <p className='font-bold'>出品ページの「個数」を2点以上にすると、「次へ」をクリックすると「カラー・サイズ等選択ページ」へ進みます。</p>
                         <ListUl>

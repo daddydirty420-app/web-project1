@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 出品者の方 | FLEX OUTDOOR",
+    title: "ご利用ガイド - 出品者の方",
     description: "FLEX OUTDOORの出品から販売、取引、配送まで、わかりやすく解説しています。",
     robots: {
         index: false,

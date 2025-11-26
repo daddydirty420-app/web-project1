@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "メールアドレスの設定・変更 | FLEX OUTDOOR",
+        title: "メールアドレスの設定・変更",
         description: "メールアドレスを設定・変更できます。ボタンをクリックすると、新しいメールアドレスに本登録URLを記載したメールを送信いたします。こちらのページでメールアドレスの変更が完了するわけではございません。",
         robots: {
             index: false,
