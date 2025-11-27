@@ -87,24 +87,15 @@ export default function StepBar() {
 
         if (!wrapper || !activeItem) return;
 
-        const wrapperWidth = wrapper.clientWidth;
-        const itemWidth = activeItem.clientWidth;
-        const itemLeft = activeItem.offsetLeft;
-        const totalWidth = wrapper.scrollWidth;
-
-        let targetScroll = 0;
-
-        if (activeIndex === 0) {
-            targetScroll = 0;
-        } else if (activeIndex === steps.length - 1) {
-            targetScroll = totalWidth - wrapperWidth;
-        } else {
-            targetScroll = itemLeft - wrapperWidth / 2 + itemWidth / 2;
-        }
-
-        wrapper.scrollTo({
-            left: Math.max(0, Math.min(targetScroll, totalWidth - wrapperWidth)),
+        activeItem.scrollIntoView({
             behavior: "smooth",
+            inline:
+                activeIndex === 0
+                    ? "start"
+                    : activeIndex === steps.length - 1
+                    ? "end"
+                    : "center",
+            block: "nearest",
         });
     }, [activeIndex, width, steps.length]);
 
