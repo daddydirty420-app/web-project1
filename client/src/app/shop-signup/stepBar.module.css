@@ -1,11 +1,23 @@
+.scrollWrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.scrollWrapper::-webkit-scrollbar {
+    display: none;
+}
+
 .wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0.5rem;
     margin: 1.5rem auto;
     box-sizing: border-box;
-    width: 100%;
+    width: max-content;
+    padding: 0 16px;
 }
 
 .stepItem {
@@ -65,7 +77,6 @@
 
 @media (max-width: 768px) {
     .stepInner {
-        display: flex;
         flex-direction: column;
         align-items: center;
     }
@@ -75,20 +86,5 @@
         margin-top: 4px;
         text-align: center;
         font-size: 11px;
-    }
-}
-
-@media (max-width: 480px) {
-    .wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-x;
-        -ms-touch-action: pan-x;
-        scrollbar-width: none;
-        padding-bottom: 8px;
-    }
-
-    .wrapper::-webkit-scrollbar {
-        display: none;
     }
 }

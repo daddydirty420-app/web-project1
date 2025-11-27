@@ -100,32 +100,34 @@ export default function StepBar() {
     }, [activeIndex, width, steps.length]);
 
     return (
-        <div className={styles.wrapper}>
-            {steps.map((step, index) => {
-                const isActive = index === activeIndex;
-                const isCompleted = index < activeIndex;
+        <div className={styles.scrollWrapper} ref={wrapperRef}>
+            <div className={styles.wrapper}>
+                {steps.map((step, index) => {
+                    const isActive = index === activeIndex;
+                    const isCompleted = index < activeIndex;
 
-                return (
-                    <div key={step.label} className={styles.stepItem}>
-                        <div className={styles.stepInner}>
-                            <div className={`${styles.circle} ${
-                                isActive ? styles.active : ""
-                            } ${isCompleted ? styles.completed : ""}`}
-                            >
-                                {isCompleted ? "✓" : index + 1}
+                    return (
+                        <div key={step.label} className={styles.stepItem}>
+                            <div className={styles.stepInner}>
+                                <div className={`${styles.circle} ${
+                                    isActive ? styles.active : ""
+                                } ${isCompleted ? styles.completed : ""}`}
+                                >
+                                    {isCompleted ? "✓" : index + 1}
+                                </div>
+
+                                <span className={`${styles.label} ${
+                                    isActive ? styles.labelActive : ""
+                                }`}>
+                                    {step.label}
+                                </span>
                             </div>
 
-                            <span className={`${styles.label} ${
-                                isActive ? styles.labelActive : ""
-                            }`}>
-                                {step.label}
-                            </span>
+                            {index < steps.length - 1 && <div className={styles.line} />}
                         </div>
-
-                        {index < steps.length - 1 && <div className={styles.line} />}
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
 };
