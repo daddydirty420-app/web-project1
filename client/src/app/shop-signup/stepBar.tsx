@@ -9,6 +9,7 @@ export default function StepBar() {
     const pathname = usePathname();
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const itemRef = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         setWidth(window.innerWidth);
@@ -79,6 +80,33 @@ export default function StepBar() {
     ];
 
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
+
+    useEffect(() => {
+        const wrapper = wrapperRef.current;
+        const activeItem = itemRef.current[activeIndex];
+
+        if (!wrapper || !activeItem) return;
+
+        const wrapperWidth = wrapper.clientWidth;
+        const itemWidth = activeItem.clientWidth;
+        const itemLeft = activeItem.offsetLeft;
+        const totalWidth = wrapper.scrollWidth;
+
+        let targetScroll = 0;
+
+        if (activeIndex === 0) {
+            targetScroll = 0;
+        } else if (activeIndex === steps.length - 1) {
+            targetScroll = totalWidth - wrapperWidth;
+        } else {
+            targetScroll = itemLeft - wrapperWidth / 2 + itemWidth / 2;
+        }
+
+        wrapper.scrollTo({
+            left: Math.max(0, Math.min(targetScroll, totalWidth - wrapperWidth)),
+            behavior: "smooth",
+        });
+    }, [activeIndex, width, steps.length]);
 
     return (
         <div className={styles.wrapper}>
