@@ -204,7 +204,7 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
                 request_all: false,
             },
             order: [["createdAt", "DESC"]],
-            attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
+            attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'member_count', 'founded_date'],
             include: [
                 {
                     model: ComOrFreeOption,
