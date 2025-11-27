@@ -48,7 +48,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     return (
         <Form
-        user={data.data}
+        user={data.userData}
         shopInfo={data.shopData || null}
         ComOrFreeOption={data.comOrFree}
         />

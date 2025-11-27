@@ -44,7 +44,7 @@ export type Name = {
 
 export type ShopInfo = {
     id: string;
-    conpany_name: string;
+    company_name: string;
     shop_name: string;
     email: string;
     phone_number: string;

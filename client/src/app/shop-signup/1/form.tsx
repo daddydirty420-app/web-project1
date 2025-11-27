@@ -22,9 +22,9 @@ type Props = {
 
 export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [selectOption, setSelectOption] = useState<number | null>(null);
-    const [companyName, setCompanyName] = useState(shopInfo?.conpany_name ?? "");
-    const [shopName, setShopName] = useState(user.user_name);
-    const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
+    const [companyName, setCompanyName] = useState(shopInfo?.company_name ?? "");
+    const [shopName, setShopName] = useState(shopInfo?.shop_name ?? user.user_name);
+    const [phoneNumber, setPhoneNumber] = useState(shopInfo?.phone_number ??user.phone_number);
     const [email, setEmail] = useState(shopInfo?.email ?? user.email ?? "");
     const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time ?? "");
     const [foundedDate, setFoundedDate] = useState<Date | null>(shopInfo?.founded_date ?? null);
@@ -34,16 +34,16 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? "");
     const [capital, setCapital] = useState<number | null>(shopInfo?.capital ?? null);
 
-    const [sei, setSei] = useState(user.Name?.sei ?? "");
-    const [mei, setMei] = useState(user.Name?.mei ?? "");
-    const [seiKana, setSeiKana] = useState(user.Name?.sei_kana ?? "");
-    const [meiKana, setMeiKana] = useState(user.Name?.mei_kana ?? "");
+    const [sei, setSei] = useState(shopInfo?.Name?.sei ?? user.Name?.sei ?? "");
+    const [mei, setMei] = useState(shopInfo?.Name?.mei ?? user.Name?.mei ?? "");
+    const [seiKana, setSeiKana] = useState(shopInfo?.Name?.sei_kana ?? user.Name?.sei_kana ?? "");
+    const [meiKana, setMeiKana] = useState(shopInfo?.Name?.mei_kana ?? user.Name?.mei_kana ?? "");
     
-    const [postNumber, setPostNumber] = useState(user.Address?.post_number ?? "");
-    const [todouhuken, setTodouhuken] = useState(user.Address?.AddressTodouhuken?.name ?? "");
-    const [shikutyouson, setShikutyouson] = useState(user.Address?.shikutyouson ?? "");
-    const [banchi, setBanchi] = useState(user.Address?.banchi ?? "");
-    const [building, setBuilding] = useState(user.Address?.building ?? "");
+    const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number ?? "");
+    const [todouhuken, setTodouhuken] = useState(shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name ?? "");
+    const [shikutyouson, setShikutyouson] = useState(shopInfo?.Address?.shikutyouson ?? user.Address?.shikutyouson ?? "");
+    const [banchi, setBanchi] = useState(shopInfo?.Address?.banchi ?? user.Address?.banchi ?? "");
+    const [building, setBuilding] = useState(shopInfo?.Address?.building ?? user.Address?.building ?? "");
 
     const [check, setCheck] = useState(false);
 

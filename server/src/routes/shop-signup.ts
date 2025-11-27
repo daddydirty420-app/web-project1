@@ -197,9 +197,56 @@ router.post("/signup2-create/:id", authenticateToken, async (req: Request, res: 
 
 router.get('/signup1', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
-    const shopId = req.query?.shopId ?? null;
     try {
-        const data = await User.findByPk(userId, {
+        const shop = await ShopInfo.findOne({
+            attributes: ["id"],
+            where: {
+                user_id: userId,
+                request_all: false,
+            },
+            order: [["createdAt", "DESC"]],
+        });
+
+        const hasShop = !!shop;
+
+        let shopData;
+        if (hasShop) {
+            shopData = await ShopInfo.findByPk(shop.id, {
+                attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
+                include: [
+                    {
+                        model: ComOrFreeOption,
+                        attributes: ['id', 'name'],
+                        require: false,
+                    },
+                    {
+                        model: Address,
+                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
+                        include: [
+                            {
+                                model: TodouhukenOption,
+                                as: "AddressTodouhuken",
+                                attributes: ["id", "name"],
+                                require: false,
+                            },
+                        ],
+                        require: false,
+                    },
+                    {
+                        model: Name,
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                        require: false,
+                    },
+                ]
+            });
+
+            if (!shopData) {
+                res.status(404).json({ message: 'データが見つかりません。' });
+                return;
+            }
+        }
+
+        const userData = await User.findByPk(userId, {
             attributes: ["id", "user_name", "email", "phone_number"],
             include: [
                 {
@@ -220,27 +267,9 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
             ],
         });
 
-        if (!data) {
+        if (!userData) {
             res.status(404).json({ message: "ユーザーが見つかりません。" });
             return;
-        }
-
-        let shopData = null;
-        if (shopId) {
-            const shopData = await ShopInfo.findByPk(shopId, {
-                attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
-                include: [
-                    {
-                        model: ComOrFreeOption,
-                        attributes: ['id', 'name']
-                    },
-                ]
-            });
-
-            if (!shopData) {
-                res.status(404).json({ message: 'データが見つかりません。' });
-                return;
-            }
         }
 
         const comOrFree = await ComOrFreeOption.findAll();
@@ -250,7 +279,7 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
             return;
         }
 
-        res.json({ data, shopData, comOrFree });
+        res.json({ shopData, userData, comOrFree });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
