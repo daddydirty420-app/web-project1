@@ -119,6 +119,30 @@ export default function SearchInputMobile({ loggedIn }: Props) {
         {searchMode && (
             <>
             <div className={styles.searchOverlayMobile}>
+                <div className={styles.searchArea}>
+                    <input
+                    type="text"
+                    name="検索"
+                    placeholder="検索"
+                    className={styles.searchInputMobile}
+                    value={value}
+                    onChange={onChange}
+                    />
+                    <FontAwesomeIcon
+                    icon={faAngleLeft}
+                    className={styles.closeSearchAreaIcon}
+                    onClick={() => setSearchMode(false)}
+                    />
+                    <FontAwesomeIcon
+                    icon={faSearch} 
+                    className={`${styles.searchIconMobile} ${value ? styles.activeIcon : ""}`}
+                    onClick={() => {
+                        if (!value.trim()) return;
+                        router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                    }}
+                    />
+                </div>
+
                 <div className={styles.suggestArea}>
                     <div className={styles.suggestInner}>
                         <p className={styles.categoryText}><Link href="/search/category">カテゴリー検索</Link></p>
@@ -148,30 +172,6 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                             </div>
                         ))}
                     </div>
-                </div>
-
-                <div className={styles.searchArea}>
-                    <input
-                    type="text"
-                    name="検索"
-                    placeholder="検索"
-                    className={styles.searchInputMobile}
-                    value={value}
-                    onChange={onChange}
-                    />
-                    <FontAwesomeIcon
-                    icon={faAngleLeft}
-                    className={styles.closeSearchAreaIcon}
-                    onClick={() => setSearchMode(false)}
-                    />
-                    <FontAwesomeIcon
-                    icon={faSearch} 
-                    className={`${styles.searchIconMobile} ${value ? styles.activeIcon : ""}`}
-                    onClick={() => {
-                        if (!value.trim()) return;
-                        router.push(`/search?keyword=${encodeURIComponent(value)}`);
-                    }}
-                    />
                 </div>
             </div>
             </>
