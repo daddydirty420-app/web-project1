@@ -108,7 +108,7 @@ Item.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        name: DataTypes.TEXT,
+        name: DataTypes.STRING(255),
         explain: DataTypes.TEXT,
         image_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
@@ -120,7 +120,7 @@ Item.init(
                 }
             }
         },
-        category_text: DataTypes.TEXT,
+        category_text: DataTypes.STRING(255),
         price: DataTypes.INTEGER,
         sort_number: DataTypes.DECIMAL,
         views_count: {

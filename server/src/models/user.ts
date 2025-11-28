@@ -142,7 +142,7 @@ User.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        user_name: DataTypes.TEXT,
+        user_name: DataTypes.STRING(255),
         user_introduction: DataTypes.TEXT,
         profile_image: DataTypes.TEXT,
         penalty_points: {
@@ -162,7 +162,7 @@ User.init(
             defaultValue: false,
         },
         email: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
             validate: {
                 isEmail: true,
@@ -177,7 +177,7 @@ User.init(
             defaultValue: 0,
         },
         password: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         points: {
@@ -198,7 +198,7 @@ User.init(
         },
         gender_id: DataTypes.INTEGER,
         birthday: DataTypes.DATE,
-        phone_number: DataTypes.TEXT,
+        phone_number: DataTypes.STRING(255),
         honnin_verify_request: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,

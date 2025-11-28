@@ -43,9 +43,9 @@ Video.init(
             autoIncrement: true,
         },
         thumbnail_url: DataTypes.TEXT,
-        title: DataTypes.TEXT,
+        title: DataTypes.STRING(255),
         summary: DataTypes.TEXT,
-        duration: DataTypes.TEXT,
+        duration: DataTypes.STRING(255),
         play_count: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -58,7 +58,7 @@ Video.init(
         },
         original_url: DataTypes.TEXT,
         converted_url: DataTypes.TEXT,
-        status: DataTypes.TEXT,
+        status: DataTypes.STRING(255),
     },
     {
         sequelize,

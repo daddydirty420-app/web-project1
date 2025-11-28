@@ -60,7 +60,7 @@ DeletedItems.init(
             allowNull: false,
         },
         item_name: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         explain: DataTypes.TEXT,
@@ -80,7 +80,7 @@ DeletedItems.init(
         },
         video_url: DataTypes.TEXT,
         thumbnail_url: DataTypes.TEXT,
-        video_title: DataTypes.TEXT,
+        video_title: DataTypes.STRING(255),
         video_summary: DataTypes.TEXT,
         parent_delivery_id: {
             type: DataTypes.INTEGER,

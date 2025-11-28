@@ -31,7 +31,7 @@ Search.init(
             autoIncrement: true,
         },
         search_text: DataTypes.TEXT,
-        category_text: DataTypes.TEXT,
+        category_text: DataTypes.STRING(255),
         user_id: DataTypes.INTEGER,
     },
     {

@@ -37,9 +37,9 @@ ReferenceCode.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        input: DataTypes.TEXT,
+        input: DataTypes.STRING(255),
         output: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             unique: true,
         },
         input_user_id: DataTypes.INTEGER,

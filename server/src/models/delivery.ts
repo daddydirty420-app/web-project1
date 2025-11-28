@@ -99,7 +99,7 @@ Delivery.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        buyer_phone_number: DataTypes.TEXT,
+        buyer_phone_number: DataTypes.STRING(255),
         cancel: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

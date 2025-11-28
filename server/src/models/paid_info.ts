@@ -112,10 +112,10 @@ PaidInfo.init(
         buy_date: DataTypes.DATE,
         paid_date: DataTypes.DATE,
         pay_id: {
-            type: DataTypes.CHAR(24),
+            type: DataTypes.STRING(50),
             unique: true,
         },
-        item_name: DataTypes.TEXT,
+        item_name: DataTypes.STRING(255),
         item_image: DataTypes.TEXT,
     },
     {

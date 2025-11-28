@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import SearchInput from "./searchInput";
+import SearchInputPC from "./searchInputPC";
+import SearchInputMobile from "./searchInputMobile";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
@@ -27,11 +28,9 @@ export default async function Header() {
                     quality={25}
                     />
                 </Link>
-
-                <div className={styles.searchDiv}>
-                    <SearchInput />
-                    <p className={styles.categorySearch}><Link href='/search/category'>カテゴリー検索</Link></p>
-                </div>
+                
+                <SearchInputPC loggedIn={loggedIn} />
+                <SearchInputMobile loggedIn={loggedIn} />
 
                 <nav className={styles.menuNav}>
                     {!loggedIn && (

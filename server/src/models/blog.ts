@@ -43,7 +43,7 @@ Blog.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        title: DataTypes.TEXT,
+        title: DataTypes.STRING(255),
         content: DataTypes.TEXT,
         summary: DataTypes.TEXT,
         mokuji: DataTypes.TEXT,

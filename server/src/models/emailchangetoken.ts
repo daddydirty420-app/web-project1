@@ -32,7 +32,7 @@ EmailChangeTokens.init(
             autoIncrement: true,
         },
         token_hash: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
         },
@@ -45,7 +45,7 @@ EmailChangeTokens.init(
             allowNull: false
         },
         new_email: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
     },

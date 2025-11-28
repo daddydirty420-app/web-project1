@@ -31,7 +31,7 @@ RefreshTokens.init(
             autoIncrement: true,
         },
         token: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
         },

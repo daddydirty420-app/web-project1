@@ -68,6 +68,7 @@ import RefreshTokensModel from "./refreshtoken.js";
 import SaleModel from "./sale.js";
 import SalesHistoryModel from "./sales_history.js";
 import SearchModel from "./search.js";
+import SearchWordsModel from "./searchword.js";
 import ShippingDayOptionModel from "./shipping_day_option.js";
 import ShippingServiceOptionModel from "./shipping_service_option.js";
 import ShopInfoEditModel from "./shop_info_edit.js";
@@ -77,6 +78,7 @@ import SizeOptionModel from "./size_option.js";
 import SizeShoesOptionModel from "./size_shoes_option.js";
 import SizeWearOptionModel from "./size_wear_option.js";
 import StarHistoryModel from "./star_history.js";
+import SuggestWordsModel from "./suggestword.js";
 import TodouhukenOptionModel from "./todouhuken_option.js";
 import TransReasonOptionModel from "./trans_reason_option.js";
 import TransfarModel from "./transfar.js";
@@ -169,6 +171,7 @@ db.RefreshTokens = RefreshTokensModel;
 db.Sale = SaleModel;
 db.SalesHistory = SalesHistoryModel;
 db.Search = SearchModel;
+db.SearchWords = SearchWordsModel;
 db.ShippingDayOption = ShippingDayOptionModel;
 db.ShippingServiceOption = ShippingServiceOptionModel;
 db.ShopInfoEdit = ShopInfoEditModel;
@@ -178,6 +181,7 @@ db.SizeOption = SizeOptionModel;
 db.SizeShoesOption = SizeShoesOptionModel;
 db.SizeWearOption = SizeWearOptionModel;
 db.StarHistory = StarHistoryModel;
+db.SuggestWords = SuggestWordsModel;
 db.TodouhukenOption = TodouhukenOptionModel;
 db.TransReasonOption = TransReasonOptionModel;
 db.Transfar = TransfarModel;
@@ -194,5 +198,5 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, CancelFeeReturnOption, Cancel, Cart, CategoryCampOption, CategoryHikeOption, CategoryOtherOption, CategoryWearOption, Category, Chat, ColorSize, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemCategory1Option, ItemConditionOption, ItemReportOption, ItemReport, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, ReccomendItem, ReccomendMonth, ReccomendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, SizeOption, SizeShoesOption, SizeWearOption, StarHistory, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
+export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, CancelFeeReturnOption, Cancel, Cart, CategoryCampOption, CategoryHikeOption, CategoryOtherOption, CategoryWearOption, Category, Chat, ColorSize, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemCategory1Option, ItemConditionOption, ItemReportOption, ItemReport, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, ReccomendItem, ReccomendMonth, ReccomendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, SearchWords, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, SizeOption, SizeShoesOption, SizeWearOption, StarHistory, SuggestWords, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
 export default db;

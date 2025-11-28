@@ -59,10 +59,10 @@ DeletedOrderSystems.init(
             allowNull: false
         },
         refund_status: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
-        refund_method: DataTypes.TEXT,
+        refund_method: DataTypes.STRING(255),
         refund_amount: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -15,7 +15,7 @@ AccountTypeOption.init(
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(20),
             allowNull: false,
         },
     },

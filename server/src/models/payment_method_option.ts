@@ -15,7 +15,7 @@ PaymentMethodOption.init(
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
     },

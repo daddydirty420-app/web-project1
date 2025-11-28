@@ -51,7 +51,7 @@ ReccomendPaidInfo.init(
         },
         reccomend_item_id: DataTypes.INTEGER,
         pay_id: {
-            type: DataTypes.CHAR(20),
+            type: DataTypes.STRING(50),
             unique: true,
         },
     },

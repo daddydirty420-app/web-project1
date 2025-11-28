@@ -19,16 +19,16 @@ Banks.init(
             autoIncrement: true,
         },
         code: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(20),
             allowNull: false,
             unique: true,
         },
         name: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
-        kana: DataTypes.TEXT,
-        hira: DataTypes.TEXT,
+        kana: DataTypes.STRING(255),
+        hira: DataTypes.STRING(255),
         normalize: DataTypes.JSONB,
     },
     {

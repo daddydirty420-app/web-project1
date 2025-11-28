@@ -33,7 +33,7 @@ SignupVerificationTokens.init(
             autoIncrement: true,
         },
         verification_code: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
         },
@@ -42,7 +42,7 @@ SignupVerificationTokens.init(
             allowNull: false,
         },
         reissue_token: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
         },

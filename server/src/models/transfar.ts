@@ -59,7 +59,7 @@ Transfar.init(
         trans_schedule_date: DataTypes.DATE,
         trans_date: DataTypes.DATE,
         transfar_id: {
-            type: DataTypes.CHAR(22),
+            type: DataTypes.STRING(50),
             unique: true,
         },
     },
