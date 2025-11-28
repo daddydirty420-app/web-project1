@@ -88,10 +88,11 @@
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .searchInputMobile {
-    width: 100%;
+    width: 90%;
     height: 40px;
     border-radius: 20px;
     border: 1px solid #ccc;
