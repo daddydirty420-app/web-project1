@@ -15,7 +15,13 @@ router.get("/history", authenticateToken, async (req: Request, res: Response) =>
                 'DISTINCT ON ("search_text") "search_text"'), 
                 "createdAt",
             ],
-            where: { user_id: userId },
+            where: {
+                user_id: userId,
+                search_text: {
+                    [Op.notIn]: [null, ""],
+                    [Op.ne]: " ",
+                },
+            },
             order: [
                 ["search_text", "ASC"],
                 ["createdAt", "DESC"],
