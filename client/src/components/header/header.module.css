@@ -163,14 +163,14 @@
 }
 
 .suggestText {
-    margin-left: 1em;
+    margin-left: 12px;
     font-size: 14px;
 }
 
 .hisIcon,
 .suggestSearchIcon {
     font-size: 16px;
-    color: #555;
+    color: var(--gray-50);
 }
 
 @media ( min-width: 768px ) {
