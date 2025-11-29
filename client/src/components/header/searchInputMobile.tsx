@@ -62,6 +62,8 @@ export default function SearchInputMobile({ loggedIn }: Props) {
             );
 
             setSearchHis(dataList);
+
+            console.log(searchHis);
         } catch (err) {
             console.error(err);
         }
