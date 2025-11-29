@@ -1,4 +1,4 @@
-import e, { Router, Request, Response } from "express";
+import { Router, Request, Response } from "express";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
 
 const router = Router();
@@ -26,7 +26,7 @@ function generateNgrams(text: string): string[] {
 
 router.get("/dev/create", async (req: Request, res: Response): Promise<void> => {
     try {
-        const items = await Item.fildAll({
+        const items = await Item.findAll({
             where: { public: true },
             include: [
                 { model: User, attributes: ["user_name"] },
