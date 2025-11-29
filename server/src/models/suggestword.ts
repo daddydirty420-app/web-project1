@@ -1,26 +1,11 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Model, DataTypes } from "sequelize";
 import sequelize from "../db.js";
-
-import Item from "./item.js";
 
 export class SuggestWords extends Model {
     declare id: number;
     declare word: string;
-    declare item_id: number;
-    declare type: "title" | "tag" | "category" | "user" | "video";
     declare createdAt: Date;
-    declare updatedAt: Date;
-    
-    static associate() {
-        SuggestWords.belongsTo(Item, {
-            foreignKey: "item_id",
-            onDelete: "CASCADE",
-        });
-    };
-
-    static associations: {
-        Item: Association<SuggestWords, Item>;
-    };        
+    declare updatedAt: Date;     
 };
 
 SuggestWords.init(
