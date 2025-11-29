@@ -35,18 +35,6 @@ SuggestWords.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        item_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Item,
-                key: "id",
-            },
-        },
-        type: {
-            type: DataTypes.ENUM("title", "tag", "category", "user", "video"),
-            allowNull: false,
-        },
     },
     {
         sequelize,

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { Item, Search, SuggestWords, User } from "../models/index.js";
+import { Search, SuggestWords } from "../models/index.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
