@@ -146,7 +146,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                 <div className={styles.suggestArea}>
                     <div className={styles.suggestInner}>
                         <p className={styles.categoryText}><Link href="/search/category">カテゴリー検索</Link></p>
-                        {!value && searchHis?.map((v, i) => (
+                        {!suggestList && searchHis?.map((v, i) => (
                             <div
                             key={i}
                             className={styles.suggestItem}
@@ -159,7 +159,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                             </div>
                         ))}
 
-                        {value && suggestList?.map((v, i) => (
+                        {suggestList && suggestList?.map((v, i) => (
                             <div
                             key={i}
                             className={styles.suggestItem}
