@@ -11,21 +11,19 @@ router.get("/history", authenticateToken, async (req: Request, res: Response) =>
 
     try {
         const searchHistory = await Search.findAll({
-            attributes: [Sequelize.literal(
-                'DISTINCT ON ("search_text") "search_text"'), 
-                "createdAt",
+            attributes: [
+                [Sequelize.fn("MAX", Sequelize.col("createdAt")), "createdAt"],
+                "search_text",
             ],
             where: {
                 user_id: userId,
                 search_text: {
-                    [Op.notIn]: [null, ""],
-                    [Op.ne]: " ",
+                    [Op.ne]: "",
+                    [Op.not]: null,
                 },
             },
-            order: [
-                ["search_text", "ASC"],
-                ["createdAt", "DESC"],
-            ],
+            group: ["search_text"],
+            order: [[Sequelize.literal("MAX(\"createdAt\")"), "DESC"]],
         });
 
         const sortedData = searchHistory.sort(
