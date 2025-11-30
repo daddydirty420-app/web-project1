@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { refreshToken } from "@/lib/refreshToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { normalizeJapanese } from "@/lib/normalizeJapanese";
 
 type Props = {
     loggedIn: boolean;
@@ -103,6 +104,28 @@ export default function SearchInputMobile({ loggedIn }: Props) {
         fetchSuggest(val);
     };
 
+    const highlightMatch = (word: string, query: string) => {
+        if (!query) return word;
+
+        const nText = normalizeJapanese(word);
+        const nQuery = normalizeJapanese(query);
+
+        const index = nText.indexOf(nQuery);
+        if (index === -1) return word;
+
+        const before = word.slice(0, index);
+        const match = word.slice(index, index + query.length);
+        const after = word.slice(index + query.length);
+
+        return (
+            <>
+                {before}
+                <strong>{match}</strong>
+                {after}
+            </>
+        );
+    };
+
     return (
         <>
         {!searchMode && (
@@ -157,7 +180,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                             }}
                             >
                                 <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
-                                <p className={styles.suggestText}>{v}</p>
+                                <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
                             </div>
                         ))}
 
@@ -170,7 +193,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                             }}
                             >
                                 <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
-                                <p className={styles.suggestText}>{v}</p>
+                                <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
                             </div>
                         ))}
                     </div>
