@@ -104,18 +104,52 @@ export default function SearchInputMobile({ loggedIn }: Props) {
         fetchSuggest(val);
     };
 
+    const buildMapping = (str: string) => {
+        let normalized = "";
+        const map: { origIndex: number; normStart: number; normEnd: number }[] = [];
+
+        for (let i = 0; i < str.length; i++) {
+            const origChar = str[i];
+            const nChar = normalizeJapanese(origChar); // 1文字ずつnormalize
+
+            const start = normalized.length;
+            normalized += nChar;
+            const end = normalized.length - 1;
+
+            map.push({
+                origIndex: i,
+                normStart: start,
+                normEnd: end,
+            });
+        }
+
+        return { normalized, map };
+    };
+
     const highlightMatch = (word: string, query: string) => {
         if (!query) return word;
 
-        const nText = normalizeJapanese(word);
+        const { normalized: nWord, map } = buildMapping(word);
         const nQuery = normalizeJapanese(query);
 
-        const index = nText.indexOf(nQuery);
-        if (index === -1) return word;
+        const normIndex = nWord.indexOf(nQuery);
+        if (normIndex === -1) return word;
 
-        const before = word.slice(0, index);
-        const match = word.slice(index, index + query.length);
-        const after = word.slice(index + query.length);
+        const startMap = 
+        map.find((m) => m.normStart === normIndex || (m.normStart < normIndex && m.normEnd >= normIndex));
+        if (!startMap) return word;
+
+        const startOrig = startMap.origIndex;
+
+        const endNormIndex = normIndex + nQuery.length - 1;
+        const endMap = map.find((m) => m.normStart <= endNormIndex && m.normEnd >= endNormIndex);
+        if (!endMap) return word;
+
+        const endOrig = endMap.origIndex;
+
+        const before = word.slice(0, startOrig);
+        const match = word.slice(startOrig, endOrig + 1);
+        const after = word.slice(endOrig + 1);
 
         return (
             <>
