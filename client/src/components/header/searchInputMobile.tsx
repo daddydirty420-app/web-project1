@@ -108,7 +108,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
 
         for (let i = 0; i < str.length; i++) {
             const origChar = str[i];
-            const nChar = normalizeJapanese(origChar); // 1文字ずつnormalize
+            const nChar = normalizeJapanese(origChar);
 
             const start = normalized.length;
             normalized += nChar;
