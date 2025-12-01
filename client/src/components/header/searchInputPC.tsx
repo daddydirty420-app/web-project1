@@ -196,8 +196,10 @@ export default function SearchInputPC({ loggedIn }: Props) {
                         <div
                         key={i}
                         className={styles.suggestItemPC}
-                        onClick={() => {
+                        onMouseDown={() => {
+                            setValue(v);
                             router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                            setIsFocused(false);
                         }}
                         >
                             <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
@@ -209,8 +211,10 @@ export default function SearchInputPC({ loggedIn }: Props) {
                         <div
                         key={i}
                         className={styles.suggestItemPC}
-                        onClick={() => {
+                        onMouseDown={() => {
+                            setValue(v);
                             router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                            setIsFocused(false);
                         }}
                         >
                             <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
