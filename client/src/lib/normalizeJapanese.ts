@@ -1,5 +1,5 @@
 const toHiragana = (str: string) =>
-    str.replace(/[\u30A0-\u30FF]/g, (ch) =>
+    str.replace(/[\u30A1-\u30F6]/g, (ch) =>
         String.fromCharCode(ch.charCodeAt(0) - 0x60)
     );
 
@@ -15,12 +15,10 @@ const normalizeSmallKana = (str: string) =>
 
 const absorbChoon = (str: string) => str.replace(/ー/g, "");
 
-const toLower = (str: string) => str.toLowerCase();
-
 export const normalizeJapanese = (str: string) => {
     let s = str;
 
-    s = toLower(s);
+    s = s.toLowerCase();
     s = toHiragana(s);
     s = removeDakuten(s);
     s = normalizeSmallKana(s);
