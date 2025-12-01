@@ -82,7 +82,13 @@ export default function SearchInputMobile({ loggedIn }: Props) {
 
             const data = await res.json();
 
-            setSuggestList(data.suggest);
+            const nValue = normalizeJapanese(word);
+
+            const list = data.suggest.filter(item =>
+                normalizeJapanese(item).includes(nValue)
+            );
+
+            setSuggestList(list);
         } catch (err) {
             console.error(err);
             setSuggestList([]);
