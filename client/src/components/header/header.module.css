@@ -215,6 +215,33 @@
         color: var(--theme);
     }
 
+    .suggestAreaPC {
+        width: 400px;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        opacity: 0;
+        transform: translateY(-10px);
+        animation: fadeSlideIn 0.25s forwards;
+    }
+
+    .suggestInnerPC {
+        padding: 8px 16px;
+    }
+
+    .suggestItemPC {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        cursor: pointer;
+        transition: background-color 0.15s;
+    }
+
+    .suggestItemPC:hover {
+        background-color: #f0f0f0;
+    }
+
     .menuNav {
         display: flex;
         width: max-content;
