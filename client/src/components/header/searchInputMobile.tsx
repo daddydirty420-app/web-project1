@@ -184,6 +184,7 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                     className={styles.searchInputMobile}
                     value={value}
                     onChange={onChange}
+                    autoComplete="off"
                     />
                     <FontAwesomeIcon
                     icon={faAngleLeft}

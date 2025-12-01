@@ -176,6 +176,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
                 onChange={onChange}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
+                autoComplete="off"
                 />
                 <FontAwesomeIcon
                 icon={faSearch} 
