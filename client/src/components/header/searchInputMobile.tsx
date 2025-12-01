@@ -80,15 +80,9 @@ export default function SearchInputMobile({ loggedIn }: Props) {
                 cache: "no-store",
             });
 
-            const data = await res.json();
+            const data: { suggest: string[] } = await res.json();
 
-            const nValue = normalizeJapanese(word);
-
-            const list = data.suggest.filter(item =>
-                normalizeJapanese(item).includes(nValue)
-            );
-
-            setSuggestList(list);
+            setSuggestList(data.suggest);
         } catch (err) {
             console.error(err);
             setSuggestList([]);
