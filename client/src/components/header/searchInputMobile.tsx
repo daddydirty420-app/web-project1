@@ -98,8 +98,6 @@ export default function SearchInputMobile({ loggedIn }: Props) {
         debounceRef.current = setTimeout(() => {
             fetchSuggest(val);
         }, 300);
-
-        fetchSuggest(val);
     };
 
     const buildMapping = (str: string) => {
