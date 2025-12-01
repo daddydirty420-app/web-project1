@@ -3,6 +3,7 @@ import { Search, SuggestWords } from "../models/index.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
@@ -38,7 +39,7 @@ router.get("/history", authenticateToken, async (req: Request, res: Response) =>
 });
 
 router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
-    const keyword = req.query.keyword as string;
+    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
     if (!keyword) {
         res.status(200).json({ suggest: [] });
@@ -49,7 +50,7 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
         const words = await SuggestWords.findAll({
             attributes: ["word"],
             where: {
-                word: {
+                normalized_word: {
                     [Op.iLike]: `%${keyword}%`,
                 },
             },
@@ -58,7 +59,7 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
         });
 
         res.status(200).json({
-            suggest: words.map((w: any) => w.word),
+            suggest: words.map((w: typeof SuggestWords) => w.word),
         });
     } catch (err) {
         console.error(err);
