@@ -187,7 +187,6 @@ export default function SearchInputPC({ loggedIn }: Props) {
                 />
             </form>
             <p className={styles.categorySearchPC}><Link href='/search/category'>カテゴリー検索</Link></p>
-        </div>
 
         {isFocused && (
             <>
@@ -222,6 +221,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
             </div>
             </>
         )}
+        </div>
         </>
     );
 };
