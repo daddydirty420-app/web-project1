@@ -7,6 +7,7 @@ import { faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import { refreshToken } from "@/lib/refreshToken";
 import { useRouter } from "next/navigation";
+import { normalizeJapanese } from "@/lib/normalizeJapanese";
 
 type Props = {
     loggedIn: boolean;
@@ -84,7 +85,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
                 cache: "no-store",
             });
 
-            const data = await res.json();
+            const data: { suggest: string[] } = await res.json();
 
             setSuggestList(data.suggest);
         } catch (err) {
@@ -102,8 +103,64 @@ export default function SearchInputPC({ loggedIn }: Props) {
         debounceRef.current = setTimeout(() => {
             fetchSuggest(val);
         }, 300);
-
-        fetchSuggest(val);
+    };
+    
+    const buildMapping = (str: string) => {
+        const normalized = normalizeJapanese(str);
+    
+        const map: { origIndex: number; normStart: number; normEnd: number }[] = [];
+        let normPos = 0;
+    
+        for (let i = 0; i < str.length; i++) {
+            const origChar = str[i];
+            const normChar = normalizeJapanese(origChar);
+    
+            const start = normPos;
+            normPos += normChar.length;
+            const end = normPos - 1;
+    
+            map.push({
+                origIndex: i,
+                normStart: start,
+                normEnd: end,
+            });
+        }
+    
+        return { normalized, map };
+    };
+    
+    const highlightMatch = (word: string, query: string) => {
+        if (!query) return word;
+    
+        const { normalized: nWord, map } = buildMapping(word);
+        const nQuery = normalizeJapanese(query);
+    
+        const normIndex = nWord.indexOf(nQuery);
+        if (normIndex === -1) return word;
+    
+        const startMap = 
+        map.find((m) => m.normStart === normIndex || (m.normStart < normIndex && m.normEnd >= normIndex));
+        if (!startMap) return word;
+    
+        const startOrig = startMap.origIndex;
+    
+        const endNormIndex = normIndex + nQuery.length - 1;
+        const endMap = map.find((m) => m.normStart <= endNormIndex && m.normEnd >= endNormIndex);
+        if (!endMap) return word;
+    
+        const endOrig = endMap.origIndex;
+    
+        const before = word.slice(0, startOrig);
+        const match = word.slice(startOrig, endOrig + 1);
+        const after = word.slice(endOrig + 1);
+    
+        return (
+            <>
+                {before}
+                <strong>{match}</strong>
+                {after}
+            </>
+        );
     };
 
     return (
@@ -136,7 +193,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
             <>
             <div className={styles.suggestAreaPC}>
                 <div className={styles.suggestInnerPC}>
-                    {!value && searchHis?.map((v, i) => (
+                    {suggestList.length === 0 && searchHis?.map((v, i) => (
                         <div
                         key={i}
                         className={styles.suggestItemPC}
@@ -145,11 +202,11 @@ export default function SearchInputPC({ loggedIn }: Props) {
                         }}
                         >
                             <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
-                            <p className={styles.suggestText}>{v}</p>
+                            <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
                         </div>
                     ))}
 
-                    {value && suggestList?.map((v, i) => (
+                    {suggestList.length > 0 && suggestList?.map((v, i) => (
                         <div
                         key={i}
                         className={styles.suggestItemPC}
@@ -158,7 +215,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
                         }}
                         >
                             <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
-                            <p className={styles.suggestText}>{v}</p>
+                            <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
                         </div>
                     ))}
                 </div>
