@@ -103,16 +103,18 @@ export default function SearchInputMobile({ loggedIn }: Props) {
     };
 
     const buildMapping = (str: string) => {
-        let normalized = "";
+        const normalized = normalizeJapanese(str);
+
         const map: { origIndex: number; normStart: number; normEnd: number }[] = [];
+        let normPos = 0;
 
         for (let i = 0; i < str.length; i++) {
             const origChar = str[i];
-            const nChar = normalizeJapanese(origChar);
+            const normChar = normalizeJapanese(origChar);
 
-            const start = normalized.length;
-            normalized += nChar;
-            const end = normalized.length - 1;
+            const start = normPos;
+            normPos += normChar.length;
+            const end = normPos - 1;
 
             map.push({
                 origIndex: i,
