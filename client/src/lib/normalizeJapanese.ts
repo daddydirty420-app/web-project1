@@ -1,7 +1,9 @@
 const toHiragana = (str: string) =>
-    str.replace(/[\u30A1-\u30F6]/g, (ch) =>
+    str.replace(/[\u30A0-\u30FF]/g, (ch) =>
         String.fromCharCode(ch.charCodeAt(0) - 0x60)
-    );
+    )
+    .replace(/ヵ/g, "か")
+    .replace(/ヶ/g, "け");
 
 const removeDakuten = (str: string) =>
     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
