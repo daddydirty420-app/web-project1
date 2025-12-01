@@ -4,6 +4,7 @@ import sequelize from "../db.js";
 export class SuggestWords extends Model {
     declare id: number;
     declare word: string;
+    declare normalized_word: string | null;
     declare createdAt: Date;
     declare updatedAt: Date;     
 };
@@ -20,6 +21,7 @@ SuggestWords.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        normalized_word: DataTypes.STRING(255),
     },
     {
         sequelize,

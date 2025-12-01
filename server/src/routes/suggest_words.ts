@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
@@ -69,6 +70,28 @@ router.get("/dev/create", async (req: Request, res: Response): Promise<void> => 
             message: "SuggestWords（辞書）作成完了！",
             count: createdCount,
         });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/dev/normalize", async (req: Request, res: Response): Promise<void> => {
+    try {
+        const allWords = await SuggestWords.findAll({
+            attributes: ["id", "word"],
+        });
+
+        const updatePromise = allWords.map((w: typeof SuggestWords) =>
+            SuggestWords.update(
+                { normalized_word: normalizeJapanese(w.word) },
+                { where: { id: w.id }},
+            )
+        );
+
+        await Promise.all(updatePromise);
+
+        res.status(200).json({ message: "全件 normalized_word 更新完了！", count: allWords.length });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
