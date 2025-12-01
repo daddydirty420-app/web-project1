@@ -192,6 +192,7 @@
         flex: 1;
         margin-left: 1rem;
         padding-top: 10px;
+        position: relative;
     }
 
     .searchInputDivPC {
@@ -216,11 +217,15 @@
     }
 
     .suggestAreaPC {
-        width: 400px;
+        position: absolute;
+        top: 70px;
+        left: 50px;
+        width: 100%;
         background-color: #fff;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
+        z-index: 1000;
         opacity: 0;
         transform: translateY(-10px);
         animation: fadeSlideIn 0.25s forwards;
