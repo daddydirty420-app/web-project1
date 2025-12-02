@@ -64,6 +64,7 @@ export default function SearchInputPC({ loggedIn }: Props) {
             }
 
             const dataList: string[] = (data.sortedData as SearchHistoryItem[]).map(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (item: any) => item.search_text
             );
 
