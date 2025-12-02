@@ -127,3 +127,52 @@
     background-color: #f5f5f5;
     cursor: pointer;
 }
+
+.imageInputDiv {
+    margin: 1rem auto;
+    width: max-content;
+}
+
+.imageInput {
+    border: solid 1px var(--gray-line);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.preview {
+    margin: 0.5rem auto;
+    width: 120px;
+    height: 120px;
+}
+
+.centerSmall {
+    font-size: 12px;
+    text-align: center;
+}
+
+.permitSection {
+    margin-top: 1rem;
+}
+
+.permitListDiv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 auto;
+}
+
+.permmitPreviewItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.permitPreview {
+    border-radius: 10px;
+}
+
+.permitRemoveIcon {
+    font-size: 18px;
+    color: var(--theme);
+    cursor: pointer;
+}

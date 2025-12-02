@@ -295,7 +295,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
                 accept="image/*"
                 onChange={handleChangeFront}
                 className={styles.imageInput}
-                placeholder="プロフィール画像をアップロード"
+                placeholder="画像ファイルをアップロード"
                 ref={idFrontRef}
                 />
                 <Image
@@ -312,7 +312,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
                 accept="image/*"
                 onChange={handleChangeRear}
                 className={styles.imageInput}
-                placeholder="プロフィール画像をアップロード"
+                placeholder="画像ファイルをアップロード"
                 ref={idRearRef}
                 required
                 />

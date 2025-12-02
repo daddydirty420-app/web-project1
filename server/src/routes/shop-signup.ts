@@ -325,7 +325,7 @@ router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

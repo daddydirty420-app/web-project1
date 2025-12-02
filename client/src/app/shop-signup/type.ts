@@ -54,6 +54,9 @@ export type ShopInfo = {
     capital: number;
     member_count: number;
     founded_date: Date;
+    id_card_front: string;
+    id_card_rear: string;
+    permit_url: string[];
     ComOrFreeOption?: ComOrFreeOption | null;
     Address?: Address | null;
     Name?: Name | null;
