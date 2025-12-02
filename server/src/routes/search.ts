@@ -68,7 +68,6 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
                 ],
                 [sequelize.fn("length", sequelize.col("word")), "ASC"],
             ],
-            group: ["word"],
             limit: 10,
         });
 
