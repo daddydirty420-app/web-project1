@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 config.autoAddCss = false;
 
@@ -55,6 +56,7 @@ export default function RootLayout({
         {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
 
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
