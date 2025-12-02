@@ -25,7 +25,7 @@ export default function TokuteiSelling() {
 
             <TokuteiContainer>
                 <TokuteiSection header='役務提供事業者'>
-                    <p>FLEX OUTDOOR</p>
+                    <p>〇〇〇〇</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='所在地'>

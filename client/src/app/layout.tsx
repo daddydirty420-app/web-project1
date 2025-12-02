@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Script from "next/script";
 import { config } from '@fortawesome/fontawesome-svg-core';
+import { Analytics } from "@vercel/analytics/next"
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -42,6 +43,8 @@ export default function RootLayout({
 }>) {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+  console.log(GA_ID);
+
   return (
     <html lang="ja">
       <body
@@ -63,6 +66,8 @@ export default function RootLayout({
             </Script>
           </>
         )}
+
+        <Analytics />
       </body>
     </html>
   );

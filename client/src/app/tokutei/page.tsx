@@ -26,7 +26,7 @@ export default function Tokutei() {
             <TokuteiContainer>
                 <TokuteiSection header='販売事業者の名称'>
                     <p>代表者氏名：○○ ○○
-                        <br />サービス名称：FLEX OUTDOOR
+                        <br />サービス名称：〇〇〇〇
                     </p>
                 </TokuteiSection>
 

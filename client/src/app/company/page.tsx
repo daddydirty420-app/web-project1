@@ -64,7 +64,7 @@ export default function Company() {
                 </TokuteiSection>
 
                 <TokuteiSection header='URL'>
-                    <p><Link href='/' className='cursor-pointer hover:underline'>https://flex-outdoor.com</Link></p>
+                    <p><Link href='/' className='cursor-pointer hover:underline'>https://fuckintesting.com</Link>（仮）</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='取引銀行'>

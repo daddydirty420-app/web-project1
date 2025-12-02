@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: "特定商取引法に基づく表記（FLEXレコメンド編）",
+    title: "特定商取引法に基づく表記（レコメンド編）",
     description: "特定商取引法に基づく表記はこちら！",
     robots: {
         index: false,
@@ -21,12 +21,12 @@ export default function TokuteiReccomend() {
         <Header />
 
         <Container header>
-            <TitleAndBack title='特定商取引法に基づく表記（FLEXレコメンド）' />
+            <TitleAndBack title='特定商取引法に基づく表記（レコメンド）' />
 
             <TokuteiContainer>
                 <TokuteiSection header='販売事業者の名称'>
                     <p>代表者氏名：○○ ○○
-                        <br />サービス名称：FLEX OUTDOOR
+                        <br />サービス名称：〇〇〇〇
                     </p>
                 </TokuteiSection>
 
