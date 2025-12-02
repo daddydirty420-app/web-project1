@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import Script from "next/script";
 import { config } from '@fortawesome/fontawesome-svg-core';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -52,20 +52,7 @@ export default function RootLayout({
       >
         {children}
 
-        {GA_ID && (
-          <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive"></Script>
-            <Script id="ga-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', '${GA_ID}', { page_path: window.location.pathname });
-              `}
-            </Script>
-          </>
-        )}
+        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
 
         <Analytics />
       </body>
