@@ -4,8 +4,9 @@ import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens,
 import sequelize from "../db.js";
 
 export const startTokenCron = () => {
-    const now = new Date();
+    const now = Date.now();
 
+    // 未認証ユーザー削除
     cron.schedule('0 * * * *', async () => {
         const t = await sequelize.transaction();
 
@@ -20,7 +21,7 @@ export const startTokenCron = () => {
 
             if (expiredTokens.length === 0) {
                 await t.commit();
-                console.log("未認証削除ユーザーはありません。");
+                console.log("[cron] 未認証削除ユーザーはありません。");
                 return;
             };
 
@@ -49,6 +50,7 @@ export const startTokenCron = () => {
         timezone: "Asia/Tokyo",
     });
 
+    // PasswordResetToken削除
     cron.schedule('0 * * * *', async () => {
         try {
             const destroyTokens = await PasswordResetTokens.destroy({
@@ -57,7 +59,7 @@ export const startTokenCron = () => {
                 },
             });
 
-            console.log(`[cron] ${destroyTokens.length}件の期限切れパスワードリセットトークンを削除しました。`);
+            console.log(`[cron] ${destroyTokens}件の期限切れパスワードリセットトークンを削除しました。`);
         } catch (err) {
             console.error('[cron] pwリセットトークン削除エラー：', err);
         }
@@ -65,6 +67,7 @@ export const startTokenCron = () => {
         timezone: "Asia/Tokyo",
     });
 
+    // EmailChangeTokens削除
     cron.schedule('0 * * * *', async () => {
         try {
             const destroyTokens = await EmailChangeTokens.destroy({
@@ -73,7 +76,7 @@ export const startTokenCron = () => {
                 },
             });
 
-            console.log(`[cron] ${destroyTokens.length}件の期限切れメールアドレス変更トークンを削除しました。`);
+            console.log(`[cron] ${destroyTokens}件の期限切れメールアドレス変更トークンを削除しました。`);
         } catch (err) {
             console.error('[cron] email変更トークン削除エラー：', err);
         }
@@ -81,6 +84,7 @@ export const startTokenCron = () => {
         timezone: "Asia/Tokyo",
     });
 
+    // 期限切れRefreshTokens削除
     cron.schedule("0 */3 * * *", async () => {
         try {
             const destroyTokens = await RefreshTokens.destroy({
@@ -89,9 +93,9 @@ export const startTokenCron = () => {
                 },
             });
 
-            console.log(`[cron] ${destroyTokens.length}件の期限切れrefreshTokensを削除しました。`)
+            console.log(`[cron] ${destroyTokens}件の期限切れrefreshTokensを削除しました。`)
         } catch (err) {
-            console.error("[cron] 期限切れrefreshTokens削除エラー", err);
+            console.error("[cron] 期限切れrefreshTokens削除エラー：", err);
         }
     }, {
         timezone: "Asia/Tokyo",
