@@ -5,6 +5,7 @@ import { Search, WatchHistory } from "../models/index.js";
 export const DataDeleteCron = () => {
     const now = Date.now();
         
+    // 30日経過WatchHistory削除
     cron.schedule("0 12 * * *", async () => {
         const thirtyDaysAgo = new Date(now - 1000 * 60 * 60 * 24 * 30);
     

@@ -4,6 +4,7 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import sequelize from "../db.js";
 
 const router = Router();
 
@@ -54,6 +55,19 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
                     [Op.iLike]: `%${keyword}%`,
                 },
             },
+            order: [
+                [
+                    sequelize.literal(`
+                        CASE
+                        WHEN normalized_word ILIKE '${keyword}%' THEN 1
+                        WHEN normalized_word ILIKE '% ${keyword}%' THEN 2
+                        ELSE 3
+                        END
+                    `),
+                    "ASC",
+                ],
+                [sequelize.fn("length", sequelize.col("word")), "ASC"],
+            ],
             group: ["word"],
             limit: 10,
         });
