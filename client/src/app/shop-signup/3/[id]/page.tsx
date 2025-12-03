@@ -46,5 +46,4 @@ export default async function Page({ params }: Props) {
         shopInfo={data.data}
         />
     );
-
 };
