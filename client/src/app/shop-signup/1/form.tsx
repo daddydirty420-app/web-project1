@@ -167,7 +167,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 return;
             }
             
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/1`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

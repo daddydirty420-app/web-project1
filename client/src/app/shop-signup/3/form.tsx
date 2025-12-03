@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     shopId: string;
@@ -18,6 +19,7 @@ type Props = {
 };
 
 type PermitImage = {
+    uploaded: boolean;
     file: File | null;
     preview: string;
 };
@@ -36,6 +38,7 @@ export default function Form({ shopId, shopInfo }: Props) {
     const initialPermit = (shopInfo.permit_url ?? []).map((url) => ({
         file: null,
         preview: url,
+        uploaded: false,
     }));
 
     const [permitImages, setPermitImages] = useState<PermitImage[]>(initialPermit);
@@ -71,6 +74,7 @@ export default function Form({ shopId, shopInfo }: Props) {
         const newImages = files.slice(0, 10 - permitImages.length).map(f => ({
             file: f,
             preview: URL.createObjectURL(f),
+            uploaded: true,
         }));
 
         setPermitImages(prev => [...prev, ...newImages]);
@@ -80,7 +84,145 @@ export default function Form({ shopId, shopInfo }: Props) {
         setPermitImages(prev => prev.filter((_, i) => i !== index));
     };
 
-    const submit = async () => {};
+    const submit = async () => {
+        if (!idCardFront || !idCardRear) {
+            alert("身分証がアップロードされていません。");
+            return;
+        }
+
+        if (checked && permitImages.length === 0) {
+            alert("許認可証がアップロードされていません。");
+            return;
+        }
+
+        let frontFileName: string | undefined;
+        let frontFileType: string | undefined;
+        let rearFileName: string | undefined;
+        let rearFileType: string | undefined;
+
+        if (idFrontUpload && idCardFront instanceof File) {
+            frontFileName = idCardFront.name;
+            frontFileType = idCardFront.type;
+        }
+
+        if (idRearUpload && idCardRear instanceof File) {
+            rearFileName = idCardRear.name;
+            rearFileType = idCardRear.type;
+        }
+
+        let permitFiles: ({ fileName: string; fileType: string | null; uploaded: boolean } | undefined)[] = [];
+        if (checked) {
+            permitFiles = permitImages.map(img => {
+                if (img.uploaded && img.file instanceof File) {
+                    return {
+                        fileName: img.file!.name,
+                        fileType: img.file!.type,
+                        uploaded: true,
+                    };
+                }
+
+                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
+
+                return {
+                    fileName,
+                    fileType: null,
+                    uploaded: false,
+                }
+            });
+        }
+
+        const body = {
+            frontFileName,
+            frontFileType,
+            rearFileName,
+            rearFileType,
+            idFrontUpload,
+            idRearUpload,
+            permitFiles,
+        };
+
+        try {
+            const accessToken = await refreshToken();
+        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/3/${shopId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(body),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.message);
+                alert(data.message || "サーバーエラーが発生しました。通信環境を確認し、もう一度トライしてください。");
+                return;
+            }
+
+            if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
+                const uploadFrontRes = await fetch(data.frontSignedUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": idCardFront.type,
+                    },
+                    body: idCardFront,
+                });
+
+                if (!uploadFrontRes.ok) {
+                    alert("身分証（表面）のアップロードに失敗しました。");
+                    return;
+                }
+            }
+
+            if (idRearUpload && data.rearSignedUrl && idCardRear instanceof File) {
+                const uploadFrontRes = await fetch(data.rearSignedUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": idCardRear.type,
+                    },
+                    body: idCardRear,
+                });
+
+                if (!uploadFrontRes.ok) {
+                    alert("身分証（裏面）のアップロードに失敗しました。");
+                    return;
+                }
+            }
+
+            if (checked) {
+                const uploadImages = permitImages.filter(img => img.uploaded && img.file instanceof File);
+
+                for (let i = 0; i < data.permitSignedUrls.length; i++) {
+                    const file = uploadImages[i].file!;
+                    const signedUrl = data.permitSignedUrls[i];
+
+                    const upload = await fetch(signedUrl, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": file.type,
+                        },
+                        body: file,
+                    });
+
+                    if (!upload.ok) {
+                        alert("許認可証のアップロードに失敗しました。");
+                        return;
+                    }
+                }
+            }
+
+            router.push(`/shop-signup/4/${shopId}`);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const backSubmit = () => router.push(`/shop-signup/2/${shopId}`);
 

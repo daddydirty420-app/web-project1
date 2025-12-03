@@ -167,7 +167,7 @@ export default function Form({ shopId, account }: Props) {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup2-create/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/2/${shopId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
