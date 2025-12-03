@@ -155,9 +155,10 @@
 }
 
 .permitListDiv {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+    width: 100%;
     margin: 0 auto;
 }
 
