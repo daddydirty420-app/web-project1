@@ -305,7 +305,7 @@ router.post("/3/:id", authenticateToken, async (req: Request, res: Response) : P
             for (const file of permitFiles) {
                 const { fileName, fileType, uploaded } = file;
 
-                if (!fileName || !fileType) continue;
+                if (!fileName) continue;
 
                 if (uploaded) {
                     const permitKey = `permit/${shopId}/${now}_${fileName}`;
@@ -321,7 +321,7 @@ router.post("/3/:id", authenticateToken, async (req: Request, res: Response) : P
                     permitSignedUrls.push(signedUrl);
                     permitUrls.push(`${s3Domain}/${permitKey}`);
                 } else {
-                    const oldUrl = oldPermitUrls.find((u) => u.includes(fileName));
+                    const oldUrl = oldPermitUrls.find((u) => decodeURIComponent(u).includes(fileName));
                     if (oldUrl) {
                         permitUrls.push(oldUrl);
                     }
