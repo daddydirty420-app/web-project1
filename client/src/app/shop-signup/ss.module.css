@@ -165,10 +165,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
 }
 
 .permitPreview {
     border-radius: 10px;
+    width: 100px;
+    height: 100px;
 }
 
 .permitRemoveIcon {
