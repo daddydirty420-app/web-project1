@@ -74,10 +74,10 @@ export default function StepBar() {
     }, []);
 
     const steps = useMemo(() => [
-        { label: "事業者情報", path: "/shop-signup/1" },
-        { label: "口座登録", path: "/shop-signup/2" },
-        { label: width <= 480 ? "身分証" : "身分証・証明書", path: "/shop-signup/3" },
-        { label: "オプション", path: "/shop-signup/4" },
+        { label: "事業者情報", path: "/shop-signup/1", shortLabel: "事業者情報" },
+        { label: "口座登録", path: "/shop-signup/2", shortLabel: "口座登録" },
+        { label: "身分証・証明書", path: "/shop-signup/3", shortLabel: "身分証" },
+        { label: "オプション", path: "/shop-signup/4", shortLabel: "オプション" },
     ], [width]);
 
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
@@ -112,7 +112,7 @@ export default function StepBar() {
                     const isCompleted = index < activeIndex;
 
                     return (
-                        <div key={step.label} className={styles.stepItem}>
+                        <div key={index} ref={(el) => {itemRef.current[index] = el}} className={styles.stepItem}>
                             <div className={styles.stepInner}>
                                 <div className={`${styles.circle} ${
                                     isActive ? styles.active : ""
@@ -121,10 +121,8 @@ export default function StepBar() {
                                     {isCompleted ? "✓" : index + 1}
                                 </div>
 
-                                <span className={`${styles.label} ${
-                                    isActive ? styles.labelActive : ""
-                                }`}>
-                                    {step.label}
+                                <span className={`${styles.label} ${isActive ? styles.labelActive : ""}`}>
+                                    {width <= 480 ? step.shortLabel : step.label}
                                 </span>
                             </div>
 
