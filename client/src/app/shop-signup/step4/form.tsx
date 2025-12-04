@@ -14,8 +14,8 @@ type Props = {
 
 export default function Form({ shopId }: Props) {
     const [autoTrans, setAutoTrans] = useState("いいえ");
-    const [openInfo, setOpenInfo] = useState(false);
-    const [reccomend, setReccomend] = useState(false);
+    const [openInfo, setOpenInfo] = useState("いいえ");
+    const [reccomend, setReccomend] = useState("いいえ");
 
     const router = useRouter();
 
@@ -27,33 +27,67 @@ export default function Form({ shopId }: Props) {
         <SSUI title="オプション選択">
             <StepBar />
 
-            <div className={styles.radioFlex}>
-                <p className={styles.text14}>自動振込を希望する</p>
+            <div className={styles.optionDiv}>
+                <div className={styles.radioFlex}>
+                    <p className={styles.text14}>自動振込を希望する</p>
 
-                <div className={styles.radioColumn}>
-                    <label className={styles.radio}>
-                        <input
-                        type="radio"
-                        name="autoTrans"
-                        value="はい"
-                        checked={autoTrans === "はい"}
-                        onChange={(e) => setAutoTrans(e.target.value)}
-                        className="cursor-pointer"
-                        />
-                        <p className={styles.text14}>はい</p>
-                    </label>
+                    <div className={styles.radioColumn}>
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="autoTrans"
+                            value="はい"
+                            checked={autoTrans === "はい"}
+                            onChange={(e) => setAutoTrans(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>はい</p>
+                        </label>
 
-                    <label className={styles.radio}>
-                        <input
-                        type="radio"
-                        name="autoTrans"
-                        value="いいえ"
-                        checked={autoTrans === "いいえ"}
-                        onChange={(e) => setAutoTrans(e.target.value)}
-                        className="cursor-pointer"
-                        />
-                        <p className={styles.text14}>いいえ</p>
-                    </label>
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="autoTrans"
+                            value="いいえ"
+                            checked={autoTrans === "いいえ"}
+                            onChange={(e) => setAutoTrans(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>いいえ</p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.optionDiv}>
+                <div className={styles.radioFlex}>
+                    <p className={styles.text14}>運営者情報を表示する</p>
+
+                    <div className={styles.radioColumn}>
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="openInfo"
+                            value="はい"
+                            checked={openInfo === "はい"}
+                            onChange={(e) => setOpenInfo(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>はい</p>
+                        </label>
+
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="openInfo"
+                            value="いいえ"
+                            checked={openInfo === "いいえ"}
+                            onChange={(e) => setOpenInfo(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>いいえ</p>
+                        </label>
+                    </div>
                 </div>
             </div>
 

@@ -181,3 +181,7 @@
     color: var(--theme);
     cursor: pointer;
 }
+
+.optionDiv {
+    margin-bottom: 1.5rem;
+}
