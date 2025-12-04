@@ -1,11 +1,13 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateAccessToken, generateRefreshToken, JwtUserPayload } from "../utils/jwtHelper.js";
 import { authenticateToken } from "../middleware/index.js";
 import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard } from "../models/index.js";
 import sequelize from "../db.js";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import { JwtPayload } from "jsonwebtoken";
 import { Op } from "sequelize";
 
 const router = Router();
@@ -395,7 +397,7 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
 
     const newAccessToken = generateAccessToken(user);
 
-    const newDecoded = jwt.decode(newAccessToken) as jwt.JwtPayload | null;;
+    const newDecoded = jwt.decode(newAccessToken) as jwt.JwtPayload | null;
 
     res.status(200).json({
       accessToken: newAccessToken,

@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateOptional } from "../middleware/index.js";
 import { Video, Item } from "../models/index.js";
 

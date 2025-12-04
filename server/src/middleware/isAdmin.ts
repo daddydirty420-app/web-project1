@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express-serve-static-core";
 import User from "../models/user.js";
 import { AuthUser } from "./authMiddleware.js";
 

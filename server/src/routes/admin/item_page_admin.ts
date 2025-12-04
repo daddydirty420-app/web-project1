@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Item, User, ItemConditionOption, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ColorSize, SizeOption, SizeWearOption, SizeShoesOption, Category, ItemReport, Comment } from "../../models/index.js";
 

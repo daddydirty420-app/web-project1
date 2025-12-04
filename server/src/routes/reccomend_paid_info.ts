@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ReccomendPaidInfo, User } from "../models/index.js";
 

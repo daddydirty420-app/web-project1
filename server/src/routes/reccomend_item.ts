@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional, isAdmin } from "../middleware/index.js";
 import { Op, Sequelize } from "sequelize";
 import { ReccomendItem, Item, User, Sale, Video } from "../models/index.js";

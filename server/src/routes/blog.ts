@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { Blog, BlogCategoryOption, ItemCategory1Option } from "../models/index.js";
 
@@ -153,7 +154,7 @@ router.get('/search-category', async (req: Request, res: Response): Promise<void
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req: Request, res: Response): Promise<void> => {
     try {
         const data = await Blog.findByPk(req.params.id, {
             include: [
@@ -169,7 +170,8 @@ router.get('/:id', async (req, res) => {
         });
 
         if (!data) {
-            return res.status(404).json({ error: 'ブログが見つかりません。' });
+            res.status(404).json({ message: 'ブログが見つかりません。' });
+            return;
         }
 
         const blogViewsRanking = await Blog.findAll({

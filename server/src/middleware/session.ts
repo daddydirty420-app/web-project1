@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express-serve-static-core";
 import { v4 as uuidv4 } from "uuid";
 
 declare module "express-serve-static-core" {

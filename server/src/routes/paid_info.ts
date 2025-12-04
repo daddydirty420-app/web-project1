@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Op, literal } from "sequelize";
 import { PaidInfo, PaymentMethodOption, Item, ColorSize, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, SizeShoesOption, SizeWearOption, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, ReccomendItem } from "../models/index.js";

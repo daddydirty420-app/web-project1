@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ColorSize, SizeOption, SizeWearOption, SizeShoesOption, Category, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs } from "../models/index.js";
@@ -99,7 +100,6 @@ router.post('/sort-add/:id', async (req: Request, res: Response): Promise<void> 
 });
 
 router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const user = req.user!;
     const itemId = req.params.id;
     if (!itemId) {
         res.status(400).json({ message: 'itemIdがありません。' });
@@ -107,6 +107,12 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
     }
 
     try {
+        const user = await User.findByPk(req.user!.id);
+        if (!user) {
+            res.status(404).json({ message: "ユーザーが見つかりません。" });
+            return;
+        }
+        
         const item = await Item.findByPk(itemId, {
             include: [
                 {

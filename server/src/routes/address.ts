@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import fetchAddressFromZip from "../services/addressService.js";
 import { Address, TodouhukenOption } from "../models/index.js";

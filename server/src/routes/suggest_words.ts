@@ -1,4 +1,5 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
