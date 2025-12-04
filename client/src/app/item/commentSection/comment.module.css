@@ -213,7 +213,8 @@
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #f5f5f5;
+    background-color: var(--light-background);
+    box-shadow: var(--shadow-str);
     border-radius: 10px;
     padding: 1rem;
     z-index: 10000;
