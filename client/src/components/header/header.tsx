@@ -20,8 +20,7 @@ export default async function Header() {
                 <Link href='/' className={styles.logo}>
                     <Image
                     src="/logo.png"
-                    alt='FLEX OUTDOORロゴ　トップページへ'
-                    layout='intrinsic'
+                    alt='ロゴ　トップページへ'
                     width={102}
                     height={34}
                     priority
