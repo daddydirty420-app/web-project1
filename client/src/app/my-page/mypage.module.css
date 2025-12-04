@@ -82,7 +82,7 @@
     align-items: center;
     justify-content: space-between;
     height: 45px;
-    border-bottom: solid 1px #bbbbbb;
+    border-bottom: solid 1px var(--gray-line-mid);
     padding: 0 0 0 1rem;
     cursor: pointer;
 }

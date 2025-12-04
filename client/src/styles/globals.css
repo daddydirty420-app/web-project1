@@ -15,9 +15,11 @@
   --gray-75: #444444;
   --gray-line: rgba(0, 0, 0, 0.08);
   --gray-line-mid: rgba(0, 0, 0, 0.10);
+  --gray-line-str: rgba(0, 0, 0, 0.14);
   --black: #222222;
   --accent: #0d87e0;
   --alert: rgba(237, 26, 61, 0.9);
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 
   /* タイポグラフィ（フォントサイズ） */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */

@@ -1,5 +1,5 @@
 .normalContainer {
-    border-top: solid 1px #bbbbbb;
+    border-top: solid 1px var(--gray-line-str);
     max-width: 500px;
     margin: 0 auto 3rem;
 }
@@ -10,7 +10,7 @@
     flex: 1;
     align-items: center;
     height: 48px;
-    border-bottom: solid 1px var(--gray-line);
+    border-bottom: solid 1px var(--gray-line-mid);
     padding: 0 1rem;
     cursor: pointer;
 }
