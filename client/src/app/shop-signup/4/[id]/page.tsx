@@ -17,3 +17,33 @@ export async function generateMetadata(): Promise<Metadata> {
         },
     };
 };
+
+export default async function Page({ params }: Props) {
+    const { id } = params;
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access-token")?.value;
+
+    if (!accessToken) redirect("/login");
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup4/${id}`, {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        console.error(data.message);
+        notFound();
+    }
+
+    return (
+        <Form
+        shopId={id}
+        reccomend={data.hasReccomend}
+        />
+    );
+};
