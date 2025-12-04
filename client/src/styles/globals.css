@@ -13,7 +13,8 @@
   --gray-25: #aaaaaa;
   --gray-50: #707070;
   --gray-75: #444444;
-  --gray-line: rgba(44, 44, 44, 0.10);
+  --gray-line: rgba(44, 44, 44, 0.08);
+  --gray-line-mid: rgba(44, 44, 44, 0.10);
   --black: #222222;
   --accent: #0d87e0;
   --alert: rgba(237, 26, 61, 0.9);
