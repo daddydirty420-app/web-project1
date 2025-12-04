@@ -20,6 +20,7 @@
   --accent: #0d87e0;
   --alert: rgba(237, 26, 61, 0.9);
   --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-mini: 0 1px 3px rgba(0, 0, 0, 0.06);
 
   /* タイポグラフィ（フォントサイズ） */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
