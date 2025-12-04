@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
+import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User, ReccomendMonth } from "../models/index.js";
 
 const router = Router();
 
@@ -141,48 +141,26 @@ router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.get('/upload-permit-list/:id', async (req: Request, res: Response): Promise<void> => {
+router.get("/signup4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const imageList = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['permit_url']
-        });
-
-        if (!imageList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(imageList);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
-router.get('/signup4/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['id'],
+        const user = await User.findByPk(req.user!.id, {
             include: [
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
+                { model: ReccomendMonth }
             ]
         });
 
-        if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
+        const hasReccomend = !!user.ReccomendMonth;
 
-        res.json(data);
+        res.status(200).json({ hasReccomend });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    try {
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

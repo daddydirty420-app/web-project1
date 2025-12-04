@@ -1,5 +1,5 @@
 {
-  "name": "flex-outdoor",
+  "name": "project1",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -21,6 +21,7 @@
     "@tailwindcss/postcss": "^4.1.17",
     "@types/bcrypt": "^6.0.0",
     "@types/hls.js": "^0.13.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -35,12 +36,12 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.525.0",
     "microcms-js-sdk": "^3.2.0",
-    "next": "15.4.1",
+    "next": "^16.0.7",
     "next-auth": "^4.24.13",
     "nookies": "^2.5.2",
-    "react": "19.1.0",
+    "react": "^19.2.1",
     "react-datepicker": "^8.8.0",
-    "react-dom": "19.1.0",
+    "react-dom": "^19.2.1",
     "react-hot-toast": "^2.6.0",
     "swiper": "^12.0.1",
     "swr": "^2.3.6",
@@ -50,7 +51,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@types/jsonwebtoken": "^9.0.10",
     "eslint": "^9",
     "eslint-config-next": "15.4.1"
   },
