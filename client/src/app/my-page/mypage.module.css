@@ -53,7 +53,7 @@
     font-weight: 600;
     color: var(--theme);
     background-color: var(--light-background);
-    border: solid 3px var(--theme);
+    border: solid 2px var(--theme);
     border-radius: 10px;
     cursor: pointer;
 }
