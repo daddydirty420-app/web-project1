@@ -74,11 +74,11 @@ export default function StepBar() {
     }, []);
 
     const steps = useMemo(() => [
-        { label: "事業者情報", path: "/shop-signup/1", shortLabel: "事業者情報" },
-        { label: "口座登録", path: "/shop-signup/2", shortLabel: "口座登録" },
-        { label: "身分証・証明書", path: "/shop-signup/3", shortLabel: "身分証" },
-        { label: "オプション", path: "/shop-signup/4", shortLabel: "オプション" },
-    ], [width]);
+        { label: "事業者情報", path: "/shop-signup/step1", shortLabel: "事業者情報" },
+        { label: "口座登録", path: "/shop-signup/step2", shortLabel: "口座登録" },
+        { label: "身分証・証明書", path: "/shop-signup/step3", shortLabel: "身分証" },
+        { label: "オプション", path: "/shop-signup/step4", shortLabel: "オプション" },
+    ], []);
 
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
 
