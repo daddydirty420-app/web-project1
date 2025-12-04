@@ -19,12 +19,10 @@ export default async function Header() {
             <section className={styles.headerConteiner}>
                 <Link href='/' className={styles.logo}>
                     <Image
-                    src="/default-profile.png"
+                    src="/logo.png"
                     alt='ロゴ　トップページへ'
                     width={102}
                     height={34}
-                    priority
-                    quality={25}
                     />
                 </Link>
                 
