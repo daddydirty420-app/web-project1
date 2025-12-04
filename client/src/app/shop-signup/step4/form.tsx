@@ -57,6 +57,8 @@ export default function Form({ shopId }: Props) {
                         </label>
                     </div>
                 </div>
+
+                <p className={styles.centerSmall}>※振込申請なしで、毎月の売上を翌月10日にお振込みいたします。（金融機関が休業日の場合、その翌営業日）</p>
             </div>
 
             <div className={styles.optionDiv}>
@@ -89,6 +91,43 @@ export default function Form({ shopId }: Props) {
                         </label>
                     </div>
                 </div>
+
+                <p className={styles.centerSmall}>※ショップ情報に会社名、氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
+            </div>
+
+            <div className={styles.optionDiv}>
+                <div className={styles.radioFlex}>
+                    <p className={styles.text14}>〇〇レコメンド（有料）</p>
+
+                    <div className={styles.radioColumn}>
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="reccomend"
+                            value="はい"
+                            checked={reccomend === "はい"}
+                            onChange={(e) => setReccomend(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>はい</p>
+                        </label>
+
+                        <label className={styles.radio}>
+                            <input
+                            type="radio"
+                            name="reccomend"
+                            value="いいえ"
+                            checked={reccomend === "いいえ"}
+                            onChange={(e) => setReccomend(e.target.value)}
+                            className="cursor-pointer"
+                            />
+                            <p className={styles.text14}>いいえ</p>
+                        </label>
+                    </div>
+                </div>
+
+                <p className={styles.centerSmall}>※ご出品された商品を、おすすめ商品や広告、公式SNSなどでご紹介いたします。</p>
+                <p className={styles.centerSmall}>※費用は毎月売上金から差し引きいたします。（売上が0円の月は差し引きいたしません。また、売上がFLEXレコメンドの料金以下の月は全額差し引きいたします。）</p>
             </div>
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />
