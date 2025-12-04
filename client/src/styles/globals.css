@@ -15,12 +15,11 @@
   --gray-75: #444444;
   --gray-line: rgba(0, 0, 0, 0.08);
   --gray-line-mid: rgba(0, 0, 0, 0.10);
+  --gray-line-mid-str: rgba(0, 0, 0, 0.12);
   --gray-line-str: rgba(0, 0, 0, 0.14);
   --black: #222222;
   --accent: #0d87e0;
   --alert: rgba(237, 26, 61, 0.9);
-  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --shadow-mini: 0 1px 3px rgba(0, 0, 0, 0.06);
 
   /* タイポグラフィ（フォントサイズ） */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
@@ -41,6 +40,10 @@
   --space-lg: calc(var(--space-xs) * 3); /* 60-90px */
   --space-xl: calc(var(--space-xs) * 4); /* 80-120px */
   --space-jump: clamp(1.25rem, 0.35rem + 3.8vw, 3.75rem); /* 20-60px */
+
+  /* 影 */
+  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-mini: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 @media (prefers-color-scheme: dark) {

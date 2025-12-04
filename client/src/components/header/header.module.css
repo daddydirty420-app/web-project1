@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: solid 1px var(--gray-line-str);
+    border-bottom: solid 1px var(--gray-line-mid-str);
     background-color: #f4f2ef;
     z-index: 1000;
     box-shadow: var(--shadow-mini);
@@ -186,6 +186,7 @@
 
     .headerConteiner {
         gap: 50px;
+        height: 60px;
     }
 
     .searchDivPC {
