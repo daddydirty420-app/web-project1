@@ -83,6 +83,9 @@ export default function StepBar() {
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
 
     useEffect(() => {
+        const idx = steps.findIndex((s) => pathname.startsWith(s.path));
+        if (idx === -1) return;
+
         const wrapper = wrapperRef.current;
         const activeItem = itemRef.current[activeIndex];
 
@@ -99,7 +102,7 @@ export default function StepBar() {
             left: targetScroll,
             behavior: "smooth",
         });
-    }, [activeIndex, width]);
+    }, [activeIndex, width, pathname, steps]);
 
     return (
         <div className={styles.scrollWrapper} ref={wrapperRef}>
