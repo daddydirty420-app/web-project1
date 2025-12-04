@@ -87,17 +87,18 @@ export default function StepBar() {
 
         if (!wrapper || !activeItem) return;
 
-        activeItem.scrollIntoView({
+        const itemRect = activeItem.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+
+        const offsetLeft = itemRect.left - wrapperRect.left;
+
+        const targetScroll = offsetLeft + wrapper.scrollLeft - wrapper.clientWidth / 2 + itemRect.width / 2;
+
+        wrapper.scrollTo({
+            left: targetScroll,
             behavior: "smooth",
-            inline:
-                activeIndex === 0
-                    ? "start"
-                    : activeIndex === steps.length - 1
-                    ? "end"
-                    : "center",
-            block: "nearest",
         });
-    }, [activeIndex, width, steps.length]);
+    }, [activeIndex, width]);
 
     return (
         <div className={styles.scrollWrapper} ref={wrapperRef}>

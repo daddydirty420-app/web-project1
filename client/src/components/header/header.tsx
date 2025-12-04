@@ -23,6 +23,7 @@ export default async function Header() {
                     alt='ロゴ　トップページへ'
                     width={102}
                     height={34}
+                    quality={50}
                     />
                 </Link>
                 
