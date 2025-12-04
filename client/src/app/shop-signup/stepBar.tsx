@@ -3,7 +3,7 @@
 
 import { usePathname } from "next/navigation";
 import styles from "./stepBar.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function StepBar() {
     const [width, setWidth] = useState(0);
@@ -73,12 +73,12 @@ export default function StepBar() {
         };
     }, []);
 
-    const steps = [
+    const steps = useMemo(() => [
         { label: "事業者情報", path: "/shop-signup/1" },
         { label: "口座登録", path: "/shop-signup/2" },
         { label: width <= 480 ? "身分証" : "身分証・証明書", path: "/shop-signup/3" },
         { label: "オプション", path: "/shop-signup/4" },
-    ];
+    ], [width]);
 
     const activeIndex = steps.findIndex((s) => pathname.startsWith(s.path));
 
