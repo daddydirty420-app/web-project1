@@ -97,7 +97,7 @@
     height: 40px;
     border-radius: 20px;
     border: 1px solid var(--gray-line-mid);
-    background-color: var(--light-background);
+    background-color: var(--background);
     padding-left: 40px;
     padding-right: 40px;
     font-size: 14px;
@@ -207,7 +207,7 @@
     .searchInputPC {
         flex: 1;
         height: 30px;
-        background-color: var(--light-background);
+        background-color: var(--background);
         padding: 6px;
         font-size: 14px;
         border: solid 1px var(--gray-line-mid);
