@@ -7,10 +7,21 @@ import { authenticateToken } from "../middleware/index.js";
 import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard } from "../models/index.js";
 import sequelize from "../db.js";
 import jwt from "jsonwebtoken";
-import { JwtPayload } from "jsonwebtoken";
 import { Op } from "sequelize";
 
 const router = Router();
+
+export interface AuthUser {
+  id: number;
+  email: string;
+  admin: boolean;
+  iat?: number;
+  exp?: number;
+  iss?: string;
+  sub?: string;
+  aud?: string | string[];
+  jti?: string;
+}
 
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
   const { email, password, rememberMe } = req.body;
@@ -397,7 +408,7 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
 
     const newAccessToken = generateAccessToken(user);
 
-    const newDecoded = jwt.decode(newAccessToken) as jwt.JwtPayload | null;
+    const newDecoded = jwt.verify(newAccessToken, process.env.NEXTAUTH_SECRET as string) as AuthUser;
 
     res.status(200).json({
       accessToken: newAccessToken,

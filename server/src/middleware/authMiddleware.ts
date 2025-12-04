@@ -1,13 +1,20 @@
 import type { Request, Response, NextFunction } from "express-serve-static-core";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export interface AuthUser extends JwtPayload {
+export interface AuthUser {
   id: number;
   email: string;
-};
+  admin: boolean;
+  iat?: number;
+  exp?: number;
+  iss?: string;
+  sub?: string;
+  aud?: string | string[];
+  jti?: string;
+}
 
 declare module "express-serve-static-core" {
   interface Request {
