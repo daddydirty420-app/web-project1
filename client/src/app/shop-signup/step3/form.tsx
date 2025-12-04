@@ -218,13 +218,13 @@ export default function Form({ shopId, shopInfo }: Props) {
                 }
             }
 
-            router.push(`/shop-signup/4/${shopId}`);
+            router.push(`/shop-signup/step4/${shopId}`);
         } catch (err) {
             console.error(err);
         }
     };
 
-    const backSubmit = () => router.push(`/shop-signup/2/${shopId}`);
+    const backSubmit = () => router.push(`/shop-signup/step2/${shopId}`);
 
     return (
         <SSUI title="身分証・許認可証登録">

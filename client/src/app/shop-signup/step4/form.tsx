@@ -21,7 +21,7 @@ export default function Form({ shopId }: Props) {
 
     const submit = async () => {};
 
-    const backSubmit = () => router.push(`/shop-signup/3/${shopId}`);
+    const backSubmit = () => router.push(`/shop-signup/step3/${shopId}`);
 
     return (
         <SSUI title="オプション選択">

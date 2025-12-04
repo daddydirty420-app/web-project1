@@ -184,13 +184,13 @@ export default function Form({ shopId, account }: Props) {
                 return;
             }
 
-            router.push(`/shop-signup/3/${shopId}`);
+            router.push(`/shop-signup/step3/${shopId}`);
         } catch (err) {
             console.error(err);
         }
     };
 
-    const backSubmit = () => router.push("/shop-signup/1");
+    const backSubmit = () => router.push("/shop-signup/step1");
 
     return (
         <SSUI title="ショップ口座登録">

@@ -184,7 +184,7 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 return;
             }
 
-            router.push(`/shop-signup/2/${data.id}`);
+            router.push(`/shop-signup/step2/${data.id}`);
         } catch (err) {
             console.error(err);
         }

@@ -14,7 +14,7 @@ type Props = {
 export default async function FooterImage({ shopPage, hasShop, loggedIn }: Props) {
     const signup = "/signup";
     const login = "/login";
-    const shopSign = "/shop-signup/1";
+    const shopSign = "/shop-signup/step1";
 
     return (
         <>

@@ -12,7 +12,7 @@ export default async function Button({ shopPage, hasShop, loggedIn }: Props) {
     const loginPage = '/login';
     const uploadPage = '/upload/before';
     const myPage = '/my-page';
-    const shopSignPage = '/shop-signup/1';
+    const shopSignPage = '/shop-signup/step1';
 
     return (
         <nav>
