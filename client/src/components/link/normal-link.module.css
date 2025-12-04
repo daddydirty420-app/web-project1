@@ -10,7 +10,7 @@
     flex: 1;
     align-items: center;
     height: 48px;
-    border-bottom: solid 1px #bbbbbb;
+    border-bottom: solid 1px var(--gray-line);
     padding: 0 1rem;
     cursor: pointer;
 }
