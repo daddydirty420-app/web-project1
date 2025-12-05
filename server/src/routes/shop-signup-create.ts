@@ -366,4 +366,31 @@ router.post("/3/:id", authenticateToken, async (req: Request, res: Response) : P
     }
 });
 
+router.post("/4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const autoTrans = req.body.autoTrans === "はい";
+    const openInfo = req.body.openInfo === "はい";
+    const reccomend = req.body.reccomend === "はい";
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId);
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        await shop.update({
+            auto_trans: autoTrans,
+            open_info: openInfo,
+            reccomend: reccomend,
+        });
+
+        res.status(200).json({ message: "データ更新完了" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 export default router;

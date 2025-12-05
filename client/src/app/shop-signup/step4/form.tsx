@@ -6,6 +6,7 @@ import SSUI from "../ssUI";
 import ButtonDiv from "../buttonDiv";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     shopId: string;
@@ -19,7 +20,36 @@ export default function Form({ shopId }: Props) {
 
     const router = useRouter();
 
-    const submit = async () => {};
+    const submit = async () => {
+        try {
+            const accessToken = await refreshToken();
+        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/4/${shopId}`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({ autoTrans, openInfo, reccomend }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.message);
+                alert(data.message || "オプション設定エラー");
+            }
+
+            router.push(`/shop-signup/step5/${shopId}`);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const backSubmit = () => router.push(`/shop-signup/step3/${shopId}`);
 
