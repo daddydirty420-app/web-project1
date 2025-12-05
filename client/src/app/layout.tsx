@@ -44,7 +44,7 @@ export default function RootLayout({
 }>) {
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-  console.log(GA_ID);
+  console.log("GA_ID:", GA_ID);
 
   return (
     <html lang="ja">
