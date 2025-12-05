@@ -42,10 +42,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-
-  console.log("GA_ID:", GA_ID);
-
   return (
     <html lang="ja">
       <body
@@ -53,7 +49,7 @@ export default function RootLayout({
       >
         {children}
 
-        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
+        <GoogleAnalytics gaId="G-M08QFX47XZ" />
 
         <Analytics />
         <SpeedInsights />
