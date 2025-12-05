@@ -185,3 +185,11 @@
 .optionDiv {
     margin-bottom: 1.5rem;
 }
+
+.radioFlex {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.25rem auto;
+    width: max-content;
+}

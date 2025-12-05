@@ -28,7 +28,7 @@ export default function Form({ shopId }: Props) {
             <StepBar />
 
             <div className={styles.optionDiv}>
-                <div className={styles.radioFlex}>
+                <div className={styles.radioFlexOption}>
                     <p className={styles.text14}>自動振込を希望する</p>
 
                     <div className={styles.radioColumn}>
@@ -62,7 +62,7 @@ export default function Form({ shopId }: Props) {
             </div>
 
             <div className={styles.optionDiv}>
-                <div className={styles.radioFlex}>
+                <div className={styles.radioFlexOption}>
                     <p className={styles.text14}>運営者情報を表示する</p>
 
                     <div className={styles.radioColumn}>
@@ -96,7 +96,7 @@ export default function Form({ shopId }: Props) {
             </div>
 
             <div className={styles.optionDiv}>
-                <div className={styles.radioFlex}>
+                <div className={styles.radioFlexOption}>
                     <p className={styles.text14}>〇〇レコメンド（有料）</p>
 
                     <div className={styles.radioColumn}>
