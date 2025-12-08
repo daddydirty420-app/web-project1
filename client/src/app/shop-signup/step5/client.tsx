@@ -116,7 +116,7 @@ export default function Client({ shopId, shopInfo }: Props) {
                 input
                 value={companyName}
                 onChange={(v) => setCompanyName(v)}
-                onSubmit={() => updateField("comnany_name", companyName)}
+                onSubmit={() => updateField("company_name", companyName)}
                 />
 
                 <ConfirmSection
