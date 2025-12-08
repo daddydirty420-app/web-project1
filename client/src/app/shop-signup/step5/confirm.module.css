@@ -68,6 +68,12 @@
     font-size: 14px;
 }
 
+.radioColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
 .radioItem {
     display: flex;
     align-items: center;

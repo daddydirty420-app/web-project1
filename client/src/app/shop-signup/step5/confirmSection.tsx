@@ -35,11 +35,11 @@ export default function ConfirmSection({ title, content, link, input, date, radi
     const handleClick = () => {
         if (!link) {
            if (input) {
-            setInputVisible(true);
+            setInputVisible(!inputVisible);
            } else if (radio) {
-            setRadioVisible(true);
+            setRadioVisible(!radioVisible);
            } else if (date) {
-            setDateVisible(true);
+            setDateVisible(!dateVisible);
            }
         } else if (link) {
             router.push(link);
@@ -119,19 +119,21 @@ export default function ConfirmSection({ title, content, link, input, date, radi
 
             {radio && radioVisible && radioOptions && onChange && onSubmit && (
                 <div className={styles.inputFlex}>
-                    {radioOptions.map((opt) => (
-                        <label key={opt.value} className={styles.radioItem}>
-                            <input
-                            type="radio"
-                            name={title}
-                            value={opt.value}
-                            checked={String(value) === String(opt.value)}
-                            onChange={() => onChange(String(opt.value))}
-                            className="cursor-pointer"
-                            />
-                            <p className={styles.text14}>{opt.value}</p>
-                        </label>
-                    ))}
+                    <div className={styles.radioColumn}>
+                        {radioOptions.map((opt) => (
+                            <label key={opt.value} className={styles.radioItem}>
+                                <input
+                                type="radio"
+                                name={title}
+                                value={opt.value}
+                                checked={String(value) === String(opt.value)}
+                                onChange={() => onChange(String(opt.value))}
+                                className="cursor-pointer"
+                                />
+                                <p className={styles.text14}>{opt.value}</p>
+                            </label>
+                        ))}
+                    </div>
 
                     <button
                     type="button"
