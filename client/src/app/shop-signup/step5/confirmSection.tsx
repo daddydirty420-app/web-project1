@@ -51,7 +51,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
             <h3 className={styles.title}>{title}</h3>
             <div className={styles.contentFlex}>
                 <p className={styles.content}>
-                    {content.split("\n").map((line, i) => (
+                    {(content ?? "").split("\n").map((line, i) => (
                         <span key={i}>
                             {line}
                             <br />
