@@ -23,6 +23,14 @@ export interface AuthUser {
   jti?: string;
 }
 
+interface DecodedAccessToken {
+  id: number | string;
+  email: string;
+  type: "access";
+  iat?: number;
+  exp?: number;
+}
+
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
   const { email, password, rememberMe } = req.body;
 
@@ -408,7 +416,7 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
 
     const newAccessToken = generateAccessToken(user);
 
-    const newDecoded = jwt.verify(newAccessToken, process.env.NEXTAUTH_SECRET as string) as AuthUser;
+    const newDecoded = jwt.decode(newAccessToken) as DecodedAccessToken | null;
 
     res.status(200).json({
       accessToken: newAccessToken,
