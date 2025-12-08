@@ -108,6 +108,7 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
             company_name: companyName,
             shop_name: shopName,
             phone_number: phoneNumber,
+            email: email,
             homepage_url: homepage,
             open_date_time: openDateTime,
             company_number: companyNumber,

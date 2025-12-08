@@ -127,6 +127,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
                             value={opt.value}
                             checked={String(value) === String(opt.value)}
                             onChange={() => onChange(String(opt.value))}
+                            className="cursor-pointer"
                             />
                             <p className={styles.text14}>{opt.value}</p>
                         </label>
