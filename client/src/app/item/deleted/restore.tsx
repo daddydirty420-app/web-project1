@@ -26,7 +26,7 @@ export default function Restore({ id, item }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/restore-item/${id}`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,

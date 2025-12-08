@@ -38,7 +38,7 @@ router.post('/cart-add', authenticateToken, async (req: Request, res: Response):
     }
 });
 
-router.post("/cart-remove", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/cart-remove", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.query.itemId;
 

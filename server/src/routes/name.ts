@@ -1,11 +1,11 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Delivery, Name } from "../models/index.js";
+import { Name } from "../models/index.js";
 
 const router = Router();
 
-router.post("/name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const name = await Name.findByPk(req.params.id);
         if (!name) {

@@ -36,7 +36,7 @@ export default function NameEditForm({ name, page, deliveryId }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/name-edit/${name.id}`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,

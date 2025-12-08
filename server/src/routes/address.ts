@@ -6,7 +6,7 @@ import { Address, TodouhukenOption } from "../models/index.js";
 
 const router = Router();
 
-router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const todouhuken = req.body.todouhuken;
     const postNumber = req.body.postNumber;
     const shikutyouson = req.body.shikutyouson;

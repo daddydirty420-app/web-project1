@@ -1,5 +1,5 @@
 import { Container } from "@/components";
-import PwForm from './pw-form';
+import PwForm from '../pw-form';
 import { Metadata } from "next";
 import styles from '@/styles/login.module.css';
 

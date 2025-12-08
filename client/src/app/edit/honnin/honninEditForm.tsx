@@ -175,7 +175,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/honnin-submit`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,

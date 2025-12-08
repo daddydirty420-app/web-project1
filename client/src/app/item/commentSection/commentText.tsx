@@ -28,8 +28,7 @@ export default function CommentText({ comment, page }: Props) {
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/expand-sort/${comment.id}`, {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
+                method: "PATCH",
             });
 
             if (!res.ok) {

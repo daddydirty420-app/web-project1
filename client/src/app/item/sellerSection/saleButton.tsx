@@ -64,7 +64,7 @@ export default function SaleButton({ item }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/sale-edit/${sale?.id}`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
@@ -96,7 +96,7 @@ export default function SaleButton({ item }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/sale-stop/${sale?.id}`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

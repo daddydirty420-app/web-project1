@@ -58,7 +58,7 @@ export default function Good({ comment, loggedIn }: Props) {
             }
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/remove/${id}`, {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

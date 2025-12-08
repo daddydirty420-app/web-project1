@@ -8,7 +8,7 @@ import sequelize from "../../db.js";
 
 const router = Router();
 
-router.post('/delete-user/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   const currentUserId = req.params.id;
   const numUserId = Number(currentUserId);
   const adminId = req.user!.id;
@@ -28,7 +28,7 @@ router.post('/delete-user/:id', authenticateToken, isAdmin, async (req: Request,
   }
 });
 
-router.post('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   const { addPenalty } = req.body;
   if (!addPenalty) {
     res.status(400).json({ error: 'ペナルティポイントを入力してください。' });
@@ -62,7 +62,7 @@ router.post('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request,
   }
 });
 
-router.post('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   const currentUserId = req.params.id;
 
   const { deleteUriage } = req.body;

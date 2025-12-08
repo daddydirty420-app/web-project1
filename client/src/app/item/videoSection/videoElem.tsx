@@ -39,7 +39,7 @@ export default function VideoElem({ item, sellerMe, page }: Props) {
             const accessToken = await refreshToken();
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/onplay/${item.Video?.id}`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,
                 },

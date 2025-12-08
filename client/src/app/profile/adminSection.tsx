@@ -37,6 +37,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
                 }
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
+                    method: "GET",
                     cache: 'no-store',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -72,7 +73,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/add-penalty/${userId}`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
@@ -107,7 +108,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-uriage/${userId}`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     'Content-type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
@@ -141,7 +142,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-user/${userId}`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,

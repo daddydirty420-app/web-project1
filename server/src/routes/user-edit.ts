@@ -18,7 +18,7 @@ const s3 = new S3Client({
     },
 });
 
-router.post("/profile-update", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/profile-update", authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
   const fileName = req.body.fileName || null;
   const contentType = req.body.contentType;
@@ -81,7 +81,7 @@ router.post("/profile-update", authenticateToken, async (req: Request, res: Resp
   }
 });
 
-router.post("/phone-number-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/phone-number-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findByPk(req.user!.id);
     if (!user) {
@@ -98,7 +98,7 @@ router.post("/phone-number-edit", authenticateToken, async (req: Request, res: R
   }
 });
 
-router.post("/honnin-submit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/honnin-submit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
   const now = Date.now();
   const {
@@ -254,24 +254,6 @@ router.post("/honnin-submit", authenticateToken, async (req: Request, res: Respo
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "サーバーエラーが発生しました。" });
-  }
-});
-
-router.get('/email-edit', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const data = await User.findByPk(req.params.id, {
-      attributes: ['id', 'email']
-    });
-
-    if (!data) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
-
-    res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。'});
   }
 });
 

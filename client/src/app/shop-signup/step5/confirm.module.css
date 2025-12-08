@@ -1,0 +1,34 @@
+.confirmWrapper {
+    width: max-content;
+    max-width: 100%;
+    margin: 2rem auto;
+}
+
+.confirmSection {
+    margin-top: 1rem;
+}
+
+.title {
+    font-size: var(--mid-text);
+    font-weight: 600;
+    color: var(--gray-50);
+}
+
+.contentFlex {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.content {
+    font-size: var(--mid-text);
+    flex: 1;
+}
+
+.editButton {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--theme);
+    cursor: pointer;
+}

@@ -6,7 +6,7 @@ import adminDeleteItem from "../../services/adminDeleteItem.js";
 
 const router = Router();
 
-router.post('/delete-item/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.delete('/delete-item/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
     if (isNaN(itemId)) {
         res.status(400).json({ message: "itemIdが不正な値です。" });

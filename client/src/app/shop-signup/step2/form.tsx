@@ -168,7 +168,7 @@ export default function Form({ shopId, account }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/2/${shopId}`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,

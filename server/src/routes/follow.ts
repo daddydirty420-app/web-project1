@@ -43,7 +43,7 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
     }
 });
 
-router.post('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
     const targetUserId = Number(req.params.id);
     if (!currentUserId || currentUserId === targetUserId) {

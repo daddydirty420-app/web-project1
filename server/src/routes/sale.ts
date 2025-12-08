@@ -5,7 +5,7 @@ import { Sale, Item } from "../models/index.js";
 
 const router = Router();
 
-router.post('/sale-edit/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const saleId = req.params.id;
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });
@@ -50,7 +50,7 @@ router.post('/sale-edit/:id', authenticateToken, async (req: Request, res: Respo
     }
 });
 
-router.post('/sale-stop/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch('/sale-stop/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const saleId = req.params.id;
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });

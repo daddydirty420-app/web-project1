@@ -16,7 +16,7 @@ export default function FetchClient({ token }: Props) {
         const fetchAPI = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/new-email-change?token=${token}`, {
-                    method: "POST",
+                    method: "PATCH",
                 });
 
                 const data = await res.json();

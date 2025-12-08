@@ -60,7 +60,7 @@ router.post("/upload/:id", authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.post("/expand-sort/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/expand-sort/:id", async (req: Request, res: Response): Promise<void> => {
     const commentId = req.params.id;
 
     try {
@@ -80,7 +80,7 @@ router.post("/expand-sort/:id", async (req: Request, res: Response): Promise<voi
     }
 });
 
-router.post("/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
     const commentId = req.params.id;
     const page = req.query.page;

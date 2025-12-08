@@ -57,6 +57,9 @@ export type ShopInfo = {
     id_card_front: string;
     id_card_rear: string;
     permit_url: string[];
+    auto_trans: boolean;
+    open_info: boolean;
+    reccomend: boolean;
     ComOrFreeOption?: ComOrFreeOption | null;
     Address?: Address | null;
     Name?: Name | null;

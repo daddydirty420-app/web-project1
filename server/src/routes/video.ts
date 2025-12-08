@@ -5,7 +5,7 @@ import { Video, Item } from "../models/index.js";
 
 const router = Router();
 
-router.post('/onplay/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.patch('/onplay/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user?.id ?? null;
     try {
         const videoData = await Video.findByPk(req.params.id);

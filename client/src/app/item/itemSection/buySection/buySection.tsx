@@ -64,7 +64,6 @@ export default function BuySection({ id, item, loggedIn }: Props) {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-add?itemId=${id}`, {
                 method: 'POST',
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
@@ -90,9 +89,8 @@ export default function BuySection({ id, item, loggedIn }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-remove?itemId=${id}`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

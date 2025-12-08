@@ -443,7 +443,7 @@ router.post('/rehash-password', async (req: Request, res: Response): Promise<voi
   res.json({ message: 'パスワードをハッシュ化して保存しました！' });
 });
 
-router.post("/email-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/email-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
   const newEmail = req.body.email;
 
@@ -479,7 +479,7 @@ router.post("/email-edit", authenticateToken, async (req: Request, res: Response
   }
 });
 
-router.post("/new-email-change", async (req: Request, res: Response): Promise<void> => {
+router.patch("/new-email-change", async (req: Request, res: Response): Promise<void> => {
   const token = req.query.token;
 
   try {

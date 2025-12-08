@@ -30,7 +30,7 @@ export default function Summary({ id, item, sellerMe, page }: Props) {
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/sort-add/${id}?number=5`, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: { 'Content-type': 'application/json' },
             });
 

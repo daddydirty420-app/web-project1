@@ -8,7 +8,7 @@ import itemCopyUpload from "../services/itemCopyUpload.js";
 
 const router = Router();
 
-router.post('/access-normal/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.patch('/access-normal/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     if (!itemId) {
         res.status(400).json({ message: '商品のidがありません。' });
@@ -65,7 +65,7 @@ router.post('/access-normal/:id', authenticateOptional, async (req: Request, res
     }
 });
 
-router.post('/sort-add/:id', async (req: Request, res: Response): Promise<void> => {
+router.patch('/sort-add/:id', async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     if (!itemId) {
         res.status(400).json({ message: 'itemIdがありません。' });
@@ -198,7 +198,7 @@ router.post('/copy-upload/:id', authenticateToken, async (req: Request, res: Res
     }
 });
 
-router.post('/delete-item-user/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const userId = req.user!.id;
 
@@ -274,7 +274,7 @@ router.post('/delete-item-user/:id', authenticateToken, async (req: Request, res
     }
 });
 
-router.post('/perfect-delete/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
     const item = await Item.findByPk(itemId, {
@@ -315,7 +315,7 @@ router.post('/perfect-delete/:id', authenticateToken, async (req: Request, res: 
     }
 });
 
-router.post("/restore-item/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const userId = req.user!.id;
 

@@ -145,7 +145,7 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
     }
 });
 
-router.post("/2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
     if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
@@ -211,7 +211,7 @@ router.post("/2/:id", authenticateToken, async (req: Request, res: Response): Pr
     }
 });
 
-router.post("/3/:id", authenticateToken, async (req: Request, res: Response) : Promise<void> => {
+router.patch("/3/:id", authenticateToken, async (req: Request, res: Response) : Promise<void> => {
     const shopId = req.params.id;
     const {
         frontFileName,
@@ -366,7 +366,7 @@ router.post("/3/:id", authenticateToken, async (req: Request, res: Response) : P
     }
 });
 
-router.post("/4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const autoTrans = req.body.autoTrans === "はい";
     const openInfo = req.body.openInfo === "はい";
@@ -387,6 +387,59 @@ router.post("/4/:id", authenticateToken, async (req: Request, res: Response): Pr
         });
 
         res.status(200).json({ message: "データ更新完了" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const updateData = req.body;
+
+    try {
+        await ShopInfo.update(updateData, {
+            where: {
+                id: shopId,
+            },
+        });
+
+        res.status(200).json({ message: "更新しました。", updated: updateData });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+
+    try {
+        const oldShop = await ShopInfo.findAll({
+            where: {
+                id: { [Op.ne]: shopId },
+                verified: false,
+                user_id: userId,
+            },
+        });
+
+        if (oldShop) {
+            await oldShop.destroy();
+        }
+
+        const shop = await ShopInfo.findByPk(shopId);
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        await shop.update({
+            request_all: true,
+        });
+
+        res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

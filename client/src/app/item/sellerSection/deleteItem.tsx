@@ -24,9 +24,8 @@ export default function DeleteItem({ id }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/delete-item-user/${id}`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

@@ -24,9 +24,8 @@ export default function PerfectDelete({ id }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/perfect-delete/${id}`, {
-                method: "POST",
+                method: "DELETE",
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

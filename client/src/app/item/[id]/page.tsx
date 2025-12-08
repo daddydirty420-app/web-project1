@@ -62,9 +62,8 @@ export default async function Page({ params }: Props) {
     const userId = session?.user.id;
 
     const accessRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/access-normal/${id}`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
-            "Content-type": "application/json",
             Authorization: `Bearer ${accessToken ?? ""}`,
         },
     });

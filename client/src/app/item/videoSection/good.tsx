@@ -57,7 +57,7 @@ export default function Good({ id, sellerMe, initialGood, initialCount, page, lo
             }
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/remove/${id}`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },

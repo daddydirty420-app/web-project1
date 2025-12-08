@@ -32,9 +32,8 @@ export default function UploadButton({ id }: Props) {
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/upload-confirm/${id}`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });

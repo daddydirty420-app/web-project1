@@ -25,7 +25,7 @@ const s3 = new S3Client({
     },
 });
 
-router.post('/upload-video/:id', upload.single('video'), authenticateToken, async(req: AuthenticatedRequest, res: Response): Promise<void> => {
+router.patch('/upload-video/:id', upload.single('video'), authenticateToken, async(req: AuthenticatedRequest, res: Response): Promise<void> => {
     if (!req.file) {
         res.status(400).json({ message: '動画ファイルがありません。' });
         return;
@@ -101,7 +101,7 @@ router.post('/upload-video/:id', upload.single('video'), authenticateToken, asyn
     }
 });
 
-router.post("/upload-confirm/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const currentUserId = req.user!.id;
     const now = Date.now();
