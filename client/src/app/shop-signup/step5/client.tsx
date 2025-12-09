@@ -93,6 +93,12 @@ export default function Client({ shopId, shopInfo }: Props) {
     const foundDateTitle = comOrFree === 1
     ? "登記年月日" : "創業日";
 
+    const displayFoundedDate = new Date(foundedDate).toLocaleDateString("ja-JP", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+
     return (
         <SSUI title="確認">
             <main className={styles.confirmWrapper}>
@@ -157,11 +163,7 @@ export default function Client({ shopId, shopInfo }: Props) {
 
                 <ConfirmSection
                 title={foundDateTitle}
-                content={foundedDate.toLocaleDateString("ja-JP", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                }) ?? ""}
+                content={displayFoundedDate}
                 date
                 value={foundedDate}
                 onChange={(v) => setFoundedDate(v)}
