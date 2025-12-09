@@ -77,6 +77,7 @@ export default function Client({ shopId, shopInfo }: Props) {
             if (!res.ok) {
                 console.log(data.message);
                 alert(data.message || "ショップデータ登録エラー");
+                return;
             }
 
             router.push("/shop-signup/complete");
