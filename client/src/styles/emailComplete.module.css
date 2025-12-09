@@ -33,7 +33,7 @@
     color: var(--light-background);
     background: var(--theme);
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(47, 112, 8, 0.08);
+    box-shadow: var(--shadow);
     cursor: pointer;
 }
 .linkButton:hover {
