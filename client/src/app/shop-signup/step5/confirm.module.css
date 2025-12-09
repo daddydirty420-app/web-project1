@@ -81,6 +81,15 @@
     font-size: 14px;
 }
 
+.radioFlex {
+    margin: 1rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .radioColumn {
     display: flex;
     flex-direction: column;

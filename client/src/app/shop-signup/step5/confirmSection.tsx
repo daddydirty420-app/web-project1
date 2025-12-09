@@ -119,7 +119,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
             )}
 
             {radio && radioVisible && radioOptions && onChange && onSubmit && (
-                <div className={styles.inputFlex}>
+                <div className={styles.radioFlex}>
                     <div className={styles.radioColumn}>
                         {radioOptions.map((opt) => (
                             <label key={opt.value} className={styles.radioItem}>
