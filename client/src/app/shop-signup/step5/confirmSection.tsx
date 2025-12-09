@@ -52,7 +52,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
             <div className={styles.contentFlex}>
                 <p className={styles.content}>
                     {(content ?? "").split("\n").map((line, i) => (
-                        <span key={i}>
+                        <span key={i} className="mt-0">
                             {line}
                             <br />
                         </span>

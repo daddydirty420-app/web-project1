@@ -228,11 +228,11 @@ export default function Client({ shopId, shopInfo }: Props) {
 
                 <ConfirmSection
                 title="振込口座"
-                content={`銀行名：　${shopInfo.BankAccount?.bank_name}
-                \n支店名：　${shopInfo.BankAccount?.branch_code}
-                \n口座種別：　${shopInfo.BankAccount?.AccountTypeOption?.name}
-                \n口座番号：　${shopInfo.BankAccount?.account_number}
-                \n口座名義：　${shopInfo.BankAccount?.meigi}`}
+                content={`銀行名： ${shopInfo.BankAccount?.bank_name}
+                \n支店名： ${shopInfo.BankAccount?.branch_code}
+                \n口座種別： ${shopInfo.BankAccount?.AccountTypeOption?.name}
+                \n口座番号： ${shopInfo.BankAccount?.account_number}
+                \n口座名義： ${shopInfo.BankAccount?.meigi}`}
                 link={`/edit/account/shop/signup/${shopId}`}
                 />
 
