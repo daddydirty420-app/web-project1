@@ -419,7 +419,7 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
     const t = await sequelize.transaction();
 
     try {
-        const oldShops = await ShopInfo.destroy({
+        const oldShops = await ShopInfo.findAll({
             where: {
                 id: { [Op.ne]: shopId },
                 verified: false,
