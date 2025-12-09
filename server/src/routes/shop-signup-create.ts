@@ -417,17 +417,13 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
     const userId = req.user!.id;
 
     try {
-        const oldShop = await ShopInfo.findAll({
+        await ShopInfo.destroy({
             where: {
                 id: { [Op.ne]: shopId },
                 verified: false,
                 user_id: userId,
             },
         });
-
-        if (oldShop) {
-            await oldShop.destroy();
-        }
 
         const shop = await ShopInfo.findByPk(shopId);
 
