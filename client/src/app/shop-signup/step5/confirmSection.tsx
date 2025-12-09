@@ -132,7 +132,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
                                     onChange={() => onChange(String(opt.value))}
                                     className="cursor-pointer"
                                     />
-                                    <p className={styles.text14}>{opt.value}</p>
+                                    <p className={styles.text14}>{opt.label}</p>
                                 </label>
                             ))}
                         </div>

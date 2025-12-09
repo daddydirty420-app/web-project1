@@ -109,8 +109,8 @@ export default function Client({ shopId, shopInfo }: Props) {
                 radio
                 value={comOrFree}
                 radioOptions={[
-                    { label: "法人", value: "法人" },
-                    { label: "個人事業主", value: "個人事業主" },
+                    { label: "法人", value: 1 },
+                    { label: "個人事業主", value: 2 },
                 ]}
                 onChange={(v) => setComOrFree(v)}
                 onSubmit={() => updateField("com_or_free_id", comOrFree)}
@@ -248,8 +248,8 @@ export default function Client({ shopId, shopInfo }: Props) {
                 radio
                 value={autoTrans}
                 radioOptions={[
-                    { label: "はい", value: "はい" },
-                    { label: "いいえ", value: "いいえ" },
+                    { label: "はい", value: "true" },
+                    { label: "いいえ", value: "false" },
                 ]}
                 onChange={(v) => setAutoTrans(v)}
                 onSubmit={() => updateField("auto_trans", autoTrans)}
@@ -261,8 +261,8 @@ export default function Client({ shopId, shopInfo }: Props) {
                 radio
                 value={openInfo}
                 radioOptions={[
-                    { label: "はい", value: "はい" },
-                    { label: "いいえ", value: "いいえ" },
+                    { label: "はい", value: "true" },
+                    { label: "いいえ", value: "false" },
                 ]}
                 onChange={(v) => setOpenInfo(v)}
                 onSubmit={() => updateField("open_info", openInfo)}
@@ -274,8 +274,8 @@ export default function Client({ shopId, shopInfo }: Props) {
                 radio
                 value={reccomend}
                 radioOptions={[
-                    { label: "はい", value: "はい" },
-                    { label: "いいえ", value: "いいえ" },
+                    { label: "はい", value: "true" },
+                    { label: "いいえ", value: "false" },
                 ]}
                 onChange={(v) => setReccomend(v)}
                 onSubmit={() => updateField("reccomend", reccomend)}
