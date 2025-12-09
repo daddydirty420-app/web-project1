@@ -1,66 +1,79 @@
 .confirmWrapper {
-    width: max-content;
-    max-width: 100%;
+    width: 100%;
+    max-width: 600px;
     margin: 2rem auto;
 }
 
-.confirmSection {
-    margin-top: 1rem;
+.confirmCard {
+    background: var(--light-background);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    width: 100%;
 }
 
 .title {
-    font-size: var(--mid-text);
+    font-size: var(--caption);
     font-weight: 600;
     color: var(--gray-50);
-}
-
-.contentFlex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    margin-bottom: 0.5rem;
 }
 
 .content {
     font-size: var(--mid-text);
-    flex: 1;
+    line-height: 1.6;
+    white-space: pre-line;
 }
 
 .editButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     font-size: 13px;
     font-weight: 500;
     color: var(--theme);
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.15s;
     cursor: pointer;
 }
 
+.editButton:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
 .inputFlex {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin: 0.5rem auto 1rem;
+    gap: 0.6rem;
     width: 100%;
 }
 
 .input {
     flex: 1;
     box-sizing: border-box;
-    width: 100%;
-    padding: 6px;
+    padding: 0.6rem 0.8rem;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
-    border-radius: 5px;
+    border-top: solid 1px var(--gray-line-mid);
+    border-radius: 8px;
     background-color: var(--light-background);
 }
 
 .inputButton {
+    padding: 0.5rem 1rem;
     width: 70px;
-    height: 22px;
+    height: 36px;
     font-size: 13px;
     font-weight: 600;
     color: var(--theme);
     border: solid 2px var(--theme);
-    border-radius: 5px;
-    background-color: var(--light-background);
+    border-radius: 8px;
+    background: var(--light-background);
     cursor: pointer;
 }
 

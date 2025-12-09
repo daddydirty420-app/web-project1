@@ -47,25 +47,25 @@ export default function ConfirmSection({ title, content, link, input, date, radi
     };
 
     return (
-        <section className={styles.confirmSection}>
+        <section className={styles.confirmCard}>
             <h3 className={styles.title}>{title}</h3>
-            <div className={styles.contentFlex}>
-                <p className={styles.content}>
-                    {(content ?? "").split("\n").map((line, i) => (
-                        <span key={i} className="mt-0">
-                            {line}
-                            <br />
-                        </span>
-                    ))}
-                </p>
-                <button
-                type="button"
-                onClick={handleClick}
-                className={styles.editButton}
-                >
-                    編集
-                </button>
-            </div>
+
+            <button
+            type="button"
+            onClick={handleClick}
+            className={styles.editButton}
+            >
+                編集
+            </button>
+            
+            <p className={styles.content}>
+                {(content ?? "").split("\n").map((line, i) => (
+                    <span key={i} className="mt-0">
+                        {line}
+                        <br />
+                    </span>
+                ))}
+            </p>
 
             {input && inputVisible && onChange && onSubmit && (
                 <label className={styles.inputFlex}>
