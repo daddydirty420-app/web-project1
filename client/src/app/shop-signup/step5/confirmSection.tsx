@@ -142,7 +142,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
                         className={styles.inputButton}
                         onClick={() => {
                             onSubmit();
-                            setInputVisible(false);
+                            setRadioVisible(false);
                         }}
                         >
                             登録
