@@ -146,7 +146,7 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
     }
 });
 
-router.patch("/2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
     if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
@@ -416,14 +416,30 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
     const shopId = req.params.id;
     const userId = req.user!.id;
 
+    const t = await sequelize.transaction();
+
     try {
-        await ShopInfo.destroy({
+        const oldShops = await ShopInfo.destroy({
             where: {
                 id: { [Op.ne]: shopId },
                 verified: false,
                 user_id: userId,
             },
+            include: [
+                { model: Address },
+                { model: Name },
+                { model: BankAccount },
+            ],
         });
+
+        if (oldShops.length > 0) {
+            for (const oldShop of oldShops) {
+                await oldShop.Address.destroy({ transaction: t });
+                await oldShop.Name.destroy({ transaction: t });
+                await oldShop.BankAccount.destroy({ transaction: t });
+                await oldShop.destroy({ transaction: t });
+            }
+        }
 
         const shop = await ShopInfo.findByPk(shopId);
 
@@ -434,10 +450,13 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
 
         await shop.update({
             request_all: true,
-        });
+        }, { transaction: t });
+
+        await t.commit();
 
         res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
     } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
