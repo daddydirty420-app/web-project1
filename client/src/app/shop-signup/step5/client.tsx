@@ -157,7 +157,11 @@ export default function Client({ shopId, shopInfo }: Props) {
 
                 <ConfirmSection
                 title={foundDateTitle}
-                content={foundedDate.toLocaleDateString()}
+                content={foundedDate.toLocaleDateString("ja-JP", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                })}
                 date
                 value={foundedDate}
                 onChange={(v) => setFoundedDate(v)}
