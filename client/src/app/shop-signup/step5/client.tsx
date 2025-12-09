@@ -165,7 +165,7 @@ export default function Client({ shopId, shopInfo }: Props) {
                 title={foundDateTitle}
                 content={displayFoundedDate}
                 date
-                value={displayFoundedDate}
+                value={foundedDate}
                 onChange={(v) => setFoundedDate(v)}
                 onSubmit={() => updateField("founded_date", foundedDate)}
                 />

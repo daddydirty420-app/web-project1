@@ -93,6 +93,7 @@ export default function ConfirmSection({ title, content, link, input, date, radi
             {date && dateVisible && onChange && onSubmit && (
                 <label className={styles.inputFlex}>
                     <DatePicker
+                    value={value as string}
                     selected={value instanceof Date ? value : null}
                     onChange={(date) => onChange(date)}
                     dateFormat="yyyy年MM月dd日"
