@@ -434,9 +434,18 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
 
         if (oldShops.length > 0) {
             for (const oldShop of oldShops) {
-                await oldShop.Address.destroy({ transaction: t });
-                await oldShop.Name.destroy({ transaction: t });
-                await oldShop.BankAccount.destroy({ transaction: t });
+                if (oldShop.Address) {
+                    await oldShop.Address.destroy({ transaction: t });
+                }
+
+                if (oldShop.Name) {
+                    await oldShop.Name.destroy({ transaction: t });
+                }
+                
+                if (oldShop.BankAccount) {
+                    await oldShop.BankAccount.destroy({ transaction: t });
+                }
+                
                 await oldShop.destroy({ transaction: t });
             }
         }
