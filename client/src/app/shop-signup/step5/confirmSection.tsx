@@ -119,21 +119,23 @@ export default function ConfirmSection({ title, content, link, input, date, radi
             )}
 
             {radio && radioVisible && radioOptions && onChange && onSubmit && (
-                <div className={styles.radioFlex}>
-                    <div className={styles.radioColumn}>
-                        {radioOptions.map((opt) => (
-                            <label key={opt.value} className={styles.radioItem}>
-                                <input
-                                type="radio"
-                                name={title}
-                                value={opt.value}
-                                checked={String(value) === String(opt.value)}
-                                onChange={() => onChange(String(opt.value))}
-                                className="cursor-pointer"
-                                />
-                                <p className={styles.text14}>{opt.value}</p>
-                            </label>
-                        ))}
+                <div className={styles.inputFlex}>
+                    <div className={styles.radioFlex}>
+                        <div className={styles.radioColumn}>
+                            {radioOptions.map((opt) => (
+                                <label key={opt.value} className={styles.radioItem}>
+                                    <input
+                                    type="radio"
+                                    name={title}
+                                    value={opt.value}
+                                    checked={String(value) === String(opt.value)}
+                                    onChange={() => onChange(String(opt.value))}
+                                    className="cursor-pointer"
+                                    />
+                                    <p className={styles.text14}>{opt.value}</p>
+                                </label>
+                            ))}
+                        </div>
                     </div>
 
                     <button
