@@ -136,18 +136,18 @@ export default function ConfirmSection({ title, content, link, input, date, radi
                                 </label>
                             ))}
                         </div>
-                    </div>
 
-                    <button
-                    type="button"
-                    className={styles.inputButton}
-                    onClick={() => {
-                        onSubmit();
-                        setInputVisible(false);
-                    }}
-                    >
-                        登録
-                    </button>
+                        <button
+                        type="button"
+                        className={styles.inputButton}
+                        onClick={() => {
+                            onSubmit();
+                            setInputVisible(false);
+                        }}
+                        >
+                            登録
+                        </button>
+                    </div>
                 </div>
             )}
         </section>
