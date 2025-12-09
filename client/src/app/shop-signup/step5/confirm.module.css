@@ -47,7 +47,7 @@
 .inputFlex {
     margin-top: 1rem;
     padding-top: 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -56,24 +56,24 @@
 
 .input {
     flex: 1;
+    min-width: 0;
     box-sizing: border-box;
     padding: 0.6rem 0.8rem;
-    font-size: 14px;
-    border-top: solid 1px var(--gray-line-mid);
+    font-size: var(--mid-text);
+    border: solid 1px var(--gray-line-str);
     border-radius: 8px;
     background-color: var(--light-background);
 }
 
 .inputButton {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
     width: 70px;
     height: 36px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme);
-    border: solid 2px var(--theme);
+    color: var(--light-background);
     border-radius: 8px;
-    background: var(--light-background);
+    background: var(--theme);
     cursor: pointer;
 }
 
