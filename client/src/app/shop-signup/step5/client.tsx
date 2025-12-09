@@ -112,7 +112,7 @@ export default function Client({ shopId, shopInfo }: Props) {
                     { label: "法人", value: 1 },
                     { label: "個人事業主", value: 2 },
                 ]}
-                onChange={(v) => setComOrFree(v)}
+                onChange={(v) => setComOrFree(Number(v))}
                 onSubmit={() => updateField("com_or_free_id", comOrFree)}
                 />
 
