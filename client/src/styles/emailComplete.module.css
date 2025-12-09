@@ -33,9 +33,10 @@
     color: var(--light-background);
     background: var(--theme);
     border-radius: 10px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
     cursor: pointer;
 }
 .linkButton:hover {
+    box-shadow: none;
     opacity: .8;
 }
