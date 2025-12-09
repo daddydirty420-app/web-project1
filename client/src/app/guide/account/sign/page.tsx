@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 会員登録について",
-    description: "FLEX OUTDOORの会員登録に関する基本操作等についてわかりやすく解説しています。",
+    description: "〇〇の会員登録に関する基本操作等についてわかりやすく解説しています。",
     robots: {
         index: false,
         follow: false

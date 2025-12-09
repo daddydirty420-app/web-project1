@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
 
                 <TermsMiniSection number={12} heading='管理責任者'>
                     <p>弊社では、個人情報の管理責任者を以下の者として、個人情報の適切な管理及び個人情報保護に関する施策の継続的な改善を実施しています。なお、個人情報に関するお問い合わせ、ご相談、第7条の開示等の請求の窓口もこちらをご利用ください。
-                        <br />運営者：FLEX OUTDOOR
+                        <br />運営者：〇〇
                         <br />メールアドレス：support@flex-outdoor-mail.com
                         <br />開示等の請求の方法：メール、郵送
                     </p>

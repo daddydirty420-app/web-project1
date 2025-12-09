@@ -10,10 +10,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - ショップガイド",
-    description: "「FLEX Shop」の限定機能や登録方法についてわかりやすく解説しています。",
+    description: "「〇〇」の限定機能や登録方法についてわかりやすく解説しています。",
     robots: {
         index: false,
-        follow: false
+        follow: false,
     }
 };
 
@@ -37,7 +37,9 @@ export default function GuideShop() {
                             <ListFlowArrow />
                             <ListFlow number={3}>会社情報（事業者情報）を登録</ListFlow>
                             <ListFlowArrow />
-                            <ListFlow number={4}>
+                            <ListFlow number={4}>口座情報を登録</ListFlow>
+                            <ListFlowArrow />
+                            <ListFlow number={5}>
                                 代表者身分証を入力<br />
                                 <small className='text-gray-500'>顔写真付き身分証、表裏両面入力
                                    <br />例：運転免許証、マイナンバーカード、パスポートなど</small>
@@ -46,8 +48,6 @@ export default function GuideShop() {
                                         <br />※販売を禁止している商品を除く
                                     </small>
                             </ListFlow>
-                            <ListFlowArrow />
-                            <ListFlow number={5}>口座情報を登録</ListFlow>
                             <ListFlowArrow />
                             <ListFlow number={6}>オプションを選択</ListFlow>
                             <ListFlowArrow />
@@ -74,7 +74,7 @@ export default function GuideShop() {
                         <GuideSection heading='運営者情報を公開する'>プロフィールのショップ情報に、ショップ登録時にご入力いただいた会社情報（事業者情報）が公開されます。</GuideSection>
 
                         <GuideSection heading='レコメンド機能（有料）'>
-                            <p className='font-bold mt-4'>レコメンド（月額880円）</p>
+                            <p className='font-bold mt-4'>〇〇レコメンド（月額880円）</p>
                             <div className='mt-2 ml-[0.5rem]'>
                                 <p className={styles.sectionChildP}>トップページのおすすめおすすめ商品一覧に表示されます。また、商品ページおよび検索ページにも、「おすすめ商品」と記載されます。</p>
                                 <GuideSmall>※商品が利用規約に違反する、または違反している可能性のある商品は、「おすすめ商品」から除外されます。</GuideSmall>
@@ -88,7 +88,7 @@ export default function GuideShop() {
 
                 <GuideSubTitle text='ショップについて' />
                 <AccordionGrid>
-                    <Accordion heading='ショップとは'>
+                    <Accordion heading='〇〇ショップとは'>
                         <p className='mt-4 mb-2'><strong className='text-[var(--theme)]'>FLEX Shop</strong>とは、<strong>法人、個人事業主向け</strong>のショップ運用サービスです。通常の〇〇と使い勝手は同じですが、内容は異なり、一つの商品につき<strong>複数点出品</strong>や専用の<strong>在庫管理システム</strong>、毎月の<strong>自動振込</strong>など、事業者にとってうれしい機能が盛りだくさんのサービスです！</p>
                     </Accordion>
 
@@ -183,5 +183,5 @@ export default function GuideShop() {
 
             <Footer />
         </>
-    )
+    );
 }

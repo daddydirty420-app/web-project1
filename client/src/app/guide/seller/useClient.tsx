@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import Image, { StaticImageData } from 'next/image'
-import guideImage1 from '@/assets/images/website-image/guide-image/2026年9月10日に1,000獲得.png'
-import guideImage2 from '@/assets/images/website-image/guide-image/売上金使用フローガイド.png'
-import { useState } from 'react'
-import { X } from 'lucide-react'
+import Image, { StaticImageData } from 'next/image';
+import guideImage1 from '@/assets/images/website-image/guide-image/2026年9月10日に1,000獲得.png';
+import guideImage2 from '@/assets/images/website-image/guide-image/売上金使用フローガイド.png';
+import { useState } from 'react';
+import { X } from 'lucide-react';
 
 export default function UseClient() {
-    const [modalSrc, setModalSrc] = useState<StaticImageData | null>(null)
+    const [modalSrc, setModalSrc] = useState<StaticImageData | null>(null);
 
     return (
         <>
@@ -26,7 +26,7 @@ export default function UseClient() {
 
         {modalSrc && (
             <div className='fixed inset-0 bg-[rgba(0,0,0,0.7)] flex items-center justify-center z-50'>
-                <X onClick={() => setModalSrc(null)} className='absolute top-4 right-4 w-8 h-8 text-white cursor-pointer' />
+                <X onClick={() => setModalSrc(null)} className='absolute top-20 right-4 w-8 h-8 text-white cursor-pointer' />
 
                 <div className='max-w-[80vw] sm:max-w-[768px] max-h-[80vh]'>
                     <Image
@@ -40,5 +40,5 @@ export default function UseClient() {
             </div>
         )}
         </>
-    )
+    );
 }

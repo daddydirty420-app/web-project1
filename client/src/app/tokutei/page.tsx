@@ -49,7 +49,7 @@ export default function Tokutei() {
                 </TokuteiSection>
 
                 <TokuteiSection header='営業時間'>
-                    <p>平日10～18時</p>
+                    <p>平日10～18時（お盆、年末年始期間を除く）</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='運営統括責任者'>

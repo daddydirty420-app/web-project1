@@ -9,7 +9,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - 禁止行為・ペナルティ",
-    description: "FLEX OUTDOORのユーザーの禁止行為とペナルティ等の処分についてわかりやすく解説しています。",
+    description: "〇〇のユーザーの禁止行為とペナルティ等の処分についてわかりやすく解説しています。",
     robots: {
         index: false,
         follow: false

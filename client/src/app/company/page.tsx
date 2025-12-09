@@ -44,7 +44,7 @@ export default function Company() {
                 </TokuteiSection>
 
                 <TokuteiSection header='事業内容'>
-                    <p>WEBサービス・ECプラットフォームの製作・運営</p>
+                    <p>WEBサービス・ECシステムの製作・運用</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='電話番号'>
@@ -60,7 +60,7 @@ export default function Company() {
                 </TokuteiSection>
 
                 <TokuteiSection header='営業時間'>
-                    <p>平日10～18時</p>
+                    <p>平日10～18時（お盆、年末年始期間を除く）</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='URL'>

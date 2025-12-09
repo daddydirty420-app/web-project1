@@ -1,0 +1,24 @@
+import { Container } from "@/components";
+import styles from "@/styles/emailComplete.module.css";
+import Link from "next/link";
+
+export default function Element() {
+    return (
+        <Container>
+            <h1 className={styles.title}>〇〇ショップ登録リクエスト完了</h1>
+
+            <p className={styles.content}>〇〇ショップ登録のお申込みが完了しました。
+                <br />審査完了後にメールにて出品などのご案内をいたします。なお、審査には1～2週間ほどお時間を頂戴しております。ご迷惑をお掛けしますが、ご協力お願いいたします。
+            </p>
+
+            <p className={styles.content}>ご不明な点などありましたらお気軽に
+                <Link href="/inquiry" className={styles.linkText}>お問い合わせフォーム</Link>
+                からお問い合わせください。
+            </p>
+
+            <Link href="/my-page" className={styles.linkButton}>
+            マイページへ戻る
+            </Link>
+        </Container>
+    );
+};

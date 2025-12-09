@@ -461,6 +461,8 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
             request_all: true,
         }, { transaction: t });
 
+        // メール送信処理
+
         await t.commit();
 
         res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });

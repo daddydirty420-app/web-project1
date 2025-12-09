@@ -32,6 +32,7 @@ export default async function FooterImage({ shopPage, hasShop, loggedIn }: Props
                 <Link href={login} className={styles.footerBrownB}>ログイン</Link>
             </nav>
         )}
+        
         {shopPage && (!loggedIn || !hasShop) && (
             <>
             <nav className={clsx('mb-8', styles.footerImageNav, styles.shopPage)}>

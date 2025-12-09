@@ -1,0 +1,40 @@
+.title {
+    font-size: var(--heading2);
+    margin: 3rem auto 2rem;
+    text-align: center;
+}
+
+.content {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+    font-size: var(--mid-text);
+}
+
+.linkText {
+    color: var(--accent);
+    cursor: pointer;
+}
+.linkText:hover {
+    text-decoration: underline;
+}
+
+.linkButton {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--light-background);
+    background: var(--theme);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(47, 112, 8, 0.04);
+    cursor: pointer;
+}
+.linkButton:hover {
+    opacity: .8;
+}

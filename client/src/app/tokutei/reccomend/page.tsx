@@ -49,7 +49,7 @@ export default function TokuteiReccomend() {
                 </TokuteiSection>
 
                 <TokuteiSection header='営業時間'>
-                    <p>平日10～18時</p>
+                    <p>平日10～18時（お盆、年末年始期間を除く）</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='運営統括責任者'>
@@ -79,17 +79,17 @@ export default function TokuteiReccomend() {
                 <TokuteiSection header='売上金額が料金に満たない場合'>
                     <div className='flex flex-start'>
                         <p>単品プラン：</p>
-                        <p>販売手数料を除いた商品の売上金額がFLEXレコメンドの料金に満たない場合、売上金全額差し引きいたします。</p>
+                        <p>販売手数料を除いた商品の売上金額が〇〇レコメンドの料金に満たない場合、売上金全額差し引きいたします。</p>
                     </div>
                     <div className='flex flex-start mt-2'>
                         <p>月額プラン：</p>
-                        <p>当月の売上金額がFLEXレコメンドの料金に満たない場合、当月の売上金額から全額差し引きいたします。また、当月の売上金額が0円だった場合、料金を徴収いたしません。</p>
+                        <p>当月の売上金額が〇〇レコメンドの料金に満たない場合、当月の売上金額から全額差し引きいたします。また、当月の売上金額が0円だった場合、料金を徴収いたしません。</p>
                     </div>
                 </TokuteiSection>
 
                 <TokuteiSection header='月額プランの自動更新・解約'>
-                    <p>月額プランの方は、マイページの「FLEXレコメンド加入・変更」をクリックし、「解約する」を選択することで解約できます。なお、解約を申し込まない限り、毎月末のお支払い時に契約が自動更新されます。解約を申し込んだ月までは料金が通常通り発生し、月末までFLEXレコメンドの機能をご利用できます。</p>
-                    <small className='block mt-2 text-[var(--gray-50)]'>※マイページの「FLEXレコメンド加入・変更」や「解約する」ボタンが表示されない場合は、お気軽にお問い合わせフォームからお問い合わせください。</small>
+                    <p>月額プランの方は、マイページの「〇〇レコメンド加入・変更」をクリックし、「解約する」を選択することで解約できます。なお、解約を申し込まない限り、毎月末のお支払い時に契約が自動更新されます。解約を申し込んだ月までは料金が通常通り発生し、月末までFLEXレコメンドの機能をご利用できます。</p>
+                    <small className='block mt-2 text-[var(--gray-50)]'>※マイページの「〇〇レコメンド加入・変更」や「解約する」ボタンが表示されない場合は、お気軽にお問い合わせフォームからお問い合わせください。</small>
                 </TokuteiSection>
             </TokuteiContainer>
         </Container>

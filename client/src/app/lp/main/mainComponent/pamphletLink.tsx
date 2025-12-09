@@ -11,7 +11,7 @@ export default function PamphletLink() {
         >
             <Image
             src="/icon.png"
-            alt="FLEX OUTDOORアイコン"
+            alt="〇〇アイコン"
             width={60}
             height={60}
             className={styles.linkIcon}

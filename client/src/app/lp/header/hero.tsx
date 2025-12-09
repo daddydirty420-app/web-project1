@@ -27,5 +27,5 @@ export default function Hero({ shopPage }: Props) {
                 <p className={styles.headerText2}><span className="text-[var(--theme)]">2026年冬</span>オープン</p>
             </div>
         </div>
-    )
+    );
 }
