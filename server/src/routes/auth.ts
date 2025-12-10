@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateAccessToken, generateRefreshToken, JwtUserPayload } from "../utils/jwtHelper.js";
 import { authenticateToken } from "../middleware/index.js";
-import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard } from "../models/index.js";
+import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard, ShopInfo } from "../models/index.js";
 import sequelize from "../db.js";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
@@ -504,13 +504,29 @@ router.patch("/new-email-change", async (req: Request, res: Response): Promise<v
 
     const userId = emailTokenData.user_id;
 
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: ShopInfo,
+          where: { verified: true },
+          required: false,
+        },
+      ],
+    });
     if (!user) {
       res.status(404).json({ message: "ユーザーが見つかりません。" });
       return;
     }
 
-    await user.update({ email: emailTokenData.new_email });
+    const hasShop = !!user.ShopInfo;
+
+    const newEmail = emailTokenData.new_email;
+
+    await user.update({ email: newEmail });
+
+    if (hasShop) {
+      await user.ShopInfo.update({ email: newEmail });
+    }
 
     res.status(200).json({ message: "メールアドレスを更新しました。" });
   } catch (err) {
