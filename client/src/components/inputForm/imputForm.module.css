@@ -20,7 +20,7 @@
 .inputStr {
     box-sizing: border-box;
     width: 100%;
-    padding: 6px;
+    padding: 8px;
     font-size: 14px;
     border: solid 1px var(--gray-line-mid);
     border-radius: 5px;
@@ -31,7 +31,7 @@
     field-sizing: content;
     box-sizing: border-box;
     width: 100%;
-    padding: 6px;
+    padding: 10px;
     font-size: 13px;
     border: solid 1px var(--gray-line-mid);
     border-radius: 5px;
