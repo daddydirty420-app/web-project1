@@ -206,12 +206,12 @@
 
     .searchInputPC {
         flex: 1;
-        height: 30px;
+        height: 32px;
         background-color: var(--background);
-        padding: 6px;
+        padding: 8px;
         font-size: 14px;
         border: solid 1px var(--gray-line-mid);
-        border-radius: 6px;
+        border-radius: 8px;
     }
 
     .categorySearchPC {

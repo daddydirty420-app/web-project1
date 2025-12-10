@@ -19,6 +19,7 @@
 
 .inputStr {
     box-sizing: border-box;
+    margin-top: 2px;
     width: 100%;
     padding: 8px;
     font-size: 14px;
@@ -29,6 +30,7 @@
 
 .textarea {
     field-sizing: content;
+    margin-top: 2px;
     box-sizing: border-box;
     width: 100%;
     padding: 10px;

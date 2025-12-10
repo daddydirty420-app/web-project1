@@ -136,7 +136,7 @@
     border: solid 1px var(--gray-line);
     border-radius: 5px;
     background: var(--background);
-    padding: 5px;
+    padding: 8px;
     margin: 0.25rem;
 }
 
