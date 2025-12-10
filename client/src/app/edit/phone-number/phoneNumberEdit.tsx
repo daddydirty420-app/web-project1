@@ -9,7 +9,7 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     user: User;
-    page: "normal" | "delivery" | "shop" | "shop-signup";
+    page: "normal" | "delivery" | "shop";
     deliveryId?: string;
     shopId?: string;
 };
@@ -59,8 +59,6 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
                 router.push(`/buy/trans/${deliveryId}`);
             } else if (page === "shop") {
                 router.push(`/shop-info/${shopId}`);
-            } else if (page === "shop-signup") {
-                router.push(`/shop-signup/step5/${shopId}`);
             } else {
                 alert("電話番号を変更しました。");
                 router.push("/my-page");
