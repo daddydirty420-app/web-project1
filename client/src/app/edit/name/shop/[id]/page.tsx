@@ -27,7 +27,7 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/delivery-name/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/name/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -47,8 +47,8 @@ export default async function Page({ params }: Props) {
     return (
         <NameEditForm
         name={name}
-        page="delivery"
-        deliveryId={id}
+        page="shop"
+        shopId={id}
         />
     );
 };

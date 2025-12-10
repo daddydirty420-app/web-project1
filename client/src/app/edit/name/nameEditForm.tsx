@@ -10,11 +10,12 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     name: Name;
-    page: "normal" | "delivery";
+    page: "normal" | "delivery" | "shop" | "shop-signup";
     deliveryId?: string;
+    shopId?: string;
 };
 
-export default function NameEditForm({ name, page, deliveryId }: Props) {
+export default function NameEditForm({ name, page, deliveryId, shopId }: Props) {
     const [seiValue, setSeiValue] = useState(name.sei);
     const [meiValue, setMeiValue] = useState(name.mei);
     const [seiKanaValue, setSeiKanaValue] = useState(name.sei_kana);
@@ -59,6 +60,10 @@ export default function NameEditForm({ name, page, deliveryId }: Props) {
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
+            } else if (page === "shop") {
+                router.push(`/shop-info/${shopId}`);
+            } else if (page === "shop-signup") {
+                router.push(`/shop-signup/step5/${shopId}`);
             } else {
                 alert("氏名を変更しました。");
                 router.push("/my-page");

@@ -36,6 +36,31 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
                 return;
             }
 
+            if (page === "shop") {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/phone-number-edit/${shopId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: value,
+                    }),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    console.error(data.message);
+                    alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                    return;
+                }
+
+                alert("電話番号を変更しました。");
+                router.push(`/shop-info/${shopId}`);
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/phone-number-edit`, {
                 method: "PATCH",
                 headers: {
@@ -57,8 +82,6 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
-            } else if (page === "shop") {
-                router.push(`/shop-info/${shopId}`);
             } else {
                 alert("電話番号を変更しました。");
                 router.push("/my-page");

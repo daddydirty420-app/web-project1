@@ -1,9 +1,34 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo } from "../models/index.js";
+import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User } from "../models/index.js";
 
 const router = Router();
+
+router.patch("/phone-number-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const phoneNumber = req.body.phoneNumber;
+    if (!phoneNumber) {
+        res.status(400).json({ message: "電話番号がありません。" });
+        return;
+    }
+
+    try {
+        await ShopInfo.update({
+            phone_number: phoneNumber,
+        }, { where: { id: shopId }});
+
+        await User.update({
+            phone_number: phoneNumber,
+        }, { where: { id: userId }});
+
+        res.status(200).json({ message: "電話番号を更新しました。" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
 
 router.get("/phone-number/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
@@ -14,7 +39,29 @@ router.get("/phone-number/:id", authenticateToken, async (req: Request, res: Res
         });
 
         if (!data) {
-            res.status(404).json({ message: "データが見つかりません。"})
+            res.status(404).json({ message: "データが見つかりません。"});
+            return;
+        }
+
+        res.status(200).json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/name/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const data = await Name.findOne({
+            attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            where: { shop_info_id: shopId },
+        });
+
+        if (!data) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
         }
 
         res.status(200).json({ data });

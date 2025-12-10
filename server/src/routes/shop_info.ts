@@ -24,7 +24,10 @@ router.get('/has-shop/me', authenticateToken, async (req: Request, res: Response
     const currentUserId = req.user!.id;
     try {
         const hasShop = await ShopInfo.findOne({
-            where: { user_id: currentUserId }
+            where: {
+                user_id: currentUserId,
+                verified: true,
+            }
         });
 
         if (!hasShop) {
