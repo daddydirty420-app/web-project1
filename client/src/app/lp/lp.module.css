@@ -61,11 +61,13 @@
     font-weight: 600;
     color: #fff;
     background-color: var(--theme);
+    box-shadow: var(--shadow);
     margin: 0 auto;
 }
 .greenButton:hover {
     opacity: 80%;
     cursor: pointer;
+    box-shadow: none;
 }
 
 .brownButton {
@@ -81,7 +83,12 @@
     color: var(--theme-sub);
     background-color: #fff;
     margin: 0 auto;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.brownButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .buttonText {
@@ -212,11 +219,13 @@
     font-weight: 600;
     color: #fff;
     background-color: var(--theme);
+    box-shadow: var(--shadow);
     margin: 0 auto 1rem;
 }
 .uploadButton:hover {
     opacity: 80%;
     cursor: pointer;
+    box-shadow: none;
 }
 
 .lpListUl {
@@ -270,7 +279,12 @@
     color: var(--theme);
     background-color: #fff;
     margin: 0 auto 2rem;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.inquiryButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .campaignTitleDiv {
@@ -353,11 +367,13 @@
     font-size: 18px;
     font-weight: 600;
     color: #fff;
+    box-shadow: var(--shadow);
     z-index: 1;
 }
 .footerGreenB:hover {
     opacity: .8;
     cursor: pointer;
+    box-shadow: none;
 }
 .footerBrownB {
     position: relative;
@@ -372,11 +388,13 @@
     font-size: 14px;
     font-weight: 600;
     color: #fff;
+    box-shadow: var(--shadow);
     z-index: 1;
 }
 .footerBrownB:hover {
     opacity: .8;
     cursor: pointer;
+    box-shadow: none;
 }
 
 .footer {

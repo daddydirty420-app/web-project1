@@ -15,7 +15,12 @@
     color: white;
     background: var(--theme);
     border-radius: 10px;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.uploadButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .editButton {
@@ -31,7 +36,12 @@
     background-color: #f5f5f5;
     border: solid 2px var(--theme);
     border-radius: 20px;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.editButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .overlay {
@@ -112,5 +122,10 @@
     color: #fff;
     background-color: var(--theme);
     border-radius: 10px;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.popupButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }

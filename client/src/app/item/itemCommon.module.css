@@ -57,7 +57,12 @@
     color: #fff;
     background-color: var(--theme);
     border-radius: 10px;
+    box-shadow: var(--shadow);
     margin: 1rem auto;
+}
+.uriageButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 @media (min-width: 768px) {

@@ -35,7 +35,12 @@
     color: #fff;
     background-color: var(--theme);
     border-radius: 10px;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.buyButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .buy2026 {
@@ -71,7 +76,12 @@
     width: 100px;
     height: 30px;
     margin: 0 auto 0.5rem;
+    box-shadow: var(--shadow);
     cursor: pointer;
+}
+.floatButton:hover {
+    box-shadow: none;
+    opacity: .8;
 }
 
 .floatCartIcon {
