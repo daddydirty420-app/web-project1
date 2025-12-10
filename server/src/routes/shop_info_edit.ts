@@ -30,6 +30,33 @@ router.patch("/phone-number-edit/:id", authenticateToken, async (req: Request, r
     }
 });
 
+router.get("/address/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    
+    try {
+        const data = await Address.findOne({
+            attributes: ["id", "todouhuken_id", "shikutyouson", "banchi", "building"],
+            where: { shop_info_id: shopId },
+            include: [
+                {
+                    model: TodouhukenOption,
+                    as: "AddressToduhuken",
+                },
+            ],
+        });
+
+        if (!data) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.get("/phone-number/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
 

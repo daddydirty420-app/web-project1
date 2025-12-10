@@ -9,11 +9,12 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     address: Address;
-    page: "normal" | "delivery";
+    page: "normal" | "delivery" | "shop" | "shop-signup";
     deliveryId?: string;
+    shopId?: string;
 };
 
-export default function AddressEditForm({ address, page, deliveryId }: Props) {
+export default function AddressEditForm({ address, page, deliveryId, shopId }: Props) {
     const [postNumber, setPostNumber] = useState(address.post_number);
     const [todouhuken, setTodouhuken] = useState(address.AddressTodouhuken.name);
     const [shikutyouson, setShikutyouson] = useState(address.shikutyouson);
@@ -105,6 +106,11 @@ export default function AddressEditForm({ address, page, deliveryId }: Props) {
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
+            } else if (page === "shop") {
+                alert("住所を変更しました。");
+                router.push(`/shop-info/${shopId}`);
+            } else if (page === "shop-signup") {
+                router.push(`/shop-signup/step5/${shopId}`);
             } else {
                 alert("住所を変更しました。");
                 router.push("/my-page");

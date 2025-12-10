@@ -61,6 +61,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
             } else if (page === "shop") {
+                alert("氏名を変更しました。");
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);

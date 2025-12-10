@@ -77,7 +77,6 @@ router.get('/myaddress', authenticateToken, async (req: Request, res: Response):
                 {
                     model: TodouhukenOption,
                     as: 'AddressTodouhuken',
-                    attributes: ['id', 'name'],
                     required: false
                 }
             ]
