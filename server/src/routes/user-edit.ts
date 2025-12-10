@@ -308,7 +308,7 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response): Pr
 router.get('/phone-number', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const data = await User.findByPk(req.user!.id, {
-      attributes: ['id', 'phone_number']
+      attributes: ['id', 'phone_number'],
     });
 
     if (!data) {

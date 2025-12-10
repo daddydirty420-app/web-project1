@@ -1,9 +1,28 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption } from "../models/index.js";
+import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo } from "../models/index.js";
 
 const router = Router();
+
+router.get("/phone-number/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const data = await ShopInfo.findByPk(shopId, {
+            attributes: ["id", "phone_number"],
+        });
+
+        if (!data) {
+            res.status(404).json({ message: "データが見つかりません。"})
+        }
+
+        res.status(200).json({ data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
 
 router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
