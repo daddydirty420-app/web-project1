@@ -74,8 +74,15 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
         }
     };
 
+    let title = "氏名の設定・変更";
+    if (page === "rep-shop" || "rep-shop-signup") {
+        title = "代表者氏名の設定・変更";
+    } else if (page === "con-shop" || "con-shop-signup") {
+        title = "ショップ担当者氏名の設定・変更";
+    }
+
     return (
-        <EditUI title="氏名の設定・変更">
+        <EditUI title={title}>
             <div className={styles.nameFlex}>
                 <InputStr
                 title="姓"
@@ -113,6 +120,8 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
                 hissu
                 />
             </div>
+
+            {page === "con-shop" || "con-shop-signup"}
 
             <Button onClick={submit}>登録する</Button>
         </EditUI>
