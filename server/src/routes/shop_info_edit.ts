@@ -1,11 +1,12 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User } from "../models/index.js";
+import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import fetchAddressFromZip from "../services/addressService.js";
 import sequelize from "../db.js";
+import { literal, Op } from "sequelize";
 
 const router = Router();
 
@@ -200,7 +201,84 @@ router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Re
 
         await t.commit();
 
-        res.status(200).json({ message: "住所を更新しました。" });
+        res.status(200).json({ message: "住所の変更を受け付けました。" });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const { bankName, branch, accountType, accountNumber, meigi } = req.body;
+    if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
+        res.status(400).json({ message: "未入力項目があります。" });
+        return;
+    }
+
+    const t = await sequelize.transaction();
+
+    try {
+        const matchedBank = await Banks.findOne({
+            where: {
+                [Op.or]: [
+                    { name: bankName },
+                    sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
+                ],
+            },
+        });
+        if (!matchedBank) {
+            res.status(400).json({ message: "指定された銀行名が存在しません。" });
+            return;
+        }
+
+        const matchedBranch = await Branches.findOne({
+            where: {
+                bank_code: matchedBank.code,
+                [Op.or]: [
+                    { name: branch },
+                    sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
+                ],
+            },
+        });
+        if (!matchedBranch) {
+            res.status(400).json({ message: "指定された支店名が存在しません。" });
+            return;
+        }
+        
+        const accountTypeData = await AccountTypeOption.findOne({
+            where: { name: accountType },
+        });
+        if (!accountTypeData) {
+            res.status(400).json({ message: "口座種別が無効な値です。" });
+            return;
+        }
+
+        const shopEdit = await ShopInfoEdit.create({
+            user_id: userId,
+            shop_info_id: shopId,
+        }, { transaction: t });
+
+        await BankAccount.create({
+            bank_code: matchedBank.code,
+            bank_name: matchedBank.normalize?.name || matchedBank.name,
+            branch_code: matchedBranch.code,
+            branch: matchedBranch.normalize?.name || matchedBranch.name,
+            account_type_id: accountTypeData.id,
+            account_number: accountNumber,
+            meigi: meigi,
+            shop_info_edit_id: shopEdit.id,
+        }, { transaction: t });
+
+        await t.commit();
+
+        res.status(200).json({ message: "口座情報の変更を受け付けました。" });
     } catch (err) {
         await t.rollback();
         console.error(err);
@@ -276,6 +354,32 @@ router.get("/rep-name/:id", authenticateToken, async (req: Request, res: Respons
         }
 
         res.status(200).json({ name: shop.RepresentativeName });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/account/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id"],
+            include: [
+                {
+                    model: BankAccount,
+                    attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi", "bank_code", "branch_code"],
+                },
+            ],
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ data: shop.BankAccount });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

@@ -8,13 +8,15 @@ import { BankAccount } from "./type";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import clsx from "clsx";
 
 type Props = {
     account: BankAccount;
-    page: "normal" | "transfar";
+    page: "normal" | "transfar" | "shop" | "shop-signup";
+    shopId?: string;
 };
 
-export default function AccountEditForm({ account, page }: Props) {
+export default function AccountEditForm({ account, page, shopId }: Props) {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;
@@ -165,6 +167,28 @@ export default function AccountEditForm({ account, page }: Props) {
                 return;
             }
 
+            if (page === "shop") {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/account-edit/${shopId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify(body),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "更新に失敗しました。");
+                    return;
+                }
+
+                alert("口座情報の変更を受け付けました。審査完了までしばらくお待ちください。");
+                router.push(`/shop-info/${shopId}`);
+                return;
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/account-edit/${account.id}`, {
                 method: "POST",
                 headers: {
@@ -186,6 +210,8 @@ export default function AccountEditForm({ account, page }: Props) {
                 router.push("/my-page");
             } else if (page === "transfar") {
                 router.push("/transfar/request");
+            } else if (page === "shop-signup") {
+                router.push(`/shop-signup/step5/${shopId}`);
             }
         } catch (err) {
             console.error(err);
@@ -306,6 +332,10 @@ export default function AccountEditForm({ account, page }: Props) {
             placeholder="〇〇　〇〇"
             hissu
             />
+
+            {page === "shop" && (
+                <p className={clsx(styles.centerSmall, "mt-4")}>※会社所在地の変更は審査が必要になります。登録される所在地の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
+            )}
 
             <Button onClick={submit}>登録する</Button>
         </EditUI>

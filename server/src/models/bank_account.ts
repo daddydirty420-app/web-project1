@@ -5,6 +5,7 @@ import ShopInfo from "./shop_info.js";
 import AccountTypeOption from "./account_type_option.js";
 import Transfar from "./transfar.js";
 import User from "./user.js";
+import ShopInfoEdit from "./shop_info_edit.js";
 
 export class BankAccount extends Model {
     declare id: number;
@@ -20,6 +21,7 @@ export class BankAccount extends Model {
     declare transfar_id: number | null;
     declare bank_code: string | null;
     declare branch_code: string | null;
+    declare shop_info_edit_id: number | null;
 
     static associate() {
         BankAccount.belongsTo(ShopInfo, {
@@ -34,10 +36,14 @@ export class BankAccount extends Model {
         BankAccount.belongsTo(User, {
             foreignKey: "user_id",
         });
+        BankAccount.belongsTo(ShopInfoEdit, {
+            foreignKey: "shop_info_edit_id",
+        });
     }
 
     static associations: {
         ShopInfo: Association<BankAccount, ShopInfo>;
+        ShopInfoEdit: Association<BankAccount, ShopInfoEdit>;
         AccountTypeOption: Association<BankAccount, AccountTypeOption>;
         Transfar: Association<BankAccount, Transfar>;
         User: Association<BankAccount, User>;
@@ -71,6 +77,10 @@ BankAccount.init(
         },
         bank_code: DataTypes.STRING(20),
         branch_code: DataTypes.STRING(20),
+        shop_info_edit_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,
