@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import NameEditForm from "../../nameEditForm";
-import { Name } from "../../../type";
+import NameEditForm from "../../../nameEditForm";
+import { Name } from "../../../../type";
 import { cookies } from "next/headers";
 
 type Props = {
@@ -47,7 +47,7 @@ export default async function Page({ params }: Props) {
     return (
         <NameEditForm
         name={name}
-        page="shop"
+        page="con-shop"
         shopId={id}
         />
     );

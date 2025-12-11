@@ -77,21 +77,27 @@ router.get("/phone-number/:id", authenticateToken, async (req: Request, res: Res
     }
 });
 
-router.get("/name/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/rep-name/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
 
     try {
-        const data = await Name.findOne({
-            attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-            where: { shop_info_id: shopId },
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id"],
+            include: [
+                {
+                    model: Name,
+                    as: "RepresentativeName",
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                }
+            ]
         });
 
-        if (!data) {
+        if (!shop) {
             res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 
-        res.status(200).json({ data });
+        res.status(200).json({ name: shop.RepresentativeName });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

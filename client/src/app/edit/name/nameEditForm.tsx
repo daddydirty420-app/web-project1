@@ -10,7 +10,7 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     name: Name;
-    page: "normal" | "delivery" | "shop" | "shop-signup";
+    page: "normal" | "delivery" | "rep-shop" | "rep-shop-signup" | "con-shop" | "con-shop-signup";
     deliveryId?: string;
     shopId?: string;
 };
@@ -60,10 +60,10 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
-            } else if (page === "shop") {
+            } else if (page === "con-shop") {
                 alert("氏名を変更しました。");
                 router.push(`/shop-info/${shopId}`);
-            } else if (page === "shop-signup") {
+            } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else {
                 alert("氏名を変更しました。");
