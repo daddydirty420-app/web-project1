@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Address } from "../type";
 import { refreshToken } from "@/lib/refreshToken";
+import clsx from "clsx";
+import styles from "../edit.module.css";
 
 type Props = {
     address: Address;
@@ -96,6 +98,18 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
                         building,
                     }),
                 });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message);
+                    console.error(data.message);
+                    return;
+                }
+
+                alert("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
+                router.push(`/shop-info/${shopId}`);
+                return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/address-edit/${address.id}`, {
@@ -123,9 +137,6 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
-            } else if (page === "shop") {
-                alert("住所を変更しました。");
-                router.push(`/shop-info/${shopId}`);
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else {
@@ -136,8 +147,6 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
             console.error(err);
         }
     };
-
-    const shopSubmit = async () => {};
 
     return (
         <EditUI title="住所の設定・変更">
@@ -183,6 +192,10 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
             placeholder="〇〇マンション××号室"
             hissu={false}
             />
+
+            {page === "shop" && (
+                <p className={clsx(styles.centerSmall, "mt-4")}>※会社所在地の変更は審査が必要になります。登録される所在地の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
+            )}
 
             <Button onClick={submit}>登録する</Button>
         </EditUI>
