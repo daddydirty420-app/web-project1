@@ -62,7 +62,8 @@ export type ShopInfo = {
     reccomend: boolean;
     ComOrFreeOption?: ComOrFreeOption | null;
     Address?: Address | null;
-    Name?: Name | null;
+    RepresentativeName?: Name | null;
+    ContactName?: Name | null;
     BankAccount?: BankAccount | null;
 };
 

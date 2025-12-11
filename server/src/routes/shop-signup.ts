@@ -18,8 +18,7 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
             include: [
                 {
                     model: ComOrFreeOption,
-                    attributes: ['id', 'name'],
-                    require: false,
+                    required: false,
                 },
                 {
                     model: Address,
@@ -28,16 +27,22 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
                         {
                             model: TodouhukenOption,
                             as: "AddressTodouhuken",
-                            attributes: ["id", "name"],
-                            require: false,
+                            required: false,
                         },
                     ],
-                    require: false,
+                    required: false,
                 },
                 {
                     model: Name,
+                    as: "RepresentativeName",
                     attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    require: false,
+                    required: false,
+                },
+                {
+                    model: Name,
+                    as: "ContactName",
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    required: false,
                 },
             ],
             require: false,
@@ -53,7 +58,6 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
                         {
                             model: TodouhukenOption,
                             as: "AddressTodouhuken",
-                            attributes: ["id", "name"],
                         },
                     ],
                 },
@@ -92,10 +96,7 @@ router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response
             attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
             where: { shop_info_id: shopId },
             include: [
-                {
-                    model: AccountTypeOption,
-                    attributes: ['id', 'name'],
-                },
+                { model: AccountTypeOption },
             ],
         });
 
@@ -104,10 +105,7 @@ router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response
                 attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
                 where: { user_id: userId },
                 include: [
-                    {
-                        model: AccountTypeOption,
-                        attributes: ['id', 'name'],
-                    },
+                    { model: AccountTypeOption },
                 ],
             });
         }
@@ -167,10 +165,16 @@ router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response
             attributes: ["id", "company_name", "shop_name", "phone_number", "email", "open_date_time", "founded_date", "member_count", "homepage_url", "company_number", "capital", "auto_trans", "open_info", "reccomend"],
             include: [
                 {
-                    model: ComOrFreeOption
+                    model: ComOrFreeOption,
                 },
                 {
                     model: Name,
+                    as: "RepresentativeName",
+                    attributes: ["sei", "mei", "sei_kana", "mei_kana"],
+                },
+                {
+                    model: Name,
+                    as: "ContactName",
                     attributes: ["sei", "mei", "sei_kana", "mei_kana"],
                 },
                 {

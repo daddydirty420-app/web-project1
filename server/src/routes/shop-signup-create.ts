@@ -35,10 +35,14 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
         foundedDate,
         memberCount,
         homepage,
-        sei,
-        mei,
-        seiKana,
-        meiKana,
+        repSei,
+        repMei,
+        repSeiKana,
+        repMeiKana,
+        conSei,
+        conMei,
+        conSeiKana,
+        conMeiKana,
         postNumber,
         todouhuken,
         shikutyouson,
@@ -57,10 +61,14 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
         openDateTime,
         foundedDate,
         memberCount,
-        sei,
-        mei,
-        seiKana,
-        meiKana,
+        repSei,
+        repMei,
+        repSeiKana,
+        repMeiKana,
+        conSei,
+        conMei,
+        conSeiKana,
+        conMeiKana,
         postNumber,
         todouhuken,
         shikutyouson,
@@ -104,6 +112,22 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
             return;
         }
 
+        const repName = await Name.create({
+            sei: repSei,
+            mei: repMei,
+            sei_kana: repSeiKana,
+            mei_kana: repMeiKana,
+            shop_type: "representative",
+        }, { transaction: t });
+
+        const conName = await Name.create({
+            sei: conSei,
+            mei: conMei,
+            sei_kana: conSeiKana,
+            mei_kana: conMeiKana,
+            shop_type: "contact",
+        }, { transaction: t });
+
         const data = await ShopInfo.create({
             company_name: companyName,
             shop_name: shopName,
@@ -117,6 +141,8 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
             user_id: userId,
             com_or_free_id: selectOption,
             founded_date: foundedDate,
+            name_representative_id: repName.id,
+            name_contact_id: conName.id,
         }, { transaction: t });
 
         await Address.create({
@@ -125,14 +151,6 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
             shikutyouson,
             banchi,
             building,
-            shop_info_id: data.id,
-        }, { transaction: t });
-
-        await Name.create({
-            sei,
-            mei,
-            sei_kana: seiKana,
-            mei_kana: meiKana,
             shop_info_id: data.id,
         }, { transaction: t });
 

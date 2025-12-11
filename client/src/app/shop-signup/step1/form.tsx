@@ -34,10 +34,15 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
     const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? "");
     const [capital, setCapital] = useState<number | null>(shopInfo?.capital ?? null);
 
-    const [sei, setSei] = useState(shopInfo?.Name?.sei ?? user.Name?.sei ?? "");
-    const [mei, setMei] = useState(shopInfo?.Name?.mei ?? user.Name?.mei ?? "");
-    const [seiKana, setSeiKana] = useState(shopInfo?.Name?.sei_kana ?? user.Name?.sei_kana ?? "");
-    const [meiKana, setMeiKana] = useState(shopInfo?.Name?.mei_kana ?? user.Name?.mei_kana ?? "");
+    const [repSei, setRepSei] = useState(shopInfo?.RepresentativeName?.sei ?? user.Name?.sei ?? "");
+    const [repMei, setRepMei] = useState(shopInfo?.RepresentativeName?.mei ?? user.Name?.mei ?? "");
+    const [repSeiKana, setRepSeiKana] = useState(shopInfo?.RepresentativeName?.sei_kana ?? user.Name?.sei_kana ?? "");
+    const [repMeiKana, setRepMeiKana] = useState(shopInfo?.RepresentativeName?.mei_kana ?? user.Name?.mei_kana ?? "");
+
+    const [conSei, setConSei] = useState(shopInfo?.ContactName?.sei ?? user.Name?.sei ?? "");
+    const [conMei, setConMei] = useState(shopInfo?.ContactName?.mei ?? user.Name?.mei ?? "");
+    const [conSeiKana, setConSeiKana] = useState(shopInfo?.ContactName?.sei_kana ?? user.Name?.sei_kana ?? "");
+    const [conMeiKana, setConMeiKana] = useState(shopInfo?.ContactName?.mei_kana ?? user.Name?.mei_kana ?? "");
     
     const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number ?? "");
     const [todouhuken, setTodouhuken] = useState(shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name ?? "");
@@ -119,10 +124,14 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
             foundedDate,
             memberCount,
             homepage,
-            sei,
-            mei,
-            seiKana,
-            meiKana,
+            repSei,
+            repMei,
+            repSeiKana,
+            repMeiKana,
+            conSei,
+            conMei,
+            conSeiKana,
+            conMeiKana,
             postNumber,
             todouhuken,
             shikutyouson,
@@ -143,10 +152,14 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
             openDateTime,
             foundedDate,
             memberCount,
-            sei,
-            mei,
-            seiKana,
-            meiKana,
+            repSei,
+            repMei,
+            repSeiKana,
+            repMeiKana,
+            conSei,
+            conMei,
+            conSeiKana,
+            conMeiKana,
             postNumber,
             todouhuken,
             shikutyouson,
@@ -341,16 +354,16 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 <InputStr
                 title="姓"
                 type="text"
-                value={sei || ""}
-                onChange={setSei}
+                value={repSei || ""}
+                onChange={setRepSei}
                 placeholder="炭火"
                 hissu
                 />
                 <InputStr
                 title="名"
                 type="text"
-                value={mei || ""}
-                onChange={setMei}
+                value={repMei || ""}
+                onChange={setRepMei}
                 placeholder="焼太郎"
                 hissu
                 />
@@ -360,16 +373,56 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 <InputStr
                 title="セイ"
                 type="text"
-                value={seiKana || ""}
-                onChange={setSeiKana}
+                value={repSeiKana || ""}
+                onChange={setRepSeiKana}
                 placeholder="スミビ"
                 hissu
                 />
                 <InputStr
                 title="メイ"
                 type="text"
-                value={meiKana || ""}
-                onChange={setMeiKana}
+                value={repMeiKana || ""}
+                onChange={setRepMeiKana}
+                placeholder="ヤキタロウ"
+                hissu
+                />
+            </div>
+
+            <h2 className={styles.subtitle}>担当者氏名</h2>
+
+            <div className={styles.nameFlex}>
+                <InputStr
+                title="姓"
+                type="text"
+                value={conSei || ""}
+                onChange={setConSei}
+                placeholder="炭火"
+                hissu
+                />
+                <InputStr
+                title="名"
+                type="text"
+                value={conMei || ""}
+                onChange={setConMei}
+                placeholder="焼太郎"
+                hissu
+                />
+            </div>
+
+            <div className={styles.nameFlex}>
+                <InputStr
+                title="セイ"
+                type="text"
+                value={conSeiKana || ""}
+                onChange={setConSeiKana}
+                placeholder="スミビ"
+                hissu
+                />
+                <InputStr
+                title="メイ"
+                type="text"
+                value={conMeiKana || ""}
+                onChange={setConMeiKana}
                 placeholder="ヤキタロウ"
                 hissu
                 />
