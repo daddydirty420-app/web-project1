@@ -225,13 +225,13 @@ export default function Client({ shopId, shopInfo }: Props) {
 
                 <ConfirmSection
                 title="担当者氏名"
-                content={`${shopInfo.ContactName?.sei} ${shopInfo.RepresentativeName?.mei}`}
+                content={`${shopInfo.ContactName?.sei} ${shopInfo.ContactName?.mei}`}
                 link={`/edit/name/shop/con-name/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="担当者氏名（カナ）"
-                content={`${shopInfo.ContactName?.sei_kana} ${shopInfo.RepresentativeName?.mei_kana}`}
+                content={`${shopInfo.ContactName?.sei_kana} ${shopInfo.ContactName?.mei_kana}`}
                 link={`/edit/name/shop/con-name/signup/${shopId}`}
                 />
 
