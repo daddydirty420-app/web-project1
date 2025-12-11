@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { User, GenderOption, Address, Name, TodouhukenOption, IdCard } from "../models/index.js";
+import { User, GenderOption, Address, Name, TodouhukenOption, IdCard, ShopInfo } from "../models/index.js";
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import sequelize from "../db.js";
@@ -25,7 +25,15 @@ router.patch("/profile-update", authenticateToken, async (req: Request, res: Res
   const imageEdit = req.query.imageEdit === "true";
 
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: ShopInfo,
+          where: { verified: true },
+          required: false,
+        },
+      ],
+    });
     if (!user) {
       res.status(404).json({ message: "ユーザーが見つかりません。" });
       return;
@@ -59,6 +67,14 @@ router.patch("/profile-update", authenticateToken, async (req: Request, res: Res
     }
 
     await user.update(updateData);
+
+    const hasShop = !!user.ShopInfo;
+
+    if (hasShop) {
+      await user.ShopInfo.update({
+        shop_name: req.body.userName,
+      });
+    }
 
     if ((!fileName && imageEdit) || (imageUrl && oldImageUrl && imageUrl !== oldImageUrl)) {
       const oldKey = oldImageUrl.split(".com/")[1];
