@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page({ params }: Props) {
-    const { id } = params;
+    const { id } = await params;
 
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
