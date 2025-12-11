@@ -213,7 +213,7 @@ router.get("/address/:id", authenticateToken, async (req: Request, res: Response
     
     try {
         const data = await Address.findOne({
-            attributes: ["id", "todouhuken_id", "shikutyouson", "banchi", "building"],
+            attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
             where: { shop_info_id: shopId },
             include: [
                 {
