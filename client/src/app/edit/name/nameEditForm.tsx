@@ -294,9 +294,9 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
                         <br />※顔写真と生年月日がわかる面を表にして撮影
                         <br />※表裏合わせて計2枚撮影
                     </p>
-
-                    <p className={clsx(styles.centerSmall, "mt-4")}>※代表者氏名の変更は審査が必要になります。登録される代表者氏名の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
                 </div>
+
+                <p className={clsx(styles.centerSmall, "mt-4")}>※代表者氏名の変更は審査が必要になります。登録される代表者氏名の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
             </>
             )}
 
