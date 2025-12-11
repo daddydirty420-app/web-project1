@@ -14,14 +14,19 @@ export class Name extends Model {
     declare mei_kana: string | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare shop_info_id: number | null;
+    declare shop_type: string;
     declare shop_info_edit_id: number | null;
     declare delivery_id: number | null;
     declare user_id: number | null;
 
     static associate() {
         Name.belongsTo(ShopInfo, {
-            foreignKey: 'shop_info_id'
+            foreignKey: 'shop_representative_id',
+            as: "Representative",
+        });
+        Name.belongsTo(ShopInfo, {
+            foreignKey: 'shop_contact_id',
+            as: "Contact",
         });
         Name.belongsTo(ShopInfoEdit, {
             foreignKey: 'shop_info_edit_id'
@@ -31,6 +36,14 @@ export class Name extends Model {
         });
         Name.belongsTo(User, {
             foreignKey: 'user_id'
+        });
+        Name.hasOne(ShopInfo, {
+            foreignKey: "name_representative_id",
+            as: "Representative"
+        });
+        Name.hasOne(ShopInfo, {
+            foreignKey: "name_contact_id",
+            as: "Contact"
         });
     }
 
@@ -54,9 +67,12 @@ Name.init(
         mei: DataTypes.STRING(255),
         sei_kana: DataTypes.STRING(255),
         mei_kana: DataTypes.STRING(255),
-        shop_info_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
+        shop_type: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            validate: {
+                isIn: [["representative", "contact"]],
+            },
         },
         shop_info_edit_id: {
             type: DataTypes.INTEGER,

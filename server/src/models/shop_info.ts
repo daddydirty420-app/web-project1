@@ -39,10 +39,15 @@ export class ShopInfo extends Model {
         ShopInfo.belongsTo(ComOrFreeOption, {
             foreignKey: 'com_or_free_id'
         });
-        ShopInfo.hasOne(Address, {
-            foreignKey: 'shop_info_id'
+        ShopInfo.belongsTo(Name, {
+            foreignKey: "name_representative_id",
+            as: "RepresentativeName"
         });
-        ShopInfo.hasOne(Name, {
+        ShopInfo.belongsTo(Name, {
+            foreignKey: "name_contact_id",
+            as: "ContactName"
+        });
+        ShopInfo.hasOne(Address, {
             foreignKey: 'shop_info_id'
         });
         ShopInfo.hasOne(BankAccount, {
@@ -111,6 +116,8 @@ ShopInfo.init(
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
+        name_representative_id: DataTypes.INTEGER,
+        name_contact_id: DataTypes.INTEGER,
     },
     {
         sequelize,
