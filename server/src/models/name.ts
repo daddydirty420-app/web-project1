@@ -61,7 +61,6 @@ Name.init(
         mei_kana: DataTypes.STRING(255),
         shop_type: {
             type: DataTypes.STRING(20),
-            allowNull: false,
             validate: {
                 isIn: [["representative", "contact"]],
             },

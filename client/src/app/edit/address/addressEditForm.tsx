@@ -81,6 +81,23 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
                 return;
             }
 
+            if (page === "shop") {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/address-edit/${shopId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: JSON.stringify({
+                        postNumber,
+                        todouhuken,
+                        shikutyouson,
+                        banchi,
+                        building,
+                    }),
+                });
+            }
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/address-edit/${address.id}`, {
                 method: "PATCH",
                 headers: {
@@ -119,6 +136,8 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
             console.error(err);
         }
     };
+
+    const shopSubmit = async () => {};
 
     return (
         <EditUI title="住所の設定・変更">

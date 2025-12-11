@@ -4,6 +4,8 @@ import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import fetchAddressFromZip from "../services/addressService.js";
+import sequelize from "../db.js";
 
 const router = Router();
 
@@ -66,6 +68,8 @@ router.post("/rep-name-edit/:id", authenticateToken, async (req: Request, res: R
         return;
     }
 
+    const t = await sequelize.transaction();
+
     try {
         const shop = await ShopInfo.findByPk(shopId);
         if (!shop) {
@@ -113,7 +117,7 @@ router.post("/rep-name-edit/:id", authenticateToken, async (req: Request, res: R
             id_card_rear: rearUrl,
             user_id: userId,
             shop_info_id: shopId,
-        });
+        }, { transaction: t });
 
         await Name.create({
             sei: seiValue,
@@ -121,10 +125,84 @@ router.post("/rep-name-edit/:id", authenticateToken, async (req: Request, res: R
             sei_kana: seiKanaValue,
             mei_kana: meiKanaValue,
             shop_info_edit_id: shopEdit.id,
-        });
+            shop_type: "representative",
+        }, { transaction: t });
+
+        await t.commit();
 
         res.status(200).json({ message: "代表者氏名の変更を受け付けました。" });
     } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const {
+        postNumber,
+        todouhuken,
+        shikutyouson,
+        banchi,
+        building,
+    } = req.body;
+    if (!postNumber || !todouhuken || !shikutyouson || !banchi) {
+        res.status(400).json({ message: "必須項目が未入力です。" });
+        return;
+    }
+
+    const t = await sequelize.transaction();
+
+    try {
+        const todouhukenData = await TodouhukenOption.findOne({
+            where: {
+                name: todouhuken,
+            },
+        });
+        if (!todouhukenData || (todouhukenData.id < 1 || todouhukenData.id > 47)) {
+            res.status(404).json({ message: "都道府県が不正な値です。" });
+            return;
+        }
+
+        try {
+            const fromZip = await fetchAddressFromZip(postNumber);
+
+            if (fromZip.todouhuken_name !== todouhuken) {
+                res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
+                return;
+            }
+
+            if (fromZip.shikutyouson !== shikutyouson) {
+                res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
+                return;
+            }
+        } catch (err) {
+            console.error("住所チェックエラー：", err);
+            res.status(400).json({ message: "郵便番号が不正です。" });
+            return;
+        }
+
+        const shopEdit = await ShopInfoEdit.create({
+            user_id: userId,
+            shop_info_id: shopId,
+        }, { transaction: t });
+
+        await Address.create({
+            post_number: postNumber,
+            todouhuken_id: todouhukenData.id,
+            shikutyouson: shikutyouson,
+            banchi: banchi,
+            building: building,
+            shop_info_edit_id: shopEdit.id,
+        }, { transaction: t });
+
+        await t.commit();
+
+        res.status(200).json({ message: "住所を更新しました。" });
+    } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
