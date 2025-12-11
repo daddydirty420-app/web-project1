@@ -20,14 +20,6 @@ export class Name extends Model {
     declare user_id: number | null;
 
     static associate() {
-        Name.belongsTo(ShopInfo, {
-            foreignKey: 'shop_representative_id',
-            as: "Representative",
-        });
-        Name.belongsTo(ShopInfo, {
-            foreignKey: 'shop_contact_id',
-            as: "Contact",
-        });
         Name.belongsTo(ShopInfoEdit, {
             foreignKey: 'shop_info_edit_id'
         });
