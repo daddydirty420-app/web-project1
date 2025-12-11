@@ -45,7 +45,7 @@ export default async function Page({ params }: Props) {
         <AddressEditForm
         address={data.data}
         page="shop"
-        deliveryId={id}
+        shopId={id}
         />
     );
 }
