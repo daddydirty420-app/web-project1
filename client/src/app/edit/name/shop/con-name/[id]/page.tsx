@@ -27,7 +27,7 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/name/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/con-name/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    const name: Name = data.data;
+    const name: Name = data.name;
 
     return (
         <NameEditForm

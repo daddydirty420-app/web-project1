@@ -104,6 +104,33 @@ router.get("/rep-name/:id", authenticateToken, async (req: Request, res: Respons
     }
 });
 
+router.get("/con-name/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id"],
+            include: [
+                {
+                    model: Name,
+                    as: "ContactName",
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                }
+            ]
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ name: shop.ContactName });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
         const dataList = await ShopInfoEdit.findAll({
