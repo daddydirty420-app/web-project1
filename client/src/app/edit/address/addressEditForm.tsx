@@ -27,6 +27,8 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
 
     const router = useRouter();
 
+    console.log(address);
+
     useEffect(() => {
         if (isInitialLoad) {
             setIsInitialLoad(false);
