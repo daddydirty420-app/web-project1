@@ -218,7 +218,7 @@ router.get("/address/:id", authenticateToken, async (req: Request, res: Response
             include: [
                 {
                     model: TodouhukenOption,
-                    as: "AddressToduhuken",
+                    as: "AddressTodouhuken",
                 },
             ],
         });
