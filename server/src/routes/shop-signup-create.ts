@@ -430,6 +430,96 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
     }
 });
 
+router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const {
+        seiValue,
+        meiValue,
+        seiKanaValue,
+        meiKanaValue,
+        frontFileName,
+        frontFileType,
+        rearFileName,
+        rearFileType,
+        idFrontUpload,
+        idRearUpload,
+    } = req.body;
+
+    if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue || !frontFileName || !rearFileName) {
+        res.status(400).json({ message: "入力されていない項目があります。" });
+        return;
+    }
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            include: [
+                {
+                    model: Name,
+                    as: "RepresentativeName",
+                },
+            ],
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        // 身分証アップロード
+        let frontSignedUrl: string | null = null;
+        let rearSignedUrl: string | null = null;
+        let frontUrl: string | null = null;
+        let rearUrl: string | null = null;
+        
+        if (frontFileName && idFrontUpload) {
+            const frontKey = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
+        
+            const frontCommand = new PutObjectCommand({
+                Bucket: bucket,
+                Key: frontKey,
+                ContentType: frontFileType,
+            });
+        
+            frontSignedUrl = await getSignedUrl(s3, frontCommand, { expiresIn: 60 });
+        
+            frontUrl = `${s3Domain}/${frontKey}`;
+        }
+        
+        if (rearFileName && idRearUpload) {
+            const rearKey = `idcard/shop/rear/${shopId}/${now}_${rearFileName}`;
+        
+            const rearCommand = new PutObjectCommand({
+                Bucket: bucket,
+                Key: rearKey,
+                ContentType: rearFileType,
+            });
+        
+            rearSignedUrl = await getSignedUrl(s3, rearCommand, { expiresIn: 60 });
+        
+            rearUrl = `${s3Domain}/${rearKey}`;
+        }
+
+        // データ作成
+        await shop.update({
+            id_card_front: frontUrl,
+            id_card_rear: rearUrl,
+        });
+
+        await shop.RepresentativeName.update({
+            sei: seiValue,
+            mei: meiValue,
+            sei_kana: seiKanaValue,
+            mei_kana: meiKanaValue,
+        });
+
+        res.status(200).json({ message: "代表者氏名を変更しました。" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const userId = req.user!.id;
