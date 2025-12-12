@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption } from "../models/index.js";
+import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption, Notification } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import fetchAddressFromZip from "../services/addressService.js";
@@ -129,6 +129,11 @@ router.post("/rep-name-edit/:id", authenticateToken, async (req: Request, res: R
             shop_type: "representative",
         }, { transaction: t });
 
+        await Notification.create({
+            read_user_id: userId,
+            message: "代表者氏名の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
+        }, { transaction: t });
+
         await t.commit();
 
         res.status(200).json({ message: "代表者氏名の変更を受け付けました。" });
@@ -197,6 +202,11 @@ router.post("/address-edit/:id", authenticateToken, async (req: Request, res: Re
             banchi: banchi,
             building: building,
             shop_info_edit_id: shopEdit.id,
+        }, { transaction: t });
+
+        await Notification.create({
+            read_user_id: userId,
+            message: "会社所在地の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
         }, { transaction: t });
 
         await t.commit();
@@ -276,11 +286,55 @@ router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Re
             shop_info_edit_id: shopEdit.id,
         }, { transaction: t });
 
+        await Notification.create({
+            read_user_id: userId,
+            message: "口座情報の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
+        }, { transaction: t });
+
         await t.commit();
 
         res.status(200).json({ message: "口座情報の変更を受け付けました。" });
     } catch (err) {
         await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.post("/company-name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const companyName = req.body.companyName;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId);
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        const comFreeId = shop.com_or_free_id;
+
+        if (comFreeId === 1) {
+            await ShopInfoEdit.create({
+                company_name: companyName,
+                user_id: userId,
+                shop_info_id: shopId,
+            });
+
+            await Notification.create({
+                read_user_id: userId,
+                message: "会社名の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
+            });
+        } else if (comFreeId === 2) {
+            await shop.update({
+                company_name: companyName,
+            });
+        }
+
+        res.status(200).json({ message: "会社名の変更を受け付けました。" });
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
@@ -407,6 +461,29 @@ router.get("/con-name/:id", authenticateToken, async (req: Request, res: Respons
         }
 
         res.status(200).json({ name: shop.ContactName });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/company-name/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id", "company_name", "com_or_free_id"],
+            include: [
+                { model: ComOrFreeOption },
+            ],
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ shop });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

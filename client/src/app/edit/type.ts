@@ -1,3 +1,20 @@
+export type AccountTypeOption = {
+    id: string;
+    name: string;
+};
+
+export type BankAccount = {
+    id: string;
+    bank_name: string;
+    bank_code: string;
+    branch: string;
+    branch_code: string;
+    account_type_id: number;
+    account_number: string;
+    meigi: string;
+    AccountTypeOption: AccountTypeOption;
+};
+
 export type TodouhukenOption = {
     id: string;
     name: string;
@@ -27,6 +44,36 @@ export type Name = {
     mei_kana: string;
     delivery_id: number;
 };
+
+export type ComOrFreeOption = {
+    id: number;
+    name: string;
+};
+
+export type ShopInfo = {
+    id: string;
+    company_name: string;
+    shop_name: string;
+    email: string;
+    phone_number: string;
+    homepage_url: string;
+    open_date_time: string;
+    company_number: string;
+    capital: number;
+    member_count: number;
+    founded_date: Date;
+    id_card_front: string;
+    id_card_rear: string;
+    permit_url: string[];
+    auto_trans: boolean;
+    open_info: boolean;
+    reccomend: boolean;
+    ComOrFreeOption?: ComOrFreeOption | null;
+    Address?: Address | null;
+    RepresentativeName?: Name | null;
+    ContactName?: Name | null;
+    BankAccount?: BankAccount | null;
+}
 
 export type GenderOption = {
     id: string;

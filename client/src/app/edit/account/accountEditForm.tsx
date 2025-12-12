@@ -4,7 +4,7 @@
 import styles from "../edit.module.css";
 import { InputStr, Button, InputTitle } from "@/components/inputForm/index";
 import EditUI from "../editUI";
-import { BankAccount } from "./type";
+import { BankAccount } from "../type";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
