@@ -340,6 +340,37 @@ router.post("/company-name-edit/:id", authenticateToken, async (req: Request, re
     }
 });
 
+router.post("/com-free-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const userId = req.user!.id;
+    const comFreeId = Number(req.body.selectOption);
+    
+    try {
+        const shop = await ShopInfo.findByPk(shopId);
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        if (comFreeId === Number(shop.com_or_free_id)) {
+            res.status(400).json({ message: "事業形態が変更されていません。" });
+            return;
+        }
+
+        await ShopInfoEdit.create({
+            user_id: userId,
+            shop_info_id: shopId,
+            com_or_free_id: comFreeId,
+        });
+
+        res.status(200).json({ message: "事業形態を変更しました。関連するショップ情報を更新してください。" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.patch("/option-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const autoTrans = req.body.autoTrans === "はい";
@@ -529,6 +560,31 @@ router.get("/option/:id", authenticateToken, async (req: Request, res: Response)
         }
 
         res.status(200).json({ shop });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/com-free/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id", "com_or_free_id"],
+            include: [
+                { model: ComOrFreeOption },
+            ],
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        const comFree = await ComOrFreeOption.findAll();
+
+        res.status(200).json({ shop, comFree });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
