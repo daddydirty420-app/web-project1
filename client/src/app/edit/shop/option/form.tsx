@@ -80,9 +80,8 @@ export default function Form({ shopId, shopInfo }: Props) {
                         <p className={styles.text14}>いいえ</p>
                     </label>
                 </div>
-
-                <p className={styles.centerSmall}>※振込申請なしで、毎月の売上を翌月10日にお振込みいたします。（金融機関が休業日の場合、その翌営業日）</p>
             </section>
+            <p className={styles.centerSmall}>※振込申請なしで、毎月の売上を翌月10日にお振込みいたします。（金融機関が休業日の場合、その翌営業日）</p>
 
             <section className={styles.radioSection}>
                 <InputTitle title="運営者情報を表示する" />
@@ -111,9 +110,8 @@ export default function Form({ shopId, shopInfo }: Props) {
                         <p className={styles.text14}>いいえ</p>
                     </label>
                 </div>
-
-                <p className={styles.centerSmall}>※ショップ情報に会社名、代表者・担当者氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
             </section>
+            <p className={styles.centerSmall}>※ショップ情報に会社名、代表者・担当者氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
 
             <Button onClick={submit}>登録する</Button>
         </EditUI>
