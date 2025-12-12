@@ -54,7 +54,7 @@ export default function Form({ shopId, shopInfo }: Props) {
     return (
         <EditUI title="オプション選択">
             <section className={styles.radioSection}>
-                <InputTitle title="自動振込" />
+                <InputTitle title="自動振込：" />
                 <div className={styles.radioColumn}>
                     <label className={styles.radio}>
                         <input
@@ -84,7 +84,7 @@ export default function Form({ shopId, shopInfo }: Props) {
             <p className={styles.centerSmall}>※振込申請なしで、毎月の売上を翌月10日にお振込みいたします。（金融機関が休業日の場合、その翌営業日）</p>
 
             <section className={styles.radioSection}>
-                <InputTitle title="運営者情報を表示する" />
+                <InputTitle title="運営者情報を表示する：" />
                 <div className={styles.radioColumn}>
                     <label className={styles.radio}>
                         <input
