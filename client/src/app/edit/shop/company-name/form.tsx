@@ -77,7 +77,7 @@ export default function Form({ shopId, shopInfo }: Props) {
             />
 
             {comFree === 1 && (
-                <p className={clsx(styles.centerSmall, "mt-4")}>※口座情報の変更は審査が必要になります。登録される口座情報の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
+                <p className={clsx(styles.centerSmall, "mt-4")}>※会社名の変更は審査が必要になります。登録される会社名の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。</p>
             )}
 
             <Button onClick={submit}>登録する</Button>

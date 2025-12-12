@@ -383,11 +383,11 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
             patternNum
             />
 
-            <div className={styles.genderDiv}>
+            <div className={styles.radioSection}>
                 <InputTitle title="性別" hissu />
-                <div className={styles.genderRadioDiv}>
+                <div className={styles.radioColumn}>
                     {genderOptions.map((option) => (
-                        <label key={option.id} className={styles.genderRadio}>
+                        <label key={option.id} className={styles.radio}>
                             <input
                             type="radio"
                             name="gender"

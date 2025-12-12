@@ -122,7 +122,7 @@ export default function Form({ shopId }: Props) {
                     </div>
                 </div>
 
-                <p className={styles.centerSmall}>※ショップ情報に会社名、氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
+                <p className={styles.centerSmall}>※ショップ情報に会社名、代表者・担当者氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
             </div>
 
             <div className={styles.optionDiv}>

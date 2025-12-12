@@ -13,6 +13,7 @@ import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import StepBar from "../stepBar";
 import { refreshToken } from "@/lib/refreshToken";
+import clsx from "clsx";
 
 type Props = {
     user: User;
@@ -427,6 +428,8 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 hissu
                 />
             </div>
+
+            <p className={clsx("mt-1", styles.centerSmall)}>※代表者・担当者氏名は同一人物でも異なる人物でも構いません。</p>
 
             <h2 className={styles.subtitle}>住所</h2>
 

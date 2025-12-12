@@ -340,6 +340,31 @@ router.post("/company-name-edit/:id", authenticateToken, async (req: Request, re
     }
 });
 
+router.patch("/option-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+    const autoTrans = req.body.autoTrans === "はい";
+    const openInfo = req.body.openInfo === "はい";
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId);
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        await shop.update({
+            auto_trans: autoTrans,
+            open_info: openInfo,
+        });
+
+        res.status(200).json({ message: "オプションを更新しました。" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.get("/address/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     
@@ -476,6 +501,26 @@ router.get("/company-name/:id", authenticateToken, async (req: Request, res: Res
             include: [
                 { model: ComOrFreeOption },
             ],
+        });
+
+        if (!shop) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ shop });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/option/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopId = req.params.id;
+
+    try {
+        const shop = await ShopInfo.findByPk(shopId, {
+            attributes: ["id", "auto_trans", "open_info"],
         });
 
         if (!shop) {

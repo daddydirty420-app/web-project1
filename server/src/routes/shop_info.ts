@@ -42,24 +42,6 @@ router.get('/has-shop/me', authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.get('/edit-companyname/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['id', 'company_name']
-        });
-
-        if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
