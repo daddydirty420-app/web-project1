@@ -324,7 +324,7 @@ router.get("/confirm/:id", authenticateToken, async (req: Request, res: Response
             return;
         }
 
-        res.status(200).json({ data })
+        res.status(200).json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

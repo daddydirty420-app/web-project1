@@ -6,6 +6,7 @@ import ShopInfo from "./shop_info.js";
 import ComOrFreeOption from "./com_or_free_option.js";
 import Address from "./address.js";
 import Name from "./name.js";
+import BankAccount from "./bank_account.js";
 
 export class ShopInfoEdit extends Model {
     declare id: number;
@@ -42,6 +43,9 @@ export class ShopInfoEdit extends Model {
         ShopInfoEdit.hasOne(Name, {
             foreignKey: 'shop_info_edit_id'
         });
+        ShopInfoEdit.hasOne(BankAccount, {
+            foreignKey: 'shop_info_edit_id'
+        });
     }
 
     static associations: {
@@ -50,6 +54,7 @@ export class ShopInfoEdit extends Model {
         ComOrFreeOption: Association<ShopInfoEdit, ComOrFreeOption>;
         Address: Association<ShopInfoEdit, Address>;
         Name: Association<ShopInfoEdit, Name>;
+        BankAccount: Association<ShopInfoEdit, BankAccount>;
     };
 }
 
