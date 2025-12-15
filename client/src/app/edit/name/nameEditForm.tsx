@@ -98,7 +98,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
-            } else if (page === "rep-com-free" || "con-com-free") {
+            } else if (page === "rep-com-free" || page === "con-com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
                 alert("氏名を変更しました。");
@@ -204,13 +204,13 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
     };
 
     let title = "氏名の設定・変更";
-    if (page === "rep-shop" || "rep-shop-signup" || "rep-com-free") {
+    if (page === "rep-shop" || page === "rep-shop-signup" || page === "rep-com-free") {
         title = "代表者氏名の設定・変更";
-    } else if (page === "con-shop" || "con-shop-signup") {
+    } else if (page === "con-shop" || page === "con-shop-signup") {
         title = "ショップ担当者氏名の設定・変更";
     }
 
-    const submitOption = (page === "rep-shop" || "rep-shop-signup")
+    const submitOption = (page === "rep-shop" || page === "rep-shop-signup")
     ? repSubmit : submit;
 
     return (
@@ -253,7 +253,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
                 />
             </div>
 
-            {(page === "rep-shop" || "rep-shop-signup") && (
+            {(page === "rep-shop" || page === "rep-shop-signup") && (
                 <>
                 <h2 className={styles.subtitle}>代表者身分証</h2>
 
