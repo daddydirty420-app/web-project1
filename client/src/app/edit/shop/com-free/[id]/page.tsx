@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
 
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/com-free-edit/com-free/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/com-free/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
