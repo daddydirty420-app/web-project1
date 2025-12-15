@@ -16,13 +16,13 @@ type Props = {
 
 export default function Client({ shopId, shopInfo }: Props) {
     const [comOrFree, setComOrFree] = useState(shopInfo.ComOrFreeOption?.id ?? "");
-    const [companyName, setCompanyName] = useState(shopInfo.company_name);
-    const [shopName, setShopName] = useState(shopInfo.shop_name);
-    const [phoneNumber, setPhoneNumber] = useState(shopInfo.phone_number);
-    const [email, setEmail] = useState(shopInfo.email);
-    const [openDateTime, setOpenDateTime] = useState(shopInfo.open_date_time);
-    const [foundedDate, setFoundedDate] = useState(shopInfo.founded_date);
-    const [memberCount, setMemberCount] = useState(shopInfo.member_count);
+    const [companyName, setCompanyName] = useState(shopInfo.company_name ?? "");
+    const [shopName, setShopName] = useState(shopInfo.shop_name ?? "");
+    const [phoneNumber, setPhoneNumber] = useState(shopInfo.phone_number ?? "");
+    const [email, setEmail] = useState(shopInfo.email ?? "");
+    const [openDateTime, setOpenDateTime] = useState(shopInfo.open_date_time ?? "");
+    const [foundedDate, setFoundedDate] = useState(shopInfo.founded_date ?? "");
+    const [memberCount, setMemberCount] = useState(shopInfo.member_count ?? "");
     const [homepage, setHomepage] = useState(shopInfo.homepage_url ?? "");
 
     const [companyNumber, setCompanyNumber] = useState(shopInfo.company_number ?? "");
@@ -213,45 +213,45 @@ export default function Client({ shopId, shopInfo }: Props) {
 
                 <ConfirmSection
                 title="代表者氏名"
-                content={`${shopInfo.RepresentativeName?.sei} ${shopInfo.RepresentativeName?.mei}`}
+                content={`${shopInfo.RepresentativeName?.sei ?? ""} ${shopInfo.RepresentativeName?.mei ?? ""}`}
                 link={`/edit/name/shop/rep-name/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="代表者氏名（カナ）"
-                content={`${shopInfo.RepresentativeName?.sei_kana} ${shopInfo.RepresentativeName?.mei_kana}`}
+                content={`${shopInfo.RepresentativeName?.sei_kana ?? ""} ${shopInfo.RepresentativeName?.mei_kana ?? ""}`}
                 link={`/edit/name/shop/rep-name/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="担当者氏名"
-                content={`${shopInfo.ContactName?.sei} ${shopInfo.ContactName?.mei}`}
+                content={`${shopInfo.ContactName?.sei ?? ""} ${shopInfo.ContactName?.mei ?? ""}`}
                 link={`/edit/name/shop/con-name/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="担当者氏名（カナ）"
-                content={`${shopInfo.ContactName?.sei_kana} ${shopInfo.ContactName?.mei_kana}`}
+                content={`${shopInfo.ContactName?.sei_kana ?? ""} ${shopInfo.ContactName?.mei_kana ?? ""}`}
                 link={`/edit/name/shop/con-name/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="所在地"
-                content={`〒${shopInfo.Address?.post_number}
-                ${shopInfo.Address?.AddressTodouhuken?.name}
-                ${shopInfo.Address?.shikutyouson}
-                ${shopInfo.Address?.banchi}
-                ${shopInfo.Address?.building}`}
+                content={`〒${shopInfo.Address?.post_number ?? ""}
+                ${shopInfo.Address?.AddressTodouhuken?.name ?? ""}
+                ${shopInfo.Address?.shikutyouson ?? ""}
+                ${shopInfo.Address?.banchi ?? ""}
+                ${shopInfo.Address?.building ?? ""}`}
                 link={`/edit/address/shop/signup/${shopId}`}
                 />
 
                 <ConfirmSection
                 title="振込口座"
-                content={`銀行名： ${shopInfo.BankAccount?.bank_name}
-                支店名： ${shopInfo.BankAccount?.branch_code}
-                口座種別： ${shopInfo.BankAccount?.AccountTypeOption?.name}
-                口座番号： ${shopInfo.BankAccount?.account_number}
-                口座名義： ${shopInfo.BankAccount?.meigi}`}
+                content={`銀行名： ${shopInfo.BankAccount?.bank_name ?? ""}
+                支店名： ${shopInfo.BankAccount?.branch_code ?? ""}
+                口座種別： ${shopInfo.BankAccount?.AccountTypeOption?.name ?? ""}
+                口座番号： ${shopInfo.BankAccount?.account_number ?? ""}
+                口座名義： ${shopInfo.BankAccount?.meigi ?? ""}`}
                 link={`/edit/account/shop/signup/${shopId}`}
                 />
 
