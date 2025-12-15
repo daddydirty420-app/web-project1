@@ -66,7 +66,7 @@ export type ShopInfoEdit = {
     ComOrFreeOption?: ComOrFreeOption | null;
     Address?: Address | null;
     Name?: Name | null;
-    BankAccount: BankAccount | null;
+    BankAccount?: BankAccount | null;
 };
 
 export type ShopInfo = {

@@ -19,10 +19,10 @@ type Props = {
 };
 
 export default function NameEditForm({ name, page, deliveryId, shopId, shopEditId }: Props) {
-    const [seiValue, setSeiValue] = useState(name.sei ?? "");
-    const [meiValue, setMeiValue] = useState(name.mei ?? "");
-    const [seiKanaValue, setSeiKanaValue] = useState(name.sei_kana ?? "");
-    const [meiKanaValue, setMeiKanaValue] = useState(name.mei_kana ?? "");
+    const [seiValue, setSeiValue] = useState(name?.sei ?? "");
+    const [meiValue, setMeiValue] = useState(name?.mei ?? "");
+    const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? "");
+    const [meiKanaValue, setMeiKanaValue] = useState(name?.mei_kana ?? "");
 
     const [idCardFront, setIdCardFront] = useState<File | string | undefined>("");
     const [idFrontPreview, setIdFrontPreview] = useState("");

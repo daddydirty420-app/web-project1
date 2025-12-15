@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function AccountEditForm({ account, page, shopId, shopEditId }: Props) {
-    const [bankQuery, setBankQuery] = useState(account.bank_name ?? "");
+    const [bankQuery, setBankQuery] = useState(account?.bank_name ?? "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;
         code: string;
@@ -28,9 +28,9 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
     const [showBankSuggest, setShowBankSuggest] = useState(false);
     const [isSelectingBank, setIsSelectingBank] = useState(false);
 
-    const [bankCode, setBankCode] = useState(account.bank_code ?? "");
+    const [bankCode, setBankCode] = useState(account?.bank_code ?? "");
     
-    const [branchQuery, setBranchQuery] = useState(account.branch ?? "");
+    const [branchQuery, setBranchQuery] = useState(account?.branch ?? "");
     const [branchSuggestions, setBranchSuggestions] = useState<{
         name: string;
         code: string;
@@ -40,11 +40,11 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
     const [showBranchSuggest, setShowBranchSuggest] = useState(false);
     const [isSelectingBranch, setIsSelectingBranch] = useState(false);
     
-    const [branchCode, setBranchCode] = useState(account.branch_code ?? "");
+    const [branchCode, setBranchCode] = useState(account?.branch_code ?? "");
     
-    const [accountType, setAccountType] = useState(account.AccountTypeOption?.name ?? "");
-    const [accountNumber, setAccountNumber] = useState(account.account_number ?? "");
-    const [meigi, setMeigi] = useState(account.meigi ?? "");
+    const [accountType, setAccountType] = useState(account?.AccountTypeOption?.name ?? "");
+    const [accountNumber, setAccountNumber] = useState(account?.account_number ?? "");
+    const [meigi, setMeigi] = useState(account?.meigi ?? "");
 
     const router = useRouter();
     
