@@ -39,7 +39,7 @@ export default function Client({ shopId, shopInfo, shopEditId, shopInfoEdit }: P
                 return;
             }
     
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/edit/${shopId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/edit/${shopEditId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

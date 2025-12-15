@@ -206,7 +206,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
     let title = "氏名の設定・変更";
     if (page === "rep-shop" || page === "rep-shop-signup" || page === "rep-com-free") {
         title = "代表者氏名の設定・変更";
-    } else if (page === "con-shop" || page === "con-shop-signup") {
+    } else if (page === "con-shop" || page === "con-shop-signup" || page === "con-com-free") {
         title = "ショップ担当者氏名の設定・変更";
     }
 
