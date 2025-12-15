@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./confirm.module.css";
+import styles from "@/components/confirm-card/confirmcard.module.css";
 import { ShopInfo } from "../type";
 import SSUI from "../ssUI";
 import ButtonDiv from "../buttonDiv";
-import ConfirmSection from "./confirmSection";
+import { ConfirmSection } from "@/components";
 import { useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
 

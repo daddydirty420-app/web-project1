@@ -12,11 +12,12 @@ import clsx from "clsx";
 
 type Props = {
     account: BankAccount;
-    page: "normal" | "transfar" | "shop" | "shop-signup";
+    page: "normal" | "transfar" | "shop" | "shop-signup" | "com-free";
     shopId?: string;
+    shopEditId?: string;
 };
 
-export default function AccountEditForm({ account, page, shopId }: Props) {
+export default function AccountEditForm({ account, page, shopId, shopEditId }: Props) {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;
@@ -212,6 +213,8 @@ export default function AccountEditForm({ account, page, shopId }: Props) {
                 router.push("/transfar/request");
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
+            } else if (page === "com-free") {
+                router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             }
         } catch (err) {
             console.error(err);

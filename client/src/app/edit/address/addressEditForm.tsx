@@ -11,12 +11,13 @@ import styles from "../edit.module.css";
 
 type Props = {
     address: Address;
-    page: "normal" | "delivery" | "shop" | "shop-signup";
+    page: "normal" | "delivery" | "shop" | "shop-signup" | "com-free";
     deliveryId?: string;
     shopId?: string;
+    shopEditId?: string;
 };
 
-export default function AddressEditForm({ address, page, deliveryId, shopId }: Props) {
+export default function AddressEditForm({ address, page, deliveryId, shopId, shopEditId }: Props) {
     const [postNumber, setPostNumber] = useState(address.post_number);
     const [todouhuken, setTodouhuken] = useState(address.AddressTodouhuken.name);
     const [shikutyouson, setShikutyouson] = useState(address.shikutyouson);
@@ -139,6 +140,8 @@ export default function AddressEditForm({ address, page, deliveryId, shopId }: P
                 router.push(`/buy/trans/${deliveryId}`);
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
+            } else if (page === "com-free") {
+                router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
                 alert("住所を変更しました。");
                 router.push("/my-page");

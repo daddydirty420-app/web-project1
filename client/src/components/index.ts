@@ -8,3 +8,4 @@ export { default as RowTextContainer } from './two-text-container/tow-text-conta
 export { default as FollowButton } from './follow-button/followButton';
 export { default as Star } from './star';
 export { default as ItemListRow } from "./itemListRow/itemListRow";
+export { default as ConfirmSection } from "./confirm-card/confirmSection";

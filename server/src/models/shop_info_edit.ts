@@ -13,6 +13,13 @@ export class ShopInfoEdit extends Model {
     declare company_number: string | null;
     declare id_card_front: string | null;
     declare id_card_rear: string | null;
+    declare phone_number: string | null;
+    declare email: string | null;
+    declare founded_date: Date | null;
+    declare member_count: number | null;
+    declare homepage_url: string | null;
+    declare capital: number | null;
+    declare open_date_time: string | null;
     declare user_id: number | null;
     declare shop_info_id: number | null;
     declare com_or_free_id: number | null;
@@ -58,6 +65,13 @@ ShopInfoEdit.init(
         company_number: DataTypes.STRING(20),
         id_card_front: DataTypes.TEXT,
         id_card_rear: DataTypes.TEXT,
+        phone_number: DataTypes.STRING(20),
+        email: DataTypes.STRING(255),
+        founded_date: DataTypes.DATE,
+        member_count: DataTypes.INTEGER,
+        homepage_url: DataTypes.STRING,
+        capital: DataTypes.DECIMAL,
+        open_date_time: DataTypes.TEXT,
         user_id: DataTypes.INTEGER,
         shop_info_id: DataTypes.INTEGER,
         com_or_free_id: DataTypes.INTEGER,

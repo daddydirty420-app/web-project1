@@ -6,19 +6,20 @@ import { Name } from "../models/index.js";
 const router = Router();
 
 router.patch("/name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const name = await Name.findByPk(req.params.id);
-        if (!name) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
+    const nameId = req.params.id;
+    const { sei, mei, seiKana, meiKana } = req.body;
+    if (!sei || !mei || !seiKana || !meiKana) {
+        res.status(404).json({ message: "必須項目が入力されていません。" });
+        return;
+    }
 
-        await name.update({
-            sei: req.body.sei,
-            mei: req.body.mei,
-            sei_kana: req.body.seiKana,
-            mei_kana: req.body.meiKana,
-        });
+    try {
+        await Name.update({
+            sei,
+            mei,
+            sei_kana: seiKana,
+            mei_kana: meiKana,
+        }, { where: { id: nameId }});
 
         res.status(200).json({ message: "氏名を更新しました。" });
     } catch (err) {

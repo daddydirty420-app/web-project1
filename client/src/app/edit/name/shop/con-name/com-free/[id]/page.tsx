@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import Form from "../form";
+import NameEditForm from "../../../../nameEditForm";
 import { cookies } from "next/headers";
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "事業形態の変更",
-        description: "事業形態を変更できます。（事業形態の変更には審査が必要になります。）",
+        title: "担当者氏名の設定・変更",
+        description: "担当者氏名の変更ができます。",
         robots: {
             index: false,
             follow: false,
@@ -20,13 +20,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
-
+        
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
-
+    
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/com-free-edit/com-free/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/con-name/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -42,10 +42,10 @@ export default async function Page({ params }: Props) {
     }
 
     return (
-        <Form
-        shopId={id}
-        shopInfo={data.shop}
-        ComOrFreeOption={data.comFree}
+        <NameEditForm
+        name={data.data.ShopInfo.Name}
+        page="con-com-free"
+        shopEditId={id}
         />
     );
 };

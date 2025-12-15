@@ -12,12 +12,13 @@ import clsx from "clsx";
 
 type Props = {
     name: Name;
-    page: "normal" | "delivery" | "rep-shop" | "rep-shop-signup" | "con-shop" | "con-shop-signup";
+    page: "normal" | "delivery" | "rep-shop" | "rep-shop-signup" | "rep-com-free" | "con-shop" | "con-shop-signup" | "con-com-free";
     deliveryId?: string;
     shopId?: string;
+    shopEditId?: string;
 };
 
-export default function NameEditForm({ name, page, deliveryId, shopId }: Props) {
+export default function NameEditForm({ name, page, deliveryId, shopId, shopEditId }: Props) {
     const [seiValue, setSeiValue] = useState(name.sei);
     const [meiValue, setMeiValue] = useState(name.mei);
     const [seiKanaValue, setSeiKanaValue] = useState(name.sei_kana);
@@ -97,6 +98,8 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
+            } else if (page === "rep-com-free" || "con-com-free") {
+                router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
                 alert("氏名を変更しました。");
                 router.push("/my-page");
@@ -201,7 +204,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId }: Props) 
     };
 
     let title = "氏名の設定・変更";
-    if (page === "rep-shop" || "rep-shop-signup") {
+    if (page === "rep-shop" || "rep-shop-signup" || "rep-com-free") {
         title = "代表者氏名の設定・変更";
     } else if (page === "con-shop" || "con-shop-signup") {
         title = "ショップ担当者氏名の設定・変更";

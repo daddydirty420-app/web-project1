@@ -50,6 +50,25 @@ export type ComOrFreeOption = {
     name: string;
 };
 
+export type ShopInfoEdit = {
+    id: string;
+    company_name?: string | null;
+    email?: string | null;
+    phone_number?: string | null;
+    homepage_url?: string | null;
+    open_date_time?: string | null;
+    company_number?: string | null;
+    capital?: number | null;
+    member_count?: number | null;
+    founded_date?: Date | null;
+    id_card_front?: string | null;
+    id_card_rear?: string | null;
+    ComOrFreeOption?: ComOrFreeOption | null;
+    Address?: Address | null;
+    Name?: Name | null;
+    BankAccount: BankAccount | null;
+};
+
 export type ShopInfo = {
     id: string;
     company_name: string;

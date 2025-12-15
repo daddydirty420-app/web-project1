@@ -10,7 +10,7 @@ type Props = {
 export async function generateMetadata(): Promise<Metadata> {
     return {
         title: "住所の設定・変更",
-        description: "配送情報に記載する住所を設定・変更できます。",
+        description: "会社所在地を設定・変更できます。",
         robots: {
             index: false,
             follow: false,

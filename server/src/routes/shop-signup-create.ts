@@ -432,7 +432,6 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
 
 router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
-    const userId = req.user!.id;
     const {
         seiValue,
         meiValue,

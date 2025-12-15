@@ -39,7 +39,7 @@ export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/com-free-edit/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/com-free-edit/${shopId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -55,7 +55,7 @@ export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
                 return;
             }
 
-            router.push(`/edit/shop/com-free/confirm/${shopId}`);
+            router.push(`/edit/shop/com-free/confirm/${data.editId}`);
         } catch (err) {
             console.error(err);
         }
