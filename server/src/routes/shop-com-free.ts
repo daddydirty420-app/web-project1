@@ -289,7 +289,12 @@ router.get("/confirm/:id", authenticateToken, async (req: Request, res: Response
                     ],
                 },
                 { model: Name },
-                { model: BankAccount },
+                {
+                    model: BankAccount,
+                    include: [
+                        { model: AccountTypeOption },
+                    ],
+                },
                 { model: ComOrFreeOption },
                 {
                     model: ShopInfo,
@@ -312,7 +317,12 @@ router.get("/confirm/:id", authenticateToken, async (req: Request, res: Response
                             model: Name,
                             as: "ContactName",
                         },
-                        { model: BankAccount },
+                        {
+                            model: BankAccount,
+                            include: [
+                                { model: AccountTypeOption },
+                            ],
+                        },
                         { model: ComOrFreeOption },
                     ],
                 },
