@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./confirm.module.css";
+import styles from "./confirmcard.module.css";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
