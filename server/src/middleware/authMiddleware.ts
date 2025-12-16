@@ -34,6 +34,11 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
   try {
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string) as AuthUser
     req.user = decoded;
+    console.log("[AUTH]", {
+      userId: req.user.id,
+      path: req.originalUrl,
+      ip: req.ip,
+    });
     next();
   } catch (err) {
     console.error("JWT検証エラー:", err);

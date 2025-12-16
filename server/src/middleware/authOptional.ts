@@ -35,6 +35,11 @@ export function authenticateOptional(req: Request, res: Response, next: NextFunc
   try {
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string, { ignoreExpiration: true }) as AuthUser;
     req.user = decoded;
+    console.log("[AUTH.optional]", {
+      userId: req.user.id,
+      path: req.originalUrl,
+      ip: req.ip,
+    });
   } catch (err) {
     console.warn("JWT検証エラー（authenticateOptional）:", err);
     req.user = undefined;
