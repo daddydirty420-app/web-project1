@@ -215,7 +215,7 @@ export default function Client({ shopEditId }: Props) {
             }
 
             alert("画像のアップロードが完了しました！");
-            router.push("/edit/shop/com-free/complete");
+            router.replace("/edit/shop/com-free/complete");
         } catch (err) {
             console.error(err);
         }

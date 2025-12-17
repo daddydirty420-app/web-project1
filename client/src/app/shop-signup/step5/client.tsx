@@ -80,7 +80,7 @@ export default function Client({ shopId, shopInfo }: Props) {
                 return;
             }
 
-            router.push("/shop-signup/complete");
+            router.replace("/shop-signup/complete");
         } catch (err) {
             console.error(err);
         }
