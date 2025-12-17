@@ -52,7 +52,7 @@ export default function Client({ shopId, shopInfo, shopEditId, shopInfoEdit }: P
         }
     };
 
-    const submit = async () => router.push(`/edit/shop/com-free/update/${shopEditId}`);
+    const submit = async () => router.push(`/edit/shop/com-free/upload/${shopEditId}`);
 
     const comOrFree = shopInfoEdit.ComOrFreeOption?.id;
 
