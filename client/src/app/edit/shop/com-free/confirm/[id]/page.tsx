@@ -45,7 +45,7 @@ export default async function Page({ params }: Props) {
         <Client
         shopId={data.data.ShopInfo.id}
         shopInfo={data.data.ShopInfo}
-        shopEditId={data.data.id}
+        shopEditId={id}
         shopInfoEdit={data.data}
         />
     );

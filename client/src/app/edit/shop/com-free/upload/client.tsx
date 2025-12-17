@@ -1,21 +1,17 @@
 "use client";
 
-import styles from "../ss.module.css";
-import SSUI from "../ssUI";
-import StepBar from "../stepBar";
-import ButtonDiv from "../buttonDiv";
-import { ShopInfo } from "../type";
-import React, { useRef, useState } from "react";
-import { InputTitle } from "@/components/inputForm";
-import Image from "next/image";
+import styles from "../../../edit.module.css";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import EditUI from "@/app/edit/editUI";
+import { Button, InputTitle } from "@/components/inputForm";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
-    shopId: string;
-    shopInfo: ShopInfo;
+    shopEditId: string;
 };
 
 type PermitImage = {
@@ -24,30 +20,30 @@ type PermitImage = {
     preview: string;
 };
 
-export default function Form({ shopId, shopInfo }: Props) {
-    const [idCardFront, setIdCardFront] = useState<File | string | undefined>(shopInfo.id_card_front ?? "");
-    const [idFrontPreview, setIdFrontPreview] = useState(shopInfo.id_card_front ?? "");
+export default function Client({ shopEditId }: Props) {
+    const [idCardFront, setIdCardFront] = useState<File | string | undefined>("");
+    const [idFrontPreview, setIdFrontPreview] = useState("");
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);
 
-    const [idCardRear, setIdCardRear] = useState<File | string | undefined>(shopInfo.id_card_rear ?? "");
-    const [idRearPreview, setIdRearPreview] = useState(shopInfo.id_card_rear ?? "");
+    const [idCardRear, setIdCardRear] = useState<File | string | undefined>("");
+    const [idRearPreview, setIdRearPreview] = useState("");
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const [checked, setChecked] = useState(false);
 
-    const initialPermit = (shopInfo.permit_url ?? []).map((url) => ({
+    const initialPermit = ([]).map((url) => ({
         file: null,
         preview: url,
         uploaded: false,
     }));
 
     const [permitImages, setPermitImages] = useState<PermitImage[]>(initialPermit);
-
+    
     const idFrontRef = useRef<HTMLInputElement | null>(null);
     const idRearRef = useRef<HTMLInputElement | null>(null);
-
+    
     const router = useRouter();
-
+        
     const handleChangeFront = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
@@ -56,7 +52,7 @@ export default function Form({ shopId, shopInfo }: Props) {
             setIdFrontUpload(true);
         }
     };
-
+        
     const handleChangeRear = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
@@ -65,21 +61,21 @@ export default function Form({ shopId, shopInfo }: Props) {
             setIdRearUpload(true);
         }
     };
-
+        
     const handlePermitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
-
+        
         const files = Array.from(e.target.files);
-
+        
         const newImages = files.slice(0, 10 - permitImages.length).map(f => ({
             file: f,
             preview: URL.createObjectURL(f),
             uploaded: true,
         }));
-
+        
         setPermitImages(prev => [...prev, ...newImages]);
     };
-
+        
     const removePermitImage = (index: number) => {
         setPermitImages(prev => prev.filter((_, i) => i !== index));
     };
@@ -143,13 +139,13 @@ export default function Form({ shopId, shopInfo }: Props) {
 
         try {
             const accessToken = await refreshToken();
-        
+                
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/3/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/id-image-upload/${shopEditId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -166,7 +162,7 @@ export default function Form({ shopId, shopInfo }: Props) {
                 return;
             }
 
-            if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
+            if (data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
                     method: "PUT",
                     headers: {
@@ -181,7 +177,7 @@ export default function Form({ shopId, shopInfo }: Props) {
                 }
             }
 
-            if (idRearUpload && data.rearSignedUrl && idCardRear instanceof File) {
+            if (data.rearSignedUrl && idCardRear instanceof File) {
                 const uploadFrontRes = await fetch(data.rearSignedUrl, {
                     method: "PUT",
                     headers: {
@@ -218,18 +214,14 @@ export default function Form({ shopId, shopInfo }: Props) {
                 }
             }
 
-            router.push(`/shop-signup/step4/${shopId}`);
+            router.push("/edit/shop/com-free/complete");
         } catch (err) {
             console.error(err);
         }
     };
 
-    const backSubmit = () => router.push(`/shop-signup/step2/${shopId}`);
-
     return (
-        <SSUI title="代表者身分証・許認可証登録">
-            <StepBar />
-
+        <EditUI title="代表者身分証・許認可証登録">
             <h2 className={styles.subtitle}>代表者身分証</h2>
 
             <div className={styles.imageInputDiv}>
@@ -325,7 +317,7 @@ export default function Form({ shopId, shopInfo }: Props) {
                 </section>
             )}
 
-            <ButtonDiv nextClick={submit} backClick={backSubmit} />
-        </SSUI>
+            <Button onClick={submit}>登録する</Button>
+        </EditUI>
     );
 };

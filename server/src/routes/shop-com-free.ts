@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { authenticateToken } from "../middleware/index.js";
 import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption, Notification } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -122,6 +122,117 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
         });
 
         res.status(200).json({ message: "更新しました。", updated: updateData });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const shopEditId = req.params.id;
+    const {
+        frontFileName,
+        frontFileType,
+        rearFileName,
+        rearFileType,
+        idFrontUpload,
+        idRearUpload,
+        permitFiles,
+    } = req.body;
+
+    if (!frontFileName || !frontFileType || !rearFileName || !rearFileType) {
+        res.status(400).json({ message: "身分証がアップロードされていない、または不正なファイルです。" });
+        return;
+    }
+
+    try {
+        const shopEdit = await ShopInfoEdit.findByPk(shopEditId, {
+            include: [
+                { model: ShopInfo },
+            ],
+        });
+        if (!shopEdit) {
+            res.status(404).json({ message: "ショップデータが見つかりません。" });
+            return;
+        }
+
+        const shopId = shopEdit.shopInfo.id;
+
+        // 身分証アップロード
+        let frontSignedUrl: string | null = null;
+        let rearSignedUrl: string | null = null;
+        let frontUrl: string | null = null;
+        let rearUrl: string | null = null;
+        
+        if (frontFileName && idFrontUpload) {
+            const frontKey = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
+        
+            const frontCommand = new PutObjectCommand({
+                Bucket: bucket,
+                Key: frontKey,
+                ContentType: frontFileType,
+            });
+        
+            frontSignedUrl = await getSignedUrl(s3, frontCommand, { expiresIn: 60 });
+        
+            frontUrl = `${s3Domain}/${frontKey}`;
+        }
+        
+        if (rearFileName && idRearUpload) {
+            const rearKey = `idcard/shop/rear/${shopId}/${now}_${rearFileName}`;
+        
+            const rearCommand = new PutObjectCommand({
+                Bucket: bucket,
+                Key: rearKey,
+                ContentType: rearFileType,
+            });
+        
+            rearSignedUrl = await getSignedUrl(s3, rearCommand, { expiresIn: 60 });
+        
+            rearUrl = `${s3Domain}/${rearKey}`;
+        }
+
+        // 許認可証アップロード
+        let permitSignedUrls: string[] = [];
+        let permitUrls: string[] = [];
+        
+        if (Array.isArray(permitFiles) && permitFiles.length > 0) {
+            for (const file of permitFiles) {
+                const { fileName, fileType } = file;
+        
+                if (!fileName) continue;
+                    
+                const permitKey = `permit/${shopId}/${now}_${fileName}`;
+        
+                const permitCommand = new PutObjectCommand({
+                    Bucket: bucket,
+                    Key: permitKey,
+                    ContentType: fileType,
+                });
+        
+                const signedUrl = await getSignedUrl(s3, permitCommand, { expiresIn: 60 });
+        
+                permitSignedUrls.push(signedUrl);
+                permitUrls.push(`${s3Domain}/${permitKey}`);
+            }
+        }
+
+        // shopInfo更新
+        await shopEdit.update({
+            id_card_front: frontUrl,
+            id_card_rear: rearUrl,
+            permit_url: permitUrls,
+        });
+
+        res.status(200).json({
+            message: "身分証・許認可証のDB登録が完了しました。",
+            frontSignedUrl,
+            frontUrl,
+            rearSignedUrl,
+            rearUrl,
+            permitSignedUrls,
+            permitUrls,
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

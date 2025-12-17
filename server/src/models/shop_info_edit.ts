@@ -24,6 +24,7 @@ export class ShopInfoEdit extends Model {
     declare user_id: number | null;
     declare shop_info_id: number | null;
     declare com_or_free_id: number | null;
+    declare permit_url: string[] | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -80,6 +81,16 @@ ShopInfoEdit.init(
         user_id: DataTypes.INTEGER,
         shop_info_id: DataTypes.INTEGER,
         com_or_free_id: DataTypes.INTEGER,
+        permit_url: {
+            type: DataTypes.ARRAY(DataTypes.TEXT),
+            validate: {
+                maxArrayLength(value: any[]) {
+                    if (value && value.length > 10) {
+                        throw new Error("画像は最大10枚までです。");
+                    }
+                }
+            }
+        },
     },
     {
         sequelize,
