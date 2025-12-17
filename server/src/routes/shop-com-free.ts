@@ -159,7 +159,7 @@ router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res
             return;
         }
 
-        const shopId = shopEdit.shopInfo.id;
+        const shopId = shopEdit.ShopInfo.id;
 
         // 身分証アップロード
         let frontSignedUrl: string | null = null;
