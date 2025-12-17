@@ -130,6 +130,7 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
 
 router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopEditId = req.params.id;
+    const userId = req.user!.id;
     const {
         frontFileName,
         frontFileType,
@@ -144,6 +145,8 @@ router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res
         res.status(400).json({ message: "身分証がアップロードされていない、または不正なファイルです。" });
         return;
     }
+
+    const t = await sequelize.transaction();
 
     try {
         const shopEdit = await ShopInfoEdit.findByPk(shopEditId, {
@@ -222,7 +225,17 @@ router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res
             id_card_front: frontUrl,
             id_card_rear: rearUrl,
             permit_url: permitUrls,
-        });
+        }, { transaction: t });
+
+        // メール送信機能
+
+        // お知らせ
+        await Notification.create({
+            read_user_id: userId,
+            message: "事業形態の変更が完了しました。審査完了まで1~2週間ほどお時間を頂戴しておりますため、しばらくお待ちください。",
+        }, { transaction: t });
+
+        await t.commit();
 
         res.status(200).json({
             message: "身分証・許認可証のDB登録が完了しました。",
@@ -234,6 +247,7 @@ router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res
             permitUrls,
         });
     } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
