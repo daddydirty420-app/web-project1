@@ -5,7 +5,7 @@ import fs from "fs";
 import { exec } from "child_process";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 
@@ -15,10 +15,14 @@ interface AuthenticatedRequest extends Request {
 }
 
 const router = Router();
+
 const upload = multer({ dest: "tmp/ " });
 
+const bucket = process.env.AWS_BUCKET;
+const region = process.env.AWS_REGION;
+const s3Domain = `https://${bucket}.s3.${region}.amazonaws.com`;
 const s3 = new S3Client({
-    region: process.env.AWS_REGION || "ap-northeast-1",
+    region: region || "ap-northeast-1",
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
@@ -47,14 +51,14 @@ router.patch('/upload-video/:id', upload.single('video'), authenticateToken, asy
         }
 
         const uploadParams = {
-            Bucket: 'flexoutdoor',
+            Bucket: bucket,
             Key: `video/original/${currentUserId}/${timestamp}_${fileName}`,
             Body: fs.createReadStream(originalFilePath),
             ContentType: req.file.mimetype,
         };
         await s3.send(new PutObjectCommand(uploadParams));
 
-        const originalUrl = `https://flexoutdoor.s3.ap-northeast-1.amazonaws.com/video/original/${currentUserId}/${timestamp}/${fileName}`;
+        const originalUrl = `${s3Domain}/video/original/${currentUserId}/${timestamp}/${fileName}`;
 
         await videoData.update({
             status: 'processing',
@@ -76,7 +80,7 @@ router.patch('/upload-video/:id', upload.single('video'), authenticateToken, asy
             for (const f of files) {
                 const filePath = `${convertedDir}/${f}`;
                 const uploadParams = {
-                    Bucket: 'flexoutdoor',
+                    Bucket: bucket,
                     Key: `videos/converted/${currentUserId}/${f}`,
                     Body: fs.createReadStream(filePath),
                     ContentType: f.endsWith('.ts') ? 'video/MP2P' : 'application/octet-stream',
@@ -84,7 +88,7 @@ router.patch('/upload-video/:id', upload.single('video'), authenticateToken, asy
                 await s3.send(new PutObjectCommand(uploadParams));
             }
 
-            const convertedUrl = `https://flexoutdoor.s3.ap-northeast-1.amazonaws.com/video/converted/${currentUserId}/${videoId}/index.m3u8`;
+            const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/index.m3u8`;
             await videoData.update({
                 status: 'done',
                 converted_url: convertedUrl,
@@ -98,6 +102,37 @@ router.patch('/upload-video/:id', upload.single('video'), authenticateToken, asy
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.post("/new-item-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+
+    const t = await sequelize.transaction();
+
+    try {
+        const item = await Item.create({
+            seller_id: userId,
+        }, { transaction: t });
+
+        const itemId = item.id;
+
+        await Video.create({
+            user_id: userId,
+            item_id: itemId,
+        }, { transaction: t });
+
+        await Sale.create({
+            item_id: itemId,
+        }, { transaction: t });
+
+        await t.commit();
+
+        res.status(200).json({ itemId });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
 });
 

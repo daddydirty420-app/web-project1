@@ -1,12 +1,10 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption, Notification } from "../models/index.js";
+import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, BankAccount, AccountTypeOption, Notification } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import fetchAddressFromZip from "../services/addressService.js";
 import sequelize from "../db.js";
-import { literal, Op } from "sequelize";
 
 const router = Router();
 
