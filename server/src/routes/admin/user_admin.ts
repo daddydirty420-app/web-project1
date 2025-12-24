@@ -156,7 +156,7 @@ router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Resp
       attributes: ['id', 'user_name', 'birthday', 'phone_number', 'verify_request', 'verified', 'email'],
       where: {
         verify_request: true,
-        verified: false
+        verified: false,
       },
       order: [['updatedAt', 'ASC']],
       include: [
@@ -167,27 +167,23 @@ router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Resp
             {
               model: TodouhukenOption,
               as: 'AddressTodouhuken',
-              attributes: ['id', 'name']
-            }
-          ]
+            },
+          ],
         },
         {
           model: Name,
-          attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
+          attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
         },
-        {
-          model: GenderOption,
-          attributes: ['id', 'name']
-        },
+        { model: GenderOption },
         {
           model: IdCard,
-          attributes: ['id', 'id_card_front', 'id_card_rear']
-        }
-      ]
+          attributes: ['id', 'id_card_front', 'id_card_rear'],
+        },
+      ],
     });
 
     if (!userList) {
-      res.status(404).json({ error: 'データが見つかりません。' });
+      res.status(404).json({ message: 'データが見つかりません。' });
       return;
     }
 
@@ -209,23 +205,23 @@ router.get('/penalty-list', authenticateToken, isAdmin, async (req: Request, res
       attributes: ['id', 'user_name', 'profile_image', 'email', 'penalty_points', 'verified'],
       order: [
         ['penalty_points', 'DESC'],
-        ['createdAt', 'ASC']
+        ['createdAt', 'ASC'],
       ],
       limit: 30,
       include: [
         {
           model: ShopInfo,
-          attributes: ['id']
-        }
-      ]
+          attributes: ['id'],
+        },
+      ],
     });
 
     if (!userList) {
-      res.status(404).json({ error: 'データが見つかりません。' });
+      res.status(404).json({ message: 'データが見つかりません。' });
       return;
     }
 
-    res.json(userList);
+    res.json({ userList });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -239,28 +235,26 @@ router.get('/penalty-search-list', authenticateToken, isAdmin, async (req: Reque
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'profile_image', 'email', 'penalty_points', 'verified'],
       where: {
-        user_name: {
-          [Op.iLike]: `%${keyword}%`
-        }
+        user_name: { [Op.iLike]: `%${keyword}%` },
       },
       order: [
         ['penalty_points', 'DESC'],
-        ['createdAt', 'ASC']
+        ['createdAt', 'ASC'],
       ],
       include: [
         {
           model: ShopInfo,
-          attributes: ['id']
-        }
-      ]
+          attributes: ['id'],
+        },
+      ],
     });
 
     if (!userList) {
-      res.status(404).json({ error: 'データが見つかりません。' });
+      res.status(404).json({ message: 'データが見つかりません。' });
       return;
     }
 
-    res.json(userList);
+    res.json({ userList });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -274,14 +268,14 @@ router.get('/points-give-list', authenticateToken, isAdmin, async (req: Request,
       include: [
         {
           model: Item,
-          attributes: [],
-          required: true
-        }
+          attributes: ["id"],
+          required: true,
+        },
       ],
       group: ['User.id'],
       order: [
         [literal('item_count'), 'DESC'],
-        ['createdAt', 'ASC']
+        ['createdAt', 'ASC'],
       ],
     });
 
@@ -315,7 +309,7 @@ router.get('/profile/:id', authenticateToken, isAdmin, async (req: Request, res:
       return;
     }
 
-    res.json(user);
+    res.json({ user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -331,8 +325,8 @@ router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, 
       include: [
         {
           model: ShopInfo,
-          attributes: ['id']
-        }
+          attributes: ['id'],
+        },
       ],
     });
 
@@ -341,7 +335,7 @@ router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, 
       return;
     }
 
-    res.json(userList);
+    res.json({ userList });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -355,26 +349,24 @@ router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res:
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'email', 'profile_image', 'verified', 'early_seller', 'createdAt'],
       where: {
-        user_name: {
-          [Op.iLike]: `%${keyword}%`
-        }
+        user_name: { [Op.iLike]: `%${keyword}%` },
       },
       order: [['createdAt', 'DESC']],
       limit: 30,
       include: [
         {
           model: ShopInfo,
-          attributes: ['id']
-        }
+          attributes: ['id'],
+        },
       ],
     });
 
     if (!userList) {
-      res.status(404).json({ error: 'データが見つかりません。' });
+      res.status(404).json({ message: 'データが見つかりません。' });
       return;
     }
 
-    res.json(userList);
+    res.json({ userList });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });

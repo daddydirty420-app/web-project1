@@ -278,10 +278,7 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response): Pr
     const data = await User.findByPk(req.user!.id, {
       attributes: ['id', 'birthday', 'phone_number', 'gender_id'],
       include: [
-        {
-          model: GenderOption,
-          attributes: ['id', 'name']
-        },
+        { model: GenderOption },
         {
           model: Address,
           attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
@@ -289,17 +286,16 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response): Pr
             {
               model: TodouhukenOption,
               as: 'AddressTodouhuken',
-              attributes: ['id', 'name']
-            }
-          ]
+            },
+          ],
         },
         {
           model: Name,
-          attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana']
+          attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
         },
         {
           model: IdCard,
-          attributes: ['id', 'id_card_front', 'id_card_rear']
+          attributes: ['id', 'id_card_front', 'id_card_rear'],
         }
       ]
     });
@@ -342,7 +338,7 @@ router.get('/phone-number', authenticateToken, async (req: Request, res: Respons
 router.get('/profile-edit', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const userData = await User.findByPk(req.user!.id, {
-      attributes: ['id', 'user_name', 'user_introduction', 'profile_image']
+      attributes: ['id', 'user_name', 'user_introduction', 'profile_image'],
     });
 
     if (!userData) {

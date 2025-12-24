@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ColorSize, SizeOption, SizeWearOption, SizeShoesOption, Category, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs } from "../models/index.js";
+import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
 import itemCopyUpload from "../services/itemCopyUpload.js";
 
@@ -106,6 +106,8 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         return;
     }
 
+    const t = await sequelize.transaction();
+
     try {
         const user = await User.findByPk(req.user!.id);
         if (!user) {
@@ -115,11 +117,27 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         
         const item = await Item.findByPk(itemId, {
             include: [
+                { model: ItemShippingProfile },
                 {
-                    model: Delivery,
-                    as: 'ParentDelivery'
-                }
-            ]
+                    model: User,
+                    include: [
+                        {
+                            model: Address,
+                            required: false,
+                            include: [
+                                {
+                                    model: TodouhukenOption,
+                                    as: "AddressTodouhuken",
+                                },
+                            ],
+                        },
+                        {
+                            model: Name,
+                            required: false,
+                        },
+                    ],
+                },
+            ],
         });
         if (!item) {
             res.status(404).json({ message: '商品が見つかりません。' });
@@ -128,15 +146,18 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
 
         const newDelivery = await Delivery.create({
             buyer_phone_number: user.phone_number,
-            shipping_day_id: item.ParentDelivery.shipping_day_id,
-            shipping_service_id: item.ParentDelivery.shipping_service_id,
+            shipping_day_id: item.ItemShippingProfile.shipping_day_id,
+            shipping_service_id: item.ItemShippingProfile.shipping_service_id,
             delivery_status_id: 1,
-            shipping_place_id: item.ParentDelivery.shipping_place_id,
-            parent_data_id: item.ParentDelivery.id,
+            shipping_place_id: item.ItemShippingProfile.shipping_place_id,
             item_id: itemId,
-            seller_user_id: item.seller_id,
-            buyer_user_id: user.id,
-        });
+            shippinf_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
+            shipping_from_postcode: item.User.Address?.post_number ?? "",
+            shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
+            shipping_from_address_line1: `${item.User.Address?.shikutyouson ?? ""} ${item.User.Address?.banchi ?? ""}`,
+            shipping_from_address_line2: item.User.Address?.building ?? "",
+            shipping_from_phone: item.user.phone_number,
+        }, { transaction: t });
 
         const userAddress = await Address.findOne({
             where: { user_id: user.id },
@@ -144,7 +165,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
 
         const newAddress = await Address.create({
             delivery_id: newDelivery.id,
-        });
+        }, { transaction: t });
 
         if (userAddress) {
             await newAddress.update({
@@ -153,7 +174,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
                 shikutyouson: userAddress.shikutyouson,
                 banchi: userAddress.banchi,
                 building: userAddress.building,
-            });
+            }, { transaction: t });
         }
 
         const userName = await Name.findOne({
@@ -162,7 +183,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
 
         const newName = await Name.create({
             delivery_id: newDelivery.id,
-        });
+        }, { transaction: t });
 
         if (userName) {
             await newName.update({
@@ -170,11 +191,14 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
                 mei: userName.mei,
                 sei_kana: userName.sei_kana,
                 mei_kana: userName.mei_kana,
-            });
+            }, { transaction: t });
         }
+
+        await t.commit();
 
         res.status(200).json({ deliveryId: newDelivery.id });
     } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
     }
@@ -204,9 +228,6 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
 
     const deliveryNow = await Delivery.findAll({
         where: {
-            item_id: itemId,
-            seller_user_id: userId,
-            parent_data: false,
             cancel: false,
             buy_date: { [Op.not]: null },
             delivery_status_id: { [Op.ne]: 4 },
@@ -226,7 +247,8 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
             include: [
                 { model: Sale },
                 { model: Video },
-            ]
+                { model: ItemShippingProfile },
+            ],
         });
 
         await Comment.destroy({ where: { item_id: itemId }, transaction: t });
@@ -234,10 +256,10 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
         await Cart.destroy({ where: { item_id: itemId }, transaction: t });
 
         const updateItemData = {
-            uploaded_date: null,
+            uploaded_at: null,
             sort_number: 0,
-            public: false,
-            deleted: true,
+            sort_buzz_number: 0,
+            status: "deleted",
             deleted_at: now,
             price: item.price,
         };
@@ -277,14 +299,7 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
 router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
-    const item = await Item.findByPk(itemId, {
-        include: [
-            {
-                model: Delivery,
-                as: "ParentDelivery",
-            },
-        ],
-    });
+    const item = await Item.findByPk(itemId);
     if (!item) {
         res.status(404).json({ message: "削除する商品データが見つかりません。" });
         return;
@@ -299,10 +314,6 @@ router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res
             delete_by_admin: false,
             delete_reason: "自主削除",
         }, { transaction: t });
-
-        if (item.ParentDelivery) {
-            await item.ParentDelivery.destroy({ transaction: t });
-        }
 
         await item.destroy({ transaction: t });
 
@@ -321,25 +332,29 @@ router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: R
 
     const now = Date.now();
 
+    const t = await sequelize.transaction();
+
     try {
         const item = await Item.findByPk(itemId);
 
         await item.update({
-            uploaded_date: now,
-            public: true,
-            deleted: false,
+            uploaded_at: now,
+            status: "active",
             deleted_at: null,
-        });
+        }, { transaction: t });
 
         await Notification.create({
             read_user_id: userId,
             url: `/item/${itemId}`,
             message_image: item.first_image_url,
             message: `「${item.name}」を復元しました。こちらから復元した商品を確認できます。`
-        });
+        }, { transaction: t });
+
+        await t.commit();
 
         res.status(200).json({ message: "商品を復元しました。" });
     } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
@@ -352,9 +367,9 @@ router.get('/metadata/:id', async (req: Request, res: Response): Promise<void> =
             include: [
                 {
                     model: Video,
-                    attributes: ['title', 'summary']
-                }
-            ]
+                    attributes: ['title', 'summary'],
+                },
+            ],
         });
 
         if (!item) {
@@ -362,7 +377,7 @@ router.get('/metadata/:id', async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        res.json(item);
+        res.json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -376,10 +391,10 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
     try {
         const item = await Item.findByPk(itemId, {
             attributes: {
-                exclude: ['sort_number', 'views_count', 'views_24h', 'checked', 'createdAt', 'search_text']
+                exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text']
             },
             include: [
-                { model: ItemConditionOption, attributes: ['name'] },
+                { model: ItemConditionOption },
                 {
                     model: Video,
                     attributes: ['id', 'thumbnail_url', 'title', 'summary', 'duration', 'play_count', 'original_url', 'converted_url'],
@@ -389,53 +404,38 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
                     attributes: ['id', 'before_price', 'discount_rate', 'discount_amount', 'sale_flag'],
                 },
                 {
-                    model: Delivery,
-                    as: 'ParentDelivery',
-                    attributes: ['id', 'parent_data'],
-                    where: { parent_data: true },
-                    required: false,
+                    model: ItemShippingProfile,
                     include: [
-                        {
-                            model: ShippingDayOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: ShippingServiceOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: TodouhukenOption,
-                            as: 'DeliveryTodouhuken',
-                            attributes: ['name']
-                        }
+                        { model: ShippingDayOption },
+                        { model: ShippingServiceOption },
+                        { model: TodouhukenOption },
                     ],
                 },
                 {
-                    model: ColorSize,
-                    attributes: ['kind', 'color', 'size', 'image_url', 'stock_all', 'stock_now'],
+                    model: Categories,
+                    attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                    as: "children",
                     include: [
                         {
-                            model: SizeOption,
-                            attributes: ['name']
+                            model: Categories,
+                            attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                            as: "parent",
+                            required: false,
                         },
-                        {
-                            model: SizeShoesOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: SizeWearOption,
-                            attributes: ['name']
-                        }
-                    ]
+                    ],
                 },
-            ]
+                {
+                    model: Brands,
+                    required: false,
+                },
+            ],
         });
 
         if (!item
-            || item.public
-            || (page === "draft" && (!item.draft || item.deleted))
-            || (page === "confirm" && item.deleted)
-            || (page === "deleted" && !item.deleted)
+            || item.status === "acrive"
+            || (page === "draft" && !(item.status === "draft"))
+            || (page === "confirm" && item.status === "deleted")
+            || (page === "deleted" && !(item.status === "deleted"))
         ) {
             res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
@@ -455,18 +455,18 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
     try {
         const item = await Item.findByPk(itemId, {
             attributes: {
-                exclude: ['sort_number', 'views_count', 'views_24h', 'checked', 'createdAt', 'search_text']
+                exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text'],
             },
             include: [
-                { model: ItemConditionOption, attributes: ['name'] },
+                { model: ItemConditionOption },
                 {
                     model: User,
                     attributes: ['id', 'user_name', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
                     include: [
                         {
                             model: ShopInfo,
-                            attributes: ['id']
-                        }
+                            attributes: ['id'],
+                        },
                     ],
                 },
                 {
@@ -478,57 +478,38 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                     attributes: ['id', 'before_price', 'discount_rate', 'discount_amount', 'sale_flag'],
                 },
                 {
-                    model: Delivery,
-                    as: 'ParentDelivery',
-                    attributes: ['id', 'parent_data'],
-                    where: { parent_data: true },
-                    required: false,
+                    model: ItemShippingProfile,
                     include: [
-                        {
-                            model: ShippingDayOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: ShippingServiceOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: TodouhukenOption,
-                            as: 'DeliveryTodouhuken',
-                            attributes: ['name']
-                        }
+                        { model: ShippingDayOption },
+                        { model: ShippingServiceOption },
+                        { model: TodouhukenOption },
                     ],
                 },
                 {
                     model: ReccomendItem,
-                    attributes: ['id']
+                    attributes: ['id'],
                 },
                 {
-                    model: ColorSize,
-                    attributes: ['kind', 'color', 'size', 'image_url', 'stock_all', 'stock_now'],
+                    model: Categories,
+                    attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                    as: "children",
                     include: [
                         {
-                            model: SizeOption,
-                            attributes: ['name']
+                            model: Categories,
+                            attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                            as: "parent",
+                            required: false,
                         },
-                        {
-                            model: SizeShoesOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: SizeWearOption,
-                            attributes: ['name']
-                        }
-                    ]
+                    ],
                 },
                 {
-                    model: Category,
-                    attributes: ['id', 'category1_id'],
+                    model: Brands,
+                    required: false,
                 },
-            ]
+            ],
         });
 
-        if (!item || !item.public || item.deleted || item.not_finish || item.draft) {
+        if (!item || !(item.status === "active" || item.status === "soldout")) {
             res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
@@ -551,25 +532,24 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             where: { item_id: itemId },
         });
 
+        const baseCategory = item.Categories;
+
+        const targetParentId = baseCategory.parent_id ?? baseCategory.id;
+
         const itemList = await Item.findAll({
             where: {
                 id: { [Op.ne]: itemId },
-                public: true,
-                sold_out: false,
-                deleted: false,
+                status: "active",
                 ...(currentUserId
                     ? (
                         sellerMe
                         ? { seller_id: currentUserId }
                         : { 
-                            '$Category.category1_id$': item.Category.category1_id,
                             seller_id: { [Op.ne]: currentUserId } 
                         }
                     )
-                    : {
-                        '$Category.category1_id$': item.Category.category1_id,
-                    }
-                )
+                    : ""
+                ),
             },
             order: [['sort_number', 'DESC']],
             limit: 20,
@@ -578,13 +558,20 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                 {
                     model: Sale,
                     attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
-                    required: false
+                    required: false,
                 },
                 {
-                    model: Category,
-                    attributes: ['id', 'category1_id'],
-                }
-            ]
+                    model: Categories,
+                    where: {
+                        [Op.or]: [
+                            { parent_id: targetParentId },
+                            { id: targetParentId },
+                        ],
+                    },
+                    attributes: ['id'],
+                    required: true,
+                },
+            ],
         });
 
         res.json({ item, sellerMe, goodCount, isGoodByMe, commentCount, itemList });

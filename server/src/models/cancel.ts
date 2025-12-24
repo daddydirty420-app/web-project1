@@ -45,7 +45,7 @@ Cancel.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
-        },
+        }, // false: 申請中, true: キャンセル確定
         cancel_fee_return_id: DataTypes.INTEGER,
         paid_info_id: {
             type: DataTypes.INTEGER,

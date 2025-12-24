@@ -1,87 +1,115 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, PaidInfo, PaymentMethodOption, Cancel, DeletedOrderSystems } from "../models/index.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, PaidInfo, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
 import sequelize from "../db.js";
 import moveToGlacier from "./moveToGlacier.js";
+import crypto from "crypto";
 
 async function adminDeleteItem(itemId: number, adminId: number, deleteReason: string) {
-    const item = await Item.findByPk(itemId, {
-        include: [
-            { model: Sale },
-            { model: Video },
-            {
-                model: Delivery,
-                as: "ParentDelivery",
-            }
-        ]
-    });
+    const today = new Date();
 
-    const sellerId = item.seller_id;
+    const twoWeeksLater = new Date(today);
+    twoWeeksLater.setDate(today.getDate() + 14);
+
+    const dayOfWeek = twoWeeksLater.getDay();
+    const dayUntilFriday = (5 - dayOfWeek + 7) % 7;
+    twoWeeksLater.setDate(twoWeeksLater.getDate() + dayUntilFriday);
 
     const t = await sequelize.transaction();
+
     try {
+        const item = await Item.findByPk(itemId, {
+            include: [
+                { model: Sale },
+                { model: Video },
+                { model: ItemShippingProfile },
+            ],
+        });
+
+        const sellerId = item.seller_id;
+
         await Notification.create({
             read_user_id: sellerId,
             url: `/profile/${sellerId}`,
-            message: `平素よりFLEX OUTDOORをご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
+            message: `平素より〇〇をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
         }, { transaction: t });
 
-        await item.ParentDelivery.destroy({ transaction: t });
-
-        const deliveryBefore = await Delivery.findAll({
-            attributes: ['id', 'paid_info_id'],
+        const paidInfos = await PaidInfo.findAll({
             where: {
                 item_id: item.id,
-                seller_user_id: item.seller_id,
-                parent_data: false,
-                cancel: false,
-                buy_date: { [Op.not]: null },
-                delivery_status_id: 1,
+                status: { [Op.notIn]: ["cancelled", "returned"] },
             },
             include: [
                 {
-                    model: PaidInfo,
-                    attributes: ['id', 'price', 'payment_method_id', 'item_count'],
-                    include: [
-                        {
-                            model: PaymentMethodOption,
-                        },
-                        {
-                            model: Cancel,
-                        }
-                    ]
-                }
-            ]
+                    model: Delivery,
+                    where: {
+                        cancel: false,
+                        delivery_status_id: 1,
+                    },
+                    required: true,
+                },
+            ],
         });
 
         const deleteOrder = [];
 
-        if (deliveryBefore && deliveryBefore.length > 0) {
-            for (const delivery of deliveryBefore) {
-                await delivery.update({
+        if (paidInfos && paidInfos.length > 0) {
+            for (const paidInfo of paidInfos) {
+                await paidInfo.update({
+                    status: "cancelled",
+                }, { transaction: t });
+
+                await paidInfo.Delivery.update({
                     cancel: true,
                 }, { transaction: t });
 
-                await delivery.PaidInfo.update({
-                    cancel: true,
-                }, { transaction: t });
-
-                await delivery.PaidInfo.Cancel.upsert({
+                await Cancel.upsert({
+                    paid_info_id: paidInfo.id,
                     cancel_reason: "商品削除",
-                    return_amount: delivery.PaidInfo.price,
-                    item_count: delivery.PaidInfo.item_count,
+                    return_amount: paidInfo.total_amount,
+                    item_count: paidInfo.item_count,
                     cancel_flag: true,
-                    paid_info_id: delivery.PaidInfo.id,
+                    cancel_fee_return_id: 2,
+                }, { transaction: t });
+
+                const buyer = await User.findByPk(paidInfo.buyer_user_id, {
+                    include: [
+                        { model: BankAccount },
+                    ],
+                });
+
+                const buyerHasAccount = !!buyer.BankAccount;
+
+                await Notification.create({
+                    read_user_id: buyer.id,
+                    message_image: item.first_image_url,
+                    message: `[重要] 取引中の商品「${item.name}」は利用規約違反により削除され、取引はキャンセル・返金となりました。` +
+                        `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
+                        `${buyerHasAccount ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。" : ""}`,
+                }, { transaction: t });
+
+                const transfarId = crypto.randomBytes(11).toString("hex");
+                    
+                await Transfar.create({
+                    all_money: paidInfo.total_amount,
+                    handling_charge: 0,
+                    trans_money: paidInfo.total_amount,
+                    trans_reason_id: 2,
+                    trans_schedule_date: twoWeeksLater,
+                    user_id: buyer.id,
+                    transfar_id: transfarId,
                 }, { transaction: t });
 
                 deleteOrder.push({
-                    paid_id: delivery.paid_info_id,
-                    delivery_id: delivery.id,
+                    paid_id: paidInfo.id,
+                    delivery_id: paidInfo.Delivery.id,
                     cancel_reason: "商品削除",
                     refund_status: "未返金",
-                    refund_method: delivery.PaidInfo.PaymentMethodOption.name,
-                    refund_amount: delivery.PaidInfo.price,
+                    refund_method: "口座振込",
+                    refund_amount: paidInfo.total_amount,
                     deleted_by: adminId,
                 });
+
+                // メール送信処理
             }
 
             await DeletedOrderSystems.bulkCreate(deleteOrder, { transaction: t });
@@ -118,7 +146,6 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
             thumbnail_url: newThumbnailUrl,
             video_title: item.Video ? item.Video.title : null,
             video_summary: item.Video ? item.Video.summary : null,
-            parent_delivery_id: item.ParentDelivery ? item.ParentDelivery.id : null,
             delete_reason: "強制削除",
             deleted_by: adminId,
         }, { transaction: t });
@@ -139,6 +166,6 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
         await t.rollback();
         throw err;
     }
-}
+};
 
 export default adminDeleteItem;

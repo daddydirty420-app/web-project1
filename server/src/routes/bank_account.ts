@@ -171,10 +171,7 @@ router.get('/myaccount', authenticateToken, async (req: Request, res: Response):
             attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
             where: { user_id: req.user!.id },
             include: [
-                {
-                    model: AccountTypeOption,
-                    attributes: ['id', 'name'],
-                },
+                { model: AccountTypeOption },
             ],
         });
 

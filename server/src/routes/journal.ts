@@ -22,10 +22,7 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
             },
             order: [['createdAt', 'DESC']],
             include: [
-                {
-                    model: JournalReasonOption,
-                    attributes: ['id', 'name']
-                }
+                { model: JournalReasonOption },
             ]
         });
          if (!dataList) {
@@ -33,7 +30,7 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

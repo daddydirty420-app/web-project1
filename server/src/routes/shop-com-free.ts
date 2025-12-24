@@ -114,12 +114,13 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
 
     try {
         await ShopInfoEdit.update(updateData, {
-            where: {
-                id: shopEditId,
-            },
+            where: { id: shopEditId },
         });
 
-        res.status(200).json({ message: "更新しました。", updated: updateData });
+        res.status(200).json({
+            message: "更新しました。",
+            updated: updateData
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });

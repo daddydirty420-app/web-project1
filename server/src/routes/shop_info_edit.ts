@@ -423,8 +423,8 @@ router.get("/rep-name/:id", authenticateToken, async (req: Request, res: Respons
                     model: Name,
                     as: "RepresentativeName",
                     attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                }
-            ]
+                },
+            ],
         });
 
         if (!shop) {
@@ -476,8 +476,8 @@ router.get("/con-name/:id", authenticateToken, async (req: Request, res: Respons
                     model: Name,
                     as: "ContactName",
                     attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                }
-            ]
+                },
+            ],
         });
 
         if (!shop) {
@@ -540,10 +540,7 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
         const dataList = await ShopInfoEdit.findAll({
             order: [['createdAt', 'ASC']],
             include: [
-                {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ComOrFreeOption },
                 {
                     model: Address,
                     attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
@@ -551,23 +548,22 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
-                }
-            ]
+                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                },
+            ],
         });
 
         if (!dataList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

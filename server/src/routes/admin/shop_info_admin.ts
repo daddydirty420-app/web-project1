@@ -21,9 +21,9 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
                     [Op.or]: [
                         { conpany_name: { [Op.iLike]: `%${keyword}%`} },
                         { shop_name: { [Op.iLike]: `%${keyword}%`} },
-                    ]
-                }
-            ]
+                    ],
+                },
+            ],
         } as WhereOptions)
         : (base as WhereOptions);
 
@@ -32,10 +32,7 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
             where: whereCondition,
             order: [['createdAt', 'DESC']],
             include: [
-                {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ComOrFreeOption },
                 {
                     model: Address,
                     attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
@@ -43,13 +40,12 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
+                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
                 }
             ]
         });
@@ -59,7 +55,7 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -72,14 +68,11 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
             attributes: ['id', 'company_name', 'id_card_front', 'id_card_rear'],
             where: {
                 request_all: true,
-                verified: false
+                verified: false,
             },
             order: [['createdAt', 'ASC']],
             include: [
-                {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ComOrFreeOption },
                 {
                     model: Address,
                     attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
@@ -87,15 +80,14 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
-                }
-            ]
+                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                },
+            ],
         });
 
         if (!dataList) {
@@ -109,10 +101,8 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
             where: {
                 request_all: true,
                 verified: false,
-                createdAt: {
-                    [Op.lte]: twoDaysAgo
-                }
-            }
+                createdAt: { [Op.lte]: twoDaysAgo },
+            },
         });
 
         res.json({
@@ -138,7 +128,7 @@ router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, 
             include: [
                 {
                     model: BankAccount,
-                    attributes: ['id']
+                    attributes: ['id'],
                 },
                 {
                     model: User,
@@ -149,20 +139,20 @@ router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, 
                             attributes: ['id'],
                             where: {
                                 createdAt: {
-                                    [Op.between]: [startOfLastMonth, endOfLastMonth]
-                                }
+                                    [Op.between]: [startOfLastMonth, endOfLastMonth],
+                                },
                             },
-                            required: false
-                        }
-                    ]
-                }
+                            required: false,
+                        },
+                    ],
+                },
             ],
             group: [
                 'ShopInfo.id',
                 'BankAccount.id',
-                'User.id'
+                'User.id',
             ],
-            subQuery: false
+            subQuery: false,
         });
 
         if (!dataList) {
@@ -191,10 +181,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
     try {
         const dataList = await ShopInfo.findByPk(req.params.id, {
             include: [
-                {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ComOrFreeOption },
                 {
                     model: Address,
                     attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
@@ -202,25 +189,21 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
+                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
                 },
                 {
                     model: BankAccount,
                     attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
                     include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: AccountTypeOption },
+                    ],
+                },
+            ],
         });
 
         if (!dataList) {
@@ -228,7 +211,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

@@ -15,14 +15,14 @@ router.get('/my-notification', authenticateToken, async (req: Request, res: Resp
         });
 
         if (!notificationList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
         const unreadCount = await Notification.count({
             where: {
                 read_user_id: currentUserId,
-                read_flag: false
+                read_flag: false,
             }
         });
 
@@ -41,8 +41,8 @@ router.get('/unread-count', authenticateToken, async (req: Request, res: Respons
         const unreadCount = await Notification.count({
             where: {
                 read_user_id: req.user!.id,
-                read_flag: false
-            }
+                read_flag: false,
+            },
         });
 
         res.json({ unreadCount });

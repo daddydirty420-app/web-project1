@@ -1,14 +1,11 @@
 import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
-import Item from "./item.js";
-import User from "./user.js";
 import ShippingDayOption from "./shipping_day_option.js";
 import ShippingServiceOption from "./shipping_service_option.js";
 import DeliveryStatusOption from "./delivery_status_option.js";
 import TodouhukenOption from "./todouhuken_option.js";
 import PaidInfo from "./paid_info.js";
-import ColorSize from "./color_size.js";
 import Address from "./address.js";
 import Name from "./name.js";
 
@@ -20,19 +17,21 @@ export class Delivery extends Model {
     declare shipping_service_id: number | null;
     declare delivery_status_id: number | null;
     declare shipping_place_id: number | null;
-    declare parent_data_id: number | null;
     declare paid_info_id: number | null;
-    declare item_id: number | null;
-    declare color_size_id: number | null;
-    declare seller_user_id: number | null;
-    declare buyer_user_id: number | null;
-    declare buy_date: Date | null;
-    declare shipping_date: Date | null;
-    declare arrived_date: Date | null;
+    declare shipping_at: Date | null;
+    declare arrived_at: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
     declare arrive_specified_date: Date | null;
-    declare parent_data: boolean | null;
+    declare shipping_service_free_text: string | null; // 自由入力配送方法（その他の場合のみ）
+    declare shipping_from_name: string | null; // 出品者氏名
+    declare shipping_from_postcode: string | null; // 出品者郵便番号
+    declare shipping_from_prefecture: string | null; // 出品者都道府県
+    declare shipping_from_address_line1: string | null; // 出品者市区町村・丁目・番地
+    declare shipping_from_address_line2: string | null; // 出品者住所（建物名・部屋番号・補足）
+    declare shipping_from_phone: string | null; // 出品者電話番号
+    declare tracking_number: string | null; // 追跡番号（手入力）
+    declare shipping_memo: string | null; // 配送メモ（自由入力）
 
     static associate() {
         Delivery.belongsTo(ShippingDayOption, {
@@ -46,46 +45,24 @@ export class Delivery extends Model {
         });
         Delivery.belongsTo(TodouhukenOption, {
             foreignKey: "shipping_place_id",
-            as: "DeliveryTodouhuken",
-        });
-        Delivery.belongsTo(Delivery, {
-            foreignKey: "parent_data_id",
         });
         Delivery.belongsTo(PaidInfo, {
             foreignKey: "paid_info_id",
         });
-        Delivery.belongsTo(Item, {
-            foreignKey: "item_id",
-        });
-        Delivery.belongsTo(ColorSize, {
-            foreignKey: "color_size_id",
-        });
-        Delivery.belongsTo(User, {
-            foreignKey: "seller_user_id",
-            as: "Seller",
-        });
-        Delivery.belongsTo(User, {
-            foreignKey: "buyer_user_id",
-            as: "Buyer",
-        });
         Delivery.hasOne(Address, {
             foreignKey: "delivery_id",
-        });
+        }); // buyer
         Delivery.hasOne(Name, {
             foreignKey: "delivery_id",
-        });
-    }
+        }); // buyer
+    };
 
     static associations: {
         ShippingDayOption: Association<Delivery, ShippingDayOption>;
         ShippingServiceOption: Association<Delivery, ShippingServiceOption>;
         DeliveryStatusOption: Association<Delivery, DeliveryStatusOption>;
         TodouhukenOption: Association<Delivery, TodouhukenOption>;
-        Delivery: Association<Delivery, Delivery>;
         PaidInfo: Association<Delivery, PaidInfo>;
-        Item: Association<Delivery, Item>;
-        ColorSize: Association<Delivery, ColorSize>;
-        User: Association<Delivery, User>;
         Address: Association<Delivery, Address>;
         Name: Association<Delivery, Name>;
     };
@@ -108,23 +85,22 @@ Delivery.init(
         shipping_service_id: DataTypes.INTEGER,
         delivery_status_id: DataTypes.INTEGER,
         shipping_place_id: DataTypes.INTEGER,
-        parent_data_id: DataTypes.INTEGER,
         paid_info_id: {
             type: DataTypes.INTEGER,
             unique: true,
         },
-        item_id: DataTypes.INTEGER,
-        color_size_id: DataTypes.INTEGER,
-        seller_user_id: DataTypes.INTEGER,
-        buyer_user_id: DataTypes.INTEGER,
-        buy_date: DataTypes.DATE,
-        shipping_date: DataTypes.DATE,
-        arrived_date: DataTypes.DATE,
+        shipping_at: DataTypes.DATE,
+        arrived_at: DataTypes.DATE,
         arrive_specified_date: DataTypes.DATE,
-        parent_data: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        },
+        shipping_service_free_text: DataTypes.STRING(255),
+        shipping_from_name: DataTypes.STRING(255),
+        shipping_from_postcode: DataTypes.STRING(255),
+        shipping_from_prefecture: DataTypes.STRING(255),
+        shipping_from_address_line1: DataTypes.STRING(255),
+        shipping_from_address_line2: DataTypes.STRING(255),
+        shipping_from_phone: DataTypes.STRING(255),
+        tracking_number: DataTypes.STRING(255),
+        shipping_memo: DataTypes.TEXT,
     },
     {
         sequelize,

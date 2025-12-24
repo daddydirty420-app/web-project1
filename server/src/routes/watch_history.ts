@@ -15,7 +15,7 @@ router.get('/watch-item-list', authenticateToken, async (req: Request, res: Resp
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'price', 'sold_out', 'first_image_url'],
+                    attributes: ['id', 'name', 'price', "status", 'first_image_url'],
                     where: { public: true },
                     required: false,
                     include: [
@@ -23,10 +23,10 @@ router.get('/watch-item-list', authenticateToken, async (req: Request, res: Resp
                             model: Sale,
                             attributes: ['discount_amount', 'discount_rate', 'sale_flag'],
                             required: false
-                        }
-                    ]
-                }
-            ]
+                        },
+                    ],
+                },
+            ],
         });
 
         if (!data) {
@@ -34,7 +34,7 @@ router.get('/watch-item-list', authenticateToken, async (req: Request, res: Resp
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

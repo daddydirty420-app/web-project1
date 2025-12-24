@@ -12,9 +12,9 @@ router.get('/receipt/:id', authenticateToken, async (req: Request, res: Response
             include: [
                 {
                     model: User,
-                    attributes: ['user_name']
-                }
-            ]
+                    attributes: ['user_name'],
+                },
+            ],
         });
 
         if (!data) {
@@ -22,7 +22,7 @@ router.get('/receipt/:id', authenticateToken, async (req: Request, res: Response
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -42,7 +42,7 @@ router.get('/paid-history', authenticateToken, async (req: Request, res: Respons
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

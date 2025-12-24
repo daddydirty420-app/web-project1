@@ -12,11 +12,8 @@ router.get('/admin/pay-list', authenticateToken, isAdmin, async (req: Request, r
         const startOfLastMonth = startOfMonth(subMonths(new Date(), 1));
         const endOfLastMonth = endOfMonth(subMonths(new Date(), 1));
 
-        const baseInclude = (plan_id: number) => ({
-            where: {
-                plan_id,
-                paid: false,
-            },
+        const list = await ReccomendMonth.findAll({
+            where: { paid: false },
             order: [['createdAt', 'ASC']],
             include: [
                 {
@@ -25,7 +22,7 @@ router.get('/admin/pay-list', authenticateToken, isAdmin, async (req: Request, r
                     include: [
                         {
                             model: UriagekinHistory,
-                            attributes: [],
+                            attributes: ["id"],
                             where: {
                                 createdAt: {
                                     [Op.between]: [startOfLastMonth, endOfLastMonth]
@@ -43,18 +40,12 @@ router.get('/admin/pay-list', authenticateToken, isAdmin, async (req: Request, r
             subQuery: false
         });
 
-        const basicList = await ReccomendMonth.findAll(baseInclude(1));
-        const plusList = await ReccomendMonth.findAll(baseInclude(2));
-
-        if (!basicList || !plusList) {
+        if (!list) {
             res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json({
-            basicList,
-            plusList
-        });
+        res.json({ list });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

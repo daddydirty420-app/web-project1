@@ -35,9 +35,9 @@ router.get('/file-edit-page/:id', authenticateToken, isAdmin, async (req: Reques
             include: [
                 {
                     model: Video,
-                    attributes: ['id', 'original_url', 'converted_url', 'thumbnail_url', 'title']
-                }
-            ]
+                    attributes: ['id', 'original_url', 'converted_url', 'thumbnail_url', 'title'],
+                },
+            ],
         });
 
         if (!item) {
@@ -45,7 +45,7 @@ router.get('/file-edit-page/:id', authenticateToken, isAdmin, async (req: Reques
             return;
         }
 
-        res.json(item);
+        res.json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

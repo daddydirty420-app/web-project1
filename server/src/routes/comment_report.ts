@@ -8,7 +8,7 @@ const router = Router();
 router.get('/all-options', async (req: Request, res: Response): Promise<void> => {
     try {
         const options = await CommentReportOption.findAll();
-        res.json(options);
+        res.json({ options });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -21,23 +21,20 @@ router.get('/admin/report-list/:id', authenticateToken, isAdmin, async (req: Req
             where: { comment_id: req.params.id },
             order: [['createdAt', 'DESC']],
             include: [
-                {
-                    model: CommentReportOption,
-                    attributes: ['id', 'name']
-                },
+                { model: CommentReportOption },
                 {
                     model: Comment,
-                    attributes: ['id', 'text']
-                }
-            ]
+                    attributes: ['id', 'text'],
+                },
+            ],
         });
 
         if (!reportList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(reportList);
+        res.json({ reportList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { Delivery, ShippingDayOption, ShippingServiceOption,  TodouhukenOption, PaidInfo, Item, ColorSize, User, SizeShoesOption, SizeWearOption,  Address, Name } from "../models/index.js";
+import { Delivery, ShippingDayOption, ShippingServiceOption,  TodouhukenOption, PaidInfo, Item, User, Address, Name } from "../models/index.js";
 
 const router = Router();
 
@@ -21,60 +21,17 @@ router.get('/index-wait-item-list', authenticateToken, async (req: Request, res:
                 },
                 {
                     model: PaidInfo,
-                    attributes: ['id']
-                }
-            ]
+                    attributes: ['id'],
+                },
+            ],
         });
 
         if (!data) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
-router.get('/buy-color-size/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const data = await Delivery.findByPk(req.params.id, {
-            attributes: ['id'],
-            include: [
-                {
-                    model: Item,
-                    attributes: ['id', 'name', [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url'], 'price']
-                },
-                {
-                    model: User,
-                    as: 'Seller',
-                    attributes: ['user_name']
-                },
-                {
-                    model: ColorSize,
-                    attributes: ['kind', 'color', 'size', 'stock_now', 'image_url'],
-                    include: [
-                        {
-                            model: SizeShoesOption,
-                            attributes: ['id','name']
-                        },
-                        {
-                            model: SizeWearOption,
-                            attributes: ['id','name']
-                        }
-                    ]
-                }
-            ]
-        });
-
-        if (!data || data.length === 0) {
-            res.status(404).json({ error: 'データを取得できません。' });
-            return;
-        }
-
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -93,77 +50,32 @@ router.get('/buy-trans/:id', authenticateToken, async (req: Request, res: Respon
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id','name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['sei', 'mei', 'middle_name']
+                    attributes: ['sei', 'mei'],
                 },
-                {
-                    model: ShippingDayOption,
-                    attributes: ['id','name']
-                },
-                {
-                    model: ShippingServiceOption,
-                    attributes: ['id','name']
-                },
+                { model: ShippingDayOption },
+                { model: ShippingServiceOption },
                 {
                     model: TodouhukenOption,
                     as: 'DeliveryTodouhuken',
-                    attributes: ['id','name']
                 },
                 {
                     model: Item,
                     attributes: ['id', 'name', 'price', 'stock_now', [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url']]
                 },
-                {
-                    model: ColorSize,
-                    attributes: ['kind', 'color', 'size', 'stock_now'],
-                    include: [
-                        {
-                            model: SizeShoesOption,
-                            attributes: ['id','name']
-                        },
-                        {
-                            model: SizeWearOption,
-                            attributes: ['id','name']
-                        }
-                    ]
-                },
-                {
-                    model: User,
-                    as: 'Seller',
-                    attributes: ['user_name']
-                }
-            ]
+            ],
         });
 
         if (!data || data.length === 0) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
-router.get('/delivery-phone/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const data = await Delivery.findByPk(req.params.id, {
-            attributes: ['id', 'buyer_phone_number']
-        });
-
-        if (!data) {
-            res.status(404).json({ error: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

@@ -8,7 +8,7 @@ const router = Router();
 router.get('/buy-item-after/bad-click', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const options = await ItemBuyerReportOption.findAll();
-        res.json(options);
+        res.json({ options });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -23,36 +23,33 @@ router.get('/admin/report-list', authenticateToken, isAdmin, async (req: Request
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'email']
+                    attributes: ['id', 'user_name', 'email'],
                 },
                 {
                     model: Item,
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name'],
                 },
-                {
-                    model: ItemBuyerReportOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ItemBuyerReportOption },
                 {
                     model: PaidInfo,
-                    attributes: ['id', 'total_amount', 'sales_commission_amount', 'gain_amount', 'return_item'],
+                    attributes: ['id', 'total_amount', 'sales_commission_amount', 'gain_amount', 'status'],
                     include: [
                         {
                             model: User,
                             as: 'Seller',
-                            attributes: ['id', 'user_name', 'email']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['id', 'user_name', 'email'],
+                        },
+                    ],
+                },
+            ],
         });
 
         if (!dataList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

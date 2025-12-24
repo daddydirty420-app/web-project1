@@ -7,7 +7,7 @@ export const startItemSortDecayCron = () => {
         try {
             const items = await Item.findAll({
                 where: {
-                    sold_out: false,
+                    status: { [Op.in]: ["active", "hidden"] },
                     sort_buzz_number: { [Op.gt]: 0.01 },
                 },
             });
@@ -32,7 +32,7 @@ export const startItemSortDecayCron = () => {
         try {
             const items = await Item.findAll({
                 where: {
-                    sold_out: false,
+                    status: { [Op.in]: ["active", "hidden"] },
                     sort_number: { [Op.gt]: 0.01 },
                 },
             });

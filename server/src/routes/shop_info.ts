@@ -47,11 +47,8 @@ router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Respon
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id'],
             include: [
-                {
-                    model: ComOrFreeOption,
-                    attributes: ['id', 'name']
-                }
-            ]
+                { model: ComOrFreeOption },
+            ],
         });
 
         const allOptions = await ComOrFreeOption.findAll();
@@ -101,15 +98,14 @@ router.get('/infopage/:id', async (req: Request, res: Response): Promise<void> =
                         {
                             model: TodouhukenOption,
                             as: 'AddressTodouhuken',
-                            attributes: ['id', 'name']
-                        }
-                    ]
+                        },
+                    ],
                 },
                 {
                     model: Name,
-                    attributes: ['sei', 'mei', 'sei_kana', 'mei_kana', 'middle_name', 'middle_name_kana']
-                }
-            ]
+                    attributes: ['sei', 'mei', 'sei_kana', 'mei_kana'],
+                },
+            ],
         });
 
         if (!data) {
@@ -117,7 +113,7 @@ router.get('/infopage/:id', async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -127,7 +123,7 @@ router.get('/infopage/:id', async (req: Request, res: Response): Promise<void> =
 router.get('/open-info-request/:id', async (req: Request, res: Response): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['id', 'shop_name']
+            attributes: ['id', 'shop_name'],
         });
 
         if (!data) {
@@ -135,7 +131,7 @@ router.get('/open-info-request/:id', async (req: Request, res: Response): Promis
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

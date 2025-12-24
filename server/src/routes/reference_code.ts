@@ -10,14 +10,14 @@ router.get('/my-page/count', authenticateToken, async (req: Request, res: Respon
 
     try {
         const itemCount = await Item.count({
-            where: { seller_id: userId }
+            where: { seller_id: userId },
         });
 
         const referenceCount = await ReferenceCode.count({
             where: {
                 output_user_id: userId,
-                checked: true
-            }
+                checked: true,
+            },
         });
 
         res.status(200).json({
@@ -44,10 +44,10 @@ router.post('/input', authenticateToken, async (req: Request, res: Response): Pr
             input,
             output: null,
             input_user_id: currentUserId,
-            output_user_id: null
+            output_user_id: null,
         });
 
-        res.status(200).json(newRecord);
+        res.status(200).json({ newRecord });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

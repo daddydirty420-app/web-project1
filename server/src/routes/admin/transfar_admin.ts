@@ -11,29 +11,23 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
             attributes: ['id', 'trans_money', 'trans_finish'],
             where: {
                 trans_finish: false,
-                trans_reason_id: 3
+                trans_reason_id: 3,
             },
             order: [['createdAt', 'ASC']],
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'email']
+                    attributes: ['id', 'user_name', 'email'],
                 },
-                {
-                    model: TransReasonOption,
-                    attributes: ['id', 'name']
-                },
+                { model: TransReasonOption },
                 {
                     model: BankAccount,
                     attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
                     include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: AccountTypeOption },
+                    ],
+                },
+            ],
         });
 
         if (!dataList) {
@@ -41,7 +35,7 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -51,30 +45,24 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
 router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
         const dataList = await Transfar.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish', 'trans_date'],
+            attributes: ['id', 'trans_money', 'trans_finish', 'trans_at'],
             where: { trans_finish: true },
             order: [['trans_date', 'DESC']],
             limit: 100,
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'email']
+                    attributes: ['id', 'user_name', 'email'],
                 },
-                {
-                    model: TransReasonOption,
-                    attributes: ['id', 'name']
-                },
+                { model: TransReasonOption },
                 {
                     model: BankAccount,
                     attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
                     include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: AccountTypeOption },
+                    ],
+                },
+            ],
         });
 
         if (!dataList) {

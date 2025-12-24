@@ -1,12 +1,12 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../db.js";
 
-export class SizeOption extends Model {
+export class Brands extends Model {
     declare id: number;
     declare name: string;
 };
 
-SizeOption.init(
+Brands.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,11 +21,11 @@ SizeOption.init(
     },
     {
         sequelize,
-        modelName: "SizeOption",
-        tableName: "size_option",
+        modelName: "Brands",
+        tableName: "brands",
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
-export default SizeOption;
+export default Brands;

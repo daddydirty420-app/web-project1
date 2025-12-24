@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { Op, Sequelize } from "sequelize";
+import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { GoodItem, Item, User, Follow, ShopInfo, Video, Sale } from "../models/index.js";
 
@@ -139,11 +139,11 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
                     include: [
                         {
                             model: ShopInfo,
-                            attributes: ['id']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['id'],
+                        },
+                    ],
+                },
+            ],
         }) as UserInstance[];
 
         const userCount = userList.length;
@@ -171,7 +171,7 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
         }
 
         if (!userList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
@@ -202,11 +202,11 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
                     include: [
                         {
                             model: ShopInfo,
-                            attributes: ['id']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['id'],
+                        },
+                    ],
+                },
+            ],
         }) as UserInstance[];
 
         const allUserList = await GoodItem.findAll({
@@ -238,7 +238,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
         }
 
         if (!userList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
@@ -265,7 +265,7 @@ router.get('/like-item/video-list', authenticateToken, async (req: Request, res:
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'price', 'sold_out'],
+                    attributes: ['id', 'name', 'price', "status"],
                     include: [
                         {
                             model: Video,
@@ -278,18 +278,18 @@ router.get('/like-item/video-list', authenticateToken, async (req: Request, res:
                         {
                             model: Sale,
                             attributes: ['before_price', 'discount_rate', 'discount_amount', 'sale_flag']
-                        }
-                    ]
-                }
-            ]
+                        },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -312,23 +312,23 @@ router.get('/like-item/item-list', authenticateToken, async (req: Request, res: 
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'price', 'sold_out', [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url']],
+                    attributes: ['id', 'name', 'price', 'status', "first_image_url"],
                     include: [
                         {
                             model: Sale,
-                            attributes: ['discount_rate', 'discount_amount', 'sale_flag']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                        },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});

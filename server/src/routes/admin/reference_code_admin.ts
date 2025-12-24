@@ -11,9 +11,7 @@ router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: 
         const inputList = await ReferenceCode.findAll({
             attributes: ['id', 'input', 'input_user_id', 'createdAt'],
             where: {
-                input: {
-                    [Op.ne]: null
-                }
+                input: { [Op.ne]: null },
             },
             include: [
                 {
@@ -24,21 +22,21 @@ router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: 
                         {
                             model: Item,
                             attributes: ['id'],
-                            required: false
-                        }
-                    ]
-                }
+                            required: false,
+                        },
+                    ],
+                },
             ],
             group: ['ReferenceCode.id', 'InputUser.id'],
             order: [
                 [literal('"InputUser.item_count"'), 'DESC'],
                 ['createdAt', 'ASC']
             ],
-            subQuery: false
+            subQuery: false,
         });
 
         if (!inputList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
@@ -71,21 +69,21 @@ router.get('/output-data', authenticateToken, isAdmin, async (req: Request, res:
                         {
                             model: Item,
                             attributes: ['id'],
-                            required: false
-                        }
-                    ]
-                }
+                            required: false,
+                        },
+                    ],
+                },
             ],
             group: ['ReferenceCode.id', 'OutputUser.id'],
-            subQuery: false
+            subQuery: false,
         });
 
         if (!outputData) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(outputData);
+        res.json({ outputData });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

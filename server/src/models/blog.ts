@@ -2,7 +2,6 @@ import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
 import BlogCategoryOption from "./blog_category_option.js";
-import ItemCategory1Option from "./item_category1_option.js";
 
 export class Blog extends Model {
     declare id: number;
@@ -14,9 +13,8 @@ export class Blog extends Model {
     declare views_count: number | null;
     declare views_24h: number | null;
     declare public: boolean | null;
-    declare uploaded_date: Date | null;
+    declare uploaded_at: Date | null;
     declare blog_category_id: number | null;
-    declare item_category1_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -24,14 +22,10 @@ export class Blog extends Model {
         Blog.belongsTo(BlogCategoryOption, {
             foreignKey: "blog_category_id",
         });
-        Blog.belongsTo(ItemCategory1Option, {
-            foreignKey: "item_category1_id",
-        });
     }
 
     static associations: {
         BlogCategoryOption: Association<Blog, BlogCategoryOption>;
-        ItemCategory1Option: Association<Blog, ItemCategory1Option>;
     };
 }
 
@@ -57,9 +51,8 @@ Blog.init(
             defaultValue: 0,
         },
         public: DataTypes.BOOLEAN,
-        uploaded_date: DataTypes.DATE,
+        uploaded_at: DataTypes.DATE,
         blog_category_id: DataTypes.INTEGER,
-        item_category1_id: DataTypes.INTEGER,
     },
     {
         sequelize,

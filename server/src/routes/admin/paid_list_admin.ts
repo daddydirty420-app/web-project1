@@ -12,55 +12,47 @@ router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response
         const thirtyDaysAgo = subDays(new Date(), 30);
 
         const dataList = await PaidInfo.findAll({
-            attributes: ['id', 'gain_amount', 'buy_date'],
+            attributes: ['id', 'gain_amount', 'buy_at'],
             where: {
                 cancel: false,
-                buy_date: {
-                    [Op.lt]: thirtyDaysAgo
-                }
+                buy_date: { [Op.lt]: thirtyDaysAgo },
             },
-            order: [['buy_date', 'ASC']],
+            order: [['buy_at', 'ASC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name'],
                 },
                 {
                     model: User,
                     as: 'Seller',
-                    attributes: ['id', 'user_name', 'email']
+                    attributes: ['id', 'user_name', 'email'],
                 },
                 {
                     model: User,
                     as: 'Buyer',
-                    attributes: ['id', 'user_name', 'email']
+                    attributes: ['id', 'user_name', 'email'],
                 },
                 {
                     model: Delivery,
                     required: true,
                     attributes: ['id'],
+                    where: {
+                        delivery_status_id: { [Op.ne]: 4 },
+                    },
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            where: {
-                                id: {
-                                    [Op.ne]: 4
-                                }
-                            },
-                            required: true,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: DeliveryStatusOption },
+                    ],
+                },
+            ],
         });
 
         if (!dataList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

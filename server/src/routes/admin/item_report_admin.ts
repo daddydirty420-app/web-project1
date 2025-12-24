@@ -9,7 +9,7 @@ const router = Router();
 router.get('/report-all', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'uploaded_date', [fn('COUNT', col('ItemReports.id')), 'report_count']],
+            attributes: ['id', 'name', 'uploaded_at', [fn('COUNT', col('ItemReports.id')), 'report_count']],
             include: [
                 {
                     model: Video,
@@ -18,7 +18,7 @@ router.get('/report-all', authenticateToken, isAdmin, async (req: Request, res: 
                 },
                 {
                     model: ItemReport,
-                    attributes: [],
+                    attributes: ["id"],
                     required: true
                 }
             ],
@@ -28,15 +28,15 @@ router.get('/report-all', authenticateToken, isAdmin, async (req: Request, res: 
                 [col('Video.play_count'), 'DESC'],
                 ['uploaded_date', 'DESC']
             ],
-            subQuery: false
+            subQuery: false,
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -49,15 +49,12 @@ router.get('/report-list/:id', authenticateToken, isAdmin, async (req: Request, 
             where: { item_id: req.params.id },
             order: [['createdAt', 'DESC']],
             include: [
-                {
-                    model: ItemReportOption,
-                    attributes: ['id', 'name']
-                },
+                { model: ItemReportOption },
                 {
                     model: Item,
-                    attributes: ['id', 'name']
-                }
-            ]
+                    attributes: ['id', 'name'],
+                },
+            ],
         });
 
         if (!reportList) {
@@ -65,7 +62,7 @@ router.get('/report-list/:id', authenticateToken, isAdmin, async (req: Request, 
             return;
         }
 
-        res.json(reportList);
+        res.json({ reportList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

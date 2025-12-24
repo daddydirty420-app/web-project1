@@ -8,6 +8,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
+import { Op } from "sequelize";
 
 interface AuthenticatedRequest extends Request {
     user?: AuthUser;
@@ -152,12 +153,10 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
                 {
                     model: User,
                     include: [
-                        {
-                            model: ReccomendMonth,
-                        }
-                    ]
-                }
-            ]
+                        { model: ReccomendMonth },
+                    ],
+                },
+            ],
         });
         if (!item) {
             res.status(404).json({ message: "itemが見つかりません。" });
@@ -171,8 +170,8 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         const sellItemCount = await Item.count({
             where: {
                 seller_id: currentUserId,
-                public: true,
-            }
+                status: { [Op.in]: ["active", "soldout"] },
+            },
         });
 
         let sort = (item.price / 10)
@@ -186,7 +185,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
             sort = sort + 5000;
         }
 
-        if (item.User.ReccomendMonth) {
+        if (item.User?.ReccomendMonth) {
             sort = sort * 5;
 
             await ReccomendItem.create({
@@ -197,12 +196,9 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         }
 
         await item.update({
-            public: true,
-            uploaded_date: now,
+            status: "active",
+            uploaded_at: now,
             save_at: now,
-            not_finish: false,
-            draft: false,
-            deleted: false,
             early_sell: true,
             sort_number: sort,
             sort_buzz_number: sort,

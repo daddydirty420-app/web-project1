@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Item, User, ItemConditionOption, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ColorSize, SizeOption, SizeWearOption, SizeShoesOption, Category, ItemReport, Comment } from "../../models/index.js";
+import { Item, User, ItemConditionOption, GoodItem, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
 
 const router = Router();
 
@@ -11,17 +11,17 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
     try {
         const item = await Item.findByPk(itemId, {
             attributes: {
-                exclude: ['sort_number', 'views_count', 'views_24h', 'checked', 'createdAt', 'search_text']
+                exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text']
             },
             include: [
-                { model: ItemConditionOption, attributes: ['name'] },
+                { model: ItemConditionOption },
                 {
                     model: User,
                     attributes: ['id', 'user_name', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
                     include: [
                         {
                             model: ShopInfo,
-                            attributes: ['id']
+                            attributes: ['id'],
                         }
                     ],
                 },
@@ -34,57 +34,38 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
                     attributes: ['id', 'before_price', 'discount_rate', 'discount_amount', 'sale_flag'],
                 },
                 {
-                    model: Delivery,
-                    as: 'ParentDelivery',
-                    attributes: ['id', 'parent_data'],
-                    where: { parent_data: true },
-                    required: false,
+                    model: ItemShippingProfile,
                     include: [
-                        {
-                            model: ShippingDayOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: ShippingServiceOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: TodouhukenOption,
-                            as: 'DeliveryTodouhuken',
-                            attributes: ['name']
-                        }
+                        { model: ShippingDayOption },
+                        { model: ShippingServiceOption },
+                        { model: TodouhukenOption },
                     ],
                 },
                 {
                     model: ReccomendItem,
-                    attributes: ['id']
+                    attributes: ['id'],
                 },
                 {
-                    model: ColorSize,
-                    attributes: ['kind', 'color', 'size', 'image_url', 'stock_all', 'stock_now'],
+                    model: Categories,
+                    attributes: ['id', 'name', "level", "allowed_gender", "allowed_age", "parent_id"],
+                    as: "children",
                     include: [
                         {
-                            model: SizeOption,
-                            attributes: ['name']
+                            model: Categories,
+                            attributes: ["id", "name", "level", "allowed_gender", "allowed_age", "parent_id"],
+                            as: "parent",
+                            required: false,
                         },
-                        {
-                            model: SizeShoesOption,
-                            attributes: ['name']
-                        },
-                        {
-                            model: SizeWearOption,
-                            attributes: ['name']
-                        }
-                    ]
+                    ],
                 },
                 {
-                    model: Category,
-                    attributes: ['id', 'category1_id'],
+                    model: Brands,
+                    required: false,
                 },
-            ]
+            ],
         });
 
-        if (!item || !item.public || item.deleted) {
+        if (!item) {
             res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }

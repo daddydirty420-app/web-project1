@@ -1,6 +1,7 @@
-import { Item, Video, Sale, Delivery, ColorSize, Category } from "../models/index.js";
+import { Item, Video, Sale, ItemShippingProfile } from "../models/index.js";
 import sequelize from "../db.js";
 import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import type { ItemAttributes } from "../types/itemAttributes.js";
 
 const s3 = new S3Client({
     region: process.env.AWS_REGION || "ap-northeast-1",
@@ -41,28 +42,11 @@ async function copyS3Object(sourceUrl: string, destKey: string) {
 
 async function itemCopyUpload(itemId: number, userId: number) {
     const item = await Item.findByPk(itemId, {
-        attributes: ['name', 'explain', 'image_url', 'category_text', 'stock_all', 'item_condition_id', 'search_text'],
         include: [
-            {
-                model: Video,
-                attributes: ['thumbnail_url', 'title', 'summary', 'duration', 'original_url', 'converted_url', 'status'],
-            },
-            {
-                model: Sale,
-                attributes: ['before_price'],
-            },
-            {
-                model: Delivery,
-                as: "ParentDelivery",
-                attributes: ['shipping_day_id', 'shipping_service_id', 'shipping_place_id'],
-            },
-            {
-                model: Category,
-            },
-            {
-                model: ColorSize,
-            }
-        ]
+            { model: Video },
+            { model: Sale },
+            { model: ItemShippingProfile },
+        ],
     });
 
     const videoOriginalUrl = item.Video?.original_url ?? null;
@@ -109,19 +93,35 @@ async function itemCopyUpload(itemId: number, userId: number) {
             );
         }
 
+        const attributes: ItemAttributes = {
+            ...item.attributes,
+            inventory: {
+                ...item.attributes?.inventory,
+                current: item.attributes?.inventory?.initial ?? 0,
+            },
+            variants: {
+                ...item.attrinutes?.variants,
+                inventory: {
+                    ...item.attributes?.variants?.inventory,
+                    current: item.attrinutes?.variants?.inventory?.initial ?? 0,
+                },
+            },
+        };
+
         const newItem = await Item.create({
             name: item.name,
             explain: item.explain,
-            category_text: item.category_text,
             price: item.Sale.before_price,
-            stock_all: item.stock_all,
-            stock_now: item.stock_all,
-            stock_20: item.stock_all / 5,
             item_condition_id: item.item_condition_id,
             seller_id: userId,
             search_text: item.search_text,
             image_url: newUrls.itemImageUrl,
             first_image_url: Array.isArray(newUrls.itemImageUrl) ? newUrls.itemImageUrl[0] : null,
+            gender_type: item.gender_type,
+            age_type: item.age_type,
+            category_id: item.category_id,
+            brand_id: item.brand_id,
+            attributes: attributes ?? {},
         }, { transaction: t });
 
         await Video.create({
@@ -141,40 +141,12 @@ async function itemCopyUpload(itemId: number, userId: number) {
             item_id: newItem.id,
         }, { transaction: t });
 
-        await Delivery.create({
-            shipping_day_id: item.ParentDelivery.shipping_day_id,
-            shipping_service_id: item.ParentDelivery.shipping_service_id,
-            shipping_place_id: item.ParentDelivery.shipping_place_id,
+        await ItemShippingProfile.create({
+            shipping_day_id: item.ItemShippingProfile.shipping_day_id,
+            shipping_service_id: item.ItemShippingProfile.shipping_service_id,
+            shipping_place_id: item.ItemShippingProfile.shipping_place_id,
             item_id: newItem.id,
-            parent_data: true,
         }, { transaction: t });
-
-        await Category.create({
-            item_id: newItem.id,
-            category1_id: item.Category.category1_id,
-            camp_id: item.Category.camp_id,
-            hike_id: item.Category.hike_id,
-            wear_id: item.Category.wear_id,
-            other_id: item.Category.other_id,
-        }, { transaction: t });
-
-        if (item.ColorSizes && item.ColorSizes.length >= 1) {
-            const newRecords = item.ColorSizes.map((cs: InstanceType<typeof ColorSize>) => ({
-                kind: cs.kind,
-                color: cs.color,
-                size: cs.size,
-                image_url: cs.image_url,
-                stock_all: cs.stock_all,
-                stock_now: cs.stock_all,
-                size_id: cs.size_id,
-                size_wear_id: cs.size_wear_id,
-                size_shoes_id: cs.size_shoes_id,
-                user_id: userId,
-                item_id: newItem.id,
-            }));
-
-            await ColorSize.bulkCreate(newRecords, { transaction: t });
-        }
 
         await t.commit();
 

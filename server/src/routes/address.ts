@@ -17,8 +17,8 @@ router.patch("/address-edit/:id", authenticateToken, async (req: Request, res: R
                 {
                     model: TodouhukenOption,
                     as: "AddressTodouhuken",
-                }
-            ]
+                },
+            ],
         });
         if (!address) {
             res.status(404).json({ message: "データが見つかりません。" });
@@ -77,9 +77,9 @@ router.get('/myaddress', authenticateToken, async (req: Request, res: Response):
                 {
                     model: TodouhukenOption,
                     as: 'AddressTodouhuken',
-                    required: false
-                }
-            ]
+                    required: false,
+                },
+            ],
         });
 
         if (!data) {
@@ -103,9 +103,8 @@ router.get('/delivery-address/:id', authenticateToken, async (req: Request, res:
                 {
                     model: TodouhukenOption,
                     as: 'AddressTodouhuken',
-                    attributes: ['id', 'name'],
-                }
-            ]
+                },
+            ],
         });
 
         if (!data) {

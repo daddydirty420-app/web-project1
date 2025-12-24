@@ -16,7 +16,6 @@ export class DeletedItems extends Model {
     declare thumbnail_url: string | null;
     declare video_title: string | null;
     declare video_summary: string | null;
-    declare parent_delevery_id: number | null;
     declare deleted_reason: string;
     declare deleted_by: number;
     declare createdAt: Date;
@@ -31,10 +30,7 @@ export class DeletedItems extends Model {
             foreignKey: "deleted_by",
             as: "DeletedBy",
         });
-        DeletedItems.belongsTo(Delivery, {
-            foreignKey: "parent_delevery_id",
-        });
-    }
+    };
 
     static associations: {
         User: Association<DeletedItems, User>;
@@ -82,10 +78,6 @@ DeletedItems.init(
         thumbnail_url: DataTypes.TEXT,
         video_title: DataTypes.STRING(255),
         video_summary: DataTypes.TEXT,
-        parent_delivery_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
         deleted_reason: {
             type: DataTypes.TEXT,
             allowNull: false,

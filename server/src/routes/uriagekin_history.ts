@@ -13,9 +13,7 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
 
         const uriagekinList = await UriagekinHistory.findAll({
             where: {
-                createdAt: {
-                    [Op.lt]: halfYearAgo
-                }
+                createdAt: { [Op.lt]: halfYearAgo },
             },
             order: [['createdAt', 'ASC']],
             include: [
@@ -25,11 +23,11 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
                     include: [
                         {
                             model: BankAccount,
-                            attributes: ['id']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['id'],
+                        },
+                    ],
+                },
+            ],
         });
 
         const totalUriagekin = uriagekinList.reduce((sum: number, data: any) => {

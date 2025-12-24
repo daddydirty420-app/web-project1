@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Blog, BlogCategoryOption, ItemCategory1Option } from "../../models/index.js";
+import { Blog, BlogCategoryOption } from "../../models/index.js";
 
 const router = Router();
 
@@ -9,23 +9,16 @@ router.get('/confirm/:id', authenticateToken, isAdmin, async (req: Request, res:
     try {
         const blog = await Blog.findByPk(req.params.id, {
             include: [
-                {
-                    model: BlogCategoryOption,
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: ItemCategory1Option,
-                    attributes: ['id', 'name']
-                }
-            ]
+                { model: BlogCategoryOption },
+            ],
         });
 
         if (!blog) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(blog);
+        res.json({ blog });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -37,17 +30,15 @@ router.get('/edit/:id', authenticateToken, isAdmin, async (req: Request, res: Re
         const blog = await Blog.findByPk(req.params.id);
 
         if (!blog) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
         const blogCategory = await BlogCategoryOption.findAll();
-        const itemCategory = await ItemCategory1Option.findAll();
 
         res.json({
             blog,
-            blogCategory,
-            itemCategory
+            blogCategory
         });
     } catch (err) {
         console.error(err);
@@ -62,7 +53,7 @@ router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: 
         const offset = (page - 1) * limit;
 
         const list = await Blog.findAll({
-            attributes: ['id', 'title', 'summary', 'image_url', 'views_count', 'uploaded_date'],
+            attributes: ['id', 'title', 'summary', 'image_url', 'views_count', 'uploaded_at'],
             where: { public: false },
             order: [['uploaded_date', 'DESC']],
             limit,
@@ -70,11 +61,11 @@ router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: 
         });
 
         if (!list) {
-            res.status(404).json({ error: 'ブログが見つかりません。' });
+            res.status(404).json({ message: 'ブログが見つかりません。' });
             return;
         }
 
-        res.json(list);
+        res.json({ list });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

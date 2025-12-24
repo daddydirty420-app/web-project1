@@ -9,36 +9,33 @@ const router = Router();
 router.get('/purchased-item-all', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 buyer_user_id: req.user!.id,
-                paid_ok: true
+                status: { [Op.ne]: "pending" },
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: DeliveryStatusOption },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -48,37 +45,33 @@ router.get('/purchased-item-all', authenticateToken, async (req: Request, res: R
 router.get('/purchased-item-trading', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 buyer_user_id: req.user!.id,
-                paid_ok: true,
-                trans_finish: false
+                status: { [Op.in]: ["paid", "shipped"] },
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: DeliveryStatusOption },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -87,29 +80,25 @@ router.get('/purchased-item-trading', authenticateToken, async (req: Request, re
 router.get('/purchased-item-finish', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 buyer_user_id: req.user!.id,
-                paid_ok: true,
-                trans_finish: true
+                status: "completed",
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: DeliveryStatusOption },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
@@ -117,7 +106,7 @@ router.get('/purchased-item-finish', authenticateToken, async (req: Request, res
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -127,28 +116,25 @@ router.get('/purchased-item-finish', authenticateToken, async (req: Request, res
 router.get('/sold-item-all', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 seller_user_id: req.user!.id,
-                paid_ok: true
+                status: { [Op.ne]: "pending" },
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: DeliveryStatusOption },
+                    ],
+                },
+            ],
         });
 
         if (!itemList) {
@@ -156,7 +142,7 @@ router.get('/sold-item-all', authenticateToken, async (req: Request, res: Respon
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -166,31 +152,26 @@ router.get('/sold-item-all', authenticateToken, async (req: Request, res: Respon
 router.get('/sold-item-pre-trans', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 seller_user_id: req.user!.id,
-                paid_ok: true
+                status: "paid",
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     required: true,
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            where: { id: 1 },
-                            required: true,
-                            attributes: ['id', 'name']
-                        }
+                        { model: DeliveryStatusOption },
                     ],
-                }
-            ]
+                },
+            ],
         });
 
         if (!itemList) {
@@ -198,7 +179,7 @@ router.get('/sold-item-pre-trans', authenticateToken, async (req: Request, res: 
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -208,31 +189,26 @@ router.get('/sold-item-pre-trans', authenticateToken, async (req: Request, res: 
 router.get('/sold-item-now-trans', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 seller_user_id: req.user!.id,
-                paid_ok: true
+                status: "shipped",
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     required: true,
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            where: { id: { [Op.in]: [2, 3] } },
-                            required: true,
-                            attributes: ['id', 'name']
-                        }
+                        { model: DeliveryStatusOption },
                     ],
-                }
-            ]
+                },
+            ],
         });
 
         if (!itemList) {
@@ -240,7 +216,7 @@ router.get('/sold-item-now-trans', authenticateToken, async (req: Request, res: 
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -250,31 +226,26 @@ router.get('/sold-item-now-trans', authenticateToken, async (req: Request, res: 
 router.get('/sold-item-finish', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_date', 'item_count'],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count'],
             where: {
                 seller_user_id: req.user!.id,
-                paid_ok: true
+                status: "completed",
             },
-            order: [['buy_date', 'DESC']],
+            order: [['buy_at', 'DESC']],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url']
+                    attributes: ['id', 'name', 'first_image_url'],
                 },
                 {
                     model: Delivery,
                     attributes: ['id'],
                     required: true,
                     include: [
-                        {
-                            model: DeliveryStatusOption,
-                            where: { id: 4 },
-                            required: true,
-                            attributes: ['id', 'name']
-                        }
+                        { model: DeliveryStatusOption },
                     ],
-                }
-            ]
+                },
+            ],
         });
 
         if (!itemList) {
@@ -282,7 +253,7 @@ router.get('/sold-item-finish', authenticateToken, async (req: Request, res: Res
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

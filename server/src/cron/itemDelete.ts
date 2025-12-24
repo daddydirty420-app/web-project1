@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import { Op } from "sequelize";
-import { Item, Delivery, ItemDeleteLogs } from "../models/index.js";
+import { Item, ItemDeleteLogs } from "../models/index.js";
 import sequelize from "../db.js";
 
 export const startItemDeleteCron = () => {
@@ -10,16 +10,9 @@ export const startItemDeleteCron = () => {
 
         const items = await Item.findAll({
             where: {
-                public: false,
-                deleted: true,
+                status: "deleted",
                 deleted_at: { [Op.lt]: thirtyDaysAgo }, 
             },
-            include: [
-                {
-                    model: Delivery,
-                    as: "ParentDelivery",
-                },
-            ],
         });
 
         if (!items || items.length === 0) {
@@ -38,10 +31,6 @@ export const startItemDeleteCron = () => {
                     delete_by_admin: false,
                     delete_reason: "自主削除、30日経過",
                 });
-
-                if (item.ParentDelivery) {
-                    await item.ParentDelivery.destroy({ transaction: t });
-                }
 
                 await item.destroy({ transaction: t });
             }
@@ -66,25 +55,15 @@ export const startItemDeleteCron = () => {
 
             const items = await Item.findAll({
                 where: {
-                    not_finish: true,
-                    draft: false,
-                    public: false,
+                    status: "editing",
                     createdAt: { [Op.lt]: sevenDaysAgo },
                 },
-                include: [
-                    {
-                        model: Delivery,
-                        as: "ParentDelivery",
-                    },
-                ],
             });
 
             if (items.length === 0) {
                 console.log("[cron] 1週間放置itemはありません。");
                 return;
             }
-
-            await items.ParentDelivery.destroy({ transaction: t });
             await items.destroy({ transaction: t });
 
             await t.commit();

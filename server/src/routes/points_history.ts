@@ -13,17 +13,15 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
 
         const pointsList = await PointsHistory.findAll({
             where: {
-                createdAt: {
-                    [Op.lt]: halfYearAgo
-                }
+                createdAt: { [Op.lt]: halfYearAgo },
             },
             order: [['createdAt', 'ASC']],
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'email']
-                }
-            ]
+                    attributes: ['id', 'user_name', 'email'],
+                },
+            ],
         });
 
         const totalPoints = await PointsHistory.sum("points", {
@@ -33,7 +31,7 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
         });
 
         if (!pointsList || !totalPoints) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 

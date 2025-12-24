@@ -223,13 +223,10 @@ router.get('/detail/:id', authenticateToken, async (req: Request, res: Response)
                     model: BankAccount,
                     attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
                     include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
+                        { model: AccountTypeOption },
+                    ],
+                },
+            ],
         });
 
         if (!data) {
@@ -237,7 +234,7 @@ router.get('/detail/:id', authenticateToken, async (req: Request, res: Response)
             return;
         }
 
-        res.json(data);
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -249,7 +246,7 @@ router.get('/history', authenticateToken, async (req: Request, res: Response): P
         const dataList = await Transfar.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
             where: { user_id: req.user!.id },
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
         });
 
         if (!dataList) {
@@ -257,7 +254,7 @@ router.get('/history', authenticateToken, async (req: Request, res: Response): P
             return;
         }
 
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

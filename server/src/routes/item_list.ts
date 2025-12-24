@@ -7,70 +7,38 @@ import { Item, User, Video, Sale, Follow, Search } from "../models/index.js";
 const router = Router();
 
 router.get('/index-item-list/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>;
-
     try {
         const currentUserId = req.user?.id ?? null;
-
-        const category = req.query.category || null;
-
-        const categoryMap = {
-            camp: '%キャンプ・BBQ%',
-            hike: '%登山・ハイキング%',
-            wear: '%ウェア・シューズ・アクセサリー%'
-        };
 
         const page = parseInt(req.query.page as string) || 1;
         const limit = Number(req.query.limit) || 6;
         const offset = (page - 1) * limit;
 
         let whereCondition: WhereOptions = {
-            public: true,
-            sold_out: false,
+            status: "active",
             ...(currentUserId && { seller_id: { [Op.ne]: currentUserId } }),
         };
 
-        if (typeof category === "string" && category in categoryMap) {
-            whereCondition = {
-                ...whereCondition,
-                category_text: { [Op.iLike]: categoryMap[category as keyof typeof categoryMap] },
-            };
-        }
-
-        if (category === 'follow' && currentUserId) {
-            const followings = await Follow.findAll({
-                where: { follow_user_id: currentUserId },
-                attributes: ['follower_user_id'],
-            }) as FollowInstance[];
-
-            const followedUserIds = followings.map(f => f.follower_user_id);
-
-            whereCondition = {
-                ...whereCondition,
-                seller_id: { [Op.in]: followedUserIds },
-            };
-        }
-
         const items = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id'],
+            attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'seller_id'],
             where: whereCondition,
             limit,
             offset,
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Video,
-                    attributes: ['thumbnail_url', 'title', 'duration']
+                    attributes: ['thumbnail_url', 'title', 'duration'],
                 },
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
                 },
                 {
                     model: User,
-                    attributes: ['user_name', 'profile_image']
-                }
-            ]
+                    attributes: ['user_name', 'profile_image'],
+                },
+            ],
         });
 
         const hasItemCount = await Item.count({
@@ -80,7 +48,7 @@ router.get('/index-item-list/video-list', authenticateOptional, async (req: Requ
         const totalPages = Math.ceil(hasItemCount / limit);
 
         if (!items) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
@@ -92,62 +60,30 @@ router.get('/index-item-list/video-list', authenticateOptional, async (req: Requ
 });
 
 router.get('/index-item-list/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>;
-
     try {
         const currentUserId = req.user?.id ?? null;
-
-        const category = req.query.category || null;
-
-        const categoryMap = {
-            camp: '%キャンプ・BBQ%',
-            hike: '%登山・ハイキング%',
-            wear: '%ウェア・シューズ・アクセサリー%'
-        };
 
         const page = parseInt(req.query.page as string) || 1;
         const limit = Number(req.query.limit) || 18;
         const offset = (page - 1) * limit;
 
         let whereCondition: WhereOptions = {
-            public: true,
-            sold_out: false,
+            status: "active",
             ...(currentUserId && { seller_id: { [Op.ne]: currentUserId } }),
         };
 
-        if (typeof category === "string" && category in categoryMap) {
-            whereCondition = {
-                ...whereCondition,
-                category_text: { [Op.iLike]: categoryMap[category as keyof typeof categoryMap] },
-            };
-        }
-
-        if (category === 'follow' && currentUserId) {
-            const followings = await Follow.findAll({
-                where: { follow_user_id: currentUserId },
-                attributes: ['follower_user_id'],
-            }) as FollowInstance[];
-
-            const followedUserIds = followings.map(f => f.follower_user_id);
-
-            whereCondition = {
-                ...whereCondition,
-                seller_id: { [Op.in]: followedUserIds },
-            };
-        }
-
         const items = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id', 'first_image_url'],
+            attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'seller_id', 'first_image_url'],
             where: whereCondition,
             limit,
             offset,
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
-                }
-            ]
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
+                },
+            ],
         });
 
         const hasItemCount = await Item.count({
@@ -157,7 +93,7 @@ router.get('/index-item-list/item-list', authenticateOptional, async (req: Reque
         const totalPages = Math.ceil(hasItemCount / limit);
 
         if (!items) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
@@ -177,10 +113,10 @@ router.get('/profile-item-list/video-list/:id', async (req: Request, res: Respon
         const offset = (page - 1) * limit;
 
         const items = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
             where: {
-                public: true,
-                seller_id: pageUserId
+                status: { [Op.in]: ["active", "soldout"] },
+                seller_id: pageUserId,
             },
             limit,
             offset,
@@ -188,20 +124,20 @@ router.get('/profile-item-list/video-list/:id', async (req: Request, res: Respon
             include: [
                 {
                     model: Video,
-                    attributes: ['thumbnail_url', 'title', 'duration']
+                    attributes: ['thumbnail_url', 'title', 'duration'],
                 },
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
-                }
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
+                },
             ]
         });
 
         const hasItemCount = await Item.count({
             where: {
-                public: true,
-                seller_id: pageUserId
-            }
+                status: { [Op.in]: ["active", "soldout"] },
+                seller_id: pageUserId,
+            },
         });
         
         const totalPages = Math.ceil(hasItemCount / limit);
@@ -227,25 +163,25 @@ router.get('/profile-item-list/item-list/:id', async (req: Request, res: Respons
         const offset = (page - 1) * limit;
 
         const items = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id', 'first_image_url'],
             where: {
-                public: true,
-                seller_id: pageUserId
+                status: { [Op.in]: ["active", "soldout"] },
+                seller_id: pageUserId,
             },
             limit,
             offset,
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
-                }
-            ]
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
+                },
+            ],
         });
 
         const hasItemCount = await Item.count({
             where: {
-                public: true,
+                status: { [Op.in]: ["active", "soldout"] },
                 seller_id: pageUserId
             }
         });
@@ -269,27 +205,26 @@ router.get('/draft', authenticateToken, async (req: Request, res: Response): Pro
         const currentUserId = req.user!.id;
 
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'seller_id', 'updatedAt', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'seller_id', 'updatedAt', 'first_image_url'],
             where: {
                 seller_id: currentUserId,
-                draft: true,
-                public: false
+                status: "draft",
             },
             order: [['updatedAt', 'DESC']],
             include: [
                 {
                     model: Video,
-                    attributes: ['title']
-                }
-            ]
+                    attributes: ['title'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -302,27 +237,27 @@ router.get('/item-money-management/item-list/:id', authenticateToken, async (req
         const currentUserId = req.user!.id;
 
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'first_image_url'],
             where: {
                 seller_id: currentUserId,
-                public: true,
-                id: { [Op.ne]: itemId }
+                status: { [Op.in]: ["active", "hidden", "soldout"] },
+                id: { [Op.ne]: itemId },
             },
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
-                }
-            ]
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -334,26 +269,26 @@ router.get('/money-management/item-list', authenticateToken, async (req: Request
         const currentUserId = req.user!.id;
 
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'first_image_url'],
             where: {
                 seller_id: currentUserId,
-                public: true
+                status: { [Op.in]: ["active", "hidden", "soldout"] },
             },
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
-                }
-            ]
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -365,26 +300,26 @@ router.get('/number-list', authenticateToken, async (req: Request, res: Response
         const currentUserId = req.user!.id;
 
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'sold_out', 'stock_all', 'stock_now', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", "attributes", 'first_image_url'],
             where: { 
                 seller_id: currentUserId,
-                public: true
+                status: { [Op.in]: ["active", "hidden", "soldout"] },
             },
             order: [['uploaded_date', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
-                }
-            ]
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -407,14 +342,14 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
             latestSearch = await Search.findOne({
                 where: {
                     id: searchId,
-                    user_id: currentUserId
+                    user_id: currentUserId,
                 }
             });
         } else {
             latestSearch = await Search.findOne({
                 where: {
                     user_id: currentUserId,
-                    search_text: { [Op.ne]: null }
+                    search_text: { [Op.ne]: null },
                 },
                 order: [['createdAt', 'DESC']]
             });
@@ -429,7 +364,7 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
                 'id', 
                 'name', 
                 'price', 
-                'sold_out',
+                "status",
                 'search_text',
                 'sort_number', 
                 [literal(`(
@@ -440,7 +375,7 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
             ],
             where: {
                 seller_id: { [Op.ne]: currentUserId },
-                public: true,
+                status: { [Op.in]: ["active", "soldout"] },
                 search_text: { [Op.iLike]: `%${searchWord}%` }
             },
             order: [
@@ -456,25 +391,25 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
             include: [
                 {
                     model: Video,
-                    attributes: ['thumbnail_url', 'duration', 'title']
+                    attributes: ['thumbnail_url', 'duration', 'title'],
                 },
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
                 },
                 {
                     model: User,
-                    attributes: ['user_name', 'profile_image']
-                }
-            ]
+                    attributes: ['user_name', 'profile_image'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -497,16 +432,16 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
             latestSearch = await Search.findOne({
                 where: {
                     id: searchId,
-                    user_id: currentUserId
-                }
+                    user_id: currentUserId,
+                },
             });
         } else {
             latestSearch = await Search.findOne({
                 where: {
                     user_id: currentUserId,
-                    search_text: { [Op.ne]: null }
+                    search_text: { [Op.ne]: null },
                 },
-                order: [['createdAt', 'DESC']]
+                order: [['createdAt', 'DESC']],
             });
         }
 
@@ -519,7 +454,7 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
                 'id', 
                 'name', 
                 'price', 
-                'sold_out',
+                "status",
                 'search_text',
                 'first_image_url',
                 'sort_number', 
@@ -531,8 +466,8 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
             ],
             where: {
                 seller_id: { [Op.ne]: currentUserId },
-                public: true,
-                search_text: { [Op.iLike]: `%${searchWord}%` }
+                status: { [Op.in]: ["active", "soldout"] },
+                search_text: { [Op.iLike]: `%${searchWord}%` },
             },
             order: [
                 [literal(`(
@@ -547,17 +482,17 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
             include: [
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
-                }
-            ]
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -575,16 +510,16 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
         const searchId = req.query.search_id;
 
         if (!searchId) {
-            res.status(400).json({ error: 'search_idが指定されていません。' });
+            res.status(400).json({ message: 'search_idが指定されていません。' });
             return;
         }
 
         const search = await Search.findOne({
-            where: { id: searchId }
+            where: { id: searchId },
         });
 
         if (!search) {
-            res.status(404).json({ error: '検索情報が見つかりません。' });
+            res.status(404).json({ message: '検索情報が見つかりません。' });
             return;
         }
 
@@ -595,14 +530,10 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
 
         if (parts.length === 1) {
             categoryCondition = {
-                category_text: {
-                    [Op.iLike]: `%${parts[0]}%`
-                }
+                category_text: { [Op.iLike]: `%${parts[0]}%` },
             };
         } else {
-            categoryCondition = {
-                category_text: categoryText
-            };
+            categoryCondition = { category_text: categoryText };
         }
 
         const itemList = await Item.findAll({
@@ -610,13 +541,12 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
                 'id',
                 'name',
                 'price',
-                'sold_out',
-                'category_text',
+                "status",
                 'sort_number'
             ],
             where: {
                 seller_id: { [Op.ne]: currentUserId },
-                public: true,
+                status: { [Op.in]: ["active", "soldout"] },
                 ...categoryCondition
             },
             order: [['sort_number', 'DESC']],
@@ -625,25 +555,25 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
             include: [
                 {
                     model: Video,
-                    attributes: ['thumbnail_url', 'duration', 'title']
+                    attributes: ['thumbnail_url', 'duration', 'title'],
                 },
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+                    attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
                 },
                 {
                     model: User,
-                    attributes: ['user_name', 'profile_image']
-                }
-            ] 
+                    attributes: ['user_name', 'profile_image'],
+                },
+            ] ,
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -661,16 +591,16 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
         const searchId = req.query.search_id;
 
         if (!searchId) {
-            res.status(400).json({ error: 'search_idが指定されていません 。' });
+            res.status(400).json({ message: 'search_idが指定されていません 。' });
             return;
         }
 
         const search = await Search.findOne({
-            where: { id: searchId }
+            where: { id: searchId },
         });
 
         if (!search) {
-            res.status(404).json({ error: '検索情報が見つかりません。' });
+            res.status(404).json({ message: '検索情報が見つかりません。' });
             return;
         }
 
@@ -681,14 +611,10 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
 
         if (parts.length === 1) {
             categoryCondition = {
-                category_text: {
-                    [Op.iLike]: `%${parts[0]}%`
-                }
+                category_text: { [Op.iLike]: `%${parts[0]}%` },
             };
         } else {
-            categoryCondition = {
-                category_text: categoryText
-            };
+            categoryCondition = { category_text: categoryText };
         }
 
         const itemList = await Item.findAll({
@@ -696,14 +622,13 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
                 'id',
                 'name',
                 'price',
-                'sold_out',
-                'category_text',
+                "status",
                 'sort_number',
                 'first_image_url',
             ],
             where: {
                 seller_id: { [Op.ne]: currentUserId },
-                public: true,
+                status: { [Op.in]: ["active", "soldout"] },
                 ...categoryCondition
             },
             order: [['sort_number', 'DESC']],
@@ -712,17 +637,17 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
             include: [
                 {
                     model: Sale,
-                    attributes: ['sale_flag', 'discount_rate', 'discount_amount']
+                    attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
                 },
-            ] 
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
+            res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -732,30 +657,30 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
 router.get('/uploaded-list-all', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'stock_all', 'stock_now', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', "attributes", 'first_image_url'],
             where: { 
                 seller_id: req.user!.id,
-                public: true
+                status: { [Op.in]: ["active", "hidden", "soldout"] },
             },
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
                 },
                 {
                     model: Video,
-                    attributes: ['title']
-                }
-            ]
+                    attributes: ['title'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -765,31 +690,30 @@ router.get('/uploaded-list-all', authenticateToken, async (req: Request, res: Re
 router.get('/uploaded-list-selling', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'sold_out', 'uploaded_date', 'stock_all', 'stock_now', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'uploaded_at', "attributes", 'first_image_url'],
             where: { 
                 seller_id: req.user!.id,
-                public: true,
-                sold_out: false
+                status: "active",
             },
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
                 },
                 {
                     model: Video,
-                    attributes: ['title']
-                }
-            ]
+                    attributes: ['title'],
+                },
+            ],
         });
 
         if (!itemList) {
-            res.status(404).json({ error: 'アイテムが見つかりません。' });
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json(itemList);
+        res.json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

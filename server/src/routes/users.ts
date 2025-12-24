@@ -27,7 +27,7 @@ router.get('/me-admin', authenticateToken, async (req: Request, res: Response): 
 router.get('/inquiry', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   try {
     const data = await User.findByPk(req.user!.id, {
-      attributes: ['id', 'user_name', 'email']
+      attributes: ['id', 'user_name', 'email'],
     });
 
     if (!data) {
@@ -35,7 +35,7 @@ router.get('/inquiry', authenticateToken, async (req: Request, res: Response): P
       return;
     }
 
-    res.json(data);
+    res.json({ data });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -51,7 +51,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
 
   try {
     const user = await User.findByPk(userId, {
-      attributes: ['user_name', 'user_introduction', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
+      attributes: ["id", 'user_name', 'user_introduction', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
       include: [
         {
           model: ShopInfo,
@@ -70,22 +70,22 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
     const hasShop = !!user.ShopInfo;
     
     const items = await Item.findAll({
-      attributes: ['id', 'name', 'price', 'public', 'sold_out', 'uploaded_date', 'seller_id'],
+      attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
       where: {
-        public: true,
-        seller_id: userId
+        status: { [Op.in]: ["active", "soldout"] },
+        seller_id: userId,
       },
       limit,
       offset,
-      order: [['uploaded_date', 'DESC']],
+      order: [['uploaded_dat', 'DESC']],
       include: [
         {
           model: Video,
-          attributes: ['thumbnail_url', 'title', 'duration']
+          attributes: ['thumbnail_url', 'title', 'duration'],
         },
         {
           model: Sale,
-          attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount']
+          attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
         }
       ]
     });
@@ -93,7 +93,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
     const hasItemCount = await Item.count({
       where: {
         public: true,
-        seller_id: userId
+        seller_id: userId,
       }
     }) ?? 0;
             
@@ -120,7 +120,7 @@ router.get('/star/:id', async (req: Request, res: Response): Promise<void> => {
       attributes: ['star_average'],
     });
 
-    res.status(200).json(user);
+    res.status(200).json({ user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -133,7 +133,7 @@ router.get('/profile/metadata/:id', async (req: Request, res: Response): Promise
       attributes: ['user_name', 'user_introduction'],
     });
 
-    res.status(200).json(userData);
+    res.status(200).json({ userData });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -158,32 +158,37 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
 
     const hasShop = !!user.ShopInfo;
 
-    const itemCount = await Item.count({ where: { seller_id: currentUserId, public: true } });
+    const itemCount = await Item.count({
+      where: { 
+        seller_id: currentUserId,
+        status: { [Op.in]: ["active", "soldout"] },
+      }
+    });
     const soldItemCount = await Item.count({
       where: {
         seller_id: currentUserId,
-        sold_out: true
-      }
+        status: "soldout",
+      },
     });
 
     const unreadCount = await Notification.count({
       where: {
         read_user_id: req.user!.id,
-        read_flag: false
-      }
+        read_flag: false,
+      },
     });
     
     const referenceCount = await ReferenceCode.count({
       where: {
         output_user_id: currentUserId,
-        checked: true
-      }
+        checked: true,
+      },
     });
 
     res.status(200).json({
       userData: {
         user,
-        hasShop
+        hasShop,
       },
       itemCount,
       soldItemCount,
@@ -211,9 +216,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
           model: BankAccount,
           attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
           include: [
-            {
-              model: AccountTypeOption,
-            },
+            { model: AccountTypeOption },
           ],
         },
       ],
