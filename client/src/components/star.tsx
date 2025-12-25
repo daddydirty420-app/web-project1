@@ -21,7 +21,7 @@ export default function Star({ userId }: Props) {
 
                 if (res.ok) {
                     const data = await res.json();
-                    setStar(data.star_average);
+                    setStar(Number(data.star_average));
                 }
             } catch (err) {
                 console.error(err);

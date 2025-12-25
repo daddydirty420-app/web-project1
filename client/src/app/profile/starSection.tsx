@@ -17,5 +17,5 @@ export default function StarSection({ user, userId }: Props) {
             <Star userId={userId} />
             <small className={clsx('text-blue-500 ml-1', styles.small)}>{user.star_amount.toLocaleString()}</small>
         </div>
-    )
+    );
 }
