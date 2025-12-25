@@ -164,7 +164,10 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                         <section className={styles.videoListSection} key={data.id}>
                             <Link href={itemLink} className={styles.thumbnail}>
                                 <Image
-                                    src={data.Video?.thumbnail_url ?? '/no-image(16x9).png'}
+                                    src={data.Video?.thumbnail_url
+                                        ? encodeURI(data.Video.thumbnail_url.trim())
+                                        : '/no-image(16x9).png'
+                                    }
                                     alt={data.Video?.title ?? '動画サムネイル'}
                                     fill
                                     priority={false}
@@ -218,7 +221,10 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                             <Link href={itemLink}>
                                 <div className={styles.ILImageDiv}>
                                     <Image
-                                        src={data.first_image_url || '/no-image(1x1).png'}
+                                        src={data.first_image_url
+                                            ? encodeURI(data.first_image_url.trim())
+                                            : '/no-image(1x1).png'
+                                        }
                                         alt={data.name}
                                         fill
                                         sizes='(max-width: 768px) 33vw, 16.66vw'

@@ -83,7 +83,7 @@
     background-color: var(--button-gray);
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.15s ease, opacity 0.15s ease;
+    transition: background-color 0.15s ease;
 }
 .shopButton:hover {
     background-color: var(--button-gray-hover);

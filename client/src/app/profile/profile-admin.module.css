@@ -30,7 +30,6 @@
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--light-background);
     box-shadow: var(--shadow-str);
     border-radius: 10px;
     z-index: 5000;
@@ -70,9 +69,8 @@
     font-size: 13px;
     font-weight: 600;
     color: #fff;
-    background-color: var(--theme);
+    background-color: var(--theme-sub);
     border-radius: 5px;
-    box-shadow: var(--shadow);
     cursor: pointer;
 }
 .popupButton:hover {
