@@ -9,7 +9,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id } = params;
+    const { id } = await params;
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/user/profile/metadata/${id}`,
         {
@@ -18,7 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         }
     );
 
-    const user = await res.json();
+    const data = await res.json();
+    const user = data.userData;
 
     return {
         title: `${user.user_name}`,
