@@ -254,8 +254,6 @@
     font-weight: 600;
     color: #fff;
     background-color: var(--theme-sub);
-    border: none;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .ellipsis {
