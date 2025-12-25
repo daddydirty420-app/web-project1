@@ -235,7 +235,7 @@
 }
 
 .pageIcon {
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .pageButton {
@@ -245,15 +245,15 @@
     width: 32px;
     height: 32px;
     font-size: 14px;
-    color: var(--theme);
-    border: solid 1px var(--theme);
+    color: var(--theme-sub);
+    border: none;
     border-radius: 6px;
     cursor: pointer;
 }
 .pageButton.active {
     font-weight: 600;
     color: #fff;
-    background-color: var(--theme);
+    background-color: var(--theme-sub);
     border: none;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
