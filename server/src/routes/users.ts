@@ -73,6 +73,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
       attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
       where: {
         status: { [Op.in]: ["active", "soldout"] },
+        seller_id: userId,
       },
       limit,
       offset,
