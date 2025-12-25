@@ -12,6 +12,8 @@
   --theme-sub: rgba(107, 114, 128, 0.9);
   --theme-sub-soft: rgba(156, 163, 175, 0.9);
   --theme-sub-hover: rgba(75, 85, 99, 1);
+  --button-gray: rgba(229, 231, 235, 1);
+  --button-gray-hover: rgba(209, 213, 219, 1);
   --white: #ffffff;
   --gray-10: #eeeeee;
   --gray-25: #aaaaaa;
