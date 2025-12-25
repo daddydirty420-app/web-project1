@@ -10,7 +10,7 @@
     align-items: center;
     border-top: solid 1px var(--gray-line-mid-str);
     padding: 0 6px 12px;
-    background-color: var(--light-background);
+    background-color: var(--gray-background);
     box-shadow: var(--shadow-mini-top);
     z-index: 1000;
 }
