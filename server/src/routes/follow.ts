@@ -46,6 +46,11 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
 router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
     const targetUserId = Number(req.params.id);
+    const same = !!(currentUserId === targetUserId);
+    console.log({
+        currentUserId,
+        same
+    });
     if (!currentUserId || currentUserId === targetUserId) {
         res.status(404).json({ message: 'ユーザーが見つかりません。' });
         return;
