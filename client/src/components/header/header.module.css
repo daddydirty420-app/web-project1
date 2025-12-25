@@ -35,6 +35,9 @@
     padding: 5px;
     color: var(--theme-sub);
 }
+.searchIcon:hover {
+    color: var(--theme-sub-hover);
+}
 
 .activeIcon {
     cursor: pointer;
@@ -63,6 +66,9 @@
     height: 20px;
     color: var(--theme-sub);
     padding: 5px;
+}
+.uploadIcon:hover {
+    color: var(--theme-sub-hover);
 }
 
 .uploadP {
@@ -118,6 +124,9 @@
     font-size: 20px;
     cursor: pointer;
     color: var(--theme-sub);
+}
+.searchIconMobile:hover {
+    color: var(--theme-sub-hover);
 }
 
 .categoryText {

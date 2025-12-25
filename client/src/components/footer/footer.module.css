@@ -32,6 +32,9 @@
     padding: 7px 5px 3px;
     color: var(--theme-sub);
 }
+.linkIcon:hover {
+    color: var(--theme-sub-hover);
+}
 
 .linkP {
     font-size: 10px;
@@ -43,6 +46,9 @@
     height: 40px;
     padding: 5px;
     color: var(--theme-sub);
+}
+.uploadIcon:hover {
+    color: var(--theme-sub-hover);
 }
 
 .notifDiv {
