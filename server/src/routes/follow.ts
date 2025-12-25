@@ -92,6 +92,12 @@ router.get('/status', authenticateToken, async (req: Request, res: Response): Pr
             }
         });
 
+        console.log({
+            "currentUserId:": currentUserId,
+            "targetUserId:": targetUserId,
+            "isFollowing:": !!isFollowing
+        });
+
         res.json({ isFollowing: !!isFollowing });
     } catch (err) {
         console.error(err);
