@@ -20,13 +20,13 @@
     font-size: 12px;
     font-weight: 600;
     color: var(--theme-sub-hover);
-    background-color: rgba(156, 163, 175, 0.12);
+    background-color: var(--button-gray);
     cursor: pointer;
     transition: color 0.15s ease,
             background-color 0.15s ease;
 }
 .stateButton:hover {
-    background-color: rgba(156, 163, 175, 0.18);
+    background-color: var(--button-gray-hover);
 }
 
 .stateIcon {

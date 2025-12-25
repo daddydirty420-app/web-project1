@@ -72,8 +72,7 @@
     background-color: var(--theme-sub);
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.15s ease;
 }
 .popupButton:hover {
-    box-shadow: none;
-    opacity: .8;
 }
