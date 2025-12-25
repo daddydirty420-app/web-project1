@@ -19,7 +19,7 @@
 .userName {
     font-size: 14px;
     font-weight: 700;
-    color: var(--theme);
+    color: var(--h-color);
 }
 
 .honninIcon {
@@ -36,7 +36,7 @@
 .earlyIcon {
     width: 16px;
     height: 16px;
-    color: var(--theme);
+    color: var(--theme-sub);
     margin-left: 4px;
 }
 
@@ -79,9 +79,8 @@
     margin: 1em auto;
     font-size: 14px;
     font-weight: 600;
-    color: var(--theme);
-    background-color: var(--light-background);
-    border: solid 3px var(--theme);
+    color: var(--theme-sub);
+    border: solid 3px var(--theme-sub);
     border-radius: 10px;
     box-shadow: var(--shadow);
     cursor: pointer;
@@ -129,8 +128,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--light-background);
-    border: solid 1px var(--theme);
+    border: solid 1px var(--theme-sub);
     border-radius: 13px;
     width: 60px;
     height: 26px;

@@ -88,7 +88,7 @@
 .title {
     font-size: 14px;
     font-weight: 600;
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .itemNamePrice {
@@ -108,7 +108,7 @@
 
 .itemName {
     font-size: 14px;
-    color: var(--foreground);
+    color: var(--h-color);
 }
 
 .itemPriceSale {
@@ -136,7 +136,7 @@
 .price {
     font-size: 18px;
     font-weight: 700;
-    color: var(--theme-sub);
+    color: var(--text);
     text-align: right;
 }
 
