@@ -33,7 +33,7 @@
     width: 20px;
     height: 20px;
     padding: 5px;
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .activeIcon {
@@ -61,7 +61,7 @@
     display: block;
     width: 20px;
     height: 20px;
-    color: var(--theme);
+    color: var(--theme-sub);
     padding: 5px;
 }
 
@@ -117,7 +117,7 @@
     right: 12px;
     font-size: 20px;
     cursor: pointer;
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .categoryText {
@@ -216,7 +216,7 @@
 
     .categorySearchPC {
         font-size: 14px;
-        color: var(--theme);
+        color: var(--theme-sub);
     }
 
     .suggestAreaPC {

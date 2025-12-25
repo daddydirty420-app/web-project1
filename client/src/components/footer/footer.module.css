@@ -30,7 +30,7 @@
     width: 25px;
     height: 25px;
     padding: 7px 5px 3px;
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .linkP {
@@ -42,7 +42,7 @@
     width: 40px;
     height: 40px;
     padding: 5px;
-    color: var(--theme);
+    color: var(--theme-sub);
 }
 
 .notifDiv {
