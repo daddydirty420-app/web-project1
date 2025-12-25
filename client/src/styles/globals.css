@@ -63,7 +63,7 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text);
   font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
   font-size: var(--body);
   letter-spacing: 0.05em;
@@ -107,5 +107,5 @@ span > img {
 /* input */
 input:focus {
   outline: 0;
-  background-color: rgba(254, 190, 32, 0.06);
+  background-color: rgba(229, 231, 235, 0.4);
 }
