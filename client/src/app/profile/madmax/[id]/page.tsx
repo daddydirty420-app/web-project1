@@ -35,6 +35,7 @@ export default async function Profile({ params }: Props) {
     const { id: userId } = await params;
 
     const session = await getServerSession(authOptions);
+    console.log(session?.user.admin);
 
     if (!session?.user.admin) redirect(`/profile/${userId}`);
         
