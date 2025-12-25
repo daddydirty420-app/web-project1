@@ -92,7 +92,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
     
     const hasItemCount = await Item.count({
       where: {
-        public: true,
+        status: { [Op.in]: ["active", "soldout"] },
         seller_id: userId,
       }
     }) ?? 0;
