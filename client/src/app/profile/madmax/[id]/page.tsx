@@ -35,9 +35,6 @@ export default async function Profile({ params }: Props) {
     const { id: userId } = await params;
 
     const session = await getServerSession(authOptions);
-    console.log(session?.user.admin);
-
-    if (!session?.user.admin) redirect(`/profile/${userId}`);
         
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
@@ -55,5 +52,5 @@ export default async function Profile({ params }: Props) {
 
     const currentUserId = session?.user.id;
 
-    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId} adminPage loggedIn />;
+    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId ?? ""} adminPage loggedIn />;
 };

@@ -79,7 +79,6 @@
     margin: 1em auto;
     font-size: 13px;
     font-weight: 600;
-    color: var(--text);
     background-color: var(--button-gray);
     border-radius: 8px;
     cursor: pointer;
@@ -127,18 +126,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: solid 1px var(--theme-sub);
-    border-radius: 13px;
+    border-radius: 5px;
     width: 60px;
     height: 26px;
     font-size: 13px;
     font-weight: 600;
-    box-shadow: var(--shadow);
+    background-color: var(--button-gray);
     cursor: pointer;
+    transition: background-color 0.15s ease;
 }
-.linkButton:hover {
-    box-shadow: none;
-    opacity: .8;
+.editButton:hover {
+    background-color: var(--button-gray-hover);
 }
 
 @media (min-width: 768px) {
