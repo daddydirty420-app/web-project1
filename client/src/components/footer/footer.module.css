@@ -48,9 +48,11 @@
     height: 40px;
     padding: 5px;
     color: var(--theme-sub);
+    transition: color 0.15s ease, transform 0.15s ease;
 }
 .uploadIcon:hover {
     color: var(--theme-sub-hover);
+    transform: scale(1.05);
 }
 
 .notifDiv {
