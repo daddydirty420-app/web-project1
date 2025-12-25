@@ -3,25 +3,28 @@
     height: 30px;
     font-size: 11px;
     font-weight: 600;
-    border: solid 2px var(--theme-sub);
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.15s ease,
                 color 0.15s ease,
                 border-color 0.15s ease;
 }
-.followButton:hover {
-    border-color: rgba(75, 85, 99, 1);
-}
 
 .false {
     background-color: var(--theme-sub);
     color: #fff;
 }
+.false:hover {
+    border-color: var(--theme-sub-soft);
+}
 
 .true {
+    border: solid 2px var(--theme-sub);
     background-color: #fff;
     color: var(--theme-sub);
+}
+.true:hover {
+    border-color: var(--theme-sub-hover);
 }
 
 @media (min-width: 768px) {
