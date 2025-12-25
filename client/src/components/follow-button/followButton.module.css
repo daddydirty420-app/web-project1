@@ -15,7 +15,7 @@
     color: #fff;
 }
 .false:hover {
-    border-color: var(--theme-sub-soft);
+    background-color: var(--theme-sub-soft);
 }
 
 .true {
