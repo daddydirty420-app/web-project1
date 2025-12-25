@@ -71,6 +71,9 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
     
     const items = await Item.findAll({
       attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
+      where: {
+        status: { [Op.in]: ["active", "soldout"] },
+      },
       limit,
       offset,
       order: [['uploaded_at', 'DESC']],
