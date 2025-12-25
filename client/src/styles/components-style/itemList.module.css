@@ -16,22 +16,23 @@
     width: 90px;
     height: 30px;
     margin-left: auto;
-    border: solid 2px var(--theme);
-    border-radius: 10px;
-    background-color: #fff;
+    border: solid 1.5px var(--theme-sub);
+    border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--theme);
-    box-shadow: var(--shadow);
+    color: var(--theme-sub);
     cursor: pointer;
+    transition: color 0.15s ease,
+            border-color 0.15s ease,
+            background-color 0.15s ease;
 }
 .stateButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    border-color: var(--theme-sub-hover);
+    color: var(--theme-sub-hover);
 }
 
 .stateIcon {
-    color: var(--theme);
+    color: inherit;
     width: 14px;
     height: 14px;
 }
