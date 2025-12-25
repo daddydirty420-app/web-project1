@@ -7,7 +7,12 @@
 .back {
     width: 24px;
     height: 24px;
-    color: var(--theme);
+    color: var(--theme-sub);
     padding: 5px 5px 5px 0;
     cursor: pointer;
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+.back:hover {
+    color: var(--theme-sub-hover);
+    transform: scale(1.05);
 }
