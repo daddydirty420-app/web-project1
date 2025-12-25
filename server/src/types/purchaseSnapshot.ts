@@ -17,6 +17,7 @@ export type PurchaseSnapshot = {
         color?: string;
         size?: string;
         size_label?: string;
+        image_url?: string;
     };
 
     material?: string[]; // 素材表記

@@ -44,6 +44,7 @@ export type ItemAttributes = {
         color?: string;
         size?: string;
         size_label?: string;
+        image_url?: string;
         inventory?: {
             initial: number,
             current: number,

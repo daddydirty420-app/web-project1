@@ -49,7 +49,6 @@ export const startItemDeleteCron = () => {
 
     // 1週間放置item削除
     cron.schedule("0 12 * * *", async () => {
-        const t = await sequelize.transaction();
         try {
             const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
 
@@ -64,14 +63,13 @@ export const startItemDeleteCron = () => {
                 console.log("[cron] 1週間放置itemはありません。");
                 return;
             }
-            await items.destroy({ transaction: t });
-
-            await t.commit();
+            await items.destroy();
 
             console.log(`[cron] ${items.length}件の1週間放置itemを削除しました。`);
         } catch (err) {
-            await t.rollback();
             console.error("[cron] 1週間放置item削除エラー：", err);
         }
+    }, {
+        timezone: "Asia/Tokyo",
     });
 };
