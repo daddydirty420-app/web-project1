@@ -4,7 +4,7 @@ import { FollowButton } from '@/components';
 import styles from './profile.module.css';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCampground, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faStore, faTag } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import Introduction from './introduction';
 
@@ -37,7 +37,7 @@ export default function ProfileMain({ data, userId, currentUserId, adminPage, lo
                     <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
                 )}
                 {data.user.early_seller && (
-                    <FontAwesomeIcon icon={faCampground} className={styles.earlyIcon} />
+                    <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
                 )}
                 {data.hasShop && (
                     <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
