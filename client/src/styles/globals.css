@@ -3,24 +3,25 @@
 
 :root {
   /* カラー */
-  --background: #f4f2ef;
-  --light-background: #faf9f7;
-  --foreground: rgba(36, 36, 36, 0.94);
-  --h-color: rgba(18, 18, 18, 0.96);
-  --theme: rgba(47, 112, 8, 0.92);
-  --theme-sub: rgba(158, 101, 60, 0.92);
+  --background: rgba(255, 255, 255, 0.98);
+  --gray-background: rgba(246, 247, 249, 1);
+  --text: rgba(34, 34, 34, 0.92);
+  --h-color: rgba(17, 17, 17, 0.98);
+  --text-muted: rgba(107, 114, 128, 0.9);
+  --theme: rgba(37, 99, 235, 0.95);
+  --theme-sub: rgba(107, 114, 128, 0.9);
   --white: #ffffff;
   --gray-10: #eeeeee;
   --gray-25: #aaaaaa;
-  --gray-50: #707070;
+  --gray-50: #6b7280; /*旧#707070*/
   --gray-75: #444444;
   --gray-line: rgba(0, 0, 0, 0.08);
   --gray-line-mid: rgba(0, 0, 0, 0.10);
   --gray-line-mid-str: rgba(0, 0, 0, 0.12);
   --gray-line-str: rgba(0, 0, 0, 0.14);
   --black: #222222;
-  --accent: #0d87e0;
-  --alert: rgba(237, 26, 61, 0.9);
+  --accent: rgba(13, 135, 224, 0.85);
+  --alert: rgba(200, 30, 45, 0.9);
 
   /* タイポグラフィ（フォントサイズ） */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
