@@ -24,7 +24,7 @@ export default function ItemListRow({ itemList }: Props) {
                                 height={100}
                                 className={styles.itemImage}
                                 />
-                                {item.sold_out && (
+                                {item.status === "soldout" && (
                                     <div className={styles.sold}>
                                         <p className={styles.soldP}>SOLD</p>
                                     </div>

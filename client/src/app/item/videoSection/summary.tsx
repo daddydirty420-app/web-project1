@@ -26,7 +26,7 @@ export default function Summary({ id, item, sellerMe, page }: Props) {
 
     const expand = async () => {
         setExpanded(!expanded);
-        if (item.sold_out || expanded || sellerMe || page !== "normal") return;
+        if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/sort-add/${id}?number=5`, {

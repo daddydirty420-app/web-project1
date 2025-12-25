@@ -28,7 +28,7 @@ export default function CountElem({ id, item, sellerMe, goodCount, isGood, page,
                 </div>
 
                 <div className="block text-center">
-                    <p className={styles.countNumber}>{formatRelativeTime(item.uploaded_date)}</p>
+                    <p className={styles.countNumber}>{formatRelativeTime(item.uploaded_at)}</p>
                     <p className={styles.countText}>出品日</p>
                 </div>
                 </>

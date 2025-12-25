@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import styles from "./comment.module.css";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 

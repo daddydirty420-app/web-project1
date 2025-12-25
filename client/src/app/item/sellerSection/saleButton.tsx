@@ -19,7 +19,7 @@ export default function SaleButton({ item }: Props) {
     const [saleStopPopup, setSaleStopPopup] = useState(false);
     const router = useRouter();
 
-    if (item.sold_out) return;
+    if (item.status === "soldout") return;
 
     const sale = item.Sale;
 

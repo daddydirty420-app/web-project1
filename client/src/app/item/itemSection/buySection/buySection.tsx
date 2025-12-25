@@ -130,7 +130,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
             if (res.ok) {
                 const data = await res.json();
                 const deliveryId = data.deliveryId;
-                if (item.ColorSizes && item.ColorSizes.length > 0) {
+                if (item.attributes.variants && item.attributes.variants.length >= 2) {
                     router.push(`/buy/color-size/${deliveryId}`);
                 } else {
                     router.push(`/buy/trans/${deliveryId}`);

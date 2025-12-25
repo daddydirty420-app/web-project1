@@ -19,7 +19,7 @@ type Props = {
 
 export default function AddressEditForm({ address, page, deliveryId, shopId, shopEditId }: Props) {
     const [postNumber, setPostNumber] = useState(address?.post_number ?? "");
-    const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken.name ?? "");
+    const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken?.name ?? "");
     const [shikutyouson, setShikutyouson] = useState(address?.shikutyouson ?? "");
     const [banchi, setBanchi] = useState(address?.banchi ?? "");
     const [building, setBuilding] = useState(address?.building ?? "");

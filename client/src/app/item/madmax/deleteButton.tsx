@@ -29,7 +29,7 @@ export default function DeleteButton({ id, item }: Props) {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-admin/delete-item/${id}`, {
                 method: "DELETE",
                 headers: {
-                    "Content-type": "application/json",
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ deleteReason }),

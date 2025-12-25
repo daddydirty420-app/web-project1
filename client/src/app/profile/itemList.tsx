@@ -191,7 +191,7 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                                         {data.Sale?.sale_flag && data.Sale.discount_amount > 0 && (
                                             <p className={styles.saleSold}>{data.Sale.discount_amount.toLocaleString()}円引き</p>
                                         )}
-                                        {data.sold_out && (
+                                        {data.status === "soldout" && (
                                             <p className={styles.saleSold}>SOLD OUT</p>
                                         )}
                                         <h3 className={styles.price}>￥{data.price.toLocaleString()}</h3>
@@ -225,7 +225,7 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                                         priority={false}
                                         className={styles.itemImage}
                                     />
-                                    {data.sold_out && (
+                                    {data.status === "soldout" && (
                                         <div className={styles.ILSold}>
                                             <p className={styles.ILSoldP}>SOLD</p>
                                         </div>

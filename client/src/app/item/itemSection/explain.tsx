@@ -26,12 +26,12 @@ export default function Explain({ id, item, sellerMe, page }: Props) {
 
     const expand = async () => {
         setExpanded(!expanded);
-        if (item.sold_out || expanded || sellerMe || page !== "normal") return;
+        if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/sort-add/${id}?number=5`, {
                 method: 'PATCH',
-                headers: { 'Content-type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (!res.ok) {

@@ -1,34 +1,53 @@
-export type Item = {
-    id: string;
-    name: string;
-    explain: string;
-    image_url: string[];
-    category_text: string;
-    price: number;
-    seller_id: number;
-    stock_all: number;
-    stock_now: number;
-    stock_20: number;
-    sold_out: boolean;
-    draft: boolean;
-    public: boolean;
-    early_sell: boolean;
-    updatedAt: Date;
-    uploaded_date: Date;
-    not_finish: boolean;
-    save_at: Date;
-    deleted_at: Date;
-    ItemConditionOption?: ItemConditionOption | null;
-    User?: User | null;
-    Video?: Video | null;
-    Sale?: Sale | null;
-    ParentDelivery?: Delivery | null;
-    ReccomendItem?: ReccomendItem | null;
-    ColorSizes?: ColorSize[] | null;
-};
+import type { ItemAttributes } from "@/types/itemAttributes";
 
 export type ItemConditionOption = {
+    id: string;
     name: string;
+};
+
+export type ShippingDayOption = {
+    id: string;
+    name: string;
+};
+
+export type ShippingServiceOption = {
+    id: string;
+    name: string;
+};
+
+export type TodouhukenOption = {
+    id: string;
+    name: string;
+};
+
+export type ReccomendItem = {
+    plus: boolean;
+};
+
+export type ShopInfo = {
+    id: string;
+};
+
+export type Brand = {
+    id: string;
+    name: string;
+};
+
+export type Categories = {
+    id: string;
+    name: string;
+    level: number;
+    allowed_gender: "men" | "women" | "both";
+    allowed_age: "adult" | "kids" | "both";
+    parent?: Categories | null;
+};
+
+export type ItemShippingProfile = {
+    id: string,
+    ShippingDayOption?: ShippingDayOption | null;
+    ShippingServiceOption?: ShippingServiceOption | null;
+    TodouhukenOption?: TodouhukenOption | null;
+    shipping_service_free_text?: string | null;
 };
 
 export type User = {
@@ -40,76 +59,6 @@ export type User = {
     star_amount: number;
     star_average: number;
     ShopInfo?: ShopInfo | null;
-};
-
-export type ShopInfo = {
-    id: string;
-};
-
-export type Video = {
-    id: string;
-    thumbnail_url: string;
-    title: string;
-    summary: string;
-    duration: string;
-    play_count: number;
-    original_url: string;
-    converted_url: string;
-    status: string;
-};
-
-export type Sale = {
-    id: string;
-    before_price: number;
-    discount_rate: number;
-    discount_amount: number;
-    sale_flag: boolean;
-};
-
-export type Delivery = {
-    ShippingDayOption?: ShippingDayOption | null;
-    ShippingServiceOption?: ShippingServiceOption | null;
-    DeliveryTodouhuken?: TodouhukenOption | null;
-};
-
-export type ShippingDayOption = {
-    name: string;
-};
-
-export type ShippingServiceOption = {
-    name: string;
-};
-
-export type TodouhukenOption = {
-    name: string;
-};
-
-export type ReccomendItem = {
-    plus: boolean;
-};
-
-export type ColorSize = {
-    kind: string;
-    color: string;
-    size: string;
-    image_url: string;
-    stock_all: number;
-    stock_now: number;
-    SizeOption?: SizeOption | null;
-    SizeShoesOption?: SizeShoesOption | null;
-    SizeWearOption?: SizeWearOption | null;
-};
-
-export type SizeOption = {
-    name: string;
-};
-
-export type SizeShoesOption = {
-    name: string;
-};
-
-export type SizeWearOption = {
-    name: string;
 };
 
 export type Comment = {
@@ -129,4 +78,50 @@ export type Comment = {
     reportCount: number;
     User?: User | null;
     Item?: Item | null;
-}
+};
+
+export type Sale = {
+    id: string;
+    before_price: number;
+    discount_rate: number;
+    discount_amount: number;
+    sale_flag: boolean;
+};
+
+export type Video = {
+    id: string;
+    thumbnail_url: string;
+    title: string;
+    summary: string;
+    duration: string;
+    play_count: number;
+    original_url: string;
+    converted_url: string;
+    status: string;
+};
+
+export type Item = {
+    id: string;
+    name: string;
+    explain: string;
+    image_url: string[];
+    price: number;
+    seller_id: number;
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
+    early_sell: boolean;
+    updatedAt: Date;
+    uploaded_at: Date;
+    save_at: Date;
+    deleted_at: Date;
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
+    attributes: ItemAttributes;
+    ItemConditionOption?: ItemConditionOption | null;
+    User?: User | null;
+    Video?: Video | null;
+    Sale?: Sale | null;
+    ItemShippingProfile?: ItemShippingProfile | null;
+    ReccomendItem?: ReccomendItem | null;
+    Categories?: Categories | null;
+    Brand?: Brand | null;
+};

@@ -22,7 +22,7 @@ export type BankAccount = {
     account_type_id: number;
     account_number: string;
     meigi: string;
-    AccountTypeOption: AccountTypeOption;
+    AccountTypeOption?: AccountTypeOption | null;
 };
 
 export type Address = {
@@ -31,7 +31,7 @@ export type Address = {
     shikutyouson: string;
     banchi: string;
     building: string;
-    AddressTodouhuken?: TodouhukenOption;
+    AddressTodouhuken?: TodouhukenOption | null;
 };
 
 export type Name = {
@@ -72,7 +72,7 @@ export type User = {
     user_name: string;
     email: string;
     phone_number: string;
-    Address?: Address;
-    Name?: Name;
+    Address?: Address | null;
+    Name?: Name | null;
     BankAccount?: BankAccount | null;
 };

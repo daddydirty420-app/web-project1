@@ -18,17 +18,20 @@ type Props = {
 };
 
 export default function ItemSection({ id, item, sellerMe, page, loggedIn }: Props) {
+    const status = item.status;
+    const variants = item.attributes.variants;
+
     return (
         <section className={styles.itemSection}>
             <Slideshow images={item.image_url} />
             <ItemName item={item} page={page} />
             <Price item={item} />
-            {item.sold_out && <p className={styles.soldOut}>SOLD OUT</p>}
-            {!sellerMe && page === "normal" && !item.sold_out && <BuySection id={id} item={item} loggedIn={loggedIn} />}
-            {item.ColorSizes && item.ColorSizes.length > 0 && <ColorSizeList cs={item.ColorSizes} />}
+            {status === "soldout" && <p className={styles.soldOut}>SOLD OUT</p>}
+            {!sellerMe && page === "normal" && !(status === "soldout") && <BuySection id={id} item={item} loggedIn={loggedIn} />}
+            {variants && variants.length > 0 && <ColorSizeList item={item} />}
             <Explain id={id} item={item} sellerMe={sellerMe} page={page} />
             <CategoryText item={item} />
-            {!item.sold_out && <DeliverySection item={item} />}
+            {!(status === "soldout") && <DeliverySection item={item} />}
         </section>
     );
 };

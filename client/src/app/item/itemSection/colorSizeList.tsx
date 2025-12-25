@@ -1,45 +1,45 @@
 import styles from "./colorSize.module.css";
 import CStyle from "../itemCommon.module.css";
-import { ColorSize } from "../itemPageTypes";
 import Image from "next/image";
+import { Item } from "../itemPageTypes";
 
 type Props = {
-    cs: ColorSize[];
+    item: Item;
 };
 
-export default function ColorSizeList({ cs }: Props) {
+export default function ColorSizeList({ item }: Props) {
     return (
-        <section className={styles.csList}>
-            {cs.map((cs, i) => {
-                if (!cs) return null;
+        <section className={styles.variantList}>
+            {item.attributes.variants?.map((variant, i) => {
+                if (!variant) return null;
 
                 return (
-                    <div key={i} className={styles.csDiv}>
+                    <div key={i} className={styles.variantDiv}>
                         <Image
-                        src={cs.image_url}
+                        src={variant.image_url ?? ""}
                         alt="商品画像"
                         width={80}
                         height={80}
-                        className={styles.csImage}
+                        className={styles.variantImage}
                         />
-                        {cs.stock_now === 0 && <p className={styles.csSold}>SOLD OUT</p>}
-                        {cs.stock_now / cs.stock_all <= 0.2 && cs.stock_now > 0 && <p className={styles.wazuka}>残りわずか</p>}
-                        {cs.kind !== null && cs.kind !== "" && (
-                            <div className={styles.csTextDiv}>
-                                <p className={CStyle.small}>種類：</p>
-                                <p className={styles.csText}>{cs.kind}</p>
-                            </div>
-                        )}
-                        {cs.color !== null && cs.color !== "" && (
+                        {variant.inventory?.current === 0 && <p className={styles.csSold}>SOLD OUT</p>}
+                        {variant.inventory && (variant.inventory?.current / variant.inventory?.initial) <= variant.inventory?.low_stock_ratio 
+                        && 
+                        variant.inventory?.current > 0
+                        && 
+                        <p className={styles.wazuka}>
+                            残りわずか
+                        </p>}
+                        {variant.color !== null && variant.color !== "" && (
                             <div className={styles.csTextDiv}>
                                 <p className={CStyle.small}>カラー：</p>
-                                <p className={styles.csText}>{cs.color}</p>
+                                <p className={styles.csText}>{variant.color}</p>
                             </div>
                         )}
-                        {cs.size !== null && cs.size !== "" && (
+                        {variant.size !== null && variant.size !== "" && (
                             <div className={styles.csTextDiv}>
                                 <p className={CStyle.small}>サイズ：</p>
-                                <p className={styles.csText}>{cs.size}</p>
+                                <p className={styles.csText}>{variant.size_label}</p>
                             </div>
                         )}
                     </div>

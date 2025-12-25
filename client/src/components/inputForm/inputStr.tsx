@@ -10,9 +10,10 @@ type Props = {
     placeholder: string;
     numeric?: boolean;
     patternNum?: boolean;
+    maxLength?: number;
 };
 
-export default function InputStr({ title, hissu, type, value, onChange, placeholder, numeric, patternNum }: Props) {
+export default function InputStr({ title, hissu, type, value, onChange, placeholder, numeric, patternNum, maxLength }: Props) {
     return (
         <div className={styles.inputDiv}>
             <InputTitle title={title} hissu={hissu} />
@@ -25,6 +26,7 @@ export default function InputStr({ title, hissu, type, value, onChange, placehol
             required={hissu}
             inputMode={numeric ? "numeric" : "text"}
             pattern={patternNum ? "[0-9]*" : ""}
+            maxLength={maxLength}
             />
         </div>
     );

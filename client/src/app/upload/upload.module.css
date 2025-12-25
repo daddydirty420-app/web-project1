@@ -36,3 +36,32 @@
     box-shadow: none;
     opacity: .8;
 }
+
+.subtitle {
+    font-size: 18px;
+    margin: 2rem auto 1rem;
+    text-align: center;
+}
+
+.imageInputDiv {
+    margin: 1rem auto;
+    width: max-content;
+    max-width: 100%;
+}
+
+.imageInput {
+    border: solid 1px var(--gray-line-mid);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.preview {
+    margin: 0.5rem auto;
+    width: 120px;
+    height: 120px;
+}
+
+.centerSmall {
+    font-size: 12px;
+    text-align: center;
+}
