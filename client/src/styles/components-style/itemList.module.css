@@ -16,20 +16,17 @@
     width: 90px;
     height: 30px;
     margin-left: auto;
-    border: solid 1.5px var(--theme-sub);
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--theme-sub);
-    background-color: rgba(107, 114, 128, 0.08);
+    color: var(--theme-sub-hover);
+    background-color: rgba(156, 163, 175, 0.12);
     cursor: pointer;
     transition: color 0.15s ease,
-            border-color 0.15s ease,
             background-color 0.15s ease;
 }
 .stateButton:hover {
-    border-color: var(--theme-sub-hover);
-    color: var(--theme-sub-hover);
+    background-color: rgba(156, 163, 175, 0.18);
 }
 
 .stateIcon {
