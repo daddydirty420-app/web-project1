@@ -120,7 +120,7 @@ router.get('/profile-item-list/video-list/:id', async (req: Request, res: Respon
             },
             limit,
             offset,
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Video,
@@ -305,7 +305,7 @@ router.get('/number-list', authenticateToken, async (req: Request, res: Response
                 seller_id: currentUserId,
                 status: { [Op.in]: ["active", "hidden", "soldout"] },
             },
-            order: [['uploaded_date', 'DESC']],
+            order: [['uploaded_at', 'DESC']],
             include: [
                 {
                     model: Sale,

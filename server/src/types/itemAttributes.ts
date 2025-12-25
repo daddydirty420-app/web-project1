@@ -51,8 +51,8 @@ export type ItemAttributes = {
             low_stock_ratio: number,
         },
     }>;
-    body_category: BodyCategory;
-    lifestyle_category: LifeStyleCategory;
+    body_category?: BodyCategory;
+    lifestyle_category?: LifeStyleCategory;
     layer?: Layer;
     fit?: Fit;
     material?: string[]; // 素材表記
