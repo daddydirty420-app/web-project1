@@ -8,6 +8,12 @@ type Props = {
     userId: string;
 };
 
+type StarResponse = {
+  user: {
+    star_average: string;
+  };
+};
+
 export default function Star({ userId }: Props) {
     const [star, setStar] = useState(0);
 
@@ -20,7 +26,7 @@ export default function Star({ userId }: Props) {
                 });
 
                 if (res.ok) {
-                    const data = await res.json();
+                    const data: StarResponse = await res.json();
                     setStar(Number(data.user.star_average) || 0);
                 }
             } catch (err) {
