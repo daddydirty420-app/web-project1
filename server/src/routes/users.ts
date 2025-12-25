@@ -77,7 +77,7 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
       },
       limit,
       offset,
-      order: [['uploaded_dat', 'DESC']],
+      order: [['uploaded_at', 'DESC']],
       include: [
         {
           model: Video,
