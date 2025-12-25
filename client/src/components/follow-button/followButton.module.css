@@ -5,12 +5,13 @@
     font-weight: 600;
     border: solid 2px var(--theme-sub);
     border-radius: 20px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.15s ease,
+                color 0.15s ease,
+                border-color 0.15s ease;
 }
 .followButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    border-color: rgba(75, 85, 99, 1);
 }
 
 .false {
