@@ -138,7 +138,7 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                     <FontAwesomeIcon icon={faAnglesRight} className={styles.pageIcon} />
                 </button>
             </div>
-        )
+        );
     }
 
     return (
