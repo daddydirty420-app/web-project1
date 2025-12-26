@@ -193,16 +193,14 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                                         {data.Sale?.sale_flag && (
                                             <p className={styles.beforePrice}>￥{data.Sale.before_price.toLocaleString()}</p>
                                         )}
-                                        {data.Sale?.sale_flag && data.Sale.discount_rate > 0 && (
-                                            <p className={styles.saleSold}>{data.Sale.discount_rate}% OFF</p>
-                                        )}
-                                        {data.Sale?.sale_flag && data.Sale.discount_amount > 0 && (
-                                            <p className={styles.saleSold}>{data.Sale.discount_amount.toLocaleString()}円引き</p>
-                                        )}
                                         {data.status === "soldout" && (
                                             <p className={styles.saleSold}>SOLD OUT</p>
                                         )}
-                                        <h3 className={styles.price}>￥{data.price.toLocaleString()}</h3>
+                                        <h3 className={clsx(
+                                            styles.price,
+                                            data.Sale?.sale_flag ? styles.sale : "")}>
+                                                ￥{data.price.toLocaleString()}
+                                            </h3>
                                     </div>
                                 </Link>
                             </div>

@@ -141,6 +141,10 @@
     text-align: right;
 }
 
+.sale {
+    color: var(--alert);
+}
+
 .itemListWrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -279,7 +283,7 @@
         max-width: 900px;
         gap: 32px;
     }
-    
+
     .title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
