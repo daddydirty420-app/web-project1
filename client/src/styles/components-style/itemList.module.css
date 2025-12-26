@@ -47,47 +47,51 @@
     max-width: 450px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 5px;
+    padding: 14px 0 18px;
     border-top: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
 }
 
 .thumbnail {
-    display: block;
     position: relative;
-    width: 75%;
+    width: 100%;
     aspect-ratio: 16 / 9;
     margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
 }
 
 .duration {
     position: absolute;
     bottom: 6px;
     right: 6px;
-    background-color: rgba(0, 0, 0, 0.7);
-    font-size: 11px;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 10px;
     font-weight: 600;
     color: #fff;
     line-height: 1;
     padding: 4px 6px;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .itemData {
-    margin: 5px auto 0;
-    width: 92%;
+    margin: 8px auto 0;
+    width: 100%;
 }
 
 .videoUser {
-    display: flex;
-    align-items: center;
-    height: 50px;
+    display: block;
+    margin-top: 10px;
+    height: auto;
 }
 
 .title {
     font-size: 14px;
     font-weight: 600;
-    color: var(--theme-sub);
+    color: var(--text-muted);
+    line-height: 1.5;
+    letter-spacing: 0.03em;
 }
 
 .itemNamePrice {
