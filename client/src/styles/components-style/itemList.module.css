@@ -103,7 +103,6 @@
     font-size: 11px;
     color: var(--text-muted);
     letter-spacing: 0.12em;
-    margin-top: 8px;
 }
 
 .itemNameDiv {
@@ -120,33 +119,33 @@
 
 .itemPriceSale {
     display: flex;
+    align-items: baseline;
     justify-content: flex-end;
-    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
 }
 
 .beforePrice {
-    font-size: 10px;
-    color: var(--gray-50);
+    font-size: 11px;
+    color: var(--text-muted);
     text-decoration: line-through;
+    line-height: 1;
 }
 
 .saleSold {
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    background-color: var(--alert);
-    border-radius: 5px;
-    padding: 0 5px;
-    margin: 0 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--alert);
+    margin-right: 4px;
+    letter-spacing: 0.08em;
 }
 
 .price {
     font-size: 18px;
     font-weight: 700;
     color: var(--text);
-    text-align: right;
+    letter-spacing: 0.02em;
 }
-
 .sale {
     color: var(--alert);
 }
