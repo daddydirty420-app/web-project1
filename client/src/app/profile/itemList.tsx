@@ -187,7 +187,7 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                                 <Link href={itemLink} className={styles.itemNamePrice}>
                                     <p className={styles.syohin}>商品</p>
                                     <div className={styles.itemNameDiv}>
-                                        <h2 className={clsx(styles.itemName, styles.line2)}>{data.name}</h2>
+                                        <h2 className={styles.itemName}>{data.name}</h2>
                                     </div>
                                     <div className={styles.itemPriceSale}>
                                         {data.Sale?.sale_flag && (

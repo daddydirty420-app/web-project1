@@ -94,22 +94,28 @@
 
 .itemNamePrice {
     display: block;
-    border-top: dotted 1px #b3b3b3;
+    border-top: solid 1px var(--gray-line);
+    margin-top: 10px;
+    padding-top: 8px;
 }
 
 .syohin {
-    font-size: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    margin-top: 8px;
 }
 
 .itemNameDiv {
-    display: flex;
-    align-items: center;
-    height: 45px;
+    display: block;
+    margin-top: 4px;
 }
 
 .itemName {
-    font-size: 14px;
-    color: var(--h-color);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
 }
 
 .itemPriceSale {
@@ -291,6 +297,15 @@
         overflow: hidden;
 
         min-height: calc(1.5em * 2); /* 2行分の高さ */
+    }
+
+    .itemName {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
+        min-height: calc(1.45em * 2);
     }
 }
 
