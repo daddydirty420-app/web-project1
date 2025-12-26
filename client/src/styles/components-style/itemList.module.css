@@ -50,6 +50,7 @@
 }
 
 .thumbnail {
+    display: block;
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
