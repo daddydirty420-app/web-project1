@@ -77,6 +77,7 @@
 
 .socialSection {
     margin-top: 12px;
+    padding-left: 4px;
 }
 
 .socialRow {
@@ -168,6 +169,16 @@
 
     .introduction {
         font-size: 14px;
+    }
+
+    .socialSection {
+        padding-left: 50px;
+    }
+}
+
+@media (max-width: 375px) {
+    .socialSection {
+        padding-left: 0;
     }
 }
 
