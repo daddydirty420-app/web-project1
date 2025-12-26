@@ -45,7 +45,7 @@
 .videoListSection {
     width: 100%;
     padding: 14px 0 12px;
-    border-top: solid 1px var(--gray-line);
+    border-top: solid 0.5px var(--gray-line);
 }
 
 .thumbnail {
@@ -93,7 +93,7 @@
 
 .itemNamePrice {
     display: block;
-    border-top: solid 1px var(--gray-line);
+    border-top: solid 0.5px var(--gray-line);
     margin-top: 10px;
     padding-top: 8px;
 }
