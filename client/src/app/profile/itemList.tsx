@@ -182,7 +182,7 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
 
                             <div className={styles.itemData}>
                                 <Link href={itemLink} className={styles.videoUser}>
-                                    <h4 className={clsx(styles.title, styles.line2)}>{data.Video?.title}</h4>
+                                    <h4 className={styles.title}>{data.Video?.title}</h4>
                                 </Link>
                                 <Link href={itemLink} className={styles.itemNamePrice}>
                                     <p className={styles.syohin}>商品</p>

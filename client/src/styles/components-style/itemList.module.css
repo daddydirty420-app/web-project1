@@ -279,6 +279,15 @@
         max-width: 900px;
         gap: 32px;
     }
+    
+    .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+
+        min-height: calc(1.5em * 2); /* 2行分の高さ */
+    }
 }
 
 @media (min-width: 768px) {
