@@ -1,5 +1,6 @@
 'use client';
 
+import pageStyle from "./profile.module.css";
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -141,19 +142,23 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
     }
 
     return (
-        <>
-            {!visibleIL && (
-                <button type='button' className={styles.stateButton} onClick={() => setIL(1, limitIL)}>
-                    <FontAwesomeIcon icon={faList} className={styles.stateIcon} />
-                    商品一覧
-                </button>
-            )}
-            {visibleIL && (
-                <button type='button' className={styles.stateButton} onClick={() => setVL(1, limitVL)}>
-                    <FontAwesomeIcon icon={faPlay} className={styles.stateIcon} />
-                    動画一覧
-                </button>
-            )}
+        <div className='mt-4'>
+            <div className={pageStyle.itemHeader}>
+                <p className={pageStyle.itemTitle}>出品した商品</p>
+
+                {!visibleIL && (
+                    <button type='button' className={styles.stateButton} onClick={() => setIL(1, limitIL)}>
+                        <FontAwesomeIcon icon={faList} className={styles.stateIcon} />
+                        商品一覧
+                    </button>
+                )}
+                {visibleIL && (
+                    <button type='button' className={styles.stateButton} onClick={() => setVL(1, limitVL)}>
+                        <FontAwesomeIcon icon={faPlay} className={styles.stateIcon} />
+                        動画一覧
+                    </button>
+                )}
+            </div>
 
             <section className={styles.videoListWrapper}>
                 {!visibleIL && videoList?.map((data) => {
@@ -259,6 +264,6 @@ export default function ItemList( { userId, defaultVideoList, adminPage }: Props
                 setPageIL(p);
                 setIL(p, limitIL);
             })}
-        </>
+        </div>
     );
 }

@@ -142,9 +142,18 @@
     background-color: var(--button-gray-hover);
 }
 
+.itemHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
 .itemTitle {
     font-size: var(--small-heading);
     font-weight: 700;
+    color: var(--h-color);
 }
 
 .editButton {
