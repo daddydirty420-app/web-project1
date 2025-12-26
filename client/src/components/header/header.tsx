@@ -18,13 +18,9 @@ export default async function Header() {
         <header className={styles.header}>
             <section className={styles.headerConteiner}>
                 <Link href='/' className={styles.logo}>
-                    <Image
-                    src="/logo.png"
-                    alt='ロゴ　トップページへ'
-                    width={102}
-                    height={34}
-                    quality={50}
-                    />
+                    <div className={styles.textLogo}>
+                        LOGO
+                    </div>
                 </Link>
                 
                 <SearchInputPC loggedIn={loggedIn} />
