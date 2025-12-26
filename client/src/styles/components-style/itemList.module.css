@@ -40,16 +40,13 @@
     grid-template-columns: repeat(1, 1fr);
     max-width: 450px;
     margin: 0 auto;
+    gap: 28px;
 }
 
 .videoListSection {
-    min-width: 300px;
-    max-width: 450px;
     width: 100%;
-    margin: 0 auto;
     padding: 14px 0 18px;
-    border-top: solid 1px #ccc;
-    border-bottom: solid 1px #ccc;
+    border-top: solid 1px var(--gray-line);
 }
 
 .thumbnail {
@@ -279,6 +276,7 @@
     .videoListWrapper {
         grid-template-columns: repeat(2, 1fr);
         max-width: 900px;
+        gap: 32px;
     }
 }
 
