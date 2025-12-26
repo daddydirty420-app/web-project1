@@ -21,5 +21,5 @@ export default async function FollowSection({ userId }: Props) {
             <FollowStat userId={userId} type="follow" initialCount={followCount} />
             <FollowStat userId={userId} type="follower" initialCount={followerCount} />
         </section>
-    )
+    );
 }

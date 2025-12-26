@@ -1,6 +1,6 @@
 'use client';
 
-import { Rating, Star as RatingStar } from '@smastrom/react-rating'
+import { Rating, Star as RatingStar } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import { useEffect, useState } from 'react';
 
