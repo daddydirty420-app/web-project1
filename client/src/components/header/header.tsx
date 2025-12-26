@@ -18,8 +18,8 @@ export default async function Header() {
         <header className={styles.header}>
             <section className={styles.headerConteiner}>
                 <Link href='/' className={styles.logo}>
-                    <div className={styles.textLogo}>
-                        LOGO
+                    <div className={styles.logoArea}>
+                        <p className={styles.logoText}>LOGO</p>
                     </div>
                 </Link>
                 
