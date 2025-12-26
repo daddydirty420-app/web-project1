@@ -10,12 +10,12 @@ type Props = {
 
 export default function StarSection({ user, userId }: Props) {
     return (
-        <div className='flex items-center ml-4'>
+        <div className={styles.starSection}>
             {user.star_amount > 0 && (
-                <small className={clsx('text-[var(--gray-50)] mr-1', styles.small)}>{Number(user.star_average).toFixed(1)}</small>
+                <small className={clsx('mr-1', styles.small)}>{Number(user.star_average).toFixed(1)}</small>
             )}
             <Star userId={userId} />
-            <small className={clsx('text-blue-500 ml-1', styles.small)}>{user.star_amount.toLocaleString()}</small>
+            <small className={clsx('ml-1', styles.small)}>{user.star_amount.toLocaleString()}</small>
         </div>
     );
 }
