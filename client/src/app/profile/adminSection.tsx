@@ -175,7 +175,8 @@ export default function AdminSection({ userId, adminPage }: Props) {
             <div className={styles.overlay} onClick={() => setPopup(false)} />
 
             <div className={styles.popup}>
-                <X className={styles.popupClose} onClick={() => setPopup(false)} />
+                <X className={styles.x} onClick={() => setPopup(false)} />
+                    
                 <p className={styles.popupTitle}>ペナルティポイント</p>
                 <form onSubmit={submitPenalty}>
                     <input

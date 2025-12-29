@@ -43,20 +43,21 @@
     padding: 1rem;
 }
 
-.popupClose {
+.x {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     color: var(--gray-50);
     width: 25px;
     height: 25px;
     cursor: pointer;
-    position: absolute;
-    top: 20px;
-    right: 20px;
 }
 
 .popupTitle {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
-    margin-top: 20px;
+    text-align: center;
+    margin: 1em 0;
 }
 
 .input {
@@ -69,19 +70,18 @@
 }
 
 .popupButton {
+    display: block;
+    margin: 1rem auto;
     width: 150px;
     height: 36px;
-    margin-top: 10px;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #fff;
     background-color: var(--theme);
-    border-radius: 5px;
-    box-shadow: var(--shadow);
+    border-radius: 10px;
     cursor: pointer;
-    transition: box-shadow 0.15s ease, opacity 0.15s ease;
+    transition: opacity 0.15s ease;
 }
 .popupButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    opacity: .85;
 }
