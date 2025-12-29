@@ -7,6 +7,7 @@ import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { refreshToken } from '@/lib/refreshToken';
+import { InputStr, InputTitle } from '@/components/inputForm';
 
 type Props = {
     userId: string;
@@ -177,19 +178,21 @@ export default function AdminSection({ userId, adminPage }: Props) {
             <div className={styles.popup}>
                 <X className={styles.x} onClick={() => setPopup(false)} />
                     
-                <p className={styles.popupTitle}>ペナルティポイント</p>
-                <form onSubmit={submitPenalty}>
-                    <input
-                    type='number'
-                    name='addPenalty'
-                    value={addPenalty}
-                    onChange={(e) => setAddPenalty(Number(e.target.value))}
-                    placeholder='ペナルティポイント'
-                    className={styles.input}
-                    required
-                    />
-                    <button type='submit' className={styles.popupButton}>ペナルティ付与</button>
-                </form>
+                <div className={styles.inputDiv}>
+                    <InputTitle title='ペナルティポイント' />
+                    <form onSubmit={submitPenalty}>
+                        <input
+                        type='number'
+                        name='addPenalty'
+                        value={addPenalty}
+                        onChange={(e) => setAddPenalty(Number(e.target.value))}
+                        placeholder='ペナルティポイント'
+                        className={styles.input}
+                        required
+                        />
+                        <button type='submit' className={styles.popupButton}>ペナルティ付与</button>
+                    </form>
+                </div>
 
                 <p className={styles.popupTitle}>売上金没収</p>
                 <form onSubmit={submitUriage}>

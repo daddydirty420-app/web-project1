@@ -34,7 +34,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const [postNumber, setPostNumber] = useState(user.Address?.post_number);
-    const [todouhuken, setTodouhuken] = useState(user.Address?.AddressTodouhuken.name);
+    const [todouhuken, setTodouhuken] = useState(user.Address?.AddressTodouhuken?.name);
     const [shikutyouson, setShikutyouson] = useState(user.Address?.shikutyouson);
     const [banchi, setBanchi] = useState(user.Address?.banchi);
     const [building, setBuilding] = useState(user.Address?.building);
