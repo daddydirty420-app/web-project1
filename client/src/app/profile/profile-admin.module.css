@@ -5,13 +5,18 @@
     font-weight: 600;
     color: #fff;
     background-color: var(--theme);
-    border-radius: 5px;
-    box-shadow: var(--shadow);
+    border-radius: 10px;
     cursor: pointer;
+    transition: 
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.1s ease;
 }
 .adButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--theme-soft);
+}
+.adButton:active {
+    transform: translateY(1px);
 }
 
 .overlay {

@@ -10,10 +10,11 @@
   --text-muted: rgba(107, 114, 128, 0.9);
   --theme: rgba(107, 114, 128, 0.9);
   --theme-soft: rgba(156, 163, 175, 0.9);
-  --theme-hover: rgba(75, 85, 99, 1);
+  --theme-str: rgba(75, 85, 99, 1);
   --button-gray: rgba(156, 163, 175, 0.12);
   --button-gray-hover: rgba(156, 163, 175, 0.18);
   --action: rgba(37, 99, 235, 0.95);
+  --action-hover: rgba(29, 78, 216, 1);
   --white: #ffffff;
   --gray-10: #eeeeee;
   --gray-25: #aaaaaa;
@@ -26,6 +27,9 @@
   --black: #222222;
   --link: rgba(13, 135, 224, 0.85);
   --alert: rgba(200, 30, 45, 0.9);
+  --success: rgba(34, 197, 94, 0.9);
+  --warning: rgba(234, 179, 8, 0.9);
+  --overlay: rgba(0, 0, 0, 0.35);
 
   /* タイポグラフィ（フォントサイズ） */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */

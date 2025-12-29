@@ -24,7 +24,7 @@
     color: var(--theme);
 }
 .true:hover {
-    border-color: var(--theme-hover);
+    border-color: var(--theme-str);
 }
 
 @media (min-width: 768px) {
