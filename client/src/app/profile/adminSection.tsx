@@ -176,7 +176,10 @@ export default function AdminSection({ userId, adminPage }: Props) {
             <div className={styles.overlay} onClick={() => setPopup(false)} />
 
             <div className={styles.popup}>
-                <X className={styles.x} onClick={() => setPopup(false)} />
+                <X
+                strokeWidth={1.5}
+                className={styles.x}
+                onClick={() => setPopup(false)} />
                     
                 <div className={styles.inputDiv}>
                     <p className={styles.inputTitle}>ペナルティポイント</p>
