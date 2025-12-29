@@ -19,7 +19,7 @@
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     background-color: var(--button-gray);
     cursor: pointer;
     transition: color 0.15s ease,
@@ -255,7 +255,7 @@
 }
 
 .pageIcon {
-    color: var(--theme-sub);
+    color: var(--theme);
 }
 
 .pageButton {
@@ -265,7 +265,7 @@
     width: 32px;
     height: 32px;
     font-size: 14px;
-    color: var(--theme-sub);
+    color: var(--theme);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -273,7 +273,7 @@
 .pageButton.active {
     font-weight: 600;
     color: #fff;
-    background-color: var(--theme-sub);
+    background-color: var(--theme);
 }
 .pageButton:not(.active):hover {
     background-color: var(--button-gray);

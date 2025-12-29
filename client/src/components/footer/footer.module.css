@@ -30,11 +30,11 @@
     width: 25px;
     height: 25px;
     padding: 7px 5px 3px;
-    color: var(--theme-sub);
+    color: var(--theme);
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .linkIcon:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 
@@ -47,11 +47,11 @@
     width: 40px;
     height: 40px;
     padding: 5px;
-    color: var(--theme-sub);
+    color: var(--theme);
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .uploadIcon:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 

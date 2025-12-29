@@ -47,11 +47,11 @@
     width: 20px;
     height: 20px;
     padding: 5px;
-    color: var(--theme-sub);
+    color: var(--theme);
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .searchIcon:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 
@@ -80,12 +80,12 @@
     display: block;
     width: 20px;
     height: 20px;
-    color: var(--theme-sub);
+    color: var(--theme);
     padding: 5px;
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .uploadIcon:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 
@@ -133,11 +133,11 @@
     left: 12px;
     font-size: 20px;
     cursor: pointer;
-    color: var(--theme-sub);
+    color: var(--theme);
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .closeSearchAreaIcon:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 
@@ -146,11 +146,11 @@
     right: 12px;
     font-size: 20px;
     cursor: pointer;
-    color: var(--theme-sub);
+    color: var(--theme);
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .searchIconMobile:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     transform: scale(1.05);
 }
 
@@ -250,12 +250,12 @@
 
     .categorySearchPC {
         font-size: 14px;
-        color: var(--theme-sub);
+        color: var(--theme);
         transition: color 0.15s ease, transform 0.15s ease;
         cursor: pointer;
     }
     .categorySearchPC:hover {
-        color: var(--theme-sub-hover);
+        color: var(--theme-hover);
         transform: scale(1.05);
     }
 
