@@ -31,16 +31,16 @@
 
 .popup {
     position: fixed;
-    width: 400px;
+    width: 100%;
+    max-width: 350px;
     top: 50px;
     left: 50%;
     transform: translateX(-50%);
+    background-color: var(--background);
     box-shadow: var(--shadow-str);
     border-radius: 10px;
     z-index: 5000;
-    padding: 20px;
-    text-align: center;
-    background: var(--background);
+    padding: 1rem;
 }
 
 .popupClose {
