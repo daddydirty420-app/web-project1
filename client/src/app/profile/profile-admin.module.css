@@ -31,7 +31,7 @@
 
 .popup {
     position: fixed;
-    width: 100%;
+    width: calc(100% - 2rem);
     max-width: 380px;
     top: 60px;
     left: 50%;
