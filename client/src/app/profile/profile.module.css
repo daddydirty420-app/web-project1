@@ -41,7 +41,7 @@
 .honninIcon,
 .earlyIcon,
 .shopIcon {
-  color: var(--theme-sub);
+  color: var(--theme);
   opacity: 0.85;
 }
 
@@ -72,7 +72,7 @@
     cursor: pointer;
 }
 .moreButton:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
 }
 
 .socialSection {
@@ -132,7 +132,7 @@
     margin-top: 10px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     background-color: var(--button-gray);
     border-radius: 8px;
     cursor: pointer;
@@ -165,7 +165,7 @@
     height: 26px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-sub-hover);
+    color: var(--theme-hover);
     background-color: var(--button-gray);
     cursor: pointer;
     transition: background-color 0.15s ease;
