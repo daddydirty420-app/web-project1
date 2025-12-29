@@ -53,11 +53,11 @@
     cursor: pointer;
 }
 
-.popupTitle {
-    font-size: 18px;
-    font-weight: 700;
+.inputTitle {
+    font-size: 16px;
+    font-weight: 600;
     text-align: center;
-    margin: 1em 0;
+    letter-spacing: 0.03em;
 }
 
 .inputDiv {
@@ -76,6 +76,7 @@
     border: solid 1px var(--gray-line);
     border-radius: 8px;
     background: var(--white);
+    margin-top: 1rem;
 }
 
 .popupButton {

@@ -179,7 +179,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
                 <X className={styles.x} onClick={() => setPopup(false)} />
                     
                 <div className={styles.inputDiv}>
-                    <InputTitle title='ペナルティポイント' />
+                    <p className={styles.inputTitle}>ペナルティポイント</p>
                     <form onSubmit={submitPenalty}>
                         <input
                         type='number'
@@ -194,41 +194,45 @@ export default function AdminSection({ userId, adminPage }: Props) {
                     </form>
                 </div>
 
-                <p className={styles.popupTitle}>売上金没収</p>
-                <form onSubmit={submitUriage}>
-                    <input
-                    type='number'
-                    name='deleteUriage'
-                    value={deleteUriage}
-                    onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (data?.uriagekin !== undefined && value > data.uriagekin) {
-                            setDeleteUriage(data.uriagekin);
-                        } else {
-                            setDeleteUriage(value);
-                        }
-                    }}
-                    placeholder='没収金額'
-                    className={styles.input}
-                    required
-                    max={data?.uriagekin}
-                    />
-                    <button type='submit' className={styles.popupButton}>売上金没収</button>
-                </form>
+                <div className={styles.inputDiv}>
+                    <p className={styles.inputTitle}>売上金没収</p>
+                    <form onSubmit={submitUriage}>
+                        <input
+                        type='number'
+                        name='deleteUriage'
+                        value={deleteUriage}
+                        onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (data?.uriagekin !== undefined && value > data.uriagekin) {
+                                setDeleteUriage(data.uriagekin);
+                            } else {
+                                setDeleteUriage(value);
+                            }
+                        }}
+                        placeholder='没収金額'
+                        className={styles.input}
+                        required
+                        max={data?.uriagekin}
+                        />
+                        <button type='submit' className={styles.popupButton}>売上金没収</button>
+                    </form>
+                </div>
 
-                <p className={styles.popupTitle}>削除</p>
-                <form onSubmit={submitDeleteUser}>
-                    <input
-                    type='text'
-                    name='deleteReason'
-                    value={deleteReason}
-                    onChange={(e) => setDeleteReason(e.target.value)}
-                    placeholder='削除理由'
-                    className={styles.input}
-                    required
-                    />
-                    <button type='submit' className={styles.popupButton}>削除する</button>
-                </form>
+                <div className={styles.inputDiv}>
+                    <p className={styles.inputTitle}>削除</p>
+                    <form onSubmit={submitDeleteUser}>
+                        <input
+                        type='text'
+                        name='deleteReason'
+                        value={deleteReason}
+                        onChange={(e) => setDeleteReason(e.target.value)}
+                        placeholder='削除理由'
+                        className={styles.input}
+                        required
+                        />
+                        <button type='submit' className={styles.popupButton}>削除する</button>
+                    </form>
+                </div>
             </div>
             </>
         )}
