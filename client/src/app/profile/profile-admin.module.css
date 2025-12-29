@@ -32,25 +32,40 @@
 .popup {
     position: fixed;
     width: 100%;
-    max-width: 350px;
-    top: 50px;
+    max-width: 380px;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--background);
-    box-shadow: var(--shadow-str);
-    border-radius: 10px;
+    border-radius: 14px;
     z-index: 5000;
-    padding: 1rem;
+    padding: 1.5rem 1.25rem;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .x {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 18px;
+    right: 18px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
     color: var(--gray-50);
-    width: 25px;
-    height: 25px;
     cursor: pointer;
+    border-radius: 50%;
+    transition: 
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
+}
+.x:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--theme);
+}
+.x:active {
+    transform: scale(0.92);
 }
 
 .inputTitle {
