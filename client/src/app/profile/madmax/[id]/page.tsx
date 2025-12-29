@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     );
 
     const data = await res.json();
-    const user = data.user;
+    const user = data.userData;
 
     return {
         title: `${user.user_name} | 管理画面`,
