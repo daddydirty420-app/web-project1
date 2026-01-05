@@ -1,6 +1,6 @@
 .normalContainer {
     max-width: 500px;
-    margin: 0 auto 3rem;
+    margin: 0 auto 1.5rem;
     background-color: var(--gray-background);
     border-radius: 14px;
     overflow: hidden;
@@ -8,7 +8,6 @@
 
 .normal {
     display: flex;
-    flex: 1;
     align-items: center;
     height: 48px;
     border-bottom: solid 1px var(--gray-line-mid);
@@ -41,5 +40,4 @@
     color: var(--text-muted);
     padding: 32px 16px 12px;
     margin-top: 24px;
-    justify-content: flex-start;
 }
