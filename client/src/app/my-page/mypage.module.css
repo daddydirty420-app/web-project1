@@ -23,9 +23,16 @@
 }
 
 .userName {
-    font-size: var(--body);
+    font-size: 14px;
     font-weight: 700;
-    color: var(--theme);
+    line-height: 1.2;
+}
+
+.iconRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 14px;
 }
 
 .honninIcon,
