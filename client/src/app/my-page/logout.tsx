@@ -23,7 +23,7 @@ export default function Logout() {
     return (
         <NormalLinkContainer>
             <div className={styles.linkElem} onClick={logout}>
-                <p className='text-[var(--alert)]'>ログアウト</p>
+                <p className={styles.red}>ログアウト</p>
             </div>
         </NormalLinkContainer>
     );

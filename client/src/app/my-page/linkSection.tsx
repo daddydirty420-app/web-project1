@@ -24,7 +24,7 @@ export default function LinkSection({ user, data, profileLink }: Props) {
                     <NormalLink url='/edit/account' text='振込口座設定' />
                     <NormalLink url='/shop-signup/step1' text='ショップ登録' />
                     {!user.honnin_verified && (
-                        <ChildrenLink url='/edit/honnin'>本人確認 <span className='text-[var(--alert)]'>※300ptプレゼント中</span></ChildrenLink>
+                        <ChildrenLink url='/edit/honnin'>本人確認 <span className={styles.red}>※300ptプレゼント中</span></ChildrenLink>
                     )}
                     </>
                 )}
