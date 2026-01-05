@@ -25,19 +25,23 @@ export default function ProfileSection({ user, data, profileLink }: Props) {
                 quality={75}
                 className={styles.profileImage}
                 />
-                <p className={styles.userName}>{user.user_name}</p>
-                {user.honnin_verified && (
-                    <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
-                )}
-                {user.early_seller && (
-                    <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
-                )}
-                {data.userData.hasShop && (
-                    <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
-                )}
+
+                <div className={styles.nameBlock}>
+                    <p className={styles.userName}>{user.user_name}</p>
+
+                    {user.honnin_verified && (
+                        <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
+                    )}
+                    {user.early_seller && (
+                        <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
+                    )}
+                    {data.userData.hasShop && (
+                        <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
+                    )}
+                </div>
             </Link>
 
-            <p><Link href={profileLink} className='block text-blue-600 hover:underline hover:text-blue-800 cursor-pointer w-max ml-auto text-sm'>プロフィールを見る ＞</Link></p>
+            <p><Link href={profileLink} className={styles.profileLinkText}>プロフィールを見る ＞</Link></p>
         </section>
     );
 }

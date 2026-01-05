@@ -1,8 +1,6 @@
-import ReferenceCode from './referenceCode';
 import Logout from './logout';
 import styles from './mypage.module.css';
 import Link from 'next/link';
-import { NormalLink, NormalLinkContainer, MypageLinkHeader, ChildrenLink } from '@/components/link';
 import { User, Res } from './types';
 import MypageUI from './mypageUI';
 import ProfileSection from './profileSection';

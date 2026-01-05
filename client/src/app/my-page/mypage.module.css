@@ -4,10 +4,10 @@
 }
 
 .profileBlock {
-    width: 100%;
-    height: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     cursor: pointer;
 }
 
@@ -17,35 +17,36 @@
     border-radius: 100%;
 }
 
+.nameBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .userName {
     font-size: var(--body);
     font-weight: 700;
     color: var(--theme);
 }
 
-.honninIcon {
-    width: 14px;
-    height: 14px;
-    color: var(--theme-sub);
-    margin-left: 4px;
-}
-.honninIcon path {
-    stroke: currentColor;
-    stroke-width: 15;
-}
-
-.earlyIcon {
-    width: 16px;
-    height: 16px;
-    color: var(--theme);
-    margin-left: 4px;
-}
-
+.honninIcon,
+.earlyIcon,
 .shopIcon {
-    width: 16px;
-    height: 16px;
-    color: var(--theme-sub);
-    margin-left: 4px;
+  color: var(--theme);
+  opacity: 0.85;
+}
+
+.profileLinkText {
+    display: block;
+    margin-left: auto;
+    width: max-content;
+    font-size: 14px;
+    color: var(--link);
+    cursor: pointer;
+}
+.profileLinkText:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
 }
 
 .uploadButton {

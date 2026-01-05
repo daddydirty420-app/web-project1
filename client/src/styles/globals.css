@@ -26,12 +26,13 @@
   --gray-line-str: rgba(0, 0, 0, 0.14);
   --black: #222222;
   --link: rgba(13, 135, 224, 0.85);
+  --link-hover: rgba(13, 135, 224, 1);
   --alert: rgba(200, 30, 45, 0.9);
   --success: rgba(34, 197, 94, 0.9);
   --warning: rgba(234, 179, 8, 0.9);
   --overlay: rgba(0, 0, 0, 0.35);
 
-  /* タイポグラフィ（フォントサイズ） */
+  /* フォントサイズ */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
   --display: clamp(3rem, 1.5rem + 10vw, 6.25rem); /* 48-100px */
   --heading1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); /* 24-32px */
