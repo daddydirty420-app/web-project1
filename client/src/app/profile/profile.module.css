@@ -16,13 +16,12 @@
     width: 40px;
     height: 40px;
     border-radius: 100%;
-    margin-right: 8px;
 }
 
 .nameBlock {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
 .userName {

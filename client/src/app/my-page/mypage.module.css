@@ -19,7 +19,7 @@
 .nameBlock {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
 .userName {
