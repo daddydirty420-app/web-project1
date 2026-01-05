@@ -55,10 +55,9 @@
 
 .profileLinkText {
     display: block;
-    margin-left: auto;
     width: max-content;
-    font-size: 14px;
-    color: var(--link);
+    font-size: 13px;
+    color: var(--text-muted);
     cursor: pointer;
 }
 .profileLinkText:hover {
