@@ -17,6 +17,12 @@
     border-radius: 100%;
 }
 
+.userName {
+    font-size: var(--body);
+    font-weight: 700;
+    color: var(--theme);
+}
+
 .honninIcon {
     width: 14px;
     height: 14px;
