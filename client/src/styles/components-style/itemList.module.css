@@ -19,7 +19,7 @@
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    color: var(--theme-hover);
+    color: var(--theme-str);
     background-color: var(--button-gray);
     cursor: pointer;
     transition: color 0.15s ease,

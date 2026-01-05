@@ -13,6 +13,6 @@
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .back:hover {
-    color: var(--theme-sub-hover);
+    color: var(--theme-str);
     transform: scale(1.05);
 }

@@ -71,7 +71,7 @@
     cursor: pointer;
 }
 .moreButton:hover {
-    color: var(--theme-hover);
+    color: var(--theme-str);
 }
 
 .socialSection {
@@ -131,7 +131,7 @@
     margin-top: 10px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-hover);
+    color: var(--theme-str);
     background-color: var(--button-gray);
     border-radius: 8px;
     cursor: pointer;
@@ -164,7 +164,7 @@
     height: 26px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-hover);
+    color: var(--theme-str);
     background-color: var(--button-gray);
     cursor: pointer;
     transition: background-color 0.15s ease;

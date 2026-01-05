@@ -34,7 +34,7 @@
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .linkIcon:hover {
-    color: var(--theme-hover);
+    color: var(--theme-str);
     transform: scale(1.05);
 }
 
@@ -51,7 +51,7 @@
     transition: color 0.15s ease, transform 0.15s ease;
 }
 .uploadIcon:hover {
-    color: var(--theme-hover);
+    color: var(--theme-str);
     transform: scale(1.05);
 }
 
