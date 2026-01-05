@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 declare module 'express';
 declare module 'jsonwebtoken';
 declare module 'bcrypt';
@@ -6,6 +7,8 @@ declare module 'uuid';
 declare module 'bcrypt';
 declare module 'multer';
 declare module 'http-errors';
+=======
+>>>>>>> Stashed changes
 declare module 'bcrypt';
 declare module 'multer';
 declare module 'http-errors';
