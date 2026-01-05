@@ -160,8 +160,12 @@
     margin: 0.25rem 0 0.25rem auto;
     font-size: 12px;
     font-weight: 600;
-    color: var(--gray-50);
+    color: var(--theme);
     cursor: pointer;
+    transition: color 0.15s ease;
+}
+.categoryText:hover {
+    color: var(--theme-str);
 }
 
 .suggestArea {
