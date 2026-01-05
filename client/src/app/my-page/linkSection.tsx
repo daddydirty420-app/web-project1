@@ -35,7 +35,7 @@ export default function LinkSection({ user, data, profileLink }: Props) {
                     {data.unreadCount >= 1 && (
                         <div className={styles.unreadDiv}>
                             <svg width={18} height={18} className={styles.unreadIcon}>
-                                <circle cx={9} cy={9} r={9} fill='red' />
+                                <circle cx={9} cy={9} r={9} />
                             </svg>
                             {data.unreadCount < 100
                             ? (<small className={styles.count}>{data.unreadCount}</small>)
