@@ -29,15 +29,17 @@ export default function ProfileSection({ user, data, profileLink }: Props) {
                 <div className={styles.nameBlock}>
                     <p className={styles.userName}>{user.user_name}</p>
 
-                    {user.honnin_verified && (
-                        <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
-                    )}
-                    {user.early_seller && (
-                        <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
-                    )}
-                    {data.userData.hasShop && (
-                        <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
-                    )}
+                    <div className={styles.iconRow}>
+                        {user.honnin_verified && (
+                            <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
+                        )}
+                        {user.early_seller && (
+                            <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
+                        )}
+                        {data.userData.hasShop && (
+                            <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
+                        )}
+                    </div>
                 </div>
             </Link>
 
