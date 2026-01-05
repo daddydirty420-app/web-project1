@@ -54,6 +54,7 @@
 }
 
 .profileLinkText {
+    margin-top: 6px;
     display: block;
     width: max-content;
     font-size: 13px;
@@ -62,7 +63,6 @@
 }
 .profileLinkText:hover {
     color: var(--link-hover);
-    text-decoration: underline;
 }
 
 .uploadButton {
