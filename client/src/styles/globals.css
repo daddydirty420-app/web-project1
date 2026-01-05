@@ -71,7 +71,7 @@ body {
   color: var(--text);
   font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
   font-size: var(--body);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.01em;
 }
 
 h1, h2, h3 {
@@ -81,7 +81,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: var(--heading2);
+  font-size: var(--heading1);
 }
 
 h2 {
@@ -94,14 +94,12 @@ h3 {
 
 p {
   font-size: var(--body);
-}
-
-p {
   line-height: 1.7;
 }
 
 small {
   line-height: 1.5;
+  color: var(--text-muted);
 }
 
 /* next/image */
