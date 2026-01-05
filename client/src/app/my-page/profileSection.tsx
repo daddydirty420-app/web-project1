@@ -43,7 +43,7 @@ export default function ProfileSection({ user, data, profileLink }: Props) {
                 </div>
             </Link>
 
-            <p><Link href={profileLink} className={styles.profileLinkText}>プロフィールを見る ＞</Link></p>
+            <p><Link href={profileLink} className={styles.profileLinkText}>プロフィールを見る</Link></p>
         </section>
     );
 }

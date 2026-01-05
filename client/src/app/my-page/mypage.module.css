@@ -64,6 +64,9 @@
 .profileLinkText:hover {
     color: var(--link-hover);
 }
+.profileLinkText::after {
+    content: " →";
+}
 
 .uploadButton {
     display: flex;
