@@ -14,18 +14,19 @@
 .false {
     background-color: var(--theme);
     color: #fff;
+    transition: opacity 0.15s ease;
 }
 .false:hover {
     opacity: 0.85;
 }
 
 .true {
-    border: solid 2px var(--theme);
-    background-color: #fff;
-    color: var(--theme);
+    background-color: var(--button-gray);
+    color: var(--theme-str);
+    transition: background-color 0.15s ease;
 }
 .true:hover {
-    border-color: var(--theme-str);
+    background-color: var(--button-gray-hover);
 }
 
 @media (min-width: 768px) {
