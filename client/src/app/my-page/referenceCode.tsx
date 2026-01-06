@@ -65,7 +65,7 @@ export default function ReferenceCode({ itemCount, referenceCount }: Props) {
                         try {
                             await navigator.clipboard.writeText(referenceCodeOutput.output);
                             console.log("コピーしました：", referenceCodeOutput.output);
-                            alert('紹介コードをコピーしました。');
+                            alert('コピーしました');
                         } catch (err) {
                             console.error("コピー失敗:", err);
                         }
@@ -79,5 +79,5 @@ export default function ReferenceCode({ itemCount, referenceCount }: Props) {
             </>
         )}
         </>
-    )
+    );
 }

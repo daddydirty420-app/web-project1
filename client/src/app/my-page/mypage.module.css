@@ -223,16 +223,19 @@
 
 .output {
     font-size: 16px;
-    font-weight: 500;
-    display: block;
-    width: max-content;
-    background: #f3f4f6;
-    border-radius: 6px;
-    margin: 2em auto;
-    padding: 10px 16px;
-    text-decoration: underline;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: var(--gray-background);
+    border-radius: 8px;
+    margin: 2em auto 1.5rem;
+    padding: 12px 18px;
     cursor: pointer;
-    transition: background 0.2s;
+}
+.output:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+.output:active {
+    transform: scale(0.97);
 }
 
 .popupText {
