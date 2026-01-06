@@ -54,15 +54,23 @@
 .checkLabel {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-top: 1.5rem;
+    gap: 6px;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 .checkbox {
     width: 16px;
     height: 16px;
-    margin-right: 5px;
-    cursor: pointer;
+    margin-right: 4px;
+    accent-color: var(--action);
+}
+
+.checkText {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    line-height: 1.4;
 }
 
 .green {

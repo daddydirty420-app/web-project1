@@ -77,7 +77,7 @@ export default function LoginForm() {
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className={styles.checkbox}
                 />
-                <p className={styles.formText}>ログイン状態を保持する</p>
+                <span className={styles.checkText}>ログイン状態を保持する</span>
             </label>
 
             <button
