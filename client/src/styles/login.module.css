@@ -75,20 +75,28 @@
 }
 
 .mainB {
+    margin-top: 32px;
+    margin-bottom: 16px;
     width: 100%;
     height: 44px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
     letter-spacing: 0.04em;
-    border-radius: 10px;
-    margin: 30px 0;
-    background-color: var(--theme);
+    border-radius: 12px;
+    background-color: var(--action);
     cursor: pointer;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.2s, transform 0.05s;
 }
 .mainB:hover {
-    opacity: 0.85;
+    background-color: var(--action-hover);
+}
+.mainB:active {
+    transform: translateY(1px);
+}
+.mainB:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .subB {
@@ -97,14 +105,14 @@
     justify-content: center;
     width: 100%;
     height: 44px;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--theme-str);
-    letter-spacing: 0.04em;
-    border-radius: 10px;
+    letter-spacing: 0.03em;
+    border-radius: 12px;
     background-color: var(--button-gray);
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.2s;
 }
 .subB:hover {
     background-color: var(--button-gray-hover);
