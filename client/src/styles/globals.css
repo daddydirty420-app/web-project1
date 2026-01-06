@@ -13,8 +13,8 @@
   --theme-str: rgba(75, 85, 99, 1);
   --button-gray: rgba(156, 163, 175, 0.12);
   --button-gray-hover: rgba(156, 163, 175, 0.18);
-  --action: rgba(75, 85, 99, 0.95);
-  --action-hover: rgba(55, 65, 81, 1);
+  --action: rgba(55, 65, 81, 0.95);
+  --action-hover: rgba(31, 41, 55, 1);
   --gray-10: #eeeeee;
   --gray-25: #aaaaaa;
   --gray-50: #6b7280; /*旧#707070*/
