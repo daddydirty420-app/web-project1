@@ -70,7 +70,7 @@ export default function LoginForm() {
                 </div>
             </div>
 
-            <label className='flex mt-6 items-center justify-center'>
+            <label className={styles.checkLabel}>
                 <input
                 type='checkbox'
                 checked={rememberMe}
