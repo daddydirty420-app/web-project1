@@ -51,6 +51,8 @@ export default function SignupForm() {
         }
     };
 
+    const isDisabled = !email || !password || !confirmPassword;
+
     return (
         <form onSubmit={handleSubmit}>
             <p className={styles.formText}>メールアドレス</p>
@@ -108,7 +110,10 @@ export default function SignupForm() {
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button type="submit" className={styles.mainB}>認証メールを送る</button>
+            <button
+            type="submit"
+            className={styles.mainB}
+            disabled={isDisabled}>認証メールを送る</button>
         </form>
     );
 }
