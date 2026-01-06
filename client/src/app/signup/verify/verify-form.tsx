@@ -96,7 +96,7 @@ export default function VerifyForm() {
             <p className={styles.reference} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
 
             {referenceVisible && (
-                <div>
+                <div className="mt-2">
                     <input
                     type='text'
                     name='reference-code'
