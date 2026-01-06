@@ -82,7 +82,7 @@ export default function LoginForm() {
 
             <button
             type="submit"
-            className={styles.green}
+            className={styles.mainB}
             disabled={loading}
             >
                 {loading ? "ログイン中..." : "ログインする"}
