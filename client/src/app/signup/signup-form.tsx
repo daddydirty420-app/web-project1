@@ -84,7 +84,7 @@ export default function SignupForm() {
                     className={styles.icon}
                     />
                 </div>
-                <p className={styles.small}>※ 小文字英字・半角数字必須、8文字以上</p>
+                <p className={styles.small}>※小文字英字・半角数字必須、8文字以上</p>
             </div>
 
             <div className="mt-6">
@@ -108,7 +108,7 @@ export default function SignupForm() {
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button type="submit" className={styles.green}>認証メールを送る</button>
+            <button type="submit" className={styles.mainB}>認証メールを送る</button>
         </form>
     );
 }

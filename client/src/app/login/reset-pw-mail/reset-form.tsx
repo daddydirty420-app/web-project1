@@ -39,7 +39,7 @@ export default function ResetForm() {
             required
             />
 
-            <button type="submit" className={styles.green}>メールを送信する</button>
+            <button type="submit" className={styles.mainB}>メールを送信する</button>
         </form>
     );
 }

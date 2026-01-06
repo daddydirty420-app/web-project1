@@ -73,19 +73,19 @@ export default function VerifyForm() {
             required
             />
 
-            <label className='flex mt-6 items-center justify-center'>
+            <label className={styles.checkLabel}>
                 <input
                 type='checkbox'
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
                 className={styles.checkbox}
                 />
-                <p className={styles.formText}>ログイン状態を保持する</p>
+                <p className={styles.checkText}>ログイン状態を保持する</p>
             </label>
 
             <button
             type="submit"
-            className={styles.green}
+            className={styles.mainB}
             disabled={loading}
             >
                 {loading ? "認証中..." : "認証する"}
