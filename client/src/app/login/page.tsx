@@ -23,7 +23,7 @@ export default function Login() {
 
                 <Link href='signup' className={styles.subB}>新規会員登録（無料）</Link>
                 
-                <Link href='/login/reset-pw-mail' className={styles.resetReference}>パスワードを忘れた方</Link>
+                <Link href='/login/reset-pw-mail' className={styles.reset}>パスワードを忘れた方</Link>
             </section>
         </Container>
     );

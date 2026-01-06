@@ -121,7 +121,7 @@
     background-color: var(--button-gray-hover);
 }
 
-.resetReference {
+.reset {
     display: block;
     width: max-content;
     margin: 20px auto 0;
@@ -148,12 +148,18 @@
     opacity: 0.85;
 }
 
-.referenceP {
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: blue;
+.reference {
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-top: 16px;
     cursor: pointer;
+    transition: color 0.2s;
+}
+.reference:hover {
+    color: var(--theme-str);
 }
 
 .superSmall {

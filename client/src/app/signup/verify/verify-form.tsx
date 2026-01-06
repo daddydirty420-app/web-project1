@@ -93,7 +93,7 @@ export default function VerifyForm() {
                 {loading ? "認証中..." : "認証する"}
             </button>
 
-            <p className={styles.resetReference} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
+            <p className={styles.reference} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
 
             {referenceVisible && (
                 <div>
