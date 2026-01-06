@@ -15,7 +15,6 @@
   --button-gray-hover: rgba(156, 163, 175, 0.18);
   --action: rgba(37, 99, 235, 0.95);
   --action-hover: rgba(29, 78, 216, 1);
-  --white: #ffffff;
   --gray-10: #eeeeee;
   --gray-25: #aaaaaa;
   --gray-50: #6b7280; /*旧#707070*/
@@ -42,7 +41,6 @@
   --small-heading2: clamp(0.9375rem, 0.85rem + 0.6vw, 1.0625rem); /* 15-17px */
   --caption: clamp(0.75rem, 0.65rem + 0.5vw, 0.875rem); /* 12-14px */
   --mid-text: clamp(0.8125rem, 0.7125rem + 0.6vw, 0.9375rem); /* 13-15px */
-  --fixed-p: 14px;
 
   /* スペース（余白・間隔） */
   --space-xs: clamp(1.25rem, 1rem + 0.98rem, 1.875rem); /* 20-30px */
@@ -108,7 +106,11 @@ span > img {
 }
 
 /* input */
+input {
+  transition: border-color 0.2s, background-color 0.2s;
+}
 input:focus {
   outline: 0;
-  background-color: rgba(229, 231, 235, 0.4);
+  background-color: rgba(229, 231, 235, 0.35);
+  border-color: var(--gray-line-mid);
 }

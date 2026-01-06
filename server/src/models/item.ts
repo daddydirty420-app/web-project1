@@ -8,7 +8,6 @@ import Cart from "./cart.js";
 import GoodItem from "./good_item.js";
 import Video from "./video.js";
 import Sale from "./sale.js";
-import Delivery from "./delivery.js";
 import ReccomendItem from "./reccomend_item.js";
 import ItemReport from "./item_report.js";
 import Categories from "./categories.js";
@@ -66,14 +65,6 @@ export class Item extends Model {
         Item.hasOne(Sale, {
             foreignKey: 'item_id'
         });
-        Item.hasOne(Delivery, {
-            foreignKey: 'item_id',
-            as: 'ParentDelivery'
-        });
-        Item.hasMany(Delivery, {
-            foreignKey: 'item_id',
-            as: 'Deliveries'
-        });
         Item.hasOne(ReccomendItem, {
             foreignKey: 'item_id'
         });
@@ -89,7 +80,6 @@ export class Item extends Model {
         GoodItem: Association<Item, GoodItem>;
         Video: Association<Item, Video>;
         Sale: Association<Item, Sale>;
-        Delivery: Association<Item, Delivery>;
         ReccomendItem: Association<Item, ReccomendItem>;
         Categories: Association<Item, Categories>;
         ItemReport: Association<Item, ItemReport>;

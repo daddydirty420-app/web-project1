@@ -23,9 +23,9 @@
     width: 100%;
     padding: 8px;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
+    border: solid 1px var(--gray-line);
     border-radius: 5px;
-    background-color: var(--white);
+    background-color: #fff;
 }
 
 .textarea {
@@ -35,9 +35,9 @@
     width: 100%;
     padding: 10px;
     font-size: 13px;
-    border: solid 1px var(--gray-line-mid);
+    border: solid 1px var(--gray-line);
     border-radius: 5px;
-    background-color: var(--light-background);
+    background-color: #fff;
 }
 
 .button {

@@ -64,7 +64,7 @@
 }
 
 .menuP {
-    font-size: var(--fixed-p);
+    font-size: 14px;
     width: 75px;
     text-align: center;
     cursor: pointer;

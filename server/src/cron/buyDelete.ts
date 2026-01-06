@@ -9,21 +9,19 @@ export const startBuyDeleteCron = () => {
     // 未購入1週間放置Delivery削除
     cron.schedule("0 12 * * *", async () => {
         try {
-            const notDeliveries = await Delivery.findAll({
+            const deletedCount = await Delivery.destroy({
                 where: {
                     paid_info_id: null,
                     createdAt: { [Op.lt]: sevenDaysAgo },
                 },
-            });
+            });     
 
-            if (notDeliveries.length === 0) {
+            if (deletedCount === 0) {
                 console.log("[cron] 1週間放置Deliveryはありません。");
                 return;
             }
 
-            await notDeliveries.destroy();
-
-            console.log(`[cron] ${notDeliveries.length}件の1週間放置Deliveryを削除しました。`);
+            console.log(`[cron] ${deletedCount}件の1週間放置Deliveryを削除しました。`);
         } catch (err) {
             console.error("[cron] 1週間放置Delivery削除エラー：", err);
         }

@@ -52,20 +52,19 @@ export const startItemDeleteCron = () => {
         try {
             const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
 
-            const items = await Item.findAll({
+            const deletedCount = await Item.destroy({
                 where: {
                     status: "editing",
                     createdAt: { [Op.lt]: sevenDaysAgo },
                 },
             });
 
-            if (items.length === 0) {
+            if (deletedCount === 0) {
                 console.log("[cron] 1週間放置itemはありません。");
                 return;
             }
-            await items.destroy();
 
-            console.log(`[cron] ${items.length}件の1週間放置itemを削除しました。`);
+            console.log(`[cron] ${deletedCount}件の1週間放置itemを削除しました。`);
         } catch (err) {
             console.error("[cron] 1週間放置item削除エラー：", err);
         }
