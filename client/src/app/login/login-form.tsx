@@ -35,6 +35,8 @@ export default function LoginForm() {
         }
     };
 
+    const isDisabled = loading || !email || !password;
+
     return (
         <form onSubmit={handleSubmit}>
             <p className={styles.formText}>メールアドレス</p>
@@ -83,7 +85,7 @@ export default function LoginForm() {
             <button
             type="submit"
             className={styles.mainB}
-            disabled={loading}
+            disabled={isDisabled}
             >
                 {loading ? "ログイン中..." : "ログインする"}
             </button>
