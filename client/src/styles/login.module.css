@@ -124,10 +124,16 @@
 .reset {
     display: block;
     width: max-content;
-    margin: 25px 0 25px auto;
-    font-size: 14px;
-    color: var(--accent);
+    margin: 20px auto 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-line);
     cursor: pointer;
+    transition: color 0.2s;
+}
+.reset:hover {
+    color: var(--theme-str);
 }
 
 .small {
