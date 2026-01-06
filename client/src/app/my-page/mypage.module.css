@@ -168,35 +168,50 @@
 
 .overlay {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--overlay);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     z-index: 4000;
 }
 
 .popup {
     position: fixed;
-    width: 320px;
-    top: 50px;
+    width: calc(100% - 2rem);
+    max-width: 380px;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--light-background);
-    box-shadow: var(--shadow-str);
-    border-radius: 10px;
+    background-color: var(--background);
+    border-radius: 14px;
     z-index: 5000;
-    padding: 20px;
+    padding: 1.5rem 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08)
+                0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.popupClose {
-    color: var(--gray-50);
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
+.x {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 18px;
+    right: 18px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
+    color: var(--gray-50);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.15s ease,
+                color 0.15s ease,
+                transform 0.1s ease;
+}
+.x:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--theme);
+}
+.x:active {
+    transform: scale(0.92);
 }
 
 .popupTitle {
