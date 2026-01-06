@@ -121,7 +121,7 @@
     background-color: var(--button-gray-hover);
 }
 
-.reset {
+.resetReference {
     display: block;
     width: max-content;
     margin: 20px auto 0;

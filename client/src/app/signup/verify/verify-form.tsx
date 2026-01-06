@@ -58,6 +58,8 @@ export default function VerifyForm() {
         }
     };
 
+    const isDisabled = loading || !code;
+
     return (
         <form onSubmit={handleSubmit}>
             <p className={styles.formText}>認証コード</p>
@@ -86,12 +88,12 @@ export default function VerifyForm() {
             <button
             type="submit"
             className={styles.mainB}
-            disabled={loading}
+            disabled={isDisabled}
             >
                 {loading ? "認証中..." : "認証する"}
             </button>
 
-            <p className={styles.referenceP} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
+            <p className={styles.resetReference} onClick={() => setReferenceVisible((v) => !v)}>紹介コードを入力する（ここをクリック）</p>
 
             {referenceVisible && (
                 <div>
@@ -101,8 +103,8 @@ export default function VerifyForm() {
                     placeholder='a1b2c3d4e5'
                     className={styles.input}
                     />
-                    <small className={styles.superSmall}>※ 商品を出品後、弊社が確認でき次第、ポイントが付与されます。（目安：3営業日以内）</small>
-                    <small className={styles.superSmall}>※ 入力ミスなど間違いがあった場合、ポイントを付与できません。</small>
+                    <small className={styles.superSmall}>※商品を出品後、弊社が確認でき次第、ポイントが付与されます。（目安：3営業日以内）
+                        <br />※入力ミスなど間違いがあった場合、ポイントを付与できません。</small>
                 </div>
             )}
         </form>

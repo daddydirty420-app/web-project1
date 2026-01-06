@@ -42,6 +42,6 @@ export default function Resend() {
     };
 
     return (
-        <p className={styles.referenceP} onClick={handleResend}>認証コードを再発行する</p>
+        <p className={styles.resetReference} onClick={handleResend}>認証コードを再発行する</p>
     );
 }
