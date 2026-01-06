@@ -88,19 +88,19 @@
     cursor: pointer;
     transition: background-color 0.2s, transform 0.05s, box-shadow 0.05s;
 }
-.mainB:hover {
-    background-color: var(--action-hover);
-}
-.mainB:active {
-    transform: translateY(1px);
-    box-shadow: none;
-}
 .mainB:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 .mainB:not(:disabled) {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.mainB:hover {
+    background-color: var(--action-hover);
+}
+.mainB:active {
+    transform: translateY(1px);
+    box-shadow: none;
 }
 
 .subB {
