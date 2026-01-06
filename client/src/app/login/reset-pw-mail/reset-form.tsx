@@ -25,6 +25,8 @@ export default function ResetForm() {
         }
     };
 
+    const isDisabled = !email;
+
     return (
         <form onSubmit={handleSubmit}>
             <p className={styles.formText}>メールアドレス</p>
@@ -39,7 +41,10 @@ export default function ResetForm() {
             required
             />
 
-            <button type="submit" className={styles.mainB}>メールを送信する</button>
+            <button
+            type="submit"
+            className={styles.mainB}
+            disabled={isDisabled}>メールを送信する</button>
         </form>
     );
 }

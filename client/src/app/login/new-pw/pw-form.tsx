@@ -58,6 +58,8 @@ export default function PwForm() {
         }
     };
 
+    const isDisabled = !password || !confirmPassword;
+
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -112,7 +114,10 @@ export default function PwForm() {
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button type="submit" className={styles.mainB}>リセットする</button>
+            <button
+            type="submit"
+            className={styles.mainB}
+            disabled={isDisabled}>リセットする</button>
         </form>
     );
 }
