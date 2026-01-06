@@ -86,7 +86,7 @@
     border-radius: 12px;
     background-color: var(--action);
     cursor: pointer;
-    transition: opacity 0.2s, transform 0.05s;
+    transition: background-color 0.2s, transform 0.05s;
 }
 .mainB:hover {
     background-color: var(--action-hover);
