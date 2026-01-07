@@ -12,11 +12,28 @@
 }
 
 .miniSectionBox {
-    margin-top: 2rem;
+    margin-top: var(--space-sm);
+}
+
+.miniSectionBox > p,
+.miniSectionBox > div {
+    margin-top: 0.5rem;
 }
 
 .miniSectionTitle {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
     font-size: var(--small-heading);
+}
+
+.articleNumber {
+    font-size: var(--caption);
+    color: var(--text-muted);
+}
+
+.articleHeading {
+    font-weight: 600;
     color: var(--gray-75);
 }
 
