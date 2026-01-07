@@ -61,27 +61,38 @@ export default function TokuteiReccomend() {
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い価格'>
-                    <p>単品プラン：300円/1点</p>
-                    <p>月額プラン：880円/月</p>
+                    <div className={styles.twoTextFlex}>
+                        <p>単品プラン：</p>
+                        <p>300円/1点</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>月額プラン：</p>
+                        <p>880円/月</p>
+                    </div>
                     <small className={styles.small}>※キャンペーン等により料金が変動する場合がございます。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い方法・支払い時期'>
-                    <p>支払い方法：売上金差し引き</p>
-                    <p>支払い時期：</p>
-                    <div className={styles.innerContent}>
-                        <p>・単品プラン：購入者が商品を受け取ったとき
-                            <br />・月額プラン：毎月末
-                        </p>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い方法：</p>
+                        <p>売上金差し引き</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い時期：</p>
+                        <div className={styles.innerContent}>
+                            <p>・単品プラン：購入者が商品を受け取ったとき
+                                <br />・月額プラン：毎月末
+                            </p>
+                        </div>
                     </div>
                 </TokuteiSection>
 
                 <TokuteiSection header='売上金額が料金に満たない場合'>
-                    <div className='flex flex-start'>
+                    <div className={styles.twoTextFlex}>
                         <p>単品プラン：</p>
                         <p>販売手数料を除いた商品の売上金額が〇〇レコメンドの料金に満たない場合、売上金全額差し引きいたします。</p>
                     </div>
-                    <div className='flex flex-start mt-2'>
+                    <div className={styles.twoTextFlex}>
                         <p>月額プラン：</p>
                         <p>当月の売上金額が〇〇レコメンドの料金に満たない場合、当月の売上金額から全額差し引きいたします。また、当月の売上金額が0円だった場合、料金を徴収いたしません。</p>
                     </div>
