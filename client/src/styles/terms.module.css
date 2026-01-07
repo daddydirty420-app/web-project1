@@ -72,12 +72,23 @@
 
 .listDiv {
     margin-top: 0.75rem;
-    margin-left: 1.25rem;
+    margin-left: 1.5rem;
 }
 
 .listParent {
-    display: flex;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.5rem;
+}
+
+.listParent + .listParent {
+    margin-top: 0.25rem;
+}
+
+.listIndex {
+    font-size: var(--caption);
+    color: var(--text-muted);
+    line-height: 1.6;
 }
 
 .listParent p {
