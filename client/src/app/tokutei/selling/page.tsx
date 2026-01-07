@@ -111,6 +111,7 @@ export default function TokuteiSelling() {
                         <p>各配送会社が指定する方法でお支払いいただきます。</p>
                     </div>
 
+                    <SecondHeader text='【出品者】' />
                     <SecondHeader text='振込手数料' />
                     <p>200円</p>
 
