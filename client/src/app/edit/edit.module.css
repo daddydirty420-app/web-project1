@@ -34,12 +34,23 @@
     height: 90px;
 }
 
-.checkbox {
+.checkLabel {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
     cursor: pointer;
+}
+
+.check {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.checkText {
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 .text14 {

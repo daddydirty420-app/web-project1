@@ -68,14 +68,15 @@ export default function ProfileImage({ user, setFile, defaultImage, setDefaultIm
             height={90}
             className={styles.previewProfile}
             />
-            <label className={styles.checkbox}>
+            <label className={styles.checkLabel}>
                 <input
                 type="checkbox"
                 name="defaultCheck"
                 checked={defaultImage}
                 onChange={handleDefaultImage}
+                className={styles.check}
                 />
-                <p className={styles.text14}>デフォルトに戻す</p>
+                <p className={styles.checkText}>デフォルトに戻す</p>
             </label>
         </div>
     );
