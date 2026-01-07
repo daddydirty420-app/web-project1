@@ -34,6 +34,7 @@
   /* フォントサイズ */
   --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
   --display: clamp(3rem, 1.5rem + 10vw, 6.25rem); /* 48-100px */
+  --page-title: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem); /* 20–24px */
   --heading1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); /* 24-32px */
   --heading2: clamp(1.25rem, 1.1rem + 1vw, 1.5rem); /* 20-24px */
   --heading3: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); /* 18-21px */
@@ -75,7 +76,7 @@ body {
 h1, h2, h3 {
   color: var(--h-color);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 h1 {
