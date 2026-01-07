@@ -78,7 +78,7 @@
 .listParent {
     display: grid;
     grid-template-columns: auto 1fr;
-    column-gap: 0.5rem;
+    column-gap: 0.25rem;
 }
 
 .listParent + .listParent {
@@ -100,6 +100,7 @@
 .date {
     display: block;
     font-size: var(--caption);
+    color: var(--text-muted);
     text-align: right;
     margin-top: 1rem;
 }
