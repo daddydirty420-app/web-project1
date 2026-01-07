@@ -103,3 +103,14 @@
     text-align: right;
     margin-top: 1rem;
 }
+
+.link {
+    font-size: var(--caption);
+    color: var(--link);
+    word-break: break-all;
+    cursor: pointer;
+}
+.link:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}

@@ -118,9 +118,9 @@ export default function PrivacyPolicy() {
                 <TermsMiniSection number={9} heading='Googleアナリティクスの使用'>
                     <p>弊社は、本サービスの利用状況を調査・分析するため、本サービス上にGoogle社が提供するGoogleアナリティクスを利用しています。Googleアナリティクスの利用規約およびGoogle社のプライバシーポリシーが適用されます。
                         <br />Googleアナリティクス　利用規約：
-                        <br /><span className='text-blue-600 hover:text-blue-800 hover:underline cursor-pointer break-all'>https://marketingplatform.google.com/about/analytics/terms/jp/</span>
+                        <br /><span className={styles.link}>https://marketingplatform.google.com/about/analytics/terms/jp/</span>
                         <br />Google　プライバシーポリシー：
-                        <br /><span className='text-blue-600 hover:text-blue-800 hover:underline cursor-pointer break-all'>https://policies.google.com/privacy?hl=ja</span>
+                        <br /><span className={styles.link}>https://policies.google.com/privacy?hl=ja</span>
                     </p>
                 </TermsMiniSection>
 
