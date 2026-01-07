@@ -387,17 +387,17 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
                 <InputTitle title="性別：" hissu />
                 <div className={styles.radioColumn}>
                     {genderOptions.map((option) => (
-                        <label key={option.id} className={styles.radio}>
+                        <label key={option.id} className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="gender"
                             value={option.name}
                             checked={selectedGender === option.id}
                             onChange={() => setSelectedGender(option.id)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             required
                             />
-                            {option.name}
+                            <p className={styles.radioText}>{option.name}</p>
                         </label>
                     ))}
                 </div>
