@@ -8,7 +8,7 @@ type TokuteiSectionProps = {
 
 export default function TokuteiSection({ header, children }: TokuteiSectionProps) {
     return (
-        <section>
+        <section className={styles.tokuteiSection}>
             <h2 className={styles.header}>{header}</h2>
             <div className={styles.content}>{children}</div>
         </section>

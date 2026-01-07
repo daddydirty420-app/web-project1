@@ -33,7 +33,7 @@ export default function TokuteiReccomend() {
                 <TokuteiSection header='所在地'>
                     <div className='flex flex-start'>
                         <p className='break-all'>〒210-0007</p>
-                        <p className='ml-[0.5rem] break-all'>神奈川県川崎市川崎区駅前本町11-2
+                        <p className='ml-2 break-all'>神奈川県川崎市川崎区駅前本町11-2
                             <br />川崎フロンティアビル4階
                         </p>
                     </div>
@@ -41,7 +41,7 @@ export default function TokuteiReccomend() {
 
                 <TokuteiSection header='電話番号'>
                     <p>請求があった場合、遅滞なく開示します。</p>
-                    <small className='block mt-1 text-[var(--gray-50)]'>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
+                    <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='メールアドレス'>
@@ -57,13 +57,13 @@ export default function TokuteiReccomend() {
                 </TokuteiSection>
 
                 <TokuteiSection header='URL'>
-                    <p><Link href='/' className='cursor-pointer hover:underline'>https://flex-outdoor.com</Link></p>
+                    <p><Link href='/' className={styles.link}>https://flex-outdoor.com</Link></p>
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い価格'>
                     <p>単品プラン：300円/1点</p>
                     <p>月額プラン：880円/月</p>
-                    <small className='block mt-2 text-[var(--gray-50)]'>※キャンペーン等により料金が変動する場合がございます。</small>
+                    <small className={styles.small}>※キャンペーン等により料金が変動する場合がございます。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い方法・支払い時期'>
@@ -89,7 +89,7 @@ export default function TokuteiReccomend() {
 
                 <TokuteiSection header='月額プランの自動更新・解約'>
                     <p>月額プランの方は、マイページの「〇〇レコメンド加入・変更」をクリックし、「解約する」を選択することで解約できます。なお、解約を申し込まない限り、毎月末のお支払い時に契約が自動更新されます。解約を申し込んだ月までは料金が通常通り発生し、月末までFLEXレコメンドの機能をご利用できます。</p>
-                    <small className='block mt-2 text-[var(--gray-50)]'>※マイページの「〇〇レコメンド加入・変更」や「解約する」ボタンが表示されない場合は、お気軽にお問い合わせフォームからお問い合わせください。</small>
+                    <small className={styles.small}>※マイページの「〇〇レコメンド加入・変更」や「解約する」ボタンが表示されない場合は、お気軽にお問い合わせフォームからお問い合わせください。</small>
                 </TokuteiSection>
             </TokuteiContainer>
         </Container>

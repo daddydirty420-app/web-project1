@@ -33,7 +33,7 @@ export default function Tokutei() {
                 <TokuteiSection header='所在地'>
                     <div className='flex flex-start'>
                         <p className='break-all'>〒210-0007</p>
-                        <p className='ml-[0.5rem] break-all'>神奈川県川崎市川崎区駅前本町11-2
+                        <p className='ml-2 break-all'>神奈川県川崎市川崎区駅前本町11-2
                             <br />川崎フロンティアビル4階
                         </p>
                     </div>
@@ -41,7 +41,7 @@ export default function Tokutei() {
 
                 <TokuteiSection header='電話番号'>
                     <p>請求があった場合、遅滞なく開示します。</p>
-                    <small className='block mt-1 text-[var(--gray-50)]'>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
+                    <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='メールアドレス'>
@@ -57,7 +57,7 @@ export default function Tokutei() {
                 </TokuteiSection>
 
                 <TokuteiSection header='URL'>
-                    <p><Link href='/' className='cursor-pointer hover:underline'>https://flex-outdoor.com</Link></p>
+                    <p><Link href='/' className={styles.link}>https://flex-outdoor.com</Link></p>
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い価格'>
@@ -89,9 +89,9 @@ export default function Tokutei() {
                     <p>返品：</p>
                     <div className={styles.innerContent}>
                         <p>お客様都合により返品される場合：</p>
-                        <p className='ml-[0.5rem]'>原則、お客様都合での返品は受け付けておりません。</p>
+                        <p className='ml-2'>原則、お客様都合での返品は受け付けておりません。</p>
                         <p>商品の不備により返品される場合：</p>
-                        <p className='ml-[0.5rem]'>チャットにてご相談のうえ、ご自身で対応できない場合は返品を申し出ることが可能です。商品や都合により返品できない場合がございますので一度チャットにてご相談ください。なお、弊社の故意または過失により商品に不備が発生した場合、弊社からお客様の口座または当サイトのポイントにて全額返金いたします。弊社の故意または過失による商品の不備がある場合、お問い合わせフォームからご連絡ください。</p>
+                        <p className='ml-2'>チャットにてご相談のうえ、ご自身で対応できない場合は返品を申し出ることが可能です。商品や都合により返品できない場合がございますので一度チャットにてご相談ください。なお、弊社の故意または過失により商品に不備が発生した場合、弊社からお客様の口座または当サイトのポイントにて全額返金いたします。弊社の故意または過失による商品の不備がある場合、お問い合わせフォームからご連絡ください。</p>
                     </div>
                 </TokuteiSection>
             </TokuteiContainer>

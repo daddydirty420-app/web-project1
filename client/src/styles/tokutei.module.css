@@ -3,11 +3,22 @@
     max-width: 768px;
 }
 
+.tokuteiSection {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--gray-line-mid);
+}
+.tokuteiSection:last-child {
+  border-bottom: none;
+}
+
 .header {
-    margin-top: 1rem;
-    font-size: var(--body);
-    font-weight: 600;
-    color: var(--gray-50);
+    margin-top: 0.8rem;
+    padding-left: 0.6rem;
+    font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--gray-75);
+    border-left: 3px solid var(--theme);
 }
 
 .secondHeader {
@@ -18,7 +29,7 @@
 }
 
 .content {
-    margin: 0.5rem 0 0 1rem;
+    margin: 0.6rem 0 0.2rem 0.8rem;
 }
 
 .content p {
@@ -27,4 +38,28 @@
 
 .innerContent {
     margin-left: 1rem;
+}
+
+.small {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--text-muted);
+}
+
+.link {
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline;
+    color: var(--link-hover);
+}
+
+@media (max-width: 640px) {
+    .content {
+        margin-left: 0.5rem;
+    }
+
+    .header {
+        font-size: 0.95rem;
+    }
 }
