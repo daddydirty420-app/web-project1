@@ -27,7 +27,7 @@
     padding: 0.15rem 0.5rem;
     font-size: var(--caption);
     font-weight: 700;
-    letter-spacing: 0.04;
+    letter-spacing: 0.04em;
     color: var(--gray-75);
     background-color: var(--gray-background);
     border-radius: 6px;
