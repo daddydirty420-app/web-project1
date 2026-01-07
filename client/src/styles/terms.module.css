@@ -35,13 +35,13 @@
 .articleHeading {
     font-weight: 600;
     color: var(--gray-75);
+    letter-spacing: 0.02em;
     flex: 1;
 }
 
 .kakkoTitle {
     display: flex;
     align-items: baseline;
-    gap: 0.5rem;
     margin-top: 1rem;
     font-size: var(--mid-text);
     font-weight: 600;
@@ -57,7 +57,12 @@
 .kakkoHeading {
     font-weight: 600;
     color: var(--gray-75);
+    letter-spacing: 0.02em;
     flex: 1;
+}
+
+.kakkoTitle + p {
+    margin-top: 0.25rem;
 }
 
 .termsP,
