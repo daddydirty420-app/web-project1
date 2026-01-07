@@ -65,17 +65,21 @@ export default function Tokutei() {
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い方法・支払い時期'>
-                    <p>支払い方法：</p>
-                    <div className={styles.innerContent}>
-                        <p>・クレジットカード決済
-                            <br />・ポイント決済
-                        </p>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い方法：</p>
+                        <div className={styles.innerContent}>
+                            <p>・クレジットカード決済
+                                <br />・ポイント決済
+                            </p>
+                        </div>
                     </div>
-                    <p>支払い時期：</p>
-                    <div className={styles.innerContent}>
-                        <p>・クレジットカード：商品注文時にお支払いが確定します。お支払い時期は各クレジットカード会社によるものとします。
-                            <br />・ポイント：商品注文時にお支払いが完了します。
-                        </p>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い時期：</p>
+                        <div className={styles.innerContent}>
+                            <p>・クレジットカード：商品注文時にお支払いが確定します。お支払い時期は各クレジットカード会社によるものとします。
+                                <br />・ポイント：商品注文時にお支払いが完了します。
+                            </p>
+                        </div>
                     </div>
                 </TokuteiSection>
 
