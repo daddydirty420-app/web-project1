@@ -67,17 +67,21 @@ export default function TokuteiSelling() {
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い方法・支払い時期'>
-                    <p>支払い方法：</p>
-                    <div className={styles.innerContent}>
-                        <p>・クレジットカード決済
-                            <br />・ポイント決済
-                        </p>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い方法：</p>
+                        <div className={styles.innerContent}>
+                            <p>・クレジットカード決済
+                                <br />・ポイント決済
+                            </p>
+                        </div>
                     </div>
-                    <p>支払い時期：</p>
-                    <div className={styles.innerContent}>
-                        <p>・クレジットカード：商品注文時にお支払いが確定します。お支払い時期は各クレジットカード会社によるものとします。
-                            <br />・ポイント：商品注文時にお支払いが完了します。
-                        </p>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い時期：</p>
+                        <div className={styles.innerContent}>
+                            <p>・クレジットカード：商品注文時にお支払いが確定します。お支払い時期は各クレジットカード会社によるものとします。
+                                <br />・ポイント：商品注文時にお支払いが完了します。
+                            </p>
+                        </div>
                     </div>
                 </TokuteiSection>
 
@@ -86,9 +90,9 @@ export default function TokuteiSelling() {
                     <SecondHeader text='販売手数料' />
                     <p>出品した商品が売却された時点で、販売価格の10%かかります。</p>
 
-                    <div className='mt-4 mb-2'>
+                    <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>
-                        <p className='block ml-2' >購入者により支払われた商品代金から販売手数料を差し引いた額を出品者の売上金に計上することで、販売手数料のお支払いとなります。</p>
+                        <p>購入者により支払われた商品代金から販売手数料を差し引いた額を出品者の売上金に計上することで、販売手数料のお支払いとなります。</p>
                     </div>
 
                     <SecondHeader text='【購入者】' />
@@ -102,17 +106,17 @@ export default function TokuteiSelling() {
                         <br />※現在、着払いには対応しておりません。発送者の負担になります。
                     </p>
 
-                    <div className='mt-4 mb-2'>
+                    <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>
-                        <p className='block ml-2'>各配送会社が指定する方法でお支払いいただきます。</p>
+                        <p>各配送会社が指定する方法でお支払いいただきます。</p>
                     </div>
 
                     <SecondHeader text='振込手数料' />
                     <p>200円</p>
 
-                    <div className='mt-4 mb-2'>
+                    <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>
-                        <p className='block ml-2'>売上金の振込時に、申請金額から200円を徴収いたします。</p>
+                        <p>売上金の振込時に、申請金額から200円を徴収いたします。</p>
                     </div>
                 </TokuteiSection>
 
@@ -121,14 +125,22 @@ export default function TokuteiSelling() {
                 </TokuteiSection>
 
                 <TokuteiSection header='キャンセル・返品'>
-                    <p>キャンセル：</p>
-                    <p className={styles.innerContent}>商品の発送前であれば、キャンセル可能です。その際、購入者からキャンセル料10%を頂戴いたします。返金額は口座振込、ポイント変換のどちらか選択できます。なお、商品や都合によりキャンセルできない場合があるので、一度チャットでご相談ください。</p>
-                    <p>返品：</p>
-                    <div className={styles.innerContent}>
-                        <p>お客様都合により返品される場合：</p>
-                        <p className='ml-2'>原則、お客様都合での返品は受け付けておりません。</p>
-                        <p>商品の不備により返品される場合：</p>
-                        <p className='ml-2'>チャットにてご相談のうえ、ご自身で対応できない場合は返品を申し出ることが可能です。商品や都合により返品できない場合がございますので一度チャットにてご相談ください。なお、弊社の故意または過失により商品に不備が発生した場合、弊社からお客様の口座または当サイトのポイントにて全額返金いたします。弊社の故意または過失による商品の不備がある場合、お問い合わせフォームからご連絡ください。</p>
+                    <div className={styles.twoTextFlex}>
+                        <p>キャンセル：</p>
+                        <p className={styles.innerContent}>商品の発送前であれば、キャンセル可能です。その際、購入者からキャンセル料10%を頂戴いたします。返金額は口座振込、ポイント変換のどちらか選択できます。なお、商品や都合によりキャンセルできない場合があるので、一度チャットでご相談ください。</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>返品：</p>
+                        <div className={styles.innerContent}>
+                            <div className={styles.twoTextFlex}>
+                                <p>お客様都合により返品される場合：</p>
+                                <p>原則、お客様都合での返品は受け付けておりません。</p>
+                            </div>
+                            <div className={styles.twoTextFlex}>
+                                <p>商品の不備により返品される場合：</p>
+                                <p>チャットにてご相談のうえ、ご自身で対応できない場合は返品を申し出ることが可能です。商品や都合により返品できない場合がございますので一度チャットにてご相談ください。なお、弊社の故意または過失により商品に不備が発生した場合、弊社からお客様の口座または当サイトのポイントにて全額返金いたします。弊社の故意または過失による商品の不備がある場合、お問い合わせフォームからご連絡ください。</p>
+                            </div>
+                        </div>
                     </div>
                 </TokuteiSection>
             </TokuteiContainer>
