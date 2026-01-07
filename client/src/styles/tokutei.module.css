@@ -41,9 +41,15 @@
     font-size: var(--mid-text);
 }
 
+.twoTextFlex {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
 .innerContent {
     flex: 1;
-    margin-left: 1rem;
 }
 
 .small {
@@ -58,12 +64,6 @@
 .link:hover {
     text-decoration: underline;
     color: var(--link-hover);
-}
-
-.twoTextFlex {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.25rem;
 }
 
 @media (max-width: 640px) {
