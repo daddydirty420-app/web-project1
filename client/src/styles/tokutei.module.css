@@ -22,10 +22,15 @@
 }
 
 .secondHeader {
-    margin: 0.5rem 0;
-    font-size: var(--body);
-    font-weight: 600;
-    color: var(--gray-50);
+    display: inline-block;
+    margin: 0.8rem 0 0.3;
+    padding: 0.15rem 0.5rem;
+    font-size: var(--caption);
+    font-weight: 700;
+    letter-spacing: 0.04;
+    color: var(--gray-75);
+    background-color: var(--gray-background);
+    border-radius: 6px;
 }
 
 .content {
