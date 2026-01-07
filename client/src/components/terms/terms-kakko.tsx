@@ -1,16 +1,19 @@
 import { ReactNode } from 'react';
 import styles from '@/styles/terms.module.css';
 
-type TermsKakkoProps = {
-    number: number,
-    heading: string,
-    children: ReactNode
+type Props = {
+    number: number;
+    heading: string;
+    children: ReactNode;
 };
 
-export default function TermsKakko ({ number, heading, children }: TermsKakkoProps) {
+export default function TermsKakko({ number, heading, children }: Props) {
     return (
         <div>
-            <h4 className={styles.kakkoTitle}>（ {number} ）　「{heading}」</h4>
+            <h4 className={styles.kakkoTitle}>
+                <span className={styles.kakkoNumber}>（ {number} ）</span>
+                <span className={styles.kakkoHeading}>「{heading}」</span>
+            </h4>
             {children}
         </div>
     );

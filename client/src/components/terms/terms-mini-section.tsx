@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 import styles from '@/styles/terms.module.css';
 
-type TeamsMiniSectionProps = {
+type Props = {
     number: number;
     heading: string;
     children: ReactNode;
 };
 
-export default function TeamsMiniSection({ number, heading, children }: TeamsMiniSectionProps) {
+export default function TeamsMiniSection({ number, heading, children }: Props) {
     return (
         <div className={styles.miniSectionBox}>
             <h3 className={styles.miniSectionTitle}>
