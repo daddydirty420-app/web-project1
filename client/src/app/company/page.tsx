@@ -4,6 +4,7 @@ import Footer from "@/components/footer/footer";
 import { TokuteiContainer, TokuteiSection } from '@/components/tokutei';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import styles from "@/styles/tokutei.module.css";
 
 export const metadata: Metadata = {
     title: "事業概要",
@@ -49,14 +50,14 @@ export default function Company() {
 
                 <TokuteiSection header='電話番号'>
                     <p>請求があった場合、遅滞なく開示します。</p>
-                    <small className='block mt-1 text-[var(--gray-50)]'>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
+                    <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='メールアドレス'>
                     <p>contact@○○.com
                         <br />support@flex-outdoor-mail.com
                     </p>
-                    <small className='block mt-1 text-[var(--gray-50)]'>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>および上記のメールからお問い合わせください。</small>
+                    <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>および上記のメールからお問い合わせください。</small>
                 </TokuteiSection>
 
                 <TokuteiSection header='営業時間'>
@@ -64,7 +65,7 @@ export default function Company() {
                 </TokuteiSection>
 
                 <TokuteiSection header='URL'>
-                    <p><Link href='/' className='cursor-pointer hover:underline'>https://fuckintesting.com</Link>（仮）</p>
+                    <p><Link href='/' className={styles.link}>https://fuckintesting.com</Link>（仮）</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='取引銀行'>
