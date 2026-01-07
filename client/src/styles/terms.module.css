@@ -1,26 +1,22 @@
 .sectionBox {
     max-width: 768px;
-    margin: 3rem auto;
+    margin: var(--space-lg) auto;
+    padding: 0 1rem;
 }
 
 .sectionTitle {
     font-size: var(--heading2);
-    padding-left: 1rem;
-    border-bottom: solid 1px var(--gray-25);
+    padding-bottom: 0.5rem;
+    border-bottom: solid 1px var(--gray-line);
 }
 
 .miniSectionBox {
-    margin-top: 2rem;
-}
-
-.miniSectionBox p{
-    font-size: var(--caption);
-    line-height: 1.5;
-    margin-top: 10px;
+    margin-top: var(--space-sm);
 }
 
 .miniSectionTitle {
     font-size: var(--small-heading);
+    color: var(--gray-75);
 }
 
 .kakkoTitle {
@@ -30,24 +26,24 @@
     margin-top: 1rem;
 }
 
-.termsP {
+.termsP,
+.miniSectionBox p {
     font-size: var(--caption);
-    line-height: 1.5;
-    margin-top: 0.5rem;
 }
 
 .listDiv {
-    margin-top: 0.5rem;
-    margin-left: 1rem;
+    margin-top: 0.75rem;
+    margin-left: 1.25rem;
 }
 
 .listParent {
     display: flex;
+    gap: 0.5rem;
 }
 
-.listParent p{
+.listParent p {
     font-size: var(--caption);
-    line-height: 1.5;
+    line-height: 1.6;
     margin-top: 0;
 }
 

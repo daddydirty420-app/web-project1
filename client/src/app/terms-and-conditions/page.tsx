@@ -624,7 +624,7 @@ export default function TermsAndConditions() {
                     </TermsMiniSection>
                 </TermsMiniSection>
 
-                <p className={styles.date}>2025年○○月○○日　施行</p>
+                <p className={styles.date}>2026年○○月○○日　施行</p>
             </TermsSection>
         </Container>
 
