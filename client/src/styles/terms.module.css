@@ -15,11 +15,6 @@
     margin-top: var(--space-sm);
 }
 
-.miniSectionBox > p,
-.miniSectionBox > div {
-    margin-top: 0.5rem;
-}
-
 .miniSectionTitle {
     display: flex;
     align-items: baseline;
