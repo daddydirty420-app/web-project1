@@ -315,6 +315,8 @@ export default function Client({ shopEditId }: Props) {
                             </div>
                         ))}
                     </div>
+
+                    <small className={styles.centerSmall}>※ 写真は文字がはっきり写っているものをアップロードしてください（最大10枚）</small>
                 </section>
             )}
 
