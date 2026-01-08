@@ -119,3 +119,8 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03);
   border-color: var(--gray-line-mid);
 }
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--gray-25);
+}
