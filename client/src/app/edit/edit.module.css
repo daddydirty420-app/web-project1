@@ -4,18 +4,6 @@
     max-width: 500px;
     position: relative;
 }
-.inputDiv::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 14px;
-    width: 6px;
-    height: 6px;
-    border-right: 1.5px solid var(--text-muted);
-    border-bottom: 1.5px solid var(--text-muted);
-    transform: translateY(-50%) rotate(45deg);
-    pointer-events: none;
-}
 
 .input {
     box-sizing: border-box;
@@ -149,6 +137,25 @@
 .searchUl::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.15);
     border-radius: 3px;
+}
+
+.selectDiv {
+    margin: 1.25rem auto;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+.selectDiv::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid var(--text-muted);
+    border-bottom: 1.5px solid var(--text-muted);
+    transform: translateY(-50%) rotate(45deg);
+    pointer-events: none;
 }
 
 .select {

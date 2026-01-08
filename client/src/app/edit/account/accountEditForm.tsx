@@ -301,7 +301,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 )}
             </div>
 
-            <div className={styles.inputDiv}>
+            <div className={styles.selectDiv}>
                 <InputTitle title="口座種別" hissu />
                 <select
                 aria-label="口座種別"
