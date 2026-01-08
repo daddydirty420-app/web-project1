@@ -48,15 +48,17 @@ export default function ConfirmSection({ title, content, link, input, date, radi
 
     return (
         <section className={styles.confirmCard}>
-            <h3 className={styles.title}>{title}</h3>
+            <div className={styles.header}>
+                <h3 className={styles.title}>{title}</h3>
 
-            <button
-            type="button"
-            onClick={handleClick}
-            className={styles.editButton}
-            >
-                編集
-            </button>
+                <button
+                type="button"
+                onClick={handleClick}
+                className={styles.editButton}
+                >
+                    編集
+                </button>
+            </div>
             
             <p className={styles.content}>
                 {(content ?? "").split("\n").map((line, i) => (

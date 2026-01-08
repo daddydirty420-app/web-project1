@@ -1,43 +1,55 @@
 .confirmWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     width: 100%;
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 2.5rem auto;
 }
 
 .confirmCard {
     background: var(--gray-background);
-    border-radius: 12px;
-    padding: 1.2rem 1.4rem;
-    margin: 1rem 0;
+    border-radius: 14px;
+    padding: 1.3rem 1.5rem 1.4rem;
+    margin: 1.1rem 0;
     position: relative;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     width: 100%;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 6px 14px rgba(0, 0, 0, 0.03);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
 }
 
 .title {
     font-size: var(--caption);
     font-weight: 600;
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
 }
 
 .content {
     font-size: var(--mid-text);
-    line-height: 1.6;
     white-space: pre-line;
+    word-break: break-word;
 }
 
 .editButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 500;
     color: var(--theme);
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background 0.15s;
+    padding: 4px 8px;
+    border-radius: 999px;
     cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+.editButton:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .editButton:hover {
