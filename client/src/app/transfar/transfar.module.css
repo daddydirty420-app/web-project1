@@ -9,7 +9,7 @@
     min-height: 50px;
     position: relative;
     padding-bottom: 0.25rem;
-    border-bottom: 1px solid var(--shadow-mini);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     gap: 1rem;
 }
 
@@ -32,30 +32,37 @@
 .inputFlex {
     display: flex;
     align-items: center;
+    gap: 6px;
+    width: 100%;
+    max-width: 260px;
 }
 
 .text14 {
     font-size: 14px;
+    color: var(--text-muted);
 }
 
 .transValueInput {
     box-sizing: border-box;
     flex: 1;
     height: 44px;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 600;
     padding: 0 14px;
+    text-align: right;
     border: solid 1px var(--gray-line);
     border-radius: 10px;
     background-color: #fff;
-    transition: border-color 0.2s ease;
 }
 
 .invalidInput {
     border-color: var(--alert);
+    background: rgba(255, 0, 0, 0.03);
     outline: none;
 }
 
 .smallGray {
+    margin-top: 4px;
     font-size: 12px;
     color: var(--text-muted);
     letter-spacing: 0.02em;
