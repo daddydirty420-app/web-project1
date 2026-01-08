@@ -49,10 +49,10 @@
 }
 
 .twoTextFlex > p:first-child {
-  min-width: 4.5rem;
-  font-weight: 600;
-  color: var(--gray-75);
-  white-space: nowrap;
+    min-width: 4.5rem;
+    font-weight: 600;
+    color: var(--gray-75);
+    white-space: nowrap;
 }
 
 .innerContent {

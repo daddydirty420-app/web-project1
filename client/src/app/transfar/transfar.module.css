@@ -154,6 +154,21 @@
     margin-left: 1rem;
 }
 
+.twoTextFlex {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 14px;
+}
+
+.twoTextFlex > p:first-child {
+    min-width: 4.5rem;
+    font-weight: 600;
+    color: var(--gray-75);
+    white-space: nowrap;
+}
+
 .accountText {
     font-size: 14px;
     margin-top: 0.5rem;
