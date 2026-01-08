@@ -274,15 +274,15 @@ export default function Form({ shopId, shopInfo }: Props) {
                 </p>
             </div>
 
-            <label className={styles.checkbox}>
+            <label className={styles.checkLabel}>
                 <input
                 type="checkbox"
                 name="checkbox"
                 checked={checked}
                 onChange={() => setChecked(!checked)}
-                className="cursor-pointer"
+                className={styles.check}
                 />
-                許認可が必要な事業内容ですか？
+                <p className={styles.checkText}>許認可が必要な事業内容ですか？</p>
             </label>
 
             {checked && (

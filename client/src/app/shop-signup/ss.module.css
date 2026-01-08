@@ -1,9 +1,9 @@
 .buttonNav {
-    width: 100%;
-    max-width: 350px;
-    margin: 2rem auto 3rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2.5rem;
+    width: max-content;
+    margin: 2rem auto 3rem;
 }
 
 .backButton {
@@ -44,7 +44,7 @@
 
 .subtitle {
     font-size: 17px;
-    margin: 0 auto 1.25rem;
+    margin: 2rem auto 1.25rem;
     text-align: center;
     letter-spacing: 0.04em;
 }
@@ -106,6 +106,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    margin-top: 1.25rem;
     padding: 0.1rem 0.3rem;
     border-radius: 6px;
     cursor: pointer;
