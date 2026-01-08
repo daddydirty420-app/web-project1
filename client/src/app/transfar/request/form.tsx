@@ -122,7 +122,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
 
             <div className={styles.transInputDiv}>
                 <p className={styles.transDivTitle}>振込金額</p>
-                <p className={styles.transTextValue}>{(value - 200).toLocaleString()}</p>
+                <p className={styles.transTextValue}>￥{(value - 200).toLocaleString()}</p>
             </div>
 
             <button
