@@ -74,6 +74,10 @@
     border-radius: 8px;
     background: var(--theme);
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.inputButton:hover {
+    background-color: var(--theme-str);
 }
 
 .text14 {
