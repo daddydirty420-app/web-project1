@@ -67,17 +67,17 @@ export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
                 <InputTitle title="事業形態：" />
                 <div className={styles.radioColumn}>
                     {ComOrFreeOption.map((option) => (
-                        <label key={option.id} className={styles.radio}>
+                        <label key={option.id} className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="comfree"
                             value={option.name}
                             checked={selectOption === option.id}
                             onChange={() => setSelectOption(option.id)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             required
                             />
-                            <p className={styles.text14}>{option.name}</p>
+                            <p className={styles.radioText}>{option.name}</p>
                         </label>
                     ))}
                 </div>
