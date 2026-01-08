@@ -108,13 +108,12 @@ span > img {
 
 /* input */
 input,
-textarea,
-select {
+textarea {
   transition: border-color 0.2s, background-color 0.2s;
 }
+
 input:focus,
-textarea:focus,
-select:focus {
+textarea:focus {
   outline: 0;
   background-color: rgba(229, 231, 235, 0.35);
   border-color: var(--gray-line-mid);
