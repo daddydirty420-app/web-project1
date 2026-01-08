@@ -63,7 +63,7 @@
 }
 
 .labelActive {
-    color: #2563eb;
+    color: var(--theme);
     font-weight: 600;
 }
 
