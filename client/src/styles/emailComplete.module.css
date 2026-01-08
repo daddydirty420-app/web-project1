@@ -1,5 +1,5 @@
 .title {
-    font-size: var(--heading2);
+    font-size: var(--page-title);
     margin: 5rem auto 2.5rem;
     text-align: center;
 }
@@ -13,30 +13,29 @@
 }
 
 .linkText {
-    color: var(--accent);
+    color: var(--link);
     cursor: pointer;
 }
 .linkText:hover {
-    color: blue;
+    color: var(--link-hover);
     text-decoration: underline;
 }
 
 .linkButton {
     width: 200px;
-    height: 40px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2rem auto;
+    margin: 2rem auto 3rem;
     font-size: 15px;
     font-weight: 600;
-    color: var(--light-background);
-    background: var(--theme);
+    color: #fff;
+    background: var(--action);
     border-radius: 10px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 .linkButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--action-hover);
 }
