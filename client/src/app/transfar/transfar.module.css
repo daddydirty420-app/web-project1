@@ -140,30 +140,35 @@
     font-size: 18px;
     font-weight: 700;
     text-align: center;
-    margin-top: 20px;
+    margin: 28px 0 8px;
 }
 
 .popupTransValueDiv {
-    margin: 1rem auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin: 1.2rem 0 1.4rem;
+    padding: 0.75rem 0.9rem;
+    background-color: var(--gray-background);
+    border-radius: 10px;
 }
 
 .popupSubTitle {
+    margin-top: 1.4rem;
     font-size: 16px;
     font-weight: 700;
 }
 
 .popupTransValue {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
-    color: var(--theme-sub);
-    text-align: right;
+    color: var(--theme);
+    letter-spacing: 0.02em;
 }
 
 .popupAccountDiv {
+    margin-top: 0.5rem;
     margin-left: 1rem;
 }
 
