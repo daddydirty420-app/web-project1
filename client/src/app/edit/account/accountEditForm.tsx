@@ -309,10 +309,10 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 onChange={(e) => setAccountType(e.target.value)}
                 className={styles.select}
                 >
-                    <option value="" disabled>--1つ選択してください。--</option>
-                    <option value="普通預金">普通預金</option>
-                    <option value="当座預金">当座預金</option>
-                    <option value="その他">その他</option>
+                    <option value="" disabled className={styles.option}>--1つ選択してください。--</option>
+                    <option value="普通預金" className={styles.option}>普通預金</option>
+                    <option value="当座預金" className={styles.option}>当座預金</option>
+                    <option value="その他" className={styles.option}>その他</option>
                 </select>
             </div>
 

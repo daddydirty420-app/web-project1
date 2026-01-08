@@ -112,6 +112,17 @@
     cursor: pointer;
 }
 
+.option {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.option:hover {
+    background-color: var(--gray-background);
+}
+
 .preview {
     margin: 0.5rem auto;
     width: 120px;
