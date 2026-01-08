@@ -1,7 +1,7 @@
 .confirmWrapper {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
     width: 100%;
     max-width: 600px;
     margin: 2.5rem auto;
@@ -10,13 +10,13 @@
 .confirmCard {
     background: var(--gray-background);
     border-radius: 14px;
-    padding: 1.3rem 1.5rem 1.4rem;
-    margin: 1.1rem 0;
+    padding: 1rem 1.2rem 1.1rem;
     position: relative;
     width: 100%;
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.04),
-        0 6px 14px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.04);
+}
+.confirmCard:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header {
@@ -50,10 +50,6 @@
 }
 .editButton:hover {
     background: rgba(0, 0, 0, 0.05);
-}
-
-.editButton:hover {
-    background: rgba(0, 0, 0, 0.03);
 }
 
 .inputFlex {
