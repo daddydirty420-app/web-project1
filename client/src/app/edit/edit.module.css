@@ -61,7 +61,12 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    padding: 0.2rem 0.3rem;
+    border-radius: 6px;
     cursor: pointer;
+}
+.checkLabel:hover {
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .check {
@@ -231,7 +236,12 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 14px;
+    padding: 0.2rem 0.3rem;
+    border-radius: 6px;
     cursor: pointer;
+}
+.radioLabel:hover {
+    background: rgba(0, 0, 0, 0.03);
 }
 
 .radio {
