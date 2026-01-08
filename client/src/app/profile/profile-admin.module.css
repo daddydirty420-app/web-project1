@@ -98,16 +98,16 @@
     display: block;
     margin: 1rem auto;
     width: 150px;
-    height: 36px;
+    height: 40px;
     font-size: 14px;
     font-weight: 600;
     color: #fff;
     letter-spacing: 0.04em;
-    background-color: var(--theme);
+    background-color: var(--action);
     border-radius: 10px;
     cursor: pointer;
-    transition: opacity 0.15s ease;
+    transition: background-color 0.15s ease;
 }
 .popupButton:hover {
-    opacity: .85;
+    background-color: var(--action-hover);
 }
