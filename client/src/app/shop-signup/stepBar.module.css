@@ -63,7 +63,7 @@
 }
 
 .labelActive {
-    color: var(--theme);
+    color: var(--theme-str);
     font-weight: 600;
 }
 
