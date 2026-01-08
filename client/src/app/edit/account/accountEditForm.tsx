@@ -241,7 +241,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 required
                 />
                 {showBankSuggest && bankSuggestions.length > 0 && (
-                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                    <ul className={styles.searchUl}>
                         {bankSuggestions.map((bank, i) => (
                             <li
                             key={i}
@@ -254,7 +254,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
 
                                 setTimeout(() => setIsSelectingBank(false), 500);
                             }}
-                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            className={styles.searchLi}
                             >
                                 {bank.name}
                             </li>
@@ -279,7 +279,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 required
                 />
                 {showBranchSuggest && branchSuggestions.length > 0 && (
-                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                    <ul className={styles.searchUl}>
                         {branchSuggestions.map((branch, i) => (
                             <li
                             key={i}
@@ -292,7 +292,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
 
                                 setTimeout(() => setIsSelectingBranch(false), 500);
                             }}
-                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            className={styles.searchLi}
                             >
                                 {branch.name}
                             </li>

@@ -1,5 +1,5 @@
 .inputDiv {
-    margin: 1rem auto;
+    margin: 1.25rem auto;
     width: 100%;
     max-width: 500px;
     position: relative;
@@ -7,22 +7,24 @@
 
 .input {
     box-sizing: border-box;
+    margin-top: 2px;
     width: 100%;
-    padding: 8px;
+    height: 48px;
+    padding: 0 14px;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
-    border-radius: 5px;
-    background-color: var(--light-background);
+    border: solid 1px var(--gray-line);
+    border-radius: 8px;
+    background-color: #fff;
 }
 
 .imageInputDiv {
-    margin: 1rem auto;
+    margin: 1.25rem auto;
     width: max-content;
     max-width: 100%;
 }
 
 .imageInput {
-    border: solid 1px var(--gray-line-mid);
+    border: solid 1px var(--gray-line);
     border-radius: 10px;
     cursor: pointer;
 }
@@ -86,14 +88,25 @@
     overflow-y: auto;
 }
 
+.searchLi {
+    padding: 0.25rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.searchLi:hover {
+    background-color: var(--gray-background);
+}
+
 .select {
     box-sizing: border-box;
+    margin-top: 2px;
     width: 100%;
-    padding: 8px;
+    height: 48px;
+    padding: 0 14px;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
-    border-radius: 5px;
-    background-color: var(--light-background);
+    border: solid 1px var(--gray-line);
+    border-radius: 8px;
+    background-color: #fff;
     cursor: pointer;
 }
 
