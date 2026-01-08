@@ -223,7 +223,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
 
     return (
         <EditUI title="振込口座の設定">
-            {page === "normal" && <p className={styles.text12}>※振込申請の際にも口座を設定できます。</p>}
+            {page === "normal" && <p className={styles.small}>※振込申請の際にも口座を設定できます。</p>}
 
             <div className={styles.inputDiv}>
                 <InputTitle title="銀行名" hissu />
