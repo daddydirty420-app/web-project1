@@ -101,22 +101,42 @@
 
 .searchUl {
     position: absolute;
-    z-index: 10;
-    background-color: #fff;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 20;
     width: 100%;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    max-height: 220px;
+    background-color: #fff;
+    border: 1px solid var(--gray-line);
+    border-radius: 10px;
+    box-shadow: var(--shadow-mini);
     overflow-y: auto;
 }
 
 .searchLi {
-    font-size: 14px;
-    font-weight: 400;
-    padding: 0.5rem 1rem;
+    font-size: 13.5px;
+    padding: 0.6rem 1rem;
+    line-height: 1.4;
     cursor: pointer;
     transition: background-color 0.15s ease;
 }
 .searchLi:hover {
-    background-color: var(--gray-background);
+    background-color: rgba(229, 231, 235, 0.6);
+}
+.searchLi:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.searchLi:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.searchUl::-webkit-scrollbar {
+    width: 6px;
+}
+.searchUl::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
 }
 
 .select {
