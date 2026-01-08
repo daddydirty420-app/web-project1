@@ -216,17 +216,17 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 <p className={styles.text14}>事業形態を選択：</p>
                 <div className={styles.radioColumn}>
                     {ComOrFreeOption.map((option) => (
-                        <label key={option.id} className={styles.radio}>
+                        <label key={option.id} className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="comorfree"
                             value={option.name}
                             checked={selectOption === option.id}
                             onChange={() => setSelectOption(option.id)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             required
                             />
-                            {option.name}
+                            <p className={styles.radioText}>{option.name}</p>
                         </label>
                     ))}
                 </div>
@@ -485,15 +485,15 @@ export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
                 をご確認ください。
             </p>
 
-            <label className={styles.checkbox}>
+            <label className={styles.checkLabel}>
                 <input
                 type="checkbox"
                 name="checkbox"
                 checked={check}
                 onChange={() => setCheck(!check)}
-                className="cursor-pointer"
+                className={styles.check}
                 />
-                利用規約およびプライバシーポリシーに同意します。
+                <p className={styles.checkText}>利用規約およびプライバシーポリシーに同意します。</p>
             </label>
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />

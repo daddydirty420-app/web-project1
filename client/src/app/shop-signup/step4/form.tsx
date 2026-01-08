@@ -62,28 +62,28 @@ export default function Form({ shopId }: Props) {
                     <p className={styles.text14}>自動振込を希望する</p>
 
                     <div className={styles.radioColumn}>
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="autoTrans"
                             value="はい"
                             checked={autoTrans === "はい"}
                             onChange={(e) => setAutoTrans(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>はい</p>
+                            <p className={styles.radioText}>はい</p>
                         </label>
 
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="autoTrans"
                             value="いいえ"
                             checked={autoTrans === "いいえ"}
                             onChange={(e) => setAutoTrans(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>いいえ</p>
+                            <p className={styles.radioText}>いいえ</p>
                         </label>
                     </div>
                 </div>
@@ -96,28 +96,28 @@ export default function Form({ shopId }: Props) {
                     <p className={styles.text14}>運営者情報を表示する</p>
 
                     <div className={styles.radioColumn}>
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="openInfo"
                             value="はい"
                             checked={openInfo === "はい"}
                             onChange={(e) => setOpenInfo(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>はい</p>
+                            <p className={styles.radioText}>はい</p>
                         </label>
 
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="openInfo"
                             value="いいえ"
                             checked={openInfo === "いいえ"}
                             onChange={(e) => setOpenInfo(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>いいえ</p>
+                            <p className={styles.radioText}>いいえ</p>
                         </label>
                     </div>
                 </div>
@@ -130,28 +130,28 @@ export default function Form({ shopId }: Props) {
                     <p className={styles.text14}>〇〇レコメンド（有料）</p>
 
                     <div className={styles.radioColumn}>
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="reccomend"
                             value="はい"
                             checked={reccomend === "はい"}
                             onChange={(e) => setReccomend(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>はい</p>
+                            <p className={styles.radioText}>はい</p>
                         </label>
 
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="reccomend"
                             value="いいえ"
                             checked={reccomend === "いいえ"}
                             onChange={(e) => setReccomend(e.target.value)}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            <p className={styles.text14}>いいえ</p>
+                            <p className={styles.radioText}>いいえ</p>
                         </label>
                     </div>
                 </div>

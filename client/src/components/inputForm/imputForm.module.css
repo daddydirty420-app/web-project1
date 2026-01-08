@@ -54,6 +54,7 @@
     font-size: 15px;
     font-weight: 600;
     color: #fff;
+    letter-spacing: 0.04em;
     background-color: var(--action);
     border-radius: 10px;
     cursor: pointer;

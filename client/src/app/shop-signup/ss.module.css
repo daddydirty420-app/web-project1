@@ -8,35 +8,34 @@
 
 .backButton {
     width: 140px;
-    height: 36px;
+    height: 40px;
     font-size: 15px;
     font-weight: 600;
-    color: var(--theme);
-    background-color: var(--light-background);
-    border: solid 2px var(--theme);
+    color: var(--theme-str);
+    letter-spacing: 0.04em;
+    background-color: var(--button-gray);
     border-radius: 10px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.15s ease;
 }
 .backButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--button-gray-hover);
 }
 
 .nextButton {
     width: 140px;
-    height: 36px;
+    height: 40px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
-    background-color: var(--theme);
+    letter-spacing: 0.04em;
+    background-color: var(--action);
     border-radius: 10px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.15s ease;
 }
 .nextButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--action-hover);
 }
 
 .text14 {
@@ -44,9 +43,10 @@
 }
 
 .subtitle {
-    font-size: 18px;
-    margin: 2rem auto 1rem;
+    font-size: 17px;
+    margin: 0 auto 1.25rem;
     text-align: center;
+    letter-spacing: 0.04em;
 }
 
 .radioFlex {
@@ -63,39 +63,70 @@
     gap: 0.25rem;
 }
 
-.radio {
+.radioLabel {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
     font-size: 14px;
+    padding: 0.1rem 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.radioLabel:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.radio {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
+.radioText {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
 .linkText {
-    font-size: var(--mid-text);
+    font-size: var(--caption);
     text-align: center;
 }
 
 .link {
-    color: var(--accent);
+    color: var(--link);
     cursor: pointer;
 }
 .link:hover {
+    color: var(--link-hover);
     text-decoration: underline;
 }
 
-.checkbox {
+.checkLabel {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem;
-    margin: 1rem;
-    font-size: var(--mid-text);
+    gap: 0.5rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.checkLabel:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.check {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
+.checkText {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
 .inputDiv {
-    margin: 1rem auto;
+    margin: 1.25rem auto;
     width: 100%;
     max-width: 500px;
     position: relative;
@@ -103,12 +134,14 @@
 
 .input {
     box-sizing: border-box;
+    margin-top: 4px;
     width: 100%;
-    padding: 8px;
+    height: 48px;
+    padding: 0 14px;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
-    border-radius: 5px;
-    background-color: var(--light-background);
+    border: solid 1px var(--gray-line);
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 .nameFlex {
@@ -127,70 +160,221 @@
     width: 100%;
 }
 
+.searchUl {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    max-height: 220px;
+    background-color: #fff;
+    border: 1px solid var(--gray-line);
+    border-radius: 10px;
+    box-shadow: var(--shadow-mini);
+    overflow-y: auto;
+}
+
+.searchLi {
+    font-size: 13.5px;
+    padding: 0.6rem 1rem;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.searchLi:hover {
+    background-color: rgba(229, 231, 235, 0.6);
+}
+.searchLi:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.searchLi:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.searchUl::-webkit-scrollbar {
+    width: 6px;
+}
+.searchUl::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+.selectDiv {
+    margin: 1.25rem auto;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+}
+.selectDiv::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid var(--text-muted);
+    border-bottom: 1.5px solid var(--text-muted);
+    transform: translateY(-50%) rotate(45deg);
+    pointer-events: none;
+}
+
 .select {
     box-sizing: border-box;
+    margin-top: 4px;
     width: 100%;
-    padding: 8px;
+    height: 48px;
+    padding: 0 36px 0 14px;
     font-size: 14px;
-    border: solid 1px var(--gray-line-mid);
-    border-radius: 5px;
-    background-color: var(--light-background);
+    color: var(--text);
+    border: solid 1px var(--gray-line);
+    border-radius: 10px;
+    background-color: #fff;
     cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+.select:focus {
+    outline: none;
+    background-color: rgba(229, 231, 235, 0.35);
+    border-color: var(--gray-line-mid);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03);
+}
+.select option[value=""] {
+    color: var(--text-muted);
+}
+
+.option {
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .imageInputDiv {
-    margin: 1rem auto;
-    width: max-content;
-    max-width: 100%;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+}
+.imageInputDiv .titleFlex {
+    justify-content: center;
 }
 
 .imageInput {
-    border: solid 1px var(--gray-line-mid);
+    width: 100%;
+    height: 44px;
+    margin-top: 6px;
+    border: 1px dashed var(--gray-line-mid);
     border-radius: 10px;
+    background-color: var(--gray-background);
+    font-size: 13px;
+    color: var(--text-muted);
     cursor: pointer;
+    transition: border-color 0.2s;
+}
+.imageInput:focus {
+    outline: none;
+    border-color: var(--gray-line-mid-str);
 }
 
 .preview {
-    margin: 0.5rem auto;
+    display: block;
+    margin: 0.75rem auto 0;
     width: 120px;
     height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--gray-line);
+    background-color: var(--gray-background);
+    box-shadow: var(--shadow-mini);
 }
 
 .centerSmall {
     font-size: 12px;
+    color: var(--text-muted);
     text-align: center;
+    letter-spacing: 0.02em;
 }
 
 .permitSection {
-    margin-top: 1rem;
+    margin-top: 2rem;
+    padding: 1.5rem 1rem 2rem;
+    border-radius: 14px;
+    background-color: var(--gray-background);
+}
+
+.imageInputDivPermit {
+    margin: 0 auto 1.5rem;
+    padding: 1rem;
+    border: 1px dashed var(--gray-line-mid);
+    border-radius: 12px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.imageInputPermit {
+    width: 100%;
+    height: 44px;
+    margin-top: 8px;
+    border: 1px dashed var(--gray-line-mid);
+    border-radius: 12px;
+    background-color: #fff;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.imageInputPermit:hover {
+    background-color: var(--gray-background);
+}
+.imageInputPermit:disabled {
+    cursor: not-allowed;
+    color: var(--gray-25);
+    border-color: var(--gray-line);
+    background-color: rgba(229, 231, 235, 0.4);
 }
 
 .permitListDiv {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 14px;
     width: 100%;
     margin: 0 auto;
 }
 
 .permitPreviewItem {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
 }
 
 .permitPreview {
-    border-radius: 10px;
-    width: 100px;
+    width: 100%;
     height: 100px;
-    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--gray-line);
+    background-color: #fff;
+    box-shadow: var(--shadow-mini);
 }
 
 .permitRemoveIcon {
-    font-size: 18px;
-    color: var(--theme);
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 14px;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: var(--shadow-mini);
     cursor: pointer;
+    transition: color 0.15s, background-color 0.15s;
+}
+.permitRemoveIcon:hover {
+    color: var(--alert);
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 .optionDiv {

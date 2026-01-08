@@ -214,7 +214,7 @@ export default function Form({ shopId, account }: Props) {
                 required
                 />
                 {showBankSuggest && bankSuggestions.length > 0 && (
-                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                    <ul className={styles.searchUl}>
                         {bankSuggestions.map((bank, i) => (
                             <li
                             key={i}
@@ -227,7 +227,7 @@ export default function Form({ shopId, account }: Props) {
 
                                 setTimeout(() => setIsSelectingBank(false), 500);
                             }}
-                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            className={styles.searchLi}
                             >
                                 {bank.name}
                             </li>
@@ -252,7 +252,7 @@ export default function Form({ shopId, account }: Props) {
                 required
                 />
                 {showBranchSuggest && branchSuggestions.length > 0 && (
-                    <ul className="absolute z-10 bg-white border rounded w-full shadow-md max-h-48 overflow-y-auto">
+                    <ul className={styles.searchUl}>
                         {branchSuggestions.map((branch, i) => (
                             <li
                             key={i}
@@ -265,7 +265,7 @@ export default function Form({ shopId, account }: Props) {
 
                                 setTimeout(() => setIsSelectingBranch(false), 500);
                             }}
-                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            className={styles.searchLi}
                             >
                                 {branch.name}
                             </li>
@@ -274,7 +274,7 @@ export default function Form({ shopId, account }: Props) {
                 )}
             </div>
 
-            <div className={styles.inputDiv}>
+            <div className={styles.selectDiv}>
                 <InputTitle title="口座種別" hissu />
                 <select
                 aria-label="口座種別"
@@ -282,10 +282,10 @@ export default function Form({ shopId, account }: Props) {
                 onChange={(e) => setAccountType(e.target.value)}
                 className={styles.select}
                 >
-                    <option value="" disabled>--1つ選択してください。--</option>
-                    <option value="普通預金">普通預金</option>
-                    <option value="当座預金">当座預金</option>
-                    <option value="その他">その他</option>
+                    <option value="" disabled className={styles.option}>--1つ選択してください。--</option>
+                    <option value="普通預金" className={styles.option}>普通預金</option>
+                    <option value="当座預金" className={styles.option}>当座預金</option>
+                    <option value="その他" className={styles.option}>その他</option>
                 </select>
             </div>
             
