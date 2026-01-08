@@ -89,7 +89,9 @@
 }
 
 .searchLi {
-    padding: 0.25rem 1rem;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
     cursor: pointer;
     transition: background-color 0.15s ease;
 }
