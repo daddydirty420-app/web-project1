@@ -282,7 +282,7 @@ export default function Client({ shopEditId }: Props) {
                 <section className={styles.permitSecton}>
                     <h2 className={styles.subtitle}>許認可証アップロード</h2>
 
-                    <div className={styles.imageInputDiv}>
+                    <div className={styles.imageInputDivPermit}>
                         <InputTitle title="許認可証（最大10枚まで）" />
                         <input
                         type="file"
@@ -290,7 +290,7 @@ export default function Client({ shopEditId }: Props) {
                         multiple
                         onChange={handlePermitChange}
                         disabled={permitImages.length >= 10}
-                        className={styles.imageInput}
+                        className={styles.imageInputPermit}
                         placeholder="画像ファイルをアップロード"
                         required
                         />
