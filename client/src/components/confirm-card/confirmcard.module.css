@@ -5,7 +5,7 @@
 }
 
 .confirmCard {
-    background: var(--light-background);
+    background: var(--gray-background);
     border-radius: 12px;
     padding: 1.2rem 1.4rem;
     margin: 1rem 0;
@@ -17,7 +17,7 @@
 .title {
     font-size: var(--caption);
     font-weight: 600;
-    color: var(--gray-50);
+    color: var(--text-muted);
     margin-bottom: 0.5rem;
 }
 
@@ -59,10 +59,9 @@
     min-width: 0;
     box-sizing: border-box;
     padding: 0.6rem 0.8rem;
-    font-size: var(--mid-text);
-    border: solid 1px var(--gray-line-mid);
+    font-size: 14px;
+    border: solid 1px var(--gray-line);
     border-radius: 8px;
-    background-color: #f6f5f3;
 }
 
 .inputButton {
@@ -71,7 +70,7 @@
     height: 36px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--light-background);
+    color: #fff;
     border-radius: 8px;
     background: var(--theme);
     cursor: pointer;
@@ -95,10 +94,21 @@
     gap: 0.25rem;
 }
 
-.radioItem {
+.radioLabel {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
     font-size: 14px;
     cursor: pointer;
+}
+
+.radio {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.radioText {
+    font-size: 14px;
+    line-height: 1.4;
 }

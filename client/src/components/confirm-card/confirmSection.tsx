@@ -123,16 +123,16 @@ export default function ConfirmSection({ title, content, link, input, date, radi
                     <div className={styles.radioFlex}>
                         <div className={styles.radioColumn}>
                             {radioOptions.map((opt) => (
-                                <label key={opt.value} className={styles.radioItem}>
+                                <label key={opt.value} className={styles.radioLabel}>
                                     <input
                                     type="radio"
                                     name={title}
                                     value={opt.value}
                                     checked={String(value) === String(opt.value)}
                                     onChange={() => onChange(String(opt.value))}
-                                    className="cursor-pointer"
+                                    className={styles.radio}
                                     />
-                                    <p className={styles.text14}>{opt.label}</p>
+                                    <p className={styles.radioText}>{opt.label}</p>
                                 </label>
                             ))}
                         </div>
