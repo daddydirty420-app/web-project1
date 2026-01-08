@@ -160,18 +160,19 @@
     gap: 0.75rem;
     margin-top: 0.75rem;
     font-size: 14px;
+    line-height: 1.4;
 }
 
 .twoTextFlex > p:first-child {
     min-width: 4.5rem;
     font-weight: 600;
-    color: var(--gray-75);
+    color: var(--gray-50);
     white-space: nowrap;
 }
 
-.accountText {
-    font-size: 14px;
-    margin-top: 0.5rem;
+.twoTextContent {
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .popupButton {

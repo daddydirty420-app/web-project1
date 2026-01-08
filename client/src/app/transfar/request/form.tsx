@@ -140,24 +140,24 @@ export default function Form({ user, reccomendPayValue }: Props) {
                     <p className={styles.popupSubTitle}>振込先口座</p>
                     <div className={styles.popupAccountDiv}>
                         <div className={styles.twoTextFlex}>
-                            <p className={styles.accountText}>銀行：</p>
-                            <span className="font-bold">{user.BankAccount?.bank_name}</span>
+                            <p>銀行：</p>
+                            <span className={styles.twoTextContent}>{user.BankAccount?.bank_name}</span>
                         </div>
                         <div className={styles.twoTextFlex}>
-                            <p className={styles.accountText}>支店：</p>
-                            <span className="font-bold">{user.BankAccount?.branch}</span>
+                            <p>支店：</p>
+                            <span className={styles.twoTextContent}>{user.BankAccount?.branch}</span>
                         </div>
                         <div className={styles.twoTextFlex}>
-                            <p className={styles.accountText}>口座種別：</p>
-                            <span className="font-bold">{user.BankAccount?.AccountTypeOption?.name}</span>
+                            <p>口座種別：</p>
+                            <span className={styles.twoTextContent}>{user.BankAccount?.AccountTypeOption?.name}</span>
                         </div>
                         <div className={styles.twoTextFlex}>
-                            <p className={styles.accountText}>口座番号：</p>
-                            <span className="font-bold">{user.BankAccount?.account_number}</span>
+                            <p>口座番号：</p>
+                            <span className={styles.twoTextContent}>{user.BankAccount?.account_number}</span>
                         </div>
                         <div className={styles.twoTextFlex}>
-                            <p className={styles.accountText}>名義：</p>
-                            <span className="font-bold">{user.BankAccount?.meigi}</span>
+                            <p>名義：</p>
+                            <span className={styles.twoTextContent}>{user.BankAccount?.meigi}</span>
                         </div>
                     </div>
 
