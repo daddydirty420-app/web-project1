@@ -9,19 +9,24 @@
     min-height: 50px;
     position: relative;
     padding-bottom: 0.25rem;
-    border-bottom: solid 1px var(--gray-line);
+    border-bottom: 1px solid var(--shadow-mini);
     gap: 1rem;
 }
 
 .transDivTitle {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
 }
 
 .transTextValue {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.transInputDiv:last-of-type .transTextValue {
+    font-size: 22px;
     font-weight: 700;
-    text-align: right;
 }
 
 .inputFlex {
