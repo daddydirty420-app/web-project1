@@ -9,7 +9,7 @@
     min-height: 50px;
     position: relative;
     padding-bottom: 0.25rem;
-    border-bottom: solid 1px var(--gray-line-mid);
+    border-bottom: solid 1px var(--gray-line);
     gap: 1rem;
 }
 
@@ -36,6 +36,7 @@
 .transValueInput {
     box-sizing: border-box;
     flex: 1;
+    height: 46px;
     font-size: 14px;
     padding: 0 14px;
     border: solid 1px var(--gray-line);

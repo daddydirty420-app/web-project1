@@ -23,6 +23,15 @@ export default function Form({ user, reccomendPayValue }: Props) {
     ? user.uriagekin - reccomendPayValue
     : user.uriagekin;
 
+    const pageButtonHandle = () => {
+        if (!value || value < 1000) {
+            alert("1,000円以上から申請可能です。");
+            return;
+        }
+
+        setPopup(true);
+    };
+
     const submit = async () => {
         if (!value || value < 1000) {
             alert("1,000円以上から申請可能です。");
@@ -119,7 +128,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
             <button
             type="button"
             className={styles.pageButton}
-            onClick={() => setPopup(true)}>
+            onClick={pageButtonHandle}>
                 確認する
             </button>
 
