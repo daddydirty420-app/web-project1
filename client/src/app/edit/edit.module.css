@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.2rem 0.3rem;
+    padding: 0.1rem 0.3rem;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -70,8 +70,8 @@
 }
 
 .check {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
@@ -221,7 +221,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin: 1rem auto;
+    margin: 1.2rem auto;
     width: max-content;
 }
 
@@ -236,7 +236,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 14px;
-    padding: 0.2rem 0.3rem;
+    padding: 0.1rem 0.3rem;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -245,8 +245,8 @@
 }
 
 .radio {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 
