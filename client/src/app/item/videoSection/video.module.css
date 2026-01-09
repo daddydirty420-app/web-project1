@@ -29,7 +29,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 24px;
-    margin: 21px 0;
+    margin: 22px 0;
 }
 
 .goodDiv {
@@ -73,7 +73,7 @@
 }
 
 .userSection {
-    margin-top: var(--space-xs);
+    margin-top: 22px;
 }
 
 .userFlex {
