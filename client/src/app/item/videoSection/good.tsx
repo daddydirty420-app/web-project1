@@ -96,7 +96,7 @@ export default function Good({ id, sellerMe, initialGood, initialCount, page, lo
 
         <div className="block text-center" onClick={userList}>
             <p className={styles.countNumber}>{count.toLocaleString()}</p>
-            <p className={styles.countText}>高評価数</p>
+            <p className={styles.countText}>good</p>
         </div>
         </>
     );

@@ -24,12 +24,12 @@ export default function CountElem({ id, item, sellerMe, goodCount, isGood, page,
 
                 <div className="block text-center">
                     <p className={styles.countNumber}>{item.Video?.play_count}</p>
-                    <p className={styles.countText}>再生回数</p>
+                    <p className={styles.countText}>views</p>
                 </div>
 
                 <div className="block text-center">
                     <p className={styles.countNumber}>{formatRelativeTime(item.uploaded_at)}</p>
-                    <p className={styles.countText}>出品日</p>
+                    <p className={styles.countText}>posted</p>
                 </div>
                 </>
             )}

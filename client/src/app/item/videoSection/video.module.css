@@ -27,13 +27,16 @@
 .countElem {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin: 1rem auto;
+    justify-content: flex-start;
+    gap: 24px;
+    margin: var(--space-xs) 0;
 }
 
 .goodDiv {
     display: flex;
     align-items: center;
+    gap: 6px;
+    margin-right: 8px;
 }
 
 .goodIcon {
@@ -50,12 +53,13 @@
 }
 
 .countNumber {
-    font-size: 13px;
-    color: var(--gray-50);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--h-color);
 }
 .countText {
-    font-size: 12px;
-    color: var(--gray-50);
+    font-size: 11px;
+    color: var(--text-muted);
 }
 
 .dateFlex {
