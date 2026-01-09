@@ -44,7 +44,7 @@ export default function Summary({ id, item, sellerMe, page }: Props) {
 
     return (
         <>
-        <p className="text-sm font-semibold">動画の概要</p>
+        <p className={styles.semiTitle}>動画の概要</p>
         <div className={styles.summaryDiv}>
             <p
             ref={summaryRef}

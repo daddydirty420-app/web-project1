@@ -44,7 +44,7 @@ export default function Explain({ id, item, sellerMe, page }: Props) {
 
     return (
         <>
-        <p className="text-sm font-semibold mt-4">商品説明</p>
+        <p className={styles.semiTitle}>商品説明</p>
         <div className={styles.summaryDiv}>
             <p
             ref={explainRef}

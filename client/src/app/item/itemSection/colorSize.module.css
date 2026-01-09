@@ -1,7 +1,7 @@
 .variantList {
     display: flex;
     width: 100%;
-    margin-top: 1rem;
+    margin: 1rem 0;
     overflow: auto;
     border-top: solid 1px var(--gray-line);
     border-bottom: solid 1px var(--gray-line);
