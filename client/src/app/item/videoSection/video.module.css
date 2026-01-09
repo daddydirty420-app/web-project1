@@ -83,13 +83,14 @@
 .userLink {
     display: flex;
     align-items: center;
+    gap: 10px;
     cursor: pointer;
 }
 .profileImage {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    margin-right: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 .nameBlock {
     display: flex;
@@ -99,8 +100,12 @@
 .userName {
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme);
-    letter-spacing: 0.04em;
+    color: var(--h-color);
+    letter-spacing: 0.03em;
+}
+.userLink:hover .userName {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .iconRow {
@@ -108,6 +113,7 @@
     align-items: center;
     gap: 6px;
     min-height: 12px;
+    opacity: 0.75;
 }
 
 .honninIcon,
