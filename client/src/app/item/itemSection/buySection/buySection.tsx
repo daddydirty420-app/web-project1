@@ -152,7 +152,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                     <p className={styles.cartText}>カートに入れる</p>
                 </Link>
             )}
-            {loggedIn && cartIn && (
+            {loggedIn && (
                 <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.cartIcon} />
                     <p className={styles.cartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
@@ -169,7 +169,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                     <p className={styles.floatCartText}>カートに入れる</p>
                 </Link>
             )}
-            {loggedIn && cartIn && (
+            {loggedIn && (
                 <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
                     <p className={styles.floatCartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
