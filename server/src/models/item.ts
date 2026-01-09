@@ -12,6 +12,7 @@ import ReccomendItem from "./reccomend_item.js";
 import ItemReport from "./item_report.js";
 import Categories from "./categories.js";
 import Brands from "./brands.js";
+import ItemShippingProfile from "./item_shipping_profile.js";
 
 export class Item extends Model {
     declare id: number;
@@ -71,6 +72,9 @@ export class Item extends Model {
         Item.hasMany(ItemReport, {
             foreignKey: 'item_id'
         });
+        Item.hasOne(ItemShippingProfile, {
+            foreignKey: "item_id"
+        });
     }
 
     static associations: {
@@ -84,6 +88,7 @@ export class Item extends Model {
         Categories: Association<Item, Categories>;
         ItemReport: Association<Item, ItemReport>;
         Brands: Association<Item, Categories>;
+        ItemShippingProfile: Association<Item, ItemShippingProfile>;
     };
 }
 
