@@ -21,7 +21,10 @@ export default function ItemPeek({ item }: Props) {
                 <p className={styles.peekName}>{item.name}</p>
             </div>
 
-            <p className={styles.peekPrice}>￥{item.price.toLocaleString()}</p>
+            <p className={`${styles.peekPrice}
+            ${item.status === "soldout" ? `${styles.sold}` : ""}`}>
+                {item.status === "soldout" ? "SOLD OUT" : `￥${item.price.toLocaleString()}`}
+            </p>
         </section>
     );
 }

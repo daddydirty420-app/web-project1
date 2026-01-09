@@ -31,6 +31,7 @@
     margin-top: 6px;
     background-color: var(--bg-subtle);
     border-radius: 10px;
+    cursor: pointer;
 }
 .itemPeek:active {
     background: rgba(0, 0, 0, 0.03);
@@ -65,6 +66,12 @@
     font-weight: 600;
     color: var(--link);
     white-space: nowrap;
+}
+.peekPrice.sold {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-50);
+    letter-spacing: 0.04em;
 }
 
 .countElem {
