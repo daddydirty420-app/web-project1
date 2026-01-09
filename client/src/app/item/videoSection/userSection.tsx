@@ -1,12 +1,10 @@
 import styles from "./video.module.css";
-import commonS from "../itemCommon.module.css";
 import { Item } from "../itemPageTypes";
 import { FollowButton, Star } from "@/components";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { faCampground, faStore } from "@fortawesome/free-solid-svg-icons";
-import clsx from "clsx";
 import Link from "next/link";
 
 type Props = {
@@ -54,10 +52,10 @@ export default function UserSection({ item, sellerMe, page, userId }: Props) {
                 {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} currentUserId={userId} />}
             </div>
 
-            <div className="flex items-center ml-4 mt-1">
-                {user && user?.star_amount > 0 && <small className={clsx("text-[var(--gray-50)] mr-1", commonS.small)}>{Number(user.star_average).toFixed(1)}</small>}
+            <div className={styles.starDiv}>
+                {user && user?.star_amount > 0 && <small className={styles.starAverage}>{Number(user.star_average).toFixed(1)}</small>}
                 <Star userId={sellerId ?? ""} />
-                <small className={clsx("text-blue-500 ml-1", commonS.small)}>{user?.star_amount.toLocaleString()}</small>
+                <small className={styles.starAmount}>{user?.star_amount.toLocaleString()}</small>
             </div>
         </section>
     );

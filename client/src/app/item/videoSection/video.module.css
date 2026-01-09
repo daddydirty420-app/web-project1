@@ -112,6 +112,24 @@
   opacity: 0.85;
 }
 
+.starDiv {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 0.25rem;
+    margin-left: 1rem;
+}
+
+.starAverage {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.starAmount {
+    font-size: 12px;
+    color: var(--link);
+}
+
 @media (min-width: 768px) {
     .profileImage {
         width: 45px;
