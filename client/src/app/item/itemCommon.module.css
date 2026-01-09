@@ -48,6 +48,11 @@
     color: var(--theme);
     padding: 4px;
 }
+.reportText {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: underline;
+}
 
 .itemListText {
     font-size: var(--heading3);

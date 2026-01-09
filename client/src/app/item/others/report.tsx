@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../itemCommon.module.css";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import clsx from "clsx";
 
 type Props = {
     id: string;
@@ -30,7 +29,7 @@ export default function Report({ id, itemReport, page, reportCount }: Props) {
     return (
         <Link href={link} className={styles.reportLink}>
             <FontAwesomeIcon icon={faFlag} className={styles.reportIcon} />
-            <small className={clsx('text-[var(--gray-50)] underline', styles.small)}>報告{page === "admin" ? `：${reportCount}件` : ""}</small>
+            <small className={styles.reportText}>報告{page === "admin" ? `：${reportCount}件` : ""}</small>
         </Link>
     );
 };

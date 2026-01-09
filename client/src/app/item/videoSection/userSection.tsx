@@ -4,7 +4,7 @@ import { FollowButton, Star } from "@/components";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
-import { faCampground, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 type Props = {
