@@ -7,12 +7,8 @@
     background: #000;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.videoPlayer:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .title {
@@ -32,10 +28,11 @@
     background-color: var(--bg-subtle);
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition: background-color 0.15s ease, border 0.15s ease, transform 0.15s ease;
 }
 .itemPeek:active {
-    background: rgba(0, 0, 0, 0.03);
+    background: transparent;
+    border: 1px solid var(--gray-line);
     transform: translateY(1px);
 }
 
@@ -80,8 +77,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 24px;
-    margin: 22px 0;
+    gap: 20px;
+    margin: 16px 0 18px;
 }
 
 .goodDiv {
@@ -211,5 +208,12 @@
 
     .starDiv {
         margin-left: 55px;
+    }
+}
+
+@media (hover: hover) {
+    .videoPlayer:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 }

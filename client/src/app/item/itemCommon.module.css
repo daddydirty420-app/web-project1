@@ -16,12 +16,11 @@
 .summary {
     font-size: var(--mid-text);
     color: var(--gray-75);
-    line-height: 1.65;
+    line-height: 1.7;
     max-width: 560px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    line-height: 1.5rem;
 }
 .clamp {
     -webkit-line-clamp: 2;
@@ -39,7 +38,9 @@
     display: flex;
     width: max-content;
     align-items: center;
+    margin-top: 6px;
     margin-left: auto;
+    opacity: 0.75;
     cursor: pointer;
 }
 .reportIcon {
