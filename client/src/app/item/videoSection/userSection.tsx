@@ -47,15 +47,15 @@ export default function UserSection({ item, sellerMe, page, userId }: Props) {
                                 <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
                             )}
                         </div>
+
+                        <div className={styles.starDiv}>
+                            {user && user?.star_amount > 0 && <small className={styles.starAverage}>{Number(user.star_average).toFixed(1)}</small>}
+                            <Star userId={sellerId ?? ""} />
+                            <small className={styles.starAmount}>{user?.star_amount.toLocaleString()}</small>
+                        </div>
                     </div>
                 </Link>
                 {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} currentUserId={userId} />}
-            </div>
-
-            <div className={styles.starDiv}>
-                {user && user?.star_amount > 0 && <small className={styles.starAverage}>{Number(user.star_average).toFixed(1)}</small>}
-                <Star userId={sellerId ?? ""} />
-                <small className={styles.starAmount}>{user?.star_amount.toLocaleString()}</small>
             </div>
         </section>
     );

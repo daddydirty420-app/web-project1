@@ -42,8 +42,8 @@
 .honninIcon,
 .earlyIcon,
 .shopIcon {
-  color: var(--theme);
-  opacity: 0.85;
+    color: var(--theme);
+    opacity: 0.85;
 }
 
 .introductionDiv {
