@@ -56,48 +56,54 @@
 }
 
 .buyFloat {
-    display: block;
-    box-sizing: border-box;
     position: fixed;
-    bottom: 80px;
-    right: 0;
-    border: solid 1px #ddd;
-    border-radius: 10px;
+    bottom: 72px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 12px 18px;
+    border: solid 1px var(--gray-line);
+    border-radius: 12px;
     background-color: var(--background);
-    width: max-content;
-    padding: 15px 25px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
     z-index: 1000;
 }
 
 .floatButton {
     display: block;
+    width: 96px;
+    height: 36px;
     font-size: 13px;
     font-weight: 600;
     color: #fff;
     background-color: var(--action);
-    border-radius: 10px;
-    width: 100px;
-    height: 36px;
-    margin: 0 auto 0.5rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow-mini);
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
-.floatButton:hover {
-    background-color: var(--action-hover);
+
+.floatCartDiv {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    cursor: pointer;
+    opacity: 0.85;
 }
 
 .floatCartIcon {
-    width: 18px;
-    height: 18px;
-    padding: 5px;
-    color: var(--theme);
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    color: var(--theme-soft);
 }
 
 .floatCartText {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: var(--theme);
+    color: var(--theme-soft);
 }
 
 @media (min-width: 768px) {
@@ -109,5 +115,13 @@
 @media (hover: hover) {
     .cartDiv:hover {
         opacity: 1;
+    }
+    .floatCartDiv:hover {
+        opacity: 1;
+    }
+
+    .floatButton:hover {
+        background-color: var(--action-hover);
+        transform: translateY(-1px);
     }
 }

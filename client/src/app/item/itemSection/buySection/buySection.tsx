@@ -164,13 +164,13 @@ export default function BuySection({ id, item, loggedIn }: Props) {
             <button type="button" className={styles.floatButton} onClick={buy}>購入する</button>
 
             {!loggedIn && (
-                <Link href="/login" className={styles.cartDiv}>
+                <Link href="/login" className={styles.floatCartDiv}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
                     <p className={styles.floatCartText}>カートに入れる</p>
                 </Link>
             )}
             {loggedIn && (
-                <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
+                <div className={styles.floatCartDiv} onClick={cartIn ? remove : add}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
                     <p className={styles.floatCartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
                 </div>
