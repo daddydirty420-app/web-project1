@@ -362,7 +362,7 @@ router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: R
 
 router.get('/metadata/:id', async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await Item.findByPk(req.params.id, {
+        const item = await Item.findByPk(req.params.id, {
             attributes: ['name', 'price', 'first_image_url'],
             include: [
                 {
@@ -372,12 +372,12 @@ router.get('/metadata/:id', async (req: Request, res: Response): Promise<void> =
             ],
         });
 
-        if (!data) {
+        if (!item) {
             res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
 
-        res.json({ data });
+        res.json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
