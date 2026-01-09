@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
 
     const data = await res.json();
-    const item = data.item;
+    const item: Item = data.item;
 
     return {
         title: `${item.name}`,
