@@ -4,7 +4,7 @@ import { FollowButton, Star } from "@/components";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
-import { faCampground, faStore } from "@fortawesome/free-solid-svg-icons";
+import { faCampground, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 type Props = {
@@ -41,7 +41,7 @@ export default function UserSection({ item, sellerMe, page, userId }: Props) {
                                 <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
                             )}
                             {user?.early_seller && (
-                                <FontAwesomeIcon icon={faCampground} className={styles.earlyIcon} />
+                                <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
                             )}
                             {user?.ShopInfo && (
                                 <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
