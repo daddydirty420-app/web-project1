@@ -537,7 +537,7 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             where: { item_id: itemId },
         });
 
-        const baseCategory = item.Categories;
+        const baseCategory = item.Category;
 
         const targetParentId = baseCategory.parent_id ?? baseCategory.id;
 
