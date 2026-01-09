@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Item } from "../itemPageTypes";
 import styles from "./video.module.css";
@@ -7,8 +9,21 @@ type Props = {
 };
 
 export default function ItemPeek({ item }: Props) {
+    const handleScroll = () => {
+        const target = document.getElementById("itemName");
+        target?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     return (
-        <section className={styles.itemPeek}>
+        <section
+        className={styles.itemPeek}
+        onClick={handleScroll}
+        role="button"
+        aria-label="商品説明へスクロール"
+        >
             <div className={styles.peekImageName}>
                 <Image
                 src={item.first_image_url}
