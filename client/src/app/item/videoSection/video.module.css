@@ -1,8 +1,19 @@
 .videoPlayer {
-    width: 100%;
-    height: auto;
     display: block;
     margin: 0 auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding-bottom: var(--space-xs);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.videoPlayer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 
 .title {
