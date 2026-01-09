@@ -28,8 +28,8 @@ export default function ItemPeek({ item }: Props) {
                 <Image
                 src={item.first_image_url}
                 alt="商品画像1枚目"
-                width={90}
-                height={90}
+                width={45}
+                height={45}
                 className={styles.peekImage}
                 />
 
