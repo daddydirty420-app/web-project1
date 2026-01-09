@@ -1,16 +1,37 @@
 .buy {
-    margin: 1.25rem 0;
+    margin: 0.75rem 0 1.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
+}
+
+.buyButton {
+    display: block;
+    width: 85%;
+    height: 46px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--action);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: var(--shadow-mini);
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.buyButton:hover {
+    background-color: var(--action-hover);
+    transform: translateY(-1px);
 }
 
 .cartDiv {
     width: max-content;
     display: flex;
     align-items: center;
+    gap: 0.25rem;
+    opacity: 0.85;
     cursor: pointer;
+    transition: opacity 0.15s ease;
 }
 
 .cartIcon {
@@ -21,25 +42,9 @@
 }
 
 .cartText {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--theme);
-}
-
-.buyButton {
-    display: block;
-    width: 80%;
-    height: 44px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-    background-color: var(--action);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.15s;
-}
-.buyButton:hover {
-    background-color: var(--action-hover);
 }
 
 .buy2026 {
@@ -98,5 +103,11 @@
 @media (min-width: 768px) {
     .buyFloat {
         display: none;
+    }
+}
+
+@media (hover: hover) {
+    .cartDiv:hover {
+        opacity: 1;
     }
 }
