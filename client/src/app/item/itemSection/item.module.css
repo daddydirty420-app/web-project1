@@ -2,73 +2,85 @@
     margin-top: var(--space-xs);
 }
 
-.soldOut {
-    display: block;
-    width: 110px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    background: var(--alert);
-    border-radius: 5px;
-    margin: 0 auto;
-    text-align: center;
-    line-height: 2rem;
-    box-shadow: var(--shadow);
+.itemHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .itemNameDiv {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     scroll-margin-top: 120px;
 }
 
 .itemName {
     font-size: var(--small-heading);
+    font-weight: 500;
     line-height: 1.5;
     color: var(--theme);
 }
 
 .reccomendFire {
     color: var(--alert);
-    width: 24px;
-    height: 24px;
-    padding: 4px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.9;
 }
 
-.priceDiv {
+.priceBlock {
     display: flex;
-    align-items: flex-end;
-    margin-left: 1rem;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .price {
-    font-size: 36px;
-    color: var(--theme-sub);
-    line-height: 1.5;
+    font-size: clamp(28px, 6vw, 36px);
+    color: var(--theme-str);
     font-weight: 800;
+    line-height: 1.2;
 }
 
-.saleP {
-    display: block;
-    font-size: 14px;
+.saleBadges {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.saleBadge {
+    font-size: 12px;
     font-weight: 600;
     color: #fff;
-    line-height: 1.5;
+    line-height: 1.4;
     background: var(--alert);
-    border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 0 10px;
-    box-shadow: var(--shadow);
+    border-radius: 4px;
+    padding: 2px 8px;
+    box-shadow: var(--shadow-mini);
 }
 
 .beforePrice {
-    display: block;
     font-size: 12px;
-    color: var(--gray-50);
-    margin-bottom: 10px;
+    color: var(--text-muted);
     text-decoration: line-through;
+    margin-left: 2px;
+}
+
+.soldOutInline {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--alert);
+    border: 1px solid var(--alert);
+    border-radius: 999px;
+    padding: 4px 12px;
+    width: fit-content;
 }
 
 .categoryP {

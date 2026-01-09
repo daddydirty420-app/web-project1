@@ -8,6 +8,7 @@ import CategoryText from "./categoryText";
 import ColorSizeList from "./colorSizeList";
 import DeliverySection from "./deliverySection";
 import BuySection from "./buySection/buySection";
+import ItemHeader from "./itemHeader";
 
 type Props = {
     id: string;
@@ -24,8 +25,7 @@ export default function ItemSection({ id, item, sellerMe, page, loggedIn }: Prop
     return (
         <section className={styles.itemSection}>
             <Slideshow images={item.image_url} />
-            <ItemName item={item} page={page} />
-            <Price item={item} />
+            <ItemHeader item={item} page={page} />
             {status === "soldout" && <p className={styles.soldOut}>SOLD OUT</p>}
             {!sellerMe && page === "normal" && !(status === "soldout") && <BuySection id={id} item={item} loggedIn={loggedIn} />}
             {variants && variants.length > 0 && <ColorSizeList item={item} />}
