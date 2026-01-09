@@ -205,10 +205,6 @@
     .userName {
         font-size: 14px;
     }
-
-    .starDiv {
-        margin-left: 55px;
-    }
 }
 
 @media (hover: hover) {
