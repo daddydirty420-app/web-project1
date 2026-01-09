@@ -20,7 +20,7 @@ export default function UserSection({ item, sellerMe, page, userId }: Props) {
     const profileUrl = `/profile/${sellerId}`;
 
     return (
-        <section>
+        <section className={styles.userSection}>
             <div className={styles.userFlex}>
                 <Link href={profileUrl} className={styles.userLink}>
                     <Image

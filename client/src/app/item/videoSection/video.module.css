@@ -71,6 +71,10 @@
     align-items: center;
 }
 
+.userSection {
+    margin-top: 20px;
+}
+
 .userFlex {
     display: flex;
     align-items: center;
@@ -84,8 +88,8 @@
 .profileImage {
     width: 38px;
     height: 38px;
-    border-radius: 100%;
-    margin-right: 0.5rem;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 .nameBlock {
     display: flex;
@@ -96,6 +100,7 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--theme);
+    letter-spacing: 0.04em;
 }
 
 .iconRow {
@@ -116,8 +121,8 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-top: 0.25rem;
-    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 48px;
 }
 
 .starAverage {
@@ -138,5 +143,9 @@
 
     .userName {
         font-size: 15px;
+    }
+
+    .starDiv {
+        margin-left: 55px;
     }
 }
