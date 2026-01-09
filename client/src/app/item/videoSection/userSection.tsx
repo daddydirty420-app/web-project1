@@ -34,10 +34,22 @@ export default function UserSection({ item, sellerMe, page, userId }: Props) {
                     quality={50}
                     className={styles.profileImage}
                     />
-                    <h4 className={styles.userName}>{user?.user_name}</h4>
-                    {user?.honnin_verified && <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />}
-                    {user?.early_seller && <FontAwesomeIcon icon={faCampground} className={styles.earlyIcon} />}
-                    {user?.ShopInfo && <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />}
+
+                    <div className={styles.nameBlock}>
+                        <h4 className={styles.userName}>{user?.user_name}</h4>
+
+                        <div className={styles.iconRow}>
+                            {user?.honnin_verified && (
+                                <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
+                            )}
+                            {user?.early_seller && (
+                                <FontAwesomeIcon icon={faCampground} className={styles.earlyIcon} />
+                            )}
+                            {user?.ShopInfo && (
+                                <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
+                            )}
+                        </div>
+                    </div>
                 </Link>
                 {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} currentUserId={userId} />}
             </div>

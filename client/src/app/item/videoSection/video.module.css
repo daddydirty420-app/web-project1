@@ -87,33 +87,29 @@
     border-radius: 100%;
     margin-right: 0.5rem;
 }
+.nameBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
 .userName {
     font-size: 13px;
     font-weight: 600;
     color: var(--theme);
 }
 
-.honninIcon {
-    width: 12px;
-    height: 12px;
-    color: var(--theme-sub);
-    margin-left: 0.25rem;
+.iconRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 12px;
 }
-.honninIcon path {
-    stroke: currentColor;
-    stroke-width: 15;
-}
-.earlyIcon {
-    width: 15px;
-    height: 15px;
-    color: var(--theme);
-    margin-left: 0.25rem;
-}
+
+.honninIcon,
+.earlyIcon,
 .shopIcon {
-    width: 15px;
-    height: 15px;
-    color: var(--theme-sub);
-    margin-left: 0.25rem;
+  color: var(--theme);
+  opacity: 0.85;
 }
 
 @media (min-width: 768px) {
