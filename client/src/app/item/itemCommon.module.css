@@ -3,18 +3,22 @@
 }
 
 .semiTitle {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--h-color);
+    font-size: var(--mid-text);
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
 }
 
 .summaryDiv {
-    margin: 0.5rem 0 1rem 0.5rem;
+    margin: var(--space-xs) 0;
 }
 
 .summary {
-    font-size: 14px;
-    max-width: 550px;
+    font-size: var(--body);
+    color: var(--gray-75);
+    line-height: 1.75;
+    max-width: 560px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -25,8 +29,9 @@
     line-clamp: 2;
 }
 .moreButton {
-    font-size: 14px;
-    color: var(--accent);
+    font-size: 13px;
+    color: var(--link);
+    letter-spacing: 0.02em;
     margin: 0.25rem 0 0 0.5rem;
     cursor: pointer;
 }

@@ -44,13 +44,15 @@ export default function Explain({ id, item, sellerMe, page }: Props) {
 
     return (
         <>
-        <p className={styles.semiTitle}>商品説明</p>
+        <p className={styles.semiTitle}>DETAIL</p>
         <div className={styles.summaryDiv}>
             <p
             ref={explainRef}
             className={`${styles.summary} ${!expanded ? styles.clamp : ""}`}
             style={{
-                maxHeight: expanded ? explainRef.current?.scrollHeight : "3rem",
+                maxHeight: expanded
+                ? explainRef.current?.scrollHeight
+                : "calc(1.75em * 2)",
                 transition: "max-height 0.3s ease"
             }}
             >

@@ -44,13 +44,15 @@ export default function Summary({ id, item, sellerMe, page }: Props) {
 
     return (
         <>
-        <p className={styles.semiTitle}>動画の概要</p>
+        <p className={styles.semiTitle}>ABOUT THE VIDEO</p>
         <div className={styles.summaryDiv}>
             <p
             ref={summaryRef}
             className={`${styles.summary} ${!expanded ? styles.clamp : ""}`}
             style={{
-                maxHeight: expanded ? summaryRef.current?.scrollHeight : "3rem",
+                maxHeight: expanded
+                ? summaryRef.current?.scrollHeight
+                : "calc(1.75em * 2)",
                 transition: "max-height 0.3s ease",
             }}
             >
