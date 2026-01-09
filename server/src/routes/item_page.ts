@@ -567,6 +567,7 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                 },
                 {
                     model: Categories,
+                    as: "Category",
                     where: {
                         [Op.or]: [
                             { parent_id: targetParentId },
@@ -579,7 +580,14 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             ],
         });
 
-        res.json({ item, sellerMe, goodCount, isGoodByMe, commentCount, itemList });
+        res.status(200).json({
+            item,
+            sellerMe,
+            goodCount,
+            isGoodByMe,
+            commentCount,
+            itemList
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
