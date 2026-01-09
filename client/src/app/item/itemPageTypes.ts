@@ -123,6 +123,6 @@ export type Item = {
     Sale?: Sale | null;
     ItemShippingProfile?: ItemShippingProfile | null;
     ReccomendItem?: ReccomendItem | null;
-    Categories?: Categories | null;
+    Category?: Categories | null;
     Brand?: Brand | null;
 };

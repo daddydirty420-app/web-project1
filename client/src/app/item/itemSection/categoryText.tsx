@@ -9,7 +9,7 @@ export default function CategoryText({ item }: Props) {
     return (
         <>
         <p className={styles.categoryP}>カテゴリー</p>
-        <p className={styles.categoryText}>{item.Categories?.name}</p>
+        <p className={styles.categoryText}>{item.Category?.name}</p>
         </>
     );
 };
