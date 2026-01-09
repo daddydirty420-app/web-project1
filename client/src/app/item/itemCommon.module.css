@@ -43,14 +43,16 @@
     cursor: pointer;
 }
 .reportIcon {
-    width: 18px;
-    height: 18px;
-    color: var(--theme);
-    padding: 4px;
+    width: 16px;
+    height: 16px;
+    color: var(--theme-soft);
+    padding: 2px;
 }
 .reportText {
     font-size: 12px;
     color: var(--text-muted);
+}
+.reportLink:hover .reportText {
     text-decoration: underline;
 }
 
