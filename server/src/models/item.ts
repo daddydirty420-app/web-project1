@@ -49,7 +49,8 @@ export class Item extends Model {
             foreignKey: 'item_condition_id'
         });
         Item.belongsTo(Categories, {
-            foreignKey: 'category_id'
+            foreignKey: 'category_id',
+            as: "Category",
         });
         Item.belongsTo(Brands, {
             foreignKey: 'brand_id'
