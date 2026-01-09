@@ -102,7 +102,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                 });
             }
         } catch (err) {
-            console.error(err)
+            console.error(err);
         }
     };
 
@@ -152,16 +152,10 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                     <p className={styles.cartText}>カートに入れる</p>
                 </Link>
             )}
-            {loggedIn && !cartIn && (
-                <div className={styles.cartDiv} onClick={add}>
-                    <FontAwesomeIcon icon={faCartShopping} className={styles.cartIcon} />
-                    <p className={styles.cartText}>カートに入れる</p>
-                </div>
-            )}
             {loggedIn && cartIn && (
-                <div className={styles.cartDiv} onClick={remove}>
+                <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.cartIcon} />
-                    <p className={styles.cartText}>カートから削除</p>
+                    <p className={styles.cartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
                 </div>
             )}
         </div>
@@ -175,16 +169,10 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                     <p className={styles.floatCartText}>カートに入れる</p>
                 </Link>
             )}
-            {loggedIn && !cartIn && (
-                <div className={styles.cartDiv} onClick={add}>
-                    <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
-                    <p className={styles.floatCartText}>カートに入れる</p>
-                </div>
-            )}
             {loggedIn && cartIn && (
-                <div className={styles.cartDiv} onClick={remove}>
+                <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
                     <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
-                    <p className={styles.floatCartText}>カートから削除</p>
+                    <p className={styles.floatCartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
                 </div>
             )}
         </div>
