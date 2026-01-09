@@ -491,7 +491,6 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                 },
                 {
                     model: Categories,
-                    attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
                     as: "Category",
                     include: [
                         {
@@ -502,7 +501,7 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                         },
                         {
                             model: Categories,
-                            attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                            attributes: ["id", "name", "level", "allowed_gender", "allowed_age"],
                             as: "parent",
                             required: false,
                         },
