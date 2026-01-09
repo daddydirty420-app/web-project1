@@ -105,6 +105,7 @@ export type Item = {
     name: string;
     explain: string;
     image_url: string[];
+    first_image_url: string;
     price: number;
     seller_id: number;
     status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";

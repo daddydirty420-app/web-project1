@@ -4,6 +4,7 @@
 :root {
   /* カラー */
   --background: rgba(255, 255, 255, 0.98);
+  --bg-subtle: rgba(246, 247, 249, 0.7);
   --gray-background: rgba(246, 247, 249, 1);
   --text: rgba(34, 34, 34, 0.92);
   --h-color: rgba(17, 17, 17, 0.98);

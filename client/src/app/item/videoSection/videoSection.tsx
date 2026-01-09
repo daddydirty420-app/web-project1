@@ -5,6 +5,7 @@ import CountElem from "./countElem";
 import Summary from "./summary";
 import UserSection from "./userSection";
 import Report from "../others/report";
+import ItemPeek from "./itemPeek";
 
 type Props = {
     id: string;
@@ -23,6 +24,7 @@ export default function VideoSection({ id, item, sellerMe, goodCount, isGood, pa
         <section className={styles.videoSection}>
             <VideoElem item={item} sellerMe={sellerMe} page={page} />
             <h3 className={styles.title}>{item.Video?.title}</h3>
+            <ItemPeek item={item} />
             <CountElem id={id} item={item} sellerMe={sellerMe} goodCount={goodCount} isGood={isGood} page={page} loggedIn={loggedIn} />
             <Summary id={id} item={item} sellerMe={sellerMe} page={page} />
             {["normal", "admin"].includes(page) && (
