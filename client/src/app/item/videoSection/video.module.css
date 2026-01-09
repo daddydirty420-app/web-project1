@@ -52,6 +52,10 @@
     cursor: pointer;
 }
 
+.countDiv {
+    text-align: center;
+}
+
 .countNumber {
     font-size: 14px;
     font-weight: 500;
