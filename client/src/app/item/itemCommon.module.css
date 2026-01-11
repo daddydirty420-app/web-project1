@@ -49,6 +49,9 @@
     color: var(--theme-soft);
     padding: 2px;
 }
+.reportLink:hover .reportIcon {
+    color: var(--theme);
+}
 .reportText {
     font-size: 12px;
     color: var(--text-muted);
