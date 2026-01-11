@@ -38,12 +38,13 @@
     clip-path: polygon(0 0, 100% 0, 0 100%);
     border-top-left-radius: 10px;
     z-index: 2;
+    opacity: 0.95;
 }
 .soldText {
     font-size: 10px;
     font-weight: 700;
     color: #fff;
-    margin: 10px 0 0 3px;
+    margin: 11.5px 0 0 3.5px;
     transform: rotate(-45deg);
     letter-spacing: 0.04em;
 }
@@ -57,14 +58,15 @@
     align-items: flex-end;
     gap: 4px;
     z-index: 2;
+    opacity: 0.95;
 }
 
 .lowText {
     font-size: 11px;
     font-weight: 700;
     color: #fff;
-    line-height: 1.5;
-    background-color: var(--alert);
+    line-height: 1.7;
+    background-color: var(--warning);
     border-radius: 5px;
     padding: 0 5px;
     white-space: nowrap;
