@@ -1,4 +1,4 @@
-import styles from "./colorSize.module.css";
+import styles from "./variants.module.css";
 import CStyle from "../itemCommon.module.css";
 import Image from "next/image";
 import { Item } from "../itemPageTypes";
@@ -7,7 +7,7 @@ type Props = {
     item: Item;
 };
 
-export default function ColorSizeList({ item }: Props) {
+export default function ValiantsList({ item }: Props) {
     return (
         <section className={styles.variantList}>
             {item.attributes.variants?.map((variant, i) => {
