@@ -24,15 +24,19 @@ export default function ValiantsList({ item }: Props) {
                             <Image
                             src={variant.image_url ?? ""}
                             alt="バリエーション画像"
-                            width={80}
-                            height={80}
+                            width={100}
+                            height={100}
                             className={styles.variantImage}
                             />
-                            {isSoldout && <span className={styles.sold}>SOLD OUT</span>}
+                            {isSoldout && (
+                                <div className={styles.sold}>
+                                    <span className={styles.soldText}>SOLD</span>
+                                </div>
+                            )}
                             {isLowStock && (
-                                <span className={styles.low}>
-                                    残りわずか
-                                </span>
+                                <div className={styles.low}>
+                                    <span className={styles.lowText}>残りわずか</span>
+                                </div>
                             )}
                         </div>
 

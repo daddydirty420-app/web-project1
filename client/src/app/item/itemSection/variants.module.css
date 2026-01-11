@@ -27,25 +27,47 @@
 }
 
 .sold {
+    display: flex;
+    align-items: flex-start;
     position: absolute;
-    inset: auto 0 4px 0;
-    margin: auto;
-    width: max-content;
-    padding: 2px 6px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #fff;
+    top: 0;
+    left: 0;
     background-color: var(--alert);
-    border-radius: 6px;
+    width: 48px;
+    height: 48px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-top-left-radius: 10px;
+    z-index: 2;
+}
+.soldText {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    margin: 10px 0 0 3px;
+    transform: rotate(-45deg);
+    letter-spacing: 0.04em;
 }
 
 .low {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    right: 3px;
+    bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    z-index: 2;
+}
+
+.lowText {
     font-size: 11px;
-    font-weight: 600;
-    color: var(--alert);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    background-color: var(--alert);
+    border-radius: 5px;
+    padding: 0 5px;
+    white-space: nowrap;
 }
 
 .meta {
