@@ -59,6 +59,6 @@
 
 .metaText span {
     font-size: 11px;
-    color: var(--gray-text);
+    color: var(--text-muted);
     margin-right: 4px;
 }
