@@ -175,7 +175,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         });
 
         let sort = (item.price / 10)
-        + (item.explain?.length ?? 0)
+        + (item.detail?.length ?? 0)
         + (item.Video?.summary?.length ?? 0)
         + (item.User?.user_introduction?.length ?? 0)
         + (followerCount * 10)

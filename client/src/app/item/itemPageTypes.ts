@@ -103,7 +103,7 @@ export type Video = {
 export type Item = {
     id: string;
     name: string;
-    explain: string;
+    detail: string;
     image_url: string[];
     first_image_url: string;
     price: number;

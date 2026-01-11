@@ -17,7 +17,7 @@ import ItemShippingProfile from "./item_shipping_profile.js";
 export class Item extends Model {
     declare id: number;
     declare name: string | null;
-    declare explain: string | null;
+    declare detail: string | null;
     declare image_url: string[] | null;
     declare price: number | null;
     declare sort_number: number | null;
@@ -102,7 +102,7 @@ Item.init(
             autoIncrement: true,
         },
         name: DataTypes.STRING(255),
-        explain: DataTypes.TEXT,
+        detail: DataTypes.TEXT,
         image_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
             validate: {

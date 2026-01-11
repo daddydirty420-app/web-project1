@@ -11,18 +11,18 @@ type Props = {
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function Explain({ id, item, sellerMe, page }: Props) {
+export default function Detail({ id, item, sellerMe, page }: Props) {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setoverflowing] = useState(false);
-    const explainRef = useRef<HTMLParagraphElement>(null);
-    const explainText = item.explain;
+    const detailRef = useRef<HTMLParagraphElement>(null);
+    const detailText = item.detail;
 
     useEffect(() => {
-        const el = explainRef.current;
+        const el = detailRef.current;
         if (el) {
             setoverflowing(el.scrollHeight > el.clientHeight);
         }
-    }, [explainText]);
+    }, [detailText]);
 
     const expand = async () => {
         setExpanded(!expanded);
@@ -47,16 +47,16 @@ export default function Explain({ id, item, sellerMe, page }: Props) {
         <p className={styles.semiTitle}>DETAIL</p>
         <div className={styles.summaryDiv}>
             <p
-            ref={explainRef}
+            ref={detailRef}
             className={`${styles.summary} ${!expanded ? styles.clamp : ""}`}
             style={{
                 maxHeight: expanded
-                ? explainRef.current?.scrollHeight
+                ? detailRef.current?.scrollHeight
                 : "calc(1.75em * 2)",
                 transition: "max-height 0.3s ease"
             }}
             >
-                {explainText}
+                {detailText}
             </p>
             {overflowing && (
                 <button
