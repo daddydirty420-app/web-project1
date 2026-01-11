@@ -24,7 +24,6 @@ export default function ItemSection({ id, item, sellerMe, page, loggedIn }: Prop
         <section className={styles.itemSection}>
             <Slideshow images={item.image_url} />
             <ItemHeader item={item} page={page} />
-            {status === "soldout" && <p className={styles.soldOut}>SOLD OUT</p>}
             {!sellerMe && page === "normal" && !(status === "soldout") && <BuySection id={id} item={item} loggedIn={loggedIn} />}
             {variants && variants.length > 0 && <VariantsList item={item} />}
             <Explain id={id} item={item} sellerMe={sellerMe} page={page} />

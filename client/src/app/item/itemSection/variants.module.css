@@ -1,57 +1,64 @@
 .variantList {
     display: flex;
+    gap: 8px;
     width: 100%;
-    margin: 1rem 0;
-    overflow: auto;
+    margin: 1.25rem 0;
+    padding: 8px 0;
+    overflow-x: auto;
     border-top: solid 1px var(--gray-line);
     border-bottom: solid 1px var(--gray-line);
 }
 
-.variantDiv {
-    width: 160px;
-    padding: 5px 5px 0;
+.variantCard {
+    width: 140px;
     flex-shrink: 0;
+    text-align: center;
+}
+
+.imageWrapper {
+    position: relative;
 }
 
 .variantImage {
     display: block;
-    width: 80px;
     margin: 0 auto;
     border-radius: 10px;
 }
 
-.variantTextDiv {
-    display: flex;
-    align-items: center;
-}
-
-.variantText {
-    flex: 1;
-    font-size: 12px;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    overflow: hidden;
-}
-
-.variantSold {
-    display: block;
+.sold {
+    position: absolute;
+    inset: auto 0 4px 0;
+    margin: auto;
     width: max-content;
-    font-size: 12px;
+    padding: 2px 6px;
+    font-size: 11px;
     font-weight: 600;
     color: #fff;
-    line-height: 1.5;
-    background: var(--alert);
-    border-radius: 5px;
-    margin: 0 auto;
-    padding: 0 5px;
+    background-color: var(--alert);
+    border-radius: 6px;
 }
 
-.wazuka {
-    font-size: 12px;
+.low {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--alert);
-    text-align: center;
+}
+
+.meta {
+    margin-top: 6px;
+}
+
+.metaText {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.metaText span {
+    font-size: 11px;
+    color: var(--gray-text);
+    margin-right: 4px;
 }

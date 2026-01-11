@@ -12,36 +12,42 @@ export default function ValiantsList({ item }: Props) {
         <section className={styles.variantList}>
             {item.attributes.variants?.map((variant, i) => {
                 if (!variant) return null;
+                const inventory = variant.inventory;
+                const isSoldout = inventory?.current === 0;
+                const isLowStock = inventory &&
+                inventory.current > 0 &&
+                inventory.current / inventory.initial <= inventory.low_stock_ratio;
 
                 return (
-                    <div key={i} className={styles.variantDiv}>
-                        <Image
-                        src={variant.image_url ?? ""}
-                        alt="商品画像"
-                        width={80}
-                        height={80}
-                        className={styles.variantImage}
-                        />
-                        {variant.inventory?.current === 0 && <p className={styles.csSold}>SOLD OUT</p>}
-                        {variant.inventory && (variant.inventory?.current / variant.inventory?.initial) <= variant.inventory?.low_stock_ratio 
-                        && 
-                        variant.inventory?.current > 0
-                        && 
-                        <p className={styles.wazuka}>
-                            残りわずか
-                        </p>}
-                        {variant.color !== null && variant.color !== "" && (
-                            <div className={styles.csTextDiv}>
-                                <p className={CStyle.small}>カラー：</p>
-                                <p className={styles.csText}>{variant.color}</p>
-                            </div>
-                        )}
-                        {variant.size !== null && variant.size !== "" && (
-                            <div className={styles.csTextDiv}>
-                                <p className={CStyle.small}>サイズ：</p>
-                                <p className={styles.csText}>{variant.size_label}</p>
-                            </div>
-                        )}
+                    <div key={i} className={styles.variantCard}>
+                        <div className={styles.imageWrapper}>
+                            <Image
+                            src={variant.image_url ?? ""}
+                            alt="バリエーション画像"
+                            width={80}
+                            height={80}
+                            className={styles.variantImage}
+                            />
+                            {isSoldout && <span className={styles.sold}>SOLD OUT</span>}
+                            {isLowStock && (
+                                <span className={styles.low}>
+                                    残りわずか
+                                </span>
+                            )}
+                        </div>
+
+                        <div className={styles.meta}>
+                            {variant.color && (
+                                <p className={styles.metaText}>
+                                    <span>カラー</span>{variant.color}
+                                </p>
+                            )}
+                            {variant.size !== null && variant.size !== "" && (
+                                <p className={styles.metaText}>
+                                    <span>サイズ</span>{variant.size_label}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 )
             })}
