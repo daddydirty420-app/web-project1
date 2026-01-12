@@ -1,4 +1,5 @@
 import styles from "./item.module.css";
+import CStyles from "../itemCommon.module.css";
 import { Item } from "../itemPageTypes";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 export default function CategoryText({ item }: Props) {
     return (
         <>
-        <p className={styles.categoryP}>カテゴリー</p>
+        <p className={CStyles.semiTitle}>カテゴリー</p>
         <p className={styles.categoryText}>{item.Category?.name}</p>
         </>
     );

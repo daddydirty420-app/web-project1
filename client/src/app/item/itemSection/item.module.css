@@ -84,15 +84,12 @@
     width: fit-content;
 }
 
-.categoryP {
-    font-size: 13px;
-    line-height: 1.5;
-}
 .categoryText {
-    font-size: 13px;
-    font-weight: 600;
-    margin: 0.5em 0 0 1em;
-    line-height: 1.5;
+    font-size: var(--mid-text);
+    font-weight: 500;
+    color: var(--gray-75);
+    line-height: 1.6;
+    margin: 0.25rem 0 0.75rem;
 }
 
 .deliverySection {
