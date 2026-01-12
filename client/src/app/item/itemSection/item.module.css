@@ -95,37 +95,49 @@
 }
 
 .deliverySection {
-    margin-top: 0.5rem;
-    border-top: solid 1px var(--gray-25);
-    border-bottom: solid 1px var(--gray-25);
+    margin-top: 0.75rem;
+    padding: 0.25rem 0;
+    border-top: solid 1px var(--gray-line);
+    border-bottom: solid 1px var(--gray-line);
 }
 
 .syohinText {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 12px 0;
-}
-
-.infoFlex {
-    display: flex;
-    align-items: center;
-    height: 45px;
-    margin-left: 0.5rem;
-}
-
-.infoText {
-    font-size: 14px;
-    width: 115px;
-    text-align: center;
-}
-
-.infoData {
-    font-size: 14px;
+    font-size: var(--mid-text);
     font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin: 12px 0 8px;
 }
 
-.font13 {
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 6px 0;
+}
+
+.label {
     font-size: 13px;
+    color: var(--text-muted);
+    min-width: 7em;
+    white-space: nowrap;
+}
+
+.value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-75);
+    line-height: 1.6;
+}
+
+.full {
+    color: var(--theme);
+}
+.low {
+    color: var(--warning);
+}
+.sold {
+    color: var(--alert);
 }
 
 @media (min-width: 768px) {
