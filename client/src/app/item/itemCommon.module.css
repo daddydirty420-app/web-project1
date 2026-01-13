@@ -78,8 +78,8 @@
     color: #fff;
     background-color: var(--theme);
     border-radius: 10px;
-    margin: 1.25rem auto;
-    transition: background-color 0.15s ease;
+    margin: 3rem auto;
+    transition: background-color 0.2s ease;
 }
 .uriageButton:hover {
     background-color: var(--theme-str);

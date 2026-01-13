@@ -137,7 +137,10 @@ export default function Form({ user, reccomendPayValue }: Props) {
                 <div className={styles.overlay} onClick={() => setPopup(false)} />
 
                 <div className={styles.popup}>
-                    <X className={styles.x} onClick={() => setPopup(false)} />
+                    <X
+                    strokeWidth={1.5}
+                    className={styles.x}
+                    onClick={() => setPopup(false)} />
                     
                     <p className={styles.popupTitle}>お振込み内容の確認</p>
 

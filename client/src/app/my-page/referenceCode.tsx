@@ -57,7 +57,10 @@ export default function ReferenceCode({ itemCount, referenceCount }: Props) {
             <div className={styles.overlay} onClick={() => setVisiblePopup(false)} />
 
             <div className={styles.popup}>
-                <X onClick={() => setVisiblePopup(false)} className={styles.x} />
+                <X
+                strokeWidth={1.5}
+                onClick={() => setVisiblePopup(false)}
+                className={styles.x} />
                 <p className={styles.popupTitle}>紹介コード発行</p>
                 <p
                     className={styles.output}

@@ -7,7 +7,6 @@ import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { refreshToken } from '@/lib/refreshToken';
-import { InputStr, InputTitle } from '@/components/inputForm';
 
 type Props = {
     userId: string;

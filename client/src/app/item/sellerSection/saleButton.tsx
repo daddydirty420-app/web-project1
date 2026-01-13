@@ -6,6 +6,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import { InputTitle } from "@/components/inputForm";
 
 type Props = {
     item: Item;
@@ -128,34 +129,37 @@ export default function SaleButton({ item }: Props) {
             <div className={styles.overlay} onClick={() => setSalePopup(false)} />
 
             <div className={styles.popup}>
-                <X className={styles.x} onClick={() => setSalePopup(false)} />
+                <X
+                strokeWidth={1.5}
+                className={styles.x}
+                onClick={() => setSalePopup(false)} />
                 
                 <p className={styles.popupTitle}>値引きする</p>
-                <div className={styles.labelDiv}>
-                    <p className={styles.labelText}>値引き額の設定：</p>
-                    <div className={styles.labelColumn}>
-                        <label className={styles.radio}>
+                <div className={styles.radioDiv}>
+                    <InputTitle title="値引き額の設定" />
+                    <div className={styles.radioColumn}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="discountType"
                             value="rate"
                             checked={selected === "rate"}
                             onChange={() => handleSelect("rate")}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            値引き率
+                            <p className={styles.radioText}>値引き率</p>
                         </label>
 
-                        <label className={styles.radio}>
+                        <label className={styles.radioLabel}>
                             <input
                             type="radio"
                             name="discountType"
                             value="amount"
                             checked={selected === "amount"}
                             onChange={() => handleSelect("amount")}
-                            className="cursor-pointer"
+                            className={styles.radio}
                             />
-                            値引き額
+                            <p className={styles.radioText}>値引き額</p>
                         </label>
                     </div>
                 </div>
