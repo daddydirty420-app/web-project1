@@ -118,7 +118,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin: 1.2rem auto;
+    margin: 1.2rem auto 0;
     width: max-content;
 }
 
@@ -160,14 +160,27 @@
     margin-top: 0.25rem;
 }
 
+.inputLabelDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+}
+
+.inputLabelText {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+}
+
 .input {
     width: 150px;
-    height: 36px;
+    height: 38px;
     border: solid 1px var(--gray-line);
-    border-radius: 5px;
-    background: var(--background);
-    padding: 8px;
-    margin: 0.25rem;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
 }
 
 .priceText {

@@ -166,40 +166,44 @@ export default function SaleButton({ item }: Props) {
                 <small className={styles.popupSmall}>1円または1%引き～半額まで</small>
 
                 {selected === "rate" && (
-                    <label className={styles.labelDiv}>
-                        <p className={styles.labelText}>値引き率：</p>
-                        <input
-                        type="text"
-                        name="discountRate"
-                        value={discountRate}
-                        onChange={(e) => {
-                            const onlyNums = e.target.value.replace(/[^0-9]/g, "");
-                            setDiscountRate(Number(onlyNums));
-                        }}
-                        placeholder="例：10（半角英数字）"
-                        required
-                        className={styles.input}
-                        />
-                        <p>%</p>
+                    <label className={styles.inputLabelDiv}>
+                        <p className={styles.inputLabelText}>値引き率</p>
+                        <div className={styles.inputDiv}>
+                            <input
+                            type="text"
+                            name="discountRate"
+                            value={discountRate}
+                            onChange={(e) => {
+                                const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+                                setDiscountRate(Number(onlyNums));
+                            }}
+                            placeholder="例：10（半角英数字）"
+                            required
+                            className={styles.input}
+                            />
+                            <p className={styles.text13}>%</p>
+                        </div>
                     </label>
                 )}
 
                 {selected === "amount" && (
-                    <label className={styles.labelDiv}>
-                        <p className={styles.labelText}>値引き額：</p>
-                        <input
-                        type="text"
-                        name="discountAmount"
-                        value={discountAmount}
-                        onChange={(e) => {
-                            const onlyNums = e.target.value.replace(/[^0-9]/g, "");
-                            setDiscountAmount(Number(onlyNums));
-                        }}
-                        placeholder="例：300（半角英数字）"
-                        required
-                        className={styles.input}
-                        />
-                        <p>円</p>
+                    <label className={styles.inputLabelDiv}>
+                        <p className={styles.inputLabelText}>値引き額</p>
+                        <div className={styles.inputDiv}>
+                            <input
+                            type="text"
+                            name="discountAmount"
+                            value={discountAmount}
+                            onChange={(e) => {
+                                const onlyNums = e.target.value.replace(/[^0-9]/g, "");
+                                setDiscountAmount(Number(onlyNums));
+                            }}
+                            placeholder="例：300（半角英数字）"
+                            required
+                            className={styles.input}
+                            />
+                            <p className={styles.text13}>円</p>
+                        </div>
                     </label>
                 )}
 
