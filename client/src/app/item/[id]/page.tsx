@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { ToastBoundary } from "@/providers/toastBoundary";
 
 type Props = {
     params: { id: string };
@@ -73,16 +74,20 @@ export default async function Page({ params }: Props) {
         console.warn("商品データ更新処理に失敗しました。");
     }
 
-    return <ItemPage
-    id={id}
-    item={item}
-    itemList={itemList}
-    sellerMe={sellerMe}
-    page="normal"
-    commentCount={commentCount}
-    goodCount={goodCount}
-    isGood={isGood}
-    userId={userId || ""}
-    loggedIn={loggedIn}
-    />;
+    return (
+        <ToastBoundary>
+            <ItemPage
+            id={id}
+            item={item}
+            itemList={itemList}
+            sellerMe={sellerMe}
+            page="normal"
+            commentCount={commentCount}
+            goodCount={goodCount}
+            isGood={isGood}
+            userId={userId || ""}
+            loggedIn={loggedIn}
+            />
+        </ToastBoundary>
+    );
 };

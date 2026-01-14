@@ -7,6 +7,7 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import { InputTitle } from "@/components/inputForm";
+import { toast } from "react-hot-toast";
 
 type Props = {
     item: Item;
@@ -74,8 +75,7 @@ export default function SaleButton({ item }: Props) {
             });
 
             if (res.ok) {
-                const data = await res.json();
-                alert(data.message);
+                toast.success("値引きしました。");
                 setSalePopup(false);
                 router.refresh();
             } else {
@@ -104,8 +104,7 @@ export default function SaleButton({ item }: Props) {
             });
 
             if (res.ok) {
-                const data = await res.json();
-                alert(data.message);
+                toast.success("値引きを終了しました！");
                 setSaleStopPopup(false);
                 router.refresh();
             } else {
@@ -232,7 +231,10 @@ export default function SaleButton({ item }: Props) {
                     )}
                 </div>
 
-                <button type="button" className={styles.popupButton} onClick={update}>値引きする</button>
+                <button
+                type="button"
+                className={styles.popupButton}
+                onClick={update}>値引きする</button>
             </div>
             </>
         )}
@@ -257,7 +259,10 @@ export default function SaleButton({ item }: Props) {
                     </div>
                 </div>
 
-                <button type="button" className={styles.popupButton} onClick={end}>値引きをやめる</button>
+                <button
+                type="button"
+                className={styles.popupButton}
+                onClick={end}>値引きをやめる</button>
             </div>
             </>
         )}
