@@ -86,6 +86,7 @@ export default function SaleButton({ item }: Props) {
                 console.error(data.message);
             }
         } catch (err) {
+            toast.error("通信エラーが発生しました。");
             console.error(err);
         }
     };
@@ -118,6 +119,7 @@ export default function SaleButton({ item }: Props) {
                 console.error(data.message);
             }
         } catch (err) {
+            toast.error("通信エラーが発生しました。");
             console.error(err);
         }
     };
