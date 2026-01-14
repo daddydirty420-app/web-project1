@@ -70,9 +70,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
 
             if (res.ok) {
                 setCartIn(true);
-                toast.success("カートに追加しました。", {
-                    duration: 3000
-                });
+                toast.success("カートに追加しました。");
             }
         } catch (err) {
             console.error(err);
@@ -97,9 +95,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
 
             if (res.ok) {
                 setCartIn(false);
-                toast.success("カートから削除しました。", {
-                    duration: 3000
-                });
+                toast.success("カートから削除しました。");
             }
         } catch (err) {
             console.error(err);

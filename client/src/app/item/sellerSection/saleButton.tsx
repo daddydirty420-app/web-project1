@@ -61,7 +61,7 @@ export default function SaleButton({ item }: Props) {
             const accessToken = await refreshToken();
             
             if (!accessToken) {
-                toast.error("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
@@ -86,7 +86,7 @@ export default function SaleButton({ item }: Props) {
                 console.error(data.message);
             }
         } catch (err) {
-            toast.error("通信エラーが発生しました。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -96,7 +96,7 @@ export default function SaleButton({ item }: Props) {
             const accessToken = await refreshToken();
 
             if (!accessToken) {
-                toast.error("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
@@ -119,7 +119,7 @@ export default function SaleButton({ item }: Props) {
                 console.error(data.message);
             }
         } catch (err) {
-            toast.error("通信エラーが発生しました。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
