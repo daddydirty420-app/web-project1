@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { ToastBoundary } from "@/providers/toastBoundary";
 
 type Props = {
     params: { id: string };
