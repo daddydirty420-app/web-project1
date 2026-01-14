@@ -95,7 +95,7 @@ export default function SaleButton({ item }: Props) {
             const accessToken = await refreshToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                toast.error("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
