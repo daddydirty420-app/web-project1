@@ -227,7 +227,7 @@ export default function SaleButton({ item }: Props) {
                     {selected === "amount" && (
                         <div className={styles.twoTextRow}>
                             <p>値引き後価格：</p>
-                            <span className={styles.twoTextContent}>￥{finalPrice.toLocaleString()}</span>
+                            <span className={styles.salePrice}>￥{finalPrice.toLocaleString()}</span>
                         </div>
                     )}
                 </div>

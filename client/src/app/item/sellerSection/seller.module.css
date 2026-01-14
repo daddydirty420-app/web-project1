@@ -217,9 +217,10 @@
     font-weight: 700;
 }
 
-.priceText {
-    margin: 1rem 0 0 1rem;
-    font-size: 14px;
+.salePrice {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--link);
 }
 
 .popupButton {
