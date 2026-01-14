@@ -252,7 +252,7 @@ export default function SaleButton({ item }: Props) {
                         <span className={styles.twoTextContent}>￥{item.price.toLocaleString()}</span>
                     </div>
                     <div className={styles.twoTextRow}>
-                        <p className={styles.priceText}>値引き前価格：</p>
+                        <p>値引き前価格：</p>
                         <span className={styles.finalPrice}>￥{sale?.before_price.toLocaleString()}</span>
                     </div>
                 </div>
