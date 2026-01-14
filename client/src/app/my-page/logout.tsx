@@ -16,6 +16,7 @@ export default function Logout() {
 
             router.push("/");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error("ログアウト失敗！", err);
         }
     };

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     user: User;
@@ -25,7 +26,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
 
     const pageButtonHandle = () => {
         if (!value || value < 1000) {
-            alert("1,000円以上から申請可能です。");
+            toast.error("1,000円以上から申請可能です。");
             return;
         }
 
@@ -34,12 +35,12 @@ export default function Form({ user, reccomendPayValue }: Props) {
 
     const submit = async () => {
         if (!value || value < 1000) {
-            alert("1,000円以上から申請可能です。");
+            toast.error("1,000円以上から申請可能です。");
             return;
         }
 
         if (value > limit) {
-            alert(`申請金額は売上金${limit.toLocaleString()}円以内にしてください。`);
+            toast.error(`申請金額は売上金${limit.toLocaleString()}円以内にしてください。`);
             return;
         }
 
@@ -66,7 +67,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message);
+                toast.error("振込申請データの登録に失敗しました。");
                 console.error(data.message);
                 return;
             }
@@ -74,6 +75,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
             alert("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
             router.push(`/transfar/detail/${data.transId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

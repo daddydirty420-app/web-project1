@@ -3,6 +3,7 @@
 import styles from '@/styles/login.module.css';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Resend() {
     const router = useRouter();
@@ -16,7 +17,7 @@ export default function Resend() {
     const handleResend = async () => {
         try {
             if (!token) {
-                alert('再発行用トークンが見つかりません。');
+                toast.error('再発行用トークンが見つかりません。');
                 return
             }
 
@@ -28,7 +29,8 @@ export default function Resend() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                alert(errorData.message || '再発行に失敗しました');
+                toast.error('認証コードの再発行に失敗しました。');
+                console.error(errorData.message);
                 return;
             }
 
@@ -37,7 +39,7 @@ export default function Resend() {
             router.push(data.reissueUrl);
         } catch (err) {
             console.error(err)
-            alert('サーバーエラーが発生しました。')
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

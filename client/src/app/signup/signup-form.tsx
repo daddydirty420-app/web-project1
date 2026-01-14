@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import toast from 'react-hot-toast';
 
 export default function SignupForm() {
     const [visible, setVisible] = useState(false);
@@ -43,11 +44,11 @@ export default function SignupForm() {
                 console.log(data.message);
                 router.push(data.reissueUrl);
             } else {
-                alert(data.message);
+                toast.error("サインアップに失敗しました。");
             }
         } catch (error) {
             console.error(error);
-            alert('通信エラーが発生しました。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

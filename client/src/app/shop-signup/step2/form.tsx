@@ -10,6 +10,7 @@ import StepBar from "../stepBar";
 import { InputStr, InputTitle } from "@/components/inputForm";
 import ButtonDiv from "../buttonDiv";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -140,12 +141,12 @@ export default function Form({ shopId, account }: Props) {
 
     const submit = async () => {
         if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
-            alert("空の項目があります。");
+            toast.error("空の項目があります。");
             return;
         }
 
         if (!/^[0-9]{5,7}$/.test(accountNumber)) {
-            alert("口座番号は5〜7桁の半角数字で入力してください。");
+            toast.error("口座番号は5〜7桁の半角数字で入力してください。");
             return;
         }
 
@@ -180,12 +181,13 @@ export default function Form({ shopId, account }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert(data.message || "口座情報を登録できませんでした。");
+                toast.error("口座情報の登録に失敗しました。");
                 return;
             }
 
             router.push(`/shop-signup/step3/${shopId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

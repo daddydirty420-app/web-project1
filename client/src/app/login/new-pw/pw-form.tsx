@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import toast from 'react-hot-toast';
 
 export default function PwForm() {
     const [visible, setVisible] = useState(false);
@@ -19,7 +20,7 @@ export default function PwForm() {
         e.preventDefault();
 
         if (!token) {
-            alert('無効なリンクです。');
+            toast.error('無効なリンクです。');
             router.push('/login');
             return;
         }
@@ -50,11 +51,12 @@ export default function PwForm() {
                 console.log(data.message);
                 router.push('/login');
             } else {
-                alert(data.message);
+                toast.error("新しいパスワードの設定に失敗しました。");
+                console.error(data.message);
             }
-        } catch (error) {
-            console.error(error);
-            alert('通信エラーが発生しました。');
+        } catch (err) {
+            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

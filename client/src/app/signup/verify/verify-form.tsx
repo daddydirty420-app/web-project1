@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from '@/styles/login.module.css';
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 export default function VerifyForm() {
     const [code, setCode] = useState('');
@@ -15,7 +16,7 @@ export default function VerifyForm() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!code || code === "") {
-            alert("認証コードを入力してください。");
+            toast.error("認証コードを入力してください。");
             return;
         }
         setLoading(true);
@@ -40,7 +41,8 @@ export default function VerifyForm() {
 
                 if (!refRes.ok) {
                     const errorData = await refRes.json();
-                    alert(errorData.message || "紹介コードが正しくありません。");
+                    toast.error("紹介コードが正しくありません。");
+                    console.error(errorData.message);
                     return;
                 }
             }
@@ -48,13 +50,13 @@ export default function VerifyForm() {
             setLoading(false);
 
             if (res?.error) {
-                alert("認証に失敗しました。");
+                toast.error("認証に失敗しました。");
             } else if (res?.ok) {
                 router.push('/my-page');
             }
         } catch (err) {
             console.error("Verify error:", err);
-            alert('通信エラーが発生しました。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

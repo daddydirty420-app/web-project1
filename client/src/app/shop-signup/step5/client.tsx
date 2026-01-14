@@ -8,6 +8,7 @@ import ButtonDiv from "../buttonDiv";
 import { ConfirmSection } from "@/components";
 import { useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -52,6 +53,7 @@ export default function Client({ shopId, shopInfo }: Props) {
                 body: JSON.stringify({ [field]: value }),
             });
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -76,12 +78,13 @@ export default function Client({ shopId, shopInfo }: Props) {
 
             if (!res.ok) {
                 console.log(data.message);
-                alert(data.message || "ショップデータ登録エラー");
+                toast.error("データ登録に失敗しました。");
                 return;
             }
 
             router.replace("/shop-signup/complete");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

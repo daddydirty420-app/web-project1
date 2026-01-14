@@ -7,6 +7,7 @@ import ButtonDiv from "../buttonDiv";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -42,11 +43,12 @@ export default function Form({ shopId }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert(data.message || "オプション設定エラー");
+                toast.error("オプション設定に失敗しました。");
             }
 
             router.push(`/shop-signup/step5/${shopId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

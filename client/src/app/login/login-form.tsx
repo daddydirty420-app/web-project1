@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import toast from 'react-hot-toast';
 
 export default function LoginForm() {
     const [visible, setVisible] = useState(false);
@@ -29,7 +30,7 @@ export default function LoginForm() {
         setLoading(false);
 
         if (res?.error) {
-            alert("メールアドレスまたはパスワードが正しくありません。");
+            toast.error("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
             router.push('/my-page');
         }

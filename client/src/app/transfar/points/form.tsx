@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     user: User;
@@ -25,12 +26,12 @@ export default function Form({ user, reccomendPayValue }: Props) {
 
     const submit = async () => {
         if (value === 0) {
-            alert("変換金額を入力してください。");
+            toast.error("変換金額を入力してください。");
             return;
         }
 
         if (value > limit) {
-            alert(`変換金額は売上金${limit.toLocaleString()}円以内にしてください。`);
+            toast.error(`変換金額は売上金${limit.toLocaleString()}円以内にしてください。`);
             return;
         }
 
@@ -54,7 +55,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.messaage);
+                toast.error("ポイント変換に失敗しました。");
                 console.error(data.message);
                 return;
             }
@@ -62,6 +63,7 @@ export default function Form({ user, reccomendPayValue }: Props) {
             alert(`売上金${value.toLocaleString()}円をポイントに変換しました。ポイントの有効期限は本日から180日後になります。`);
             router.push("/my-page");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

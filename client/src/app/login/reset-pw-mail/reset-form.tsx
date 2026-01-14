@@ -21,7 +21,7 @@ export default function ResetForm() {
             alert(data.message);
         } catch (error) {
             console.error(error);
-            alert('通信エラーが発生しました。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

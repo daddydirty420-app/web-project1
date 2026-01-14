@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { useState } from 'react';
 import styles from './mypage.module.css';
 import { refreshToken } from '@/lib/refreshToken';
+import toast from 'react-hot-toast';
 
 type ReferenceCode = {
     output: string;
@@ -40,6 +41,7 @@ export default function ReferenceCode({ itemCount, referenceCount }: Props) {
                 setVisiblePopup(true);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -68,8 +70,9 @@ export default function ReferenceCode({ itemCount, referenceCount }: Props) {
                         try {
                             await navigator.clipboard.writeText(referenceCodeOutput.output);
                             console.log("コピーしました：", referenceCodeOutput.output);
-                            alert('コピーしました');
+                            toast.success('コピーしました');
                         } catch (err) {
+                            toast.error("コピー失敗しました。")
                             console.error("コピー失敗:", err);
                         }
                     }}

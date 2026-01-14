@@ -5,6 +5,7 @@ import styles from "../upload.module.css";
 import UploadUI from "../uploadUI";
 import { refreshToken } from "@/lib/refreshToken";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Client() {
     const router = useRouter();
@@ -28,12 +29,13 @@ export default function Client() {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || "通信エラーが発生しました。")
+                toast.error("通信エラーが発生しました。");
                 return;
             }
 
             router.push(`/upload/${data.itemId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

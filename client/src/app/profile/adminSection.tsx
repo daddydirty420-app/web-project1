@@ -89,9 +89,10 @@ export default function AdminSection({ userId, adminPage }: Props) {
                 setData(prev => prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty }: prev);
                 router.refresh();
             } else {
-                alert(data.message);
+                console.error(data.message);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -126,6 +127,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
                 router.refresh();
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -159,6 +161,7 @@ export default function AdminSection({ userId, adminPage }: Props) {
                 router.refresh();
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
