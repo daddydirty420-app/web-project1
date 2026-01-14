@@ -36,7 +36,7 @@ export default function DeliverySection({ item }: Props) {
 
                     {inventory.initial <= 4
                     ? inventory.current === 1
-                    : (inventory.current / inventory.initial) <= (inventory.initial * inventory.low_stock_ratio) && inventory.current >= 1
+                    : (inventory.initial / inventory.current) <= (inventory.initial * inventory.low_stock_ratio) && inventory.current >= 1
                     && <span className={`${styles.value} ${styles.low}`}>残りわずか</span>}
 
                     {inventory.current === 0 && <span className={`${styles.value} ${styles.sold}`}>SOLD OUT</span>}
