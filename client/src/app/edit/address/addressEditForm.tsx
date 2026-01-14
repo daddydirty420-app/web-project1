@@ -8,6 +8,7 @@ import { Address } from "../type";
 import { refreshToken } from "@/lib/refreshToken";
 import clsx from "clsx";
 import styles from "../edit.module.css";
+import toast from "react-hot-toast";
 
 type Props = {
     address: Address;
@@ -41,7 +42,7 @@ export default function AddressEditForm({ address, page, deliveryId, shopId, sho
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            alert("7桁の郵便番号を入力してください。");
+            toast.error("7桁の郵便番号を入力してください。");
             return;
         }
 
@@ -66,13 +67,13 @@ export default function AddressEditForm({ address, page, deliveryId, shopId, sho
 
     const submit = async () => {
         if (!postNumber || !todouhuken || !shikutyouson || !banchi) {
-            alert("必須項目が空になっています。");
+            toast.error("必須項目が空になっています。");
             return;
         }
 
         const normalizedPostNumber = postNumber.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
-            alert("郵便番号は半角数字7桁で入力してください。");
+            toast.error("郵便番号は半角数字7桁で入力してください。");
             return;
         }
 
@@ -103,12 +104,12 @@ export default function AddressEditForm({ address, page, deliveryId, shopId, sho
                 const data = await res.json();
 
                 if (!res.ok) {
-                    alert(data.message);
+                    toast.error("住所変更に失敗しました。");
                     console.error(data.message);
                     return;
                 }
 
-                alert("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
+                toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
@@ -131,7 +132,7 @@ export default function AddressEditForm({ address, page, deliveryId, shopId, sho
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message);
+                toast.error("住所変更に失敗しました。");
                 console.error(data.message);
                 return;
             }
@@ -143,10 +144,11 @@ export default function AddressEditForm({ address, page, deliveryId, shopId, sho
             } else if (page === "com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                alert("住所を変更しました。");
+                toast.success("住所を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

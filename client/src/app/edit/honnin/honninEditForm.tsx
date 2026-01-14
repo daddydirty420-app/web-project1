@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     user: User;
@@ -56,7 +57,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            alert("7桁の郵便番号を入力してください。");
+            toast.error("7桁の郵便番号を入力してください。");
             return;
         }
 
@@ -70,7 +71,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
 
             if (!res.ok) {
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
             };
 
             setTodouhuken(data.address.todouhuken_name);
@@ -102,7 +103,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
     const submit = async () => {
         const normalizedPostNumber = postNumber?.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
-            alert("郵便番号は半角数字7桁で入力してください。");
+            toast.error("郵便番号は半角数字7桁で入力してください。");
             return;
         }
 

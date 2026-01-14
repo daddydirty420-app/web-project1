@@ -75,19 +75,17 @@ export default async function Page({ params }: Props) {
     }
 
     return (
-        <ToastBoundary>
-            <ItemPage
-            id={id}
-            item={item}
-            itemList={itemList}
-            sellerMe={sellerMe}
-            page="normal"
-            commentCount={commentCount}
-            goodCount={goodCount}
-            isGood={isGood}
-            userId={userId || ""}
-            loggedIn={loggedIn}
-            />
-        </ToastBoundary>
+        <ItemPage
+        id={id}
+        item={item}
+        itemList={itemList}
+        sellerMe={sellerMe}
+        page="normal"
+        commentCount={commentCount}
+        goodCount={goodCount}
+        isGood={isGood}
+        userId={userId || ""}
+        loggedIn={loggedIn}
+        />
     );
 };

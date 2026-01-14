@@ -6,6 +6,7 @@ import EditUI from "../editUI";
 import { useState } from "react";
 import { Session } from "next-auth";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     session: Session | null;
@@ -17,7 +18,7 @@ export default function EmailEditForm({ session }: Props) {
     const submit = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-            alert("正しいメールアドレスの形式で入力してください。");
+            toast.error("正しいメールアドレスの形式で入力してください。");
             return;
         }
         
@@ -43,13 +44,15 @@ export default function EmailEditForm({ session }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message);
+                toast.error("メールアドレスの変更に失敗しました。");
+                console.error(data.message);
                 return;
             }
 
-            alert(data.message);
+            toast.success(data.message);
             setValue("");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

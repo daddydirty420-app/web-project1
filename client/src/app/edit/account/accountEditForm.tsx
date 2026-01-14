@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import clsx from "clsx";
+import toast from "react-hot-toast";
 
 type Props = {
     account: BankAccount;
@@ -141,12 +142,12 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
 
     const submit = async () => {
         if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
-            alert("空の項目があります。");
+            toast.error("空の項目があります。");
             return;
         }
 
         if (!/^[0-9]{5,7}$/.test(accountNumber)) {
-            alert("口座番号は5〜7桁の半角数字で入力してください。");
+            toast.error("口座番号は5〜7桁の半角数字で入力してください。");
             return;
         }
 
@@ -181,7 +182,8 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 const data = await res.json();
 
                 if (!res.ok) {
-                    alert(data.message || "更新に失敗しました。");
+                    toast.error("更新に失敗しました。");
+                    console.error(data.message);
                     return;
                 }
 
@@ -207,7 +209,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
             }
 
             if (page === "normal") {
-                alert("口座情報を更新しました。");
+                toast.success("口座情報を更新しました。");
                 router.push("/my-page");
             } else if (page === "transfar") {
                 router.push("/transfar/request");
@@ -217,6 +219,7 @@ export default function AccountEditForm({ account, page, shopId, shopEditId }: P
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
