@@ -207,10 +207,30 @@ export default function SaleButton({ item }: Props) {
                     </label>
                 )}
 
-                <p className={styles.priceText}>値引き前価格：<span className="font-bold">￥{sale?.before_price.toLocaleString()}</span></p>
-                {item.Sale?.sale_flag && <p className={styles.priceText}>現在の価格：<span className="font-bold">￥{item.price.toLocaleString()}</span></p>}
-                {selected === "rate" && <p className={styles.priceText}>値引き後価格：<span className="font-bold">￥{finalPrice.toLocaleString()}</span></p>}
-                {selected === "amount" && <p className={styles.priceText}>値引き後価格：<span className="font-bold">￥{finalPrice.toLocaleString()}</span></p>}
+                <div className={styles.priceTextDiv}>
+                    <div className={styles.twoTextRow}>
+                        <p>値引き前価格：</p>
+                        <span className={styles.twoTextContent}>￥{sale?.before_price.toLocaleString()}</span>
+                    </div>
+                    {item.Sale?.sale_flag && (
+                        <div className={styles.twoTextRow}>
+                            <p>現在の価格：</p>
+                            <span className={styles.twoTextContent}>￥{item.price.toLocaleString()}</span>
+                        </div>
+                    )}
+                    {selected === "rate" && (
+                        <div className={styles.twoTextRow}>
+                            <p>値引き後価格：</p>
+                            <span className={styles.twoTextContent}>￥{finalPrice.toLocaleString()}</span>
+                        </div>
+                    )}
+                    {selected === "amount" && (
+                        <div className={styles.twoTextRow}>
+                            <p>値引き後価格：</p>
+                            <span className={styles.twoTextContent}>￥{finalPrice.toLocaleString()}</span>
+                        </div>
+                    )}
+                </div>
 
                 <button type="button" className={styles.popupButton} onClick={update}>値引きする</button>
             </div>
