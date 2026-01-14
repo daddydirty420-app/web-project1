@@ -8,6 +8,7 @@ import EditUI from "../../editUI";
 import { Button, InputTitle } from "@/components/inputForm";
 import clsx from "clsx";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -22,12 +23,12 @@ export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
 
     const submit = async () => {
         if (selectOption === null || selectOption === undefined) {
-            alert("事業形態を選択してください。");
+            toast.error("事業形態を選択してください。");
             return;
         }
 
         if (shopInfo.ComOrFreeOption?.id === selectOption) {
-            alert("事業形態が変更されていません。");
+            toast.error("事業形態が変更されていません。");
             return;
         }
 
@@ -51,13 +52,15 @@ export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || "更新に失敗しました。");
+                toast.error("事業形態の更新に失敗しました。");
+                console.error(data.message);
                 return;
             }
 
             router.push(`/edit/shop/com-free/confirm/${data.editId}`);
         } catch (err) {
             console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 

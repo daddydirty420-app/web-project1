@@ -8,6 +8,7 @@ import EditUI from "../../editUI";
 import { Button, InputStr } from "@/components/inputForm";
 import clsx from "clsx";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -22,7 +23,7 @@ export default function Form({ shopId, shopInfo }: Props) {
 
     const submit = async () => {
         if (!companyName) {
-            alert(`${title}を入力してください。`);
+            toast.error(`${title}を入力してください。`);
             return;
         }
 
@@ -46,7 +47,8 @@ export default function Form({ shopId, shopInfo }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || "更新に失敗しました。");
+                toast.error("更新に失敗しました。");
+                console.error(data.message);
                 return;
             }
 
@@ -54,9 +56,10 @@ export default function Form({ shopId, shopInfo }: Props) {
             ? "会社名の変更を受け付けました。審査完了までお待ちください。"
             : "屋号を変更しました。"
 
-            alert(`${alertText}`);
+            toast.success(`${alertText}`);
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

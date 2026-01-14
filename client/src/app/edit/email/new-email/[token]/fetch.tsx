@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
     token: string;
@@ -26,7 +27,7 @@ export default function FetchClient({ token }: Props) {
                     return;
                 }
 
-                alert(data.message);
+                toast.success(data.message);
                 setTimeout(() => router.push("/my-page"), 2000);
             } catch (err) {
                 console.error(err);

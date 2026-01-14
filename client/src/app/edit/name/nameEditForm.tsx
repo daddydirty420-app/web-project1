@@ -9,6 +9,7 @@ import { Name } from "../type";
 import { refreshToken } from "@/lib/refreshToken";
 import Image from "next/image";
 import clsx from "clsx";
+import toast from "react-hot-toast";
 
 type Props = {
     name: Name;
@@ -57,7 +58,7 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
 
     const submit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            alert("空の項目があります。");
+            toast.error("空の項目があります。");
             return;
         }
 
@@ -87,36 +88,37 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
 
             if (!res.ok) {
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("氏名の変更に失敗しました。");
                 return;
             }
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
             } else if (page === "con-shop") {
-                alert("氏名を変更しました。");
+                toast.success("氏名を変更しました。");
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else if (page === "rep-com-free" || page === "con-com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                alert("氏名を変更しました。");
+                toast.success("氏名を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const repSubmit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            alert("空の項目があります。");
+            toast.error("空の項目があります。");
             return;
         }
 
         if (!idCardFront || !idCardRear) {
-            alert("身分証がアップロードされていません。");
+            toast.error("身分証がアップロードされていません。");
             return;
         }
 
@@ -171,10 +173,10 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
 
                 if (!res.ok) {
                     console.error(data.message);
-                    alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                    toast.error("氏名の変更に失敗しました。");
                     return;
                 }
-                alert("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。");
+                toast.success("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。");
                 router.push(`/shop-info/${shopId}`);
 
             } else if (page === "rep-shop-signup") {
@@ -192,13 +194,14 @@ export default function NameEditForm({ name, page, deliveryId, shopId, shopEditI
 
                 if (!res.ok) {
                     console.error(data.message);
-                    alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                    alert("氏名の変更に失敗しました。");
                     return;
                 }
 
                 router.push(`/shop-signup/step5/${shopId}`);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

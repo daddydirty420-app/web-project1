@@ -9,6 +9,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopEditId: string;
@@ -82,12 +83,12 @@ export default function Client({ shopEditId }: Props) {
 
     const submit = async () => {
         if (!idCardFront || !idCardRear) {
-            alert("身分証がアップロードされていません。");
+            toast.error("身分証がアップロードされていません。");
             return;
         }
 
         if (checked && permitImages.length === 0) {
-            alert("許認可証がアップロードされていません。");
+            toast.error("許認可証がアップロードされていません。");
             return;
         }
 
@@ -158,7 +159,7 @@ export default function Client({ shopEditId }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert(data.message || "サーバーエラーが発生しました。通信環境を確認し、もう一度トライしてください。");
+                toast.error("画像データの送信に失敗しました。");
                 return;
             }
 
@@ -172,7 +173,7 @@ export default function Client({ shopEditId }: Props) {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    alert("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました。");
                     return;
                 }
             }
@@ -187,7 +188,7 @@ export default function Client({ shopEditId }: Props) {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    alert("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました。");
                     return;
                 }
             }
@@ -208,15 +209,16 @@ export default function Client({ shopEditId }: Props) {
                     });
 
                     if (!upload.ok) {
-                        alert("許認可証のアップロードに失敗しました。");
+                        toast.error("許認可証のアップロードに失敗しました。");
                         return;
                     }
                 }
             }
 
-            alert("画像のアップロードが完了しました！");
+            toast.success("画像のアップロードが完了しました！");
             router.replace("/edit/shop/com-free/complete");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

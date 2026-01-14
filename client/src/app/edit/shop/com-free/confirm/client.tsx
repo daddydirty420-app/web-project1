@@ -48,6 +48,7 @@ export default function Client({ shopId, shopInfo, shopEditId, shopInfoEdit }: P
                 body: JSON.stringify({ [field]: value }),
             });
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

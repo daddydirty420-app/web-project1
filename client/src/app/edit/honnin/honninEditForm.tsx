@@ -163,7 +163,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
         const hasRearImage = !!(idCardRear || rearFileName);
 
         if (requiredBody.some(v => v === "" || v === undefined || v === null) || !hasFrontImage || !hasRearImage) {
-            alert("未入力の必須項目があります。");
+            toast.error("未入力の必須項目があります。");
             return;
         }
 
@@ -187,8 +187,8 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
             const data = await res.json();
 
             if (!res.ok) {
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
-                console.error(data.message)
+                toast.error("本人確認情報の送信に失敗しました。");
+                console.error(data.message);
                 return;
             }
 
@@ -203,7 +203,7 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
 
                 if (!uploadFrontRes.ok) {
                     console.error("身分証（表面）のアップロードに失敗しました。");
-                    alert("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました。");
                     return;
                 }
             }
@@ -219,14 +219,15 @@ export default function HonninEditForm({ user, genderOptions, campaign }: Props)
 
                 if (!uploadFrontRes.ok) {
                     console.error("身分証（裏面）のアップロードに失敗しました。");
-                    alert("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました。");
                     return;
                 }
             }
 
-            alert("本人確認情報を送信しました。");
+            toast.success("本人確認情報を送信しました。");
             router.push("/my-page");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

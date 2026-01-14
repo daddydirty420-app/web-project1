@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "../type";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     user: User;
@@ -20,11 +21,11 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
 
     const submit = async () => {
         if (!/^[0-9]+$/.test(value)) {
-            alert("電話番号は半角数字のみで入力してください。");
+            toast.error("電話番号は半角数字のみで入力してください。");
             return;
         }
         if (!value) {
-            alert("電話番号を入力してください。");
+            toast.error("電話番号を入力してください。");
             return;
         }
         
@@ -52,11 +53,11 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
 
                 if (!res.ok) {
                     console.error(data.message);
-                    alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                    toast.error("電話番号の変更に失敗しました。");
                     return;
                 }
 
-                alert("電話番号を変更しました。");
+                toast.success("電話番号を変更しました。");
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
@@ -76,17 +77,18 @@ export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Prop
 
             if (!res.ok) {
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("電話番号の変更に失敗しました。");
                 return;
             }
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
             } else {
-                alert("電話番号を変更しました。");
+                toast.success("電話番号を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

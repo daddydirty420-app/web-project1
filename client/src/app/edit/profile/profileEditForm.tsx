@@ -7,6 +7,7 @@ import { User } from "../type";
 import ProfileImage from "./profileImage";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     user: User;
@@ -21,7 +22,7 @@ export default function ProfileEditForm({ user }: Props) {
 
     const submit = async () => {
         if (!userNameValue) {
-            alert("必須項目が空になっています。");
+            toast.error("必須項目が空になっています。");
             return;
         }
             
@@ -53,7 +54,7 @@ export default function ProfileEditForm({ user }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("プロフィールの変更に失敗しました。");
                 return;
             }
 
@@ -67,13 +68,14 @@ export default function ProfileEditForm({ user }: Props) {
                 });
 
                 if (!uploadRes.ok) {
-                    console.error("プロフィール画像のS3アップロードに失敗しました。");
+                    toast.error("プロフィール画像のS3アップロードに失敗しました。");
                     return;
                 }
             }
 
             router.push(`/profile/${user.id}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

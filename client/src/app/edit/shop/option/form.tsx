@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import EditUI from "../../editUI";
 import { Button, InputTitle } from "@/components/inputForm";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
@@ -41,12 +42,13 @@ export default function Form({ shopId, shopInfo }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                alert(data.message || "オプション設定エラー");
+                toast.error("オプション設定変更に失敗しました。");
             }
 
-            alert("オプション設定を変更しました。");
+            toast.success("オプション設定を変更しました。");
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
