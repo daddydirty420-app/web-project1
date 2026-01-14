@@ -26,17 +26,17 @@ export default function DeliverySection({ item }: Props) {
                 <span className={styles.label}>発送までの日数</span>
                 <span className={styles.value}>{item.ItemShippingProfile?.ShippingDayOption?.name}</span>
             </div>
-            {inventory && inventory?.initial >= 2 && (
+            {inventory && inventory.initial >= 2 && (
                 <div className={styles.infoRow}>
                     <span className={styles.label}>在庫</span>
                     {inventory.initial <= 4
                     ? inventory.current >= 2
-                    : inventory.initial / inventory.current > inventory.low_stock_ratio
+                    : inventory.initial / inventory.current > inventory.initial * inventory.low_stock_ratio
                     && <span className={`${styles.value} ${styles.full}`}>在庫あり</span>}
 
                     {inventory.initial <= 4
                     ? inventory.current === 1
-                    : (inventory.current / inventory.initial <= inventory.low_stock_ratio && inventory.current >= 1)
+                    : (inventory.current / inventory.initial <= inventory.initial * inventory.low_stock_ratio && inventory.current >= 1)
                     && <span className={`${styles.value} ${styles.low}`}>残りわずか</span>}
 
                     {inventory.current === 0 && <span className={`${styles.value} ${styles.sold}`}>SOLD OUT</span>}
