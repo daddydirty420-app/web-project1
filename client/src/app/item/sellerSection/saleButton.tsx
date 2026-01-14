@@ -74,13 +74,16 @@ export default function SaleButton({ item }: Props) {
                 body: JSON.stringify({ discountRate, discountAmount, finalPrice }),
             });
 
+            const data = await res.json();
+
             if (res.ok) {
-                toast.success("値引きしました。");
+                toast.success("値引きしました！");
+                console.log(data.message)
                 setSalePopup(false);
                 router.refresh();
             } else {
-                const msgJson = await res.json();
-                console.error(msgJson.message);
+                toast.error("値引きに失敗しました。")
+                console.error(data.message);
             }
         } catch (err) {
             console.error(err);
@@ -103,13 +106,16 @@ export default function SaleButton({ item }: Props) {
                 },
             });
 
+            const data = await res.json();
+
             if (res.ok) {
                 toast.success("値引きを終了しました！");
+                console.log(data.message);
                 setSaleStopPopup(false);
                 router.refresh();
             } else {
-                const msgJson = await res.json();
-                console.error(msgJson.message);
+                toast.error("値引きの終了に失敗しました。");
+                console.error(data.message);
             }
         } catch (err) {
             console.error(err);
