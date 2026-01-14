@@ -44,7 +44,7 @@ export default function SaleButton({ item }: Props) {
 
         if (selected === "rate") {
             if (rate < 1 || rate > 50) {
-                alert("値引き率は1～50%の間で設定してください。");
+                toast.error("値引き率は1～50%の間で設定してください。");
                 return;
             }
         }
@@ -52,7 +52,7 @@ export default function SaleButton({ item }: Props) {
         if (selected === "amount") {
             const maxAmount = sale ? Math.round(sale.before_price / 2) : 0;
             if (amount < 1 || amount > maxAmount) {
-                alert(`値引き額は1円～${maxAmount}円の間で設定してください。`);
+                toast.error(`値引き額は1円～${maxAmount}円の間で設定してください。`);
                 return;
             }
         }
@@ -61,7 +61,7 @@ export default function SaleButton({ item }: Props) {
             const accessToken = await refreshToken();
             
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                toast.error("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
