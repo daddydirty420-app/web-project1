@@ -246,8 +246,16 @@ export default function SaleButton({ item }: Props) {
                 
                 <p className={styles.popupTitle}>値引きをやめる</p>
 
-                <p className={styles.priceText}>現在の価格：<span className="font-bold">￥{item.price.toLocaleString()}</span></p>
-                <p className={styles.priceText}>値引き前価格：<span className="font-bold text-[var(--alert)]">￥{sale?.before_price.toLocaleString()}</span></p>
+                <div className={styles.priceTextDiv}>
+                    <div className={styles.twoTextRow}>
+                        <p>現在の価格：</p>
+                        <span className={styles.twoTextContent}>￥{item.price.toLocaleString()}</span>
+                    </div>
+                    <div className={styles.twoTextRow}>
+                        <p className={styles.priceText}>値引き前価格：</p>
+                        <span className={styles.finalPrice}>￥{sale?.before_price.toLocaleString()}</span>
+                    </div>
+                </div>
 
                 <button type="button" className={styles.popupButton} onClick={end}>値引きをやめる</button>
             </div>
