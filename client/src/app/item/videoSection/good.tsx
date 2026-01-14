@@ -43,6 +43,7 @@ export default function Good({ id, sellerMe, initialGood, initialCount, page, lo
             });
             updateGoodItemCache(id, true);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

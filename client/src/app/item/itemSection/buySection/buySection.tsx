@@ -73,6 +73,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                 toast.success("カートに追加しました。");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -98,6 +99,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                 toast.success("カートから削除しました。");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -133,6 +135,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
                 }
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

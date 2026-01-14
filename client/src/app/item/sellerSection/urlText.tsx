@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import styles from "./seller.module.css";
+import toast from "react-hot-toast";
 
 export default function UrlText() {
     const pathname = usePathname();
@@ -11,10 +12,10 @@ export default function UrlText() {
     const copy = async () => {
         try {
             await navigator.clipboard.writeText(fullUrl);
-            alert("リンクをコピーしました！");
+            toast.success("リンクをコピーしました！");
         } catch (err) {
             console.error(err);
-            alert("コピー失敗！");
+            toast.error("コピー失敗！");
         }
     };
 

@@ -41,6 +41,7 @@ export default function DeleteItem({ id }: Props) {
                 console.error(errorData.message);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import { InputTitle } from "@/components/inputForm";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 type Props = {
     item: Item;
