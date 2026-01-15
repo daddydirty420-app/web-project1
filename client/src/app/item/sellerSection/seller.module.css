@@ -280,6 +280,7 @@
 
 .deleteText {
     margin-top: 2.5rem;
+    margin-bottom: 150px;
     font-size: 13px;
     color: var(--text-muted);
     text-align: center;
