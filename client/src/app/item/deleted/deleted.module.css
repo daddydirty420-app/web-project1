@@ -107,10 +107,13 @@
 }
 
 .deleteText {
-    margin-top: 1rem;
-    font-size: 14px;
-    color: var(--accent);
+    margin-top: 2.5rem;
+    font-size: 13px;
+    color: var(--text-muted);
     text-align: center;
     cursor: pointer;
-    margin-bottom: 150px;
+}
+.deleteText:hover {
+    opacity: 1;
+    text-decoration: underline;
 }
