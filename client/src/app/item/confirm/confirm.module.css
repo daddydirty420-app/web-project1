@@ -13,6 +13,7 @@
     font-size: 15px;
     font-weight: 600;
     color: white;
+    letter-spacing: 0.04em;
     background: var(--action);
     border-radius: 10px;
     cursor: pointer;
@@ -30,9 +31,10 @@
     justify-content: center;
     width: 200px;
     height: 40px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--theme-str);
+    letter-spacing: 0.04em;
     background-color: var(--button-gray);
     border-radius: 20px;
     cursor: pointer;
@@ -113,6 +115,10 @@
     border: 1px solid var(--gray-line);
     overflow-y: scroll;
     padding: 0.5rem;
+}
+.termsDiv p {
+    font-size: 11px;
+    line-height: 1.5;
 }
 
 .checkLabel {
