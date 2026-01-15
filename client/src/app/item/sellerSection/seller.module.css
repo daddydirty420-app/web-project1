@@ -20,7 +20,7 @@
 }
 
 .saleButton {
-    width: 120px;
+    min-width: 120px;
     height: 36px;
     background-color: var(--theme);
     border-radius: 999px;
@@ -39,7 +39,7 @@
 }
 
 .saleStopButton {
-    width: 120px;
+    min-width: 120px;
     height: 36px;
     background-color: rgba(255, 0, 0, 0.08);
     border-radius: 999px;
