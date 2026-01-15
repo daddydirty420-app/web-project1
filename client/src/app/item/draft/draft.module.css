@@ -4,17 +4,16 @@
     justify-content: center;
     margin: 2rem auto;
     width: 200px;
-    height: 40px;
-    border: solid 3px var(--theme);
-    border-radius: 20px;
-    background-color: #f5f5f5;
+    height: 44px;
+    border-radius: 999px;
+    background-color: var(--action);
     font-size: 15px;
     font-weight: 600;
-    color: var(--theme);
-    box-shadow: var(--shadow);
+    color: #fff;
     cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .editButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--action-hover);
+    transform: translateY(1px);
 }
