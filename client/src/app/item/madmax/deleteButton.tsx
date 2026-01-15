@@ -5,6 +5,7 @@ import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
 import { X } from "lucide-react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     id: string;
@@ -16,7 +17,10 @@ export default function DeleteButton({ id, item }: Props) {
     const [deleteReason, setDeleteReason] = useState("");
 
     const deleteItem = async () => {
-        if (!deleteReason || deleteReason === "") return;
+        if (!deleteReason || deleteReason === "") {
+            toast.error("削除理由を入力してください。");
+            return;
+        }
 
         try {
             const accessToken = await refreshToken();
@@ -41,6 +45,7 @@ export default function DeleteButton({ id, item }: Props) {
                 setPopup(false);
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -58,6 +63,7 @@ export default function DeleteButton({ id, item }: Props) {
                 <X className={styles.x} onClick={() => setPopup(false)} />
                 
                 <p className={styles.popupTitle}>本当に削除しますか？</p>
+
                 <p className={styles.text13}>※本当にこの商品を削除しますか？削除した場合、商品のデータがすべて無くなってしまいます。</p>
 
                 <label>
