@@ -17,7 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         cache: 'no-store'
     });
 
-    const item: Item = await res.json();
+    const data = await res.json();
+    const item = data.item;
 
     return {
         title: `${item.name} | 下書き`,
