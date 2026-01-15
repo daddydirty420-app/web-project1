@@ -122,14 +122,15 @@ export default function UploadButton({ id }: Props) {
                     <TermsList number={27} text='その他、法令違反している又はその可能性があるもの、弊社が不適切と判断するもの' />
                 </div>
 
-                <label className={styles.checkbox}>
+                <label className={styles.checkLabel}>
                     <input
                     type="checkbox"
                     name="check"
                     checked={check}
                     onChange={() => setCheck(!check)}
+                    className={styles.check}
                     />
-                    <p className={styles.text14}>この商品は利用規約を遵守しております。</p>
+                    <p className={styles.checkText}>この商品は利用規約を遵守しております。</p>
                 </label>
 
                 <button
