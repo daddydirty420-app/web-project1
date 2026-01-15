@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     id: string;
@@ -36,9 +37,10 @@ export default function PerfectDelete({ id }: Props) {
                 router.push("/item-list/deleted");
             } else {
                 console.error("APIフェッチエラー：", res.status);
-                alert("サーバーエラーが発生しました。通信環境を確認し、再度クリックしてください。");
+                toast.error("商品の削除に失敗しました。");
             }
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     id: string;
@@ -33,16 +34,19 @@ export default function Restore({ id, item }: Props) {
                 },
             });
 
+            const data = await res.json();
+
             if (!res.ok) {
                 console.error("APIフェッチエラー：", res.status);
-                alert("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
                 return;
             }
-
-            const data = await res.json();
-            alert(data.message);
+            
+            toast.success("この商品を復元しました！");
+            console.log(data.message);
             router.push(`/item/${id}`);
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
