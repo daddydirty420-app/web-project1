@@ -413,12 +413,17 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
                 },
                 {
                     model: Categories,
-                    attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
-                    as: "children",
+                    as: "Category",
                     include: [
                         {
                             model: Categories,
                             attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                            as: "children",
+                            required: false,
+                        },
+                        {
+                            model: Categories,
+                            attributes: ["id", "name", "level", "allowed_gender", "allowed_age"],
                             as: "parent",
                             required: false,
                         },
