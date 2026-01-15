@@ -8,19 +8,19 @@
 .uploadButton {
     margin: 3rem auto 0;
     display: block;
-    width: 200px;
-    height: 40px;
+    width: 240px;
+    height: 46px;
     font-size: 15px;
     font-weight: 600;
     color: white;
-    background: var(--theme);
+    background: var(--action);
     border-radius: 10px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .uploadButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--action-hover);
+    transform: translateY(1px);
 }
 
 .editButton {
@@ -32,16 +32,15 @@
     height: 40px;
     font-size: 15px;
     font-weight: 600;
-    color: var(--theme);
-    background-color: #f5f5f5;
-    border: solid 2px var(--theme);
+    color: var(--theme-str);
+    background-color: var(--button-gray);
     border-radius: 20px;
-    box-shadow: var(--shadow);
     cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .editButton:hover {
-    box-shadow: none;
-    opacity: .8;
+    background-color: var(--button-gray-hover);
+    transform: translateY(1px);
 }
 
 .overlay {
