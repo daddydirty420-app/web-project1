@@ -48,6 +48,7 @@
     color: var(--alert);
     padding: 0 16px;
     cursor: pointer;
+    transform: background-color 0.15s ease;
 }
 .saleStopButton:hover {
     background-color: rgba(255, 0, 0, 0.12);
