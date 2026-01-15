@@ -47,12 +47,17 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
                 },
                 {
                     model: Categories,
-                    attributes: ['id', 'name', "level", "allowed_gender", "allowed_age", "parent_id"],
-                    as: "children",
+                    as: "Category",
                     include: [
                         {
                             model: Categories,
-                            attributes: ["id", "name", "level", "allowed_gender", "allowed_age", "parent_id"],
+                            attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                            as: "children",
+                            required: false,
+                        },
+                        {
+                            model: Categories,
+                            attributes: ["id", "name", "level", "allowed_gender", "allowed_age"],
                             as: "parent",
                             required: false,
                         },
