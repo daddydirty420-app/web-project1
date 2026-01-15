@@ -274,9 +274,13 @@
 
 .deleteText {
     margin-top: 1rem;
+    margin-bottom: 150px;
     font-size: 14px;
     color: var(--link);
     text-align: center;
     cursor: pointer;
-    margin-bottom: 150px;
+}
+.deleteText:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
 }
