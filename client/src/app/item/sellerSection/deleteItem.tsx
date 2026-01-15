@@ -48,7 +48,7 @@ export default function DeleteItem({ id }: Props) {
 
     return (
         <>
-        <p className={styles.deleteText} onClick={() => setPopup(true)}>商品を削除する</p>
+        <p className={styles.deleteText} onClick={() => setPopup(true)}>この商品を削除する</p>
 
         {popup && (
             <>
