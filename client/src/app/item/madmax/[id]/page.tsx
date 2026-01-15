@@ -32,8 +32,6 @@ export default async function Page({ params }: Props) {
     const { id } = await params;
 
     const session = await getServerSession(authOptions);
-
-    if (!session?.user.admin) redirect(`/item/${id}`);
         
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
