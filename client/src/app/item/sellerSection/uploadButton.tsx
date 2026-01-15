@@ -46,8 +46,8 @@ export default function UploadButton({ id }: Props) {
 
     return (
         <div className={styles.buttonDiv}>
-            <button type="button" className={styles.blackButton} onClick={copy}>コピー出品</button>
-            <Link href={`/upload/edit/${id}`} className={clsx(styles.blackButton, styles.edit)}>商品を編集する</Link>
+            <button type="button" className={styles.grayButton} onClick={copy}>コピー出品</button>
+            <Link href={`/upload/edit/${id}`} className={clsx(styles.grayButton, styles.edit)}>商品を編集する</Link>
         </div>
     );
 };

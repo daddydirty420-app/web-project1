@@ -128,7 +128,7 @@ export default function SaleButton({ item }: Props) {
         <>
         <div className={styles.buttonDiv}>
             <button type="button" className={styles.saleButton} onClick={() => setSalePopup(true)}>値引きする</button>
-            {sale?.sale_flag && <button type="button" className={styles.blackButton} onClick={() => setSaleStopPopup(true)}>値引きをやめる</button>}
+            {sale?.sale_flag && <button type="button" className={styles.grayButton} onClick={() => setSaleStopPopup(true)}>値引きをやめる</button>}
         </div>
 
         {salePopup && (
