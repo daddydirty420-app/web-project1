@@ -95,6 +95,11 @@
     margin-top: 0;
 }
 
+.small p {
+    font-size: 11px;
+    line-height: 1.5;
+}
+
 .date {
     display: block;
     font-size: var(--caption);

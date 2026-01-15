@@ -116,10 +116,6 @@
     overflow-y: scroll;
     padding: 0.5rem;
 }
-.termsDiv p {
-    font-size: 11px;
-    line-height: 1.5;
-}
 
 .checkLabel {
     display: flex;
