@@ -5,6 +5,8 @@
     margin: 1rem 0;
     cursor: pointer;
     gap: 0.1rem;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
 }
 .commentShowDiv:hover {
     background-color: var(--bg-subtle);
