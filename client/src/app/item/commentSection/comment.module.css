@@ -241,7 +241,7 @@
     background: var(--overlay);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
-    z-index: 4000;
+    z-index: 9000;
 }
 
 .popup {
@@ -253,7 +253,7 @@
     transform: translateX(-50%);
     background-color: var(--background);
     border-radius: 14px;
-    z-index: 5000;
+    z-index: 10000;
     padding: 1.5rem 1.25rem;
     box-shadow:
         0 10px 30px rgba(0, 0, 0, 0.08),
