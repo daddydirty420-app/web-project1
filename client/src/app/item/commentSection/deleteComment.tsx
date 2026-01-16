@@ -8,6 +8,7 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import Portial from "../portial";
 
 type Props = {
     comment: Comment;
@@ -57,19 +58,19 @@ export default function DeleteComment({ comment, page }: Props) {
         </div>
 
         {popup && (
-            <>
-            <div className={styles.overlay} onClick={() => setPopup(false)} />
+            <Portial>
+                <div className={styles.overlay} onClick={() => setPopup(false)} />
 
-            <div className={styles.popup}>
-                <X className={styles.x} onClick={() => setPopup(false)} />
+                <div className={styles.popup}>
+                    <X className={styles.x} onClick={() => setPopup(false)} />
                 
-                <p className={styles.popupTitle}>確認</p>
-                <p className={styles.popupText}>※ 本当にこのコメントを削除しますか？</p>
-                <p className={styles.popupComment}>「{comment.text}」</p>
+                    <p className={styles.popupTitle}>確認</p>
+                    <p className={styles.popupText}>※ 本当にこのコメントを削除しますか？</p>
+                    <p className={styles.popupComment}>「{comment.text}」</p>
 
-                <button type="button" className={styles.popupButton} onClick={deleteComment}>削除する</button>
-            </div>
-            </>
+                    <button type="button" className={styles.popupButton} onClick={deleteComment}>削除する</button>
+                </div>
+            </Portial>
         )}
         </>
     );
