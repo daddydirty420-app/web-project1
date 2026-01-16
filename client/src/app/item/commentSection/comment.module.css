@@ -157,6 +157,11 @@
     align-items: center;
     cursor: pointer;
     margin-right: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+}
+.replyDiv:hover {
+    background-color: var(--bg-subtle);
 }
 
 .replyIcon {
@@ -174,6 +179,11 @@
     display: flex;
     align-items: center;
     margin-right: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+}
+.goodDiv:hover {
+    background-color: var(--bg-subtle);
 }
 
 .goodIcon {
