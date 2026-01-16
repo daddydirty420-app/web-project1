@@ -337,14 +337,11 @@
     transition: max-height 0.35s ease-in, opacity 0.2s ease-in, transform 0.25s ease-in;
 }
 .replySection.replyOpen {
+    margin-top: 0.75rem;
     max-height: 5000px;
     opacity: 1;
     transform: translateY(0);
     transition: max-height 0.45s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.replyListWrapper {
-    margin-top: 1rem;
 }
 
 @media (min-width: 768px) {
