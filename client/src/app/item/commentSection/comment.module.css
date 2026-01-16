@@ -6,6 +6,9 @@
     cursor: pointer;
     gap: 0.1rem;
 }
+.commentShowDiv:hover {
+    background-color: var(--bg-subtle);
+}
 
 .commentShowIcon {
     width: 23px;
@@ -16,7 +19,7 @@
 
 .commentShowText {
     font-size: 14px;
-    color: var(--accent);
+    color: var(--text-muted);
 }
 
 .commentLabel {
