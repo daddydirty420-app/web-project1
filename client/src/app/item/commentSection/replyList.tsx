@@ -56,21 +56,23 @@ export default function ReplyList({ parentId, page, loggedIn }: Props) {
                 if (!comment) return null;
 
                 return (
-                    <section className={styles.commentFlex} key={comment.id}>
-                        <ProfileImage user={comment.User} />
-                        <div className={styles.commentMain}>
-                            {comment.pin && <Pin />}
+                    <section className={styles.commentListSection} key={comment.id}>
+                        <section className={styles.commentFlex}>
+                            <ProfileImage user={comment.User} />
+                            <div className={styles.commentMain}>
+                                {comment.pin && <Pin />}
 
-                            <CommentDataDiv comment={comment} />
-                            <CommentText comment={comment} page={page} />
+                                <CommentDataDiv comment={comment} />
+                                <CommentText comment={comment} page={page} />
 
-                            <div className={styles.commentEditDiv}>
-                                <Good comment={comment} loggedIn={loggedIn} />
-                                <ReportFloat comment={comment} page={page} />
+                                <div className={styles.commentEditDiv}>
+                                    <Good comment={comment} loggedIn={loggedIn} />
+                                    <ReportFloat comment={comment} page={page} />
 
-                                {comment.isMyComment && <DeleteComment comment={comment} page={page} />}
+                                    {comment.isMyComment && <DeleteComment comment={comment} page={page} />}
+                                </div>
                             </div>
-                        </div>
+                        </section>
                     </section>
                 );
             })}
