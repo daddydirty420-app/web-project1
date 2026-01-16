@@ -24,6 +24,19 @@
     color: var(--text-muted);
 }
 
+.commentBody {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+.commentBody.open {
+    max-height: none;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .commentLabel {
     display: block;
     width: 100%;

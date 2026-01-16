@@ -61,12 +61,10 @@ export default function CommentSection({ id, sellerMe, commentCount, page, logge
             <p className={styles.commentShowText}>{visible ? "閉じる" : "コメントを見る"}（{commentCount?.toLocaleString()}）</p> 
         </div>
 
-        {visible && (
-            <>
+        <div className={`${styles.commentBody} ${visible ? styles.open : ""}`}>
             {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} loggedIn={loggedIn} />}
             <CommentList id={id} sellerMe={sellerMe} comments={comments} page={page} loggedIn={loggedIn} />
-            </>
-        )}
+        </div>
         </>
     );
 };
