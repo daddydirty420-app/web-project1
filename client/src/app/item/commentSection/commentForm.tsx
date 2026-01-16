@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./comment.module.css";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     id: string;
@@ -18,7 +19,7 @@ export default function CommentForm({ id, sellerMe, parentId, loggedIn }: Props)
 
     const upload = async () => {
         if (inputComment.length === 0) {
-            alert("コメントを入力してください。");
+            toast.error("コメントを入力してください。");
             return;
         }
 
@@ -41,17 +42,19 @@ export default function CommentForm({ id, sellerMe, parentId, loggedIn }: Props)
 
             if (!res.ok) {
                 const errorData = await res.json();
-                alert(errorData.message);
+                toast.error("コメントの投稿に失敗しました。");
+                console.error(errorData.message);
                 return;
             }
 
-            alert("コメントを投稿しました！");
+            toast.success("コメントを投稿しました！");
             setInputComment("");
             router.refresh();
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
-    }
+    };
 
     return (
         <>
