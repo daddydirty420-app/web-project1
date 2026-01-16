@@ -65,7 +65,7 @@ export default function CommentList({ id, sellerMe, comments, page, loggedIn }: 
                         </section>
 
                         {isVisibleReply && (
-                            <section className={styles.replySection}>
+                            <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
                                 {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} parentId={commentId} loggedIn={loggedIn} />}
                                 <ReplyList parentId={commentId} page={page} loggedIn={loggedIn} />
                             </section>
