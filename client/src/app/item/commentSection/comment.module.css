@@ -52,6 +52,7 @@
     border: solid 1px var(--gray-line);
     border-radius: 10px;
     background-color: #fff;
+    min-height: 56px;
 }
 
 .commentUploadButton {
