@@ -221,12 +221,16 @@
     width: 17px;
     height: 17px;
     padding: 0 5px;
-    color: var(--theme);
+    color: var(--gray-50);
 }
 
 .deleteText {
-    font-size: 12px;
-    text-decoration: underline;
+    font-size: 11px;
+    color: var(--gray-50);
+}
+.deleteDiv:hover .deleteIcon,
+.deleteDiv:hover .deleteText {
+    color: var(--theme);
 }
 
 .overlay {
