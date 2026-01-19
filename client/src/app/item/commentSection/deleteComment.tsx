@@ -9,6 +9,7 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import Portial from "../portial";
+import toast from "react-hot-toast";
 
 type Props = {
     comment: Comment;
@@ -37,7 +38,7 @@ export default function DeleteComment({ comment, page }: Props) {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                alert("コメント削除エラー");
+                toast.error("コメント削除エラー");
                 console.error(errorData.message);
                 return;
             }
@@ -46,6 +47,7 @@ export default function DeleteComment({ comment, page }: Props) {
             alert(data.message);
             router.refresh();
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
