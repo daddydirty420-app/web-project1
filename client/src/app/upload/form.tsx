@@ -57,34 +57,38 @@ export default function Form({ itemId, item }: Props) {
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
             <div className={styles.imageInputDiv}>
-                <InputTitle title="動画をアップロード" hissu />
-                <input
-                type="file"
-                accept="video/*"
-                onChange={handleChangeVideo}
-                className={styles.imageInput}
-                placeholder="動画ファイルをアップロード"
-                ref={videoRef}
-                />
-                <p className={styles.centerSmall}>※アップロードに少々お時間がかかります。</p>
+                <div>
+                    <InputTitle title="動画をアップロード" hissu />
+                    <input
+                    type="file"
+                    accept="video/*"
+                    onChange={handleChangeVideo}
+                    className={styles.imageInput}
+                    placeholder="動画ファイルをアップロード"
+                    ref={videoRef}
+                    />
+                    <p className={styles.centerSmall}>※アップロードに少々お時間がかかります。</p>
+                </div>
 
-                <InputTitle title="サムネイルをアップロード" hissu />
-                <input
-                type="file"
-                accept="image/*"
-                onChange={handleChangeThumbnail}
-                className={styles.imageInput}
-                placeholder="画像ファイルをアップロード"
-                ref={thumbnailRef}
-                required
-                />
-                <Image
-                src={thumbnailPreview || "/no-image(1x1).png"}
-                alt="サムネイル"
-                width={120}
-                height={120}
-                className={styles.preview}
-                />
+                <div>
+                    <InputTitle title="サムネイルをアップロード" hissu />
+                    <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChangeThumbnail}
+                    className={styles.imageInput}
+                    placeholder="画像ファイルをアップロード"
+                    ref={thumbnailRef}
+                    required
+                    />
+                    <Image
+                    src={thumbnailPreview || "/no-image(1x1).png"}
+                    alt="サムネイル"
+                    width={120}
+                    height={120}
+                    className={styles.preview}
+                    />
+                </div>
             </div>
 
             <InputStr

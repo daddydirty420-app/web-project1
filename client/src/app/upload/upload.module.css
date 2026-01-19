@@ -44,12 +44,14 @@
 }
 
 .imageInputDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     margin: 1.5rem auto;
     width: 100%;
     max-width: 340px;
-    text-align: center;
 }
-.imageInputDiv .titleFlex {
+.imageInputDiv.titleFlex {
     justify-content: center;
 }
 

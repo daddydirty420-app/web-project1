@@ -243,6 +243,11 @@ router.get("/upload/:id", authenticateToken, async (req: Request, res: Response)
             return;
         }
 
+        if (item.status !== "editing") {
+            res.status(400).json({ message: "不正なデータが検出されました。" });
+            return;
+        }
+
         res.status(200).json({ item });
     } catch (err) {
         console.error(err);
