@@ -221,4 +221,8 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
     }
 });
 
+router.get("/upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = req.params.id;
+});
+
 export default router;

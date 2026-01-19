@@ -1,3 +1,7 @@
+export type ItemShippingProfile = {
+    id: string;
+};
+
 export type Sale = {
     id: string;
     shop_id: string | number;

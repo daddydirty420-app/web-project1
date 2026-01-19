@@ -1,28 +1,18 @@
 import { Metadata } from "next";
-import ItemPage from "../../itemPage";
-import { Item } from "../../itemPageTypes";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
+import Form from "../form";
 
 type Props = {
     params: { id: string };
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id } = await params;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/metadata/${id}`,{
-        method: 'GET',
-        cache: 'no-store'
-    });
-
-    const data = await res.json();
-    const item = data.item;
-
+export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: `${item.name} | 出品する商品の確認`,
-        description: `「${item.name}」のアップロード確認`,
+        title: "商品を出品する",
+        description: "",
         robots: {
             index: false,
             follow: false
@@ -39,10 +29,10 @@ export default async function Page({ params }: Props) {
     const accessToken = cookieStore.get("access-token")?.value;
     
     if (!accessToken) redirect("/login");
-    
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/draft-confirm-deleted/${id}?page=confirm`, {
-        method: 'GET',
-        cache: 'no-store',
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/upload/${id}`, {
+        method: "GET",
+        cache: "no-store",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -53,21 +43,17 @@ export default async function Page({ params }: Props) {
     }
 
     const data = await res.json();
-    const item: Item = data.item;
+    const item = data.item;
 
-    const userId = String(session?.user?.id).trim();
+    const userId = String(session?.user.id).trim();
     const sellerId = String(item.seller_id).trim();
 
     if (userId !== sellerId) {
-        redirect(`/item/${id}`);
+        redirect(`/upload/before`);
     }
 
-    return <ItemPage
-    id={id}
+    return <Form
+    itemId={id}
     item={item}
-    page="confirm"
-    sellerMe
-    loggedIn
-    userId={userId || ""}
     />;
 };
