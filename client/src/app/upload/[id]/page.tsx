@@ -49,7 +49,11 @@ export default async function Page({ params }: Props) {
     const sellerId = String(item.seller_id).trim();
 
     if (userId !== sellerId) {
-        redirect(`/upload/before`);
+        redirect("/upload/before");
+    }
+
+    if (item.status !== "editing") {
+        redirect("/upload/before");
     }
 
     return <Form

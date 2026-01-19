@@ -5,7 +5,7 @@ import fs from "fs";
 import { exec } from "child_process";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -126,6 +126,10 @@ router.post("/new-item-create", authenticateToken, async (req: Request, res: Res
         await Sale.create({
             item_id: itemId,
         }, { transaction: t });
+        
+        await ItemShippingProfile.create({
+            item_id: itemId,
+        }, { transaction: t });
 
         await t.commit();
 
@@ -223,6 +227,27 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
 
 router.get("/upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
+
+    try {
+        const item = await Item.findByPk(itemId, {
+            attributes: ["id", "seller_id", "status"],
+            include: [
+                { model: Video },
+                { model: Sale },
+                { model: ItemShippingProfile },
+            ],
+        });
+
+        if (!item) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ item });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
 });
 
 export default router;
