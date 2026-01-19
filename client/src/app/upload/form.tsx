@@ -156,7 +156,7 @@ export default function Form({ itemId, item }: Props) {
                     multiple
                     onChange={handleChangeItemImage}
                     disabled={itemImages.length >= 10}
-                    className={styles.imageInput}
+                    className={styles.itemImageInput}
                     placeholder="商品画像をアップロード"
                     required
                     />
