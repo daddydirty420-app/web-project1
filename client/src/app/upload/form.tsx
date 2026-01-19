@@ -26,13 +26,14 @@ export default function Form({ itemId, item }: Props) {
     const [videoUpload, setVideoUpload] = useState<boolean>(false);
 
     const [thumbnail, setThumbnail] = useState<File | string | undefined>(item.Video?.thumbnail_url ?? "");
-    const [thumbnailPreview, setThumbnailPreview] = useState(item.Video?.thumbnail_url);
+    const [thumbnailPreview, setThumbnailPreview] = useState(item.Video?.thumbnail_url ?? "");
     const [thumbnailUpload, setThumbnailUpload] = useState<boolean>(false);
 
     const [videoTitle, setVideoTitle] = useState(item.Video?.title ?? "");
     const [videoSummary, setVideoSummary] = useState(item.Video?.summary ?? "");
 
-    const [itemName, setItemName] = useState(item.name);
+    const [itemName, setItemName] = useState(item.name ?? "");
+    const [detail, setDetail] = useState(item.detail ?? "");
 
     const initialItemImage = ([]).map((url) => ({
         file: null,
@@ -181,6 +182,25 @@ export default function Form({ itemId, item }: Props) {
                     ))}
                 </div>
             </div>
+
+            <InputStr
+            title="商品名"
+            type="text"
+            value={itemName}
+            onChange={setItemName}
+            placeholder="商品名（50文字以内）"
+            hissu
+            maxLength={50}
+            />
+
+            <Textarea
+            title="商品の詳細"
+            value={detail}
+            onChange={setDetail}
+            maxLength={500}
+            placeholder="詳細な商品情報（最大500文字まで）"
+            hissu
+            />
         </UploadUI>
     );
 };

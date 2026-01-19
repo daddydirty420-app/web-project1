@@ -21,7 +21,7 @@ export type Video = {
 export type Item = {
     id: string;
     name: string;
-    explain: string;
+    detail: string;
     user_id: string | number;
     Video?: Video | null;
     Sale?: Sale | null;
