@@ -22,6 +22,7 @@ export default function Client() {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/new-item-create`, {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
