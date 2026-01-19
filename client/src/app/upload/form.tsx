@@ -7,10 +7,18 @@ import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
 import { InputStr, InputTitle, Textarea } from "@/components/inputForm";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
     itemId: string;
     item: Item;
+};
+
+type ItemImage = {
+    uploaded: boolean;
+    file: File | null;
+    preview: string;
 };
 
 export default function Form({ itemId, item }: Props) {
@@ -25,6 +33,14 @@ export default function Form({ itemId, item }: Props) {
     const [videoSummary, setVideoSummary] = useState(item.Video?.summary ?? "");
 
     const [itemName, setItemName] = useState(item.name);
+
+    const initialItemImage = ([]).map((url) => ({
+        file: null,
+        preview: url,
+        uploaded: false,
+    }));
+
+    const [itemImages, setItemImages] = useState<ItemImage[]>(initialItemImage);
 
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
@@ -46,6 +62,24 @@ export default function Form({ itemId, item }: Props) {
             setThumbnailPreview(URL.createObjectURL(selectedFile));
             setThumbnailUpload(true);
         }
+    };
+
+    const handleChangeItemImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
+
+        const files = Array.from(e.target.files);
+
+        const newImages = files.slice(0, 10 - itemImages.length).map(f => ({
+            file: f,
+            preview: URL.createObjectURL(f),
+            uploaded: true,
+        }));
+
+        setItemImages(prev => [...prev, ...newImages]);
+    };
+
+    const removeItemImage = (index: number) => {
+        setItemImages(prev => prev.filter((_, i) => i !== index));
     };
 
     const upload = async () => {};
@@ -112,7 +146,42 @@ export default function Form({ itemId, item }: Props) {
 
             <h2 className={styles.subtitle}>商品をアップロード</h2>
 
+            <div className={styles.itemImageDiv}>
+                <div className={styles.itemImageInputDiv}>
+                    <InputTitle title="商品画像（最大10枚まで）" hissu />
+                    
+                    <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleChangeItemImage}
+                    disabled={itemImages.length >= 10}
+                    className={styles.imageInput}
+                    placeholder="商品画像をアップロード"
+                    required
+                    />
+                </div>
 
+                <div className={styles.itemImageListDiv}>
+                    {itemImages.map((img, index) => (
+                        <div key={index} className={styles.itemImagePreviewDiv}>
+                            <Image
+                            src={img.preview}
+                            alt={`商品画像-${index}`}
+                            width={100}
+                            height={100}
+                            className={styles.itemImagePreview}
+                            />
+
+                            <FontAwesomeIcon
+                            icon={faTrashCan}
+                            onClick={() => removeItemImage(index)}
+                            className={styles.itemImageRemoveIcon}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </UploadUI>
     );
 };
