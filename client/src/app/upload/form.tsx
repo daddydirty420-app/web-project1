@@ -91,7 +91,7 @@ export default function Form({ itemId, item }: Props) {
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
             <div className={styles.imageInputDiv}>
-                <div className={styles.imageInputDivChild}>
+                <div>
                     <InputTitle title="動画をアップロード" hissu />
                     <input
                     type="file"
@@ -104,7 +104,7 @@ export default function Form({ itemId, item }: Props) {
                     <p className={styles.centerSmall}>※アップロードに少々お時間がかかります。</p>
                 </div>
 
-                <div className={styles.imageInputDivChild}>
+                <div>
                     <InputTitle title="サムネイルをアップロード" hissu />
                     <input
                     type="file"
@@ -118,8 +118,7 @@ export default function Form({ itemId, item }: Props) {
                     <Image
                     src={thumbnailPreview || "/no-image(1x1).png"}
                     alt="サムネイル"
-                    width={120}
-                    height={120}
+                    width={220}
                     className={styles.preview}
                     />
                 </div>
