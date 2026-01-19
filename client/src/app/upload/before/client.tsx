@@ -33,7 +33,10 @@ export default function Client() {
                 return;
             }
 
-            router.push(`/upload/${data.itemId}`);
+            const itemId = data.itemId;
+            console.log(itemId);
+
+            router.push(`/upload/${itemId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
