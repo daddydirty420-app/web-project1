@@ -1,9 +1,6 @@
 .titleFlex {
     display: flex;
 }
-.imageInputDivChild.titleFlex {
-    justify-content: center;
-}
 
 .title {
     font-size: 12.5px;

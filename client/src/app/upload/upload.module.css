@@ -51,9 +51,6 @@
     width: 100%;
     max-width: 340px;
 }
-.imageInputDivChild.titleFlex {
-    justify-content: center;
-}
 
 .imageInput {
     width: 100%;
