@@ -69,6 +69,18 @@
     border-color: var(--gray-line-mid-str);
 }
 
+.videoPreview {
+    display: block;
+    width: 60%;
+    max-width: 320px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    object-fit: cover;
+    overflow: hidden;
+    background-color: #000;
+}
+
 .preview {
     display: block;
     margin: 0.75rem auto 0;
