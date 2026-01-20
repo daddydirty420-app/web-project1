@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Item } from "./type";
+import { Categories, Item } from "./type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 type Props = {
     itemId: string;
     item: Item;
+    category: Categories;
 };
 
 type ItemImage = {
@@ -34,6 +35,11 @@ export default function Form({ itemId, item }: Props) {
 
     const [itemName, setItemName] = useState(item.name ?? "");
     const [detail, setDetail] = useState(item.detail ?? "");
+
+    const [category, setCategory] = useState(item.Category?.name ?? "");
+    const [gender, setGender] = useState(item.gender_type ?? "");
+    const [age, setAge] = useState(item.age_type ?? "");
+    const [brand, setBrand] = useState(item.Brands?.name ?? "");
 
     const initialItemImage = ([]).map((url) => ({
         file: null,
@@ -141,7 +147,6 @@ export default function Form({ itemId, item }: Props) {
             onChange={setVideoSummary}
             maxLength={500}
             placeholder="概要（500文字まで）"
-            hissu
             />
 
             <h2 className={styles.subtitle}>商品をアップロード</h2>
@@ -199,7 +204,6 @@ export default function Form({ itemId, item }: Props) {
             onChange={setDetail}
             maxLength={500}
             placeholder="詳細な商品情報（最大500文字まで）"
-            hissu
             />
         </UploadUI>
     );

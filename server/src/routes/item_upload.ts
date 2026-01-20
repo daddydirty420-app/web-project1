@@ -5,7 +5,7 @@ import fs from "fs";
 import { exec } from "child_process";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -248,7 +248,11 @@ router.get("/upload/:id", authenticateToken, async (req: Request, res: Response)
             return;
         }
 
-        res.status(200).json({ item });
+        const category = await Categories.findAll({
+            where: { level: 1 },
+        });
+
+        res.status(200).json({ item, category });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
