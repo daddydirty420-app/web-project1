@@ -10,6 +10,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import VideoInput, { VideoInputValue } from "./videoInput";
+import ItemImage from "./itemImage";
 
 type Props = {
     itemId: string;
@@ -43,10 +44,10 @@ export default function Form({ itemId, item }: Props) {
     const [age, setAge] = useState(item.age_type ?? "");
     const [brand, setBrand] = useState(item.Brands?.name ?? "");
 
-    const initialItemImage = ([]).map((url) => ({
+    const initialItemImage = (item.image_url ?? []).map((url) => ({
         file: null,
         preview: url,
-        uploaded: false,
+        uploaded: true,
     }));
 
     const [itemImages, setItemImages] = useState<ItemImage[]>(initialItemImage);
@@ -56,18 +57,14 @@ export default function Form({ itemId, item }: Props) {
 
     const router = useRouter();
 
-    const handleChangeItemImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
-
-        const files = Array.from(e.target.files);
-
-        const newImages = files.slice(0, 10 - itemImages.length).map(f => ({
-            file: f,
-            preview: URL.createObjectURL(f),
-            uploaded: true,
+    const addItemImage = (files: FileList) => {
+        const newImages = Array.from(files).slice(0, 10 - itemImages.length).map((file) => ({
+            file,
+            preview: URL.createObjectURL(file),
+            uploaded: false,
         }));
 
-        setItemImages(prev => [...prev, ...newImages]);
+        setItemImages((prev) => [...prev, ...newImages]);
     };
 
     const removeItemImage = (index: number) => {
@@ -92,42 +89,11 @@ export default function Form({ itemId, item }: Props) {
 
             <h2 className={styles.subtitle}>商品をアップロード</h2>
 
-            <div className={styles.itemImageDiv}>
-                <div className={styles.itemImageInputDiv}>
-                    <InputTitle title="商品画像（最大10枚まで）" hissu />
-                    
-                    <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleChangeItemImage}
-                    disabled={itemImages.length >= 10}
-                    className={styles.itemImageInput}
-                    placeholder="商品画像をアップロード"
-                    required
-                    />
-                </div>
-
-                <div className={styles.itemImageListDiv}>
-                    {itemImages.map((img, index) => (
-                        <div key={index} className={styles.itemImagePreviewDiv}>
-                            <Image
-                            src={img.preview}
-                            alt={`商品画像-${index}`}
-                            width={100}
-                            height={100}
-                            className={styles.itemImagePreview}
-                            />
-
-                            <FontAwesomeIcon
-                            icon={faTrashCan}
-                            onClick={() => removeItemImage(index)}
-                            className={styles.itemImageRemoveIcon}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <ItemImage
+            images={initialItemImage}
+            onAdd={addItemImage}
+            onRemove={removeItemImage}
+            />
 
             <InputStr
             title="商品名"
