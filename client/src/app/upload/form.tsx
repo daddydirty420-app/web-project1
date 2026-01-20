@@ -9,6 +9,7 @@ import { InputStr, InputTitle, Textarea } from "@/components/inputForm";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import VideoInput, { VideoInputValue } from "./videoInput";
 
 type Props = {
     itemId: string;
@@ -23,15 +24,16 @@ type ItemImage = {
 };
 
 export default function Form({ itemId, item }: Props) {
-    const [video, setVideo] = useState<File | string | undefined>(item.Video?.converted_url ?? item.Video?.original_url ?? "");
-    const [videoUpload, setVideoUpload] = useState<boolean>(false);
+    const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
+    const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
-    const [thumbnail, setThumbnail] = useState<File | string | undefined>(item.Video?.thumbnail_url ?? "");
-    const [thumbnailPreview, setThumbnailPreview] = useState(item.Video?.thumbnail_url ?? "");
-    const [thumbnailUpload, setThumbnailUpload] = useState<boolean>(false);
-
-    const [videoTitle, setVideoTitle] = useState(item.Video?.title ?? "");
-    const [videoSummary, setVideoSummary] = useState(item.Video?.summary ?? "");
+    const [videoInput, setVideoInput] = useState<VideoInputValue>({
+        videoFile: null,
+        thumbnailFile: null,
+        thumbnailPreview: initialThumbnailPreview,
+        title: item.Video?.title ?? "",
+        summary: item.Video?.summary ?? "",
+    });
 
     const [itemName, setItemName] = useState(item.name ?? "");
     const [detail, setDetail] = useState(item.detail ?? "");
@@ -53,23 +55,6 @@ export default function Form({ itemId, item }: Props) {
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
 
     const router = useRouter();
-
-    const handleChangeVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            setVideo(selectedFile);
-            setVideoUpload(true);
-        }
-    };
-
-    const handleChangeThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            setThumbnail(selectedFile);
-            setThumbnailPreview(URL.createObjectURL(selectedFile));
-            setThumbnailUpload(true);
-        }
-    };
 
     const handleChangeItemImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
@@ -97,56 +82,12 @@ export default function Form({ itemId, item }: Props) {
         <UploadUI title="商品をアップロード">
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
-            <div className={styles.imageInputDiv}>
-                <div>
-                    <InputTitle title="動画をアップロード" hissu />
-                    <input
-                    type="file"
-                    accept="video/*"
-                    onChange={handleChangeVideo}
-                    className={styles.imageInput}
-                    placeholder="動画ファイルをアップロード"
-                    ref={videoRef}
-                    />
-                    <p className={styles.centerSmall}>※アップロードに少々お時間がかかります。</p>
-                </div>
-
-                <div>
-                    <InputTitle title="サムネイルをアップロード" hissu />
-                    <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleChangeThumbnail}
-                    className={styles.imageInput}
-                    placeholder="画像ファイルをアップロード"
-                    ref={thumbnailRef}
-                    required
-                    />
-                    <Image
-                    src={thumbnailPreview || "/no-image(1x1).png"}
-                    alt="サムネイル"
-                    width={220}
-                    className={styles.preview}
-                    />
-                </div>
-            </div>
-
-            <InputStr
-            title="動画タイトル"
-            type="text"
-            value={videoTitle}
-            onChange={setVideoTitle}
-            placeholder="動画のタイトル（50文字以内）"
-            hissu
-            maxLength={50}
-            />
-
-            <Textarea
-            title="動画の概要"
-            value={videoSummary}
-            onChange={setVideoSummary}
-            maxLength={500}
-            placeholder="概要（500文字まで）"
+            <VideoInput
+            value={videoInput}
+            onChange={setVideoInput}
+            videoRef={videoRef}
+            thumbnailRef={thumbnailRef}
+            existingVideoUrl={existingVideoUrl}
             />
 
             <h2 className={styles.subtitle}>商品をアップロード</h2>
@@ -205,6 +146,8 @@ export default function Form({ itemId, item }: Props) {
             maxLength={500}
             placeholder="詳細な商品情報（最大500文字まで）"
             />
+
+
         </UploadUI>
     );
 };
