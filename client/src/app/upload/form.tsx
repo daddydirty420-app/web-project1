@@ -5,12 +5,9 @@ import { Categories, Item } from "./type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
-import { InputStr, InputTitle, Textarea } from "@/components/inputForm";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import VideoInput, { VideoInputValue } from "./videoInput";
 import ItemImage from "./itemImage";
+import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
 
 type Props = {
     itemId: string;
@@ -36,8 +33,10 @@ export default function Form({ itemId, item }: Props) {
         summary: item.Video?.summary ?? "",
     });
 
-    const [itemName, setItemName] = useState(item.name ?? "");
-    const [detail, setDetail] = useState(item.detail ?? "");
+    const [itemNameDetail, setItemNameDetail] = useState<ItemNameDetailValue>({
+        name: item.name ?? "",
+        detail: item.detail ?? "",
+    });
 
     const [category, setCategory] = useState(item.Category?.name ?? "");
     const [gender, setGender] = useState(item.gender_type ?? "");
@@ -95,25 +94,10 @@ export default function Form({ itemId, item }: Props) {
             onRemove={removeItemImage}
             />
 
-            <InputStr
-            title="商品名"
-            type="text"
-            value={itemName}
-            onChange={setItemName}
-            placeholder="商品名（50文字以内）"
-            hissu
-            maxLength={50}
+            <ItemNameDetail
+            value={itemNameDetail}
+            onChange={setItemNameDetail}
             />
-
-            <Textarea
-            title="商品の詳細"
-            value={detail}
-            onChange={setDetail}
-            maxLength={500}
-            placeholder="詳細な商品情報（最大500文字まで）"
-            />
-
-
         </UploadUI>
     );
 };
