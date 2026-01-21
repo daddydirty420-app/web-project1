@@ -97,6 +97,8 @@ export default function Category({ level1List, value, onChange }: Props) {
     };
 
     const handleLevel2Set = (cat: CategoryValue) => {
+        const display1 = displayLevel1;
+
         onChange({
             ...value,
             id: cat.id,
@@ -107,6 +109,7 @@ export default function Category({ level1List, value, onChange }: Props) {
 
         setDisplayLevel2(cat.name);
         setOpenLevel2(false);
+        setDisplayLevel1(display1);
     };
 
     return (
@@ -120,7 +123,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                 type="text"
                 value={displayLevel1}
                 placeholder="カテゴリーを選択してください"
-                className={styles.input}
+                className={styles.categoryInput}
                 readOnly
                 onFocus={() => setOpenLevel1(true)}
                 onBlur={() => setOpenLevel1(false)}
@@ -149,7 +152,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                 type="text"
                 value={displayLevel2}
                 placeholder="カテゴリーを選択してください"
-                className={styles.input}
+                className={styles.categoryInput}
                 readOnly
                 onFocus={() => setOpenLevel2(true)}
                 onBlur={() => setOpenLevel2(false)}

@@ -187,8 +187,8 @@
 .categoryColumn {
     flex: 1;
     border: 1px solid var(--gray-line);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 12px;
 }
 
 .input {
@@ -200,6 +200,18 @@
     font-size: 14px;
     border: solid 1px var(--gray-line);
     border-radius: 10px;
+    background-color: #fff;
+}
+
+.categoryInput {
+    box-sizing: border-box;
+    margin-top: 4px;
+    width: 100%;
+    height: 36px;
+    padding: 0 4px;
+    font-size: 11.5px;
+    border: solid 1px var(--gray-line);
+    border-radius: 8px;
     background-color: #fff;
 }
 
