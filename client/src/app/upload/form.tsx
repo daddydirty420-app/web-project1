@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import VideoInput, { VideoInputValue } from "./videoInput";
 import ItemImage from "./itemImage";
 import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
+import { CategoryValue } from "./category";
 
 type Props = {
     itemId: string;
@@ -36,6 +37,13 @@ export default function Form({ itemId, item }: Props) {
     const [itemNameDetail, setItemNameDetail] = useState<ItemNameDetailValue>({
         name: item.name ?? "",
         detail: item.detail ?? "",
+    });
+
+    const [categoryValue, setCategoryValue] = useState<CategoryValue>({
+        id: item.Category?.id ?? "",
+        name: item.Category?.name ?? "",
+        parent_id: item.Category?.parent_id ?? null,
+        level: item.Category?.level ?? 0,
     });
 
     const [category, setCategory] = useState(item.Category?.name ?? "");

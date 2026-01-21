@@ -225,6 +225,31 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
     }
 });
 
+router.get("/category2/:id", async (req: Request, res: Response): Promise<void> => {
+    const parentId = req.params.id;
+    const parentIdNum = Number(parentId);
+
+    try {
+        const category2 = await Categories.findAll({
+            where: {
+                parent_id: parentIdNum,
+                level: 2,
+            },
+            order: [["sort_order", "ASC"]],
+        });
+
+        if (!category2) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        res.status(200).json({ category2 });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
 router.get("/upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
@@ -250,6 +275,7 @@ router.get("/upload/:id", authenticateToken, async (req: Request, res: Response)
 
         const category = await Categories.findAll({
             where: { level: 1 },
+            order: [["sort_order", "ASC"]],
         });
 
         res.status(200).json({ item, category });
