@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Categories } from "./type";
 import styles from "./upload.module.css";
 import toast from "react-hot-toast";
@@ -27,7 +27,10 @@ export default function Category({ level1List, value, onChange }: Props) {
     const [openLevel1, setOpenLevel1] = useState(false);
     const [openLevel2, setOpenLevel2] = useState(false);
 
+    const initializedRef = useRef(false);
+
     useEffect(() => {
+        if (initializedRef.current) return;
         if (!value.id || value.level === null) return;
 
         if (value.level === 1) {
@@ -45,6 +48,8 @@ export default function Category({ level1List, value, onChange }: Props) {
 
             fetchLevel2(value.parent_id);
         }
+
+        initializedRef.current = true;
     }, [value, level1List]);
 
     const handleLevel1Set = (cat: CategoryValue) => {
