@@ -187,8 +187,8 @@
 .categoryColumn {
     flex: 1;
     border: 1px solid var(--gray-line);
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 12px;
+    padding: 16px;
 }
 
 .input {
@@ -207,18 +207,18 @@
     box-sizing: border-box;
     margin-top: 4px;
     width: 100%;
-    height: 36px;
+    height: 48px;
     padding: 0 4px;
-    font-size: 11.5px;
+    font-size: 14px;
     border: solid 1px var(--gray-line);
-    border-radius: 8px;
+    border-radius: 10px;
     background-color: #fff;
 }
 
 .categoryList {
     position: absolute;
     top: calc(100% + 4px);
-    left: 50%;
+    left: 0;
     z-index: 20;
     width: 100%;
     max-width: 420px;
@@ -254,4 +254,10 @@
 .categoryList::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.15);
     border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .categoryWrapper {
+        flex-direction: column;
+    }
 }
