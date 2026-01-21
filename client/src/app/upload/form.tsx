@@ -8,12 +8,12 @@ import { useRouter } from "next/navigation";
 import VideoInput, { VideoInputValue } from "./videoInput";
 import ItemImage from "./itemImage";
 import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
-import { CategoryValue } from "./category";
+import Category, { CategoryValue } from "./category";
 
 type Props = {
     itemId: string;
     item: Item;
-    category: Categories;
+    category: Categories[];
 };
 
 type ItemImage = {
@@ -22,7 +22,7 @@ type ItemImage = {
     preview: string;
 };
 
-export default function Form({ itemId, item }: Props) {
+export default function Form({ itemId, item, category }: Props) {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -46,7 +46,6 @@ export default function Form({ itemId, item }: Props) {
         level: item.Category?.level ?? 0,
     });
 
-    const [category, setCategory] = useState(item.Category?.name ?? "");
     const [gender, setGender] = useState(item.gender_type ?? "");
     const [age, setAge] = useState(item.age_type ?? "");
     const [brand, setBrand] = useState(item.Brands?.name ?? "");
@@ -105,6 +104,12 @@ export default function Form({ itemId, item }: Props) {
             <ItemNameDetail
             value={itemNameDetail}
             onChange={setItemNameDetail}
+            />
+
+            <Category
+            level1List={category}
+            value={categoryValue}
+            onChange={setCategoryValue}
             />
         </UploadUI>
     );
