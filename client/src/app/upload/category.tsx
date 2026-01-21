@@ -31,11 +31,10 @@ export default function Category({ level1List, value, onChange }: Props) {
 
     useEffect(() => {
         if (initializedRef.current) return;
-        if (!value.id || value.level === null) return;
 
         if (value.level === 1) {
             setDisplayLevel1(value.name);
-            return;
+            setDisplayLevel2("");
         }
 
         if (value.level === 2 && value.parent_id) {
