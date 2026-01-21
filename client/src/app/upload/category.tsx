@@ -149,33 +149,35 @@ export default function Category({ level1List, value, onChange }: Props) {
             </div>
 
             {/* category2 */}
-            <div className={styles.categoryColumn}>
-                <InputTitle title="詳細カテゴリー" />
+            {displayLevel1 !== "" && (
+                <div className={styles.categoryColumn}>
+                    <InputTitle title="詳細カテゴリー" />
 
-                <input
-                type="text"
-                value={displayLevel2}
-                placeholder="カテゴリーを選択してください"
-                className={styles.categoryInput}
-                readOnly
-                onFocus={() => setOpenLevel2(true)}
-                onBlur={() => setOpenLevel2(false)}
-                />
+                    <input
+                    type="text"
+                    value={displayLevel2}
+                    placeholder="カテゴリーを選択してください"
+                    className={styles.categoryInput}
+                    readOnly
+                    onFocus={() => setOpenLevel2(true)}
+                    onBlur={() => setOpenLevel2(false)}
+                    />
 
-                {!loading && openLevel2 && (
-                    <ul className={styles.categoryList}>
-                        {level2List.map((cat) => (
-                            <li
-                            key={cat.id}
-                            onMouseDown={() => handleLevel2Set(cat)}
-                            className={styles.listLi}
-                            >
-                                {cat.name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+                    {!loading && openLevel2 && (
+                        <ul className={styles.categoryList}>
+                            {level2List.map((cat) => (
+                                <li
+                                key={cat.id}
+                                onMouseDown={() => handleLevel2Set(cat)}
+                                className={styles.listLi}
+                                >
+                                    {cat.name}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
