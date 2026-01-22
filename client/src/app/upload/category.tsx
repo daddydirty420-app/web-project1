@@ -117,10 +117,10 @@ export default function Category({ level1List, value, onChange }: Props) {
     };
 
     return (
-        <div className={styles.categoryWrapper}>
+        <div className={styles.select2ColumnWrapper}>
 
             {/* category1 */}
-            <div className={styles.categoryColumn}>
+            <div className={styles.selectColumn}>
                 <InputTitle title="カテゴリー" hissu />
 
                 <input
@@ -134,13 +134,13 @@ export default function Category({ level1List, value, onChange }: Props) {
                 />
 
                 {openLevel1 && (
-                    <ul className={styles.categoryList}>
+                    <ul className={styles.selectUl}>
                         {level1List.map((cat) => (
                             <li
                             key={cat.id}
                             onMouseDown={() => handleLevel1Set(cat)}
                             data-selected={displayLevel1 === cat.name}
-                            className={styles.listLi}
+                            className={styles.selectLi}
                             >
                                 {cat.name}
                                 <span className={styles.chevron}>›</span>
@@ -152,7 +152,7 @@ export default function Category({ level1List, value, onChange }: Props) {
 
             {/* category2 */}
             {displayLevel1 !== "" && (
-                <div className={styles.categoryColumn}>
+                <div className={styles.selectColumn}>
                     <InputTitle title="詳細カテゴリー" />
 
                     <input
@@ -166,13 +166,13 @@ export default function Category({ level1List, value, onChange }: Props) {
                     />
 
                     {!loading && openLevel2 && (
-                        <ul className={styles.categoryList}>
+                        <ul className={styles.selectUl}>
                             {level2List.map((cat) => (
                                 <li
                                 key={cat.id}
                                 onMouseDown={() => handleLevel2Set(cat)}
                                 data-selected={displayLevel2 === cat.name}
-                                className={styles.listLi}
+                                className={styles.selectLi}
                                 >
                                     {cat.name}
                                 </li>
