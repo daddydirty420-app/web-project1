@@ -21,6 +21,7 @@ type Props = {
 
 export default function Category({ level1List, value, onChange }: Props) {
     const [level2List, setLevel2List] = useState<Categories[]>([]);
+    const [selectedLevel1, setSelectedLevel1] = useState<CategoryValue | null>(null);
     const [displayLevel1, setDisplayLevel1] = useState("");
     const [displayLevel2, setDisplayLevel2] = useState("");
     const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ export default function Category({ level1List, value, onChange }: Props) {
         if (initializedRef.current) return;
 
         if (value.level === 1) {
+            setSelectedLevel1(value);
             setDisplayLevel1(value.name);
             setDisplayLevel2("");
         }
@@ -42,20 +44,37 @@ export default function Category({ level1List, value, onChange }: Props) {
                 (cat) => cat.id === String(value.parent_id)
             );
 
-            setDisplayLevel1(parent?.name ?? "");
-            setDisplayLevel2(value.name);
+            if (parent) {
+                const parentCategoryValue: CategoryValue = {
+                    id: parent.id,
+                    name: parent.name,
+                    parent_id: null,
+                    level: 1,
+                };
 
-            fetchLevel2(value.parent_id);
+                setDisplayLevel1(parent?.name ?? "");
+                setSelectedLevel1(parentCategoryValue);
+                setDisplayLevel2(value.name);
+
+                fetchLevel2(value.parent_id);
+            }
         }
 
         initializedRef.current = true;
     }, [value, level1List]);
 
+    const NONE_CATEGORY: CategoryValue = {
+        id: null,
+        name: "選択しない",
+        parent_id: null,
+        level: 2,
+    };
+
     const handleLevel1Set = (cat: CategoryValue) => {
         setLoading(true);
+        setSelectedLevel1(cat);
 
         onChange({
-            ...value,
             id: cat.id,
             name: cat.name,
             parent_id: null,
@@ -91,7 +110,11 @@ export default function Category({ level1List, value, onChange }: Props) {
 
             const category2 = data.category2;
 
-            setLevel2List(category2);
+            setLevel2List({
+                ...category2,
+                NONE_CATEGORY
+            });
+
             setLoading(false);
         } catch (err) {
             toast.error("詳細カテゴリーの取得に失敗しました。");
@@ -103,8 +126,22 @@ export default function Category({ level1List, value, onChange }: Props) {
     const handleLevel2Set = (cat: CategoryValue) => {
         const display1 = displayLevel1;
 
+        if (cat.id === null) {
+            if (!selectedLevel1) return;
+
+            onChange({
+                id: selectedLevel1.id,
+                name: selectedLevel1.name,
+                parent_id: null,
+                level: 1,
+            });
+
+            setDisplayLevel2("選択しない");
+            setOpenLevel2(false);
+            return;
+        }
+
         onChange({
-            ...value,
             id: cat.id,
             name: cat.name,
             parent_id: cat.parent_id,

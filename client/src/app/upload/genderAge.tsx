@@ -13,9 +13,16 @@ type Props = {
 };
 
 export default function GenderAge({ value, onChange }: Props) {
+    const genderTypeLabel: string[] = ["メンズ", "レディース", "ユニセックス"];
+    const ageTypeLabel: string[] = ["大人向け", "キッズ向け", "指定なし"];
+
     return (
         <>
-        
+        <div className={styles.select2ColumnWrapper}>
+
+            {/* gender_type */}
+            <div className={styles.selectColumn}></div>
+        </div>
         </>
     );
 };
