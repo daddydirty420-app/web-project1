@@ -127,7 +127,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                 type="text"
                 value={displayLevel1}
                 placeholder="カテゴリーを選択してください"
-                className={styles.categoryInput}
+                className={styles.input}
                 readOnly
                 onFocus={() => setOpenLevel1(true)}
                 onBlur={() => setOpenLevel1(false)}
@@ -157,7 +157,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                     type="text"
                     value={displayLevel2}
                     placeholder="カテゴリーを選択してください"
-                    className={styles.categoryInput}
+                    className={styles.input}
                     readOnly
                     onFocus={() => setOpenLevel2(true)}
                     onBlur={() => setOpenLevel2(false)}
