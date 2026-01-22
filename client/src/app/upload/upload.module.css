@@ -203,6 +203,13 @@
     border-radius: 10px;
     background-color: #fff;
 }
+.input[readonly] {
+    cursor: pointer;
+    background-color: #fafafa;
+}
+.input[readonly]:focus {
+    border-color: #111;
+}
 
 .categoryList {
     position: absolute;
@@ -237,12 +244,21 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+.listLi[data-selected="true"] {
+    background-color: rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+}
 .categoryList::-webkit-scrollbar {
     width: 6px;
 }
 .categoryList::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.15);
     border-radius: 3px;
+}
+
+.chevron {
+    float: right;
+    opacity: 0.4;
 }
 
 @media (max-width: 768px) {

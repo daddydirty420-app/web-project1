@@ -139,9 +139,11 @@ export default function Category({ level1List, value, onChange }: Props) {
                             <li
                             key={cat.id}
                             onMouseDown={() => handleLevel1Set(cat)}
+                            data-selected={displayLevel1 === cat.name}
                             className={styles.listLi}
                             >
                                 {cat.name}
+                                <span className={styles.chevron}>›</span>
                             </li>
                         ))}
                     </ul>
@@ -169,6 +171,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                                 <li
                                 key={cat.id}
                                 onMouseDown={() => handleLevel2Set(cat)}
+                                data-selected={displayLevel2 === cat.name}
                                 className={styles.listLi}
                                 >
                                     {cat.name}
