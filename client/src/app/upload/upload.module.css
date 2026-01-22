@@ -187,11 +187,12 @@
 .selectColumn {
     position: relative;
     flex: 1;
+    margin: 0 auto;
+    max-width: 600px;
+    width: 100%;
     border: 1px solid var(--gray-line);
     border-radius: 12px;
     padding: 16px;
-    margin: 0 auto;
-    max-width: 600px;
 }
 
 .input {
