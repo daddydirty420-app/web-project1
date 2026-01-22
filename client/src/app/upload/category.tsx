@@ -110,10 +110,10 @@ export default function Category({ level1List, value, onChange }: Props) {
 
             const category2 = data.category2;
 
-            setLevel2List({
+            setLevel2List([
                 ...category2,
                 NONE_CATEGORY
-            });
+            ]);
 
             setLoading(false);
         } catch (err) {
