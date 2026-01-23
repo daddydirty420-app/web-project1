@@ -49,7 +49,7 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
     const genderLabelMap = {
         men: "メンズ",
         women: "レディース",
-        both: "ユニセックス",
+        unisex: "ユニセックス",
     } as const;
     const ageLabelMap = {
         adult: "大人向け",
