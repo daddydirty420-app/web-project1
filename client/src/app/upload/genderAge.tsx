@@ -29,8 +29,6 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
     const [openGender, setOpenGender] = useState(false);
     const [openAge, setOpenAge] = useState(false);
 
-    const initializedRef = useRef(false);
-
     const allGenderOptions = ["men", "women", "unisex"] as const;
     const allAgeOptions = ["adult", "kids", "both"] as const;
 
@@ -58,8 +56,6 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
     } as const;
 
     useEffect(() => {
-        if (initializedRef.current) return;
-
         const nextGenderLabelOptions = genderOptions.map(
             (g) => genderLabelMap[g]
         );
@@ -101,8 +97,6 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
                 ageLabelMap[nextValue.age_type]
             );
         }
-
-        initializedRef.current = true;
     }, [ageOptions, genderOptions, onChange, value]);
 
     const handleGenderSet = (label: string) => {
