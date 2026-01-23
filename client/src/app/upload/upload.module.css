@@ -181,7 +181,8 @@
 
 .select2ColumnWrapper {
     display: flex;
-    gap: 24px;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .selectColumn {
