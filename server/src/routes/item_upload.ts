@@ -3,12 +3,13 @@ import type { Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
 import { exec } from "child_process";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, ListMultipartUploadsCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
+import { normalizeJapanese } from "utils/normalizeJapanese.js";
 
 interface AuthenticatedRequest extends Request {
     user?: AuthUser;
@@ -247,6 +248,34 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> => {
+    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
+
+    if (!keyword) {
+        res.status(200).json({ suggest: [] });
+        return;
+    }
+
+    try {
+        const brands = await Brands.findAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${keyword}%`,
+                },
+            },
+            order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
+            limit: 15,
+        });
+
+        res.status(200).json({
+            suggest: brands.map((b: typeof Brands) => b.name),
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ suggest: [] });
     }
 });
 

@@ -2,7 +2,7 @@
 
 import { InputTitle } from "@/components/inputForm";
 import styles from "./upload.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export type GenderAgeValue = {

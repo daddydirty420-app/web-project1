@@ -10,6 +10,7 @@ import ItemImage from "./itemImage";
 import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
 import Category, { CategoryValue } from "./category";
 import GenderAge, { GenderAgeValue } from "./genderAge";
+import BrandInput, { BrandValue } from "./brandInput";
 
 type Props = {
     itemId: string;
@@ -62,9 +63,10 @@ export default function Form({ itemId, item, category }: Props) {
         age_type: item.age_type ?? null,
     });
 
-    const [gender, setGender] = useState(item.gender_type ?? "");
-    const [age, setAge] = useState(item.age_type ?? "");
-    const [brand, setBrand] = useState(item.Brands?.name ?? "");
+    const [brandValue, setBrandValue] = useState<BrandValue>({
+        id: item.Brands?.id ?? null,
+        name: item.Brands?.name ?? "",
+    });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
         file: null,
@@ -133,6 +135,11 @@ export default function Form({ itemId, item, category }: Props) {
             value={genderAgeValue}
             onChange={setGenderAgeValue}
             categoryConstraint={categoryConstraint}
+            />
+
+            <BrandInput
+            value={brandValue}
+            onChange={setBrandValue}
             />
         </UploadUI>
     );
