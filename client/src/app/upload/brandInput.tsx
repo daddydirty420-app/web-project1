@@ -78,7 +78,7 @@ export default function BrandInput({ value, onChange }: Props) {
     };
 
     return (
-        <div className={styles.selectColumn}>
+        <div className={styles.selectDiv}>
             <InputTitle title="ブランド名を入力" />
             <input
             type="text"
