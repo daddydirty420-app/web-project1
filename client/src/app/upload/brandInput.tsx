@@ -99,7 +99,11 @@ export default function BrandInput({ value, onChange }: Props) {
                         key={i}
                         onMouseDown={() => {
                             setIsSelecting(true);
-                            handleChangeBrand(brand.name);
+                            setBrandName(brand.name);
+                            onChange({
+                                id: brand.id,
+                                name: brand.name,
+                            });
                             setOpenSuggest(false);
 
                             setTimeout(() => setIsSelecting(false), 500);
