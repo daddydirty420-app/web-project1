@@ -3,13 +3,13 @@ import type { Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
 import { exec } from "child_process";
-import { S3Client, PutObjectCommand, ListMultipartUploadsCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
 import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
-import { normalizeJapanese } from "utils/normalizeJapanese.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 interface AuthenticatedRequest extends Request {
     user?: AuthUser;
