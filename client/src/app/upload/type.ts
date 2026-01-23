@@ -9,7 +9,7 @@ export type Categories = {
     id: string;
     name: string;
     level: number;
-    allowed_gender: "men" | "women" | "both";
+    allowed_gender: "men" | "women" | "unisex";
     allowed_age: "adult" | "kids" | "both";
     parent_id: number;
     body_category: BodyCategory;

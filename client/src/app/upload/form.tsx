@@ -9,6 +9,7 @@ import VideoInput, { VideoInputValue } from "./videoInput";
 import ItemImage from "./itemImage";
 import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
 import Category, { CategoryValue } from "./category";
+import GenderAge, { GenderAgeValue } from "./genderAge";
 
 type Props = {
     itemId: string;
@@ -44,6 +45,21 @@ export default function Form({ itemId, item, category }: Props) {
         name: item.Category?.name ?? "",
         parent_id: item.Category?.parent_id ?? null,
         level: item.Category?.level ?? 0,
+    });
+
+    const [categoryConstraint, setCategoryConstraint] = useState<{
+        allowed_gender: "men" | "women" | "unisex" | null;
+        allowed_age: "adult" | "kids" | "both" | null;
+    } | null>(
+        item.Category ? {
+            allowed_gender: item.Category?.allowed_gender ?? null,
+            allowed_age: item.Category?.allowed_age ?? null,
+        } : null
+    );
+
+    const [genderAgeValue, setGenderAgeValue] = useState<GenderAgeValue>({
+        gender_type: item.gender_type ?? null,
+        age_type: item.age_type ?? null,
     });
 
     const [gender, setGender] = useState(item.gender_type ?? "");
@@ -110,6 +126,13 @@ export default function Form({ itemId, item, category }: Props) {
             level1List={category}
             value={categoryValue}
             onChange={setCategoryValue}
+            onConstraintChange={setCategoryConstraint}
+            />
+
+            <GenderAge
+            value={genderAgeValue}
+            onChange={setGenderAgeValue}
+            categoryConstraint={categoryConstraint}
             />
         </UploadUI>
     );

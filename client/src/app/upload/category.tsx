@@ -17,9 +17,13 @@ type Props = {
     level1List: Categories[];
     value: CategoryValue;
     onChange: (v: CategoryValue) => void;
+    onConstraintChange: (c: {
+        allowed_gender: "men" | "women" | "unisex" | null;
+        allowed_age: "adult" | "kids" | "both" | null;
+    } | null) => void;
 };
 
-export default function Category({ level1List, value, onChange }: Props) {
+export default function Category({ level1List, value, onChange, onConstraintChange }: Props) {
     const [level2List, setLevel2List] = useState<Categories[]>([]);
     const [selectedLevel1, setSelectedLevel1] = useState<CategoryValue | null>(null);
     const [displayLevel1, setDisplayLevel1] = useState("");
@@ -37,6 +41,14 @@ export default function Category({ level1List, value, onChange }: Props) {
             setSelectedLevel1(value);
             setDisplayLevel1(value.name);
             setDisplayLevel2("");
+
+            const cat = level1List.find((c) => c.id === value.id);
+            if (cat) {
+                onConstraintChange({
+                    allowed_gender: cat.allowed_gender ?? null,
+                    allowed_age: cat.allowed_age ?? null,
+                });
+            }
         }
 
         if (value.level === 2 && value.parent_id) {
@@ -56,6 +68,11 @@ export default function Category({ level1List, value, onChange }: Props) {
                 setSelectedLevel1(parentCategoryValue);
                 setDisplayLevel2(value.name);
 
+                onConstraintChange({
+                    allowed_gender: parent.allowed_gender ?? null,
+                    allowed_age: parent.allowed_age ?? null,
+                });
+
                 fetchLevel2(value.parent_id);
             }
         }
@@ -70,7 +87,7 @@ export default function Category({ level1List, value, onChange }: Props) {
         level: 2,
     };
 
-    const handleLevel1Set = (cat: CategoryValue) => {
+    const handleLevel1Set = (cat: Categories) => {
         setLoading(true);
         setSelectedLevel1(cat);
 
@@ -79,6 +96,11 @@ export default function Category({ level1List, value, onChange }: Props) {
             name: cat.name,
             parent_id: null,
             level: 1
+        });
+
+        onConstraintChange({
+            allowed_gender: cat.allowed_gender,
+            allowed_age: cat.allowed_age,
         });
 
         setDisplayLevel1(cat.name);
@@ -123,7 +145,7 @@ export default function Category({ level1List, value, onChange }: Props) {
         }
     };
 
-    const handleLevel2Set = (cat: CategoryValue) => {
+    const handleLevel2Set = (cat: Categories) => {
         const display1 = displayLevel1;
 
         if (cat.id === null) {
@@ -148,6 +170,11 @@ export default function Category({ level1List, value, onChange }: Props) {
             level: 2,
         });
 
+        onConstraintChange({
+            allowed_gender: cat.allowed_gender,
+            allowed_age: cat.allowed_age,
+        });
+
         setDisplayLevel2(cat.name);
         setOpenLevel2(false);
         setDisplayLevel1(display1);
@@ -166,6 +193,7 @@ export default function Category({ level1List, value, onChange }: Props) {
                 placeholder="カテゴリーを選択してください"
                 className={styles.input}
                 readOnly
+                required
                 onFocus={() => setOpenLevel1(true)}
                 onBlur={() => setOpenLevel1(false)}
                 />

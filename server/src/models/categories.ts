@@ -8,7 +8,7 @@ export class Categories extends Model {
     declare level: number;
     declare sort_order: number;
     declare parent_id: number | null;
-    declare allowed_gender: "men" | "women" | "both";
+    declare allowed_gender: "men" | "women" | "unisex";
     declare allowed_age: "adult" | "kids" | "both";
     declare body_category: BodyCategory | null;
     declare lifestyle_category: LifeStyleCategory | null;
@@ -59,7 +59,7 @@ Categories.init(
         allowed_gender: {
             type: DataTypes.STRING(20),
             allowNull: false,
-            defaultValue: "both",
+            defaultValue: "unisex",
         },
         allowed_age: {
             type: DataTypes.STRING(20),
