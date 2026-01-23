@@ -71,6 +71,8 @@ export default function BrandInput({ value, onChange }: Props) {
     }, [brandName, isSelecting, value.name]);
 
     const handleChangeBrand = (name: string) => {
+        setBrandName(name);
+        
         onChange({
             ...value,
             name
