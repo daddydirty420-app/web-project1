@@ -33,23 +33,19 @@ export default function BrandInput({ value, onChange }: Props) {
     }, [value.id, value.name]);
 
     useEffect(() => {
-        console.log("検索1:", brandName);
         if (brandName.length === 0) return;
-        console.log("検索2:", brandName);
         if (isSelecting) return;
-        console.log("検索3:", brandName);
 
         if (suggestTimeout.current) clearTimeout(suggestTimeout.current);
-        console.log("検索5:", brandName);
 
         suggestTimeout.current = setTimeout(async () => {
             try {
-                console.log("検索6:", brandName);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/brand-suggest?keyword=${brandName}`, {
                     cache: "no-store",
                 });
 
                 const data = await res.json();
+                console.log(data);
 
                 if (!res.ok) {
                     console.error("ブランド名検索エラー：", data.message);
