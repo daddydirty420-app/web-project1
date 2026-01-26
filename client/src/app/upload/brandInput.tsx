@@ -34,8 +34,14 @@ export default function BrandInput({ value, onChange }: Props) {
     }, [value.id, value.name]);
 
     useEffect(() => {
-        if (brandName.length === 0) return;
-        if (isSelecting) return;
+        if (brandName.length === 0) {
+            setSuggestions([]);
+            return;
+        }
+        if (isSelecting) {
+            setSuggestions([]);
+            return;
+        }
 
         if (suggestTimeout.current) clearTimeout(suggestTimeout.current);
 
