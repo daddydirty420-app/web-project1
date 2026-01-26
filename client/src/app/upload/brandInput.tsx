@@ -22,6 +22,7 @@ export default function BrandInput({ value, onChange }: Props) {
     const [suggestions, setSuggestions] = useState<{
         id: string;
         name: string;
+        name_normalized: string;
     }[]>([]);
 
     const suggestTimeout = useRef<NodeJS.Timeout | null>(null);
