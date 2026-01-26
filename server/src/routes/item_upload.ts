@@ -262,7 +262,7 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
     try {
         const brands = await Brands.findAll({
             where: {
-                name: {
+                name_normalized: {
                     [Op.iLike]: `%${keyword}%`,
                 },
             },

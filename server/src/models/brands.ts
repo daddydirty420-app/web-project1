@@ -4,6 +4,7 @@ import sequelize from "../db.js";
 export class Brands extends Model {
     declare id: number;
     declare name: string;
+    declare name_normalized: string;
 };
 
 Brands.init(
@@ -15,6 +16,10 @@ Brands.init(
             autoIncrement: true,
         },
         name: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        name_normalized: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
