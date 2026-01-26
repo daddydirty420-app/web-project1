@@ -38,12 +38,6 @@ export default function BrandInput({ value, onChange }: Props) {
         console.log("検索2:", brandName);
         if (isSelecting) return;
         console.log("検索3:", brandName);
-        if (brandName === value.name) {
-            setSuggestions([]);
-            setOpenSuggest(false);
-            return;
-        }
-        console.log("検索4:", brandName);
 
         if (suggestTimeout.current) clearTimeout(suggestTimeout.current);
         console.log("検索5:", brandName);
