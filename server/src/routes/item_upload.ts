@@ -262,9 +262,18 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
     try {
         const brands = await Brands.findAll({
             where: {
-                name_normalized: {
-                    [Op.iLike]: `%${keyword}%`,
-                },
+                [Op.or]: [
+                    {
+                        name: {
+                            [Op.iLike]: `%${keyword}`,
+                        },
+                    },
+                    {
+                        name_normalized: {
+                            [Op.iLike]: `%${keyword}%`,
+                        },
+                    },
+                ],
             },
             order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
             limit: 15,

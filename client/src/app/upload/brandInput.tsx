@@ -52,7 +52,6 @@ export default function BrandInput({ value, onChange }: Props) {
                 });
 
                 const data = await res.json();
-                console.log("data:", data);
 
                 if (!res.ok) {
                     console.error("ブランド名検索エラー：", data.message);
@@ -62,7 +61,6 @@ export default function BrandInput({ value, onChange }: Props) {
                 }
 
                 setSuggestions(data.brands);
-                console.log("data.brands:", data.brands);
             } catch (err) {
                 console.error(err);
                 setSuggestions([]);
@@ -98,28 +96,25 @@ export default function BrandInput({ value, onChange }: Props) {
 
             {openSuggest && suggestions.length > 0 && (
                 <ul className={styles.selectUl}>
-                    {suggestions.map((brand, i) => {
-                        console.log("suggestions:", suggestions);
-                        return (
-                            <li
-                            key={i}
-                            onMouseDown={() => {
-                                setIsSelecting(true);
-                                setBrandName(brand.name);
-                                onChange({
-                                    id: brand.id,
-                                    name: brand.name,
-                                });
-                                setOpenSuggest(false);
+                    {suggestions.map((brand, i) => (
+                        <li
+                        key={i}
+                        onMouseDown={() => {
+                            setIsSelecting(true);
+                            setBrandName(brand.name);
+                            onChange({
+                                id: brand.id,
+                                name: brand.name,
+                            });
+                            setOpenSuggest(false);
 
-                                setTimeout(() => setIsSelecting(false), 500);
-                            }}
-                            className={styles.selectLi}
-                            >
-                                {brand.name}
-                            </li>
-                        );
-                    })}
+                            setTimeout(() => setIsSelecting(false), 500);
+                        }}
+                        className={styles.selectLi}
+                        >
+                            {brand.name}
+                        </li>
+                    ))}
                 </ul>
             )}
         </div>
