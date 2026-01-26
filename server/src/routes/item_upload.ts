@@ -253,6 +253,7 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
 
 router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> => {
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
+    console.log("keyword:", keyword);
 
     if (!keyword) {
         res.status(200).json({ suggest: [] });
@@ -269,6 +270,8 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
             order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
             limit: 15,
         });
+
+        console.log("brands:", brands);
 
         res.status(200).json({
             suggest: brands.map((b: typeof Brands) => b.name),
