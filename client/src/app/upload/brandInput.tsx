@@ -56,7 +56,7 @@ export default function BrandInput({ value, onChange }: Props) {
 
                 setSuggestions(data.suggest);
                 console.log("data.suggest:", data.suggest);
-                console.log(suggestions);
+                console.log("suggestions:", suggestions);
             } catch (err) {
                 console.error(err);
                 setSuggestions([]);
