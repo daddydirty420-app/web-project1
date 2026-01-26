@@ -253,7 +253,6 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
 
 router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> => {
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
-    console.log("keyword:", keyword);
 
     if (!keyword) {
         res.status(200).json({ suggest: [] });
@@ -262,11 +261,6 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
 
     try {
         const brands = await Brands.findAll({
-            where: {
-                name: {
-                    [Op.iLike]: `%${keyword}%`,
-                },
-            },
             order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
             limit: 15,
         });
