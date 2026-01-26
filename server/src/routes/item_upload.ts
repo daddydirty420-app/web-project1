@@ -265,7 +265,7 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
                 [Op.or]: [
                     {
                         name: {
-                            [Op.iLike]: `%${keyword}`,
+                            [Op.iLike]: `%${keyword}%`,
                         },
                     },
                     {
