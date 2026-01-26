@@ -66,7 +66,7 @@ export default function BrandInput({ value, onChange }: Props) {
         return () => {
             if (suggestTimeout.current) clearTimeout(suggestTimeout.current);
         };
-    }, [brandName, isSelecting, value.name]);
+    }, [brandName, isSelecting, value.name, suggestions]);
 
     const handleChangeBrand = (name: string) => {
         setBrandName(name);
