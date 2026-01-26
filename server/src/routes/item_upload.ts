@@ -252,12 +252,6 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
 });
 
 router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> => {
-    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
-
-    if (!keyword) {
-        res.status(200).json({ suggest: [] });
-        return;
-    }
 
     try {
         const brands = await Brands.findAll({
