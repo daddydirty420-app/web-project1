@@ -45,6 +45,7 @@ export default async function Page({ params }: Props) {
     const data = await res.json();
     const item = data.item;
     const category = data.category;
+    const hasShop = data.hasShop;
 
     const userId = String(session?.user.id).trim();
     const sellerId = String(item.seller_id).trim();
@@ -61,5 +62,6 @@ export default async function Page({ params }: Props) {
     itemId={id}
     item={item}
     category={category}
+    hasShop={hasShop}
     />;
 };

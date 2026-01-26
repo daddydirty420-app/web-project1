@@ -16,6 +16,7 @@ type Props = {
     itemId: string;
     item: Item;
     category: Categories[];
+    hasShop: boolean;
 };
 
 type ItemImage = {
@@ -24,7 +25,7 @@ type ItemImage = {
     preview: string;
 };
 
-export default function Form({ itemId, item, category }: Props) {
+export default function Form({ itemId, item, category, hasShop }: Props) {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -141,6 +142,8 @@ export default function Form({ itemId, item, category }: Props) {
             value={brandValue}
             onChange={setBrandValue}
             />
+
+            {hasShop}
         </UploadUI>
     );
 };
