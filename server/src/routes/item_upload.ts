@@ -270,8 +270,6 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
             limit: 15,
         });
 
-        console.log("brands:", brands);
-
         res.status(200).json({
             suggest: brands.map((b: typeof Brands) => b.name),
         });
