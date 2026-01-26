@@ -45,6 +45,7 @@ export default function BrandInput({ value, onChange }: Props) {
 
         suggestTimeout.current = setTimeout(async () => {
             try {
+                console.log("検索BrandName:", brandName);
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/brand-suggest?keyword=${brandName}`, {
                     cache: "no-store",
                 });
