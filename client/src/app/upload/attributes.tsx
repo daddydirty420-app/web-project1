@@ -75,6 +75,11 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
 
         if (safeNum === 1) {
             setShowVariants(false);
+            onChange({
+                ...value,
+                all_inventory: safeNum,
+                variants: [],
+            });
         }
     };
 
