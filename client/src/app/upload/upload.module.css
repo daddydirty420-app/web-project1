@@ -196,6 +196,12 @@
     padding: 16px;
 }
 
+.inputDiv {
+    margin: 1.25rem auto;
+    width: 100%;
+    max-width: 500px;
+}
+
 .input {
     box-sizing: border-box;
     margin-top: 4px;

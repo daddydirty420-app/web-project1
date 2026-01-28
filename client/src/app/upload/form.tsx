@@ -11,6 +11,7 @@ import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
 import Category, { CategoryValue } from "./category";
 import GenderAge, { GenderAgeValue } from "./genderAge";
 import BrandInput, { BrandValue } from "./brandInput";
+import AttributesInput, { AttributesValue } from "./attributes";
 
 type Props = {
     itemId: string;
@@ -68,6 +69,32 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
         id: item.Brands?.id ?? null,
         name: item.Brands?.name ?? "",
     });
+
+    const initialAttributesValue: AttributesValue = {
+        all_inventory: item.attributes.inventory?.current ?? 1,
+        variants: item.attributes.variants?.map((v) => ({
+            _uiId: crypto.randomUUID(),
+            color: v.color ?? null,
+            size: v.size ?? null,
+            image: null,
+            inventory: v.inventory?.initial ?? 0,
+        })) ?? [],
+    };
+
+    const initialAttributesImageUrlMap = new Map<string, string>();
+
+    item.attributes.variants?.forEach((v, i) => {
+        if (v.image_url && initialAttributesValue.variants[i]) {
+            initialAttributesImageUrlMap.set(
+                initialAttributesValue.variants[i]._uiId,
+                v.image_url,
+            );
+        }
+    });
+
+    const [attributesValue, setAttributesValue] = useState<AttributesValue>(initialAttributesValue);
+
+    const [attributesImageMap, setAttributesImageMap] = useState<Map<string, string>>(initialAttributesImageUrlMap);
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
         file: null,
@@ -143,7 +170,13 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
             onChange={setBrandValue}
             />
 
-            {hasShop}
+            {hasShop && (
+                <AttributesInput
+                value={attributesValue}
+                onChange={setAttributesValue}
+                imageUrlMap={attributesImageMap}
+                />
+            )}
         </UploadUI>
     );
 };

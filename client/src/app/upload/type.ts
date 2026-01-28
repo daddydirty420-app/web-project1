@@ -1,4 +1,4 @@
-import { BodyCategory, Layer, LifeStyleCategory } from "@/types/itemAttributes";
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "@/types/itemAttributes";
 
 export type Brands = {
     id: string;
@@ -45,6 +45,7 @@ export type Item = {
     seller_id: string | number;
     gender_type: "men" | "women" | "unisex";
     age_type: "adult" | "kids" | "both";
+    attributes: ItemAttributes;
     Video?: Video | null;
     Sale?: Sale | null;
     Category?: Categories | null;
