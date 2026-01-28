@@ -189,7 +189,7 @@
     position: relative;
     flex: 1;
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
     border: 1px solid var(--gray-line);
     border-radius: 12px;
@@ -274,7 +274,7 @@
 .selectDiv {
     position: relative;
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
     border: 1px solid var(--gray-line);
     border-radius: 12px;
