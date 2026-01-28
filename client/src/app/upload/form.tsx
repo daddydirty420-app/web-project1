@@ -71,8 +71,8 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
     });
 
     const initialAttributesValue: AttributesValue = {
-        all_inventory: item.attributes.inventory?.current ?? 1,
-        variants: item.attributes.variants?.map((v) => ({
+        all_inventory: item.attributes?.inventory?.current ?? 1,
+        variants: item.attributes?.variants?.map((v) => ({
             _uiId: crypto.randomUUID(),
             color: v.color ?? null,
             size: v.size ?? null,
