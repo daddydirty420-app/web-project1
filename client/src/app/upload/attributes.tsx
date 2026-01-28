@@ -144,6 +144,8 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     };
 
     const addVariant = () => {
+        if (value.variants.length >= value.all_inventory) return;
+        
         onChange({
             ...value,
             variants: [...value.variants, createEnptyVariant()],
