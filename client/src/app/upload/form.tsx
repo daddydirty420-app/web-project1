@@ -83,7 +83,7 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
 
     const initialAttributesImageUrlMap = new Map<string, string>();
 
-    item.attributes.variants?.forEach((v, i) => {
+    item.attributes?.variants?.forEach((v, i) => {
         if (v.image_url && initialAttributesValue.variants[i]) {
             initialAttributesImageUrlMap.set(
                 initialAttributesValue.variants[i]._uiId,
