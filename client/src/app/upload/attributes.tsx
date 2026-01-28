@@ -57,18 +57,24 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     }, [previewMap]);
 
     const handleAllInventory = (num: number) => {
+        const safeNum = Math.max(1, num);
+
         onChange({
             ...value,
-            all_inventory: num,
+            all_inventory: safeNum,
         });
 
-        if (num > 1 && value.variants.length === 0) {
+        if (safeNum > 1 && value.variants.length === 0) {
             setShowVariants(true);
             onChange({
                 ...value,
-                all_inventory: num,
+                all_inventory: safeNum,
                 variants: [createEnptyVariant()],
             });
+        }
+
+        if (safeNum === 1) {
+            setShowVariants(false);
         }
     };
 
@@ -109,10 +115,12 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     };
 
     const handleChangeVariantInventory = (uiId: string, inventory: number) => {
+        const safeNum = Math.max(1, inventory);
+
         onChange({
             ...value,
             variants: value.variants.map((v) => 
-                v._uiId === uiId ? { ...v, inventory }: v
+                v._uiId === uiId ? { ...v, inventory: safeNum }: v
             ),
         })
     };
@@ -143,6 +151,8 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
             <InputTitle title="出品点数" hissu />
             <input
             type="number"
+            min={1}
+            step={1}
             value={value.all_inventory}
             onChange={(e) => handleAllInventory(Number(e.target.value))}
             placeholder="1"
@@ -208,6 +218,8 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
                                 <p className={styles.cardInputTitle}>在庫数</p>
                                 <input
                                 type="number"
+                                min={1}
+                                step={1}
                                 value={variant.inventory ?? 1}
                                 onChange={(e) => handleChangeVariantInventory(variant._uiId, Number(e.target.value))}
                                 placeholder="在庫数を入力してください"
