@@ -295,6 +295,44 @@
     background-color: #fff;
 }
 
+.radioSection {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.2rem auto;
+    width: max-content;
+}
+
+.radioColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.radioLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    padding: 0.1rem 0.3rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.radioLabel:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.radio {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.radioText {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
 @media (max-width: 768px) {
     .select2ColumnWrapper {
         flex-direction: column;

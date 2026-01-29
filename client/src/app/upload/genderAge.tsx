@@ -26,9 +26,6 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
     const [selectedGenderLabel, setSelectedGenderLabel] = useState("");
     const [selectedAgeLabel, setSelectedAgeLabel] = useState("");
 
-    const [openGender, setOpenGender] = useState(false);
-    const [openAge, setOpenAge] = useState(false);
-
     const allGenderOptions = ["men", "women", "unisex"] as const;
     const allAgeOptions = ["adult", "kids", "both"] as const;
 
@@ -152,65 +149,47 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
         <div className={styles.select2ColumnWrapper}>
 
             {/* gender_type */}
-            <div className={styles.selectColumn}>
+            <div className={styles.radioSection}>
                 <InputTitle title="着用対象（性別）" hissu />
 
-                <input
-                type="text"
-                value={selectedGenderLabel}
-                placeholder="着用対象を選択してください"
-                className={styles.input}
-                readOnly
-                required
-                onFocus={() => setOpenGender(true)}
-                onBlur={() => setOpenGender(false)}
-                />
-
-                {openGender && (
-                    <ul className={styles.selectUl}>
-                        {genderLabelOptions.map((g) => (
-                            <li
-                            key={g}
-                            onMouseDown={() => handleGenderSet(g)}
-                            data-selected={selectedGenderLabel === g}
-                            className={styles.selectLi}
-                            >
-                                {g}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <div className={styles.radioColumn}>
+                    {genderLabelOptions.map((g) => (
+                        <label key={g} className={styles.radioLabel}>
+                            <input
+                            type="radio"
+                            name="gender_type"
+                            value={g}
+                            checked={selectedGenderLabel === g}
+                            onChange={() => handleGenderSet(g)}
+                            className={styles.radio}
+                            required
+                            />
+                            <p className={styles.radioText}>{g}</p>
+                        </label>
+                    ))}
+                </div>
             </div>
 
             {/* age_type */}
-            <div className={styles.selectColumn}>
+            <div className={styles.radioSection}>
                 <InputTitle title="着用対象（年齢）" hissu />
 
-                <input
-                type="text"
-                value={selectedAgeLabel}
-                placeholder="着用対象を選択してください"
-                className={styles.input}
-                readOnly
-                required
-                onFocus={() => setOpenAge(true)}
-                onBlur={() => setOpenAge(false)}
-                />
-
-                {openAge && (
-                    <ul className={styles.selectUl}>
-                        {ageLabelOptions.map((a) => (
-                            <li
-                            key={a}
-                            onMouseDown={() => handleAgeSet(a)}
-                            data-selected={selectedAgeLabel === a}
-                            className={styles.selectLi}
-                            >
-                                {a}
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                <div className={styles.radioColumn}>
+                    {ageLabelOptions.map((a) => (
+                        <label key={a} className={styles.radioLabel}>
+                            <input
+                            type="radio"
+                            name="age_type"
+                            value={a}
+                            checked={selectedAgeLabel === a}
+                            onChange={() => handleAgeSet(a)}
+                            className={styles.radio}
+                            required
+                            />
+                            <p className={styles.radioText}>{a}</p>
+                        </label>
+                    ))}
+                </div>
             </div>
         </div>
         </>
