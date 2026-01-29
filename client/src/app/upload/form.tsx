@@ -98,7 +98,7 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
     const [attributesImageMap, setAttributesImageMap] = useState<Map<string, string>>(initialAttributesImageUrlMap);
 
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
-        material: item.attributes.material ?? [],
+        material: item.attributes?.material ?? [],
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
