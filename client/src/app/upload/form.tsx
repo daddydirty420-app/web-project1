@@ -12,6 +12,7 @@ import Category, { CategoryValue } from "./category";
 import GenderAge, { GenderAgeValue } from "./genderAge";
 import BrandInput, { BrandValue } from "./brandInput";
 import AttributesInput, { AttributesValue } from "./attributes";
+import MaterialInput, { MaterialValue } from "./material";
 
 type Props = {
     itemId: string;
@@ -96,6 +97,10 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
 
     const [attributesImageMap, setAttributesImageMap] = useState<Map<string, string>>(initialAttributesImageUrlMap);
 
+    const [materialValue, setMaterialValue] = useState<MaterialValue>({
+        material: item.attributes.material ?? [],
+    });
+
     const initialItemImage = (item.image_url ?? []).map((url) => ({
         file: null,
         preview: url,
@@ -177,6 +182,11 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
                 imageUrlMap={attributesImageMap}
                 />
             )}
+
+            <MaterialInput
+            value={materialValue}
+            onChange={setMaterialValue}
+            />
         </UploadUI>
     );
 };
