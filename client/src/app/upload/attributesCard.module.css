@@ -12,7 +12,9 @@
     width: 160px;
     padding: 8px;
     border-radius: 12px;
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.04),
+        0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .cardX {
@@ -99,7 +101,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--gray-text);
+    color: var(--text-muted);
     transition: all 0.2s ease;
 }
 .addCard:hover {
