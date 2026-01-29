@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Categories, Item } from "./type";
+import { Categories, Item, ItemConditionOption } from "./type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
@@ -13,11 +13,13 @@ import GenderAge, { GenderAgeValue } from "./genderAge";
 import BrandInput, { BrandValue } from "./brandInput";
 import AttributesInput, { AttributesValue } from "./attributes";
 import MaterialInput, { MaterialValue } from "./material";
+import ConditionInput, { ConditionValue } from "./condition";
 
 type Props = {
     itemId: string;
     item: Item;
     category: Categories[];
+    allCondition: ItemConditionOption[];
     hasShop: boolean;
 };
 
@@ -27,7 +29,7 @@ type ItemImage = {
     preview: string;
 };
 
-export default function Form({ itemId, item, category, hasShop }: Props) {
+export default function Form({ itemId, item, category, allCondition, hasShop }: Props) {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -99,6 +101,11 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
 
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
         material: item.attributes?.material ?? [],
+    });
+
+    const [conditionValue, setConditionValue] = useState<ConditionValue>({
+        id: item.ItemConditionOption?.id ?? null,
+        name: item.ItemConditionOption?.name ?? "",
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
@@ -186,6 +193,12 @@ export default function Form({ itemId, item, category, hasShop }: Props) {
             <MaterialInput
             value={materialValue}
             onChange={setMaterialValue}
+            />
+
+            <ConditionInput
+            allCondition={allCondition}
+            value={conditionValue}
+            onChange={setConditionValue}
             />
         </UploadUI>
     );

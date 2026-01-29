@@ -1,5 +1,10 @@
 import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "@/types/itemAttributes";
 
+export type ItemConditionOption = {
+    id: string;
+    name: string;
+};
+
 export type Brands = {
     id: string;
     name: string;
@@ -50,4 +55,5 @@ export type Item = {
     Sale?: Sale | null;
     Category?: Categories | null;
     Brands?: Brands | null;
+    ItemConditionOption?: ItemConditionOption | null;
 };

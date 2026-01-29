@@ -1,6 +1,6 @@
 "use client";
 
-import { InputTitle, Textarea } from "@/components/inputForm";
+import { InputTitle } from "@/components/inputForm";
 import { useState } from "react";
 import styles from "./upload.module.css";
 

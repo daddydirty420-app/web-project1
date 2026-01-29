@@ -5,7 +5,7 @@ import fs from "fs";
 import { exec } from "child_process";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -314,6 +314,10 @@ router.get("/upload/:id", authenticateToken, async (req: Request, res: Response)
             order: [["sort_order", "ASC"]],
         });
 
+        const allCondition = await ItemConditionOption.findAll({
+            order: [["id", "ASC"]],
+        });
+
         const me = await User.findByPk(item.seller_id, {
             attributes: ["id"],
             include: [
@@ -326,7 +330,7 @@ router.get("/upload/:id", authenticateToken, async (req: Request, res: Response)
 
         const hasShop = !!me.ShopInfo;
 
-        res.status(200).json({ item, category, hasShop });
+        res.status(200).json({ item, category, allCondition, hasShop });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
