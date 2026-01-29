@@ -1,6 +1,8 @@
 "use client";
 
-import { Textarea } from "@/components/inputForm";
+import { InputTitle, Textarea } from "@/components/inputForm";
+import { useState } from "react";
+import styles from "./upload.module.css";
 
 export type MaterialValue = {
     material: string[];
@@ -12,19 +14,29 @@ type Props = {
 };
 
 export default function MaterialInput({ value, onChange }: Props) {
-    return (
-        <Textarea
-        title="素材表記（自由入力）"
-        value={value.material.join("\n")}
-        onChange={(val) => onChange({
+    const [text, setText] = useState(value.material.join("\n"));
+
+    const handleBlur = () => {
+        onChange({
             ...value,
-            material: val
+            material: text
             .split("\n")
             .map(v => v.trim())
             .filter(Boolean),
-        })}
-        maxLength={500}
-        placeholder="素材表記（自由入力）"
-        />
+        });
+    };
+
+    return (
+        <div className={styles.inputDiv}>
+            <InputTitle title="素材表記（自由入力）" />
+            <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onBlur={handleBlur}
+            maxLength={500}
+            placeholder="素材表記（自由入力）"
+            className={styles.textarea}
+            />
+        </div>
     );
 };
