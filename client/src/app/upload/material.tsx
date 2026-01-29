@@ -18,7 +18,10 @@ export default function MaterialInput({ value, onChange }: Props) {
         value={value.material.join("\n")}
         onChange={(val) => onChange({
             ...value,
-            material: val.split("\n").map(v => v.trim()).filter(Boolean),
+            material: val
+            .split("\n")
+            .map(v => v.trim())
+            .filter(Boolean),
         })}
         maxLength={500}
         placeholder="素材表記（自由入力）"
