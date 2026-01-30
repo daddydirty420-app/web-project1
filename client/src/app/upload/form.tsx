@@ -226,6 +226,8 @@ export default function Form({
             onChange={setConditionValue}
             />
 
+            <h2 className={styles.subtitle}>配送について</h2>
+
             <ShippingInput
             allDay={allDay}
             allService={allService}
