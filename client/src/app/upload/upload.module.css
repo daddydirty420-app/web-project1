@@ -182,18 +182,17 @@
 .twoColumnWrapper {
     display: flex;
     gap: 1.5rem;
-    margin-top: 1.5rem;
 }
 
-.selectColumn {
+.selectDiv {
     position: relative;
-    flex: 1;
     margin: 0 auto;
     max-width: 500px;
     width: 100%;
     border: 1px solid var(--gray-line);
     border-radius: 12px;
     padding: 16px;
+    margin-top: 1.5rem;
 }
 
 .inputDiv {
@@ -271,17 +270,6 @@
     opacity: 0.4;
 }
 
-.selectDiv {
-    position: relative;
-    margin: 0 auto;
-    max-width: 500px;
-    width: 100%;
-    border: 1px solid var(--gray-line);
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 1.5rem;
-}
-
 .textarea {
     field-sizing: content;
     margin-top: 4px;
@@ -347,5 +335,6 @@
 @media (max-width: 768px) {
     .twoColumnWrapper {
         flex-direction: column;
+        gap: 0;
     }
 }
