@@ -24,6 +24,7 @@ type Props = {
 };
 
 export default function ShippingInput({ allDay, allService, allPlace, value, onChange }: Props) {
+    const [openServiceSelect, setOpenServiceSelect] = useState(false);
     const [openPlaceSelect, setOpenPlaceSelect] = useState(false);
     const [selectDayText, setSelectDayText] = useState("");
     const [selectServiceText, setSelectServiceText] = useState("");
@@ -95,53 +96,60 @@ export default function ShippingInput({ allDay, allService, allPlace, value, onC
 
     return (
         <>
-        <div className={styles.select2ColumnWrapper}>
 
-            {/* day */}
-            <div className={styles.radioSection}>
-                <InputTitle title="発送までの日数" hissu />
+        {/* day */}
+        <div className={styles.radioSection}>
+            <InputTitle title="発送までの日数" hissu />
 
-                <div className={styles.radioColumn}>
-                    {allDay.map((day) => (
-                        <label key={day.id} className={styles.radioLabel}>
-                            <input
-                            type="radio"
-                            name="day_option"
-                            value={day.name}
-                            checked={selectDayText === day.name}
-                            onChange={() => handleChangeDay(day)}
-                            className={styles.radio}
-                            required
-                            />
-                            <p className={styles.radioText}>{day.name}</p>
-                        </label>
-                    ))}
-                </div>
-            </div>
-
-            {/* service */}
-            <div className={styles.radioSection}>
-                <InputTitle title="配送方法" hissu />
-
-                <div className={styles.radioColumn}>
-                    {allService.map((service) => (
-                        <label key={service.id} className={styles.radioLabel}>
-                            <input
-                            type="radio"
-                            name="service_option"
-                            value={service.name}
-                            checked={selectServiceText === service.name}
-                            onChange={() => handleChangeService(service)}
-                            className={styles.radio}
-                            required
-                            />
-                            <p className={styles.radioText}>{service.name}</p>
-                        </label>
-                    ))}
-                </div>
+            <div className={styles.radioColumn}>
+                {allDay.map((day) => (
+                    <label key={day.id} className={styles.radioLabel}>
+                        <input
+                        type="radio"
+                        name="day_option"
+                        value={day.name}
+                        checked={selectDayText === day.name}
+                        onChange={() => handleChangeDay(day)}
+                        className={styles.radio}
+                        required
+                        />
+                        <p className={styles.radioText}>{day.name}</p>
+                    </label>
+                ))}
             </div>
         </div>
 
+        {/* service */}
+        <div className={styles.selectDiv}>
+            <InputTitle title="配送方法" hissu />
+            <input
+            type="text"
+            value={selectServiceText}
+            placeholder="配送方法を選択"
+            onFocus={() => setOpenServiceSelect(true)}
+            onBlur={() => setTimeout(() => setOpenServiceSelect(false), 150)}
+            className={styles.input}
+            readOnly
+            required
+            />
+
+            {openServiceSelect && (
+                <ul className={styles.selectUl}>
+                    {allService.map((service) => (
+                        <li
+                        key={service.id}
+                        onMouseDown={() => handleChangeService(service)}
+                        data-selected={selectServiceText === service.name}
+                        className={styles.selectLi}
+                        >
+                            {service.name}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+
+        {/* place */}
         <div className={styles.selectDiv}>
             <InputTitle title="発送元地域" hissu />
             <input
@@ -171,6 +179,7 @@ export default function ShippingInput({ allDay, allService, allPlace, value, onC
             )}
         </div>
 
+        {/* free_text */}
         <Textarea
         title="配送に関する備考（自由入力）"
         value={value.free_text ?? ""}
