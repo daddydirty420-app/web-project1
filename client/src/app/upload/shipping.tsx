@@ -119,64 +119,67 @@ export default function ShippingInput({ allDay, allService, allPlace, value, onC
             </div>
         </div>
 
-        {/* service */}
-        <div className={styles.selectDiv}>
-            <InputTitle title="配送方法" hissu />
-            <input
-            type="text"
-            value={selectServiceText}
-            placeholder="配送方法を選択"
-            onFocus={() => setOpenServiceSelect(true)}
-            onBlur={() => setTimeout(() => setOpenServiceSelect(false), 150)}
-            className={styles.input}
-            readOnly
-            required
-            />
+        <div className={styles.twoColumnWrapper}>
+        
+            {/* service */}
+            <div className={styles.selectDiv}>
+                <InputTitle title="配送方法" hissu />
+                <input
+                type="text"
+                value={selectServiceText}
+                placeholder="配送方法を選択"
+                onFocus={() => setOpenServiceSelect(true)}
+                onBlur={() => setTimeout(() => setOpenServiceSelect(false), 150)}
+                className={styles.input}
+                readOnly
+                required
+                />
 
-            {openServiceSelect && (
-                <ul className={styles.selectUl}>
-                    {allService.map((service) => (
-                        <li
-                        key={service.id}
-                        onMouseDown={() => handleChangeService(service)}
-                        data-selected={selectServiceText === service.name}
-                        className={styles.selectLi}
-                        >
-                            {service.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+                {openServiceSelect && (
+                    <ul className={styles.selectUl}>
+                        {allService.map((service) => (
+                            <li
+                            key={service.id}
+                            onMouseDown={() => handleChangeService(service)}
+                            data-selected={selectServiceText === service.name}
+                            className={styles.selectLi}
+                            >
+                                {service.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
-        {/* place */}
-        <div className={styles.selectDiv}>
-            <InputTitle title="発送元地域" hissu />
-            <input
-            type="text"
-            value={selectPlaceText}
-            placeholder="発送元地域を選択"
-            onFocus={() => setOpenPlaceSelect(true)}
-            onBlur={() => setTimeout(() => setOpenPlaceSelect(false), 150)}
-            className={styles.input}
-            readOnly
-            required
-            />
+            {/* place */}
+            <div className={styles.selectDiv}>
+                <InputTitle title="発送元地域" hissu />
+                <input
+                type="text"
+                value={selectPlaceText}
+                placeholder="発送元地域を選択"
+                onFocus={() => setOpenPlaceSelect(true)}
+                onBlur={() => setTimeout(() => setOpenPlaceSelect(false), 150)}
+                className={styles.input}
+                readOnly
+                required
+                />
 
-            {openPlaceSelect && (
-                <ul className={styles.selectUl}>
-                    {allPlace.map((t) => (
-                        <li
-                        key={t.id}
-                        onMouseDown={() => handleChangePlace(t)}
-                        data-selected={selectPlaceText === t.name}
-                        className={styles.selectLi}
-                        >
-                            {t.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                {openPlaceSelect && (
+                    <ul className={styles.selectUl}>
+                        {allPlace.map((t) => (
+                            <li
+                            key={t.id}
+                            onMouseDown={() => handleChangePlace(t)}
+                            data-selected={selectPlaceText === t.name}
+                            className={styles.selectLi}
+                            >
+                                {t.name}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
 
         {/* free_text */}

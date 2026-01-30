@@ -181,7 +181,7 @@ export default function Category({ level1List, value, onChange, onConstraintChan
     };
 
     return (
-        <div className={styles.select2ColumnWrapper}>
+        <div className={styles.twoColumnWrapper}>
 
             {/* category1 */}
             <div className={styles.selectColumn}>

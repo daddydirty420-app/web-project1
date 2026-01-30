@@ -146,7 +146,7 @@ export default function GenderAge({ value, onChange, categoryConstraint }: Props
 
     return (
         <>
-        <div className={styles.select2ColumnWrapper}>
+        <div className={styles.twoColumnWrapper}>
 
             {/* gender_type */}
             <div className={styles.radioSection}>

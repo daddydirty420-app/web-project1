@@ -179,7 +179,7 @@
     background-color: rgba(255, 255, 255, 0.95);
 }
 
-.select2ColumnWrapper {
+.twoColumnWrapper {
     display: flex;
     gap: 1.5rem;
     margin-top: 1.5rem;
@@ -345,7 +345,7 @@
 }
 
 @media (max-width: 768px) {
-    .select2ColumnWrapper {
+    .twoColumnWrapper {
         flex-direction: column;
     }
 }
