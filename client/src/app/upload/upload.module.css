@@ -45,11 +45,10 @@
 
 .imageInputDiv {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 1rem;
     margin: 1.5rem auto;
     width: 100%;
-    max-width: 340px;
 }
 
 .imageInput {
@@ -343,6 +342,11 @@
 }
 
 @media (max-width: 768px) {
+    .imageInputDiv {
+        flex-direction: column;
+        max-width: 340px;
+    }
+    
     .twoColumnWrapper {
         display: block;
     }
