@@ -184,7 +184,7 @@ export default function Category({ level1List, value, onChange, onConstraintChan
         <div className={styles.twoColumnWrapper}>
 
             {/* category1 */}
-            <div className={styles.selectDiv}>
+            <div className={styles.selectColumn}>
                 <InputTitle title="カテゴリー" hissu />
 
                 <input
@@ -217,7 +217,7 @@ export default function Category({ level1List, value, onChange, onConstraintChan
 
             {/* category2 */}
             {displayLevel1 !== "" && (
-                <div className={styles.selectDiv}>
+                <div className={styles.selectColumn}>
                     <InputTitle title="詳細カテゴリー" />
 
                     <input

@@ -186,13 +186,22 @@
 
 .selectDiv {
     position: relative;
+    margin: 1.5rem auto 0;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--gray-line);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.selectColumn {
+    position: relative;
     margin: 0 auto;
     max-width: 500px;
     width: 100%;
     border: 1px solid var(--gray-line);
     border-radius: 12px;
     padding: 16px;
-    margin-top: 1.5rem;
 }
 
 .inputDiv {
@@ -335,6 +344,5 @@
 @media (max-width: 768px) {
     .twoColumnWrapper {
         flex-direction: column;
-        gap: 0;
     }
 }

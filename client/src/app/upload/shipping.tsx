@@ -122,7 +122,7 @@ export default function ShippingInput({ allDay, allService, allPlace, value, onC
         <div className={styles.twoColumnWrapper}>
         
             {/* service */}
-            <div className={styles.selectDiv}>
+            <div className={styles.selectColumn}>
                 <InputTitle title="配送方法" hissu />
                 <input
                 type="text"
@@ -152,7 +152,7 @@ export default function ShippingInput({ allDay, allService, allPlace, value, onC
             </div>
 
             {/* place */}
-            <div className={styles.selectDiv}>
+            <div className={styles.selectColumn}>
                 <InputTitle title="発送元地域" hissu />
                 <input
                 type="text"
