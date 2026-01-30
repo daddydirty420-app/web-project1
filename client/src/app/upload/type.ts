@@ -1,5 +1,20 @@
 import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "@/types/itemAttributes";
 
+export type ShippingDayOption = {
+    id: string;
+    name: string;
+};
+
+export type ShippingServiceOption = {
+    id: string;
+    name: string;
+};
+
+export type TodouhukenOption = {
+    id: string;
+    name: string;
+};
+
 export type ItemConditionOption = {
     id: string;
     name: string;
@@ -24,6 +39,10 @@ export type Categories = {
 
 export type ItemShippingProfile = {
     id: string;
+    ShippingDayOption?: ShippingDayOption | null;
+    ShippingServiceOption?: ShippingServiceOption | null;
+    TodouhukenOption?: TodouhukenOption | null;
+    shipping_service_free_text: string | null;
 };
 
 export type Sale = {
@@ -56,4 +75,5 @@ export type Item = {
     Category?: Categories | null;
     Brands?: Brands | null;
     ItemConditionOption?: ItemConditionOption | null;
+    ItemShippingProfile?: ItemShippingProfile | null;
 };

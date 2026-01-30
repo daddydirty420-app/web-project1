@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Categories, Item, ItemConditionOption } from "./type";
+import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
@@ -14,12 +14,16 @@ import BrandInput, { BrandValue } from "./brandInput";
 import AttributesInput, { AttributesValue } from "./attributes";
 import MaterialInput, { MaterialValue } from "./material";
 import ConditionInput, { ConditionValue } from "./condition";
+import ShippingInput, { ShippingValue } from "./shipping";
 
 type Props = {
     itemId: string;
     item: Item;
     category: Categories[];
     allCondition: ItemConditionOption[];
+    allDay: ShippingDayOption[];
+    allService: ShippingServiceOption[];
+    allPlace: TodouhukenOption[];
     hasShop: boolean;
 };
 
@@ -29,7 +33,16 @@ type ItemImage = {
     preview: string;
 };
 
-export default function Form({ itemId, item, category, allCondition, hasShop }: Props) {
+export default function Form({
+    itemId,
+    item,
+    category,
+    allCondition,
+    allDay,
+    allService,
+    allPlace,
+    hasShop
+}: Props) {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -106,6 +119,18 @@ export default function Form({ itemId, item, category, allCondition, hasShop }: 
     const [conditionValue, setConditionValue] = useState<ConditionValue>({
         id: item.ItemConditionOption?.id ?? null,
         name: item.ItemConditionOption?.name ?? "",
+    });
+
+    const shipping = item.ItemShippingProfile;
+
+    const [shippingValue, setShippingValue] = useState<ShippingValue>({
+        day_id: shipping?.ShippingDayOption?.id ?? null,
+        day_name: shipping?.ShippingDayOption?.name ?? null,
+        service_id: shipping?.ShippingServiceOption?.id ?? null,
+        service_name: shipping?.ShippingServiceOption?.name ?? null,
+        place_id: shipping?.TodouhukenOption?.id ?? null,
+        place_name: shipping?.TodouhukenOption?.name ?? null,
+        free_text: shipping?.shipping_service_free_text ?? null,
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
@@ -199,6 +224,14 @@ export default function Form({ itemId, item, category, allCondition, hasShop }: 
             allCondition={allCondition}
             value={conditionValue}
             onChange={setConditionValue}
+            />
+
+            <ShippingInput
+            allDay={allDay}
+            allService={allService}
+            allPlace={allPlace}
+            value={shippingValue}
+            onChange={setShippingValue}
             />
         </UploadUI>
     );

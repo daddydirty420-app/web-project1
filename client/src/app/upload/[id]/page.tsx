@@ -46,6 +46,9 @@ export default async function Page({ params }: Props) {
     const item = data.item;
     const category = data.category;
     const allCondition = data.allCondition;
+    const allDay = data.allDay;
+    const allService = data.allService;
+    const allPlace = data.allPlace;
     const hasShop = data.hasShop;
 
     const userId = String(session?.user.id).trim();
@@ -64,6 +67,9 @@ export default async function Page({ params }: Props) {
     item={item}
     category={category}
     allCondition={allCondition}
+    allDay={allDay}
+    allService={allService}
+    allPlace={allPlace}
     hasShop={hasShop}
     />;
 };
