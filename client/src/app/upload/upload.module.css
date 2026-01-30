@@ -46,7 +46,7 @@
 .imageInputDiv {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 4rem;
     margin: 1.5rem auto;
     width: 100%;
 }
@@ -344,9 +344,10 @@
 @media (max-width: 768px) {
     .imageInputDiv {
         flex-direction: column;
+        gap: 1.25rem;
         max-width: 340px;
     }
-    
+
     .twoColumnWrapper {
         display: block;
     }
