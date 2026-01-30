@@ -109,23 +109,25 @@ export default function VideoInput({ value, onChange, videoRef, thumbnailRef, ex
             </div>
         </div>
         
-        <InputStr
-        title="動画タイトル"
-        type="text"
-        value={value.title}
-        onChange={handleChangeTitle}
-        placeholder="動画のタイトル（50文字以内）"
-        hissu
-        maxLength={50}
-        />
+        <div className={styles.twoColumnWrapper}>
+            <InputStr
+            title="動画タイトル"
+            type="text"
+            value={value.title}
+            onChange={handleChangeTitle}
+            placeholder="動画のタイトル（50文字以内）"
+            hissu
+            maxLength={50}
+            />
         
-        <Textarea
-        title="動画の概要"
-        value={value.summary}
-        onChange={handleChangeSummary}
-        maxLength={500}
-        placeholder="概要（500文字まで）"
-        />
+            <Textarea
+            title="動画の概要"
+            value={value.summary}
+            onChange={handleChangeSummary}
+            maxLength={500}
+            placeholder="概要（500文字まで）"
+            />
+        </div>
         </>
     );
 }
