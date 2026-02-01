@@ -15,6 +15,7 @@ import AttributesInput, { AttributesValue } from "./attributes";
 import MaterialInput, { MaterialValue } from "./material";
 import ConditionInput, { ConditionValue } from "./condition";
 import ShippingInput, { ShippingValue } from "./shipping";
+import PriceInput, { PriceValue } from "./price";
 
 type Props = {
     itemId: string;
@@ -133,6 +134,10 @@ export default function Form({
         free_text: shipping?.shipping_service_free_text ?? null,
     });
 
+    const [priceValue, setPriceValue] = useState<PriceValue>({
+        price: item.price ?? 0,
+    });
+
     const initialItemImage = (item.image_url ?? []).map((url) => ({
         file: null,
         preview: url,
@@ -234,6 +239,13 @@ export default function Form({
             allPlace={allPlace}
             value={shippingValue}
             onChange={setShippingValue}
+            />
+
+            <h2 className={styles.subtitle}>価格</h2>
+
+            <PriceInput
+            value={priceValue}
+            onChange={setPriceValue}
             />
         </UploadUI>
     );

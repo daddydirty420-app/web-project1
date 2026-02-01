@@ -70,6 +70,7 @@ export type Item = {
     gender_type: "men" | "women" | "unisex";
     age_type: "adult" | "kids" | "both";
     attributes: ItemAttributes;
+    price: number;
     Video?: Video | null;
     Sale?: Sale | null;
     Category?: Categories | null;
