@@ -378,6 +378,42 @@
     color: var(--theme-str);
 }
 
+.uploadButton {
+    display: block;
+    margin: 2rem auto 0;
+    width: 250px;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.02em;
+    background-color: var(--action);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.uploadButton:hover {
+    background-color: var(--action-hover);
+}
+
+.draftButton {
+    display: block;
+    margin: 1.25rem auto 5rem;
+    width: 180px;
+    height: 42px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--theme-str);
+    letter-spacing: 0.02em;
+    background-color: var(--button-gray);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.draftButton:hover {
+    background-color: var(--button-gray-hover);
+}
+
 @media (max-width: 768px) {
     .imageInputDiv {
         flex-direction: column;

@@ -249,6 +249,22 @@ export default function Form({
             value={priceValue}
             onChange={setPriceValue}
             />
+                
+            <button
+            type="button"
+            className={styles.uploadButton}
+            onClick={upload}
+            >
+                出品する
+            </button>
+
+            <button
+            type="button"
+            className={styles.draftButton}
+            onClick={draft}
+            >
+                下書き保存する
+            </button>
         </UploadUI>
     );
 };
