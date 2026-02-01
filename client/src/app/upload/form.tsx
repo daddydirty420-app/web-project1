@@ -135,7 +135,9 @@ export default function Form({
     });
 
     const [priceValue, setPriceValue] = useState<PriceValue>({
-        price: item.price ?? 0,
+        price: item.price && !Number.isNaN(item.price)
+        ? String(item.price)
+        : "",
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({

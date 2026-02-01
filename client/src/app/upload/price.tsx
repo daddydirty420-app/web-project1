@@ -5,7 +5,7 @@ import styles from "./upload.module.css";
 import { useEffect, useState } from "react";
 
 export type PriceValue = {
-    price: number;
+    price: string;
 };
 
 type Props = {
@@ -18,20 +18,28 @@ export default function PriceInput({ value, onChange }: Props) {
     const [commission, setCommission] = useState(0);
 
     useEffect(() => {
-        if (value.price > 0) {
-            setGain(value.price * 0.9);
-            setCommission(value.price * 0.1);
+        const num = Number(value.price.replace(/,/g, ""));
+
+        if (!Number.isNaN(num) && num > 0) {
+            setGain(num * 0.9);
+            setCommission(num * 0.1);
         }
     }, [value.price]);
 
-    const handleChangePrice = (num: number) => {
+    const handleChangePrice = (raw: string) => {
+        if (!/^[0-9,]*$/.test(raw)) return;
+
         onChange({
             ...value,
-            price: num,
+            price: raw,
         });
 
-        setGain(num * 0.9);
-        setCommission(num * 0.1);
+        const num = Number(raw.replace(/,/g, ""));
+
+        if (!Number.isNaN(num)) {
+            setGain(num * 0.9);
+            setCommission(num * 0.1);
+        }
     };
 
     return (
@@ -44,7 +52,7 @@ export default function PriceInput({ value, onChange }: Props) {
                 <input
                 type="text"
                 value={value.price}
-                onChange={(e) => handleChangePrice(Number(e.target.value))}
+                onChange={(e) => handleChangePrice(e.target.value)}
                 placeholder="例：30,000"
                 className={styles.input}
                 inputMode="numeric"

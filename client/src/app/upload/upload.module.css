@@ -368,12 +368,12 @@
 }
 
 .textFlexTitle {
-    font-size: 11.5px;
+    font-size: 13px;
     color: var(--text-muted);
 }
 
 .textFlexMain {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--theme-str);
 }
@@ -395,5 +395,13 @@
 
     .text2Column {
         display: block;
+    }
+
+    .textFlexTitle {
+        font-size: 11.5px;
+    }
+
+    .textFlexMain {
+        font-size: 16px;
     }
 }
