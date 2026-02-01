@@ -362,12 +362,13 @@
 
 .textFlex {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
     align-items: center;
+    justify-content: space-between;
 }
 
 .textFlexTitle {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-muted);
 }
 

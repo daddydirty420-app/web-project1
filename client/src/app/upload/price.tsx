@@ -49,6 +49,8 @@ export default function PriceInput({ value, onChange }: Props) {
                 className={styles.input}
                 inputMode="numeric"
                 pattern="[0-9]*"
+                min={300}
+                max={1000000}
                 required
                 />
             </div>
