@@ -186,7 +186,7 @@ export default function Form({
             <h2 className={styles.subtitle}>商品をアップロード</h2>
 
             <ItemImage
-            images={initialItemImage}
+            images={itemImages}
             onAdd={addItemImage}
             onRemove={removeItemImage}
             />

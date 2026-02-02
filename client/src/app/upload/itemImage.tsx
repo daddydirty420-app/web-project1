@@ -31,10 +31,10 @@ export default function ItemImage({ images, onAdd, onRemove }: Props) {
                 onChange={(e) => {
                     if (e.target.files) {
                         onAdd(e.target.files);
-                        // e.target.value = "";
+                        e.target.value = "";
                     }
                 }}
-                disabled={images?.length >= 10}
+                disabled={images.length >= 10}
                 className={styles.itemImageInput}
                 placeholder="商品画像をアップロード"
                 required
