@@ -381,7 +381,7 @@
 .uploadButton {
     display: block;
     margin: 2rem auto 0;
-    width: 250px;
+    width: 240px;
     height: 48px;
     font-size: 15px;
     font-weight: 600;
@@ -398,9 +398,9 @@
 
 .draftButton {
     display: block;
-    margin: 1.25rem auto 5rem;
-    width: 180px;
-    height: 42px;
+    margin: 1.5rem auto 5rem;
+    width: 200px;
+    height: 44px;
     font-size: 14px;
     font-weight: 600;
     color: var(--theme-str);
