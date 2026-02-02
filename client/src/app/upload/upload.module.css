@@ -38,55 +38,56 @@
 
 .subtitle {
     font-size: 17px;
-    margin: 2rem auto 1.25rem;
+    margin: 2.25rem auto 1.35rem;
     text-align: center;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
 }
 
 .imageInputDiv {
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    margin: 1.5rem auto;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3rem;
+    margin: 1.75rem auto 1.5rem;
+    width: min(100%, 960px);
 }
 
 .imageInput {
     width: 100%;
-    height: 44px;
+    height: 48px;
     margin-top: 6px;
-    border: 1px dashed var(--gray-line-mid);
-    border-radius: 10px;
+    border: 1.5px dashed var(--gray-line-mid);
+    border-radius: 12px;
     background-color: var(--gray-background);
     font-size: 13px;
     color: var(--text-muted);
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.2s;
 }
-.imageInput:focus {
-    outline: none;
+.imageInput:hover {
     border-color: var(--gray-line-mid-str);
+    background-color: rgba(246, 247, 249, 0.9);
 }
 
 .videoPreview {
     display: block;
-    width: 60%;
-    max-width: 320px;
-    margin: 0.5rem auto 0;
+    width: 100%;
+    max-width: 420px;
+    margin: 0.75rem auto 0;
     aspect-ratio: 16 / 9;
-    border-radius: 6px;
+    border-radius: 10px;
     object-fit: cover;
-    overflow: hidden;
     background-color: #000;
+    box-shadow: var(--shadow-mini);
 }
 
 .preview {
     display: block;
     margin: 0.75rem auto 0;
-    width: 220px;
+    width: 100%;
+    max-width: 300px;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid var(--gray-line);
     background-color: var(--gray-background);
     box-shadow: var(--shadow-mini);
@@ -179,9 +180,11 @@
 }
 
 .twoColumnWrapper {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    margin: 1.75rem auto 0;
+    width: min(100%, 960px);
 }
 
 .selectDiv {
@@ -416,13 +419,20 @@
 
 @media (max-width: 768px) {
     .imageInputDiv {
-        flex-direction: column;
-        gap: 1.25rem;
-        max-width: 340px;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .twoColumnWrapper {
-        display: block;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .selectColumn {
