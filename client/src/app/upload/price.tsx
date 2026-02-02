@@ -48,7 +48,7 @@ export default function PriceInput({ value, onChange }: Props) {
             <InputTitle title="価格" hissu />
             
             <div className={styles.inputTextFlex}>
-                <p className={styles.text14}>￥</p>
+                <p className={styles.text15}>￥</p>
                 <input
                 type="text"
                 value={value.price}

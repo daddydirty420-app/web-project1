@@ -347,12 +347,13 @@
 
 .inputTextFlex {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     align-items: center;
 }
 
-.text14 {
-    font-size: 14px;
+.text15 {
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .text2Column {
@@ -360,7 +361,7 @@
     gap: 3rem;
     align-items: center;
     justify-content: center;
-    margin: 1rem auto 0;
+    margin: 1.25rem auto 0;
     width: max-content;
 }
 
@@ -452,6 +453,10 @@
 
     .text2Column {
         display: block;
+    }
+
+    .textFlex {
+        margin-top: 0.4rem;
     }
 
     .textFlexTitle {
