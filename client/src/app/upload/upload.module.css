@@ -422,12 +422,12 @@
     .imageInputDiv {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        max-width: 360px;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
     }
     .itemImageDiv {
-        max-width: 360px;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -440,7 +440,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 0;
-        max-width: 360px;
+        max-width: 500px;
         margin-left: auto;
         margin-right: auto;
     }
