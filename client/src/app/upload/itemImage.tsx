@@ -34,7 +34,7 @@ export default function ItemImage({ images, onAdd, onRemove }: Props) {
                         e.target.value = "";
                     }
                 }}
-                disabled={images.length >= 10}
+                disabled={images?.length >= 10}
                 className={styles.itemImageInput}
                 placeholder="商品画像をアップロード"
                 required
