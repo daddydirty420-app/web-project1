@@ -436,7 +436,8 @@
     }
 
     .selectColumn {
-        margin-top: 1.25rem;
+        margin-top: 0.85rem;
+        padding: 12px 14px;
     }
 
     .text2Column {
