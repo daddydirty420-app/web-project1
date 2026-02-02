@@ -385,15 +385,15 @@
 
 .uploadButton {
     display: block;
-    margin: 2.5rem auto 0;
+    margin: 2.75rem auto 0;
     width: 240px;
-    height: 48px;
+    height: 50px;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
     letter-spacing: 0.02em;
     background-color: var(--action);
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.15s ease;
 }
@@ -403,7 +403,7 @@
 
 .draftButton {
     display: block;
-    margin: 1.5rem auto 5rem;
+    margin: 1.25rem auto 5rem;
     width: 200px;
     height: 44px;
     font-size: 14px;
@@ -411,7 +411,7 @@
     color: var(--theme-str);
     letter-spacing: 0.02em;
     background-color: var(--button-gray);
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.15s ease;
 }
