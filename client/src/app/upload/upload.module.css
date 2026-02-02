@@ -429,10 +429,14 @@
     .twoColumnWrapper {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+        gap: 0;
         max-width: 360px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .twoColumnWrapper > * {
+        margin-top: 0 !important;
     }
 
     .selectColumn {
