@@ -435,10 +435,6 @@
         margin-right: auto;
     }
 
-    .twoColumnWrapper > * {
-        margin-top: 0 !important;
-    }
-
     .selectColumn {
         margin-top: 1.25rem;
     }
