@@ -1,26 +1,13 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import multer from "multer";
-import fs from "fs";
-import { exec } from "child_process";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "../models/index.js";
-import { AuthUser } from "../middleware/authMiddleware.js";
+import { Video, Item, Notification, Sale, ItemShippingProfile, Categories, Brands, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "../models/index.js";
 import sequelize from "../db.js";
-import { Op } from "sequelize";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import findOrCreateBrand from "../services/findOrCreateBrand.js";
 
-interface AuthenticatedRequest extends Request {
-    user?: AuthUser;
-    file?: Express.Multer.File;
-}
-
 const router = Router();
-
-const upload = multer({ dest: "tmp/ " });
 
 const bucket = process.env.AWS_BUCKET;
 const region = process.env.AWS_REGION;
@@ -72,6 +59,15 @@ type DraftBody = {
     };
     price: string;
 };
+
+function toNullableNumber(value: any): number | null {
+    if (value === null || value === "") return null;
+    const num = Number(value);
+    if (Number.isNaN(num)) {
+        throw new Error("不正な数値");
+    }
+    return num;
+}
 
 router.patch("/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
@@ -213,32 +209,43 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }
 
         // 数値チェック
-        const categoryId = category.id === null ? null : Number(category.id);
-        if (categoryId !== null && Number.isNaN(categoryId)) {
-            res.status(400).json({ message: "category.idが不正です" });
+        let categoryId: number | null;
+        try {
+            categoryId = toNullableNumber(category.id);
+        } catch {
+            res.status(400).json({ message: "category.idの値が不正です" });
             return;
         }
 
-        const conditionId = condition.id === null ? null : Number(condition.id);
-        if (conditionId !== null && Number.isNaN(conditionId)) {
-            res.status(400).json({ message: "condition.idが不正です" });
+        let conditionId: number | null;
+        try {
+            conditionId = toNullableNumber(condition.id);
+        } catch {
+            res.status(400).json({ message: "condition.idの値が不正です" });
             return;
         }
 
-        const dayId = shipping.day === null ? null : Number(shipping.day);
-        if (dayId !== null && Number.isNaN(dayId)) {
-            res.status(400).json({ message: "day.idが不正です" });
-        }
-
-        const serviceId = shipping.service === null ? null : Number(shipping.service);
-        if (serviceId !== null && Number.isNaN(serviceId)) {
-            res.status(400).json({ message: "service.idが不正です" });
+        let dayId: number | null;
+        try {
+            dayId = toNullableNumber(shipping.day);
+        } catch {
+            res.status(400).json({ message: "day.idの値が不正です" });
             return;
         }
 
-        const placeId = shipping.place === null ? null : Number(shipping.place);
-        if (placeId !== null && Number.isNaN(placeId)) {
-            res.status(400).json({ message: "place.idが不正です" });
+        let serviceId: number | null;
+        try {
+            serviceId = toNullableNumber(shipping.service);
+        } catch {
+            res.status(400).json({ message: "service.idの値が不正です" });
+            return;
+        }
+
+        let placeId: number | null;
+        try {
+            placeId = toNullableNumber(shipping.place);
+        } catch {
+            res.status(400).json({ message: "place.idの値が不正です" });
             return;
         }
 
@@ -253,7 +260,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (categoryId !== null && categoryId !== 0) {
             categoryOption = await Categories.findByPk(categoryId);
             if (!categoryOption) {
-                console.log("category", categoryId);
                 res.status(404).json({ message: "カテゴリーが見つかりません" });
                 return;
             }
@@ -262,7 +268,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (conditionId !== null && conditionId !== 0) {
             const conditionOption = await ItemConditionOption.findByPk(conditionId);
             if (!conditionOption) {
-                console.log("condition");
                 res.status(404).json({ message: "ItemConditionOptionが見つかりません" });
                 return;
             }
@@ -271,7 +276,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (dayId !== null && dayId !== 0) {
             const dayOption = await ShippingDayOption.findByPk(dayId);
             if (!dayOption) {
-                console.log("day");
                 res.status(404).json({ message: "ShippingDayOptionが見つかりません" });
                 return;
             }
@@ -280,7 +284,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (serviceId !== null && serviceId !== 0) {
             const serviceOption = await ShippingServiceOption.findByPk(serviceId);
             if (!serviceOption) {
-                console.log("service");
                 res.status(404).json({ message: "ShippingServiceOptionが見つかりません" });
                 return;
             }
@@ -289,16 +292,17 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (placeId !== null && placeId !== 0) {
             const placeOption = await TodouhukenOption.findByPk(placeId);
             if (!placeOption) {
-                console.log("place");
                 res.status(404).json({ message: "placeOption（都道府県）が見つかりません" });
                 return;
             }
         }
 
         // ブランドチェック
-        const brandId = brand.id === null ? null : Number(brand.id);
-        if (brandId !== null && Number.isNaN(brandId)) {
-            res.status(400).json({ message: "brand.idが不正です" });
+        let brandId: number | null;
+        try {
+            brandId = toNullableNumber(brand.id);
+        } catch {
+            res.status(400).json({ message: "brand.idの値が不正です" });
             return;
         }
 
