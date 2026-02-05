@@ -178,8 +178,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }
 
         // attributes.image署名付きURL生成
-        let attributesImageSignedUrl: Record<string, string> = {};
-        let attributesImageUrl: Record<string, string> = {};
+        let attributesImageSignedUrls: Record<string, string> = {};
+        let attributesImageUrls: Record<string, string> = {};
 
         if (attributes.variants.length > 0) {
             for (let i = 0; i < attributes.variants.length; i++) {
@@ -198,11 +198,11 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
                     const signedUrl = await getSignedUrl(s3, cmd, { expiresIn: 60 });
 
-                    attributesImageSignedUrl[v.uiId] = signedUrl;
-                    attributesImageUrl[v.uiId] = `${s3Domain}/${key}`;
+                    attributesImageSignedUrls[v.uiId] = signedUrl;
+                    attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
                 } else if (v.image && v.image.uploaded) {
                     if (existingVariant?.image_url) {
-                        attributesImageUrl[v.uiId] = existingVariant.image_url;
+                        attributesImageUrls[v.uiId] = existingVariant.image_url;
                     }
                 }
             }
@@ -356,7 +356,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                     color: v.color ?? null,
                     size: v.size ?? null,
                     size_label: v.size ?? null,
-                    image_url: attributesImageUrl[v.uiId] ?? null,
+                    image_url: attributesImageUrls[v.uiId] ?? null,
                     inventory: {
                         initial: v.inventory,
                         current: v.inventory,
@@ -394,8 +394,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             thumbnailUrl,
             itemImageSignedUrls,
             itemImageUrls,
-            attributesImageSignedUrl,
-            attributesImageUrl
+            attributesImageSignedUrls,
+            attributesImageUrls
         });
     } catch (err) {
         await t.rollback();
