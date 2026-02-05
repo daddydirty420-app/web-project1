@@ -474,7 +474,10 @@ export default function Form({
                     }
                 }
             }
+
+            toast.success("下書き保存しました");
         } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
