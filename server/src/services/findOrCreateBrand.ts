@@ -1,4 +1,4 @@
-import { Brands, BrandAliases } from "@models/index.js";
+import { Brands, BrandAliases } from "../models/index.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 async function findOrCreateBrand(inputName: string) {
