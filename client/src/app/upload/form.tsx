@@ -88,8 +88,8 @@ export default function Form({
     );
 
     const [genderAgeValue, setGenderAgeValue] = useState<GenderAgeValue>({
-        gender_type: item.gender_type ?? null,
-        age_type: item.age_type ?? null,
+        gender_type: item.gender_type ?? "unisex",
+        age_type: item.age_type ?? "both",
     });
 
     const [brandValue, setBrandValue] = useState<BrandValue>({
