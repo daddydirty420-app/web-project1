@@ -13,6 +13,7 @@ import BanksModel from "./banks.js";
 import BlogCategoryOptionModel from "./blog_category_option.js";
 import BlogModel from "./blog.js";
 import BranchesModel from "./branches.js";
+import BrandAliasesModel from "./brand_aliases.js";
 import BrandsModel from "./brands.js";
 import CancelFeeReturnOptionModel from "./cancel_fee_return_option.js";
 import CancelModel from "./cancel.js";
@@ -105,6 +106,7 @@ db.Banks = BanksModel;
 db.BlogCategoryOption = BlogCategoryOptionModel;
 db.Blog = BlogModel;
 db.Branches = BranchesModel;
+db.BrandAliases = BrandAliasesModel;
 db.Brands = BrandsModel;
 db.CancelFeeReturnOption = CancelFeeReturnOptionModel;
 db.Cancel = CancelModel;
@@ -177,5 +179,5 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, Brands, CancelFeeReturnOption, Cancel, Cart, Categories, Chat, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemConditionOption, ItemReportOption, ItemReport, ItemShippingProfile, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, ReccomendItem, ReccomendMonth, ReccomendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, SearchWords, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, StarHistory, SuggestWords, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
+export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, BrandAliases, Brands, CancelFeeReturnOption, Cancel, Cart, Categories, Chat, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemConditionOption, ItemReportOption, ItemReport, ItemShippingProfile, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, ReccomendItem, ReccomendMonth, ReccomendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, SearchWords, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, StarHistory, SuggestWords, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
 export default db;

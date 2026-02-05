@@ -3,9 +3,9 @@ import type { Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
 import { exec } from "child_process";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, ListMultipartUploadsCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -31,19 +31,11 @@ const s3 = new S3Client({
     },
 });
 
-router.patch('/upload-video/:id', upload.single('video'), authenticateToken, async(req: AuthenticatedRequest, res: Response): Promise<void> => {
-    if (!req.file) {
-        res.status(400).json({ message: '動画ファイルがありません。' });
-        return;
-    }
+const now = Date.now();
 
-    const originalFilePath = req.file.path;
-    const fileName = req.file.originalname;
-
+router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     const currentUserId = req.user?.id;
     const videoId = req.params.id;
-
-    const timestamp = Date.now();
 
     try {
         const videoData = await Video.findByPk(videoId);
@@ -52,55 +44,98 @@ router.patch('/upload-video/:id', upload.single('video'), authenticateToken, asy
             return;
         }
 
-        const uploadParams = {
+        const originalUrl = videoData.original_url;
+        if (!originalUrl) {
+            res.status(400).json({ message: "original_urlがありません" });
+            return;
+        }
+
+        const originalKey = originalUrl.replace(`${s3Domain}/`, '');
+
+        // 拡張子を抽出
+        let ext = originalKey.split('.').pop();
+        if (!["mp4", "mov", "webm", "mkv"].includes(ext)) {
+            ext = "mp4"; // 最終フォールバック
+        }
+
+        // 一時保存先
+        const originalFilePath = `tmp/original_${videoId}_${now}.${ext}`;
+        const convertedDir = `tmp/converted_${videoId}_${now}`;
+
+        const getObjectCommand = new GetObjectCommand({
             Bucket: bucket,
-            Key: `video/original/${currentUserId}/${timestamp}_${fileName}`,
-            Body: fs.createReadStream(originalFilePath),
-            ContentType: req.file.mimetype,
-        };
-        await s3.send(new PutObjectCommand(uploadParams));
-
-        const originalUrl = `${s3Domain}/video/original/${currentUserId}/${timestamp}/${fileName}`;
-
-        await videoData.update({
-            status: 'processing',
-            original_url: originalUrl,
+            Key: originalKey,
         });
 
-        const convertedDir = `tmp/converted_${videoId}`;
-        fs.mkdirSync(convertedDir);
+        const s3Object = await s3.send(getObjectCommand);
+        const whiteStream = fs.createWriteStream(originalFilePath);
 
-        const ffmpegCmd = `ffmpeg -i ${originalFilePath} -profile:v baseline -level 3.0 -start_number 0 -hls_time 10 -hls_list_time 0 -f hls ${convertedDir}/index.m3u8`;
+        await new Promise<void>((resolve, reject) => {
+            (s3Object.Body as any)
+            .pipe(whiteStream)
+            .on("finish", resolve)
+            .on("error", reject);
+        });
+
+        await videoData.update({ status: "processing" });
+
+        // 変換ディレクトリ作成
+        fs.mkdirSync(convertedDir, { recursive: true });
+
+        // ffmpegでHLS変換
+        const ffmpegCmd = `
+        ffmpeg -i ${originalFilePath}
+        -profile:v baseline
+        -level 3.0
+        -start_number 0
+        -hls_time 10
+        -hls_list_time 0
+        -f hls
+        ${convertedDir}/index.m3u8
+        `;
+
         exec(ffmpegCmd, async (err) => {
             if (err) {
                 console.error(err);
                 await videoData.update({ status: 'failed' });
+                fs.rmSync(originalFilePath, { force: true });
                 return;
             }
 
-            const files = fs.readdirSync(convertedDir);
-            for (const f of files) {
-                const filePath = `${convertedDir}/${f}`;
-                const uploadParams = {
-                    Bucket: bucket,
-                    Key: `videos/converted/${currentUserId}/${f}`,
-                    Body: fs.createReadStream(filePath),
-                    ContentType: f.endsWith('.ts') ? 'video/MP2P' : 'application/octet-stream',
-                };
-                await s3.send(new PutObjectCommand(uploadParams));
+            try {
+                const files = fs.readdirSync(convertedDir);
+            
+                for (const f of files) {
+                    const filePath = `${convertedDir}/${f}`;
+                    
+                    const uploadParams = {
+                        Bucket: bucket,
+                        Key: `videos/converted/${currentUserId}/${videoId}/${f}`,
+                        Body: fs.createReadStream(filePath),
+                        ContentType: f.endsWith('.ts') ? 'video/mp2t' : 'application/vnd.apple.mpegurl',
+                    };
+
+                    await s3.send(new PutObjectCommand(uploadParams));
+                }
+
+                const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/index.m3u8`;
+
+                await videoData.update({
+                    status: 'done',
+                    converted_url: convertedUrl,
+                });
+
+                // 後処理
+                fs.rmSync(originalFilePath, { force: true });
+                fs.rmSync(convertedDir, { recursive: true, force: true });
+            } catch (e) {
+                console.error(e);
+                await videoData.update({ status: "failed" });
             }
-
-            const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/index.m3u8`;
-            await videoData.update({
-                status: 'done',
-                converted_url: convertedUrl,
-            });
-
-            fs.rmSync(originalFilePath);
-            fs.rmSync(convertedDir, { recursive: true });
         });
 
-        res.status(200).json({ message: '動画のアップロードが完了しました。' });
+        // 受付だけして即レス
+        res.status(200).json({ message: "変換処理を開始しました" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -260,26 +295,60 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
     }
 
     try {
-        const brands = await Brands.findAll({
+        const direct = await Brands.findAll({
             where: {
-                [Op.or]: [
-                    {
-                        name: {
-                            [Op.iLike]: `%${keyword}%`,
-                        },
-                    },
-                    {
-                        name_normalized: {
-                            [Op.iLike]: `%${keyword}%`,
-                        },
-                    },
-                ],
+                name: {
+                    [Op.iLike]: `%${keyword}%`,
+                },
             },
             order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
             limit: 15,
         });
 
-        res.status(200).json({ brands });
+        let fromAlias = null;
+
+        if (direct.length < 15) {
+            fromAlias = await BrandAliases.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            name: {
+                                [Op.iLike]: `%${keyword}%`,
+                            },
+                        },
+                        {
+                            name_normalized: {
+                                [Op.iLike]: `%${keyword}%`,
+                            },
+                        },
+                    ],
+                },
+                include: [
+                    {
+                        model: Brands,
+                        required: true,
+                    },
+                ],
+                order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
+                limit: 15 - direct.length,
+            });
+        }
+
+        const brandMap = new Map<number, typeof Brands>();
+
+        for (const d of direct) {
+            brandMap.set(d.id, d);
+        }
+
+        for (const alias of fromAlias) {
+            if (alias.brand) {
+                brandMap.set(alias.brand.id, alias.brand);
+            }
+        }
+
+        const result = Array.from(brandMap.values());
+
+        res.status(200).json({ brands: result });
     } catch (err) {
         console.error(err);
         res.status(500).json({ suggest: [] });

@@ -10,6 +10,8 @@ export type VideoInputValue = {
     thumbnailPreview: string | null;
     title: string;
     summary: string;
+    videoUploaded: boolean;
+    thumbnailUploaded: boolean;
 };
 
 type Props = {

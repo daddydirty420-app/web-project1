@@ -22,6 +22,7 @@ import ItemsRouter from "./routes/item.js";
 import ItemListRouter from "./routes/item_list.js";
 import ItemPageRouter from "./routes/item_page.js";
 import ItemUploadRouter from "./routes/item_upload.js";
+import ItemUploadDraftRouter from "./routes/item_upload_draft.js";
 import AddressRouter from "./routes/address.js";
 import BankAccountRouter from "./routes/bank_account.js";
 import BlogRouter from "./routes/blog.js";
@@ -123,6 +124,7 @@ app.use('/api/item', ItemsRouter);
 app.use('/api/item-list', ItemListRouter);
 app.use('/api/item-page', ItemPageRouter);
 app.use('/api/item-upload', ItemUploadRouter);
+app.use("/api/item-upload-draft", ItemUploadDraftRouter)
 app.use('/api/address', AddressRouter);
 app.use('/api/bank-account', BankAccountRouter);
 app.use('/api/blog', BlogRouter);

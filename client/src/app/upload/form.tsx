@@ -16,6 +16,8 @@ import MaterialInput, { MaterialValue } from "./material";
 import ConditionInput, { ConditionValue } from "./condition";
 import ShippingInput, { ShippingValue } from "./shipping";
 import PriceInput, { PriceValue } from "./price";
+import toast from "react-hot-toast";
+import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     itemId: string;
@@ -32,6 +34,12 @@ type ItemImage = {
     uploaded: boolean;
     file: File | null;
     preview: string;
+};
+
+type ItemImageUpload = {
+    name: string;
+    type: string | null;
+    uploaded: boolean;
 };
 
 export default function Form({
@@ -53,6 +61,8 @@ export default function Form({
         thumbnailPreview: initialThumbnailPreview,
         title: item.Video?.title ?? "",
         summary: item.Video?.summary ?? "",
+        videoUploaded: !!existingVideoUrl,
+        thumbnailUploaded: !!initialThumbnailPreview,
     });
 
     const [itemNameDetail, setItemNameDetail] = useState<ItemNameDetailValue>({
@@ -167,9 +177,307 @@ export default function Form({
         setItemImages(prev => prev.filter((_, i) => i !== index));
     };
 
-    const upload = async () => {};
+    const upload = async () => {
+        const required = {
+            videoFile: {
+                ok: !!videoInput.videoFile,
+                message: "動画ファイルを選択してください",
+            },
+            thumbnailFile: {
+                ok: !!videoInput.thumbnailFile,
+                message: "サムネイルを選択してください",
+            },
+            title: {
+                ok: videoInput.title.trim().length > 0,
+                message: "動画タイトルを入力してください",
+            },
+            itemImages: {
+                ok: itemImages.length > 0,
+                message: "商品画像を選択してください",
+            },
+            name: {
+                ok: itemNameDetail.name.trim().length > 0,
+                message: "商品名を入力してください",
+            },
+            category: {
+                ok: !!categoryValue.id,
+                message: "カテゴリーを選択してください",
+            },
+            gender_type: {
+                ok: !!genderAgeValue.gender_type,
+                message: "着用対象（性別）を選択してください",
+            },
+            age_type: {
+                ok: !!genderAgeValue.age_type,
+                message: "着用対象（年齢）を選択してください",
+            },
+            all_inventory: {
+                ok: attributesValue.all_inventory > 0,
+                message: "出品点数を1点以上入力してください",
+            },
+            condition: {
+                ok: !!conditionValue.id,
+                message: "商品の状態を選択してください",
+            },
+            shipping_day: {
+                ok: !!shippingValue.day_id,
+                message: "発送までの日数を選択してください",
+            },
+            shipping_service: {
+                ok: !!shippingValue.service_id,
+                message: "配送方法を選択してください",
+            },
+            shipping_place: {
+                ok: !!shippingValue.place_id,
+                message: "発送元地域を選択してください",
+            },
+            price: {
+                ok: priceValue.price.trim().length > 0
+                && !Number.isNaN(Number(priceValue.price))
+                && Number(priceValue.price) >= 300
+                && Number(priceValue.price) <= 1000000,
+                message: "価格を300~1,000,000円の間で設定してください",
+            },
+        };
 
-    const draft = async () => {};
+        const errors = Object.values(required)
+        .filter(r => !r.ok)
+        .map(r => r.message);
+
+        if (errors.length) {
+            toast.error(errors[0]);
+            console.log("バリデーションエラー：", errors);
+            return;
+        }
+    };
+
+    const draft = async () => {
+        let itemImagesUpload: ItemImageUpload[] = [];
+
+        if (itemImages.length > 0) {
+            itemImagesUpload = itemImages.map(img => {
+                if (!img.uploaded && img.file instanceof File) {
+                    return {
+                        name: img.file!.name,
+                        type: img.file!.type,
+                        uploaded: false, // 新規アップロード
+                    };
+                }
+
+                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
+
+                return {
+                    name: fileName,
+                    type: null,
+                    uploaded: true,
+                }
+            });
+        }
+
+        const body = {
+            video: {
+                name: videoInput.videoFile?.name,
+                type: videoInput.videoFile?.type,
+                uploaded: videoInput.videoUploaded,
+            },
+            thumbnail: {
+                name: videoInput.thumbnailFile?.name,
+                type: videoInput.thumbnailFile?.type,
+                uploaded: videoInput.thumbnailUploaded,
+            },
+            videoMeta: {
+                title: videoInput.title,
+                summary: videoInput.summary,
+            },
+            itemImages: itemImagesUpload,
+            itemMeta: {
+                name: itemNameDetail.name,
+                detail: itemNameDetail.detail,
+            },
+            category: {
+                id: categoryValue.id,
+                name: categoryValue.name,
+                parent_id: categoryValue.parent_id,
+                level: categoryValue.level,
+            },
+            genderAge: {
+                gender: genderAgeValue.gender_type,
+                age: genderAgeValue.age_type,
+            },
+            brand: {
+                id: brandValue.id,
+                name: brandValue.name,
+            },
+            attributes: {
+                allInventory: attributesValue.all_inventory,
+                variants: attributesValue.variants.map(v => ({
+                    uiId: v._uiId,
+                    color: v.color,
+                    size: v.size,
+                    inventory: v.inventory,
+                    image: v.image ? {
+                        name: v.image.name,
+                        type: v.image.type,
+                        uploaded: false, // 新規アップロード
+                    } : initialAttributesImageUrlMap.get(v._uiId) ? {
+                        name: (initialAttributesImageUrlMap.get(v._uiId) || "").split("/").pop(),
+                        type: null,
+                        uploaded: true, // 既存画像
+                    } : null,
+                })),
+                material: materialValue.material,
+            },
+            condition: {
+                id: conditionValue.id,
+                name: conditionValue.name,
+            },
+            shipping: {
+                day: shippingValue.day_id,
+                service: shippingValue.service_id,
+                place: shippingValue.place_id,
+                freeText: shippingValue.free_text,
+            },
+            price: priceValue.price,
+        };
+
+        try {
+            const accessToken = await refreshToken();
+                        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-draft/${itemId}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(body),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.message);
+                toast.error("下書き保存に失敗しました");
+                return;
+            }
+
+            // 動画アップロード
+            if (data.videoSignedUrl && videoInput.videoFile instanceof File) {
+                const videoRes = await fetch(data.videoSignedUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": videoInput.videoFile.type,
+                    },
+                    body: videoInput.videoFile,
+                });
+
+                if (!videoRes.ok) {
+                    toast.error("動画のアップロードに失敗しました");
+                    return;
+                } else {
+                    // ffmpeg変換
+                    const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/convert-video/${item.Video?.id}`, {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                    });
+
+                    const data = await convertRes.json();
+
+                    if (convertRes.ok) {
+                        console.log(data.message);
+                    } else {
+                        console.warn(data.message);
+                    }
+                }
+            }
+
+            // サムネイルアップロード
+            if (data.thumbnailSignedUrl && videoInput.thumbnailFile instanceof File) {
+                const thumbnailRes = await fetch(data.thumbnailSignedUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": videoInput.thumbnailFile.type,
+                    },
+                    body: videoInput.thumbnailFile,
+                });
+
+                if (!thumbnailRes.ok) {
+                    toast.error("サムネイルのアップロードに失敗しました");
+                    return;
+                }
+            }
+
+            // 商品画像アップロード
+            if (data.itemImageSignedUrls.length > 0) {
+                const uploadItemImages = itemImages.filter(img => !img.uploaded && img.file instanceof File);
+
+                for (let i = 0; i < data.itemImageSignedUrls.length; i++) {
+                    const signedUrl = data.itemImageSignedUrls[i];
+                    const target = uploadItemImages[i];
+
+                    if (!target || !(target.file instanceof File)) {
+                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
+                        continue;
+                    }
+
+                    const file = target.file;
+
+                    const uploadRes = await fetch(signedUrl, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": file.type,
+                        },
+                        body: file,
+                    });
+
+                    if (!uploadRes.ok) {
+                        toast.error("商品画像のアップロードに失敗しました");
+                        return;
+                    }
+                }
+            }
+
+            // attributes.imagesアップロード
+            const hasAttributesImages = Object.keys(data.attributesImageSignedUrls).length > 0;
+
+            if (hasAttributesImages) {
+                const uploadImages = attributesValue.variants
+                .map(v => v.image)
+                .filter((img): img is File => img instanceof File);
+
+                const imageLength = Object.keys(data.attributesImageSignedUrls).length;
+
+                for (let i = 0; i < imageLength; i++) {
+                    const signedUrl = data.attributesImageSignedUrls[i];
+                    const target = uploadImages[i];
+
+                    if (!target || !(target instanceof File)) {
+                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
+                        continue;
+                    }
+
+                    const uploadRes = await fetch(signedUrl, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": target.type,
+                        },
+                        body: target,
+                    });
+
+                    if (!uploadRes.ok) {
+                        toast.error("商品画像のアップロードに失敗しました");
+                        return;
+                    }
+                }
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <UploadUI title="商品をアップロード">
