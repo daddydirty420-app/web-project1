@@ -106,6 +106,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         });
 
         if (!item) {
+            console.log("item:", item);
             res.status(404).json({ message: "商品データが見つかりません。" });
             return;
         }
