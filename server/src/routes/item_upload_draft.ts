@@ -253,7 +253,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (categoryId !== null) {
             categoryOption = await Categories.findByPk(categoryId);
             if (!categoryOption) {
-                console.log("category");
+                console.log("category", categoryId);
                 res.status(404).json({ message: "カテゴリーが見つかりません" });
                 return;
             }
