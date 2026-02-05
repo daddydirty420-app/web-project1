@@ -6,7 +6,10 @@ async function findOrCreateBrand(inputName: string) {
 
     let alias = await BrandAliases.findOne({
         where: { name_normalized: normalized },
-        include: [{ model: Brands }],
+        include: [{
+            model: Brands,
+            as: "brand",
+        }],
     });
 
     if (alias?.brand) {
