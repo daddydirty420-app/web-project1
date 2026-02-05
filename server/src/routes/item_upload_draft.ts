@@ -106,7 +106,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         });
 
         if (!item) {
-            console.log("item:", item);
             res.status(404).json({ message: "商品データが見つかりません。" });
             return;
         }
@@ -254,6 +253,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (categoryId !== null) {
             categoryOption = await Categories.findByPk(categoryId);
             if (!categoryOption) {
+                console.log("category");
                 res.status(404).json({ message: "カテゴリーが見つかりません" });
                 return;
             }
@@ -262,6 +262,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (conditionId !== null) {
             const conditionOption = await ItemConditionOption.findByPk(conditionId);
             if (!conditionOption) {
+                console.log("condition");
                 res.status(404).json({ message: "ItemConditionOptionが見つかりません" });
                 return;
             }
@@ -270,6 +271,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (dayId !== null) {
             const dayOption = await ShippingDayOption.findByPk(dayId);
             if (!dayOption) {
+                console.log("day");
                 res.status(404).json({ message: "ShippingDayOptionが見つかりません" });
                 return;
             }
@@ -278,6 +280,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (serviceId !== null) {
             const serviceOption = await ShippingServiceOption.findByPk(serviceId);
             if (!serviceOption) {
+                console.log("service");
                 res.status(404).json({ message: "ShippingServiceOptionが見つかりません" });
                 return;
             }
@@ -286,6 +289,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (placeId !== null) {
             const placeOption = await TodouhukenOption.findByPk(placeId);
             if (!placeOption) {
+                console.log("place");
                 res.status(404).json({ message: "placeOption（都道府県）が見つかりません" });
                 return;
             }
