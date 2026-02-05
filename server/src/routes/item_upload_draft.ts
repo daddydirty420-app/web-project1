@@ -250,7 +250,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
         // マスターテーブルチェック
         let categoryOption = null;
-        if (categoryId !== null) {
+        if (categoryId !== null || categoryId !== 0) {
             categoryOption = await Categories.findByPk(categoryId);
             if (!categoryOption) {
                 console.log("category", categoryId);
@@ -259,7 +259,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         }
 
-        if (conditionId !== null) {
+        if (conditionId !== null || conditionId !== 0) {
             const conditionOption = await ItemConditionOption.findByPk(conditionId);
             if (!conditionOption) {
                 console.log("condition");
@@ -268,7 +268,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         }
 
-        if (dayId !== null) {
+        if (dayId !== null || dayId !== 0) {
             const dayOption = await ShippingDayOption.findByPk(dayId);
             if (!dayOption) {
                 console.log("day");
@@ -277,7 +277,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         }
 
-        if (serviceId !== null) {
+        if (serviceId !== null || serviceId !== 0) {
             const serviceOption = await ShippingServiceOption.findByPk(serviceId);
             if (!serviceOption) {
                 console.log("service");
@@ -286,7 +286,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         }
 
-        if (placeId !== null) {
+        if (placeId !== null || placeId !== 0) {
             const placeOption = await TodouhukenOption.findByPk(placeId);
             if (!placeOption) {
                 console.log("place");
