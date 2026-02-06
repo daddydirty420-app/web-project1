@@ -211,9 +211,31 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         for (const v of attributes.variants) {
             if (v.image?.uploaded) {
                 const existingVariant = item.attributes?.variants ?? [];
+<<<<<<< Updated upstream
                     
                 if (existingVariant) {
                     attributesImageUrls[v.uiId] = existingVariant.image_url;
+=======
+
+                if (v.image && v.image.name && !v.image.uploaded) {
+                    const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image.name}`;
+
+                    const cmd = new PutObjectCommand({
+                        Bucket: bucket,
+                        Key: key,
+                        ContentType: v.image.type ?? "",
+                    });
+
+                    const signedUrl = await getSignedUrl(s3, cmd, { expiresIn: 60 });
+
+                    attributesImageSignedUrls[v.uiId] = signedUrl;
+                    console.log(attributesImageSignedUrls);
+                    attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
+                } else if (v.image && v.image.uploaded) {
+                    if (existingVariant?.image_url) {
+                        attributesImageUrls[v.uiId] = existingVariant.image_url;
+                    }
+>>>>>>> Stashed changes
                 }
             }
         }
