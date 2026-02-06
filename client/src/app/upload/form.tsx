@@ -413,31 +413,39 @@ export default function Form({
 
             // 商品画像アップロード
             if (data.itemImageSignedUrls.length > 0) {
-                const uploadItemImages = itemImages.filter(img => !img.uploaded && img.file instanceof File);
+                const uploadItemImages = itemImages.filter(
+                    img => !img.uploaded && img.file instanceof File
+                );
 
-                for (let i = 0; i < data.itemImageSignedUrls.length; i++) {
-                    const signedUrl = data.itemImageSignedUrls[i];
+                const uploadPromises = data.itemImageSignedUrls.map((signedUrl, i) => {
                     const target = uploadItemImages[i];
 
                     if (!target || !(target.file instanceof File)) {
                         console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
-                        continue;
+                        return Promise.resolve();
                     }
 
                     const file = target.file;
 
-                    const uploadRes = await fetch(signedUrl, {
+                    return fetch(signedUrl, {
                         method: "PUT",
                         headers: {
                             "Content-Type": file.type,
                         },
                         body: file,
+                    }).then(res => {
+                        if (!res.ok) {
+                            throw new Error(`画像${i + 1}枚目のアップロードに失敗`);
+                        }
                     });
+                });
 
-                    if (!uploadRes.ok) {
-                        toast.error("商品画像のアップロードに失敗しました");
-                        return;
-                    }
+                try {
+                    await Promise.all(uploadPromises);
+                } catch (err) {
+                    console.error(err);
+                    toast.error("商品画像のアップロードに失敗しました");
+                    return;
                 }
             }
 
@@ -449,15 +457,15 @@ export default function Form({
                 .map(v => v.image)
                 .filter((img): img is File => img instanceof File);
 
-                const imageLength = Object.keys(data.attributesImageSignedUrls).length;
+                const signedUrlMap = data.attributesImageSignedUrls as Record<string, string>;
+                const imageUrls = Object.values(signedUrlMap);
 
-                for (let i = 0; i < imageLength; i++) {
-                    const signedUrl = data.attributesImageSignedUrls[i];
+                await Promise.all(imageUrls.map(async (signedUrl, i) => {
                     const target = uploadImages[i];
 
                     if (!target || !(target instanceof File)) {
                         console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
-                        continue;
+                        return;
                     }
 
                     const uploadRes = await fetch(signedUrl, {
@@ -472,7 +480,7 @@ export default function Form({
                         toast.error("商品画像のアップロードに失敗しました");
                         return;
                     }
-                }
+                }));
             }
 
             toast.success("下書き保存しました");

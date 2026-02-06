@@ -150,61 +150,70 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         let itemImageSignedUrls: string[] = [];
         let itemImageUrls: string[] = [];
 
-        if (Array.isArray(itemImages) && itemImages.length > 0) {
-            for (let i = 0; i < itemImages.length; i++) {
-                const img = itemImages[i];
+        const itemImageTargets = Array.isArray(itemImages)
+        ? itemImages
+        .map((img, index) => ({ img, index }))
+        .filter(({ img }) => img.name && !img.uploaded)
+        : [];
 
+        await Promise.all(itemImageTargets.map(async ({ img, index }) => {
+            const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
+
+            const itemImageCommand = new PutObjectCommand({
+                Bucket: bucket,
+                Key: key,
+                ContentType: img.type ?? "",
+            });
+
+            const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
+
+            itemImageSignedUrls[index] = signedUrl;
+            itemImageUrls[index] = `${s3Domain}/${key}`;
+        }));
+
+        if (Array.isArray(itemImages)) {
+            itemImages.forEach((img, i) => {
                 const existingUrl = existingImages[i];
 
-                if (img.name && !img.uploaded) {
-                    const key = `item-image/${userId}/${itemId}_${i}_${now}_${img.name}`;
-
-                    const itemImageCommand = new PutObjectCommand({
-                        Bucket: bucket,
-                        Key: key,
-                        ContentType: img.type ?? "",
-                    });
-
-                    const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
-
-                    itemImageSignedUrls.push(signedUrl);
-                    itemImageUrls.push(`${s3Domain}/${key}`);
-                } else if (img.uploaded) {
-                    itemImageUrls.push(existingUrl);
-                } else if (img.uploaded && !existingUrl) {
-                    console.warn(`既存URLが見つかりません: index=${i}`);
+                if (img.uploaded) {
+                    if (existingUrl) {
+                        itemImageUrls[i] = existingUrl;
+                    } else {
+                        console.warn(`既存URLが見つかりません: index=${i}`);
+                    }
                 }
-            }
+            });
         }
 
         // attributes.image署名付きURL生成
         let attributesImageSignedUrls: Record<string, string> = {};
         let attributesImageUrls: Record<string, string> = {};
 
-        if (attributes.variants.length > 0) {
-            for (let i = 0; i < attributes.variants.length; i++) {
-                const v = attributes.variants[i];
+        const attributesTargets = attributes.variants.filter(
+            v => v.image && v.image.name && !v.image.uploaded
+        );
 
+        await Promise.all(attributesTargets.map(async (v) => {
+            const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image?.name}`;
+
+            const cmd = new PutObjectCommand({
+                Bucket: bucket,
+                Key: key,
+                ContentType: v.image?.type ?? "",
+            });
+
+            const signedUrl = await getSignedUrl(s3, cmd, { expiresIn: 60 });
+
+            attributesImageSignedUrls[v.uiId] = signedUrl;
+            attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
+        }));
+        
+        for (const v of attributes.variants) {
+            if (v.image?.uploaded) {
                 const existingVariant = item.attributes?.variants ?? [];
-
-                if (v.image && v.image.name && !v.image.uploaded) {
-                    const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image.name}`;
-
-                    const cmd = new PutObjectCommand({
-                        Bucket: bucket,
-                        Key: key,
-                        ContentType: v.image.type ?? "",
-                    });
-
-                    const signedUrl = await getSignedUrl(s3, cmd, { expiresIn: 60 });
-
-                    attributesImageSignedUrls[v.uiId] = signedUrl;
-                    console.log(attributesImageSignedUrls);
-                    attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
-                } else if (v.image && v.image.uploaded) {
-                    if (existingVariant?.image_url) {
-                        attributesImageUrls[v.uiId] = existingVariant.image_url;
-                    }
+                    
+                if (existingVariant) {
+                    attributesImageUrls[v.uiId] = existingVariant.image_url;
                 }
             }
         }
