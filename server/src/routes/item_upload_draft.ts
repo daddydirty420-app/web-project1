@@ -37,16 +37,18 @@ type DraftBody = {
     brand: { id: string | null; name: string | null };
     attributes: {
         allInventory: number;
-        variants: Array<{
+        colorVariants: Array<{
             uiId: string;
             color: string | null;
-            size: string | null;
-            inventory: number;
             image: {
                 name: string;
                 type: string | null;
                 uploaded: boolean;
             } | null;
+            sizes: Array<{
+                size: string | null;
+                inventory: number;
+            }>;
         }>;
         material: string[],
     };
@@ -189,7 +191,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         let attributesImageSignedUrls: Record<string, string> = {};
         let attributesImageUrls: Record<string, string> = {};
 
-        const attributesTargets = attributes.variants.filter(
+        const attributesTargets = attributes.colorVariants.filter(
             v => v.image && v.image.name && !v.image.uploaded
         );
 
@@ -208,7 +210,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
         }));
         
-        for (const v of attributes.variants) {
+        for (const v of attributes.colorVariants) {
             if (v.image?.uploaded) {
                 const existingVariant = item.attributes?.variants ?? [];
                     
@@ -361,17 +363,18 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                     current: attributes.allInventory,
                     low_stock_ratio: attributes.allInventory * 0.2,
                 },
-                variants: attributes.variants.length > 0
-                ? attributes.variants.map(v => ({
+                colorVariants: attributes.colorVariants.length > 0
+                ? attributes.colorVariants.map(v => ({
                     color: v.color ?? null,
-                    size: v.size ?? null,
-                    size_label: v.size ?? null,
                     image_url: attributesImageUrls[v.uiId] ?? null,
-                    inventory: {
-                        initial: v.inventory,
-                        current: v.inventory,
-                        low_stock_ratio: v.inventory * 0.2,
-                    },
+                    sizes: v.sizes.map(s => ({
+                        size: s.size ?? null,
+                        inventory: {
+                            initial: s.inventory,
+                            current: s.inventory,
+                            low_stock_ratio: s.inventory * 0.2,
+                        },
+                    })),
                 })) : undefined,
                 material: attributes.material ?? [],
                 body_category: categoryOption?.body_category ?? null,

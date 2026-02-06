@@ -99,21 +99,23 @@ export default function Form({
 
     const initialAttributesValue: AttributesValue = {
         all_inventory: item.attributes?.inventory?.current ?? 1,
-        variants: item.attributes?.variants?.map((v) => ({
+        colorVariants: item.attributes?.colorVariants?.map((v) => ({
             _uiId: crypto.randomUUID(),
             color: v.color ?? null,
-            size: v.size ?? null,
             image: null,
-            inventory: v.inventory?.initial ?? 0,
+            sizes: (v.sizes ?? []).map((s) => ({
+                size: s.size ?? null,
+                inventory: s.inventory.current ?? 1,
+            })),
         })) ?? [],
     };
 
     const initialAttributesImageUrlMap = new Map<string, string>();
 
-    item.attributes?.variants?.forEach((v, i) => {
-        if (v.image_url && initialAttributesValue.variants[i]) {
+    item.attributes?.colorVariants?.forEach((v, i) => {
+        if (v.image_url && initialAttributesValue.colorVariants[i]) {
             initialAttributesImageUrlMap.set(
-                initialAttributesValue.variants[i]._uiId,
+                initialAttributesValue.colorVariants[i]._uiId,
                 v.image_url,
             );
         }
@@ -274,6 +276,27 @@ export default function Form({
             });
         }
 
+        const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
+            if (v.image) {
+                return {
+                    name: v.image.name,
+                    type: v.image.type,
+                    uploaded: false,
+                };
+            }
+
+            const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
+            if (existingUrl) {
+                return {
+                    name: existingUrl.split("/").pop(),
+                    type: null,
+                    uploaded: true,
+                };
+            }
+
+            return null;
+        };
+
         const body = {
             video: {
                 name: videoInput.videoFile?.name,
@@ -310,20 +333,14 @@ export default function Form({
             },
             attributes: {
                 allInventory: attributesValue.all_inventory,
-                variants: attributesValue.variants.map(v => ({
+                colorVariants: attributesValue.colorVariants.map(v => ({
                     uiId: v._uiId,
                     color: v.color,
-                    size: v.size,
-                    inventory: v.inventory,
-                    image: v.image ? {
-                        name: v.image.name,
-                        type: v.image.type,
-                        uploaded: false, // 新規アップロード
-                    } : initialAttributesImageUrlMap.get(v._uiId) ? {
-                        name: (initialAttributesImageUrlMap.get(v._uiId) || "").split("/").pop(),
-                        type: null,
-                        uploaded: true, // 既存画像
-                    } : null,
+                    image: resolveAttributesImage(v),
+                    sizes: v.sizes.map(s => ({
+                        size: s.size,
+                        inventory: s.inventory
+                    })),
                 })),
                 material: materialValue.material,
             },
@@ -453,7 +470,7 @@ export default function Form({
             const hasAttributesImages = Object.keys(data.attributesImageSignedUrls).length > 0;
 
             if (hasAttributesImages) {
-                const uploadImages = attributesValue.variants
+                const uploadImages = attributesValue.colorVariants
                 .map(v => v.image)
                 .filter((img): img is File => img instanceof File);
 

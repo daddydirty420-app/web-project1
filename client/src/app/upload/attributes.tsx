@@ -6,15 +6,19 @@ import styles from "./attributesCard.module.css";
 import { InputTitle } from "@/components/inputForm";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export type AttributesValue = {
     all_inventory: number;
-    variants: Array<{
+    colorVariants: Array<{
         _uiId: string;
         color: string | null;
-        size: string | null;
         image: File | null;
-        inventory: number;
+        sizes: {
+            size: string | null;
+            inventory: number;
+        }[];
     }>;
 };
 
@@ -30,7 +34,7 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     const previewMap = useMemo(() => {
         const map = new Map<string, string>();
 
-        value.variants.forEach((variant) => {
+        value.colorVariants.forEach((variant) => {
             if (variant.image) {
                 map.set(
                     variant._uiId,
@@ -40,13 +44,13 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
         });
 
         return map;
-    }, [value.variants]);
+    }, [value.colorVariants]);
 
     useEffect(() => {
-        if (value.variants.length > 0) {
+        if (value.colorVariants.length > 0) {
             setShowVariants(true);
         }
-    }, [value.variants.length]);
+    }, [value.colorVariants.length]);
 
     useEffect(() => {
         return () => {
@@ -64,12 +68,12 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
             all_inventory: safeNum,
         });
 
-        if (safeNum > 1 && value.variants.length === 0) {
+        if (safeNum > 1 && value.colorVariants.length === 0) {
             setShowVariants(true);
             onChange({
                 ...value,
                 all_inventory: safeNum,
-                variants: [createEnptyVariant()],
+                colorVariants: [createEmptyVariant()],
             });
         }
 
@@ -78,24 +82,27 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
             onChange({
                 ...value,
                 all_inventory: safeNum,
-                variants: [],
+                colorVariants: [],
             });
         }
     };
 
-    const createEnptyVariant = () => ({
+    const createEmptyVariant = () => ({
         _uiId: crypto.randomUUID(),
         color: null,
-        size: null,
-        size_label: null,
         image: null,
-        inventory: 0,
+        sizes: [],
+    });
+
+    const createEmptySize = () => ({
+        size: "",
+        inventory: 1,
     });
 
     const handleChangeCardImage = (file: File, uiId: string) => {
         onChange({
             ...value,
-            variants: value.variants.map((v) => 
+            colorVariants: value.colorVariants.map((v) => 
                 v._uiId === uiId ? { ...v, image: file } : v
             ),
         });
@@ -104,38 +111,50 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     const handleChangeVariantColor = (uiId: string, color: string) => {
         onChange({
             ...value,
-            variants: value.variants.map((v) => 
+            colorVariants: value.colorVariants.map((v) => 
                 v._uiId === uiId ? { ...v, color }: v
             ),
-        })
+        });
     };
 
-    const handleChangeVariantSize = (uiId: string, size: string) => {
+    const handleChangeSize = (colorVariantsId: string, newSize: string, index: number) => {
         onChange({
             ...value,
-            variants: value.variants.map((v) => 
-                v._uiId === uiId ? { ...v, size }: v
+            colorVariants: value.colorVariants.map(v => 
+                v._uiId === colorVariantsId
+                ? {
+                    ...v,
+                    sizes: v.sizes.map((s, i) =>
+                        i === index ? { ...s, size: newSize } : s
+                    ),
+                } : v
             ),
-        })
+        });
     };
 
-    const handleChangeVariantInventory = (uiId: string, inventory: number) => {
-        const safeNum = Math.max(1, inventory);
+    const handleChangeInventory = (colorVariantsId: string, newInventory: number, index: number) => {
+        const safeNum = Math.max(1, newInventory);
 
         onChange({
             ...value,
-            variants: value.variants.map((v) => 
-                v._uiId === uiId ? { ...v, inventory: safeNum }: v
+            colorVariants: value.colorVariants.map(v => 
+                v._uiId === colorVariantsId
+                ? {
+                    ...v,
+                    sizes: v.sizes.map((s, i) =>
+                        i === index ? { ...s, inventory: safeNum } : s
+                    ),
+                } : v
             ),
-        })
+        });
     };
 
     const cardRemove = (uiId: string) => {
-        const nextVariants = value.variants.filter(v => v._uiId !== uiId);
+        const nextVariants = value.colorVariants.filter(v => v._uiId !== uiId);
 
         onChange({
             ...value,
-            variants: nextVariants,
+            colorVariants: nextVariants,
         });
 
         if (nextVariants.length === 0) {
@@ -144,11 +163,38 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
     };
 
     const addVariant = () => {
-        if (value.variants.length >= value.all_inventory) return;
+        if (value.colorVariants.length >= value.all_inventory) return;
         
         onChange({
             ...value,
-            variants: [...value.variants, createEnptyVariant()],
+            colorVariants: [...value.colorVariants, createEmptyVariant()],
+        });
+    };
+
+    const addSize = (colorVariantId: string) => {
+        onChange({
+            ...value,
+            colorVariants: value.colorVariants.map(v =>
+                v._uiId === colorVariantId
+                ? {
+                    ...v,
+                    sizes: [...v.sizes, createEmptySize()],
+                } : v
+            ),
+        });
+    };
+
+    const removeSize = (colorVariantsId: string, index: number) => {
+        onChange({
+            ...value,
+            colorVariants: value.colorVariants.map(v =>
+                v._uiId === colorVariantsId
+                ? {
+                    ...v,
+                    sizes: v.sizes.filter((_, i) => i !== index),
+                }
+                : v
+            ),
         });
     };
 
@@ -169,7 +215,7 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
 
         {showVariants && (
             <div className={styles.cardWrapper}>
-                {value.variants.map((variant) => {
+                {value.colorVariants.map((variant) => {
                     const previewUrl =  previewMap.get(variant._uiId) ?? imageUrlMap.get(variant._uiId) ?? null;
 
                     return (
@@ -205,35 +251,51 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
                                 onChange={(e) => handleChangeVariantColor(variant._uiId, e.target.value)}
                                 placeholder="カラーを入力してください"
                                 className={styles.cardInput}
-                                required
                                 />
                             </div>
 
-                            <div className={styles.cardInputDiv}>
-                                <p className={styles.cardInputTitle}>サイズ</p>
-                                <input
-                                type="text"
-                                value={variant.size ?? ""}
-                                onChange={(e) => handleChangeVariantSize(variant._uiId, e.target.value)}
-                                placeholder="サイズを入力してください"
-                                className={styles.cardInput}
-                                required
-                                />
+                            <div className={styles.sizeList}>
+                                {variant.sizes.map((s, index) => (
+                                    <div className={styles.sizeRow} key={index}>
+                                        <div className={styles.sizeInputDiv}>
+                                            <p className={styles.sizeInputTitle}>サイズ</p>
+                                            <input
+                                            type="text"
+                                            value={s.size ?? ""}
+                                            onChange={(e) => handleChangeSize(variant._uiId, e.target.value, index)}
+                                            placeholder="S"
+                                            className={styles.sizeInput}
+                                            />
+                                        </div>
+
+                                        <div className={styles.inventoryInputDiv}>
+                                            <p className={styles.sizeInputTitle}>在庫数</p>
+                                            <input
+                                            type="number"
+                                            min={1}
+                                            value={s.inventory}
+                                            onChange={(e) => handleChangeInventory(variant._uiId, Number(e.target.value), index)}
+                                            placeholder="1"
+                                            className={styles.inventoryInput}
+                                            />
+                                        </div>
+
+                                        <FontAwesomeIcon
+                                        icon={faTrash}
+                                        className={styles.sizeDelete}
+                                        onClick={() => removeSize(variant._uiId, index)}
+                                        />
+                                    </div>
+                                ))}
                             </div>
 
-                            <div className={styles.cardInputDiv}>
-                                <p className={styles.cardInputTitle}>在庫数</p>
-                                <input
-                                type="number"
-                                min={1}
-                                step={1}
-                                value={variant.inventory ?? 1}
-                                onChange={(e) => handleChangeVariantInventory(variant._uiId, Number(e.target.value))}
-                                placeholder="在庫数を入力してください"
-                                className={styles.cardInput}
-                                required
-                                />
-                            </div>
+                            <button
+                            type="button"
+                            className={styles.addSizeButton}
+                            onClick={() => addSize(variant._uiId)}
+                            >
+                                + サイズ追加
+                            </button>
                         </div>
                     );
                 })}

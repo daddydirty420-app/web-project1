@@ -40,17 +40,20 @@ export type ItemAttributes = {
         current: number,
         low_stock_ratio: number,
     }; // 在庫
-    variants?: Array<{
+
+    colorVariants?: Array<{
         color?: string;
-        size?: string;
-        size_label?: string;
         image_url?: string;
-        inventory?: {
-            initial: number,
-            current: number,
-            low_stock_ratio: number,
-        },
+        sizes?: Array<{
+            size: string;
+            inventory: {
+                initial: number;
+                current: number;
+                low_stock_ratio: number;
+            };
+        }>;
     }>;
+
     body_category?: BodyCategory;
     lifestyle_category?: LifeStyleCategory;
     layer?: Layer;
