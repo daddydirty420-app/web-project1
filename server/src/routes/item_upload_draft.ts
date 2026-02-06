@@ -199,6 +199,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                     const signedUrl = await getSignedUrl(s3, cmd, { expiresIn: 60 });
 
                     attributesImageSignedUrls[v.uiId] = signedUrl;
+                    console.log(attributesImageSignedUrls);
                     attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
                 } else if (v.image && v.image.uploaded) {
                     if (existingVariant?.image_url) {
