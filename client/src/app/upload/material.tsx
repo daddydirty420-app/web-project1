@@ -75,7 +75,7 @@ export default function MaterialInput({ value, onChange }: Props) {
                         type="text"
                         value={m.name ?? ""}
                         onChange={(e) => handleChangeName(e.target.value, index)}
-                        placeholder="綿"
+                        placeholder="例：綿"
                         className={styles.nameInput}
                         />
                     </div>
