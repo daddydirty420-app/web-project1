@@ -20,7 +20,7 @@ export default function MaterialInput({ value, onChange }: Props) {
 
     const createEmptyMaterial = () => ({
         name: "",
-        ratio: 0,
+        ratio: 1,
     });
 
     const addMaterial = () => {
