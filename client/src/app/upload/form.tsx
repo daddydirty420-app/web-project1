@@ -128,7 +128,7 @@ export default function Form({
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
         materials: (item.attributes?.materials ?? []).map(m => ({
             name: m.name ?? "",
-            ratio: m.ratio ?? 0, 
+            ratio: m.ratio ?? 1, 
         })),
     });
 
