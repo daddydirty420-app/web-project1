@@ -29,6 +29,7 @@ export default function VideoInput({ value, onChange, videoRef, thumbnailRef, ex
         onChange({
             ...value,
             videoFile: e.target.files[0],
+            videoUploaded: false,
         });
     };
 
