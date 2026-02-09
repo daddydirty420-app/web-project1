@@ -79,7 +79,7 @@
     margin: 8px auto 0;
     width: 200px;
     height: 40px;
-    border: 1px dashed var(--gray-line-mid);
+    border: 2px dashed var(--gray-line-str);
     border-radius: 10px;
     font-size: 14px;
     color: var(--text-muted);
