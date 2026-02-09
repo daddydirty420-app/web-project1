@@ -60,6 +60,8 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
         const originalFilePath = `tmp/original_${videoId}_${now}.${ext}`;
         const convertedDir = `tmp/converted_${videoId}_${now}`;
 
+        fs.mkdirSync("tmp", { recursive: true });
+
         const getObjectCommand = new GetObjectCommand({
             Bucket: bucket,
             Key: originalKey,
