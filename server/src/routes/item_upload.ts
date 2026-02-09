@@ -3,6 +3,7 @@ import type { Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
 import { exec } from "child_process";
+import { spawn } from "child_process";
 import { S3Client, PutObjectCommand, ListMultipartUploadsCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
 import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
@@ -83,36 +84,57 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
         fs.mkdirSync(convertedDir, { recursive: true });
 
         // ffmpegでHLS変換
-        const ffmpegCmd = `
-        ffmpeg -i ${originalFilePath}
-        -profile:v baseline
-        -level 3.0
-        -start_number 0
-        -hls_time 10
-        -hls_list_time 0
-        -f hls
-        ${convertedDir}/index.m3u8
-        `;
+        const ffmpeg = spawn("ffmpeg", [
+            "-i", originalFilePath,
+            "-profile:v", "baseline",
+            "-level", "3.0",
+            "-start_number", "0",
+            "-hls_time", "10",
+            "-hls_list_time", "0",
+            "-f", "hls",
+            `${convertedDir}/index.m3u8`
+        ]);
 
-        exec(ffmpegCmd, async (err) => {
-            if (err) {
-                console.error(err);
+        const timeout = setTimeout(async () => {
+            console.error("ffmpeg timeout");
+            ffmpeg.kill("SIGKILL");
+            await videoData.update({ status: "failed" });
+        }, 5 * 60 * 1000); // 5分
+
+        ffmpeg.stderr.on("data", (data) => {
+            console.error(`ffmpeg: ${data}`);
+        });
+
+        ffmpeg.on("close", async (code) => {
+            clearTimeout(timeout);
+
+            if (code !== 0) {
+                console.error(`ffmpeg exited with code ${code}`);
                 await videoData.update({ status: 'failed' });
-                fs.rmSync(originalFilePath, { force: true });
                 return;
             }
 
             try {
                 const files = fs.readdirSync(convertedDir);
+
+                if (files.length === 0) {
+                    throw new Error("HLSファイルが生成されていません");
+                }
             
                 for (const f of files) {
                     const filePath = `${convertedDir}/${f}`;
+                    
+                    const contentType = f.endsWith(".ts")
+                    ? "video/mp2t"
+                    : f.endsWith(".m3u8")
+                    ? "application/vnd.apple.mpegurl"
+                    : "application/octet-stream";
                     
                     const uploadParams = {
                         Bucket: bucket,
                         Key: `videos/converted/${currentUserId}/${videoId}/${f}`,
                         Body: fs.createReadStream(filePath),
-                        ContentType: f.endsWith('.ts') ? 'video/mp2t' : 'application/vnd.apple.mpegurl',
+                        ContentType: contentType,
                     };
 
                     await s3.send(new PutObjectCommand(uploadParams));
