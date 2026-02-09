@@ -135,7 +135,7 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
                     
                     const uploadParams = {
                         Bucket: bucket,
-                        Key: `videos/converted/${currentUserId}/${videoId}/${f}`,
+                        Key: `video/converted/${currentUserId}/${videoId}/${f}`,
                         Body: fs.createReadStream(filePath),
                         ContentType: contentType,
                     };

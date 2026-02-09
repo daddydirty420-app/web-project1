@@ -163,6 +163,9 @@ export default function Form({
 
     const [itemImages, setItemImages] = useState<ItemImage[]>(initialItemImage);
 
+    const [loading, setLoading] = useState(false);
+    const [draftLoading, setDraftLoading] = useState(false);
+
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
 
@@ -183,6 +186,8 @@ export default function Form({
     };
 
     const upload = async () => {
+        setLoading(true);
+
         const required = {
             videoFile: {
                 ok: !!videoInput.videoFile,
@@ -252,17 +257,21 @@ export default function Form({
         if (errors.length) {
             toast.error(errors[0]);
             console.log("バリデーションエラー：", errors);
+            setLoading(false);
             return;
         }
     };
 
     const draft = async () => {
+        setDraftLoading(true);
+
         const totalRatio = materialValue.materials.reduce(
             (sum, m) => sum + (m.ratio ?? 0),
             0,
         );
         if (totalRatio > 100) {
             toast.error("素材の割合が100%を超えています");
+            setDraftLoading(false);
             return;
         }
 
@@ -377,6 +386,7 @@ export default function Form({
                         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                setDraftLoading(false);
                 return;
             }
 
@@ -394,6 +404,7 @@ export default function Form({
             if (!res.ok) {
                 console.error(data.message);
                 toast.error("下書き保存に失敗しました");
+                setDraftLoading(false);
                 return;
             }
 
@@ -409,6 +420,7 @@ export default function Form({
 
                 if (!videoRes.ok) {
                     toast.error("動画のアップロードに失敗しました");
+                    setDraftLoading(false);
                     return;
                 } else {
                     // ffmpeg変換
@@ -442,6 +454,7 @@ export default function Form({
 
                 if (!thumbnailRes.ok) {
                     toast.error("サムネイルのアップロードに失敗しました");
+                    setDraftLoading(false);
                     return;
                 }
             }
@@ -480,6 +493,7 @@ export default function Form({
                 } catch (err) {
                     console.error(err);
                     toast.error("商品画像のアップロードに失敗しました");
+                    setDraftLoading(false);
                     return;
                 }
             }
@@ -513,15 +527,18 @@ export default function Form({
 
                     if (!uploadRes.ok) {
                         toast.error("商品画像のアップロードに失敗しました");
+                        setDraftLoading(false);
                         return;
                     }
                 }));
             }
 
             toast.success("下書き保存しました");
+            setDraftLoading(false);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
+            setDraftLoading(false);
         }
     };
 
@@ -609,7 +626,7 @@ export default function Form({
             className={styles.uploadButton}
             onClick={upload}
             >
-                出品する
+                {loading ? "登録中..." : "出品する"}
             </button>
 
             <button
@@ -617,7 +634,7 @@ export default function Form({
             className={styles.draftButton}
             onClick={draft}
             >
-                下書き保存する
+                {draftLoading ? "保存中..." : "下書き保存する"}
             </button>
         </UploadUI>
     );
