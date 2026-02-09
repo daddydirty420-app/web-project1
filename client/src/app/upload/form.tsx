@@ -354,7 +354,7 @@ export default function Form({
                         inventory: s.inventory,
                     })),
                 })),
-                material: materialValue.materials.map(m => ({
+                materials: materialValue.materials.map(m => ({
                     name: m.name,
                     ratio: m.ratio,
                 })),

@@ -379,7 +379,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                         },
                     })),
                 })) : undefined,
-                material: attributes.materials.length > 0
+                materials: (attributes?.materials?.length ?? 0) > 0
                 ? attributes.materials.map(m => ({
                     name: m.name,
                     ratio: m.ratio,
