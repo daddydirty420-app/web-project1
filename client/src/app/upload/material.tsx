@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./upload.module.css";
+import styles from "./material.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -69,33 +69,36 @@ export default function MaterialInput({ value, onChange }: Props) {
         <div className={styles.materialDiv}>
             {value.materials.map((m, index) => (
                 <div className={styles.materialRow} key={index}>
-                    <div className={styles.mInputDiv}>
-                        <p className={styles.mInputTitle}>素材名</p>
+                    <div className={styles.inputDiv}>
+                        <p className={styles.inputTitle}>素材名</p>
                         <input
                         type="text"
                         value={m.name ?? ""}
                         onChange={(e) => handleChangeName(e.target.value, index)}
                         placeholder="綿"
-                        className={styles.mNameInput}
+                        className={styles.nameInput}
                         />
                     </div>
 
-                    <div className={styles.mInputDiv}>
-                        <p className={styles.mInputTitle}>割合</p>
-                        <input
-                        type="number"
-                        min={1}
-                        max={100}
-                        value={m.ratio}
-                        onChange={(e) => handleChangeRatio(Number(e.target.value), index)}
-                        placeholder="100"
-                        className={styles.mRatioInput}
-                        />
+                    <div className={styles.inputDiv}>
+                        <p className={styles.inputTitle}>割合</p>
+                        <div className={styles.ratioRow}>
+                            <input
+                            type="number"
+                            min={1}
+                            max={100}
+                            value={m.ratio}
+                            onChange={(e) => handleChangeRatio(Number(e.target.value), index)}
+                            placeholder="100"
+                            className={styles.ratioInput}
+                            />
+                            <p className={styles.ratio}>%</p>
+                        </div>
                     </div>
 
                     <FontAwesomeIcon
                     icon={faTrash}
-                    className={styles.mDelete}
+                    className={styles.delete}
                     onClick={() => removeMaterial(index)}
                     />
                 </div>
@@ -103,7 +106,7 @@ export default function MaterialInput({ value, onChange }: Props) {
 
             <button
             type="button"
-            className={styles.addMaterialButton}
+            className={styles.addButton}
             onClick={addMaterial}
             >
                 + 素材追加（自由入力）

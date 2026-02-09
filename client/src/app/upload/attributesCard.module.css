@@ -188,9 +188,8 @@
     color: var(--theme);
     cursor: pointer;
     border-radius: 50%;
-    transition: background-color 0.15s;
+    transition: background-color 0.15s ease;
 }
-
 .sizeDelete:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
@@ -208,7 +207,6 @@
     cursor: pointer;
     transition: all 0.15s;
 }
-
 .addSizeButton:hover {
     border-color: var(--theme);
     color: var(--theme);
