@@ -262,7 +262,7 @@ export default function Form({
             0,
         );
         if (totalRatio > 100) {
-            toast.error("素材の割合の合計が100%を超えています");
+            toast.error("素材の割合が100%を超えています");
             return;
         }
 
