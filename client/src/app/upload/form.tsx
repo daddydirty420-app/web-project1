@@ -414,7 +414,10 @@ export default function Form({
                     // ffmpeg変換
                     const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/convert-video/${item.Video?.id}`, {
                         method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${accessToken}`,
+                        },
                     });
 
                     const data = await convertRes.json();
