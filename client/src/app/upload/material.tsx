@@ -1,11 +1,14 @@
 "use client";
 
-import { InputTitle } from "@/components/inputForm";
-import { useState } from "react";
 import styles from "./upload.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export type MaterialValue = {
-    material: string[];
+    materials: {
+        name: string;
+        ratio: number;
+    }[];
 };
 
 type Props = {
@@ -14,29 +17,97 @@ type Props = {
 };
 
 export default function MaterialInput({ value, onChange }: Props) {
-    const [text, setText] = useState(value.material.join("\n"));
 
-    const handleBlur = () => {
+    const createEmptyMaterial = () => ({
+        name: "",
+        ratio: 0,
+    });
+
+    const addMaterial = () => {
         onChange({
             ...value,
-            material: text
-            .split("\n")
-            .map(v => v.trim())
-            .filter(Boolean),
+            materials: [...value.materials, createEmptyMaterial()],
+        });
+    };
+
+    const removeMaterial = (index: number) => {
+        const nextMaterials = value.materials.filter((_, i) => i !== index);
+
+        onChange({
+            ...value,
+            materials: nextMaterials,
+        });
+    };
+
+    const handleChangeName = (name: string, index: number) => {
+        onChange({
+            ...value,
+            materials: value.materials.map((m, i) =>
+                i === index
+                ? {
+                    ...m,
+                    name: name,
+                } : m
+            ),
+        });
+    };
+
+    const handleChangeRatio = (ratio: number, index: number) => {
+        onChange({
+            ...value,
+            materials: value.materials.map((m, i) =>
+                i === index
+                ? {
+                    ...m,
+                    ratio: ratio,
+                } : m
+            ),
         });
     };
 
     return (
-        <div className={styles.inputDiv}>
-            <InputTitle title="素材表記（自由入力）" />
-            <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onBlur={handleBlur}
-            maxLength={500}
-            placeholder="素材表記（自由入力）"
-            className={styles.textarea}
-            />
+        <div className={styles.materialDiv}>
+            {value.materials.map((m, index) => (
+                <div className={styles.materialRow} key={index}>
+                    <div className={styles.mInputDiv}>
+                        <p className={styles.mInputTitle}>素材名</p>
+                        <input
+                        type="text"
+                        value={m.name ?? ""}
+                        onChange={(e) => handleChangeName(e.target.value, index)}
+                        placeholder="綿"
+                        className={styles.mNameInput}
+                        />
+                    </div>
+
+                    <div className={styles.mInputDiv}>
+                        <p className={styles.mInputTitle}>割合</p>
+                        <input
+                        type="number"
+                        min={1}
+                        max={100}
+                        value={m.ratio}
+                        onChange={(e) => handleChangeRatio(Number(e.target.value), index)}
+                        placeholder="100"
+                        className={styles.mRatioInput}
+                        />
+                    </div>
+
+                    <FontAwesomeIcon
+                    icon={faTrash}
+                    className={styles.mDelete}
+                    onClick={() => removeMaterial(index)}
+                    />
+                </div>
+            ))}
+
+            <button
+            type="button"
+            className={styles.addMaterialButton}
+            onClick={addMaterial}
+            >
+                + 素材追加（自由入力）
+            </button>
         </div>
     );
 };

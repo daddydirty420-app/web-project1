@@ -216,7 +216,7 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
         {showVariants && (
             <div className={styles.cardWrapper}>
                 {value.colorVariants.map((variant) => {
-                    const previewUrl =  previewMap.get(variant._uiId) ?? imageUrlMap.get(variant._uiId) ?? null;
+                    const previewUrl = previewMap.get(variant._uiId) ?? imageUrlMap.get(variant._uiId) ?? null;
 
                     return (
                         <div className={styles.variantsCard} key={variant._uiId}>
@@ -292,7 +292,7 @@ export default function AttributesInput({ value, onChange, imageUrlMap }: Props)
                             <button
                             type="button"
                             className={styles.addSizeButton}
-                            onClick={() => addSize(variant._uiId)}
+                            onClick={() =>addSize(variant._uiId)}
                             >
                                 + サイズ追加
                             </button>

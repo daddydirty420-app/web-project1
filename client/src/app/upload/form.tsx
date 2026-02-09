@@ -126,7 +126,10 @@ export default function Form({
     const [attributesImageMap, setAttributesImageMap] = useState<Map<string, string>>(initialAttributesImageUrlMap);
 
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
-        material: item.attributes?.material ?? [],
+        materials: (item.attributes?.materials ?? []).map(m => ({
+            name: m.name ?? "",
+            ratio: m.ratio ?? 0, 
+        })),
     });
 
     const [conditionValue, setConditionValue] = useState<ConditionValue>({
@@ -254,6 +257,15 @@ export default function Form({
     };
 
     const draft = async () => {
+        const totalRatio = materialValue.materials.reduce(
+            (sum, m) => sum + (m.ratio ?? 0),
+            0,
+        );
+        if (totalRatio > 100) {
+            toast.error("素材の割合の合計が100%を超えています");
+            return;
+        }
+
         let itemImagesUpload: ItemImageUpload[] = [];
 
         if (itemImages.length > 0) {
@@ -339,10 +351,13 @@ export default function Form({
                     image: resolveAttributesImage(v),
                     sizes: v.sizes.map(s => ({
                         size: s.size,
-                        inventory: s.inventory
+                        inventory: s.inventory,
                     })),
                 })),
-                material: materialValue.material,
+                material: materialValue.materials.map(m => ({
+                    name: m.name,
+                    ratio: m.ratio,
+                })),
             },
             condition: {
                 id: conditionValue.id,

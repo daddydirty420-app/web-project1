@@ -50,7 +50,10 @@ type DraftBody = {
                 inventory: number;
             }>;
         }>;
-        material: string[],
+        materials: Array<{
+            name: string;
+            ratio: number;
+        }>;
     };
     condition: { id: string; name: string };
     shipping: {
@@ -376,7 +379,11 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                         },
                     })),
                 })) : undefined,
-                material: attributes.material ?? [],
+                material: attributes.materials.length > 0
+                ? attributes.materials.map(m => ({
+                    name: m.name,
+                    ratio: m.ratio,
+                })) : undefined,
                 body_category: categoryOption?.body_category ?? null,
                 lifestyle_category: categoryOption?.lifestyle_category ?? null,
                 layer: categoryOption?.layer ?? null,

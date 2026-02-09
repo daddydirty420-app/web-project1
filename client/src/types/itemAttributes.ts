@@ -58,5 +58,8 @@ export type ItemAttributes = {
     lifestyle_category?: LifeStyleCategory;
     layer?: Layer;
     fit?: Fit;
-    material?: string[]; // 素材表記
+    materials?: Array<{
+        name?: string;
+        ratio?: number;
+    }>; // 素材表記
 };
