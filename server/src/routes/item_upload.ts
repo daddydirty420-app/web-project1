@@ -2,9 +2,8 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
-import { exec } from "child_process";
 import { spawn } from "child_process";
-import { S3Client, PutObjectCommand, ListMultipartUploadsCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
 import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
@@ -18,8 +17,6 @@ interface AuthenticatedRequest extends Request {
 }
 
 const router = Router();
-
-const upload = multer({ dest: "tmp/ " });
 
 const bucket = process.env.AWS_BUCKET;
 const region = process.env.AWS_REGION;
@@ -85,12 +82,16 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
 
         // ffmpegでHLS変換
         const ffmpeg = spawn("ffmpeg", [
+            "-y",                       // ← 追加（既存ファイルを上書き）
             "-i", originalFilePath,
+            "-map", "0:v:0",            // ← 追加（動画トラックを明示）
+            "-map", "0:a:0?",           // ← 追加（音声はあれば使う）
             "-profile:v", "baseline",
             "-level", "3.0",
             "-start_number", "0",
             "-hls_time", "10",
-            "-hls_list_time", "0",
+            "-hls_playlist_type", "vod",
+            "-hls_segment_filename", `${convertedDir}/seg_%03d.ts`, // ← 追加（名前が綺麗）
             "-f", "hls",
             `${convertedDir}/index.m3u8`
         ]);
