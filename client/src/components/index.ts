@@ -9,3 +9,4 @@ export { default as FollowButton } from './follow-button/followButton';
 export { default as Star } from './star';
 export { default as ItemListRow } from "./itemListRow/itemListRow";
 export { default as ConfirmSection } from "./confirm-card/confirmSection";
+export { TopLoader } from "./loading/topLoader";

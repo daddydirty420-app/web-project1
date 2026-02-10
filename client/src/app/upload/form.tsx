@@ -42,7 +42,7 @@ type ItemImageUpload = {
     uploaded: boolean;
 };
 
-export default function Form({
+export const Form = ({
     itemId,
     item,
     category,
@@ -51,7 +51,7 @@ export default function Form({
     allService,
     allPlace,
     hasShop
-}: Props) {
+}: Props) => {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -638,6 +638,7 @@ export default function Form({
             type="button"
             className={styles.uploadButton}
             onClick={upload}
+            disabled={loading}
             >
                 {loading ? "登録中..." : "出品する"}
             </button>
@@ -646,6 +647,7 @@ export default function Form({
             type="button"
             className={styles.draftButton}
             onClick={draft}
+            disabled={draftLoading}
             >
                 {draftLoading ? "保存中..." : "下書き保存する"}
             </button>
