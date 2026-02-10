@@ -8,7 +8,7 @@ type Props = {
     token: string;
 };
 
-export default function FetchClient({ token }: Props) {
+export const FetchClient = ({ token }: Props) => {
     const router = useRouter();
 
     useEffect(() => {

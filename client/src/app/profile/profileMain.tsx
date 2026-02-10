@@ -1,12 +1,12 @@
 import { Res } from './profileTypes';
-import EditButton from './editButton';
+import { EditButton } from './editButton';
 import { FollowButton } from '@/components';
 import styles from './profile.module.css';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStore, faTag } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import Introduction from './introduction';
+import { Introduction } from './introduction';
 
 type Props = {
     data: Res;
@@ -16,7 +16,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function ProfileMain({ data, userId, currentUserId, adminPage, loggedIn }: Props) {
+export const ProfileMain = ({ data, userId, currentUserId, adminPage, loggedIn }: Props) => {
     const sameId = userId === currentUserId?.toString();
 
     return (

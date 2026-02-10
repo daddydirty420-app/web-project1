@@ -1,7 +1,7 @@
 import styles from "../../lp.module.css";
 import Image from "next/image";
 
-export default function PamphletLink() {
+export const PamphletLink = () => {
     return (
         <a
         href="/pamphlet.pdf"

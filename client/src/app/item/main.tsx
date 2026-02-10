@@ -1,8 +1,8 @@
 import styles from "./itemCommon.module.css";
 import { Item } from "./itemPageTypes";
-import VideoSection from "./videoSection/videoSection";
-import ItemSection from "./itemSection/itemSection";
-import SellerSectionTop from "./sellerSection/sellerSectionTop";
+import { VideoSection } from "./videoSection/videoSection";
+import { ItemSection } from "./itemSection/itemSection";
+import { SellerSectionTop } from "./sellerSection/sellerSectionTop";
 
 type Props = {
     id: string;
@@ -16,7 +16,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function Main({ id, item, sellerMe, page, goodCount, isGood, reportCount, userId, loggedIn }: Props) {
+export const Main = ({ id, item, sellerMe, page, goodCount, isGood, reportCount, userId, loggedIn }: Props) => {
     return (
         <main className={styles.main2column}>
             <div className={styles.left2column}>

@@ -7,7 +7,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default async function Button({ shopPage, hasShop, loggedIn }: Props) {
+export const Button = async ({ shopPage, hasShop, loggedIn }: Props) => {
     const signupPage = '/signup';
     const loginPage = '/login';
     const uploadPage = '/upload/before';

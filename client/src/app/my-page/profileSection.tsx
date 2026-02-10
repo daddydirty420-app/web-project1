@@ -12,7 +12,7 @@ type Props = {
     profileLink: string;
 };
 
-export default function ProfileSection({ user, data, profileLink }: Props) {
+export const ProfileSection = ({ user, data, profileLink }: Props) => {
     return (
         <section className={styles.block}>
             <Link href={profileLink} className={styles.profileBlock}>

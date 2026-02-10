@@ -8,7 +8,7 @@ type Props = {
     item: Item;
 };
 
-export default function ItemPeek({ item }: Props) {
+export const ItemPeek = ({ item }: Props) => {
     const handleScroll = () => {
         const target = document.getElementById("itemName");
         target?.scrollIntoView({

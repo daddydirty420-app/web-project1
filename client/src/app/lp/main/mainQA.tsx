@@ -1,8 +1,8 @@
-import MainH2 from "./mainComponent/mainh2";
-import Question from "./mainComponent/question";
-import Answer from "./mainComponent/answer";
+import { MainH2 } from "./mainComponent/mainh2";
+import { Question } from "./mainComponent/question";
+import { Answer } from "./mainComponent/answer";
 
-export default function MainQA() {
+export const MainQA = () => {
     return (
         <>
         <MainH2>Q&A</MainH2>

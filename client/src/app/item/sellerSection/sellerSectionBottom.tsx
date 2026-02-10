@@ -1,7 +1,7 @@
 import styles from "./seller.module.css";
-import SaleButton from "./saleButton";
-import UploadButton from "./uploadButton";
-import DeleteItem from "./deleteItem";
+import { SaleButton } from "./saleButton";
+import { UploadButton } from "./uploadButton";
+import { DeleteItem } from "./deleteItem";
 import { Item } from "../itemPageTypes";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
     item: Item;
 };
 
-export default function SellerSectionBottom({ id, item }: Props) {
+export const SellerSectionBottom = ({ id, item }: Props) => {
     return (
         <nav className={styles.sellerSectionBottom}>
             <UploadButton id={id} />

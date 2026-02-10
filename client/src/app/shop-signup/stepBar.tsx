@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import styles from "./stepBar.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export default function StepBar() {
+export const StepBar = () => {
     const [width, setWidth] = useState(0);
     const pathname = usePathname();
 

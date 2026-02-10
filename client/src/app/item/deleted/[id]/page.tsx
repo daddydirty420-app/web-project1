@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ItemPage from "../../itemPage";
+import { ItemPage } from "../../itemPage";
 import { Item } from "../../itemPageTypes";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";

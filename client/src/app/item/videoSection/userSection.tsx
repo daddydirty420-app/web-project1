@@ -14,7 +14,7 @@ type Props = {
     userId: string | null;
 };
 
-export default function UserSection({ item, sellerMe, page, userId }: Props) {
+export const UserSection = ({ item, sellerMe, page, userId }: Props) => {
     const user = item.User ?? null;
     const sellerId = user?.id;
     const profileUrl = `/profile/${sellerId}`;

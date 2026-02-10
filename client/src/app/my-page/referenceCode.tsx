@@ -15,7 +15,7 @@ type Props = {
     referenceCount: number;
 }
 
-export default function ReferenceCode({ itemCount, referenceCount }: Props) {
+export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [referenceCodeOutput, setReferenceCodeOutput] = useState<ReferenceCode | null>(null);
 

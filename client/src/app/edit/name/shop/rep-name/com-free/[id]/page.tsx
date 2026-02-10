@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import NameEditForm from "../../../../nameEditForm";
+import { NameEditForm } from "../../../../nameEditForm";
 import { cookies } from "next/headers";
 
 type Props = {

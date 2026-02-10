@@ -2,8 +2,8 @@
 
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
-import StepBar from "../stepBar";
-import ButtonDiv from "../buttonDiv";
+import { StepBar } from "../stepBar";
+import { ButtonDiv } from "../buttonDiv";
 import { ShopInfo } from "../type";
 import React, { useRef, useState } from "react";
 import { InputTitle } from "@/components/inputForm";
@@ -25,7 +25,7 @@ type PermitImage = {
     preview: string;
 };
 
-export default function Form({ shopId, shopInfo }: Props) {
+export const Form = ({ shopId, shopInfo }: Props) => {
     const [idCardFront, setIdCardFront] = useState<File | string | undefined>(shopInfo.id_card_front ?? "");
     const [idFrontPreview, setIdFrontPreview] = useState(shopInfo.id_card_front ?? "");
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);

@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { InputStr, InputTitle, InputStrAndSmall } from "@/components/inputForm";
 import Link from "next/link";
-import ButtonDiv from "../buttonDiv";
+import { ButtonDiv } from "../buttonDiv";
 import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import StepBar from "../stepBar";
+import { StepBar } from "../stepBar";
 import { refreshToken } from "@/lib/refreshToken";
 import clsx from "clsx";
 import toast from "react-hot-toast";
@@ -22,7 +22,7 @@ type Props = {
     ComOrFreeOption: ComOrFreeOption[];
 };
 
-export default function Form({ user, shopInfo, ComOrFreeOption }: Props) {
+export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
     const [selectOption, setSelectOption] = useState<number | null>(null);
     const [companyName, setCompanyName] = useState(shopInfo?.company_name ?? "");
     const [shopName, setShopName] = useState(shopInfo?.shop_name ?? user.user_name);

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Lp from "../lp";
+import { Lp } from "../lp";
 import { Items } from "@/types/itemListTypes";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";

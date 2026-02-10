@@ -6,7 +6,7 @@ type Props = {
     user: User | null | undefined;
 }
 
-export default function ProfileImage({ user }: Props) {
+export const ProfileImage = ({ user }: Props) => {
     return (
         <Image
         src={user?.profile_image || "/default-profile.png"}

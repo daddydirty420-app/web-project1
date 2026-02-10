@@ -1,10 +1,10 @@
 import Link from "next/link";
 import styles from "../lp.module.css";
-import MainH2 from "./mainComponent/mainh2";
-import MainH3 from "./mainComponent/mainh3";
-import MainP from "./mainComponent/mainP";
+import { MainH2 } from "./mainComponent/mainh2";
+import { MainH3 } from "./mainComponent/mainh3";
+import { MainP } from "./mainComponent/mainP";
 
-export default function MainAllUser() {
+export const MainAllUser = () => {
     return (
         <>
         <MainH2>個人でも、事業者でも</MainH2>

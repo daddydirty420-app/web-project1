@@ -13,7 +13,7 @@ type Props = {
     adminPage: boolean;
 };
 
-export default function AdminSection({ userId, adminPage }: Props) {
+export const AdminSection = ({ userId, adminPage }: Props) => {
     const [data, setData] = useState<User | null>(null);
     const [popup, setPopup] = useState(false);
     const [addPenalty, setAddPenalty] = useState(0);

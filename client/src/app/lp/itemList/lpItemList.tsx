@@ -19,7 +19,7 @@ type Props = {
     defaultVideoList: Res;
 };
 
-export default function LpItemList({ defaultVideoList }: Props) {
+export const LpItemList = ({ defaultVideoList }: Props) => {
     const [visibleIL, setVisibleIL] = useState(false);
     const [videoList, setVideoList] = useState<Items[] | null>(defaultVideoList.items);
     const [itemList, setItemList] = useState<Items[] | null>(null);

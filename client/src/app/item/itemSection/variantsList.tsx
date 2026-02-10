@@ -6,10 +6,10 @@ type Props = {
     item: Item;
 };
 
-export default function ValiantsList({ item }: Props) {
+export const VariantsList = ({ item }: Props) => {
     return (
         <section className={styles.variantList}>
-            {item.attributes.variants?.map((variant, i) => {
+            {item.attributes.colorVariants?.map((variant, i) => {
                 if (!variant) return null;
                 const inventory = variant.inventory;
                 const isSoldout = inventory?.current === 0;

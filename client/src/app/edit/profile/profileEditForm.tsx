@@ -4,7 +4,7 @@ import { InputStr, Button, Textarea } from "@/components/inputForm";
 import EditUI from "../editUI";
 import { useState } from "react";
 import { User } from "../type";
-import ProfileImage from "./profileImage";
+import { ProfileImage } from "./profileImage";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ type Props = {
     user: User;
 };
 
-export default function ProfileEditForm({ user }: Props) {
+export const ProfileEditForm = ({ user }: Props) => {
     const [file, setFile] = useState<File | null>(null);
     const [userNameValue, setUserNameValue] = useState(user.user_name);
     const [introductionValue, setIntroductionValue] = useState(user.user_introduction);

@@ -10,7 +10,7 @@ type Props = {
     id: string;
 };
 
-export default function UploadButton({ id }: Props) {
+export const UploadButton = ({ id }: Props) => {
     const router = useRouter();
 
     const copy = async () => {

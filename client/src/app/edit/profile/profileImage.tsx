@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../edit.module.css";
-import InputTitle from "@/components/inputForm/inputTitle";
+import { InputTitle } from "@/components/inputForm";
 import React, { useEffect, useRef, useState } from "react";
 import { User } from "../type";
 import Image from "next/image";
@@ -13,7 +13,7 @@ type Props = {
     setDefaultImage: (value: boolean) => void;
 };
 
-export default function ProfileImage({ user, setFile, defaultImage, setDefaultImage }: Props) {
+export const ProfileImage = ({ user, setFile, defaultImage, setDefaultImage }: Props) => {
     const originalImage = user.profile_image || "/default-profile.png";
     const [preview, setPreview] = useState<string>(user.profile_image || "/default-profile.png");
 

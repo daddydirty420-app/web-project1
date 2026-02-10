@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import styles from "@/components/confirm-card/confirmcard.module.css";
 import { ShopInfo } from "../type";
 import SSUI from "../ssUI";
-import ButtonDiv from "../buttonDiv";
+import { ButtonDiv } from "../buttonDiv";
 import { ConfirmSection } from "@/components";
 import { useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
@@ -15,7 +15,7 @@ type Props = {
     shopInfo: ShopInfo;
 };
 
-export default function Client({ shopId, shopInfo }: Props) {
+export const Client = ({ shopId, shopInfo }: Props) => {
     const [comOrFree, setComOrFree] = useState(shopInfo.ComOrFreeOption?.id ?? "");
     const [companyName, setCompanyName] = useState(shopInfo.company_name ?? "");
     const [shopName, setShopName] = useState(shopInfo.shop_name ?? "");

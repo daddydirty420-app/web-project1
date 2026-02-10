@@ -1,21 +1,19 @@
-import { Container, Back } from "@/components";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
+import { Container, Back, Header, Footer } from "@/components";
 import { Item } from "./itemPageTypes";
 import { Items } from "@/types/itemListTypes";
-import Main from "./main";
-import SellerSectionBottom from "./sellerSection/sellerSectionBottom";
-import ItemListSection from "./itemListSection";
-import CommentSection from "./commentSection/commentSection";
+import { Main } from "./main";
+import { SellerSectionBottom } from "./sellerSection/sellerSectionBottom";
+import { ItemListSection } from "./itemListSection";
+import { CommentSection } from "./commentSection/commentSection";
 import Link from "next/link";
 import styles from "./itemCommon.module.css";
-import EditButton from "./draft/editButton";
-import DeleteButton from "./madmax/deleteButton";
-import Title from "./confirm/title";
-import UploadButton from "./confirm/uploadButton";
-import DeleteItem from "./sellerSection/deleteItem";
-import Restore from "./deleted/restore";
-import PerfectDelete from "./deleted/perfectDelete";
+import { EditButton } from "./draft/editButton";
+import { DeleteButton } from "./madmax/deleteButton";
+import { Title } from "./confirm/title";
+import { UploadButton } from "./confirm/uploadButton";
+import { DeleteItem } from "./sellerSection/deleteItem";
+import { Restore } from "./deleted/restore";
+import { PerfectDelete } from "./deleted/perfectDelete";
 
 type Props = {
     id: string;
@@ -31,7 +29,20 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function ItemPage({ id, item, itemList, sellerMe, page, commentCount, goodCount, isGood, reportCount, userId, loggedIn }: Props) {
+export const ItemPage = ({
+    id,
+    item,
+    itemList,
+    sellerMe,
+    page,
+    commentCount,
+    goodCount,
+    isGood,
+    reportCount,
+    userId,
+    loggedIn
+}: Props) => {
+    
     if (!["normal", "admin", "draft", "confirm", "deleted"].includes(page)) {
         console.error("ページ信号が正しくありません。page：", page);
         return;

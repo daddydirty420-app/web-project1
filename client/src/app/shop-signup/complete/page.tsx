@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Element from "./element";
+import { Element } from "./element";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {

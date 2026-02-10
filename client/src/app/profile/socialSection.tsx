@@ -1,7 +1,7 @@
 import styles from "./profile.module.css";
-import FollowSection from "./followSection";
-import StarSection from "./starSection";
-import ShopButton from "./shopButton";
+import { FollowSection } from "./followSection";
+import { StarSection } from "./starSection";
+import { ShopButton } from "./shopButton";
 import { Res } from "./profileTypes";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
     userId: string;
 };
 
-export default function SocialSection({ data, userId }: Props) {
+export const SocialSection = ({ data, userId }: Props) => {
     return (
         <section className={styles.socialSection}>
             <div className={styles.socialRow}>

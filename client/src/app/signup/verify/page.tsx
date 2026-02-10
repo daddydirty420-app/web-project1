@@ -1,6 +1,6 @@
 import { Container } from "@/components";
-import VerifyForm from './verify-form';
-import Resend from "./resend";
+import { VerifyForm } from './verify-form';
+import { Resend } from "./resend";
 import styles from '@/styles/login.module.css';
 
 export default function Page() {

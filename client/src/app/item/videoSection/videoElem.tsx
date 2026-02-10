@@ -12,7 +12,7 @@ type Props = {
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function VideoElem({ item, sellerMe, page }: Props) {
+export const VideoElem = ({ item, sellerMe, page }: Props) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {

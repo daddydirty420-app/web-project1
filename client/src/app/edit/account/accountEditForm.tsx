@@ -18,7 +18,7 @@ type Props = {
     shopEditId?: string;
 };
 
-export default function AccountEditForm({ account, page, shopId, shopEditId }: Props) {
+export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) => {
     const [bankQuery, setBankQuery] = useState(account?.bank_name ?? "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;

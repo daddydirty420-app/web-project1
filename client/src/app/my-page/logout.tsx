@@ -5,7 +5,7 @@ import styles from './mypage.module.css';
 import { useRouter } from 'next/navigation';
 import { signOut } from "next-auth/react";
 
-export default function Logout() {
+export const Logout = () => {
     const router = useRouter();
     
     const logout = async () => {

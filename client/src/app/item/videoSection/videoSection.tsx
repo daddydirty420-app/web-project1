@@ -1,11 +1,11 @@
 import { Item } from "../itemPageTypes";
 import styles from "./video.module.css";
-import VideoElem from "./videoElem";
-import CountElem from "./countElem";
-import Summary from "./summary";
-import UserSection from "./userSection";
-import Report from "../others/report";
-import ItemPeek from "./itemPeek";
+import { VideoElem } from "./videoElem";
+import { CountElem } from "./countElem";
+import { Summary } from "./summary";
+import { UserSection } from "./userSection";
+import { Report } from "../others/report";
+import { ItemPeek } from "./itemPeek";
 
 type Props = {
     id: string;
@@ -19,7 +19,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function VideoSection({ id, item, sellerMe, goodCount, isGood, page, reportCount, userId, loggedIn }: Props) {
+export const VideoSection = ({ id, item, sellerMe, goodCount, isGood, page, reportCount, userId, loggedIn }: Props) => {
     return (
         <section className={styles.videoSection}>
             <VideoElem item={item} sellerMe={sellerMe} page={page} />

@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./comment.module.css";
 import { useEffect, useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
-import CommentForm from "./commentForm";
-import CommentList from "./commentList";
+import { CommentForm } from "./commentForm";
+import { CommentList } from "./commentList";
 import { Comment } from "../itemPageTypes";
 import { refreshToken } from "@/lib/refreshToken";
 
@@ -17,7 +17,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function CommentSection({ id, sellerMe, commentCount, page, loggedIn }: Props) {
+export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn }: Props) => {
     const [visible, setVisible] = useState(false);
     const [comments, setComments] = useState<Comment[]>([]);
 

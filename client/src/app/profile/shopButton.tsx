@@ -5,7 +5,7 @@ type Props = {
     shopId: string;
 };
 
-export default function ShopButton({ shopId }: Props) {
+export const ShopButton = ({ shopId }: Props) => {
     return (
         <>
         <Link href={`/shop-info/${shopId}`} className={styles.shopButton}>ショップ情報</Link>

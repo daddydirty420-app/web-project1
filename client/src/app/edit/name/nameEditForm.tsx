@@ -19,7 +19,7 @@ type Props = {
     shopEditId?: string;
 };
 
-export default function NameEditForm({ name, page, deliveryId, shopId, shopEditId }: Props) {
+export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Props) => {
     const [seiValue, setSeiValue] = useState(name?.sei ?? "");
     const [meiValue, setMeiValue] = useState(name?.mei ?? "");
     const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? "");

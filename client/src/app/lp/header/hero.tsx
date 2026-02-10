@@ -7,7 +7,7 @@ type Props = {
     shopPage?: boolean;
 };
 
-export default function Hero({ shopPage }: Props) {
+export const Hero = ({ shopPage }: Props) => {
     return (
         <div className={styles.headerDiv}>
             <Image

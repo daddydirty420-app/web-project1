@@ -16,7 +16,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function BuySection({ id, item, loggedIn }: Props) {
+export const BuySection = ({ id, item, loggedIn }: Props) => {
     const [cartIn, setCartIn] = useState(false);
     const router = useRouter();
 
@@ -128,7 +128,7 @@ export default function BuySection({ id, item, loggedIn }: Props) {
             if (res.ok) {
                 const data = await res.json();
                 const deliveryId = data.deliveryId;
-                if (item.attributes.variants && item.attributes.variants.length >= 2) {
+                if (item.attributes.colorVariants && item.attributes.colorVariants.length >= 2) {
                     router.push(`/buy/color-size/${deliveryId}`);
                 } else {
                     router.push(`/buy/trans/${deliveryId}`);

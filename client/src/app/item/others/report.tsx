@@ -10,7 +10,7 @@ type Props = {
     reportCount?: number;
 };
 
-export default function Report({ id, itemReport, page, reportCount }: Props) {
+export const Report = ({ id, itemReport, page, reportCount }: Props) => {
     const itemLink = `/report/item/${id}`;
     const commentLink = `/report/comment/${id}`;
     const adminItemLink = `/madmax/report-list/item/${id}`;

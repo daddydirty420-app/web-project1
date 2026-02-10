@@ -13,7 +13,7 @@ type Props = {
     item: Item;
 };
 
-export default function Restore({ id, item }: Props) {
+export const Restore = ({ id, item }: Props) => {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 

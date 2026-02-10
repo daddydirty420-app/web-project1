@@ -6,9 +6,9 @@ import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { BankAccount } from "../type";
 import { useEffect, useRef, useState } from "react";
-import StepBar from "../stepBar";
+import { StepBar } from "../stepBar";
 import { InputStr, InputTitle } from "@/components/inputForm";
-import ButtonDiv from "../buttonDiv";
+import { ButtonDiv } from "../buttonDiv";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
 
@@ -17,7 +17,7 @@ type Props = {
     account: BankAccount;
 };
 
-export default function Form({ shopId, account }: Props) {
+export const Form = ({ shopId, account }: Props) => {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<{
         name: string;

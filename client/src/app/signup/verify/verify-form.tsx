@@ -6,7 +6,7 @@ import styles from '@/styles/login.module.css';
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 
-export default function VerifyForm() {
+export const VerifyForm = () => {
     const [code, setCode] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [referenceVisible, setReferenceVisible] = useState(false);

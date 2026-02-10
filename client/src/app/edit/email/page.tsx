@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import EmailEditForm from "./emailEditForm";
+import { EmailEditForm } from "./emailEditForm";
 import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {

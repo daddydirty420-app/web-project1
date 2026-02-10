@@ -14,7 +14,7 @@ type Props = {
     shopInfo: ShopInfo;
 };
 
-export default function Form({ shopId, shopInfo }: Props) {
+export const Form = ({ shopId, shopInfo }: Props) => {
     const [autoTrans, setAutoTrans] = useState(shopInfo.auto_trans ? "はい" : "いいえ");
     const [openInfo, setOpenInfo] = useState(shopInfo.open_info ? "はい" : "いいえ");
 

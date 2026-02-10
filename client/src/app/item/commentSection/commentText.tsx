@@ -9,7 +9,7 @@ type Props = {
     page: "normal" | "admin";
 }
 
-export default function CommentText({ comment, page }: Props) {
+export const CommentText = ({ comment, page }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setOverflowing] = useState(false);
     const textRef = useRef<HTMLParagraphElement>(null);

@@ -1,5 +1,5 @@
 import { Container } from "@/components";
-import LoginForm from './login-form';
+import { LoginForm } from './login-form';
 import Link from "next/link";
 import styles from '@/styles/login.module.css';
 import { Metadata } from "next";
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function Login() {
+export default function Page() {
     return (
         <Container>
             <h1 className={styles.title}>ログイン</h1>

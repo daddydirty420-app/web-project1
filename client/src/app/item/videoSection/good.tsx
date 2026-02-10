@@ -18,7 +18,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function Good({ id, sellerMe, initialGood, initialCount, page, loggedIn }: Props) {
+export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }: Props) => {
     const { data: goodStatus } = useGoodStatus(id);
     const { data: goodCount } = useGoodCount(id);
     const router = useRouter();

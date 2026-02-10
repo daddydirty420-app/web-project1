@@ -13,7 +13,7 @@ type Props = {
     loggedIn: boolean;
 }
 
-export default function CommentForm({ id, sellerMe, parentId, loggedIn }: Props) {
+export const CommentForm = ({ id, sellerMe, parentId, loggedIn }: Props) => {
     const [inputComment, setInputComment] = useState<string>("");
     const router = useRouter();
 

@@ -12,7 +12,7 @@ type Props = {
     session: Session | null;
 };
 
-export default function EmailEditForm({ session }: Props) {
+export const EmailEditForm = ({ session }: Props) => {
     const [value, setValue] = useState(session?.user.email || "");
 
     const submit = async () => {

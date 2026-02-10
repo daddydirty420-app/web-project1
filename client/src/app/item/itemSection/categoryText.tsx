@@ -6,7 +6,7 @@ type Props = {
     item: Item;
 };
 
-export default function CategoryText({ item }: Props) {
+export const CategoryText = ({ item }: Props) => {
     return (
         <>
         <p className={CStyles.semiTitle}>カテゴリー</p>

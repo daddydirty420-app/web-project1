@@ -7,7 +7,7 @@ type Props = {
     comment: Comment;
 }
 
-export default function CommentDataDiv({ comment }: Props) {
+export const CommentDataDiv = ({ comment }: Props) => {
     return (
         <div className="flex">
             <p className={styles.commentDataText}>{comment.User?.user_name}</p>

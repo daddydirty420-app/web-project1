@@ -8,7 +8,7 @@ type Props = {
     data: Res;
 };
 
-export default function Introduction({ data }: Props) {
+export const Introduction = ({ data }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setOverflowing] = useState(false);
     const textRef = useRef<HTMLParagraphElement>(null);

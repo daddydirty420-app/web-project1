@@ -10,7 +10,7 @@ type Props = {
     initialCount: number;
 };
 
-export default function FollowStat({ userId, type, initialCount }: Props) {
+export const FollowStat = ({ userId, type, initialCount }: Props) => {
     const { data } = useFollowCount(userId);
 
     const count = type === "follow" 

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import toast from 'react-hot-toast';
 
-export default function LoginForm() {
+export const LoginForm = () => {
     const [visible, setVisible] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

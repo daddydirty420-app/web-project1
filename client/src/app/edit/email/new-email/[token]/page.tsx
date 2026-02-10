@@ -1,4 +1,4 @@
-import FetchClient from "./fetch";
+import { FetchClient } from "./fetch";
 
 type Props = {
     params: { token: string };

@@ -5,7 +5,7 @@ type Props = {
     backClick: () => void;
 };
 
-export default function ButtonDiv({ nextClick, backClick }: Props) {
+export const ButtonDiv = ({ nextClick, backClick }: Props) => {
     return (
         <nav className={styles.buttonNav}>
             <button

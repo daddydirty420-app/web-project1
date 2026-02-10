@@ -6,6 +6,6 @@ type Props = {
     children: ReactNode;
 };
 
-export default function ShopStep({ number, children }: Props) {
+export const ShopStep = ({ number, children }: Props) => {
     return <p className={styles.shopStep}>STEP{number}：<strong>{children}</strong></p>;
 };

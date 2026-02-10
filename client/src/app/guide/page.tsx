@@ -1,6 +1,5 @@
 import { TitleAndBack, Container, AccordionGrid } from '@/components';
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
+import { Header, Footer } from "@/components";
 import { GuideLink } from '@/components/guide';
 import { Metadata } from 'next';
 
@@ -13,7 +12,7 @@ export const metadata: Metadata = {
     }
 }
 
-export default function GuideHome() {
+export default function Page() {
     return (
         <>
             <Header />

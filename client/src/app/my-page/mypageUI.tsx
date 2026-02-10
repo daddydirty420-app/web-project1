@@ -1,6 +1,4 @@
-import { Back, Container } from "@/components";
-import Footer from "@/components/footer/footer";
-import Header from "@/components/header/header";
+import { Back, Container, Header, Footer } from "@/components";
 import { ReactNode } from "react";
 
 type Props = {

@@ -12,7 +12,7 @@ type Props = {
     id: string;
 }
 
-export default function UploadButton({ id }: Props) {
+export const UploadButton = ({ id }: Props) => {
     const [popup, setPopup] = useState(false);
     const [check, setCheck] = useState(false);
     const router = useRouter();

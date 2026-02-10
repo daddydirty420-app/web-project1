@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from '@/styles/login.module.css';
 
-export default function ResetForm() {
+export const ResetForm = () => {
     const [email, setEmail] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {

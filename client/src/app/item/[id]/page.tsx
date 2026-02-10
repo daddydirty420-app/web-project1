@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ItemPage from "../itemPage";
+import { ItemPage } from "../itemPage";
 import { Item } from "../itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import { notFound } from "next/navigation";

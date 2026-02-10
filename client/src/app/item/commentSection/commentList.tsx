@@ -3,17 +3,17 @@
 import styles from "./comment.module.css";
 import { Comment } from "../itemPageTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CommentText from "./commentText";
-import CommentDataDiv from "./commentDataDiv";
-import Good from "./good";
-import ReportFloat from "./reportFloat";
-import DeleteComment from "./deleteComment";
-import ProfileImage from "./profileImage";
+import { CommentText } from "./commentText";
+import { CommentDataDiv } from "./commentDataDiv";
+import { Good } from "./good";
+import { ReportFloat } from "./reportFloat";
+import { DeleteComment } from "./deleteComment";
+import { ProfileImage } from "./profileImage";
 import { useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
-import Pin from "./pin";
-import CommentForm from "./commentForm";
-import ReplyList from "./replyList";
+import { Pin } from "./pin";
+import { CommentForm } from "./commentForm";
+import { ReplyList } from "./replyList";
 
 type Props = {
     id: string;
@@ -23,7 +23,7 @@ type Props = {
     loggedIn: boolean;
 }
 
-export default function CommentList({ id, sellerMe, comments, page, loggedIn }: Props) {
+export const CommentList = ({ id, sellerMe, comments, page, loggedIn }: Props) => {
     const [replyVisible, setReplyVisible] = useState<{ [key: string]: boolean }>({});
 
     const toggleReplyVisible = (commentId: string) => {

@@ -1,11 +1,9 @@
-import { Back, Container } from '@/components';
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
+import { Back, Container, Header, Footer } from '@/components';
 import { Res } from './profileTypes';
-import ProfileMain from './profileMain';
-import AdminSection from './adminSection';
-import SocialSection from './socialSection';
-import ItemList from './itemList';
+import { ProfileMain } from './profileMain';
+import { AdminSection } from './adminSection';
+import { SocialSection } from './socialSection';
+import { ItemList } from './itemList';
 
 type Props = {
     data: Res;
@@ -15,7 +13,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function ProfilePage({ data, userId, currentUserId, adminPage, loggedIn }: Props) {
+export const ProfilePage = ({ data, userId, currentUserId, adminPage, loggedIn }: Props) => {
     return (
         <>
         <Header />

@@ -15,7 +15,7 @@ type Props = {
     loggedIn: boolean;
 }
 
-export default function Good({ comment, loggedIn }: Props) {
+export const Good = ({ comment, loggedIn }: Props) => {
     const id = comment.id;
     const initialGood = comment.isGoodByMe;
     const initialCount = comment.goodCount;

@@ -5,6 +5,6 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function UploadButton({ loggedIn }: Props) {
+export const UploadButton = ({ loggedIn }: Props) => {
     return <Link href={loggedIn ? "/upload/before" : "/login"} className={styles.uploadButton}>出品する</Link>;
 };

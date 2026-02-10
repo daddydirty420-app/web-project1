@@ -6,7 +6,7 @@ import guideImage2 from '@/assets/images/website-image/guide-image/売上金使�
 import { useState } from 'react';
 import { X } from 'lucide-react';
 
-export default function UseClient() {
+export const Client = () => {
     const [modalSrc, setModalSrc] = useState<StaticImageData | null>(null);
 
     return (

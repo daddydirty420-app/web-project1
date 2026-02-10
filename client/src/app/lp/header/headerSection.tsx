@@ -1,13 +1,13 @@
-import Hero from "./hero";
-import HeaderGreen from "./headerGreen";
-import Button from "../button/button";
+import { Hero } from "./hero";
+import { HeaderGreen } from "./headerGreen";
+import { Button } from "../button/button";
 
 type Props = {
     shopPage?: boolean;
     loggedIn: boolean;
 };
 
-export default function HeaderSection({ shopPage, loggedIn }: Props) {
+export const HeaderSection = ({ shopPage, loggedIn }: Props) => {
     return (
         <header>
             <Hero shopPage={shopPage} />

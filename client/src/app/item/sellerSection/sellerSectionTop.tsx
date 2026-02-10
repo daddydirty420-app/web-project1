@@ -1,7 +1,7 @@
-import UrlText from "./urlText";
+import { UrlText } from "./urlText";
 import { Item } from "../itemPageTypes";
-import SaleButton from "./saleButton";
-import UploadButton from "./uploadButton";
+import { SaleButton } from "./saleButton";
+import { UploadButton } from "./uploadButton";
 import styles from "./seller.module.css";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
     item: Item;
 };
 
-export default function SellerSectionTop({ id, item }: Props) {
+export const SellerSectionTop = ({ id, item }: Props) => {
     return (
         <nav className={styles.sellerSectionTop}>
             <UrlText />

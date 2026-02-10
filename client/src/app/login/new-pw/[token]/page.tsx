@@ -1,5 +1,5 @@
 import { Container } from "@/components";
-import PwForm from '../pw-form';
+import { PwForm } from '../pw-form';
 import { Metadata } from "next";
 import styles from '@/styles/login.module.css';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function NewPw() {
+export default function Page() {
     return (
         <Container>
             <h1 className={styles.title}>新しいパスワード</h1>

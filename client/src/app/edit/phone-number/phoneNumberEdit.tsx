@@ -15,7 +15,7 @@ type Props = {
     shopId?: string;
 };
 
-export default function PhoneNumberEdit({ user, page, deliveryId, shopId }: Props) {
+export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
     const [value, setValue] = useState(user.phone_number);
     const router = useRouter();
 

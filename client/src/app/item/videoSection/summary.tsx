@@ -11,7 +11,7 @@ type Props = {
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function Summary({ id, item, sellerMe, page }: Props) {
+export const Summary = ({ id, item, sellerMe, page }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setOverflowing] = useState(false);
     const summaryRef = useRef<HTMLParagraphElement>(null);

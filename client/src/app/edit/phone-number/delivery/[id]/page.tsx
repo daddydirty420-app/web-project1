@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import PhoneNumberEdit from "../../phoneNumberEdit";
+import { PhoneNumberEdit } from "../../phoneNumberEdit";
 import { cookies } from "next/headers";
 
 type Props = {

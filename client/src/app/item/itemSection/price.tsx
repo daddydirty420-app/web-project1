@@ -5,7 +5,7 @@ type Props = {
     item: Item;
 };
 
-export default function Price({ item }: Props) {
+export const Price = ({ item }: Props) => {
     return (
         <div className={styles.priceDiv}>
             <h2 className={styles.price}>￥{item.price.toLocaleString()}</h2>

@@ -14,7 +14,7 @@ type Props = {
     reccomendPayValue: number;
 };
 
-export default function Form({ user, reccomendPayValue }: Props) {
+export const Form = ({ user, reccomendPayValue }: Props) => {
     const [value, setValue] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
     const [popup, setPopup] = useState(false);

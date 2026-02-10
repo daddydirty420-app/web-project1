@@ -15,7 +15,7 @@ type Props = {
     shopInfo: ShopInfo;
 };
 
-export default function Form({ shopId, shopInfo }: Props) {
+export const Form = ({ shopId, shopInfo }: Props) => {
     const [companyName, setCompanyName] = useState(shopInfo.company_name);
     const router = useRouter();
 

@@ -8,7 +8,7 @@ type Props = {
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function ItemHeader({ item, page }: Props) {
+export const ItemHeader = ({ item, page }: Props) => {
     return (
         <div className={styles.itemHeader}>
             <div id="itemName" className={styles.itemNameDiv}>

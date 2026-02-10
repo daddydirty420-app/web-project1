@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-export default function Resend() {
+export const Resend = () => {
     const router = useRouter();
     const [token, setToken] = useState<string | null>(null);
 

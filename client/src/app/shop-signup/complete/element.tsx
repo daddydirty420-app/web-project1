@@ -2,7 +2,7 @@ import { Container } from "@/components";
 import styles from "@/styles/emailComplete.module.css";
 import Link from "next/link";
 
-export default function Element() {
+export const Element = () => {
     return (
         <Container>
             <h1 className={styles.title}>〇〇ショップ登録の申請が完了しました</h1>

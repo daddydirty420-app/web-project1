@@ -8,7 +8,7 @@ type Props = {
     userId: string;
 };
 
-export default function StarSection({ user, userId }: Props) {
+export const StarSection = ({ user, userId }: Props) => {
     return (
         <div className={styles.starSection}>
             {user.star_amount > 0 && (

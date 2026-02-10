@@ -18,7 +18,7 @@ type Props = {
     shopEditId?: string;
 };
 
-export default function AddressEditForm({ address, page, deliveryId, shopId, shopEditId }: Props) {
+export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId }: Props) => {
     const [postNumber, setPostNumber] = useState(address?.post_number ?? "");
     const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken?.name ?? "");
     const [shikutyouson, setShikutyouson] = useState(address?.shikutyouson ?? "");

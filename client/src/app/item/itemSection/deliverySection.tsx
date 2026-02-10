@@ -5,7 +5,7 @@ type Props = {
     item: Item;
 };
 
-export default function DeliverySection({ item }: Props) {
+export const DeliverySection = ({ item }: Props) => {
     const inventory = item.attributes.inventory;
     return (
         <section className={styles.deliverySection}>

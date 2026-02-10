@@ -10,3 +10,5 @@ export { Star } from './star';
 export { ItemListRow } from "./itemListRow/itemListRow";
 export { ConfirmSection } from "./confirm-card/confirmSection";
 export { TopLoader } from "./loading/topLoader";
+export { Header } from "./header/header";
+export { Footer } from "./footer/footer";

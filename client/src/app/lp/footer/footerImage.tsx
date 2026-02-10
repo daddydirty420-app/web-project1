@@ -2,7 +2,7 @@ import styles from "../lp.module.css";
 import Pic from "@/assets/images/pexels-xue-guangjian-815005-1687845.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import InquiryButton from "../button/inquiryButton";
+import { InquiryButton } from "../button/inquiryButton";
 import clsx from "clsx";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default async function FooterImage({ shopPage, hasShop, loggedIn }: Props) {
+export const FooterImage = async ({ shopPage, hasShop, loggedIn }: Props) => {
     const signup = "/signup";
     const login = "/login";
     const shopSign = "/shop-signup/step1";

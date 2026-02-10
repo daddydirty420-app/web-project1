@@ -4,7 +4,7 @@ type Props = {
     shopPage?: boolean;
 };
 
-export default function HeaderGreen({ shopPage }: Props) {
+export const HeaderGreen = ({ shopPage }: Props) => {
     return (
         <div className={styles.headerGreen}>
         {!shopPage && <h1 className={styles.headerh1}>【史上初】動画で商品紹介<br />キャンプ・登山用品専用フリーマーケットサイト</h1>}

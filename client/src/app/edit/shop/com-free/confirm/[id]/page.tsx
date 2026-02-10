@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import Client from "../client";
+import { Client } from "../client";
 import { cookies } from "next/headers";
 
 type Props = {

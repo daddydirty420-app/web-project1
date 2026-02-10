@@ -1,8 +1,8 @@
 import { Container } from "@/components";
-import TwoColumn from "./two-column";
-import HeaderSection from "./header/headerSection";
-import FooterImage from "./footer/footerImage";
-import FooterSitemap from "./footer/footerSitemap";
+import { TwoColumn } from "./two-column";
+import { HeaderSection } from "./header/headerSection";
+import { FooterImage } from "./footer/footerImage";
+import { FooterSitemap } from "./footer/footerSitemap";
 import { Items } from "@/types/itemListTypes";
 
 type Res = {
@@ -17,7 +17,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function Lp({ shopPage, hasShop, itemList, loggedIn }: Props) {
+export const Lp = ({ shopPage, hasShop, itemList, loggedIn }: Props) => {
     return (
         <>
         <HeaderSection shopPage={shopPage} loggedIn={loggedIn} />

@@ -14,7 +14,7 @@ type Props = {
     images: string[];
 };
 
-export default function Slideshow({ images }: Props) {
+export const Slideshow = ({ images }: Props) => {
     const [modalSrc, setModalSrc] = useState<string | null>(null);
 
     return (

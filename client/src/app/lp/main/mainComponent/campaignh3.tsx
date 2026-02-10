@@ -5,7 +5,7 @@ type Props = {
     text: string;
 };
 
-export default function CampaignH3({ number, text }: Props) {
+export const CampaignH3 = ({ number, text }: Props) => {
     return (
         <div className={styles.campaignTitleDiv}>
             <p className={styles.campaignNumber}>{number}</p>

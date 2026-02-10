@@ -1,5 +1,5 @@
 import { Container } from "@/components";
-import ResetForm from './reset-form';
+import { ResetForm } from './reset-form';
 import { Metadata } from "next";
 import styles from '@/styles/login.module.css';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function PasswordReset() {
+export default function Page() {
     return (
         <Container>
             <h1 className={styles.title}>パスワードリセット</h1>

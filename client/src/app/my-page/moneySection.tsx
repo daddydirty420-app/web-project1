@@ -5,7 +5,7 @@ type Props = {
     user: User;
 };
 
-export default function MoneySection({ user }: Props) {
+export const MoneySection = ({ user }: Props) => {
     return (
         <div className={styles.block}>
             <section className={styles.moneySection}>

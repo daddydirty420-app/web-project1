@@ -1,9 +1,9 @@
 import styles from "../lp.module.css";
-import MainH2 from "./mainComponent/mainh2";
-import MainH3 from "./mainComponent/mainh3";
-import MainP from "./mainComponent/mainP";
+import { MainH2 } from "./mainComponent/mainh2";
+import { MainH3 } from "./mainComponent/mainh3";
+import { MainP } from "./mainComponent/mainP";
 
-export default function MainShopUtil() {
+export const MainShopUtil = () => {
     return (
         <>
         <MainH2>FLEX Shopの機能</MainH2>

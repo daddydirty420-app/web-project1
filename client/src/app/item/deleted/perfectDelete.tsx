@@ -11,7 +11,7 @@ type Props = {
     id: string;
 };
 
-export default function PerfectDelete({ id }: Props) {
+export const PerfectDelete = ({ id }: Props) => {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
     

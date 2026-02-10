@@ -12,7 +12,7 @@ type Props = {
     item: Item;
 }
 
-export default function DeleteButton({ id, item }: Props) {
+export const DeleteButton = ({ id, item }: Props) => {
     const [popup, setPopup] = useState(false);
     const [deleteReason, setDeleteReason] = useState("");
 

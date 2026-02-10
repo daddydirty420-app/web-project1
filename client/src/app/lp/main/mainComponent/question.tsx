@@ -5,7 +5,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function Question({ children }: Props) {
+export const Question = ({ children }: Props) => {
     return (
         <div className={styles.questionDiv}>
             <p><span className="text-blue-700">Q</span>：</p>

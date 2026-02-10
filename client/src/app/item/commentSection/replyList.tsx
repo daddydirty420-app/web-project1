@@ -1,15 +1,15 @@
 "use client";
 
 import styles from "./comment.module.css";
-import ProfileImage from "./profileImage";
+import { ProfileImage } from "./profileImage";
 import { Comment } from "../itemPageTypes";
 import { useEffect, useState } from "react";
-import Pin from "./pin";
-import CommentDataDiv from "./commentDataDiv";
-import CommentText from "./commentText";
-import Good from "./good";
-import ReportFloat from "./reportFloat";
-import DeleteComment from "./deleteComment";
+import { Pin } from "./pin";
+import { CommentDataDiv } from "./commentDataDiv";
+import { CommentText } from "./commentText";
+import { Good } from "./good";
+import { ReportFloat } from "./reportFloat";
+import { DeleteComment } from "./deleteComment";
 import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
     loggedIn: boolean;
 }
 
-export default function ReplyList({ parentId, page, loggedIn }: Props) {
+export const ReplyList = ({ parentId, page, loggedIn }: Props) => {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {

@@ -5,6 +5,6 @@ type Props = {
     children: ReactNode;
 };
 
-export default function MainP({ children }: Props) {
+export const MainP = ({ children }: Props) => {
     return <p className={styles.mainP}>{children}</p>;
 };

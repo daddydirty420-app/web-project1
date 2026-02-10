@@ -1,6 +1,6 @@
 import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
-import Good from "./good";
+import { Good } from "./good";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function CountElem({ id, item, sellerMe, goodCount, isGood, page, loggedIn }: Props) {
+export const CountElem = ({ id, item, sellerMe, goodCount, isGood, page, loggedIn }: Props) => {
     return (
         <section className={styles.countElem}>
             {["normal", "admin"].includes(page) && (

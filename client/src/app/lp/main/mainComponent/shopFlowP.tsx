@@ -5,6 +5,6 @@ type Props = {
     children: ReactNode;
 };
 
-export default function ShopFlowP({ children }: Props) {
+export const ShopFlowP = ({ children }: Props) => {
     return <p className={styles.shopFlowP}>{children}</p>;
 };

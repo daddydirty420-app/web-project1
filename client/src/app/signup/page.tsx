@@ -1,5 +1,5 @@
 import { Container } from "@/components";
-import SignupForm from './signup-form';
+import { SignupForm } from './signup-form';
 import { Metadata } from "next";
 import styles from '@/styles/login.module.css';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function Signup() {
+export default function Page() {
     return (
         <Container>
             <h1 className={styles.title}>会員登録</h1>

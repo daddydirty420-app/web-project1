@@ -16,7 +16,7 @@ type Props = {
     ComOrFreeOption: ComOrFreeOption[];
 };
 
-export default function Form({ shopId, shopInfo, ComOrFreeOption }: Props) {
+export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
     const [selectOption, setSelectOption] = useState(shopInfo.ComOrFreeOption?.id ?? "");
 
     const router = useRouter();

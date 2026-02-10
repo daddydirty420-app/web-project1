@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ProfileEditForm from "./profileEditForm";
+import { ProfileEditForm } from "./profileEditForm";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";

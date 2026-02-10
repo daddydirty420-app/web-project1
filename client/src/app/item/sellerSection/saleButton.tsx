@@ -13,7 +13,7 @@ type Props = {
     item: Item;
 };
 
-export default function SaleButton({ item }: Props) {
+export const SaleButton = ({ item }: Props) => {
     const [salePopup, setSalePopup] = useState(false);
     const [selected, setSelected] = useState("rate");
     const [discountRate, setDiscountRate] = useState(0);

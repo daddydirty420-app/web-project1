@@ -10,7 +10,7 @@ type Props = {
     id: string;
 };
 
-export default function DeleteItem({ id }: Props) {
+export const DeleteItem = ({ id }: Props) => {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 

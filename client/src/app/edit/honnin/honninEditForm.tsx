@@ -19,7 +19,7 @@ type Props = {
     campaign?: boolean;
 };
 
-export default function HonninEditForm({ user, genderOptions, campaign }: Props) {
+export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
     const [sei, setSei] = useState(user.Name?.sei);
     const [mei, setMei] = useState(user.Name?.mei);
     const [seiKana, setSeiKana] = useState(user.Name?.sei_kana);

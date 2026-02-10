@@ -16,7 +16,7 @@ type Props = {
     shopInfoEdit: ShopInfoEdit
 };
 
-export default function Client({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) {
+export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) => {
     const [companyName, setCompanyName] = useState(shopInfoEdit.company_name ?? shopInfo.company_name ?? "");
     const [phoneNumber, setPhoneNumber] = useState(shopInfoEdit.phone_number ?? shopInfo.phone_number ?? "");
     const [email, setEmail] = useState(shopInfoEdit.email ?? shopInfo.email ?? "");

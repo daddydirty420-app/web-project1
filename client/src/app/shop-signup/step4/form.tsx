@@ -1,9 +1,9 @@
 "use client";
 
 import styles from "../ss.module.css";
-import StepBar from "../stepBar";
+import { StepBar } from "../stepBar";
 import SSUI from "../ssUI";
-import ButtonDiv from "../buttonDiv";
+import { ButtonDiv } from "../buttonDiv";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
@@ -14,7 +14,7 @@ type Props = {
     reccomend: boolean;
 };
 
-export default function Form({ shopId }: Props) {
+export const Form = ({ shopId }: Props) => {
     const [autoTrans, setAutoTrans] = useState("いいえ");
     const [openInfo, setOpenInfo] = useState("いいえ");
     const [reccomend, setReccomend] = useState("いいえ");

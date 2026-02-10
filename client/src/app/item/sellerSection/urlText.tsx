@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import styles from "./seller.module.css";
 import toast from "react-hot-toast";
 
-export default function UrlText() {
+export const UrlText = () => {
     const pathname = usePathname();
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
     const fullUrl = `${baseUrl}${pathname}`;

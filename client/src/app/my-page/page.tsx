@@ -3,8 +3,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import CookieSet from './cookieSet';
-import MypageElement from './mypageElement';
+import { CookieSet } from './cookieSet';
+import { MypageElement } from './mypageElement';
 
 type User = {
     id: number;

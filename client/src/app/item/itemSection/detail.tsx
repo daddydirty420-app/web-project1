@@ -11,7 +11,7 @@ type Props = {
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export default function Detail({ id, item, sellerMe, page }: Props) {
+export const Detail = ({ id, item, sellerMe, page }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setoverflowing] = useState(false);
     const detailRef = useRef<HTMLParagraphElement>(null);

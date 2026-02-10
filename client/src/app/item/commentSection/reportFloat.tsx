@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./comment.module.css";
 import { useState } from "react";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import Report from "../others/report";
+import { Report } from "../others/report";
 import { Comment } from "../itemPageTypes";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
     page: "normal" | "admin";
 }
 
-export default function ReportFloat({ comment, page }: Props) {
+export const ReportFloat = ({ comment, page }: Props) => {
     const [floatVisible, setFloatVisible] = useState(false);
 
     return (

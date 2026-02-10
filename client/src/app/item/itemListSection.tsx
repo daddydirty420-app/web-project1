@@ -7,7 +7,7 @@ type Props = {
     sellerMe?: boolean;
 };
 
-export default function ItemListSection({ itemList, sellerMe }: Props) {
+export const ItemListSection = ({ itemList, sellerMe }: Props) => {
     if (!itemList) {
         console.error("itemListがありません。", itemList);
         return;

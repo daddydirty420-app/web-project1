@@ -7,7 +7,7 @@ type Props = {
     rememberMe?: boolean;
 };
 
-export default function CookieSet({ refreshToken, rememberMe }: Props) {
+export const CookieSet = ({ refreshToken, rememberMe }: Props) => {
     useEffect(() => {
         if (!refreshToken) return;
 

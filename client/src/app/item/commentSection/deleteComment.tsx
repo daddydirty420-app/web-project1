@@ -16,7 +16,7 @@ type Props = {
     page: "normal" | "admin";
 }
 
-export default function DeleteComment({ comment, page }: Props) {
+export const DeleteComment = ({ comment, page }: Props) => {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 

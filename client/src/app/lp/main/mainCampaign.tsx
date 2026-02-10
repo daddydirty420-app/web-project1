@@ -1,11 +1,11 @@
 import styles from "../lp.module.css";
-import MainH2 from "./mainComponent/mainh2";
-import MainP from "./mainComponent/mainP";
-import CampaignH3 from "./mainComponent/campaignh3";
+import { MainH2 } from "./mainComponent/mainh2";
+import { MainP } from "./mainComponent/mainP";
+import { CampaignH3 } from "./mainComponent/campaignh3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCampground } from "@fortawesome/free-solid-svg-icons";
 
-export default function MainCampaign() {
+export const MainCampaign = () => {
     return (
         <>
         <MainH2>早期出品特典</MainH2>

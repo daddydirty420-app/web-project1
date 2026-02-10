@@ -1,0 +1,93 @@
+import { TitleAndBack } from '@/components';
+import { TokuteiContainer, TokuteiSection } from '@/components/tokutei';
+import styles from '@/styles/tokutei.module.css';
+import Link from 'next/link';
+
+export const Content = () => {
+    return (
+        <>
+            <TitleAndBack title='特定商取引法に基づく表記（レコメンド）' />
+
+            <TokuteiContainer>
+                <TokuteiSection header='販売事業者の名称'>
+                    <p>代表者氏名：○○ ○○
+                        <br />サービス名称：〇〇〇〇
+                    </p>
+                </TokuteiSection>
+
+                <TokuteiSection header='所在地'>
+                    <div className='flex flex-start'>
+                        <p className='break-all'>〒210-0007</p>
+                        <p className='ml-2 break-all'>神奈川県川崎市川崎区駅前本町11-2
+                            <br />川崎フロンティアビル4階
+                        </p>
+                    </div>
+                </TokuteiSection>
+
+                <TokuteiSection header='電話番号'>
+                    <p>請求があった場合、遅滞なく開示します。</p>
+                    <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>からお問い合わせください。</small>
+                </TokuteiSection>
+
+                <TokuteiSection header='メールアドレス'>
+                    <p>support@flex-outdoor-mail.com</p>
+                </TokuteiSection>
+
+                <TokuteiSection header='営業時間'>
+                    <p>平日10～18時（お盆、年末年始期間を除く）</p>
+                </TokuteiSection>
+
+                <TokuteiSection header='運営統括責任者'>
+                    <p>○○ ○○</p>
+                </TokuteiSection>
+
+                <TokuteiSection header='URL'>
+                    <p><Link href='/' className={styles.link}>https://flex-outdoor.com</Link></p>
+                </TokuteiSection>
+
+                <TokuteiSection header='支払い価格'>
+                    <div className={styles.twoTextFlex}>
+                        <p>単品プラン：</p>
+                        <p>300円/1点</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>月額プラン：</p>
+                        <p>880円/月</p>
+                    </div>
+                    <small className={styles.small}>※キャンペーン等により料金が変動する場合がございます。</small>
+                </TokuteiSection>
+
+                <TokuteiSection header='支払い方法・支払い時期'>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い方法：</p>
+                        <p>売上金差し引き</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>支払い時期：</p>
+                        <div className={styles.innerContent}>
+                            <p>・単品プラン：購入者が商品を受け取ったとき
+                                <br />・月額プラン：毎月末
+                            </p>
+                        </div>
+                    </div>
+                </TokuteiSection>
+
+                <TokuteiSection header='売上金額が料金に満たない場合'>
+                    <div className={styles.twoTextFlex}>
+                        <p>単品プラン：</p>
+                        <p>販売手数料を除いた商品の売上金額が〇〇レコメンドの料金に満たない場合、売上金全額差し引きいたします。</p>
+                    </div>
+                    <div className={styles.twoTextFlex}>
+                        <p>月額プラン：</p>
+                        <p>当月の売上金額が〇〇レコメンドの料金に満たない場合、当月の売上金額から全額差し引きいたします。また、当月の売上金額が0円だった場合、料金を徴収いたしません。</p>
+                    </div>
+                </TokuteiSection>
+
+                <TokuteiSection header='月額プランの自動更新・解約'>
+                    <p>月額プランの方は、マイページの「〇〇レコメンド加入・変更」をクリックし、「解約する」を選択することで解約できます。なお、解約を申し込まない限り、毎月末のお支払い時に契約が自動更新されます。解約を申し込んだ月までは料金が通常通り発生し、月末までFLEXレコメンドの機能をご利用できます。</p>
+                    <small className={styles.small}>※マイページの「〇〇レコメンド加入・変更」や「解約する」ボタンが表示されない場合は、お気軽にお問い合わせフォームからお問い合わせください。</small>
+                </TokuteiSection>
+            </TokuteiContainer>
+        </>
+    );
+}

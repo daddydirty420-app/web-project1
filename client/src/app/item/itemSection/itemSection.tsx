@@ -1,12 +1,12 @@
 import { Item } from "../itemPageTypes";
 import styles from "./item.module.css";
-import Slideshow from "./slideshow";
-import Detail from "./detail";
-import CategoryText from "./categoryText";
-import VariantsList from "./variantsList";
-import DeliverySection from "./deliverySection";
-import BuySection from "./buySection/buySection";
-import ItemHeader from "./itemHeader";
+import { Slideshow } from "./slideshow";
+import { Detail } from "./detail";
+import { CategoryText } from "./categoryText";
+import { VariantsList } from "./variantsList";
+import { DeliverySection } from "./deliverySection";
+import { BuySection } from "./buySection/buySection";
+import { ItemHeader } from "./itemHeader";
 
 type Props = {
     id: string;
@@ -16,9 +16,9 @@ type Props = {
     loggedIn: boolean;
 };
 
-export default function ItemSection({ id, item, sellerMe, page, loggedIn }: Props) {
+export const ItemSection = ({ id, item, sellerMe, page, loggedIn }: Props) => {
     const status = item.status;
-    const variants = item.attributes.variants;
+    const variants = item.attributes.colorVariants;
 
     return (
         <section className={styles.itemSection}>

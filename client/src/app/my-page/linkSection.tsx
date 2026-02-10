@@ -1,7 +1,7 @@
 import { ChildrenLink, MypageLinkHeader, NormalLink, NormalLinkContainer } from "@/components/link";
 import styles from "./mypage.module.css";
 import { Res, User } from "./types";
-import ReferenceCode from "./referenceCode";
+import { ReferenceCode } from "./referenceCode";
 import Link from "next/link";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
     profileLink: string;
 };
 
-export default function LinkSection({ user, data, profileLink }: Props) {
+export const LinkSection = ({ user, data, profileLink }: Props) => {
     return (
         <>
             <MypageLinkHeader text='アカウント' />

@@ -22,7 +22,7 @@ type Props = {
     adminPage?: boolean;
 };
 
-export default function ItemList( { userId, defaultVideoList, adminPage }: Props ) {
+export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
     const [visibleIL, setVisibleIL] = useState(false);
     const [videoList, setVideoList] = useState<Items[] | null>(defaultVideoList.items);
     const [itemList, setItemList] = useState<Items[] | null>(null);

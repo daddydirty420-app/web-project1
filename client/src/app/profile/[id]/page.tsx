@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ProfilePage from '../profilePage';
+import { ProfilePage } from '../profilePage';
 import { Res } from '../profileTypes';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
