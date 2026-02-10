@@ -326,7 +326,7 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
                     [Op.iLike]: `%${keyword}%`,
                 },
             },
-            order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
+            order: [[sequelize.fn("length", sequelize.col("Brands.name")), "ASC"]],
             limit: 15,
         });
 
@@ -355,7 +355,7 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
                         required: true,
                     },
                 ],
-                order: [[sequelize.fn("length", sequelize.col("name")), "ASC"]],
+                order: [[sequelize.fn("length", sequelize.col("BrandAliases.name")), "ASC"]],
                 limit: 15 - direct.length,
             });
         }
