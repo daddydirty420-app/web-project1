@@ -535,6 +535,7 @@ export default function Form({
 
             toast.success("下書き保存しました");
             setDraftLoading(false);
+            router.push("/item-list/draft");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
