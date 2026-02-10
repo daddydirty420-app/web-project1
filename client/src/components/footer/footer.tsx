@@ -7,7 +7,7 @@ import { faSquarePlus, faCircleUser } from '@fortawesome/free-regular-svg-icons'
 import Link from 'next/link';
 import { cookies } from "next/headers";
 
-export const Footer = async () => {
+export default async function Footer() {
     const session = await getServerSession(authOptions);
     
     const loggedIn = !!session?.user;

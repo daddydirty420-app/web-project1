@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { SearchInputPC } from "./searchInputPC";
 import { SearchInputMobile } from "./searchInputMobile";
 
-export const Header = async () => {
+export default async function Header() {
     const session = await getServerSession(authOptions);
 
     const loggedIn = !!session?.user;

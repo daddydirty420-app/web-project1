@@ -11,8 +11,11 @@ export const VariantsList = ({ item }: Props) => {
         <section className={styles.variantList}>
             {item.attributes.colorVariants?.map((variant, i) => {
                 if (!variant) return null;
-                const inventory = variant.inventory;
-                const isSoldout = inventory?.current === 0;
+                const inventory = variant.sizes?.reduce(
+                    (sum, s) => sum + (s.inventory.current ?? 0),
+                    0,
+                ) ?? 0;
+                const isSoldout = inventory === 0;
                 const isLowStock = inventory &&
                 inventory.current > 0 &&
                 inventory.current / inventory.initial <= inventory.low_stock_ratio;
@@ -45,11 +48,18 @@ export const VariantsList = ({ item }: Props) => {
                                     <span>カラー</span>{variant.color}
                                 </p>
                             )}
-                            {variant.size !== null && variant.size !== "" && (
-                                <p className={styles.metaText}>
-                                    <span>サイズ</span>{variant.size_label}
-                                </p>
-                            )}
+
+                            {variant.sizes?.map((size, i) => {
+                                if (!size) return;
+
+                                const current = size.inventory.current;
+                                const soldout = current === 0;
+                                const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
+
+                                return (
+                                    <div
+                                )
+                            })}
                         </div>
                     </div>
                 )
