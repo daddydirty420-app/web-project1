@@ -93,9 +93,9 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
             "-start_number", "0",
             "-hls_time", "10",
             "-hls_playlist_type", "vod",
-            "-hls_segment_filename", `${convertedDir}/seg_%03d.ts`, // ← 追加（名前が綺麗）
+            "-hls_segment_filename", `${convertedDir}/${now}_seg_%03d.ts`, // ← 追加（名前が綺麗）
             "-f", "hls",
-            `${convertedDir}/index.m3u8`
+            `${convertedDir}/${now}_index.m3u8`
         ]);
 
         const timeout = setTimeout(async () => {
@@ -143,7 +143,7 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
                     await s3.send(new PutObjectCommand(uploadParams));
                 }
 
-                const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/index.m3u8`;
+                const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/${now}_index.m3u8`;
 
                 await videoData.update({
                     status: 'done',
