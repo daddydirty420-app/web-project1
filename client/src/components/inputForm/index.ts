@@ -1,5 +1,5 @@
-export { default as Button } from "./button";
-export { default as InputStr } from "./inputStr";
-export { default as Textarea } from "./textarea";
-export { default as InputTitle } from "./inputTitle";
-export { default as InputStrAndSmall } from "./inputStrAndSmall";
+export { Button } from "./button";
+export { InputStr } from "./inputStr";
+export { Textarea } from "./textarea";
+export { InputTitle } from "./inputTitle";
+export { InputStrAndSmall } from "./inputStrAndSmall";
