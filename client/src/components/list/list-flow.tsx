@@ -7,7 +7,7 @@ type ListFrowProps = {
     number: number,
 };
 
-export default function ListFlow({ children, number }: ListFrowProps) {
+export const ListFlow = ({ children, number }: ListFrowProps) => {
     return (
         <li className="flex gap-2 items-center mb-2">
             <span className="text-(--theme) text-base font-medium">{number}.</span>

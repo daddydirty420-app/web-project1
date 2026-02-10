@@ -18,7 +18,7 @@ type SearchHistoryItem = {
     createdAt: string;
 };
 
-export default function SearchInputPC({ loggedIn }: Props) {
+export const SearchInputPC = ({ loggedIn }: Props) => {
     const [value, setValue] = useState("");
     const [isPC, setIsPC] = useState(true);
     const [isFocused, setIsFocused] = useState(false);

@@ -6,7 +6,7 @@ type ContainerProps = {
     header?: boolean
 };
 
-export default function Container({ children, header = false }: ContainerProps) {
+export const Container = ({ children, header = false }: ContainerProps) => {
     const classNames = header
     ? styles.headerContainer
     : styles.default;

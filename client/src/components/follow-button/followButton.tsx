@@ -11,7 +11,7 @@ type Props = {
     currentUserId: string | null;
 };
 
-export default function FollowButton({ targetUserId, withCount, currentUserId }: Props) {
+export const FollowButton = ({ targetUserId, withCount, currentUserId }: Props) => {
     const { data: status } = useFollowStatus(targetUserId);
 
     if (!currentUserId || !targetUserId) return null;

@@ -1,5 +1,5 @@
 import styles from "./imputForm.module.css";
-import InputTitle from "./inputTitle";
+import { InputTitle } from "./inputTitle";
 
 type Props = {
     title: string;
@@ -13,7 +13,17 @@ type Props = {
     maxLength?: number;
 };
 
-export default function InputStr({ title, hissu, type, value, onChange, placeholder, numeric, patternNum, maxLength }: Props) {
+export const InputStr = ({
+    title,
+    hissu,
+    type,
+    value,
+    onChange,
+    placeholder,
+    numeric,
+    patternNum,
+    maxLength
+}: Props) => {
     return (
         <div className={styles.inputDiv}>
             <InputTitle title={title} hissu={hissu} />

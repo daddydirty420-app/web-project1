@@ -19,7 +19,7 @@ type SearchHistoryItem = {
     createdAt: string;
 };
 
-export default function SearchInputMobile({ loggedIn }: Props) {
+export const SearchInputMobile = ({ loggedIn }: Props) => {
     const [value, setValue] = useState("");
     const [isMobile, setIsMobile] = useState(true);
     const [searchMode, setSearchMode] = useState(false);

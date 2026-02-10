@@ -7,7 +7,7 @@ import { refreshToken } from "@/lib/refreshToken";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default function Client() {
+export const Client = () => {
     const router = useRouter();
 
     const newItem = async () => {

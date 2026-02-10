@@ -5,7 +5,7 @@ type TermsListSecondProps = {
     text: string;
 };
 
-export default function TermsListSecond({ alfabet, text }: TermsListSecondProps) {
+export const TermsListSecond = ({ alfabet, text }: TermsListSecondProps) => {
     return (
         <div className={styles.listParent}>
             <span className={styles.listIndex}>{alfabet}.</span>

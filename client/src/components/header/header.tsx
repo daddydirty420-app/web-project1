@@ -1,15 +1,14 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import Image from 'next/image';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import SearchInputPC from "./searchInputPC";
-import SearchInputMobile from "./searchInputMobile";
+import { SearchInputPC } from "./searchInputPC";
+import { SearchInputMobile } from "./searchInputMobile";
 
-export default async function Header() {
+export const Header = async () => {
     const session = await getServerSession(authOptions);
 
     const loggedIn = !!session?.user;

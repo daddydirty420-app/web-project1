@@ -11,7 +11,7 @@ type accordionProps = {
     children: ReactNode
 };
 
-export default function Accordion({ heading, children }: accordionProps) {
+export const Accordion = ({ heading, children }: accordionProps) => {
     const [textIsOpen, setTextIsOpen] = useState(false);
     const refText = useRef<HTMLDivElement>(null);
 

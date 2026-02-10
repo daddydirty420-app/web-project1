@@ -14,7 +14,7 @@ type StarResponse = {
   };
 };
 
-export default function Star({ userId }: Props) {
+export const Star = ({ userId }: Props) => {
     const [star, setStar] = useState(0);
 
     useEffect(() => {

@@ -6,7 +6,7 @@ type TokuteiSectionProps = {
     children: ReactNode,
 };
 
-export default function TokuteiSection({ header, children }: TokuteiSectionProps) {
+export const TokuteiSection = ({ header, children }: TokuteiSectionProps) => {
     return (
         <section className={styles.tokuteiSection}>
             <h2 className={styles.header}>{header}</h2>

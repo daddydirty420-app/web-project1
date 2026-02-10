@@ -7,7 +7,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function TermsKakko({ number, heading, children }: Props) {
+export const TermsKakko = ({ number, heading, children }: Props) => {
     return (
         <div>
             <h4 className={styles.kakkoTitle}>

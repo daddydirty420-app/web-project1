@@ -1,3 +1,3 @@
-export { default as TokuteiContainer } from './tokutei-container';
-export { default as TokuteiSection } from './tokutei-section';
-export { default as SecondHeader } from './second-header';
+export { TokuteiContainer } from './tokutei-container';
+export { TokuteiSection } from './tokutei-section';
+export { SecondHeader } from './second-header';

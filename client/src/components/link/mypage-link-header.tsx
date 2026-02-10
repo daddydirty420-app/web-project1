@@ -4,6 +4,6 @@ type MypageLinkHeaderProps = {
     text: string
 };
 
-export default function MypageLinkHeader({ text }: MypageLinkHeaderProps) {
+export const MypageLinkHeader = ({ text }: MypageLinkHeaderProps) => {
     return <h2 className={styles.mypageHeader}>{text}</h2>;
 }

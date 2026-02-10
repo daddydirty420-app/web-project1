@@ -7,7 +7,7 @@ type Props = {
     itemList: Items[];
 };
 
-export default function ItemListRow({ itemList }: Props) {
+export const ItemListRow = ({ itemList }: Props) => {
     return (
         <section className={styles.itemListWrapper}>
             {itemList.map((item) => {

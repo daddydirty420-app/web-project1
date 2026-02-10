@@ -8,7 +8,7 @@ type GuideLinkProps = {
     url: string,
 };
 
-export default function GuideLink({ heading, url }: GuideLinkProps) {
+export const GuideLink = ({ heading, url }: GuideLinkProps) => {
     return (
         <div className={styles.heading}>
             <h3>

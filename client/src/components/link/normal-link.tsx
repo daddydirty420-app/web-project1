@@ -6,7 +6,7 @@ type NormalLinkProps = {
     text: string,
 };
 
-export default function NormalLink({ text, url }: NormalLinkProps) {
+export const NormalLink = ({ text, url }: NormalLinkProps) => {
     return (
         <Link href={url} className={styles.normal}>
             <p>{text}</p>

@@ -6,7 +6,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function Button({ onClick, children }: Props) {
+export const Button = ({ onClick, children }: Props) => {
     return (
         <button
         type="button"

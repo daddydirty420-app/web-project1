@@ -6,6 +6,6 @@ type ListCheckProps = {
     children: ReactNode
 };
 
-export default function ListDiscSecond({ children }: ListCheckProps) {
+export const ListDiscSecond = ({ children }: ListCheckProps) => {
     return <li className={clsx("mb-2 list-disc", styles.listTextSecond)}>{children}</li>;
 }

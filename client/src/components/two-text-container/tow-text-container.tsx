@@ -8,7 +8,7 @@ type RowTextContainerProps = {
     flex?: boolean
 };
 
-export default function RowTextContainer({ heading, children, flex = false }: RowTextContainerProps) {
+export const RowTextContainer = ({ heading, children, flex = false }: RowTextContainerProps) => {
     const divClass = flex
     ? clsx('flex mb-2', styles.container)
     : clsx('block mb-3', styles.container);

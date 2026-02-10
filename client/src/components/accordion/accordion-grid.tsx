@@ -5,6 +5,6 @@ type AccordionGridProps = {
     children: ReactNode
 };
 
-export default function AccordionGrid({ children }: AccordionGridProps) {
+export const AccordionGrid = ({ children }: AccordionGridProps) => {
     return <div className={AcGStyle.flexGrid}>{children}</div>;
 }

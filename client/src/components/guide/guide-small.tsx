@@ -7,6 +7,6 @@ type GuideSmallProps = {
     className?: string
 };
 
-export default function GuideSmall({ children, className }: GuideSmallProps) {
+export const GuideSmall = ({ children, className }: GuideSmallProps) => {
     return <small className={clsx('block text-gray-500 mt-2', styles.small, className)}>{children}</small>;
 }

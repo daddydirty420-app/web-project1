@@ -6,7 +6,7 @@ type TermsListProps = {
     fontSize?: 'default' | 'small';
 };
 
-export default function TermsList({ number, text, fontSize = "default" }: TermsListProps) {
+export const TermsList = ({ number, text, fontSize = "default" }: TermsListProps) => {
     return (
         <div className={`${styles.listParent} ${
             fontSize === "small" ? styles.small : ""

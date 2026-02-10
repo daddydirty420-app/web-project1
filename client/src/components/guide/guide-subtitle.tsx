@@ -5,7 +5,7 @@ type GuideSubTitleProps = {
     mTop?: boolean
 };
 
-export default function GuideSubTitle({ text, mTop = false }: GuideSubTitleProps) {
+export const GuideSubTitle = ({ text, mTop = false }: GuideSubTitleProps) => {
     const classNames = mTop
     ? `${styles.subtitle} ${styles.mTop}`
     : styles.subtitle;

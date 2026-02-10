@@ -7,7 +7,7 @@ type GuideSectionProps = {
     children: ReactNode
 };
 
-export default function GuideSection({ heading, children }: GuideSectionProps) {
+export const GuideSection = ({ heading, children }: GuideSectionProps) => {
     return (
         <div>
             <p className={clsx('mt-4 mb-2', styles.PHeading)}>{heading}</p>

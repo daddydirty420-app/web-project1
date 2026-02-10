@@ -6,7 +6,7 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from './title-back.module.css';
 import clsx from 'clsx';
 
-export default function Back() {
+export const Back = () => {
     const router = useRouter();
 
     return (

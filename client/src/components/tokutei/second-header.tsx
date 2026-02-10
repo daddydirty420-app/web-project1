@@ -4,6 +4,6 @@ type SecondHeaderProps = {
     text: string,
 };
 
-export default function SecondHeader({ text }: SecondHeaderProps) {
+export const SecondHeader = ({ text }: SecondHeaderProps) => {
     return <h3 className={styles.secondHeader}>{text}</h3>;
 }

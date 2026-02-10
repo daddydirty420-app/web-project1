@@ -6,6 +6,6 @@ type ListUlProps = {
     className?: string
 };
 
-export default function ListUl({ children, className }: ListUlProps) {
+export const ListUl = ({ children, className }: ListUlProps) => {
     return <ul className={clsx("ml-[2rem] mt-3", className)}>{children}</ul>;
 }

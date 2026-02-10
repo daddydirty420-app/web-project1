@@ -5,7 +5,7 @@ type Props = {
     hissu?: boolean;
 };
 
-export default function InputTitle({ title, hissu }: Props) {
+export const InputTitle = ({ title, hissu }: Props) => {
     return (
         <label className={styles.titleFlex}>
             <p className={styles.title}>{title}</p>

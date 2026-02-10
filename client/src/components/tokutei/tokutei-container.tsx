@@ -5,7 +5,7 @@ type TokuteiContainerProps = {
     children: ReactNode,
 };
 
-export default function TokuteiContainer({ children }: TokuteiContainerProps) {
+export const TokuteiContainer = ({ children }: TokuteiContainerProps) => {
     return (
         <main className={styles.container}>
             {children}

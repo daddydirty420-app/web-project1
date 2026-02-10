@@ -9,7 +9,7 @@ type pageTitleProps = {
     title: string,
 };
 
-export default function TitleAndBack({ title }: pageTitleProps) {
+export const TitleAndBack = ({ title }: pageTitleProps) => {
     const router = useRouter();
 
     return (

@@ -7,7 +7,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function TeamsMiniSection({ number, heading, children }: Props) {
+export const TermsMiniSection = ({ number, heading, children }: Props) => {
     return (
         <div className={styles.miniSectionBox}>
             <h3 className={styles.miniSectionTitle}>

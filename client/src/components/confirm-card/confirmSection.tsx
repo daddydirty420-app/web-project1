@@ -26,7 +26,7 @@ type Props = {
     onSubmit?: () => void;
 };
 
-export default function ConfirmSection({ title, content, link, input, date, radio, value, radioOptions, onChange, onSubmit }: Props) {
+export const ConfirmSection = ({ title, content, link, input, date, radio, value, radioOptions, onChange, onSubmit }: Props) => {
     const [inputVisible, setInputVisible] = useState(false);
     const [dateVisible, setDateVisible] = useState(false);
     const [radioVisible, setRadioVisible] = useState(false);

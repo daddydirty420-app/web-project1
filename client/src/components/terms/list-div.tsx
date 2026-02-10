@@ -5,7 +5,7 @@ type TermsListDivProps = {
     children: ReactNode;
 };
 
-export default function TermsListDiv({ children }: TermsListDivProps) {
+export const TermsListDiv = ({ children }: TermsListDivProps) => {
     return (
         <div className={styles.listDiv}>
             {children}

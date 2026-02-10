@@ -7,7 +7,7 @@ type ListCheckProps = {
     children: ReactNode
 };
 
-export default function ListCheck({ children }: ListCheckProps) {
+export const ListCheck = ({ children }: ListCheckProps) => {
     return (
         <li className="flex gap-2 items-center mb-2">
             <FontAwesomeIcon icon={faCheck} className="text-(--theme) text-base font-medium" />

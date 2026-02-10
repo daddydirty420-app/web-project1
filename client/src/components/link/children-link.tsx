@@ -7,7 +7,7 @@ type NormalLinkProps = {
     children: ReactNode,
 };
 
-export default function ChildrenLink({ children, url }: NormalLinkProps) {
+export const ChildrenLink = ({ children, url }: NormalLinkProps) => {
     return (
         <Link href={url} className={styles.normal}>
             <p>{children}</p>

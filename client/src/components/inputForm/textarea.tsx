@@ -1,5 +1,5 @@
 import styles from "./imputForm.module.css";
-import InputTitle from "./inputTitle";
+import { InputTitle } from "./inputTitle";
 
 type Props = {
     title: string;
@@ -10,7 +10,14 @@ type Props = {
     maxLength: number;
 };
 
-export default function Textarea({ title, hissu, value, onChange, placeholder, maxLength }: Props) {
+export const Textarea = ({
+    title,
+    hissu,
+    value,
+    onChange,
+    placeholder,
+    maxLength
+}: Props) => {
     return (
         <div className={styles.inputDiv}>
             <InputTitle title={title} hissu={hissu} />

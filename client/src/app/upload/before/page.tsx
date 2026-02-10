@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import Client from "./client";
+import { Client } from "./client";
 import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
