@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
-import Form from "../form";
+import { Form } from "../form";
 
 type Props = {
     params: { id: string };
