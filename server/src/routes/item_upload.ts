@@ -351,6 +351,7 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
                 include: [
                     {
                         model: Brands,
+                        as: "brand",
                         required: true,
                     },
                 ],
