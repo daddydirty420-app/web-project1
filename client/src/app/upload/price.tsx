@@ -13,7 +13,7 @@ type Props = {
     onChange: (v: PriceValue) => void;
 };
 
-export default function PriceInput({ value, onChange }: Props) {
+export const PriceInput = ({ value, onChange }: Props) => {
     const [gain, setGain] = useState(0);
     const [commission, setCommission] = useState(0);
 

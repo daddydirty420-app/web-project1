@@ -22,7 +22,7 @@ type Props = {
     existingVideoUrl: string | null;
 };
 
-export default function VideoInput({ value, onChange, videoRef, thumbnailRef, existingVideoUrl }: Props) {
+export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVideoUrl }: Props) => {
     const handleChangeVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files?.[0]) return;
 

@@ -5,17 +5,17 @@ import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServi
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
-import VideoInput, { VideoInputValue } from "./videoInput";
-import ItemImage from "./itemImage";
-import ItemNameDetail, { ItemNameDetailValue } from "./itemNameDetail";
-import Category, { CategoryValue } from "./category";
-import GenderAge, { GenderAgeValue } from "./genderAge";
-import BrandInput, { BrandValue } from "./brandInput";
-import AttributesInput, { AttributesValue } from "./attributes";
-import MaterialInput, { MaterialValue } from "./material";
-import ConditionInput, { ConditionValue } from "./condition";
-import ShippingInput, { ShippingValue } from "./shipping";
-import PriceInput, { PriceValue } from "./price";
+import { VideoInput, VideoInputValue } from "./videoInput";
+import { ItemImage } from "./itemImage";
+import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
+import { Category, CategoryValue } from "./category";
+import { GenderAge, GenderAgeValue } from "./genderAge";
+import { BrandInput, BrandValue } from "./brandInput";
+import { AttributesInput, AttributesValue } from "./attributes";
+import { MaterialInput, MaterialValue } from "./material";
+import { ConditionInput, ConditionValue } from "./condition";
+import { ShippingInput, ShippingValue } from "./shipping";
+import { PriceInput, PriceValue } from "./price";
 import toast from "react-hot-toast";
 import { refreshToken } from "@/lib/refreshToken";
 import { TopLoader } from "@/components";
@@ -560,7 +560,7 @@ export const Form = ({
         <UploadUI title="商品をアップロード">
             <TopLoader loading={loading} />
             <TopLoader loading={draftLoading} />
-            
+
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
             <VideoInput

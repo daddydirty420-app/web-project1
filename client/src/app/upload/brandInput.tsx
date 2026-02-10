@@ -14,7 +14,7 @@ type Props = {
     onChange: (v: BrandValue) => void;
 };
 
-export default function BrandInput({ value, onChange }: Props) {
+export const BrandInput = ({ value, onChange }: Props) => {
     const [brandName, setBrandName] = useState("");
     const [openSuggest, setOpenSuggest] = useState(false);
     const [isSelecting, setIsSelecting] = useState(false);

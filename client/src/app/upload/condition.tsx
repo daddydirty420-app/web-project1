@@ -16,7 +16,7 @@ type Props = {
     onChange: (v: ConditionValue) => void;
 };
 
-export default function ConditionInput({ allCondition, value, onChange }: Props) {
+export const ConditionInput = ({ allCondition, value, onChange }: Props) => {
     const [openSelect, setOpenSelect] = useState(false);
     const [conditionName, setConditionName] = useState("");
 

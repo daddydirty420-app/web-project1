@@ -13,7 +13,7 @@ type Props = {
     onChange: (v: ItemNameDetailValue) => void;
 };
 
-export default function ItemNameDetail({ value, onChange }: Props) {
+export const ItemNameDetail = ({ value, onChange }: Props) => {
     return (
         <div className={styles.twoColumnWrapper}>
             <InputStr

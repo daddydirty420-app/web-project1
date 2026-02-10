@@ -23,7 +23,7 @@ type Props = {
     } | null) => void;
 };
 
-export default function Category({ level1List, value, onChange, onConstraintChange }: Props) {
+export const Category = ({ level1List, value, onChange, onConstraintChange }: Props) => {
     const [level2List, setLevel2List] = useState<Categories[]>([]);
     const [selectedLevel1, setSelectedLevel1] = useState<CategoryValue | null>(null);
     const [displayLevel1, setDisplayLevel1] = useState("");

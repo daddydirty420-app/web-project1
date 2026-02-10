@@ -28,7 +28,7 @@ type Props = {
     imageUrlMap: Map<string, string>;
 };
 
-export default function AttributesInput({ value, onChange, imageUrlMap }: Props) {
+export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
     const [showVariants, setShowVariants] = useState(false);
 
     const previewMap = useMemo(() => {

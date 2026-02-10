@@ -6,19 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { InputTitle } from "@/components/inputForm";
 
-export type ItemImage = {
+export type ItemImageValue = {
     file: File | null;
     preview: string;
     uploaded: boolean;
 };
 
 type Props = {
-    images: ItemImage[];
+    images: ItemImageValue[];
     onAdd: (files: FileList) => void;
     onRemove: (index: number) => void;
 };
 
-export default function ItemImage({ images, onAdd, onRemove }: Props) {
+export const ItemImage = ({ images, onAdd, onRemove }: Props) => {
     return (
         <div className={styles.itemImageDiv}>
             <div className={styles.itemImageInputDiv}>

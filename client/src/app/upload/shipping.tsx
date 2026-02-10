@@ -23,7 +23,7 @@ type Props = {
     onChange: (v: ShippingValue) => void;
 };
 
-export default function ShippingInput({ allDay, allService, allPlace, value, onChange }: Props) {
+export const ShippingInput = ({ allDay, allService, allPlace, value, onChange }: Props) => {
     const [openServiceSelect, setOpenServiceSelect] = useState(false);
     const [openPlaceSelect, setOpenPlaceSelect] = useState(false);
     const [selectDayText, setSelectDayText] = useState("");

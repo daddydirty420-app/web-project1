@@ -16,7 +16,7 @@ type Props = {
     onChange: (v: MaterialValue) => void;
 };
 
-export default function MaterialInput({ value, onChange }: Props) {
+export const MaterialInput = ({ value, onChange }: Props) => {
 
     const createEmptyMaterial = () => ({
         name: "",

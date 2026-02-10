@@ -19,7 +19,7 @@ type Props = {
     } | null;
 };
 
-export default function GenderAge({ value, onChange, categoryConstraint }: Props) {
+export const GenderAge = ({ value, onChange, categoryConstraint }: Props) => {
     const [genderLabelOptions, setGenderLabelOptions] = useState<string[]>(["メンズ", "レディース", "ユニセックス"]);
     const [ageLabelOptions, setAgeLabelOptions] = useState<string[]>(["大人向け", "キッズ向け", "指定なし"]);
 
