@@ -275,6 +275,18 @@ export default function Form({
             return;
         }
 
+        const totalInventory = attributesValue.colorVariants.reduce(
+            (sum, v) => sum + v.sizes.reduce(
+                (sizeSum, s) => sizeSum + (s.inventory ?? 0), 0
+            ),
+            0,
+        );
+        if (totalInventory > attributesValue.all_inventory) {
+            toast.error("サイズの出品点数が合計点数を超過しています");
+            setDraftLoading(false);
+            return;
+        }
+
         let itemImagesUpload: ItemImageUpload[] = [];
 
         if (itemImages.length > 0) {
