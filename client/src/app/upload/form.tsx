@@ -18,6 +18,7 @@ import ShippingInput, { ShippingValue } from "./shipping";
 import PriceInput, { PriceValue } from "./price";
 import toast from "react-hot-toast";
 import { refreshToken } from "@/lib/refreshToken";
+import { TopLoader } from "@/components";
 
 type Props = {
     itemId: string;
@@ -557,6 +558,9 @@ export const Form = ({
 
     return (
         <UploadUI title="商品をアップロード">
+            <TopLoader loading={loading} />
+            <TopLoader loading={draftLoading} />
+            
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
             <VideoInput
