@@ -1,5 +1,6 @@
 import { TitleAndBack, Container } from '@/components';
-import { Header, Footer } from "@/components";
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 import { TokuteiContainer } from '@/components/tokutei';
 import { Metadata } from 'next';
 import { Content } from './content';

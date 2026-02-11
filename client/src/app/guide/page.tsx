@@ -1,7 +1,8 @@
 import { TitleAndBack, Container, AccordionGrid } from '@/components';
-import { Header, Footer } from "@/components";
 import { GuideLink } from '@/components/guide';
 import { Metadata } from 'next';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド",

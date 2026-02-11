@@ -1,4 +1,6 @@
-import { Container, Header, Footer } from '@/components';
+import { Container } from '@/components';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 import { Metadata } from 'next';
 import { Content } from './content';
 

@@ -1,4 +1,6 @@
-import { Back, Container, Header, Footer } from '@/components';
+import { Back, Container } from '@/components';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 import { Res } from './profileTypes';
 import { ProfileMain } from './profileMain';
 import { AdminSection } from './adminSection';
