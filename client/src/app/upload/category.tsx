@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Categories } from "./type";
+import { Categories } from "./types/type";
 import styles from "./upload.module.css";
 import toast from "react-hot-toast";
 import { InputTitle } from "@/components/inputForm";
@@ -10,7 +10,7 @@ export type CategoryValue = {
     id: string | null;
     name: string;
     parent_id: number | null;
-    level: number | null;
+    level: number;
 };
 
 type Props = {

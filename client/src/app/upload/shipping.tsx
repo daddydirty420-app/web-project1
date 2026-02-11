@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./type";
+import { ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import { InputTitle, Textarea } from "@/components/inputForm";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./type";
+import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,8 @@ import { PriceInput, PriceValue } from "./price";
 import toast from "react-hot-toast";
 import { refreshToken } from "@/lib/refreshToken";
 import { TopLoader } from "@/components";
+import { useUpload } from "./hooks/useUpload";
+import { useFileUpload } from "./hooks/useFileUpload";
 
 type Props = {
     itemId: string;
@@ -35,12 +37,6 @@ type ItemImage = {
     uploaded: boolean;
     file: File | null;
     preview: string;
-};
-
-type ItemImageUpload = {
-    name: string;
-    type: string | null;
-    uploaded: boolean;
 };
 
 export const Form = ({
@@ -134,7 +130,7 @@ export const Form = ({
     });
 
     const [conditionValue, setConditionValue] = useState<ConditionValue>({
-        id: item.ItemConditionOption?.id ?? null,
+        id: item.ItemConditionOption?.id ?? "",
         name: item.ItemConditionOption?.name ?? "",
     });
 
@@ -169,6 +165,14 @@ export const Form = ({
 
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
+
+    const { validateForDraft, createBody, submitDraft } = useUpload();
+    const {
+        videoUploadAndConvert,
+        thumbnailUpload,
+        itemImageUpload,
+        attributesImageUpload
+    } = useFileUpload();
 
     const router = useRouter();
 
@@ -266,50 +270,6 @@ export const Form = ({
     const draft = async () => {
         setDraftLoading(true);
 
-        const totalRatio = materialValue.materials.reduce(
-            (sum, m) => sum + (m.ratio ?? 0),
-            0,
-        );
-        if (totalRatio > 100) {
-            toast.error("素材の割合が100%を超えています");
-            setDraftLoading(false);
-            return;
-        }
-
-        const totalInventory = attributesValue.colorVariants.reduce(
-            (sum, v) => sum + v.sizes.reduce(
-                (sizeSum, s) => sizeSum + (s.inventory ?? 0), 0
-            ),
-            0,
-        );
-        if (totalInventory > attributesValue.all_inventory) {
-            toast.error("サイズの出品点数が合計点数を超過しています");
-            setDraftLoading(false);
-            return;
-        }
-
-        let itemImagesUpload: ItemImageUpload[] = [];
-
-        if (itemImages.length > 0) {
-            itemImagesUpload = itemImages.map(img => {
-                if (!img.uploaded && img.file instanceof File) {
-                    return {
-                        name: img.file!.name,
-                        type: img.file!.type,
-                        uploaded: false, // 新規アップロード
-                    };
-                }
-
-                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
-
-                return {
-                    name: fileName,
-                    type: null,
-                    uploaded: true,
-                }
-            });
-        }
-
         const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
             if (v.image) {
                 return {
@@ -331,68 +291,29 @@ export const Form = ({
             return null;
         };
 
-        const body = {
-            video: {
-                name: videoInput.videoFile?.name,
-                type: videoInput.videoFile?.type,
-                uploaded: videoInput.videoUploaded,
-            },
-            thumbnail: {
-                name: videoInput.thumbnailFile?.name,
-                type: videoInput.thumbnailFile?.type,
-                uploaded: videoInput.thumbnailUploaded,
-            },
-            videoMeta: {
-                title: videoInput.title,
-                summary: videoInput.summary,
-            },
-            itemImages: itemImagesUpload,
-            itemMeta: {
-                name: itemNameDetail.name,
-                detail: itemNameDetail.detail,
-            },
-            category: {
-                id: categoryValue.id,
-                name: categoryValue.name,
-                parent_id: categoryValue.parent_id,
-                level: categoryValue.level,
-            },
-            genderAge: {
-                gender: genderAgeValue.gender_type,
-                age: genderAgeValue.age_type,
-            },
-            brand: {
-                id: brandValue.id,
-                name: brandValue.name,
-            },
-            attributes: {
-                allInventory: attributesValue.all_inventory,
-                colorVariants: attributesValue.colorVariants.map(v => ({
-                    uiId: v._uiId,
-                    color: v.color,
-                    image: resolveAttributesImage(v),
-                    sizes: v.sizes.map(s => ({
-                        size: s.size,
-                        inventory: s.inventory,
-                    })),
-                })),
-                materials: materialValue.materials.map(m => ({
-                    name: m.name,
-                    ratio: m.ratio,
-                })),
-            },
-            condition: {
-                id: conditionValue.id,
-                name: conditionValue.name,
-            },
-            shipping: {
-                day: shippingValue.day_id,
-                service: shippingValue.service_id,
-                place: shippingValue.place_id,
-                freeText: shippingValue.free_text,
-            },
-            price: priceValue.price,
+        const params = {
+            videoInput,
+            itemImages,
+            itemNameDetail,
+            categoryValue,
+            genderAgeValue,
+            brandValue,
+            attributesValue,
+            materialValue,
+            conditionValue,
+            shippingValue,
+            priceValue,
+            resolveAttributesImage,
         };
+
+        const validate = validateForDraft(params);
+        if (!validate.ok) {
+            toast.error(validate.message ?? "");
+            setDraftLoading(false);
+            return;
+        }
+
+        const body = createBody(params);
 
         try {
             const accessToken = await refreshToken();
@@ -403,147 +324,60 @@ export const Form = ({
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-draft/${itemId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
+            const result = await submitDraft({ itemId, body, accessToken });
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                console.error(data.message);
+            if (!result.ok) {
                 toast.error("下書き保存に失敗しました");
                 setDraftLoading(false);
                 return;
             }
 
+            const data = result.data;
+
             // 動画アップロード
-            if (data.videoSignedUrl && videoInput.videoFile instanceof File) {
-                const videoRes = await fetch(data.videoSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": videoInput.videoFile.type,
-                    },
-                    body: videoInput.videoFile,
-                });
+            const videoOk = await videoUploadAndConvert({
+                accessToken,
+                videoFile: videoInput.videoFile,
+                videoSignedUrl: data.videoSignedUrl,
+                videoId: item.Video?.id,
+            });
 
-                if (!videoRes.ok) {
-                    toast.error("動画のアップロードに失敗しました");
-                    setDraftLoading(false);
-                    return;
-                } else {
-                    // ffmpeg変換
-                    const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/convert-video/${item.Video?.id}`, {
-                        method: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-
-                    const data = await convertRes.json();
-
-                    if (convertRes.ok) {
-                        console.log(data.message);
-                    } else {
-                        console.warn(data.message);
-                    }
-                }
+            if (!videoOk) {
+                setDraftLoading(false);
+                return;
             }
 
             // サムネイルアップロード
-            if (data.thumbnailSignedUrl && videoInput.thumbnailFile instanceof File) {
-                const thumbnailRes = await fetch(data.thumbnailSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": videoInput.thumbnailFile.type,
-                    },
-                    body: videoInput.thumbnailFile,
-                });
+            const thumbnailOk = await thumbnailUpload({
+                thumbnailFile: videoInput.thumbnailFile,
+                thumbnailSignedUrl: data.thumbnailSignedUrl,
+            });
 
-                if (!thumbnailRes.ok) {
-                    toast.error("サムネイルのアップロードに失敗しました");
-                    setDraftLoading(false);
-                    return;
-                }
+            if (!thumbnailOk) {
+                setDraftLoading(false);
+                return;
             }
 
             // 商品画像アップロード
-            if (data.itemImageSignedUrls.length > 0) {
-                const uploadItemImages = itemImages.filter(
-                    img => !img.uploaded && img.file instanceof File
-                );
+            const itemImagesOk = await itemImageUpload({
+                itemImageFiles: itemImages,
+                itemImageSignedUrls: data.itemImageSignedUrls,
+            });
 
-                const uploadPromises = data.itemImageSignedUrls.map((signedUrl, i) => {
-                    const target = uploadItemImages[i];
-
-                    if (!target || !(target.file instanceof File)) {
-                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
-                        return Promise.resolve();
-                    }
-
-                    const file = target.file;
-
-                    return fetch(signedUrl, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": file.type,
-                        },
-                        body: file,
-                    }).then(res => {
-                        if (!res.ok) {
-                            throw new Error(`画像${i + 1}枚目のアップロードに失敗`);
-                        }
-                    });
-                });
-
-                try {
-                    await Promise.all(uploadPromises);
-                } catch (err) {
-                    console.error(err);
-                    toast.error("商品画像のアップロードに失敗しました");
-                    setDraftLoading(false);
-                    return;
-                }
+            if (!itemImagesOk) {
+                setDraftLoading(false);
+                return;
             }
 
             // attributes.imagesアップロード
-            const hasAttributesImages = Object.keys(data.attributesImageSignedUrls).length > 0;
+            const attributesImagesOk = await attributesImageUpload({
+                attributesValue: attributesValue,
+                signedUrlMap: data.attributesImageSignedUrls,
+            });
 
-            if (hasAttributesImages) {
-                const uploadImages = attributesValue.colorVariants
-                .map(v => v.image)
-                .filter((img): img is File => img instanceof File);
-
-                const signedUrlMap = data.attributesImageSignedUrls as Record<string, string>;
-                const imageUrls = Object.values(signedUrlMap);
-
-                await Promise.all(imageUrls.map(async (signedUrl, i) => {
-                    const target = uploadImages[i];
-
-                    if (!target || !(target instanceof File)) {
-                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
-                        return;
-                    }
-
-                    const uploadRes = await fetch(signedUrl, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": target.type,
-                        },
-                        body: target,
-                    });
-
-                    if (!uploadRes.ok) {
-                        toast.error("商品画像のアップロードに失敗しました");
-                        setDraftLoading(false);
-                        return;
-                    }
-                }));
+            if (!attributesImagesOk) {
+                setDraftLoading(false);
+                return;
             }
 
             toast.success("下書き保存しました");
