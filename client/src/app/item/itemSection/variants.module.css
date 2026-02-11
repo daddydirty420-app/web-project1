@@ -90,3 +90,52 @@
     color: var(--text-muted);
     margin-right: 4px;
 }
+
+/* sizes 全体：縦並び */
+.sizesList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+/* 1行（サイズ＋状態）を横並び */
+.sizeRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+/* サイズ名 */
+.sizeLabel {
+    font-weight: 600;
+}
+
+/* バッジをまとめる箱 */
+.stockBadge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 小さめ SOLD バッジ */
+.soldMini {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background-color: var(--alert);
+    border-radius: 4px;
+    padding: 1px 5px;
+}
+
+/* 小さめ 残りわずか */
+.lowMini {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background-color: var(--warning);
+    border-radius: 4px;
+    padding: 1px 5px;
+    white-space: nowrap;
+}

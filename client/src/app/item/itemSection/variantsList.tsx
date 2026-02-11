@@ -11,14 +11,19 @@ export const VariantsList = ({ item }: Props) => {
         <section className={styles.variantList}>
             {item.attributes.colorVariants?.map((variant, i) => {
                 if (!variant) return null;
-                const inventory = variant.sizes?.reduce(
+                const initialInventory = variant.sizes?.reduce(
+                    (sum, s) => sum + (s.inventory.initial ?? 0),
+                    0,
+                ) ?? 0;
+                const currentInventory = variant.sizes?.reduce(
                     (sum, s) => sum + (s.inventory.current ?? 0),
                     0,
                 ) ?? 0;
-                const isSoldout = inventory === 0;
-                const isLowStock = inventory &&
-                inventory.current > 0 &&
-                inventory.current / inventory.initial <= inventory.low_stock_ratio;
+
+                const isSoldout = currentInventory === 0;
+                const isLowStock = currentInventory &&
+                currentInventory > 0 &&
+                currentInventory / initialInventory <= 0.2;
 
                 return (
                     <div key={i} className={styles.variantCard}>
@@ -49,17 +54,35 @@ export const VariantsList = ({ item }: Props) => {
                                 </p>
                             )}
 
-                            {variant.sizes?.map((size, i) => {
-                                if (!size) return;
+                            {variant.sizes && variant.sizes?.length > 0 && (
+                                <div className={styles.sizeList}>
+                                    {variant.sizes?.map((size, i) => {
+                                        if (!size) return;
 
-                                const current = size.inventory.current;
-                                const soldout = current === 0;
-                                const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
+                                        const current = size.inventory.current;
+                                        const soldout = current === 0;
+                                        const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
 
-                                return (
-                                    <div
-                                )
-                            })}
+                                        return (
+                                            <div key={i} className={styles.sizeRow}>
+                                                <p className={styles.metaText}>
+                                                    <span className={styles.sizeLabel}>{size.size}</span>
+                                                </p>
+
+                                                <div className={styles.stockBadge}>
+                                                    {soldout && (
+                                                        <span className={styles.soldMini}>SOLD OUT</span>
+                                                    )}
+
+                                                    {lowStock && (
+                                                        <span className={styles.lowMini}>残りわずか</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )}
                         </div>
                     </div>
                 )

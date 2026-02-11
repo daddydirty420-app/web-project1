@@ -364,7 +364,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                 inventory: {
                     initial: attributes.allInventory,
                     current: attributes.allInventory,
-                    low_stock_ratio: attributes.allInventory * 0.2,
+                    low_stock_ratio: 0.2,
                 },
                 colorVariants: attributes.colorVariants.length > 0
                 ? attributes.colorVariants.map(v => ({
@@ -375,7 +375,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                         inventory: {
                             initial: s.inventory,
                             current: s.inventory,
-                            low_stock_ratio: s.inventory * 0.2,
+                            low_stock_ratio: 0.2,
                         },
                     })),
                 })) : undefined,
