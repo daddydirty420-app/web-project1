@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -311,7 +311,6 @@ export const Form = ({
             }
 
             toast.success("商品データを登録しました");
-            setLoading(false);
             return router.push(`/item/confirm/${itemId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
