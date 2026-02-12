@@ -64,7 +64,7 @@ export const useUpload = () => {
             ),
             0,
         );
-        if (!(totalInventory === params.attributesValue.all_inventory)) {
+        if (totalInventory >= 2 && !(totalInventory === params.attributesValue.all_inventory)) {
             return { ok: false, message: "サイズの出品点数と合計点数が一致していません" };
         }
 
