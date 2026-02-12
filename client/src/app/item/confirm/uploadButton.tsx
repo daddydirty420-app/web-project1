@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from "./confirm.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
 import { TermsList } from "@/components/terms";
 import { useRouter } from "next/navigation";
@@ -16,11 +16,6 @@ export const UploadButton = ({ id }: Props) => {
     const [popup, setPopup] = useState(false);
     const [check, setCheck] = useState(false);
     const router = useRouter();
-
-    useEffect(() => {
-        console.log("CONFIRM MOUNT");
-    }, []);
-
 
     const upload = async () => {
         if (!check) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useEffect, useRef, useState } from "react";
+import React, { startTransition, useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -181,13 +181,6 @@ export const Form = ({
         attributesImageUpload
     } = useFileUpload();
 
-    useEffect(() => {
-        console.log("UPLOAD MOUNT");
-        return () => {
-            console.log("UPLOAD UNMOUNT");
-        };
-    }, []);
-
     const router = useRouter();
 
     const addItemImage = (files: FileList) => {
@@ -319,12 +312,7 @@ export const Form = ({
 
             toast.success("商品データを登録しました");
             setLoading(false);
-            console.log("before push");
-            startTransition(() => {
-                router.push(`/item/confirm/${itemId}`);
-            });
-            console.log("after push");
-            console.log(window.location.pathname);
+            return router.push(`/item/confirm/${itemId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
