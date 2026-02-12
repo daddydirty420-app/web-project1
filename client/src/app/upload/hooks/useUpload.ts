@@ -158,7 +158,7 @@ export const useUpload = () => {
             ),
             0,
         );
-        if (totalInventory > params.attributesValue.all_inventory) {
+        if (totalInventory >= 2 && totalInventory > params.attributesValue.all_inventory) {
             return { ok: false, message: "サイズの出品点数が合計点数を超過しています" };
         }
 
