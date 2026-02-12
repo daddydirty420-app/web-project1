@@ -122,12 +122,12 @@ export const useUpload = () => {
         });
 
         return {
-            video: videoInput.videoUploaded ? {
+            video: !videoInput.videoUploaded ? {
                 name: videoInput.videoFile?.name ?? "unknown",
                 type: videoInput.videoFile?.type ?? null,
                 uploaded: videoInput.videoUploaded,
             } : undefined,
-            thumbnail: videoInput.thumbnailUploaded ? {
+            thumbnail: !videoInput.thumbnailUploaded ? {
                 name: videoInput.thumbnailFile?.name ?? "unknown",
                 type: videoInput.thumbnailFile?.type ?? null,
                 uploaded: videoInput.thumbnailUploaded,
