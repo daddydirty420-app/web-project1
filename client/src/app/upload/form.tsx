@@ -316,6 +316,7 @@ export const Form = ({
             setTimeout(() => {
                console.log("pathname after 100ms:", window.location.pathname); 
             }, 100);
+            window.location.href = `/item/confirm/${itemId}`;
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
