@@ -313,7 +313,9 @@ export const Form = ({
             toast.success("商品データを登録しました");
             setLoading(false);
             console.log("before push");
-            router.replace(`/item/confirm/${itemId}`);
+            setTimeout(() => {
+                router.push(`/item/confirm/${itemId}`);
+            }, 0);
             console.log("after push");
             console.log(window.location.pathname);
         } catch (err) {
