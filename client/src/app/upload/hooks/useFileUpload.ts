@@ -36,7 +36,7 @@ export const useFileUpload = () => {
             });
 
             if (!videoSignedUrl || !(videoFile instanceof File) || !videoId) {
-                return false;
+                return true;
             }
 
             console.log("ここまで来てる？直前チェック 1");
@@ -83,7 +83,7 @@ export const useFileUpload = () => {
     const thumbnailUpload = useCallback(
         async ({ thumbnailFile, thumbnailSignedUrl }: ThumbnailArgs): Promise<boolean> => {
             if (!thumbnailSignedUrl || !(thumbnailFile instanceof File)) {
-                return false;
+                return true;
             }
 
             const thumbnailRes = await fetch(thumbnailSignedUrl, {
