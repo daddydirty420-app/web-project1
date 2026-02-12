@@ -306,6 +306,8 @@ export const Form = ({
             resolveAttributesImage,
         };
 
+        console.log("params1:", params);
+
         const validate = validateForDraft(params);
         if (!validate.ok) {
             toast.error(validate.message ?? "");
