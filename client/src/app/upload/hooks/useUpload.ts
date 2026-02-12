@@ -181,21 +181,6 @@ export const useUpload = () => {
             resolveAttributesImage,
         } = params;
 
-        console.log({
-            videoInput,
-            itemImages,
-            itemNameDetail,
-            categoryValue,
-            genderAgeValue,
-            brandValue,
-            attributesValue,
-            materialValue,
-            conditionValue,
-            shippingValue,
-            priceValue,
-            resolveAttributesImage,
-        });
-
         const itemImagesUpload: UploadMeta[] = itemImages.map(img => {
             if (!img.uploaded && img.file instanceof File) {
                 return {
