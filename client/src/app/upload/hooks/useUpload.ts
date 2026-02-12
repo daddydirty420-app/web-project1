@@ -182,6 +182,8 @@ export const useUpload = () => {
 
         const data = await res.json();
 
+        console.log("data1:", data);
+
         if (!res.ok) {
             console.error(data.message);
             return { ok: false, data };
