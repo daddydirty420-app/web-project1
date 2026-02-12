@@ -314,7 +314,7 @@ export const Form = ({
             setLoading(false);
             console.log("before push");
             startTransition(() => {
-                router.replace(`/item/confirm/${itemId}`);
+                router.push(`/item/confirm/${itemId}`);
             });
             console.log("after push");
             console.log(window.location.pathname);
