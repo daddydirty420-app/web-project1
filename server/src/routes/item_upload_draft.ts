@@ -115,7 +115,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
         // 動画署名付きURL生成
         let videoSignedUrl: string | null = null;
-        let videoUrl: string | null = null;
+        let videoUrl: string | null = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
         if (video?.name && !video.uploaded) {
             const originalKey = `video/original/${userId}/${itemId}_${now}_${video.name}`;
@@ -133,7 +133,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
         // サムネイル署名付きURL生成
         let thumbnailSignedUrl: string | null = null;
-        let thumbnailUrl: string | null = null;
+        let thumbnailUrl: string | null = item.Video?.thumbnail_url ?? null;
 
         if (thumbnail?.name && !thumbnail.uploaded) {
             const key = `thumbnail/${userId}/${itemId}_${now}_${thumbnail.name}`;
@@ -155,7 +155,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         : [];
 
         let itemImageSignedUrls: string[] = [];
-        let itemImageUrls: string[] = [];
+        let itemImageUrls: string[] = item.image_url ?? [];
 
         const itemImageTargets = Array.isArray(itemImages)
         ? itemImages
