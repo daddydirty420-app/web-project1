@@ -18,6 +18,8 @@ export async function middleware(req) {
 
     const now = Math.floor(Date.now() / 1000);
 
+    console.log("TOKEN EXP:", decoded?.exp, "NOW:", now);
+
     const expNum = Number(decoded?.exp);
 
     let accessTokenToUse = token.accessToken;
