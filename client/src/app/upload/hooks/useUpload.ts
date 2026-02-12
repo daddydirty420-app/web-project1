@@ -186,6 +186,8 @@ export const useUpload = () => {
     };
 
     const submitDraft = async ({ itemId, body, accessToken }: SubmitType) => {
+        console.log("送信する body:", body);
+        
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-draft/${itemId}`, {
             method: "PATCH",
             headers: {

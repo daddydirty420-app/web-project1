@@ -95,6 +95,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         price,
     } = body;
 
+    console.log("送った body（再掲）:", body);
+
     const t = await sequelize.transaction();
 
     try {
