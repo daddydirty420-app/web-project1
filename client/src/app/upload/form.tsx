@@ -173,7 +173,7 @@ export const Form = ({
         submitDraft,
         submitMain
     } = useUpload();
-    
+
     const {
         videoUploadAndConvert,
         thumbnailUpload,
@@ -312,7 +312,9 @@ export const Form = ({
 
             toast.success("商品データを登録しました");
             setLoading(false);
+            console.log("before push");
             router.push(`/item/confirm/${itemId}`);
+            console.log("after push");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
