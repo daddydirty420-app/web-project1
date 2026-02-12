@@ -70,11 +70,11 @@ export const useUpload = () => {
 
         const required = {
             videoFile: {
-                ok: !!params.videoInput.videoFile,
+                ok: !!(params.videoInput.videoFile || params.videoInput.videoUploaded),
                 message: "動画ファイルを選択してください",
             },
             thumbnailFile: {
-                ok: !!params.videoInput.thumbnailFile,
+                ok: !!(params.videoInput.thumbnailFile || params.videoInput.thumbnailUploaded),
                 message: "サムネイルを選択してください",
             },
             title: {
