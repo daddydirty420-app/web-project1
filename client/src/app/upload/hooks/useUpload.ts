@@ -48,6 +48,100 @@ type ValidationResult = {
 
 export const useUpload = () => {
 
+    const validateUpload = (params: UploadParams): ValidationResult => {
+
+        const totalRatio = params.materialValue.materials.reduce(
+            (sum, m) => sum + (m.ratio ?? 0),
+            0,
+        );
+        if (totalRatio > 100) {
+            return { ok: false, message: "素材の割合が100%を超えています" };
+        }
+
+        const totalInventory = params.attributesValue.colorVariants.reduce(
+            (sum, v) => sum + v.sizes.reduce(
+                (sizeSum, s) => sizeSum + (s.inventory ?? 0), 0
+            ),
+            0,
+        );
+        if (!(totalInventory === params.attributesValue.all_inventory)) {
+            return { ok: false, message: "サイズの出品点数と合計点数が一致していません" };
+        }
+
+        const required = {
+            videoFile: {
+                ok: !!params.videoInput.videoFile,
+                message: "動画ファイルを選択してください",
+            },
+            thumbnailFile: {
+                ok: !!params.videoInput.thumbnailFile,
+                message: "サムネイルを選択してください",
+            },
+            title: {
+                ok: params.videoInput.title.trim().length > 0,
+                message: "動画タイトルを入力してください",
+            },
+            itemImages: {
+                ok: params.itemImages.length > 0,
+                message: "商品画像を選択してください",
+            },
+            name: {
+                ok: params.itemNameDetail.name.trim().length > 0,
+                message: "商品名を入力してください",
+            },
+            category: {
+                ok: !!params.categoryValue.id,
+                message: "カテゴリーを選択してください",
+            },
+            gender_type: {
+                ok: !!params.genderAgeValue.gender_type,
+                message: "着用対象（性別）を選択してください",
+            },
+            age_type: {
+                ok: !!params.genderAgeValue.age_type,
+                message: "着用対象（年齢）を選択してください",
+            },
+            all_inventory: {
+                ok: params.attributesValue.all_inventory > 0,
+                message: "出品点数を1点以上入力してください",
+            },
+            condition: {
+                ok: !!params.conditionValue.id,
+                message: "商品の状態を選択してください",
+            },
+            shipping_day: {
+                ok: !!params.shippingValue.day_id,
+                message: "発送までの日数を選択してください",
+            },
+            shipping_service: {
+                ok: !!params.shippingValue.service_id,
+                message: "配送方法を選択してください",
+            },
+            shipping_place: {
+                ok: !!params.shippingValue.place_id,
+                message: "発送元地域を選択してください",
+            },
+            price: {
+                ok: params.priceValue.price.trim().length > 0
+                && !Number.isNaN(Number(params.priceValue.price))
+                && Number(params.priceValue.price) >= 300
+                && Number(params.priceValue.price) <= 1000000,
+                message: "価格を300~1,000,000円の間で設定してください",
+            },
+        };
+
+        const errors = Object.values(required)
+        .filter(r => !r.ok)
+        .map(r => r.message);
+
+        if (errors.length) {
+            console.error("バリデーションエラー：", errors);
+            return { ok: false, message: errors[0] };
+        }
+
+        return { ok: true };
+    };
+
     const validateForDraft = (params: UploadParams): ValidationResult => {
 
         const totalRatio = params.materialValue.materials.reduce(
@@ -64,7 +158,6 @@ export const useUpload = () => {
             ),
             0,
         );
-
         if (totalInventory > params.attributesValue.all_inventory) {
             return { ok: false, message: "サイズの出品点数が合計点数を超過しています" };
         }
@@ -206,9 +299,32 @@ export const useUpload = () => {
         return { ok: true, data };
     };
 
+    const submitMain = async ({ itemId, body, accessToken }: SubmitType) => {
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-main/${itemId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(body),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            console.error(data.message);
+            return { ok: false, data };
+        }
+
+        return { ok: true, data };
+    };
+
     return {
+        validateUpload,
         validateForDraft,
         createBody,
         submitDraft,
+        submitMain
     };
 };

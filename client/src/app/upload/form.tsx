@@ -166,7 +166,14 @@ export const Form = ({
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
 
-    const { validateForDraft, createBody, submitDraft } = useUpload();
+    const {
+        validateUpload,
+        validateForDraft,
+        createBody,
+        submitDraft,
+        submitMain
+    } = useUpload();
+    
     const {
         videoUploadAndConvert,
         thumbnailUpload,
@@ -193,77 +200,123 @@ export const Form = ({
     const upload = async () => {
         setLoading(true);
 
-        const required = {
-            videoFile: {
-                ok: !!videoInput.videoFile,
-                message: "動画ファイルを選択してください",
-            },
-            thumbnailFile: {
-                ok: !!videoInput.thumbnailFile,
-                message: "サムネイルを選択してください",
-            },
-            title: {
-                ok: videoInput.title.trim().length > 0,
-                message: "動画タイトルを入力してください",
-            },
-            itemImages: {
-                ok: itemImages.length > 0,
-                message: "商品画像を選択してください",
-            },
-            name: {
-                ok: itemNameDetail.name.trim().length > 0,
-                message: "商品名を入力してください",
-            },
-            category: {
-                ok: !!categoryValue.id,
-                message: "カテゴリーを選択してください",
-            },
-            gender_type: {
-                ok: !!genderAgeValue.gender_type,
-                message: "着用対象（性別）を選択してください",
-            },
-            age_type: {
-                ok: !!genderAgeValue.age_type,
-                message: "着用対象（年齢）を選択してください",
-            },
-            all_inventory: {
-                ok: attributesValue.all_inventory > 0,
-                message: "出品点数を1点以上入力してください",
-            },
-            condition: {
-                ok: !!conditionValue.id,
-                message: "商品の状態を選択してください",
-            },
-            shipping_day: {
-                ok: !!shippingValue.day_id,
-                message: "発送までの日数を選択してください",
-            },
-            shipping_service: {
-                ok: !!shippingValue.service_id,
-                message: "配送方法を選択してください",
-            },
-            shipping_place: {
-                ok: !!shippingValue.place_id,
-                message: "発送元地域を選択してください",
-            },
-            price: {
-                ok: priceValue.price.trim().length > 0
-                && !Number.isNaN(Number(priceValue.price))
-                && Number(priceValue.price) >= 300
-                && Number(priceValue.price) <= 1000000,
-                message: "価格を300~1,000,000円の間で設定してください",
-            },
+        const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
+            if (v.image) {
+                return {
+                    name: v.image.name,
+                    type: v.image.type,
+                    uploaded: false,
+                };
+            }
+
+            const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
+            if (existingUrl) {
+                return {
+                    name: existingUrl.split("/").pop(),
+                    type: null,
+                    uploaded: true,
+                };
+            }
+
+            return null;
         };
 
-        const errors = Object.values(required)
-        .filter(r => !r.ok)
-        .map(r => r.message);
+        const params = {
+            videoInput,
+            itemImages,
+            itemNameDetail,
+            categoryValue,
+            genderAgeValue,
+            brandValue,
+            attributesValue,
+            materialValue,
+            conditionValue,
+            shippingValue,
+            priceValue,
+            resolveAttributesImage,
+        };
 
-        if (errors.length) {
-            toast.error(errors[0]);
-            console.log("バリデーションエラー：", errors);
+        const validate = validateUpload(params);
+        if (!validate.ok) {
+            toast.error(validate.message ?? "");
             setLoading(false);
             return;
+        }
+
+        const body = createBody(params);
+
+        try {
+            const accessToken = await refreshToken();
+                        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                setLoading(false);
+                return;
+            }
+
+            const result = await submitMain({ itemId, body, accessToken });
+
+            if (!result.ok) {
+                toast.error("データ作成に失敗しました");
+                setLoading(false);
+                return;
+            }
+
+            const data = result.data;
+
+            // 動画アップロード
+            const videoOk = await videoUploadAndConvert({
+                accessToken,
+                videoFile: videoInput.videoFile,
+                videoSignedUrl: data.videoSignedUrl,
+                videoId: item.Video?.id,
+            });
+
+            if (!videoOk) {
+                setLoading(false);
+                return;
+            }
+
+            // サムネイルアップロード
+            const thumbnailOk = await thumbnailUpload({
+                thumbnailFile: videoInput.thumbnailFile,
+                thumbnailSignedUrl: data.thumbnailSignedUrl,
+            });
+
+            if (!thumbnailOk) {
+                setLoading(false);
+                return;
+            }
+
+            // 商品画像アップロード
+            const itemImagesOk = await itemImageUpload({
+                itemImageFiles: itemImages,
+                itemImageSignedUrls: data.itemImageSignedUrls,
+            });
+
+            if (!itemImagesOk) {
+                setLoading(false);
+                return;
+            }
+
+            // attributes.imagesアップロード
+            const attributesImagesOk = await attributesImageUpload({
+                attributesValue: attributesValue,
+                signedUrlMap: data.attributesImageSignedUrls,
+            });
+
+            if (!attributesImagesOk) {
+                setLoading(false);
+                return;
+            }
+
+            toast.success("商品データを登録しました");
+            setLoading(false);
+            router.push(`/item/confirm/${itemId}`);
+        } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            console.error(err);
+            setLoading(false);
         }
     };
 
@@ -390,14 +443,6 @@ export const Form = ({
         }
     };
 
-    const loadingTest = () => {
-        setDraftLoading(true);
-
-        setTimeout(() => {
-            setDraftLoading(false);
-        }, 10000);
-    };
-
     return (
         <UploadUI title="商品をアップロード">
             <TopLoader loading={loading} />
@@ -496,17 +541,6 @@ export const Form = ({
             disabled={draftLoading}
             >
                 {draftLoading ? "保存中..." : "下書き保存する"}
-            </button>
-
-
-
-            <button
-            type="button"
-            className={styles.draftButton}
-            onClick={loadingTest}
-            disabled={draftLoading}
-            >
-                {draftLoading ? "loading..." : "ローディングテスト"}
             </button>
         </UploadUI>
     );
