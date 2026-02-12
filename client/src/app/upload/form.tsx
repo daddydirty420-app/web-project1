@@ -306,8 +306,6 @@ export const Form = ({
             resolveAttributesImage,
         };
 
-        console.log("params1:", params);
-
         const validate = validateForDraft(params);
         if (!validate.ok) {
             toast.error(validate.message ?? "");
@@ -334,11 +332,7 @@ export const Form = ({
                 return;
             }
 
-            console.log("ここまで来てる？直前チェック 0");
-
             const data = result.data;
-
-            console.log("data2", data);
 
             // 動画アップロード
             const videoOk = await videoUploadAndConvert({
@@ -394,6 +388,14 @@ export const Form = ({
             console.error(err);
             setDraftLoading(false);
         }
+    };
+
+    const loadingTest = () => {
+        setDraftLoading(true);
+
+        setTimeout(() => {
+            setDraftLoading(false);
+        }, 10000);
     };
 
     return (
@@ -494,6 +496,17 @@ export const Form = ({
             disabled={draftLoading}
             >
                 {draftLoading ? "保存中..." : "下書き保存する"}
+            </button>
+
+
+
+            <button
+            type="button"
+            className={styles.draftButton}
+            onClick={loadingTest}
+            disabled={draftLoading}
+            >
+                {draftLoading ? "loading..." : "ローディングテスト"}
             </button>
         </UploadUI>
     );
