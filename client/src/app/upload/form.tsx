@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
-import { useRouter } from "next/navigation";
 import { VideoInput, VideoInputValue } from "./videoInput";
 import { ItemImage } from "./itemImage";
 import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
@@ -181,8 +180,6 @@ export const Form = ({
         attributesImageUpload
     } = useFileUpload();
 
-    const router = useRouter();
-
     const addItemImage = (files: FileList) => {
         const newImages = Array.from(files).slice(0, 10 - itemImages.length).map((file) => ({
             file,
@@ -311,12 +308,8 @@ export const Form = ({
             }
 
             toast.success("商品データを登録しました");
-            router.push(`/item/confirm/${itemId}`);
-            console.log("after push", window.history.length);
-            setTimeout(() => {
-               console.log("pathname after 100ms:", window.location.pathname); 
-            }, 100);
-            window.location.href = `/item/confirm/${itemId}`;
+            setLoading(false);
+            window.location.assign(`/item/confirm/${itemId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
@@ -439,7 +432,7 @@ export const Form = ({
 
             toast.success("下書き保存しました");
             setDraftLoading(false);
-            router.push("/item-list/draft");
+            window.location.assign("/item-list/draft");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
