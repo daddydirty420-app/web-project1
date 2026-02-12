@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { startTransition, useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -313,9 +313,9 @@ export const Form = ({
             toast.success("商品データを登録しました");
             setLoading(false);
             console.log("before push");
-            setTimeout(() => {
-                router.push(`/item/confirm/${itemId}`);
-            }, 0);
+            startTransition(() => {
+                router.replace(`/item/confirm/${itemId}`);
+            });
             console.log("after push");
             console.log(window.location.pathname);
         } catch (err) {
