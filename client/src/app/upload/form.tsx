@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useRef, useState } from "react";
+import React, { startTransition, useEffect, useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -180,6 +180,13 @@ export const Form = ({
         itemImageUpload,
         attributesImageUpload
     } = useFileUpload();
+
+    useEffect(() => {
+        console.log("UPLOAD MOUNT");
+        return () => {
+            console.log("UPLOAD UNMOUNT");
+        };
+    }, []);
 
     const router = useRouter();
 
