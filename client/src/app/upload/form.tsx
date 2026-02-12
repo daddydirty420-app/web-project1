@@ -311,7 +311,7 @@ export const Form = ({
             }
 
             toast.success("商品データを登録しました");
-            return router.push(`/item/confirm/${itemId}`);
+            router.push(`/item/confirm/${itemId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
