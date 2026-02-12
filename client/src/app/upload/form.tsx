@@ -336,6 +336,8 @@ export const Form = ({
 
             const data = result.data;
 
+            console.log(data);
+
             // 動画アップロード
             const videoOk = await videoUploadAndConvert({
                 accessToken,
