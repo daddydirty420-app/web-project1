@@ -29,9 +29,17 @@ export const useFileUpload = () => {
     // 動画
     const videoUploadAndConvert = useCallback(
         async ({ accessToken, videoFile, videoSignedUrl, videoId }: VideoArgs): Promise<boolean> => {
+            console.log({
+                videoSignedUrl,
+                videoFile,
+                videoId,
+            });
+
             if (!videoSignedUrl || !(videoFile instanceof File) || !videoId) {
                 return false;
             }
+
+            console.log("ここまで来てる？直前チェック 1");
 
             // s3直接アップロード
             const uploadRes = await fetch(videoSignedUrl, {
@@ -46,6 +54,8 @@ export const useFileUpload = () => {
                 toast.error("動画のアップロードに失敗しました");
                 return false;
             }
+
+            console.log("ここまで来てる？直前チェック 2");
 
             // ffmpeg変換
             const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/convert-video/${videoId}`, {

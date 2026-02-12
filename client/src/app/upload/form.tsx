@@ -332,6 +332,8 @@ export const Form = ({
                 return;
             }
 
+            console.log("ここまで来てる？直前チェック 0");
+
             const data = result.data;
 
             // 動画アップロード
