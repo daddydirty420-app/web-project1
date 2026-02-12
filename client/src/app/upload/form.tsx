@@ -311,8 +311,11 @@ export const Form = ({
             }
 
             toast.success("商品データを登録しました");
-            await router.push(`/item/confirm/${itemId}`);
-            return;
+            router.push(`/item/confirm/${itemId}`);
+            console.log("after push", window.history.length);
+            setTimeout(() => {
+               console.log("pathname after 100ms:", window.location.pathname); 
+            }, 100);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
