@@ -163,15 +163,12 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         : [];
 
         let itemImageSignedUrls: string[] = [];
-        let itemImageUrls: string[] = item.image_url ?? [];
+        let newUploadedUrls: string[] = []; // 新規用
+        let finalImageUrls: string[] = []; // DB保存用
 
-        const itemImageTargets = Array.isArray(itemImages)
-        ? itemImages
-        .map((img, index) => ({ img, index }))
-        .filter(({ img }) => img.name && !img.uploaded)
-        : [];
+        await Promise.all((itemImages ?? []).map(async (img, index) => {
+            if (!img || img.uploaded) return;
 
-        await Promise.all(itemImageTargets.map(async ({ img, index }) => {
             const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
 
             const itemImageCommand = new PutObjectCommand({
@@ -183,24 +180,24 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
 
             itemImageSignedUrls[index] = signedUrl;
-            itemImageUrls[index] = `${s3Domain}/${key}`;
+            newUploadedUrls[index] = `${s3Domain}/${key}`;
         }));
 
-        if (Array.isArray(itemImages)) {
-            itemImages.forEach((img, i) => {
+        (itemImages ?? []).forEach((img, i) => {
+            if (!img) return;
+
+            if (img.uploaded) {
                 const existingUrl = existingImages[i];
+                if (existingUrl) finalImageUrls.push(existingUrl);
+            } else {
+                const newUrl = newUploadedUrls[i];
+                if (newUrl) finalImageUrls.push(newUrl);
+            }
+        });
 
-                if (img.uploaded) {
-                    if (existingUrl) {
-                        itemImageUrls[i] = existingUrl;
-                    } else {
-                        console.warn(`既存URLが見つかりません: index=${i}`);
-                    }
-                }
-            });
-        }
+        console.log(finalImageUrls);
 
-        if (itemImageUrls.length === 0) {
+        if (finalImageUrls.length === 0) {
             res.status(400).json({ message: "商品画像が見つかりません" });
             return;
         }
@@ -406,10 +403,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             price: priceNum,
 
             save_at: now,
-            first_image_url: itemImageUrls[0],
+            first_image_url: finalImageUrls[0],
         }, { transaction: t });
 
-        item.setDataValue("image_url", itemImageUrls);
+        item.setDataValue("image_url", finalImageUrls);
         item.changed("image_url", true);
         await item.save({ transaction: t });
 
@@ -418,13 +415,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         res.status(200).json({
             message: `${item.name}のデータを作成しました。`,
             videoSignedUrl,
-            videoUrl,
             thumbnailSignedUrl,
-            thumbnailUrl,
             itemImageSignedUrls,
-            itemImageUrls,
-            attributesImageSignedUrls,
-            attributesImageUrls
+            attributesImageSignedUrls
         });
     } catch (err) {
         await t.rollback();
