@@ -89,7 +89,7 @@ export class Item extends Model {
         RecommendItem: Association<Item, RecommendItem>;
         Categories: Association<Item, Categories>;
         ItemReport: Association<Item, ItemReport>;
-        Brands: Association<Item, Categories>;
+        Brand: Association<Item, Brands>;
         ItemShippingProfile: Association<Item, ItemShippingProfile>;
     };
 }
