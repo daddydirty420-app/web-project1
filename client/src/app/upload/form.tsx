@@ -196,6 +196,8 @@ export const Form = ({
         setItemImages(prev => prev.filter((_, i) => i !== index));
     };
 
+    console.log(item);
+
     const upload = async () => {
         setLoading(true);
 
