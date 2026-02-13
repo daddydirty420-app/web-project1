@@ -195,8 +195,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         });
 
-        console.log(finalImageUrls);
-
         if (finalImageUrls.length === 0) {
             res.status(400).json({ message: "商品画像が見つかりません" });
             return;
@@ -406,6 +404,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             first_image_url: finalImageUrls[0],
         }, { transaction: t });
 
+        // 商品画像更新
         item.setDataValue("image_url", finalImageUrls);
         item.changed("image_url", true);
         await item.save({ transaction: t });

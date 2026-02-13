@@ -151,44 +151,39 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         const existingImages = Array.isArray(item.image_url)
         ? item.image_url
         : [];
-
+        
         let itemImageSignedUrls: string[] = [];
-        let itemImageUrls: string[] = item.image_url ?? [];
-
-        const itemImageTargets = Array.isArray(itemImages)
-        ? itemImages
-        .map((img, index) => ({ img, index }))
-        .filter(({ img }) => img.name && !img.uploaded)
-        : [];
-
-        await Promise.all(itemImageTargets.map(async ({ img, index }) => {
+        let newUploadedUrls: string[] = []; // 新規用
+        let finalImageUrls: string[] = []; // DB保存用
+        
+        await Promise.all((itemImages ?? []).map(async (img, index) => {
+            if (!img || img.uploaded) return;
+        
             const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
-
+        
             const itemImageCommand = new PutObjectCommand({
                 Bucket: bucket,
                 Key: key,
                 ContentType: img.type ?? "",
             });
-
+        
             const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
-
+        
             itemImageSignedUrls[index] = signedUrl;
-            itemImageUrls[index] = `${s3Domain}/${key}`;
+            newUploadedUrls[index] = `${s3Domain}/${key}`;
         }));
-
-        if (Array.isArray(itemImages)) {
-            itemImages.forEach((img, i) => {
+        
+        (itemImages ?? []).forEach((img, i) => {
+            if (!img) return;
+        
+            if (img.uploaded) {
                 const existingUrl = existingImages[i];
-
-                if (img.uploaded) {
-                    if (existingUrl) {
-                        itemImageUrls[i] = existingUrl;
-                    } else {
-                        console.warn(`既存URLが見つかりません: index=${i}`);
-                    }
-                }
-            });
-        }
+                if (existingUrl) finalImageUrls.push(existingUrl);
+            } else {
+                const newUrl = newUploadedUrls[i];
+                if (newUrl) finalImageUrls.push(newUrl);
+            }
+        });
 
         // attributes.image署名付きURL生成
         let attributesImageSignedUrls: Record<string, string> = {};
@@ -350,7 +345,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }, { transaction: t });
 
         await item.update({
-            image_url: itemImageUrls,
             name: itemMeta.name,
             detail: itemMeta.detail,
 
@@ -392,7 +386,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             price: priceNum,
 
             save_at: now,
-            first_image_url: itemImageUrls[0] ?? null,
+            first_image_url: finalImageUrls[0] ?? null,
             status: "draft",
         }, { transaction: t });
 
@@ -404,18 +398,19 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             message: `${item.name}の下書きを作成しました。下書きの閲覧・編集・出品はこちらから！`,
         }, { transaction: t });
 
+        // 商品画像更新
+        item.setDataValue("image_url", finalImageUrls);
+        item.changed("image_url", true);
+        await item.save({ transaction: t });
+
         await t.commit();
 
         res.status(200).json({
             message: `${item.name}の下書きを作成しました。`,
             videoSignedUrl,
-            videoUrl,
             thumbnailSignedUrl,
-            thumbnailUrl,
             itemImageSignedUrls,
-            itemImageUrls,
-            attributesImageSignedUrls,
-            attributesImageUrls
+            attributesImageSignedUrls
         });
     } catch (err) {
         await t.rollback();
