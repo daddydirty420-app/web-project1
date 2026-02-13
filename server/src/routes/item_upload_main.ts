@@ -365,7 +365,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }, { transaction: t });
 
         await item.update({
-            image_url: itemImageUrls,
+            image_url: JSON.parse(JSON.stringify(itemImageUrls)),
             name: itemMeta.name,
             detail: itemMeta.detail,
 
