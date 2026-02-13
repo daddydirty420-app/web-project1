@@ -431,6 +431,7 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
                 },
                 {
                     model: Brands,
+                    as: "Brand",
                     required: false,
                 },
             ],
@@ -514,6 +515,7 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                 },
                 {
                     model: Brands,
+                    as: "Brand",
                     required: false,
                 },
             ],

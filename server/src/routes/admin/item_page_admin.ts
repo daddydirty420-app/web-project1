@@ -65,6 +65,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
                 },
                 {
                     model: Brands,
+                    as: "brand",
                     required: false,
                 },
             ],
