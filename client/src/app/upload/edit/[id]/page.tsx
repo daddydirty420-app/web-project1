@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { Form } from "../form";
+import { Form } from "../../form";
 
 type Props = {
     params: { id: string };
@@ -11,8 +11,8 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "商品を出品する",
-        description: "",
+        title: "商品を編集する",
+        description: "動画・商品画像・商品名・説明文・価格など、商品情報の変更はこちら！",
         robots: {
             index: false,
             follow: false
@@ -58,8 +58,8 @@ export default async function Page({ params }: Props) {
         redirect("/upload/before");
     }
 
-    if (item.status !== "editing") {
-        redirect("/upload/before");
+    if (item.status === "soldout") {
+        redirect(`/item/${id}`);
     }
 
     return <Form
@@ -71,6 +71,6 @@ export default async function Page({ params }: Props) {
     allService={allService}
     allPlace={allPlace}
     hasShop={hasShop}
-    page="normal"
+    page="edit"
     />;
-};
+}

@@ -47,7 +47,7 @@ export type ItemShippingProfile = {
 
 export type Sale = {
     id: string;
-    shop_id: string | number;
+    before_price: number;
 };
 
 export type Video = {
@@ -70,11 +70,12 @@ export type Item = {
     gender_type: "men" | "women" | "unisex";
     age_type: "adult" | "kids" | "both";
     attributes: ItemAttributes;
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     price: number;
     Video?: Video | null;
     Sale?: Sale | null;
     Category?: Categories | null;
-    Brands?: Brands | null;
+    Brand?: Brands | null;
     ItemConditionOption?: ItemConditionOption | null;
     ItemShippingProfile?: ItemShippingProfile | null;
 };

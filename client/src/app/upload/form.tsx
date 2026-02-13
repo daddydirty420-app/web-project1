@@ -30,6 +30,7 @@ type Props = {
     allService: ShippingServiceOption[];
     allPlace: TodouhukenOption[];
     hasShop: boolean;
+    page: "normal" | "draft" | "edit";
 };
 
 type ItemImage = {
@@ -46,7 +47,8 @@ export const Form = ({
     allDay,
     allService,
     allPlace,
-    hasShop
+    hasShop,
+    page
 }: Props) => {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
@@ -89,8 +91,8 @@ export const Form = ({
     });
 
     const [brandValue, setBrandValue] = useState<BrandValue>({
-        id: item.Brands?.id ?? null,
-        name: item.Brands?.name ?? "",
+        id: item.Brand?.id ?? null,
+        name: item.Brand?.name ?? "",
     });
 
     const initialAttributesValue: AttributesValue = {
@@ -146,8 +148,8 @@ export const Form = ({
     });
 
     const [priceValue, setPriceValue] = useState<PriceValue>({
-        price: item.price && !Number.isNaN(item.price)
-        ? String(item.price)
+        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price)
+        ? String(item.Sale?.before_price)
         : "",
     });
 
@@ -309,7 +311,16 @@ export const Form = ({
 
             toast.success("商品データを登録しました");
             setLoading(false);
-            window.location.assign(`/item/confirm/${itemId}`);
+
+            if (page === "edit") {
+                if (item.status === "active") {
+                    window.location.assign(`/item/${itemId}`);
+                } else {
+                    window.location.assign(`/item/confirm/${itemId}`);
+                }
+            } else {
+                window.location.assign(`/item/confirm/${itemId}`);
+            }
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
@@ -531,14 +542,16 @@ export const Form = ({
                 {loading ? "登録中..." : "出品する"}
             </button>
 
-            <button
-            type="button"
-            className={styles.draftButton}
-            onClick={draft}
-            disabled={draftLoading}
-            >
-                {draftLoading ? "保存中..." : "下書き保存する"}
-            </button>
+            {page !== "edit" && (
+                <button
+                type="button"
+                className={styles.draftButton}
+                onClick={draft}
+                disabled={draftLoading}
+                >
+                    {draftLoading ? "保存中..." : "下書き保存する"}
+                </button>
+            )}
         </UploadUI>
     );
 };

@@ -104,7 +104,17 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
             await videoData.update({ status: "failed" });
         }, 5 * 60 * 1000); // 5分
 
+        const ffprobe = spawn("ffprobe", [
+            "-v", "error",
+            "-show_entries", "format=duration",
+            "-of", "default=noprint_wrappers=1:nokey=1",
+            originalFilePath
+        ]);
+
+        let duration = "";
+
         ffmpeg.stderr.on("data", (data) => {
+            duration += data.toString();
             console.error(`ffmpeg: ${data}`);
         });
 
@@ -145,9 +155,12 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
 
                 const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/${now}_index.m3u8`;
 
+                const seconds = Math.floor(parseFloat(duration));
+
                 await videoData.update({
                     status: 'done',
                     converted_url: convertedUrl,
+                    duration: seconds,
                 });
 
                 // 後処理
@@ -378,6 +391,126 @@ router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> 
     } catch (err) {
         console.error(err);
         res.status(500).json({ suggest: [] });
+    }
+});
+
+router.get("/upload-edit-draft/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = req.params.id;
+    const page = req.query.page;
+    if (!["edit", "draft"].includes(String(page))) {
+        res.status(400).json({ message: "ページが正しくありません" });
+        return;
+    }
+
+    try {
+        const item = await Item.findByPk(itemId, {
+            attributes: ["id", "name", "detail", "image_url", "price", "seller_id", "gender_type", "age_type", "status", "attributes"],
+            include: [
+                {
+                    model: Video,
+                    attributes: ["id", "thumbnail_url", "title", "summary", "duration", "original_url", "converted_url"],
+                },
+                {
+                    model: Sale,
+                    attributes: ["id", "before_price"],
+                },
+                {
+                    model: ItemShippingProfile,
+                    attributes: ["id", "shipping_service_free_text"],
+                    include: [
+                        {
+                            model: ShippingDayOption,
+                            required: false,
+                        },
+                        {
+                            model :ShippingServiceOption,
+                            required: false,
+                        },
+                        {
+                            model: TodouhukenOption,
+                            required: false,
+                        },
+                    ],
+                },
+                {
+                    model: ItemConditionOption,
+                    required: false,
+                },
+                {
+                    model: Brands,
+                    as: "Brand",
+                    attributes: ["id", "name"],
+                    required: false,
+                },
+                {
+                    model: Categories,
+                    as: "Category",
+                    attributes: ["id", "name", "level", "parent_id"],
+                    required: false,
+                },
+            ],
+        });
+
+        if (!item) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        if (page === "draft" && item.status !== "draft") {
+            res.status(400).json({ message: "不正なデータが検出されました。" });
+            return;
+        }
+
+        if (page === "edit" && item.status === "soldout") {
+            res.status(400).json({ message: "不正なデータが検出されました。" });
+            return;
+        }
+
+        const category = await Categories.findAll({
+            where: { level: 1 },
+            order: [["sort_order", "ASC"]],
+        });
+
+        const allCondition = await ItemConditionOption.findAll({
+            order: [["id", "ASC"]],
+        });
+
+        const allDay = await ShippingDayOption.findAll({
+            order: [["id", "ASC"]],
+        });
+
+        const allService = await ShippingServiceOption.findAll({
+            order: [["id", "ASC"]],
+        });
+
+        const allPlace = await TodouhukenOption.findAll({
+            order: [["id", "ASC"]],
+        });
+
+        const me = await User.findByPk(item.seller_id, {
+            attributes: ["id"],
+            include: [
+                {
+                    model: ShopInfo,
+                    required: false,
+                },
+            ],
+        });
+
+        const hasShop = !!me.ShopInfo;
+
+        res.status(200).json({
+            item,
+            category,
+            allCondition,
+            hasShop,
+            allDay,
+            allService,
+            allPlace
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
 });
 

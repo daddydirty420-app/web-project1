@@ -53,7 +53,8 @@ export class Item extends Model {
             as: "Category",
         });
         Item.belongsTo(Brands, {
-            foreignKey: 'brand_id'
+            foreignKey: 'brand_id',
+            as: "Brand",
         });
         Item.hasMany(Cart, {
             foreignKey: 'item_id'

@@ -335,6 +335,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
         await item.Sale.update({
             before_price: priceNum,
+            sale_flag: false,
+            discount_rate: 0,
+            discount_amount: 0,
         }, { transaction: t });
 
         await item.ItemShippingProfile.update({
