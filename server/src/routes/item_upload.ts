@@ -205,20 +205,20 @@ router.post("/new-item-create", authenticateToken, async (req: Request, res: Res
 router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const currentUserId = req.user!.id;
-    const now = Date.now();
 
     const t = await sequelize.transaction();
 
     try {
         const item = await Item.findByPk(itemId, {
             include: [
-                {
-                    model: Video,
-                },
+                { model: Video },
                 {
                     model: User,
                     include: [
-                        { model: ReccomendMonth },
+                        {
+                            model: ReccomendMonth,
+                            required: false,
+                        },
                     ],
                 },
             ],
