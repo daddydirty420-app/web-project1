@@ -365,7 +365,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }, { transaction: t });
 
         await item.update({
-            image_url: JSON.parse(JSON.stringify(itemImageUrls)),
             name: itemMeta.name,
             detail: itemMeta.detail,
 
@@ -409,6 +408,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             save_at: now,
             first_image_url: itemImageUrls[0],
         }, { transaction: t });
+
+        item.setDataValue("image_url", itemImageUrls);
+        item.changed("image_url", true);
+        await item.save({ transaction: t });
 
         await t.commit();
 
