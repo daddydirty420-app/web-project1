@@ -2,16 +2,16 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional, isAdmin } from "../middleware/index.js";
 import { Op, Sequelize } from "sequelize";
-import { ReccomendItem, Item, User, Sale, Video } from "../models/index.js";
+import { RecommendItem, Item, User, Sale, Video } from "../models/index.js";
 import { subDays } from "date-fns";
 
 const router = Router();
 
-router.get('/reccomend-item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/recommend-item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;
 
-        const data = await ReccomendItem.findAll({
+        const data = await RecommendItem.findAll({
             attributes: ['id'],
             where: {
                 user_id: { [Op.ne]: currentUserId },
@@ -46,11 +46,11 @@ router.get('/reccomend-item-list', authenticateOptional, async (req: Request, re
     }
 });
 
-router.get('/admin/reccomend-item-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/admin/recommend-item-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
         const sevenDaysAgo = subDays(new Date(), 7);
 
-        const itemList = await ReccomendItem.findAll({
+        const itemList = await RecommendItem.findAll({
             attributes: ['id'],
             where: { createdAt: { [Op.gte]: sevenDaysAgo } },
             order: [[Sequelize.col('Item.uploaded_at'), 'DESC']],

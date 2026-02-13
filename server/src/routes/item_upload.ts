@@ -5,7 +5,7 @@ import fs from "fs";
 import { spawn } from "child_process";
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, ReccomendItem, ReccomendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, RecommendItem, RecommendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -216,7 +216,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
                     model: User,
                     include: [
                         {
-                            model: ReccomendMonth,
+                            model: RecommendMonth,
                             required: false,
                         },
                     ],
@@ -250,10 +250,10 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
             sort = sort + 5000;
         }
 
-        if (item.User?.ReccomendMonth) {
+        if (item.User?.RecommendMonth) {
             sort = sort * 5;
 
-            await ReccomendItem.create({
+            await RecommendItem.create({
                 recommend_month: true,
                 item_id: itemId,
                 user_id: currentUserId,

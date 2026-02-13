@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Item, User, ItemConditionOption, GoodItem, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ReccomendItem, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
+import { Item, User, ItemConditionOption, GoodItem, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, RecommendItem, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
 
 const router = Router();
 
@@ -42,7 +42,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
                     ],
                 },
                 {
-                    model: ReccomendItem,
+                    model: RecommendItem,
                     attributes: ['id'],
                 },
                 {

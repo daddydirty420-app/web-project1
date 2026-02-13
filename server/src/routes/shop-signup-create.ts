@@ -389,7 +389,7 @@ router.patch("/4/:id", authenticateToken, async (req: Request, res: Response): P
     const shopId = req.params.id;
     const autoTrans = req.body.autoTrans === "はい";
     const openInfo = req.body.openInfo === "はい";
-    const reccomend = req.body.reccomend === "はい";
+    const recommend = req.body.recommend === "はい";
 
     try {
         const shop = await ShopInfo.findByPk(shopId);
@@ -402,7 +402,7 @@ router.patch("/4/:id", authenticateToken, async (req: Request, res: Response): P
         await shop.update({
             auto_trans: autoTrans,
             open_info: openInfo,
-            reccomend: reccomend,
+            recommend: recommend,
         });
 
         res.status(200).json({ message: "データ更新完了" });

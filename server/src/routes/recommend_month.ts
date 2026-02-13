@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { Op, fn, col } from "sequelize";
-import { ReccomendMonth, User, UriagekinHistory } from "../models/index.js";
+import { RecommendMonth, User, UriagekinHistory } from "../models/index.js";
 import { subMonths, startOfMonth, endOfMonth } from "date-fns";
 
 const router = Router();
@@ -12,7 +12,7 @@ router.get('/admin/pay-list', authenticateToken, isAdmin, async (req: Request, r
         const startOfLastMonth = startOfMonth(subMonths(new Date(), 1));
         const endOfLastMonth = endOfMonth(subMonths(new Date(), 1));
 
-        const list = await ReccomendMonth.findAll({
+        const list = await RecommendMonth.findAll({
             where: { paid: false },
             order: [['createdAt', 'ASC']],
             include: [
@@ -34,7 +34,7 @@ router.get('/admin/pay-list', authenticateToken, isAdmin, async (req: Request, r
                 }
             ],
             group: [
-                'ReccomendMonth.id',
+                'RecommendMonth.id',
                 'User.id'
             ],
             subQuery: false

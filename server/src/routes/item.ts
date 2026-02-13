@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Item, User, ItemConditionOption, Video, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ReccomendMonth, ItemDeleteLogs } from "../models/index.js";
+import { Item, User, ItemConditionOption, Video, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, RecommendMonth, ItemDeleteLogs } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
@@ -59,12 +59,12 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
             return;
         }
 
-        const currentUserReccomend = await User.findOne({
+        const currentUserRecommend = await User.findOne({
             attributes: ['id'],
             where: { id: currentUserId },
             include: [
                 {
-                    model: ReccomendMonth,
+                    model: RecommendMonth,
                     attributes: ['id'],
                 },
             ],
@@ -72,7 +72,7 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
 
         res.json({
             item,
-            currentUserReccomend
+            currentUserRecommend
         });
     } catch (err) {
         console.error(err);

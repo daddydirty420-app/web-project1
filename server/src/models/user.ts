@@ -8,14 +8,14 @@ import GoodItem from "./good_item.js";
 import Item from "./item.js";
 import ReferenceCode from "./reference_code.js";
 import Notification from "./notification.js";
-import ReccomendPaidInfo from "./reccomend_paid_info.js";
+import RecommendPaidInfo from "./recommend_paid_info.js";
 import IdCard from "./id_card.js";
 import ShopInfo from "./shop_info.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import WatchHistory from "./watch_history.js";
 import Name from "./name.js";
-import ReccomendMonth from "./reccomend_month.js";
+import RecommendMonth from "./recommend_month.js";
 import GenderOption from "./gender_option.js";
 import PointsHistory from "./points_history.js";
 import UriagekinHistory from "./uriagekin_history.js";
@@ -73,7 +73,7 @@ export class User extends Model {
         User.hasMany(Notification, {
             foreignKey: 'read_user_id'
         });
-        User.hasMany(ReccomendPaidInfo, {
+        User.hasMany(RecommendPaidInfo, {
             foreignKey: 'user_id'
         });
         User.hasOne(IdCard, {
@@ -98,7 +98,7 @@ export class User extends Model {
             foreignKey: 'input_user_id',
             as: 'Input'
         });
-        User.hasOne(ReccomendMonth, {
+        User.hasOne(RecommendMonth, {
             foreignKey: 'user_id'
         });
         User.belongsTo(GenderOption, {
@@ -120,14 +120,14 @@ export class User extends Model {
         Item: Association<User, Item>;
         ReferenceCode: Association<User, ReferenceCode>;
         Notification: Association<User, Notification>;
-        ReccomendPaidInfo: Association<User, ReccomendPaidInfo>;
+        RecommendPaidInfo: Association<User, RecommendPaidInfo>;
         IdCard: Association<User, IdCard>;
         ShopInfo: Association<User, ShopInfo>;
         Address: Association<User, Address>;
         BankAccount: Association<User, BankAccount>;
         WatchHistory: Association<User, WatchHistory>;
         Name: Association<User, Name>;
-        ReccomendMonth: Association<User, ReccomendMonth>;
+        RecommendMonth: Association<User, RecommendMonth>;
         GenderOption: Association<User, GenderOption>;
         PointsHistory: Association<User, PointsHistory>;
         UriagekinHistory: Association<User, UriagekinHistory>;

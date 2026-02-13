@@ -1,13 +1,13 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { ReccomendPaidInfo, User } from "../models/index.js";
+import { RecommendPaidInfo, User } from "../models/index.js";
 
 const router = Router();
 
 router.get('/receipt/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await ReccomendPaidInfo.findByPk(req.params.id, {
+        const data = await RecommendPaidInfo.findByPk(req.params.id, {
             attributes: ['id', 'price', 'pay_id', 'createdAt'],
             include: [
                 {
@@ -31,7 +31,7 @@ router.get('/receipt/:id', authenticateToken, async (req: Request, res: Response
 
 router.get('/paid-history', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await ReccomendPaidInfo.findAll({
+        const dataList = await RecommendPaidInfo.findAll({
             attributes: ['id', 'createdAt'],
             where: { user_id: req.user!.id },
             order: [['createdAt', 'DESC']],

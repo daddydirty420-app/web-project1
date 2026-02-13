@@ -2,27 +2,32 @@ import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
 import User from "./user.js";
+import Item from "./item.js";
 
-export class ReccomendMonth extends Model {
+export class RecommendItem extends Model {
     declare id: number;
-    declare paid: boolean;
-    declare will_cancel: boolean;
+    declare recommend_month: boolean;
+    declare item_id: number;
     declare user_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        ReccomendMonth.belongsTo(User, {
+        RecommendItem.belongsTo(Item, {
+            foreignKey: "item_id",
+        });
+        RecommendItem.belongsTo(User, {
             foreignKey: "user_id",
         });
     }
 
     static associations: {
-        User: Association<ReccomendMonth, User>;
+        Item: Association<RecommendItem, Item>;
+        User: Association<RecommendItem, User>;
     };
 }
 
-ReccomendMonth.init(
+RecommendItem.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -30,28 +35,27 @@ ReccomendMonth.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        paid: {
+        recommend_month: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false
         },
-        will_cancel: {
-            type: DataTypes.BOOLEAN,
+        item_id: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: false
+            unique: true,
         },
         user_id: {
             type: DataTypes.INTEGER,
-            unique: true,
+            allowNull: false,
         },
     },
     {
         sequelize,
-        modelName: "ReccomendMonth",
-        tableName: "reccomend_month",
+        modelName: "RecommendItem",
+        tableName: "recommend_item",
         freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default ReccomendMonth;
+export default RecommendItem;

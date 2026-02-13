@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { User, Item, ShopInfo, ReccomendMonth, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
+import { User, Item, ShopInfo, RecommendMonth, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
 import { Op } from "sequelize";
 
 const router = Router();
@@ -209,7 +209,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
       attributes: ['id', 'uriagekin'],
       include: [
         {
-          model: ReccomendMonth,
+          model: RecommendMonth,
           attributes: ['id'],
         },
         {
@@ -229,7 +229,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
 
     let minValue = 0;
 
-    if (user.ReccomendMonth) {
+    if (user.RecommendMonth) {
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 999);
@@ -264,7 +264,7 @@ router.get('/transfar-points', authenticateToken, async (req: Request, res: Resp
       attributes: ['id', 'points', 'uriagekin'],
       include: [
         {
-          model: ReccomendMonth,
+          model: RecommendMonth,
           attributes: ["id"],
         },
       ],
@@ -277,7 +277,7 @@ router.get('/transfar-points', authenticateToken, async (req: Request, res: Resp
 
     let minValue = 0;
 
-    if (user.ReccomendMonth) {
+    if (user.RecommendMonth) {
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
       const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 999);

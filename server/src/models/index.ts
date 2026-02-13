@@ -54,9 +54,9 @@ import PaymentMethodOptionModel from "./payment_method_option.js";
 import PointConversionLogsModel from "./pointconversionlog.js";
 import PointsHistoryModel from "./points_history.js";
 import PointsUriageOverModel from "./points_uriage_over.js";
-import ReccomendItemModel from "./reccomend_item.js";
-import ReccomendMonthModel from "./reccomend_month.js";
-import ReccomendPaidInfoModel from "./reccomend_paid_info.js";
+import RecommendItemModel from "./recommend_item.js";
+import RecommendMonthModel from "./recommend_month.js";
+import RecommendPaidInfoModel from "./recommend_paid_info.js";
 import ReferenceCodeModel from "./reference_code.js";
 import RefreshTokensModel from "./refreshtoken.js";
 import SaleModel from "./sale.js";
@@ -147,9 +147,9 @@ db.PaymentMethodOption = PaymentMethodOptionModel;
 db.PointConversionLogs = PointConversionLogsModel;
 db.PointsHistory = PointsHistoryModel;
 db.PointsUriageOver = PointsUriageOverModel;
-db.ReccomendItem = ReccomendItemModel;
-db.ReccomendMonth = ReccomendMonthModel;
-db.ReccomendPaidInfo = ReccomendPaidInfoModel;
+db.RecommendItem = RecommendItemModel;
+db.RecommendMonth = RecommendMonthModel;
+db.RecommendPaidInfo = RecommendPaidInfoModel;
 db.ReferenceCode = ReferenceCodeModel;
 db.RefreshTokens = RefreshTokensModel;
 db.Sale = SaleModel;
@@ -179,5 +179,5 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, BrandAliases, Brands, CancelFeeReturnOption, Cancel, Cart, Categories, Chat, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemConditionOption, ItemReportOption, ItemReport, ItemShippingProfile, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, ReccomendItem, ReccomendMonth, ReccomendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, SearchWords, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, StarHistory, SuggestWords, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
+export const { AccountTypeOption, Address, BankAccount, Banks, BlogCategoryOption, Blog, Branches, BrandAliases, Brands, CancelFeeReturnOption, Cancel, Cart, Categories, Chat, ComOrFreeOption, CommentReportOption, CommentReport, Comment, DeletedItems, DeletedOrderSystems, DeliveryStatusOption, Delivery, EmailChangeTokens, Follow, GenderOption, GoodComment, GoodItem, IdCard, Inquiry, ItemBuyerReportOption, ItemBuyerReport, ItemConditionOption, ItemReportOption, ItemReport, ItemShippingProfile, Item, ItemDeleteLogs, JournalReasonOption, Journal, KanjyoOption, Name, Notification, PaidInfo, PasswordResetTokens, PaymentMethodOption, PointConversionLogs, PointsHistory, PointsUriageOver, RecommendItem, RecommendMonth, RecommendPaidInfo, ReferenceCode, RefreshTokens, Sale, SalesHistory, Search, SearchWords, ShippingDayOption, ShippingServiceOption, ShopInfoEdit, ShopInfo, SignupVerificationTokens, StarHistory, SuggestWords, TodouhukenOption, TransReasonOption, Transfar, UriagekinHistory, User, UserDeleteLogs, Video, WatchHistory } = db;
 export default db;

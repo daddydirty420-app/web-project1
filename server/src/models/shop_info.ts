@@ -30,7 +30,7 @@ export class ShopInfo extends Model {
     declare founded_date: Date | null;
     declare open_info: boolean;
     declare permit_url: string[] | null;
-    declare reccomend: boolean;
+    declare recommend: boolean;
 
     static associate() {
         ShopInfo.belongsTo(User, {
@@ -112,7 +112,7 @@ ShopInfo.init(
                 }
             }
         },
-        reccomend: {
+        recommend: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },

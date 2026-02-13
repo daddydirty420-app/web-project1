@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, ReccomendMonth, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, PaymentMethodOption, Cancel, PaidInfo } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, RecommendMonth, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, PaymentMethodOption, Cancel, PaidInfo } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -121,7 +121,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await Notification.destroy({ where: { read_user_id: currentUserId }, transaction: t });
         await WatchHistory.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Comment.destroy({ where: { user_id: currentUserId }, transaction: t });
-        await ReccomendMonth.destroy({ where: { user_id: currentUserId }, transaction: t });
+        await RecommendMonth.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Transfar.destroy({ where: { user_id: currentUserId }, transaction: t });
     
         const items = await Item.findAll({
