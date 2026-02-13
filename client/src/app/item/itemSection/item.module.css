@@ -23,7 +23,7 @@
     color: var(--theme);
 }
 
-.reccomendFire {
+.recommendFire {
     color: var(--alert);
     width: 20px;
     height: 20px;

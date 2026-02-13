@@ -13,8 +13,8 @@ export const ItemHeader = ({ item, page }: Props) => {
         <div className={styles.itemHeader}>
             <div id="itemName" className={styles.itemNameDiv}>
                 <h1 className={styles.itemName}>{item.name}</h1>
-                {item.ReccomendItem && ["normal", "admin"].includes(page) && (
-                    <FontAwesomeIcon icon={faFire} className={styles.reccomendFire} />
+                {item.RecommendItem && ["normal", "admin"].includes(page) && (
+                    <FontAwesomeIcon icon={faFire} className={styles.recommendFire} />
                 )}
             </div>
 

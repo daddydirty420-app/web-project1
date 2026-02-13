@@ -38,7 +38,7 @@ export default async function Page() {
     return (
         <Form
         user={data.user}
-        reccomendPayValue={data.minValue}
+        recommendPayValue={data.minValue}
         />
     );
 };

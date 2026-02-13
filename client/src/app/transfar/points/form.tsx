@@ -11,17 +11,17 @@ import toast from "react-hot-toast";
 
 type Props = {
     user: User;
-    reccomendPayValue: number;
+    recommendPayValue: number;
 };
 
-export const Form = ({ user, reccomendPayValue }: Props) => {
+export const Form = ({ user, recommendPayValue }: Props) => {
     const [value, setValue] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
-    const limit = user.ReccomendMonth
-    ? user.uriagekin - reccomendPayValue
+    const limit = user.RecommendMonth
+    ? user.uriagekin - recommendPayValue
     : user.uriagekin;
 
     const submit = async () => {

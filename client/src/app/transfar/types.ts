@@ -13,7 +13,7 @@ export type BankAccount = {
     AccountTypeOption?: AccountTypeOption;
 }
 
-export type ReccomendMonth = {
+export type RecommendMonth = {
     id: string;
 };
 
@@ -21,6 +21,6 @@ export type User = {
     id: string;
     uriagekin: number;
     points: number;
-    ReccomendMonth?: ReccomendMonth;
+    RecommendMonth?: RecommendMonth;
     BankAccount?: BankAccount;
 };

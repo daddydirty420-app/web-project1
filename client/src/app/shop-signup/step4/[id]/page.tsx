@@ -43,7 +43,7 @@ export default async function Page({ params }: Props) {
     return (
         <Form
         shopId={id}
-        reccomend={data.hasReccomend}
+        recommend={data.hasRecommend}
         />
     );
 };

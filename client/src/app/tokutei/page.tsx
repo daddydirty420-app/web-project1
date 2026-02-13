@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function Tokutei() {
+export default function Page() {
     return (
         <>
         <Header />

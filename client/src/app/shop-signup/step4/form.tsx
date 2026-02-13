@@ -11,13 +11,13 @@ import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
-    reccomend: boolean;
+    recommend: boolean;
 };
 
 export const Form = ({ shopId }: Props) => {
     const [autoTrans, setAutoTrans] = useState("いいえ");
     const [openInfo, setOpenInfo] = useState("いいえ");
-    const [reccomend, setReccomend] = useState("いいえ");
+    const [recommend, setRecommend] = useState("いいえ");
 
     const router = useRouter();
 
@@ -36,7 +36,7 @@ export const Form = ({ shopId }: Props) => {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
-                body: JSON.stringify({ autoTrans, openInfo, reccomend }),
+                body: JSON.stringify({ autoTrans, openInfo, recommend }),
             });
 
             const data = await res.json();
@@ -135,10 +135,10 @@ export const Form = ({ shopId }: Props) => {
                         <label className={styles.radioLabel}>
                             <input
                             type="radio"
-                            name="reccomend"
+                            name="recommend"
                             value="はい"
-                            checked={reccomend === "はい"}
-                            onChange={(e) => setReccomend(e.target.value)}
+                            checked={recommend === "はい"}
+                            onChange={(e) => setRecommend(e.target.value)}
                             className={styles.radio}
                             />
                             <p className={styles.radioText}>はい</p>
@@ -147,10 +147,10 @@ export const Form = ({ shopId }: Props) => {
                         <label className={styles.radioLabel}>
                             <input
                             type="radio"
-                            name="reccomend"
+                            name="recommend"
                             value="いいえ"
-                            checked={reccomend === "いいえ"}
-                            onChange={(e) => setReccomend(e.target.value)}
+                            checked={recommend === "いいえ"}
+                            onChange={(e) => setRecommend(e.target.value)}
                             className={styles.radio}
                             />
                             <p className={styles.radioText}>いいえ</p>

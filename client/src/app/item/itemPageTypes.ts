@@ -20,7 +20,7 @@ export type TodouhukenOption = {
     name: string;
 };
 
-export type ReccomendItem = {
+export type RecommendItem = {
     plus: boolean;
 };
 
@@ -122,7 +122,7 @@ export type Item = {
     Video?: Video | null;
     Sale?: Sale | null;
     ItemShippingProfile?: ItemShippingProfile | null;
-    ReccomendItem?: ReccomendItem | null;
+    RecommendItem?: RecommendItem | null;
     Category?: Categories | null;
     Brand?: Brand | null;
 };

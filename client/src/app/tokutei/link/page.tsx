@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     }
 };
 
-export default function Tokutei() {
+export default function Page() {
     return (
         <>
         <Header />
@@ -24,7 +24,7 @@ export default function Tokutei() {
             <NormalLinkContainer>
                 <NormalLink url='/tokutei' text='商品の購入・取引' />
                 <NormalLink url='/tokutei/selling' text='出品・配送・売上・振込（出品者向け）' />
-                <NormalLink url='/tokutei/reccomend' text='レコメンド' />
+                <NormalLink url='/tokutei/recommend' text='レコメンド' />
             </NormalLinkContainer>
         </Container>
 
