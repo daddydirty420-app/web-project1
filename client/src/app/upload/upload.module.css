@@ -403,7 +403,7 @@
 
 .draftButton {
     display: block;
-    margin: 1.25rem auto 5rem;
+    margin: 1.25rem auto 0;
     width: 200px;
     height: 44px;
     font-size: 14px;
@@ -417,6 +417,10 @@
 }
 .draftButton:hover {
     background-color: var(--button-gray-hover);
+}
+
+.formButtonDiv {
+    margin-bottom: 5rem;
 }
 
 @media (max-width: 768px) {

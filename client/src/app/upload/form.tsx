@@ -536,25 +536,27 @@ export const Form = ({
             onChange={setPriceValue}
             />
                 
-            <button
-            type="button"
-            className={styles.uploadButton}
-            onClick={upload}
-            disabled={loading}
-            >
-                {loading ? "登録中..." : "出品する"}
-            </button>
-
-            {page !== "edit" && (
+            <div className={styles.formButtonDiv}>
                 <button
                 type="button"
-                className={styles.draftButton}
-                onClick={draft}
-                disabled={draftLoading}
+                className={styles.uploadButton}
+                onClick={upload}
+                disabled={loading}
                 >
-                    {draftLoading ? "保存中..." : "下書き保存する"}
+                    {loading ? "登録中..." : "出品する"}
                 </button>
-            )}
+
+                {page !== "edit" && (
+                    <button
+                    type="button"
+                    className={styles.draftButton}
+                    onClick={draft}
+                    disabled={draftLoading}
+                    >
+                        {draftLoading ? "保存中..." : "下書き保存する"}
+                    </button>
+                )}
+            </div>
         </UploadUI>
     );
 };
