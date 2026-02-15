@@ -52,19 +52,9 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         }
 
         if (value.level === 2 && value.parent_id) {
-            console.log("useEffect作動");
-            console.log("level1List:", level1List);
-            console.log("parent_id:", value.parent_id, typeof value.parent_id);
-            console.log(
-                "level1 ids:",
-                level1List.map((c) => [c.id, typeof c.id])
-            );
-
             const parent = level1List.find(
                 (cat) => Number(cat.id) === Number(value.parent_id)
             );
-
-            console.log("parent:", parent);
 
             if (parent) {
                 const parentCategoryValue: CategoryValue = {
@@ -77,10 +67,6 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                 setDisplayLevel1(parent?.name ?? "");
                 setSelectedLevel1(parentCategoryValue);
                 setDisplayLevel2(value.name);
-
-                console.log("displayLevel1:", displayLevel1);
-                console.log("selectedLevel1:", selectedLevel1);
-                console.log("displayLevel2:", displayLevel2);
 
                 onConstraintChange({
                     allowed_gender: parent.allowed_gender ?? null,
