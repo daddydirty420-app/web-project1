@@ -42,6 +42,7 @@ export type ItemAttributes = {
     }; // 在庫
 
     colorVariants?: Array<{
+        _uiId?: string;
         color?: string;
         image_url?: string;
         sizes?: Array<{

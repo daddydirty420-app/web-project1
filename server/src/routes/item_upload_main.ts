@@ -201,6 +201,18 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }
 
         // attributes.image署名付きURL生成
+        const existingVariants = Array.isArray(item.attributes?.variants)
+        ? item.attributes.variants
+        : [];
+
+        const existingVariantMap = new Map<string, string>();
+
+        existingVariants.forEach((variant: any) => {
+            if (variant.uiId && variant.image_url) {
+                existingVariantMap.set(variant.uiId, variant.image_url);
+            }
+        });
+
         let attributesImageSignedUrls: Record<string, string> = {};
         let attributesImageUrls: Record<string, string> = {};
 
@@ -222,13 +234,19 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             attributesImageSignedUrls[v.uiId] = signedUrl;
             attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
         }));
+
+        const finalAttributesImageUrls: Record<string, string> = {};
         
         for (const v of attributes.colorVariants) {
-            if (v.image?.uploaded) {
-                const existingVariant = item.attributes?.variants ?? [];
-                    
-                if (existingVariant) {
-                    attributesImageUrls[v.uiId] = existingVariant.image_url;
+            if (!v.image?.uploaded) {
+                const newUrl = attributesImageUrls[v.uiId];
+                if (newUrl) {
+                    finalAttributesImageUrls[v.uiId] = newUrl;
+                }
+            } else {
+                const existingUrl = existingVariantMap.get(v.uiId);
+                if (existingUrl) {
+                    finalAttributesImageUrls[v.uiId] = existingUrl;
                 }
             }
         }
@@ -381,8 +399,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                 },
                 colorVariants: attributes.colorVariants.length > 0
                 ? attributes.colorVariants.map(v => ({
+                    _uiId: v.uiId,
                     color: v.color ?? null,
-                    image_url: attributesImageUrls[v.uiId] ?? null,
+                    image_url: finalAttributesImageUrls[v.uiId] ?? null,
                     sizes: v.sizes.map(s => ({
                         size: s.size ?? null,
                         inventory: {
