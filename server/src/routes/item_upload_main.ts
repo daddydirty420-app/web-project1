@@ -399,7 +399,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                 },
                 colorVariants: attributes.colorVariants.length > 0
                 ? attributes.colorVariants.map(v => ({
-                    _uiId: v.uiId,
+                    uiId: v.uiId,
                     color: v.color ?? null,
                     image_url: finalAttributesImageUrls[v.uiId] ?? null,
                     sizes: v.sizes.map(s => ({
