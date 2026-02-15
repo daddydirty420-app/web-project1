@@ -35,7 +35,6 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
     const initializedRef = useRef(false);
 
     useEffect(() => {
-        console.log("useEffect作動");
         if (initializedRef.current) return;
 
         if (value.level === 1) {
@@ -53,7 +52,8 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         }
 
         if (value.level === 2 && value.parent_id) {
-            console.log("useEffect正しく作動");
+            console.log("useEffect作動");
+            console.log("level1List:", level1List);
             const parent = level1List.find(
                 (cat) => cat.id === String(value.parent_id)
             );
