@@ -220,6 +220,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             v => v.image && v.image.name && !v.image.uploaded
         );
 
+        console.log("incoming colorVariants", attributes.colorVariants);
+        console.log("existingVariants", existingVariants);
+        console.log("existingVariantMap", Array.from(existingVariantMap.entries()));
+
         await Promise.all(attributesTargets.map(async (v) => {
             const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image?.name}`;
 
@@ -238,12 +242,18 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         const finalAttributesImageUrls: Record<string, string> = {};
         
         for (const v of attributes.colorVariants) {
+            console.log("checking uiId:", v.uiId);
+            console.log("image:", v.image);
+
             if (v.image && !v.image.uploaded) {
+                console.log("→ new upload");
                 const newUrl = attributesImageUrls[v.uiId];
                 if (newUrl) {
                     finalAttributesImageUrls[v.uiId] = newUrl;
                 }
             } else {
+                console.log("→ existing branch");
+                console.log("existing found:", existingVariantMap.get(v.uiId));
                 const existingUrl = existingVariantMap.get(v.uiId);
                 if (existingUrl) {
                     finalAttributesImageUrls[v.uiId] = existingUrl;

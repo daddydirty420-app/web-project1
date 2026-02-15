@@ -98,7 +98,7 @@ export const Form = ({
     const initialAttributesValue: AttributesValue = {
         all_inventory: item.attributes?.inventory?.current ?? 1,
         colorVariants: item.attributes?.colorVariants?.map((v) => ({
-            _uiId: crypto.randomUUID(),
+            _uiId: v.uiId ?? crypto.randomUUID(),
             color: v.color ?? null,
             image: null,
             image_uploaded: true,
