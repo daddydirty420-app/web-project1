@@ -22,7 +22,7 @@ async function findOrCreateBrand(inputName: string) {
 
     if (!brand && inputName.length >= 2) {
         await BrandAliases.create({
-            brand_id: brand.id,
+            brand_id: brand.id ?? null,
             name: inputName,
             name_normalized: normalized,
         });
