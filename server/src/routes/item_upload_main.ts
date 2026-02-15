@@ -238,7 +238,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         const finalAttributesImageUrls: Record<string, string> = {};
         
         for (const v of attributes.colorVariants) {
-            if (!v.image?.uploaded) {
+            if (v.image && !v.image.uploaded) {
                 const newUrl = attributesImageUrls[v.uiId];
                 if (newUrl) {
                     finalAttributesImageUrls[v.uiId] = newUrl;
