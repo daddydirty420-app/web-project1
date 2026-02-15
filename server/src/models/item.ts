@@ -13,6 +13,7 @@ import ItemReport from "./item_report.js";
 import Categories from "./categories.js";
 import Brands from "./brands.js";
 import ItemShippingProfile from "./item_shipping_profile.js";
+import BrandAliases from "./brand_aliases.js";
 
 export class Item extends Model {
     declare id: number;
@@ -39,6 +40,7 @@ export class Item extends Model {
     declare status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     declare category_id: number | null;
     declare brand_id: number | null;
+    declare brand_aliases_id: number | null;
     declare attributes: ItemAttributes;
 
     static associate() {
@@ -55,6 +57,9 @@ export class Item extends Model {
         Item.belongsTo(Brands, {
             foreignKey: 'brand_id',
             as: "Brand",
+        });
+        Item.belongsTo(BrandAliases, {
+            foreignKey: 'brand_aliases_id',
         });
         Item.hasMany(Cart, {
             foreignKey: 'item_id'
@@ -90,6 +95,7 @@ export class Item extends Model {
         Categories: Association<Item, Categories>;
         ItemReport: Association<Item, ItemReport>;
         Brand: Association<Item, Brands>;
+        BrandAliases: Association<Item, BrandAliases>;
         ItemShippingProfile: Association<Item, ItemShippingProfile>;
     };
 }
@@ -153,6 +159,7 @@ Item.init(
         },
         category_id: DataTypes.INTEGER,
         brand_id: DataTypes.INTEGER,
+        brand_aliases_id: DataTypes.INTEGER,
         attributes: {
             type: DataTypes.JSONB,
             allowNull: false,

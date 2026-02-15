@@ -13,7 +13,7 @@ async function findOrCreateBrand(inputName: string) {
     });
 
     if (alias?.brand) {
-        return alias.brand;
+        return { brand: alias.brand };
     }
 
     let brand = await Brands.findOne({
@@ -21,14 +21,14 @@ async function findOrCreateBrand(inputName: string) {
     });
 
     if (!brand && inputName.length >= 2) {
-        await BrandAliases.create({
+        alias = await BrandAliases.create({
             brand_id: brand.id ?? null,
             name: inputName,
             name_normalized: normalized,
         });
     }
 
-    return brand;
+    return { brand, alias };
 }
 
 export default findOrCreateBrand;
