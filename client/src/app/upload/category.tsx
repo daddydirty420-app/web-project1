@@ -54,6 +54,12 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         if (value.level === 2 && value.parent_id) {
             console.log("useEffect作動");
             console.log("level1List:", level1List);
+            console.log("parent_id:", value.parent_id, typeof value.parent_id);
+            console.log(
+                "level1 ids:",
+                level1List.map((c) => [c.id, typeof c.id])
+            );
+            
             const parent = level1List.find(
                 (cat) => cat.id === String(value.parent_id)
             );
