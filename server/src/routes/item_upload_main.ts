@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, Sale, ItemShippingProfile, Categories, Brands, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "../models/index.js";
+import { Video, Item, Sale, ItemShippingProfile, Categories, Brands, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
 import sequelize from "../db.js";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import findOrCreateBrand from "../services/findOrCreateBrand.js";
@@ -63,6 +63,11 @@ type Body = {
         freeText: string | null;
     };
     price: string;
+};
+
+type BrandResult = {
+    brand: InstanceType<typeof Brands> | null;
+    alias: InstanceType<typeof BrandAliases> | null;
 };
 
 function toNullableNumber(value: any): number | null {
@@ -220,12 +225,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             v => v.image && v.image.name && !v.image.uploaded
         );
 
-        console.log("DB raw attributes:", item.attributes);
-
-        console.log("incoming colorVariants", attributes.colorVariants);
-        console.log("existingVariants", existingVariants);
-        console.log("existingVariantMap", Array.from(existingVariantMap.entries()));
-
         await Promise.all(attributesTargets.map(async (v) => {
             const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image?.name}`;
 
@@ -244,18 +243,12 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         const finalAttributesImageUrls: Record<string, string> = {};
         
         for (const v of attributes.colorVariants) {
-            console.log("checking uiId:", v.uiId);
-            console.log("image:", v.image);
-
             if (v.image && !v.image.uploaded) {
-                console.log("→ new upload");
                 const newUrl = attributesImageUrls[v.uiId];
                 if (newUrl) {
                     finalAttributesImageUrls[v.uiId] = newUrl;
                 }
             } else {
-                console.log("→ existing branch");
-                console.log("existing found:", existingVariantMap.get(v.uiId));
                 const existingUrl = existingVariantMap.get(v.uiId);
                 if (existingUrl) {
                     finalAttributesImageUrls[v.uiId] = existingUrl;
@@ -361,13 +354,15 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             return;
         }
 
-        let brandOption = null;
+        let brandResult: BrandResult = { brand: null, alias: null };
+
         if (brandId !== null) {
-            brandOption = await Brands.findByPk(brandId);
+            const selectedBrand = await Brands.findByPk(brandId);
+            brandResult = { brand: selectedBrand, alias: null };
         }
 
-        if (brandOption === null && brand.name) {
-            brandOption = await findOrCreateBrand(brand.name ?? "");
+        if (!brandResult.brand && brand.name) {
+            brandResult = await findOrCreateBrand(brand.name ?? "");
         }
 
         // データ更新
@@ -399,8 +394,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             category_id: categoryId,
             gender_type: genderAge.gender,
             age_type: genderAge.age,
-            brand_id: brandOption?.brand?.id ?? null,
-            brand_aliases_id: brandOption?.alias?.id ?? null,
+            brand_id: brandResult.brand?.id ?? null,
+            brand_aliases_id: brandResult.alias?.id ?? null,
             item_condition_id: conditionId,
 
             attributes: {
