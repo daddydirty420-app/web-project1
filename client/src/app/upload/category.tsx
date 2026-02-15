@@ -59,9 +59,9 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                 "level1 ids:",
                 level1List.map((c) => [c.id, typeof c.id])
             );
-            
+
             const parent = level1List.find(
-                (cat) => cat.id === String(value.parent_id)
+                (cat) => Number(cat.id) === Number(value.parent_id)
             );
 
             console.log("parent:", parent);
