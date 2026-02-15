@@ -220,6 +220,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             v => v.image && v.image.name && !v.image.uploaded
         );
 
+        console.log("DB raw attributes:", item.attributes);
+
         console.log("incoming colorVariants", attributes.colorVariants);
         console.log("existingVariants", existingVariants);
         console.log("existingVariantMap", Array.from(existingVariantMap.entries()));
