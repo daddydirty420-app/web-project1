@@ -201,8 +201,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         }
 
         // attributes.image署名付きURL生成
-        const existingVariants = Array.isArray(item.attributes?.variants)
-        ? item.attributes.variants
+        const existingVariants = Array.isArray(item.attributes?.colorVariants)
+        ? item.attributes.colorVariants
         : [];
 
         const existingVariantMap = new Map<string, string>();
