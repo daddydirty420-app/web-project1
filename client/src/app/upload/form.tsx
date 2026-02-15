@@ -101,6 +101,7 @@ export const Form = ({
             _uiId: crypto.randomUUID(),
             color: v.color ?? null,
             image: null,
+            image_uploaded: true,
             sizes: (v.sizes ?? []).map((s) => ({
                 size: s.size ?? null,
                 inventory: s.inventory.current ?? 1,
@@ -195,8 +196,6 @@ export const Form = ({
     const removeItemImage = (index: number) => {
         setItemImages(prev => prev.filter((_, i) => i !== index));
     };
-
-    console.log(item);
 
     const upload = async () => {
         setLoading(true);
@@ -334,7 +333,8 @@ export const Form = ({
         setDraftLoading(true);
 
         const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
-            if (v.image) {
+            // 新規アップロード
+            if (v.image && !v.image_uploaded) {
                 return {
                     name: v.image.name,
                     type: v.image.type,
@@ -342,6 +342,7 @@ export const Form = ({
                 };
             }
 
+            // 既存画像
             const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
             if (existingUrl) {
                 return {

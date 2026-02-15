@@ -354,7 +354,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             category_id: categoryId,
             gender_type: genderAge.gender,
             age_type: genderAge.age,
-            brand_id: brandOption?.id ?? null,
+            brand_id: brandOption?.brand?.id ?? null,
+            brand_aliases_id: brandOption?.alias?.id ?? null,
             item_condition_id: conditionId,
 
             attributes: {

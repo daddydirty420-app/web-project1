@@ -15,6 +15,7 @@ export type AttributesValue = {
         _uiId: string;
         color: string | null;
         image: File | null;
+        image_uploaded: boolean;
         sizes: {
             size: string | null;
             inventory: number;
@@ -91,6 +92,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
         _uiId: crypto.randomUUID(),
         color: null,
         image: null,
+        image_uploaded: true,
         sizes: [],
     });
 
@@ -103,7 +105,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
         onChange({
             ...value,
             colorVariants: value.colorVariants.map((v) => 
-                v._uiId === uiId ? { ...v, image: file } : v
+                v._uiId === uiId ? { ...v, image: file, image_uploaded: false } : v
             ),
         });
     };
