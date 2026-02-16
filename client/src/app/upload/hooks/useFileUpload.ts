@@ -107,11 +107,11 @@ export const useFileUpload = () => {
                     !img.uploaded && img.file instanceof File
             );
 
-            const uploadPromises = itemImageSignedUrls.map((signedUrl, i) => {
+            const uploadPromises = itemImageSignedUrls.map(async (signedUrl, i) => {
                 const target = uploadItemImages[i];
 
-                if (!target) {
-                    console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
+                if (!target || target.uploaded || !(target.file instanceof File)) {
+                    console.warn(`画像${i + 1}枚目はアップロード対象ではありません。スキップします。`);
                     return Promise.resolve();
                 }
 
@@ -148,28 +148,31 @@ export const useFileUpload = () => {
             }
 
             const uploadTarget = attributesValue.colorVariants
-            .map((v, index) => ({
-                file: v.image instanceof File ? v.image : null,
-                index,
-            }))
-            .filter((v): v is { file: File; index: number } => v.file !== null);
+            .map(v => v.image)
+            .filter((img): img is File => img instanceof File);
+
+            const imageUrls = Object.values(signedUrlMap);
 
             try {
-                await Promise.all(uploadTarget.map(async ({ file, index }) => {
-                    const signedUrl = signedUrlMap[index];
-                    if (!signedUrl) return;
+                await Promise.all(imageUrls.map(async (signedUrl, i) => {
+                    const target = uploadTarget[i];
+
+                    if (!target) {
+                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
+                        return;
+                    }
 
                     const res = await fetch(signedUrl, {
                         method: "PUT",
                         headers: {
-                            "Content-Type": file.type,
+                            "Content-Type": target.type,
                         },
-                        body: file,
+                        body: target,
                     });
 
                     if (!res.ok) {
                         console.log(res.status, res.statusText);
-                        throw new Error(`属性画像 ${index + 1}枚目のアップロードに失敗`);
+                        throw new Error(`属性画像 ${i + 1}枚目のアップロードに失敗`);
                     }
                 }));
 
