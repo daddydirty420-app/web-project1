@@ -70,6 +70,11 @@ type BrandResult = {
     alias: InstanceType<typeof BrandAliases> | null;
 };
 
+type SignedUrlWithIndex = {
+    index: number;
+    url: string;
+};
+
 function toNullableNumber(value: any): number | null {
     if (value === null || value === "") return null;
     const num = Number(value);
@@ -157,27 +162,35 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         ? item.image_url
         : [];
         
-        let itemImageSignedUrls: string[] = [];
+        let itemImageSignedUrls: SignedUrlWithIndex[] = [];
         let newUploadedUrls: string[] = []; // 新規用
         let finalImageUrls: string[] = []; // DB保存用
         
         await Promise.all((itemImages ?? []).map(async (img, index) => {
             if (!img || img.uploaded) return;
-        
+
             const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
-        
+
             const itemImageCommand = new PutObjectCommand({
                 Bucket: bucket,
                 Key: key,
                 ContentType: img.type ?? "",
             });
-        
+
             const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
         
-            itemImageSignedUrls[index] = signedUrl;
+            itemImageSignedUrls[index] = {
+                index,
+                url: signedUrl
+            };
+
+            itemImageSignedUrls = itemImageSignedUrls.filter(
+                (v): v is SignedUrlWithIndex => v != null
+            );
+
             newUploadedUrls[index] = `${s3Domain}/${key}`;
         }));
-        
+
         (itemImages ?? []).forEach((img, i) => {
             if (!img) return;
         
