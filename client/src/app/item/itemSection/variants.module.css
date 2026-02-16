@@ -27,6 +27,7 @@
     margin: 0 auto;
     border-radius: 10px;
     aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
 .sold {
