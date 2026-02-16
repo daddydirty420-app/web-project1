@@ -155,6 +155,7 @@ export const useFileUpload = () => {
 
             try {
                 await Promise.all(imageUrls.map(async (signedUrl, i) => {
+                    console.log("index, signedUrl:", i, signedUrl);
                     const target = uploadTarget[i];
 
                     if (!target) {

@@ -201,6 +201,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             }
         });
 
+        console.log("finalImageUrls:", finalImageUrls);
+        console.log("signedUrls:", itemImageSignedUrls);
+
         if (finalImageUrls.length === 0) {
             res.status(400).json({ message: "商品画像が見つかりません" });
             return;
