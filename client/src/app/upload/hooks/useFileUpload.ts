@@ -172,6 +172,7 @@ export const useFileUpload = () => {
                     });
 
                     if (!res.ok) {
+                        console.log(res.status, res.statusText);
                         throw new Error(`属性画像 ${i + 1}枚目のアップロードに失敗`);
                     }
                 }));
