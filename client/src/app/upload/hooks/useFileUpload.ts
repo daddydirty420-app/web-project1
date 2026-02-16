@@ -148,36 +148,28 @@ export const useFileUpload = () => {
             }
 
             const uploadTarget = attributesValue.colorVariants
-            .map(v => v.image)
-            .filter((img): img is File => img instanceof File);
-
-            const imageUrls = Object.values(signedUrlMap);
+            .map((v, index) => ({
+                file: v.image instanceof File ? v.image : null,
+                index,
+            }))
+            .filter((v): v is { file: File; index: number } => v.file !== null);
 
             try {
-                await Promise.all(imageUrls.map(async (signedUrl, i) => {
-                    console.log("index, signedUrl:", i, signedUrl);
-                    const target = uploadTarget[i];
-
-                    if (!target) {
-                        console.warn(`画像${i + 1}枚目が見つかりません。スキップします。`);
-                        return;
-                    }
-
-                    console.log("before fetch", signedUrl);
+                await Promise.all(uploadTarget.map(async ({ file, index }) => {
+                    const signedUrl = signedUrlMap[index];
+                    if (!signedUrl) return;
 
                     const res = await fetch(signedUrl, {
                         method: "PUT",
                         headers: {
-                            "Content-Type": target.type,
+                            "Content-Type": file.type,
                         },
-                        body: target,
+                        body: file,
                     });
-
-                    console.log("after fetch");
 
                     if (!res.ok) {
                         console.log(res.status, res.statusText);
-                        throw new Error(`属性画像 ${i + 1}枚目のアップロードに失敗`);
+                        throw new Error(`属性画像 ${index + 1}枚目のアップロードに失敗`);
                     }
                 }));
 
