@@ -9,7 +9,7 @@ export class Video extends Model {
     declare thumbnail_url: string | null;
     declare title: string | null;
     declare summary: string | null;
-    declare duration: string | null;
+    declare duration: number | null;
     declare play_count: number;
     declare user_id: number | null;
     declare item_id: number | null;
@@ -45,7 +45,7 @@ Video.init(
         thumbnail_url: DataTypes.TEXT,
         title: DataTypes.STRING(255),
         summary: DataTypes.TEXT,
-        duration: DataTypes.STRING(255),
+        duration: DataTypes.INTEGER,
         play_count: {
             type: DataTypes.INTEGER,
             allowNull: false,

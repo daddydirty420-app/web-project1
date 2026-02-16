@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '@/styles/components-style/itemList.module.css';
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Items } from '@/types/itemListTypes';
+import { formatDuration } from "@/lib/formatDuration";
 
 type Res = {
     items: Items[] | null;
@@ -177,7 +178,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                     fill
                                     priority={false}
                                 />
-                                <div className={styles.duration}>{data.Video?.duration}</div>
+                                <div className={styles.duration}>{formatDuration(Number(data.Video?.duration))}</div>
                             </Link>
 
                             <div className={styles.itemData}>
