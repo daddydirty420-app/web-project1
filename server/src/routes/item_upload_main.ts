@@ -194,6 +194,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                 index,
                 url: signedUrl
             };
+
+            itemImageSignedUrls = itemImageSignedUrls.filter(
+                (v): v is SignedUrlWithIndex => v != null
+            );
             
             newUploadedUrls[index] = `${s3Domain}/${key}`;
         }));
