@@ -104,6 +104,7 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
             await videoData.update({ status: "failed" });
         }, 5 * 60 * 1000); // 5分
 
+        // 再生時間
         const ffprobe = spawn("ffprobe", [
             "-v", "error",
             "-show_entries", "format=duration",
@@ -111,12 +112,23 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
             originalFilePath
         ]);
 
-        let duration = "";
+        let durationOutput = "";
 
-        ffmpeg.stderr.on("data", (data) => {
-            duration += data.toString();
-            console.error(`ffmpeg: ${data}`);
+        ffprobe.stdout.on("data", (data) => {
+            durationOutput += data.toString();
         });
+
+        await new Promise<void>((resolve, reject) => {
+            ffprobe.on("close", (code) => {
+                if (code !== 0) {
+                    reject(new Error("ffprobe failed"));
+                } else {
+                    resolve();
+                }
+            });
+        });
+
+        const seconds = Math.floor(parseFloat(durationOutput));
 
         ffmpeg.on("close", async (code) => {
             clearTimeout(timeout);
@@ -154,8 +166,6 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
                 }
 
                 const convertedUrl = `${s3Domain}/video/converted/${currentUserId}/${videoId}/${now}_index.m3u8`;
-
-                const seconds = Math.floor(parseFloat(duration));
 
                 await videoData.update({
                     status: 'done',
