@@ -34,6 +34,7 @@ type Props = {
 };
 
 type ItemImage = {
+    id: string;
     uploaded: boolean;
     file: File | null;
     preview: string;
@@ -155,6 +156,7 @@ export const Form = ({
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
+        id: crypto.randomUUID(),
         file: null,
         preview: url,
         uploaded: true,
@@ -185,6 +187,7 @@ export const Form = ({
 
     const addItemImage = (files: FileList) => {
         const newImages = Array.from(files).slice(0, 10 - itemImages.length).map((file) => ({
+            id: crypto.randomUUID(),
             file,
             preview: URL.createObjectURL(file),
             uploaded: false,

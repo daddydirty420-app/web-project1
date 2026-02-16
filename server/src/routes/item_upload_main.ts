@@ -190,10 +190,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
             const signedUrl = await getSignedUrl(s3, itemImageCommand, { expiresIn: 60 });
 
-            itemImageSignedUrls.push({
+            itemImageSignedUrls[index] = {
                 index,
                 url: signedUrl
-            });
+            };
             
             newUploadedUrls[index] = `${s3Domain}/${key}`;
         }));

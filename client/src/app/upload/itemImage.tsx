@@ -7,6 +7,7 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { InputTitle } from "@/components/inputForm";
 
 export type ItemImageValue = {
+    id: string;
     file: File | null;
     preview: string;
     uploaded: boolean;
