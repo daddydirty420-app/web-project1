@@ -3,6 +3,11 @@ import toast from "react-hot-toast";
 import { ItemImageValue } from "../itemImage";
 import { AttributesValue } from "../attributes";
 
+type SignedUrlItem = {
+    index: number;
+    url: string;
+}
+
 type VideoArgs = {
     accessToken: string;
     videoId?: string | number;
@@ -17,7 +22,7 @@ type ThumbnailArgs = {
 
 type ItemImageArgs = {
     itemImageFiles: ItemImageValue[];
-    itemImageSignedUrls: string[];
+    itemImageSignedUrls: SignedUrlItem[];
 };
 
 type AttributesImageArgs = {
@@ -102,34 +107,28 @@ export const useFileUpload = () => {
                 return true;
             }
 
-            const uploadItemImages = itemImageFiles.filter(
-                (img): img is ItemImageValue & { file: File } =>
-                    !img.uploaded && img.file instanceof File
-            );
-
-            const uploadPromises = itemImageSignedUrls.map(async (signedUrl, i) => {
-                const target = uploadItemImages[i];
-
-                if (!target || target.uploaded || !(target.file instanceof File)) {
-                    console.warn(`画像${i + 1}枚目はアップロード対象ではありません。スキップします。`);
-                    return Promise.resolve();
-                }
-
-                return fetch(signedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": target.file.type,
-                    },
-                    body: target.file,
-                }).then(res => {
-                    if (!res.ok) {
-                        throw new Error(`画像${i + 1}枚目のアップロードに失敗`);
-                    }
-                });
-            });
-
             try {
-                await Promise.all(uploadPromises);
+                await Promise.all(itemImageSignedUrls.map(async ({ index, url }) => {
+                    const target = itemImageFiles[index];
+
+                    if (!target || target.uploaded || !(target.file instanceof File)) {
+                        return;
+                    }
+
+                    const res = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": target.file.type,
+                        },
+                        body: target.file,
+                    });
+
+                    if (!res.ok) {
+                        console.log(res.status, res.statusText);
+                        throw new Error(`画像${index + 1}枚目のアップロードに失敗`);
+                    }
+                }));
+
                 return true;
             } catch (err) {
                 console.error(err);
@@ -171,7 +170,6 @@ export const useFileUpload = () => {
                     });
 
                     if (!res.ok) {
-                        console.log(res.status, res.statusText);
                         throw new Error(`属性画像 ${i + 1}枚目のアップロードに失敗`);
                     }
                 }));
