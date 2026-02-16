@@ -163,6 +163,8 @@ export const useFileUpload = () => {
                         return;
                     }
 
+                    console.log("before fetch", signedUrl);
+
                     const res = await fetch(signedUrl, {
                         method: "PUT",
                         headers: {
@@ -170,6 +172,8 @@ export const useFileUpload = () => {
                         },
                         body: target,
                     });
+
+                    console.log("after fetch");
 
                     if (!res.ok) {
                         console.log(res.status, res.statusText);
