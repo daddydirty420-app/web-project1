@@ -22,7 +22,7 @@ export type User = {
 export type Video = {
     thumbnail_url: string;
     title: string;
-    duration: string;
+    duration: number;
 };
 
 export type Sale = {

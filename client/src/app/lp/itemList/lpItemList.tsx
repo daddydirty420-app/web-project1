@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { Items } from "@/types/itemListTypes";
 import { refreshToken } from "@/lib/refreshToken";
+import { formatDuration } from "@/lib/formatDuration";
 
 type Res = {
     items: Items[];
@@ -177,7 +178,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                                     alt={data.Video?.title ?? '動画サムネイル'}
                                     fill
                                 />
-                                <div className={styles.duration}>{data.Video?.duration}</div>
+                                <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
                             </Link>
 
                             <div className={styles.itemData}>

@@ -178,7 +178,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                     fill
                                     priority={false}
                                 />
-                                <div className={styles.duration}>{formatDuration(Number(data.Video?.duration))}</div>
+                                <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
                             </Link>
 
                             <div className={styles.itemData}>
