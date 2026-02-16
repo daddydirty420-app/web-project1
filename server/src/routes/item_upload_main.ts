@@ -172,6 +172,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         let finalImageUrls: string[] = []; // DB保存用
 
         await Promise.all((itemImages ?? []).map(async (img, index) => {
+            console.log("index, uploaded:", index, img.uploaded);
             if (!img || img.uploaded) return;
 
             const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
