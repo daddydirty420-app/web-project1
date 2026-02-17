@@ -140,6 +140,23 @@
     color: var(--alert);
 }
 
+.materialColumn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.materialRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.materialBar {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
 @media (min-width: 768px) {
     .itemSection {
         margin-top: 0;
