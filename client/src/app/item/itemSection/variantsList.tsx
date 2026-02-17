@@ -1,3 +1,5 @@
+"use state"
+
 import styles from "./variants.module.css";
 import Image from "next/image";
 import { Item } from "../itemPageTypes";
