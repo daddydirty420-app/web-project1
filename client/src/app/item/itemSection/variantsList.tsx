@@ -54,7 +54,7 @@ export const VariantsList = ({ item }: Props) => {
                         <div className={styles.meta}>
                             {variant.color && (
                                 <p className={styles.metaText}>
-                                    <span>カラー</span>
+                                    <span className={styles.colorLabel}>カラー</span>
                                     {variant.color}
                                     {variant.sizes && variant.sizes?.length > 0 && (
                                         <span className={styles.expandIcon}>▼</span>

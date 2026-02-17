@@ -91,7 +91,7 @@
     line-height: 1.4;
 }
 
-.metaText span {
+.colorLabel {
     font-size: 11px;
     color: var(--text-muted);
     margin-right: 4px;
@@ -99,7 +99,7 @@
 
 .expandIcon {
     font-size: 10px;
-    margin-left: 4px;
+    margin-left: 6px;
     opacity: 0.6;
 }
 
