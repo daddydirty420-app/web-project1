@@ -101,6 +101,12 @@
     font-size: 10px;
     margin-left: 6px;
     opacity: 0.6;
+    transition: transform 0.25s ease;
+}
+.variantCard.active .expandIcon {
+    transform: rotate(180deg);
+}.variantCard:hover .expandIcon {
+    transform: rotate(180deg);
 }
 
 /* サイズ拡張ビュー */
