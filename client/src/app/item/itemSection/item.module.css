@@ -157,6 +157,29 @@
     color: var(--text-muted);
 }
 
+.typeTags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+}
+
+.typeTag {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--bg-subtle);
+    color: var(--theme-str);
+    border: 1px solid var(--gray-line-mid);
+}
+
+.kidsTag {
+    background: rgba(234, 179, 8, 0.10);
+    color: var(--theme-str);
+    border: 1px solid rgba(234, 179, 8, 0.25);
+}
+
 @media (min-width: 768px) {
     .itemSection {
         margin-top: 0;

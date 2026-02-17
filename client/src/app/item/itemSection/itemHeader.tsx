@@ -50,6 +50,26 @@ export const ItemHeader = ({ item, page }: Props) => {
                     </>
                 )}
             </div>
+
+            {(
+                ["men", "women", "unisex"].includes(item.gender_type) ||
+                item.age_type === "kids"
+            ) && (
+                <div className={styles.typeTagsRow}>
+                    {item.gender_type === "men" && (
+                        <span className={styles.typeTag}>メンズ</span>
+                    )}
+                    {item.gender_type === "women" && (
+                        <span className={styles.typeTag}>レディース</span>
+                    )}
+                    {item.gender_type === "unisex" && (
+                        <span className={styles.typeTag}>ユニセックス</span>
+                    )}
+                    {item.age_type === "kids" && (
+                        <span className={`${styles.typeTag} ${styles.kidsTag}`}>キッズ</span>
+                    )}
+                </div>
+            )}
         </div>
     );
 };
