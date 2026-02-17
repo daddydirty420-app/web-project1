@@ -1,4 +1,4 @@
-"use state"
+"use client"
 
 import styles from "./variants.module.css";
 import Image from "next/image";
