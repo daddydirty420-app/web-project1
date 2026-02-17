@@ -59,7 +59,7 @@ export const VariantsList = ({ item }: Props) => {
                             )}
 
                             {variant.sizes && variant.sizes?.length > 0 && (
-                                <div className={styles.sizePopover}>
+                                <div className={styles.sizeExpand}>
                                     <div className={styles.sizeGrid}>
                                         {variant.sizes?.map((size, i) => {
                                             if (!size) return;

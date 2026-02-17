@@ -14,7 +14,10 @@
     width: 140px;
     flex-shrink: 0;
     text-align: center;
-    position: relative;
+    transition: 0.25s ease;
+}
+.variantCard:hover {
+    transform: translateY(-2px);
 }
 
 .imageWrapper {
@@ -94,59 +97,52 @@
     margin-right: 4px;
 }
 
-/* サイズポップアップ */
-.sizePopover {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    bottom: -8px;
-    background: #fff;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+/* サイズ拡張ビュー */
+.sizeExpand {
+    overflow: hidden;
+    max-height: 0;
     opacity: 0;
-    pointer-events: none;
-    transition: 0.25s ease;
-    min-width: 120px;
-    max-width: 180px;
-    white-space: normal;
-    z-index: 10
+    transform: translateY(-4px);
+    transition: 
+        max-height 0.35s ease,
+        opacity 0.25s ease,
+        transform 0.25s ease;
 }
-.variantCard:hover .sizePopover,
-.variantCard:focus-within .sizePopover,
-.variantCard:focus .sizePopover {
+.variantCard:hover .sizeExpand,
+.variantCard:focus-within .sizeExpand {
+    max-height: 200px;
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
-    pointer-events: auto;
+    transform: translateY(6px);
 }
 
 /* sizes 全体：縦並び */
 .sizeGrid {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
+    padding-top: 8px;
 }
 
 /* サイズ表記 */
 .sizeChip {
     font-size: 12px;
     font-weight: 600;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 999px;
-    background: var(--gray-bg);
+    background: var(--gray-background);
     transition: 0.2s ease;
+    letter-spacing: 0.02em;
 }
 .sizeChip:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
 }
 
 /* 状態 */
 .soldChip {
     background: var(--alert);
     color: #fff;
-    opacity: 0.8;
+    opacity: 0.75;
 }
 
 .lowChip {
