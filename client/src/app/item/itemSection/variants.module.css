@@ -114,8 +114,9 @@
         opacity 0.25s ease,
         transform 0.25s ease;
 }
-.variantCard.active .sizeExpand {
-    max-height: 200px;
+.variantCard.active .sizeExpand,
+.variantCard:hover .sizeExpand {
+    max-height: 500px;
     opacity: 1;
     transform: translateY(6px);
 }
