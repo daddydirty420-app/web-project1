@@ -157,7 +157,7 @@
     color: var(--text-muted);
 }
 
-.typeTags {
+.typeTagsRow {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
