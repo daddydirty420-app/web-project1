@@ -98,6 +98,7 @@
 }
 
 .expandIcon {
+    display: inline-block;
     font-size: 10px;
     margin-left: 6px;
     opacity: 0.6;
@@ -122,10 +123,9 @@
     transform: translateY(6px);
 }
 
-.variantCard.active .expandIcon {
-    transform: rotate(180deg);
-}.variantCard:hover .expandIcon {
-    transform: rotate(180deg);
+.variantCard.active .expandIcon,
+.variantCard:hover .expandIcon {
+    transform: rotate(180deg) translateY(-1px);
 }
 
 /* sizes 全体：縦並び */
