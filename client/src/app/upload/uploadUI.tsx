@@ -8,11 +8,9 @@ type Props = {
 
 export default function UploadUI({ title, children }: Props) {
     return (
-        <>
         <Container>
             <TitleAndBack title={title} />
             {children}
         </Container>
-        </>
     );
 };
