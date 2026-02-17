@@ -1,12 +1,15 @@
 import styles from "./variants.module.css";
 import Image from "next/image";
 import { Item } from "../itemPageTypes";
+import { useState } from "react";
 
 type Props = {
     item: Item;
 };
 
 export const VariantsList = ({ item }: Props) => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
     return (
         <section className={styles.variantList}>
             {item.attributes.colorVariants?.map((variant, i) => {
@@ -28,8 +31,13 @@ export const VariantsList = ({ item }: Props) => {
                 return (
                     <div
                     key={i}
-                    className={styles.variantCard}
-                    tabIndex={0}
+                    className={`
+                        ${styles.variantCard}
+                        ${openIndex === i ? styles.active : ""}
+                    `}
+                    onClick={() =>
+                        setOpenIndex(openIndex === i ? null : i)
+                    }
                     >
                         <div className={styles.imageWrapper}>
                             <Image
