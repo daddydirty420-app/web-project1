@@ -13,6 +13,7 @@
     width: 140px;
     flex-shrink: 0;
     text-align: center;
+    position: relative;
 }
 
 .imageWrapper {
@@ -92,51 +93,59 @@
     margin-right: 4px;
 }
 
+/* サイズポップアップ */
+.sizePopover {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    bottom: -8px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+    min-width: 120px;
+    z-index: 10
+}
+.variantCard:hover .sizePopover,
+.variantCard:focus-within .sizePopover,
+.variantCard:focus .sizePopover {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
 /* sizes 全体：縦並び */
-.sizesList {
+.sizeGrid {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 6px;
-    margin-top: 6px;
+    justify-content: center;
 }
 
-/* 1行（サイズ＋状態）を横並び */
-.sizeRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* サイズ表記 */
+.sizeChip {
     font-size: 12px;
-}
-
-/* サイズ名 */
-.sizeLabel {
     font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--gray-bg);
+    transition: 0.2s ease;
+}
+.sizeChip:hover {
+    transform: scale(1.05);
 }
 
-/* バッジをまとめる箱 */
-.stockBadge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* 小さめ SOLD バッジ */
-.soldMini {
-    font-size: 10px;
-    font-weight: 700;
+/* 状態 */
+.soldChip {
+    background: var(--alert);
     color: #fff;
-    background-color: var(--alert);
-    border-radius: 4px;
-    padding: 1px 5px;
+    opacity: 0.8;
 }
 
-/* 小さめ 残りわずか */
-.lowMini {
-    font-size: 10px;
-    font-weight: 700;
+.lowChip {
+    background: var(--warning);
     color: #fff;
-    background-color: var(--warning);
-    border-radius: 4px;
-    padding: 1px 5px;
-    white-space: nowrap;
 }

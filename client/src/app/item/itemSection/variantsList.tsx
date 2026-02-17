@@ -26,7 +26,11 @@ export const VariantsList = ({ item }: Props) => {
                 currentInventory / initialInventory <= 0.2;
 
                 return (
-                    <div key={i} className={styles.variantCard}>
+                    <div
+                    key={i}
+                    className={styles.variantCard}
+                    tabIndex={0}
+                    >
                         <div className={styles.imageWrapper}>
                             <Image
                             src={variant.image_url ?? ""}
@@ -55,32 +59,29 @@ export const VariantsList = ({ item }: Props) => {
                             )}
 
                             {variant.sizes && variant.sizes?.length > 0 && (
-                                <div className={styles.sizeList}>
-                                    {variant.sizes?.map((size, i) => {
-                                        if (!size) return;
+                                <div className={styles.sizePopover}>
+                                    <div className={styles.sizeGrid}>
+                                        {variant.sizes?.map((size, i) => {
+                                            if (!size) return;
 
-                                        const current = size.inventory.current;
-                                        const soldout = current === 0;
-                                        const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
+                                            const current = size.inventory.current;
+                                            const soldout = current === 0;
+                                            const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
 
-                                        return (
-                                            <div key={i} className={styles.sizeRow}>
-                                                <p className={styles.metaText}>
-                                                    <span className={styles.sizeLabel}>{size.size}</span>
-                                                </p>
-
-                                                <div className={styles.stockBadge}>
-                                                    {soldout && (
-                                                        <span className={styles.soldMini}>SOLD OUT</span>
-                                                    )}
-
-                                                    {lowStock && (
-                                                        <span className={styles.lowMini}>残りわずか</span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
+                                            return (
+                                                <span
+                                                key={i}
+                                                className={`
+                                                    ${styles.sizeChip}
+                                                    ${soldout ? styles.soldChip : ""}
+                                                    ${lowStock ? styles.lowChip : ""}
+                                                `}
+                                                >
+                                                    {size.size}
+                                                </span>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             )}
                         </div>
