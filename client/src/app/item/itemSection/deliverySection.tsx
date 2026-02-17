@@ -8,6 +8,10 @@ type Props = {
 export const DeliverySection = ({ item }: Props) => {
     const inventory = item.attributes.inventory;
     const materials = item.attributes.materials;
+    const materialTotalRatio = materials?.reduce(
+        (sum, m) => sum + (m.ratio ?? 0),
+        0
+    );
 
     return (
         <section className={styles.deliverySection}>
@@ -50,7 +54,7 @@ export const DeliverySection = ({ item }: Props) => {
                 </div>
             )}
 
-            {materials && materials.length > 0 && (
+            {materials && materials.length > 0 && materialTotalRatio === 100 && (
                 <div className={styles.infoRow}>
                     <span className={styles.label}>素材</span>
 
