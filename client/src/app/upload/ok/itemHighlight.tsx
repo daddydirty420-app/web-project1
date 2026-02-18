@@ -23,6 +23,7 @@ export const ItemHighlight = ({ itemId, item }: Props) => {
                 alt="商品画像1枚目"
                 width={80}
                 height={80}
+                className={styles.image}
                 />
 
                 <div className={styles.nameType}>
