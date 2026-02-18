@@ -108,6 +108,7 @@
     justify-content: center;
     width: 220px;
     height: 48px;
+    margin: 2rem auto 5rem;
     font-size: 15px;
     font-weight: 600;
     color: #fff;
@@ -115,10 +116,11 @@
     background-color: var(--action);
     border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: all 0.15s ease;
 }
 .button:hover {
     background-color: var(--action-hover);
+    transform: translateY(1px);
 }
 
 @media (min-width: 768px) {
