@@ -64,6 +64,7 @@ export type Video = {
 export type Item = {
     id: string;
     image_url: string[];
+    first_image_url: string;
     name: string;
     detail: string;
     seller_id: string | number;

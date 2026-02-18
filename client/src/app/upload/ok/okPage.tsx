@@ -1,18 +1,21 @@
 "use client"
 
 import { Item } from "../types/type";
+import { ItemHighlight } from "./itemHighlight";
 import OkUI from "./okUI";
 
 type Props = {
     itemId: string;
     item: Item;
-    hasReccomend: boolean;
+    hasRecommend: boolean;
 };
 
-export const OkPage = ({ itemId, item, hasReccomend }: Props) => {
+export const OkPage = ({ itemId, item, hasRecommend }: Props) => {
     return (
         <OkUI title="出品が完了しました">
-            {hasReccomend}
+            <ItemHighlight itemId={itemId} item={item} />
+
+            {!hasRecommend}
         </OkUI>
     );
 };

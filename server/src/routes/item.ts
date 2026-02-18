@@ -47,11 +47,11 @@ router.post('/delete-all', authenticateToken, async (req: Request, res: Response
 });
 
 router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const currentUserId = req.user!.id;
+    const userId = req.user!.id;
 
+    try {
         const item = await Item.findByPk(req.params.id, {
-            attributes: ['id', 'name', 'price', "attributes", 'first_image_url'],
+            attributes: ['id', 'name', 'price', "attributes", 'first_image_url', "gender_type", "age_type", "seller_id", "status"],
         });
 
         if (!item) {
@@ -59,9 +59,8 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
             return;
         }
 
-        const currentUserRecommend = await User.findOne({
+        const user = await User.findByPk(userId, {
             attributes: ['id'],
-            where: { id: currentUserId },
             include: [
                 {
                     model: RecommendMonth,
@@ -70,9 +69,11 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
             ],
         });
 
+        const hasRecommend = !!user.RecommendMonth;
+
         res.json({
             item,
-            currentUserRecommend
+            hasRecommend
         });
     } catch (err) {
         console.error(err);
