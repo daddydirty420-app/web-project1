@@ -86,6 +86,25 @@
     font-weight: 700;
 }
 
+.button {
+    display: flex;
+    align-items: center;
+    padding-bottom: center;
+    width: 220px;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.02em;
+    background-color: var(--action);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.button:hover {
+    background-color: var(--action-hover);
+}
+
 @media (min-width: 768px) {
     .itemHighlight {
         width: 100%;

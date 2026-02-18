@@ -1,6 +1,7 @@
 "use client"
 
 import { Item } from "../types/type";
+import { Button } from "./button";
 import { ItemHighlight } from "./itemHighlight";
 import { OkText } from "./okText";
 import OkUI from "./okUI";
@@ -18,6 +19,8 @@ export const OkPage = ({ itemId, item, hasRecommend }: Props) => {
             <OkText name={item.name ?? ""} />
 
             {!hasRecommend}
+
+            <Button itemId={itemId} />
         </OkUI>
     );
 };
