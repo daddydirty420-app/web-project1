@@ -74,12 +74,28 @@
 .okTextDiv {
     width: 92%;
     max-width: 480px;
-    margin: 1.5rem auto;
+    margin: 2rem auto;
+    padding: 20px;
+    text-align: center;
+    background: var(--bg-subtle);
+    border-radius: 16px;
+}
+
+.icon {
+    font-size: 28px;
+    color: var(--link);
+    margin-bottom: 10px;
 }
 
 .okText {
-    font-size: var(--mid-text);
+    font-size: 18px;
     letter-spacing: 0.02;
+}
+
+.subText {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
 }
 
 .bold {
