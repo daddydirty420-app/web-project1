@@ -71,6 +71,21 @@
     white-space: nowrap;
 }
 
+.okTextDiv {
+    width: 92%;
+    max-width: 480px;
+    margin: 1.5rem auto;
+}
+
+.okText {
+    font-size: var(--mid-text);
+    letter-spacing: 0.02;
+}
+
+.bold {
+    font-weight: 700;
+}
+
 @media (min-width: 768px) {
     .itemHighlight {
         width: 100%;
