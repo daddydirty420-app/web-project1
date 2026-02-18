@@ -79,6 +79,10 @@
         border-radius: 14px;
     }
 
+    .imageName {
+        gap: 14px;
+    }
+
     .image {
         width: 80px;
         height: 80px;
