@@ -10,7 +10,7 @@ export const OkText = ({ name }: Props) => {
             <div className={styles.icon}>✓</div>
             <p className={styles.okText}>
                 <span className={styles.bold}>{name}</span>
-                の出品が完了しました。
+                の出品が完了しました！
             </p>
             <p className={styles.subText}>ただいまより商品の販売が開始されます。</p>
         </div>
