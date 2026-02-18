@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 2.5rem auto 0;
     padding: 10px 12px;
     background-color: var(--bg-subtle);
     border-radius: 10px;
@@ -72,7 +73,6 @@
     .itemHighlight {
         width: 100%;
         max-width: 900px;
-        margin: 0 auto;
         padding: 14px 18px;
         border-radius: 14px;
     }
