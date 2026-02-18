@@ -8,7 +8,7 @@
     cursor: pointer;
     transition: all 0.15s ease;
 }
-.itemHighlight:active {
+.itemHighlight:hover {
     background: transparent;
     border: 1px solid var(--gray-line);
     transform: translateY(1px);
