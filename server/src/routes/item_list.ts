@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Op, literal, WhereOptions } from "sequelize";
+import { Op, literal, WhereOptions, Sequelize } from "sequelize";
 import { Item, User, Video, Sale, Follow, Search } from "../models/index.js";
 
 const router = Router();
@@ -714,6 +714,38 @@ router.get('/uploaded-list-selling', authenticateToken, async (req: Request, res
         }
 
         res.json({ itemList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+router.get('/recommend-item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const currentUserId = req.user?.id ?? null;
+
+        const data = await Item.findAll({
+            attributes: ['id', 'name', 'price', 'first_image_url'],
+            where: {
+                status: "active",
+                seller_id: { [Op.ne]: currentUserId },
+                recommend: true,
+            },
+            limit: 20,
+            order: [['sort_number', 'DESC']],
+            include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                },
+            ],
+        });
+
+        if (!data) {
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

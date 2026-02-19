@@ -240,7 +240,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 type="text"
                 value={sei || ""}
                 onChange={setSei}
-                placeholder="炭火"
+                placeholder="山田"
                 hissu
                 />
                 <InputStr
@@ -248,7 +248,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 type="text"
                 value={mei || ""}
                 onChange={setMei}
-                placeholder="焼太郎"
+                placeholder="太郎"
                 hissu
                 />
             </div>
@@ -259,7 +259,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 type="text"
                 value={seiKana || ""}
                 onChange={setSeiKana}
-                placeholder="スミビ"
+                placeholder="ヤマダ"
                 hissu
                 />
                 <InputStr
@@ -267,7 +267,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 type="text"
                 value={meiKana || ""}
                 onChange={setMeiKana}
-                placeholder="ヤキタロウ"
+                placeholder="タロウ"
                 hissu
                 />
             </div>

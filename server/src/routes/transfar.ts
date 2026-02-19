@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Transfar, BankAccount, AccountTypeOption, User, RecommendMonth, UriagekinHistory, Notification, PointsHistory, Journal, PointConversionLogs } from "../models/index.js";
+import { Transfar, BankAccount, AccountTypeOption, User, UriagekinHistory, Notification, PointsHistory, Journal, PointConversionLogs } from "../models/index.js";
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -39,7 +39,6 @@ router.post("/request-create", authenticateToken, async (req: Request, res: Resp
     try {
         const user = await User.findByPk(userId, {
             include: [
-                { model: RecommendMonth },
                 { model: UriagekinHistory },
             ],
         });
@@ -138,7 +137,6 @@ router.post("/points-create", authenticateToken, async (req: Request, res: Respo
     try {
         const user = await User.findByPk(userId, {
             include: [
-                { model: RecommendMonth },
                 { model: UriagekinHistory },
             ],
         });

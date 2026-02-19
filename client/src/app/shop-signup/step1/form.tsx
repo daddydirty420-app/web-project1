@@ -359,7 +359,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={repSei || ""}
                 onChange={setRepSei}
-                placeholder="炭火"
+                placeholder="山田"
                 hissu
                 />
                 <InputStr
@@ -367,7 +367,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={repMei || ""}
                 onChange={setRepMei}
-                placeholder="焼太郎"
+                placeholder="太郎"
                 hissu
                 />
             </div>
@@ -378,7 +378,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={repSeiKana || ""}
                 onChange={setRepSeiKana}
-                placeholder="スミビ"
+                placeholder="ヤマダ"
                 hissu
                 />
                 <InputStr
@@ -386,7 +386,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={repMeiKana || ""}
                 onChange={setRepMeiKana}
-                placeholder="ヤキタロウ"
+                placeholder="タロウ"
                 hissu
                 />
             </div>
@@ -399,7 +399,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={conSei || ""}
                 onChange={setConSei}
-                placeholder="炭火"
+                placeholder="山田"
                 hissu
                 />
                 <InputStr
@@ -407,7 +407,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={conMei || ""}
                 onChange={setConMei}
-                placeholder="焼太郎"
+                placeholder="太郎"
                 hissu
                 />
             </div>
@@ -418,7 +418,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={conSeiKana || ""}
                 onChange={setConSeiKana}
-                placeholder="スミビ"
+                placeholder="ヤマダ"
                 hissu
                 />
                 <InputStr
@@ -426,7 +426,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={conMeiKana || ""}
                 onChange={setConMeiKana}
-                placeholder="ヤキタロウ"
+                placeholder="タロウ"
                 hissu
                 />
             </div>

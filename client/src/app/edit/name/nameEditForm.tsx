@@ -224,7 +224,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 type="text"
                 value={seiValue}
                 onChange={setSeiValue}
-                placeholder="炭火"
+                placeholder="山田"
                 hissu
                 />
                 <InputStr
@@ -232,7 +232,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 type="text"
                 value={meiValue}
                 onChange={setMeiValue}
-                placeholder="焼太郎"
+                placeholder="太郎"
                 hissu
                 />
             </div>
@@ -243,7 +243,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 type="text"
                 value={seiKanaValue}
                 onChange={setSeiKanaValue}
-                placeholder="スミビ"
+                placeholder="ヤマダ"
                 hissu
                 />
                 <InputStr
@@ -251,7 +251,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 type="text"
                 value={meiKanaValue}
                 onChange={setMeiKanaValue}
-                placeholder="ヤキタロウ"
+                placeholder="タロウ"
                 hissu
                 />
             </div>

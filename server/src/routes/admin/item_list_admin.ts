@@ -63,4 +63,37 @@ router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Respo
     }
 });
 
+router.get('/recommend-item-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+    try {
+        const itemList = await Item.findAll({
+            attributes: ['id', 'name', "status", 'uploaded_at', 'first_image_url'],
+            where: {
+                status: "active",
+                recommend: true,
+            },
+            order: [['Item.uploaded_at', 'DESC']],
+            include: [
+                {
+                    model: Video,
+                    attributes: ['id', 'video_url', 'thumbnail_url', 'title'],
+                },
+                {
+                    model: User,
+                    attributes: ['id', 'user_name', 'email'],
+                },
+            ],
+        });
+
+        if (!itemList) {
+            res.status(404).json({ message: 'アイテムが見つかりません。' });
+            return;
+        }
+
+        res.status(200).json({ itemList });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
 export default router;

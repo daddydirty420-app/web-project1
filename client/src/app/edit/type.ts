@@ -86,7 +86,6 @@ export type ShopInfo = {
     permit_url: string[];
     auto_trans: boolean;
     open_info: boolean;
-    recommend: boolean;
     ComOrFreeOption?: ComOrFreeOption | null;
     Address?: Address | null;
     RepresentativeName?: Name | null;

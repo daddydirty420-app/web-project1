@@ -5,7 +5,7 @@ import fs from "fs";
 import { spawn } from "child_process";
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, RecommendItem, RecommendMonth, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -235,15 +235,6 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         const item = await Item.findByPk(itemId, {
             include: [
                 { model: Video },
-                {
-                    model: User,
-                    include: [
-                        {
-                            model: RecommendMonth,
-                            required: false,
-                        },
-                    ],
-                },
             ],
         });
         if (!item) {
@@ -271,16 +262,6 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
 
         if (item.User?.penalty_points <= 5) {
             sort = sort + 5000;
-        }
-
-        if (item.User?.RecommendMonth) {
-            sort = sort * 5;
-
-            await RecommendItem.create({
-                recommend_month: true,
-                item_id: itemId,
-                user_id: currentUserId,
-            }, { transaction: t });
         }
 
         await item.update({

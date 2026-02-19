@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Form } from "../form";
 import { cookies } from "next/headers";
 
@@ -25,25 +25,9 @@ export default async function Page({ params }: Props) {
 
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup4/${id}`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
-    }
-
     return (
         <Form
         shopId={id}
-        recommend={data.hasRecommend}
         />
     );
 };

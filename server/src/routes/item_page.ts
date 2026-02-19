@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, RecommendItem, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
+import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
 import itemCopyUpload from "../services/itemCopyUpload.js";
 
@@ -17,9 +17,7 @@ router.patch('/access-normal/:id', authenticateOptional, async (req: Request, re
     const currentUserId = req.user?.id ?? null;
 
     try {
-        const item = await Item.findByPk(itemId, {
-            include: [{ model: RecommendItem }],
-        });
+        const item = await Item.findByPk(itemId);
         if (!item) {
             res.status(404).json({ message: '商品が見つかりません。' });
             return;
@@ -49,7 +47,7 @@ router.patch('/access-normal/:id', authenticateOptional, async (req: Request, re
                 item.sort_number = Number(item.sort_number) + 5;
                 item.sort_buzz_number = Number(item.sort_buzz_number) + 30;
                 
-                if (item.RecommendItem) {
+                if (item.recommend) {
                     item.sort_number = Number(item.sort_number) + 5;
                     item.sort_buzz_number = Number(item.sort_buzz_number) + 30;
                 }
@@ -490,10 +488,6 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
                         { model: ShippingServiceOption },
                         { model: TodouhukenOption },
                     ],
-                },
-                {
-                    model: RecommendItem,
-                    attributes: ['id'],
                 },
                 {
                     model: Categories,

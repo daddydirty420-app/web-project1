@@ -44,7 +44,6 @@ export default async function Page({ params }: Props) {
 
     const data = await res.json();
     const item = data.item;
-    const hasReccomend = data.hasRecommend;
 
     const userId = String(session?.user.id).trim();
     const sellerId = String(item.seller_id).trim();

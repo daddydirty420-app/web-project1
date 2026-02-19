@@ -8,7 +8,6 @@ import Cart from "./cart.js";
 import GoodItem from "./good_item.js";
 import Video from "./video.js";
 import Sale from "./sale.js";
-import RecommendItem from "./recommend_item.js";
 import ItemReport from "./item_report.js";
 import Categories from "./categories.js";
 import Brands from "./brands.js";
@@ -42,6 +41,7 @@ export class Item extends Model {
     declare brand_id: number | null;
     declare brand_aliases_id: number | null;
     declare attributes: ItemAttributes;
+    declare recommend: boolean | null;
 
     static associate() {
         Item.belongsTo(User, {
@@ -73,9 +73,6 @@ export class Item extends Model {
         Item.hasOne(Sale, {
             foreignKey: 'item_id'
         });
-        Item.hasOne(RecommendItem, {
-            foreignKey: 'item_id'
-        });
         Item.hasMany(ItemReport, {
             foreignKey: 'item_id'
         });
@@ -91,7 +88,6 @@ export class Item extends Model {
         GoodItem: Association<Item, GoodItem>;
         Video: Association<Item, Video>;
         Sale: Association<Item, Sale>;
-        RecommendItem: Association<Item, RecommendItem>;
         Categories: Association<Item, Categories>;
         ItemReport: Association<Item, ItemReport>;
         Brand: Association<Item, Brands>;
@@ -164,6 +160,10 @@ Item.init(
             type: DataTypes.JSONB,
             allowNull: false,
             defaultValue: {},
+        },
+        recommend: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
     },
     {

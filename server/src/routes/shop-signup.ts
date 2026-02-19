@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User, RecommendMonth } from "../models/index.js";
+import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
 
 const router = Router();
 
@@ -140,29 +140,12 @@ router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.get("/signup4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const user = await User.findByPk(req.user!.id, {
-            include: [
-                { model: RecommendMonth }
-            ]
-        });
-
-        const hasRecommend = !!user.RecommendMonth;
-
-        res.status(200).json({ hasRecommend });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
-    }
-});
-
 router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
 
     try {
         const data = await ShopInfo.findByPk(shopId, {
-            attributes: ["id", "company_name", "shop_name", "phone_number", "email", "open_date_time", "founded_date", "member_count", "homepage_url", "company_number", "capital", "auto_trans", "open_info", "recommend"],
+            attributes: ["id", "company_name", "shop_name", "phone_number", "email", "open_date_time", "founded_date", "member_count", "homepage_url", "company_number", "capital", "auto_trans", "open_info"],
             include: [
                 {
                     model: ComOrFreeOption,

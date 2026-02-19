@@ -31,7 +31,6 @@ export const Client = ({ shopId, shopInfo }: Props) => {
 
     const [autoTrans, setAutoTrans] = useState(shopInfo.auto_trans ? "true" : "false");
     const [openInfo, setOpenInfo] = useState(shopInfo.open_info ? "true" : "false");
-    const [recommend, setRecommend] = useState(shopInfo.recommend ? "true" : "false");
 
     const router = useRouter();
 
@@ -282,19 +281,6 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 ]}
                 onChange={(v) => setOpenInfo(v)}
                 onSubmit={() => updateField("open_info", openInfo)}
-                />
-
-                <ConfirmSection
-                title="〇〇レコメンド"
-                content={recommend === "true" ? "はい" : "いいえ"}
-                radio
-                value={recommend}
-                radioOptions={[
-                    { label: "はい", value: "true" },
-                    { label: "いいえ", value: "false" },
-                ]}
-                onChange={(v) => setRecommend(v)}
-                onSubmit={() => updateField("recommend", recommend)}
                 />
             </main>
 

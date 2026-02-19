@@ -57,17 +57,6 @@ export const Content = () => {
                 <p className='mt-4'>Shop登録時に、以下のオプションの選択ができます。</p>
                 <GuideSection heading='自動振込'>毎月10日に、前月分の売上金を自動的にお振込みいたします。これにより、振込申請の手間が省ける、申請し忘れが無くなるといったメリットがあります。（金融機関が休業日の場合、その翌営業日）</GuideSection>
                 <GuideSection heading='運営者情報を公開する'>プロフィールのショップ情報に、ショップ登録時にご入力いただいた会社情報（事業者情報）が公開されます。</GuideSection>
-
-                <GuideSection heading='レコメンド機能（有料）'>
-                    <p className='font-bold mt-4'>〇〇レコメンド（月額880円）</p>
-                    <div className='mt-2 ml-[0.5rem]'>
-                        <p className={styles.sectionChildP}>トップページのおすすめおすすめ商品一覧に表示されます。また、商品ページおよび検索ページにも、「おすすめ商品」と記載されます。</p>
-                        <GuideSmall>※商品が利用規約に違反する、または違反している可能性のある商品は、「おすすめ商品」から除外されます。</GuideSmall>
-                        <GuideSmall>※レコメンドを申し込んでいないユーザーの商品も、ごくまれに「おすすめ商品」になることがあります。</GuideSmall>
-                        <GuideSmall>※ショップ会員ではない通常会員も利用可能</GuideSmall>
-                        <GuideSmall>※商品単品での申込み可能！（1点300円）</GuideSmall>
-                    </div>
-                </GuideSection>
             </Accordion>
         </AccordionGrid>
 

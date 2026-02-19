@@ -26,8 +26,7 @@ export const MainShopFlow = () => {
         <ShopFlowP>必要に応じて、許認可証もアップロードしていただきます。</ShopFlowP>
 
         <ShopStep number={5}>オプションの選択</ShopStep>
-        <ShopFlowP>自動振込や事業者情報の公開といった無料のオプション、有料のレコメンド機能「FLEXレコメンド」がございます。</ShopFlowP>
-        <small className={styles.small}>※ 早期出品期間中、「FLEXレコメンド」は無料！</small>
+        <ShopFlowP>自動振込や事業者情報の公開といった無料のオプションを選択できます。</ShopFlowP>
 
         <MainH3><span className="text-[var(--theme)]">ここまで約5～10分</span></MainH3>
 

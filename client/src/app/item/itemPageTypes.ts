@@ -20,10 +20,6 @@ export type TodouhukenOption = {
     name: string;
 };
 
-export type RecommendItem = {
-    plus: boolean;
-};
-
 export type ShopInfo = {
     id: string;
 };
@@ -117,12 +113,12 @@ export type Item = {
     gender_type: "men" | "women" | "unisex";
     age_type: "adult" | "kids" | "both";
     attributes: ItemAttributes;
+    recommend: boolean;
     ItemConditionOption?: ItemConditionOption | null;
     User?: User | null;
     Video?: Video | null;
     Sale?: Sale | null;
     ItemShippingProfile?: ItemShippingProfile | null;
-    RecommendItem?: RecommendItem | null;
     Category?: Categories | null;
     Brand?: Brand | null;
 };

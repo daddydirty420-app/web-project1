@@ -66,7 +66,6 @@ export const config = {
         "/notification/:path*", 
         "/personal-infomation/:path*",
         "/profile/madmax/:path*", 
-        "/recommend/:path*", 
         "/shop-signup/:path*", 
         "/transfar/:path*", 
         "/upload/:path*",

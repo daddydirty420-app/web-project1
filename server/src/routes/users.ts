@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { User, Item, ShopInfo, RecommendMonth, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
+import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
 import { Op } from "sequelize";
 
 const router = Router();
@@ -205,13 +205,9 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
   const userId = req.user!.id;
 
   try {
-    const user = await User.findByPk(req.user!.id, {
+    const user = await User.findByPk(userId, {
       attributes: ['id', 'uriagekin'],
       include: [
-        {
-          model: RecommendMonth,
-          attributes: ['id'],
-        },
         {
           model: BankAccount,
           attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
@@ -227,29 +223,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
       return;
     }
 
-    let minValue = 0;
-
-    if (user.RecommendMonth) {
-      const now = new Date();
-      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 999);
-
-      const histories = await UriagekinHistory.findAll({
-        where: {
-          user_id: userId,
-          createdAt: {
-            [Op.between]: [startOfMonth, endOfMonth],
-          },
-        },
-        attributes: ["uriagekin"],
-      });
-
-      const totalUriagekin = histories.reduce((sum: number, h: any) => sum + Number(h.uriagekin || 0), 0);
-
-      minValue = Math.min(totalUriagekin, 880);
-    }
-
-    res.json({ user, minValue });
+    res.json({ user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -262,12 +236,6 @@ router.get('/transfar-points', authenticateToken, async (req: Request, res: Resp
   try {
     const user = await User.findByPk(userId, {
       attributes: ['id', 'points', 'uriagekin'],
-      include: [
-        {
-          model: RecommendMonth,
-          attributes: ["id"],
-        },
-      ],
     });
 
     if (!user) {
@@ -275,29 +243,7 @@ router.get('/transfar-points', authenticateToken, async (req: Request, res: Resp
       return;
     }
 
-    let minValue = 0;
-
-    if (user.RecommendMonth) {
-      const now = new Date();
-      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 999);
-
-      const histories = await UriagekinHistory.findAll({
-        where: {
-          user_id: userId,
-          createdAt: {
-            [Op.between]: [startOfMonth, endOfMonth],
-          },
-        },
-        attributes: ["uriagekin"],
-      });
-
-      const totalUriagekin = histories.reduce((sum: number, h: any) => sum + Number(h.uriagekin || 0), 0);
-
-      minValue = Math.min(totalUriagekin, 880);
-    }
-
-    res.json({ user, minValue });
+    res.json({ user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'サーバーエラーが発生しました。'});

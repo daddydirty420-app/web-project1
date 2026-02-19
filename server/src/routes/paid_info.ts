@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Op, literal } from "sequelize";
-import { PaidInfo, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, RecommendItem, Categories } from "../models/index.js";
+import { Op } from "sequelize";
+import { PaidInfo, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
 
 const router = Router();
 
@@ -241,12 +241,6 @@ router.get('/item-transport/:id', authenticateToken, async (req: Request, res: R
                 {
                     model: Item,
                     attributes: ['id', 'name', 'first_image_url'],
-                    include: [
-                        {
-                            model: RecommendItem,
-                            attributes: ['id', 'plus', 'recommend_month'],
-                        },
-                    ],
                 },
                 {
                     model: User,

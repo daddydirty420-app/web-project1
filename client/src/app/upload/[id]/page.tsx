@@ -12,7 +12,7 @@ type Props = {
 export async function generateMetadata(): Promise<Metadata> {
     return {
         title: "商品を出品する",
-        description: "",
+        description: "商品の出品はこちら！",
         robots: {
             index: false,
             follow: false

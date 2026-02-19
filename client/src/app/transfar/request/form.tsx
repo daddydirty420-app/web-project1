@@ -11,18 +11,15 @@ import toast from "react-hot-toast";
 
 type Props = {
     user: User;
-    recommendPayValue: number;
 };
 
-export const Form = ({ user, recommendPayValue }: Props) => {
+export const Form = ({ user }: Props) => {
     const [value, setValue] = useState(0);
     const [isInvalid, setIsInvalid] = useState(false);
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
-    const limit = user.RecommendMonth
-    ? user.uriagekin - recommendPayValue
-    : user.uriagekin;
+    const limit = user.uriagekin;
 
     const pageButtonHandle = () => {
         if (!value || value < 1000) {
@@ -82,8 +79,6 @@ export const Form = ({ user, recommendPayValue }: Props) => {
 
     return (
         <TransfarUI title="振込申請金額を入力">
-            <p className={styles.smallAttention}>※FLEXレコメンド月額プランをご利用中のお客様は、振込申請金額の上限が現在の売上金からFLEXレコメンドの料金を引いた額となっております。</p>
-
             <div className={styles.transInputDiv}>
                 <p className={styles.transDivTitle}>現在の売上金</p>
                 <p className={styles.transTextValue}>￥{user.uriagekin.toLocaleString()}</p>

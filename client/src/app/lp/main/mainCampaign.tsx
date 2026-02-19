@@ -36,15 +36,7 @@ export const MainCampaign = () => {
         </section>
 
         <section className={styles.mainSec}>
-            <CampaignH3 number={4} text="無料でおすすめ商品" />
-            <MainP>早期出品期間中に限り、有料オプションとなる予定の「<strong>FLEXレコメンド</strong>」の機能を<strong className="text-[var(--theme)]">無料</strong>でご提供いたします。</MainP>
-            <MainP>「FLEXレコメンド」は、あなたの商品が<strong>おすすめ商品欄</strong>や、<strong><span className="text-[var(--theme)]">FLEX OUTDOOR</span>公式SNS・広告</strong>に掲載されるPR機能です。</MainP>
-            <MainP>これにより、商品が多くの人の目に触れ、<strong>購入率が大幅に上がります！</strong></MainP>
-            <MainP>早期出品終了後は有料オプションとなる予定です。（料金未定）</MainP>
-        </section>
-
-        <section className={styles.mainSec}>
-            <CampaignH3 number={5} text="出品者紹介キャンペーン" />
+            <CampaignH3 number={4} text="出品者紹介キャンペーン" />
             <MainP>早期出品期間中に紹介コードを入力したユーザーが出品すると、<strong>紹介先・紹介元ともに、<span className="text-[var(--theme)]">1,000pt</span>お配りします！</strong></MainP>
             <MainP>紹介コードは会員登録・ログイン後、マイページから発行できます！</MainP>
             <small className={styles.small}>※ 同じ紹介コードをご入力いただけるのは<strong>2名まで</strong>です。3名以上でも入力できますが、ポイントはお配りできません。

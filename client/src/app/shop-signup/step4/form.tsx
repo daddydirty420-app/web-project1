@@ -11,13 +11,11 @@ import toast from "react-hot-toast";
 
 type Props = {
     shopId: string;
-    recommend: boolean;
 };
 
 export const Form = ({ shopId }: Props) => {
     const [autoTrans, setAutoTrans] = useState("いいえ");
     const [openInfo, setOpenInfo] = useState("いいえ");
-    const [recommend, setRecommend] = useState("いいえ");
 
     const router = useRouter();
 
@@ -36,7 +34,7 @@ export const Form = ({ shopId }: Props) => {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
-                body: JSON.stringify({ autoTrans, openInfo, recommend }),
+                body: JSON.stringify({ autoTrans, openInfo }),
             });
 
             const data = await res.json();
@@ -125,41 +123,6 @@ export const Form = ({ shopId }: Props) => {
                 </div>
 
                 <p className={styles.centerSmall}>※ショップ情報に会社名、代表者・担当者氏名、所在地、電話番号、メールアドレス、ホームページURLを掲載します。運営者情報を表示しない場合、お客様から請求があったとき、遅滞なく開示するものとします。</p>
-            </div>
-
-            <div className={styles.optionDiv}>
-                <div className={styles.radioFlexOption}>
-                    <p className={styles.text14}>〇〇レコメンド（有料）</p>
-
-                    <div className={styles.radioColumn}>
-                        <label className={styles.radioLabel}>
-                            <input
-                            type="radio"
-                            name="recommend"
-                            value="はい"
-                            checked={recommend === "はい"}
-                            onChange={(e) => setRecommend(e.target.value)}
-                            className={styles.radio}
-                            />
-                            <p className={styles.radioText}>はい</p>
-                        </label>
-
-                        <label className={styles.radioLabel}>
-                            <input
-                            type="radio"
-                            name="recommend"
-                            value="いいえ"
-                            checked={recommend === "いいえ"}
-                            onChange={(e) => setRecommend(e.target.value)}
-                            className={styles.radio}
-                            />
-                            <p className={styles.radioText}>いいえ</p>
-                        </label>
-                    </div>
-                </div>
-
-                <p className={styles.centerSmall}>※ご出品された商品を、おすすめ商品や広告、公式SNSなどでご紹介いたします。</p>
-                <p className={styles.centerSmall}>※費用は毎月売上金から差し引きいたします。（売上が0円の月は差し引きいたしません。また、売上がFLEXレコメンドの料金以下の月は全額差し引きいたします。）</p>
             </div>
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />

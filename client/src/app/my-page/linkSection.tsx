@@ -28,7 +28,6 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                     )}
                     </>
                 )}
-                <NormalLink url='/recommend' text='レコメンド月額プラン加入・変更' />
                 <ReferenceCode itemCount={data.itemCount} referenceCount={data.referenceCount} />
                 <Link href='/notification' className={styles.linkElem}>
                     <p>お知らせ</p>
@@ -77,7 +76,6 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                 <NormalLink url='/transfar/history' text='振込申請履歴' />
                 <NormalLink url='/transfar/points' text='ポイント変換' />
                 <NormalLink url='/history/points' text='ポイント履歴' />
-                <NormalLink url='/recommend/history' text='レコメンド支払い履歴' />
             </NormalLinkContainer>
 
             <MypageLinkHeader text='〇〇について' />
