@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link";
 import { Item } from "../types/type";
 import styles from "./ok.module.css";

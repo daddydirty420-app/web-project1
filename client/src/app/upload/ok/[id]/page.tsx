@@ -60,6 +60,5 @@ export default async function Page({ params }: Props) {
     return <OkPage
     itemId={id}
     item={item}
-    hasRecommend={hasReccomend}
     />;
 };

@@ -47,10 +47,10 @@ router.post('/delete-all', authenticateToken, async (req: Request, res: Response
 });
 
 router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const userId = req.user!.id;
+    const itemId = req.params.id;
 
     try {
-        const item = await Item.findByPk(req.params.id, {
+        const item = await Item.findByPk(itemId, {
             attributes: ['id', 'name', 'price', "attributes", 'first_image_url', "gender_type", "age_type", "seller_id", "status"],
         });
 
@@ -59,22 +59,7 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
             return;
         }
 
-        const user = await User.findByPk(userId, {
-            attributes: ['id'],
-            include: [
-                {
-                    model: RecommendMonth,
-                    attributes: ['id'],
-                },
-            ],
-        });
-
-        const hasRecommend = !!user.RecommendMonth;
-
-        res.json({
-            item,
-            hasRecommend
-        });
+        res.json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
