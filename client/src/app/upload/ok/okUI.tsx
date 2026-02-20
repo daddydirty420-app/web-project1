@@ -10,15 +10,9 @@ type Props = {
 
 export default function OkUI({ title, children }: Props) {
     return (
-        <>
-        <Header />
-
         <Container header>
             <Title title={title} />
             {children}
         </Container>
-
-        <Footer />
-        </>
     );
 }
