@@ -44,7 +44,7 @@ router.post("/item/report-create/:id", authenticateToken, async (req: Request, r
         }, { transaction: t });
 
         await item.update({
-            report_score: item.report_score + user.report_trust_score,
+            report_score: Number(item.report_score) + Number(user.report_trust_score),
         }, { transaction: t });
 
         await t.commit();
@@ -95,7 +95,7 @@ router.post("/comment/report-create/:id", authenticateToken, async (req: Request
         }, { transaction: t });
 
         await comment.update({
-            report_score: comment.report_score + user.report_trust_score,
+            report_score: Number(comment.report_score) + Number(user.report_trust_score),
         }, { transaction: t });
 
         await t.commit();
