@@ -30,7 +30,10 @@ export const VideoSection = ({ id, item, sellerMe, goodCount, isGood, page, repo
             {["normal", "admin"].includes(page) && (
                 <>
                 <UserSection item={item} sellerMe={sellerMe} page={page as "normal" | "admin"} userId={userId} />
-                <Report id={id} itemReport={true} page={page as "normal" | "admin"} reportCount={reportCount} />
+
+                {!sellerMe && (
+                    <Report id={id} itemReport={true} page={page as "normal" | "admin"} reportCount={reportCount} />
+                )}
                 </>
             )}
         </section>
