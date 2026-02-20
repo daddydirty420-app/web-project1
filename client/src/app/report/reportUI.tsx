@@ -1,4 +1,6 @@
 import { Container, TitleAndBack } from "@/components";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 import { ReactNode } from "react";
 
 type Props = {
@@ -8,9 +10,15 @@ type Props = {
 
 export default function ReportUI({ title, children }: Props) {
     return (
-        <Container>
+        <>
+        <Header />
+
+        <Container header>
             <TitleAndBack title={title} />
             {children}
         </Container>
+
+        <Footer />
+        </>
     );
 };
