@@ -4,6 +4,7 @@ import { startItemSortDecayCron } from "./itemSortDecay.js";
 import { startTokenCron } from "./token.js";
 import { startCommentSortDecayCron } from "./commentSortDecay.js";
 import { startBuyDeleteCron } from "./buyDelete.js";
+import { startTrustScoreCron } from "./trustScore.js";
 
 export const startAllCrons = () => {
     console.log("Starting all cron job...");
@@ -13,4 +14,5 @@ export const startAllCrons = () => {
     startTokenCron();
     startCommentSortDecayCron();
     startBuyDeleteCron();
+    startTrustScoreCron();
 };

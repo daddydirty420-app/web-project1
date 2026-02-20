@@ -23,8 +23,14 @@ export const startItemDeleteCron = () => {
         const t = await sequelize.transaction();
 
         try {
-            const newItemDeleteLogs = [];
-            for (const item of items) {
+            const newItemDeleteLogs: {
+                item_id: number;
+                delete_user_id: number;
+                delete_by_admin: boolean;
+                delete_reason: string;
+            }[]  = [];
+
+            await Promise.all(items.map(async (item: typeof Item) => {
                 newItemDeleteLogs.push({
                     item_id: item.id,
                     delete_user_id: item.seller_id,
@@ -33,7 +39,7 @@ export const startItemDeleteCron = () => {
                 });
 
                 await item.destroy({ transaction: t });
-            }
+            }))
 
             await ItemDeleteLogs.bulkCreate(newItemDeleteLogs, { transaction: t });
 

@@ -42,6 +42,7 @@ export class User extends Model {
     declare phone_number: string | null;
     declare honnin_verify_request: boolean | null;
     declare email_verified: boolean | null;
+    declare report_trust_score: number;
 
     static associate() {
         User.hasMany(Cart, {
@@ -196,6 +197,11 @@ User.init(
         email_verified: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        report_trust_score: {
+            type: DataTypes.DECIMAL,
+            defaultValue: 0.3,
+            allowNull: false,
         },
     },
     {

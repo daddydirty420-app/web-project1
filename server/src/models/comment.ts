@@ -16,6 +16,7 @@ export class Comment extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
     declare pin: boolean;
+    declare report_score: number;
 
     static associate() {
         Comment.belongsTo(Item, {
@@ -72,6 +73,11 @@ Comment.init(
         pin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        report_score: {
+            type: DataTypes.DECIMAL,
+            defaultValue: 0,
+            allowNull: false,
         },
     },
     {

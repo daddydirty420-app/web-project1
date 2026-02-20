@@ -42,35 +42,4 @@ router.post("/delete/:id", authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.get('/admin/report-all', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const commentList = await Comment.findAll({
-            attributes: ['id', 'text', [fn('COUNT', col('CommentReports.id')), 'report_count']],
-            include: [
-                {
-                    model: CommentReport,
-                    attributes: ['id'],
-                    required: true
-                }
-            ],
-            group: ['Comment.id'],
-            order: [
-                [literal('report_count'), 'DESC'],
-                ['createdAt', 'DESC']
-            ],
-            subQuery: false
-        });
-
-        if (!commentList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(commentList);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 export default router;

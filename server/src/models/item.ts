@@ -42,6 +42,7 @@ export class Item extends Model {
     declare brand_aliases_id: number | null;
     declare attributes: ItemAttributes;
     declare recommend: boolean | null;
+    declare report_score: number;
 
     static associate() {
         Item.belongsTo(User, {
@@ -164,6 +165,11 @@ Item.init(
         recommend: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        report_score: {
+            type: DataTypes.DECIMAL,
+            defaultValue: 0,
+            allowNull: false,
         },
     },
     {

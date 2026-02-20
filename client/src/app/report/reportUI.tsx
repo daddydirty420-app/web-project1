@@ -1,4 +1,4 @@
-import { Container, Title } from "@/components";
+import { Container, TitleAndBack } from "@/components";
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { ReactNode } from "react";
@@ -8,17 +8,17 @@ type Props = {
     children: ReactNode;
 };
 
-export default function OkUI({ title, children }: Props) {
+export default function ReportUI({ title, children }: Props) {
     return (
         <>
         <Header />
 
         <Container header>
-            <Title title={title} />
+            <TitleAndBack title={title} />
             {children}
         </Container>
 
         <Footer />
         </>
     );
-}
+};
