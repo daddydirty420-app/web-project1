@@ -1,4 +1,5 @@
 import { Container, TitleAndBack } from "@/components";
+import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { ReactNode } from "react";
 
@@ -17,6 +18,7 @@ export default function ReportUI({ title, children }: Props) {
             {children}
         </Container>
 
+        <Footer />
         </>
     );
 };

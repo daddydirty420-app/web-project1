@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { Form } from "../../form";
+import ReportUI from "../../reportUI";
 
 type Props = {
     params: { id: string };
@@ -34,9 +35,13 @@ export default async function Page({ params }: Props) {
 
     const data = await res.json();
 
-    return <Form
-    id={id}
-    options={data.options}
-    page="item"
-    />;
+    return (
+        <ReportUI title="報告">
+            <Form
+            id={id}
+            options={data.options}
+            page="item"
+            />
+        </ReportUI>
+    );
 }

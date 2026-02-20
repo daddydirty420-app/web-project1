@@ -4,7 +4,6 @@ import { useState } from "react";
 import styles from "./report.module.css";
 import { Option } from "./type";
 import { useRouter } from "next/navigation";
-import ReportUI from "./reportUI";
 import { Button, InputTitle } from "@/components/inputForm";
 import toast from "react-hot-toast";
 import { refreshToken } from "@/lib/refreshToken";
@@ -79,29 +78,29 @@ export const Form = ({ id, options, page }: Props) => {
     };
 
     return (
-        <ReportUI title="報告">
-            <section className={styles.radioSection}>
-                <InputTitle title="報告内容を選択してください" hissu />
+        <>
+        <section className={styles.radioSection}>
+            <InputTitle title="報告内容を選択してください" hissu />
 
-                <div className={styles.radioColumn}>
-                    {options.map((option) => (
-                        <label key={option.id} className={styles.radioLabel}>
-                            <input
-                            type="radio"
-                            name="report"
-                            value={option.name}
-                            checked={selected === option.id}
-                            onChange={() => setSelected(option.id)}
-                            className={styles.ratio}
-                            required
-                            />
-                            <p className={styles.radioText}>{option.name}</p>
-                        </label>
-                    ))}
-                </div>
-            </section>
+            <div className={styles.radioColumn}>
+                {options.map((option) => (
+                    <label key={option.id} className={styles.radioLabel}>
+                        <input
+                        type="radio"
+                        name="report"
+                        value={option.name}
+                        checked={selected === option.id}
+                        onChange={() => setSelected(option.id)}
+                        className={styles.ratio}
+                        required
+                        />
+                        <p className={styles.radioText}>{option.name}</p>
+                    </label>
+                ))}
+            </div>
+        </section>
 
-            <Button onClick={submit}>報告する</Button>
-        </ReportUI>
+        <Button onClick={submit}>報告する</Button>
+        </>
     );
 };
