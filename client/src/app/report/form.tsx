@@ -42,7 +42,7 @@ export const Form = ({ id, options, page }: Props) => {
                         "Content-type": "application/json",
                         Authorization: `Bearer ${accessToken}`,
                     },
-                    body: JSON.stringify(selected),
+                    body: JSON.stringify({ selected }),
                 });
             } else if (page === "comment") {
                 res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/report/comment/report-create/${id}`, {
@@ -51,7 +51,7 @@ export const Form = ({ id, options, page }: Props) => {
                         "Content-type": "application/json",
                         Authorization: `Bearer ${accessToken}`,
                     },
-                    body: JSON.stringify(selected),
+                    body: JSON.stringify({ selected }),
                 });
             } else {
                 console.error("ページが正しくありません");
