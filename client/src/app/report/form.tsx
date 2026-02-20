@@ -91,7 +91,7 @@ export const Form = ({ id, options, page }: Props) => {
                         value={option.name}
                         checked={selected === option.id}
                         onChange={() => setSelected(option.id)}
-                        className={styles.ratio}
+                        className={styles.radio}
                         required
                         />
                         <p className={styles.radioText}>{option.name}</p>
