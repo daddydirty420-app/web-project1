@@ -8,7 +8,7 @@ type Props = {
 
 export default function OkUI({ title, children }: Props) {
     return (
-        <Container header>
+        <Container>
             <Title title={title} />
             {children}
         </Container>
