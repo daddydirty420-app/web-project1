@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Form = ({ loggedIn, user }: Props) => {
-    const [name, setName] = useState(user?.name ?? "");
+    const [name, setName] = useState(user?.user_name ?? "");
     const [email, setEmail] = useState(user?.email ?? "");
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
