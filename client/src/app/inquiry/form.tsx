@@ -16,6 +16,7 @@ export const Form = ({ loggedIn, user }: Props) => {
     const [email, setEmail] = useState(user?.email ?? "");
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
@@ -48,6 +49,8 @@ export const Form = ({ loggedIn, user }: Props) => {
         }
 
         try {
+            setLoading(true);
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiry/user-submit${loggedIn ? `?userId=${user?.id ?? ""}` : ""}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -62,6 +65,7 @@ export const Form = ({ loggedIn, user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
+                setLoading(false);
                 toast.error("お問い合わせ内容の送信に失敗しました");
                 console.error(data.message);
                 return;
@@ -71,9 +75,11 @@ export const Form = ({ loggedIn, user }: Props) => {
             console.log(data.message);
 
             setTimeout(() => {
+                setLoading(false);
                 router.back();
-            }, 2000);
+            }, 1500);
         } catch (err) {
+            setLoading(false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
@@ -118,7 +124,7 @@ export const Form = ({ loggedIn, user }: Props) => {
         hissu
         />
 
-        <Button onClick={submit}>送信する</Button>
+        <Button onClick={submit}>{loading ? "送信中..." : "送信する"}</Button>
         </>
     );
 };
