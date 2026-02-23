@@ -77,7 +77,7 @@ export const Form = ({ loggedIn, user }: Props) => {
             setTimeout(() => {
                 setLoading(false);
                 router.back();
-            }, 1500);
+            }, 1000);
         } catch (err) {
             setLoading(false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
