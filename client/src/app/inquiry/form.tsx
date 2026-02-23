@@ -20,6 +20,33 @@ export const Form = ({ loggedIn, user }: Props) => {
     const router = useRouter();
 
     const submit = async () => {
+        if (!name || name.trim() === "") {
+            toast.error("お名前を入力してください");
+            return;
+        }
+
+        if (!email || email.trim() === "") {
+            toast.error("メールアドレスを入力してください");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            toast.error("正しいメールアドレス形式で入力してください");
+            return;
+        }
+
+        if (!title || title.trim() === "") {
+            toast.error("件名を入力してください");
+            return;
+        }
+
+        if (!body || body.trim() === "") {
+            toast.error("本文を入力してください");
+            return;
+        }
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiry/user-submit${loggedIn ? `?userId=${user?.id ?? ""}` : ""}`, {
                 method: "POST",
@@ -74,7 +101,8 @@ export const Form = ({ loggedIn, user }: Props) => {
         type="text"
         value={title || ""}
         onChange={setTitle}
-        placeholder="件名"
+        placeholder="件名（最大50文字まで）"
+        maxLength={50}
         hissu
         />
 
