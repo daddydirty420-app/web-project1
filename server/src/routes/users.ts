@@ -24,24 +24,6 @@ router.get('/me-admin', authenticateToken, async (req: Request, res: Response): 
   }
 });
 
-router.get('/inquiry', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const data = await User.findByPk(req.user!.id, {
-      attributes: ['id', 'user_name', 'email'],
-    });
-
-    if (!data) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
-
-    res.json({ data });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。'});
-  }
-});
-
 router.get('/profile/:id', async (req: Request, res: Response): Promise<void> => {
   const userId = req.params.id;
 
