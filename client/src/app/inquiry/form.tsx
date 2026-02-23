@@ -69,7 +69,10 @@ export const Form = ({ loggedIn, user }: Props) => {
 
             toast.success("お問い合わせ内容を送信しました！");
             console.log(data.message);
-            router.back();
+
+            setTimeout(() => {
+                router.back();
+            }, 2000);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
