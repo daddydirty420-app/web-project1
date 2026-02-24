@@ -135,7 +135,7 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified'],
+                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
                     include: [
                         {
                             model: ShopInfo,
@@ -175,7 +175,7 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
             return;
         }
 
-        res.json({ userList: finalUserList ?? userList, userCount });
+        res.status(200).json({ userList: finalUserList ?? userList, userCount });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
