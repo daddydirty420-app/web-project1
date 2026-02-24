@@ -120,15 +120,14 @@ router.get('/count/:id', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
+    
+    const currentUserId = req.user!.id;
+    const itemId = req.params.id;
 
     try {
-        const currentUserId = req.user?.id ?? null;
-
-        const itemId = req.params.id;
-
         const goodItemList = await GoodItem.findAll({
             attributes: ["id"],
             where: { item_id: itemId },
