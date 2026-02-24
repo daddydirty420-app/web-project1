@@ -130,6 +130,7 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
         const itemId = req.params.id;
 
         const userList = await GoodItem.findAll({
+            attributes: ["id"],
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],
             include: [

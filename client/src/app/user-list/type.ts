@@ -1,3 +1,7 @@
+export type GoodItem = {
+    id: string;
+};
+
 export type Follow = {
     id: string;
     follow_user_id: string | number;
@@ -11,7 +15,7 @@ export type ShopInfo = {
 export type User = {
     id: string;
     user_name: string;
-    profile_image: string | null;
+    profile_image: string;
     honnin_verified: boolean;
     early_seller: boolean;
     ShopInfo?: ShopInfo | null;

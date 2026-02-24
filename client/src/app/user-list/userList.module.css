@@ -1,0 +1,85 @@
+.userListSection {
+    width: 100%;
+    max-width: 768px;
+    margin: 1rem auto 5rem;
+    border: 1px solid var(--gray-line);
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.25rem;
+}
+
+.userImageNameFlex {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    cursor: pointer;
+}
+
+.image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.nameBlock {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.userName {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+.iconRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 13px;
+}
+
+.honninIcon,
+.earlyIcon,
+.shopIcon {
+    color: var(--theme);
+    opacity: 0.85;
+}
+
+.followRemoveButton {
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--button-gray);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.followRemoveButton:hover {
+    background-color: var(--button-gray-hover);
+    transform: translateY(1px);
+}
+
+@media (min-width: 768px) {
+    .image {
+        width: 45px;
+        height: 45px;
+    }
+
+    .userName {
+        font-size: 14px;
+    }
+}
