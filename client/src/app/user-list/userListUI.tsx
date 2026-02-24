@@ -1,4 +1,4 @@
-import { Container, Title } from "@/components";
+import { Container, TitleAndBack } from "@/components";
 import { ReactNode } from "react";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 export default function UserListUI({ title, children }: Props) {
     return (
         <Container>
-            <Title title={title} />
+            <TitleAndBack title={title} />
             {children}
         </Container>
     );
