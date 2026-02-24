@@ -43,6 +43,7 @@ export default async function Page({ params }: Props) {
     }
 
     const data = await res.json();
+    console.log(data);
 
     return <UserListPage
     title="いいねしたユーザー"

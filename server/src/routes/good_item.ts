@@ -132,6 +132,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             attributes: ["id"],
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],
+            distinct: true,
             include: [
                 {
                     model: User,
