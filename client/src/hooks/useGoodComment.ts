@@ -32,7 +32,7 @@ export async function updateGoodCommentCache(commentId: string, isGood: boolean)
     await mutate(statusKey, { isGood }, false);
 
     await mutate(countKey, (current?: GoodCountResponce) => {
-        if (!current) return current;
+        if (!current) return { count: isGood ? 1 : 0 };
         return {
             ...current,
             count: isGood

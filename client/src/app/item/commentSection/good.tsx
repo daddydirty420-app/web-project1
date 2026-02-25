@@ -103,5 +103,5 @@ export const Good = ({ comment, loggedIn }: Props) => {
 
             <p className={styles.goodCount}>{count.toLocaleString()}</p>
         </div>
-    )
+    );
 }
