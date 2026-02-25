@@ -18,8 +18,9 @@ type Props = {
 export const Good = ({ comment, loggedIn }: Props) => {
     const id = comment.id;
     const initialCount = comment.goodCount;
+    const initialGood = comment.isGoodByMe;
     const isMyComment = comment.isMyComment;
-    const { data: goodStatus } = useGoodStatus(id);
+    const { data: goodStatus } = useGoodStatus(id, initialGood);
     const { data: goodCount } = useGoodCount(id, initialCount);
     const router = useRouter();
 

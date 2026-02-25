@@ -3,10 +3,11 @@ import { fetcher } from "@/lib/fetcher";
 
 type GoodCountResponce = { count: number };
 
-export function useGoodStatus(commentId: string) {
+export function useGoodStatus(commentId: string, initialGood: boolean) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`,
         fetcher, {
+            fallbackData: { isGood: initialGood },
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,
@@ -33,10 +34,8 @@ export async function updateGoodCommentCache(commentId: string, nextIsGood: bool
     await mutate(statusKey, { isGood: nextIsGood }, false);
 
     await mutate(countKey, (current?: GoodCountResponce) => {
-        const base = current?.count ?? 0;
-
         return {
-            count: Math.max(0, base + (nextIsGood ? 1 : -1)),
+            count: Math.max(0, current?.count ?? 0) + (nextIsGood ? 1 : -1)
         };
     }, false);
 };
