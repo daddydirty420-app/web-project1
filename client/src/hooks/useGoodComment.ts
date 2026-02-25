@@ -3,39 +3,33 @@ import { fetcher } from "@/lib/fetcher";
 
 type GoodCountResponce = { count: number };
 
-export function useGoodStatus(commentId: string, initialGood: boolean) {
+export function useGoodStatus(commentId: string,) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`,
-        fetcher, {
-            fallbackData: { isGood: initialGood },
-            revalidateIfStale: false,
-            revalidateOnMount: true,
-            revalidateOnFocus: false,
-        }
+        fetcher,
     );
 };
 
-export function useGoodCount(commentId: string, initialCount: number) {
+export function useGoodCount(commentId: string) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`,
-        fetcher, {
-            fallbackData: { count: initialCount },
-            revalidateIfStale: false,
-            revalidateOnMount: true,
-            revalidateOnFocus: false,
-        }
+        fetcher,
     );
 };
 
-export async function updateGoodCommentCache(commentId: string, nextIsGood: boolean) {
+export async function updateGoodCommentCache(commentId: string, isGood: boolean) {
     const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`;
     const countKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`;
 
-    await mutate(statusKey, { isGood: nextIsGood }, false);
+    await mutate(statusKey, { isGood }, false);
 
     await mutate(countKey, (current?: GoodCountResponce) => {
+        if (!current) return current;
         return {
-            count: Math.max(0, (current?.count ?? 0) + (nextIsGood ? 1 : -1))
+            ...current,
+            count: isGood
+            ? current.count + 1
+            : Math.max(0, current.count - 1)
         };
     }, false);
 };

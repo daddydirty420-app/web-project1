@@ -18,14 +18,13 @@ type Props = {
 export const Good = ({ comment, loggedIn }: Props) => {
     const id = comment.id;
     const initialCount = comment.goodCount;
-    const initialGood = comment.isGoodByMe;
     const isMyComment = comment.isMyComment;
-    const { data: goodStatus } = useGoodStatus(id, initialGood);
-    const { data: goodCount } = useGoodCount(id, initialCount);
+    const { data: goodStatus } = useGoodStatus(id);
+    const { data: goodCount } = useGoodCount(id);
     const router = useRouter();
 
     const good = goodStatus?.isGood ?? false;
-    const count = goodCount?.count ?? 0;
+    const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
         updateGoodCommentCache(id, true);

@@ -24,7 +24,7 @@ export async function updateGoodItemCache(itemId: string, isGood: boolean) {
     await mutate(statusKey, { isGood }, false);
 
     await mutate(countKey, (current?: GoodCountResponce) => {
-        if (!current) return { count: isGood ? 1 : 0 };
+        if (!current) return current;
         return {
             ...current,
             count: isGood
