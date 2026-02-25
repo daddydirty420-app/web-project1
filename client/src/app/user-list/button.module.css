@@ -1,0 +1,36 @@
+.followButton {
+    width: 75px;
+    height: 30px;
+    font-size: 10.5px;
+    font-weight: 600;
+    border-radius: 15px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.15s ease
+}
+
+.false {
+    background-color: var(--theme);
+    color: #fff;
+    transition: opacity 0.15s ease;
+}
+.false:hover {
+    opacity: 0.85;
+}
+
+.true {
+    background-color: var(--button-gray);
+    color: var(--theme-str);
+    transition: background-color 0.15s ease;
+}
+.true:hover {
+    background-color: var(--button-gray-hover);
+}
+
+@media (min-width: 768px) {
+    .followButton {
+        width: 95px;
+        height: 32px;
+        font-size: 12px;
+    }
+}

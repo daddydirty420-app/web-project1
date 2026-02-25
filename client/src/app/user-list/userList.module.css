@@ -33,22 +33,27 @@
 .nameBlock {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 5px;
 }
 
 .userName {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--theme);
     line-height: 1.2;
     letter-spacing: 0.02em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
 }
 
 .iconRow {
     display: flex;
     align-items: center;
     gap: 4px;
-    min-height: 13px;
+    min-height: 12px;
 }
 
 .honninIcon,
@@ -80,6 +85,6 @@
     }
 
     .userName {
-        font-size: 14px;
+        font-size: 13px;
     }
 }

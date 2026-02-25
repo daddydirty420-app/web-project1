@@ -5,8 +5,8 @@ import { User } from "./type";
 import styles from "./userList.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
-import { FollowButton } from "@/components";
 import Link from "next/link";
+import { FollowButton } from "./followButton";
 
 type Props = {
     loggedIn: boolean;
@@ -60,8 +60,11 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
                         </div>
                     </Link>
 
-                    {loggedIn && !(followTab === "follow" && myFollow) && (
-                        <FollowButton targetUserId={user.id} currentUserId={currentUserId} />
+                    {loggedIn && 
+                    !(followTab === "follow" && myFollow) && 
+                    currentUserId !== user.id && 
+                    (
+                        <FollowButton user={user} />
                     )}
 
                     {loggedIn && followTab === "follow" && myFollow && (
