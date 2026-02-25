@@ -53,6 +53,8 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
     }, [id, loggedIn]);
 
     const add = async () => {
+        setCartIn(true);
+
         try {
             const accessToken = await refreshToken();
 
@@ -69,16 +71,18 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
             });
 
             if (res.ok) {
-                setCartIn(true);
                 toast.success("カートに追加しました。");
             }
         } catch (err) {
+            setCartIn(false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
+        setCartIn(false);
+
         try {
             const accessToken = await refreshToken();
 
@@ -95,10 +99,10 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
             });
 
             if (res.ok) {
-                setCartIn(false);
                 toast.success("カートから削除しました。");
             }
         } catch (err) {
+            setCartIn(true);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
