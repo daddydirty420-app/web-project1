@@ -39,7 +39,7 @@ export type Categories = {
 };
 
 export type ItemShippingProfile = {
-    id: string,
+    id: string;
     ShippingDayOption?: ShippingDayOption | null;
     ShippingServiceOption?: ShippingServiceOption | null;
     TodouhukenOption?: TodouhukenOption | null;
