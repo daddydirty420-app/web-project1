@@ -38,7 +38,7 @@
     display: flex;
     width: max-content;
     align-items: center;
-    margin-top: 6px;
+    padding: 3px 0;
     margin-left: auto;
     opacity: 0.75;
     cursor: pointer;
@@ -48,6 +48,7 @@
     height: 16px;
     color: var(--theme-soft);
     padding: 2px;
+    transition: color 0.15s ease;
 }
 .reportLink:hover .reportIcon {
     color: var(--theme);
