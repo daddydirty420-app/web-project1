@@ -26,20 +26,18 @@ export function useGoodCount(commentId: string) {
 };
 
 export async function updateGoodCommentCache(commentId: string, isGood: boolean) {
-    mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`,
-        { isGood },
-        false
-    );
-    mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`,
-        (currentData?: GoodCountResponce) => {
-            if (!currentData) return { count: 1 };
-            return { count: isGood ? currentData.count + 1 : Math.max(0, currentData.count - 1) };
-        },
-        false
-    );
+    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`;
+    const countKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`;
 
-    mutate(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`);
-    mutate(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`);
+    await mutate(statusKey, { isGood }, false);
+
+    await mutate(countKey, (current?: GoodCountResponce) => {
+        if (!current) return current;
+        return {
+            ...current,
+            count: isGood
+            ? current.count + 1
+            : Math.max(0, current.count - 1)
+        };
+    }, false);
 };

@@ -28,6 +28,8 @@ export const Good = ({ comment, loggedIn }: Props) => {
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
+        updateGoodCommentCache(id, true);
+
         try {
             const accessToken = await refreshToken();
             
@@ -42,13 +44,16 @@ export const Good = ({ comment, loggedIn }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateGoodCommentCache(id, true);
         } catch (err) {
+            updateGoodCommentCache(id, false);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
+        updateGoodCommentCache(id, false);
+
         try {
             const accessToken = await refreshToken();
 
@@ -63,8 +68,9 @@ export const Good = ({ comment, loggedIn }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateGoodCommentCache(id, false);
         } catch (err) {
+            updateGoodCommentCache(id, true);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR, { mutate } from 'swr';
 import { fetcher } from '@/lib/fetcher';
 
@@ -37,7 +36,7 @@ export async function updateFollowCache(
     // 即キャッシュ更新
     await mutate(statusKey, { isFollowing }, false);
 
-    await mutate(myCountKey, (current?: any) => {
+    await mutate(myCountKey, (current?: FollowCountResponse) => {
         if (!current) return current;
         return {
             ...current,
@@ -47,7 +46,7 @@ export async function updateFollowCache(
         };
     }, false);
 
-    await mutate(targetCountKey, (current?: any) => {
+    await mutate(targetCountKey, (current?: FollowCountResponse) => {
         if (!current) return current;
         return {
             ...current,
