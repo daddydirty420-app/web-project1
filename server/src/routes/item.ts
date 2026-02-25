@@ -59,7 +59,7 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
             return;
         }
 
-        res.json({ item });
+        res.status(200).json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
