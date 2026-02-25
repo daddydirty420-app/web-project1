@@ -6,7 +6,7 @@ type GoodCountResponce = { count: number };
 export function useGoodStatus(itemId: string) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/status/${itemId}`,
-        fetcher(), {
+        fetcher, {
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,
@@ -17,7 +17,7 @@ export function useGoodStatus(itemId: string) {
 export function useGoodCount(itemId: string, initialCount: number) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/count/${itemId}`,
-        fetcher(), {
+        fetcher, {
             fallbackData: { count: initialCount },
             revalidateIfStale: false,
             revalidateOnMount: false,

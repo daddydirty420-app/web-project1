@@ -1,6 +1,6 @@
 import { refreshToken } from "./refreshToken";
 
-export const fetcher = <T>() => async (url: string): Promise<T> => {
+export const fetcher = async <T>(url: string): Promise<T> => {
     const accessToken = await refreshToken();
     
     const res = await fetch(url, {

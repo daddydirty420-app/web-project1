@@ -13,14 +13,14 @@ type FollowCountResponse = {
 export function useFollowStatus(targetUserId: string) {
     return useSWR<FollowStatus>(
         `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`,
-        fetcher(),
+        fetcher,
     );
 }
 
 export function useFollowCount(userId: string) {
     return useSWR<FollowCountResponse>(
         `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`,
-        fetcher(),
+        fetcher,
     );
 }
 
