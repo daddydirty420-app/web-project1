@@ -26,19 +26,18 @@ export function useGoodCount(commentId: string, initialCount: number) {
     );
 };
 
-export async function updateGoodCommentCache(commentId: string, isGood: boolean) {
+export async function updateGoodCommentCache(commentId: string, nextIsGood: boolean) {
     const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`;
     const countKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`;
 
-    await mutate(statusKey, { isGood }, false);
+    await mutate(statusKey, { isGood: nextIsGood }, false);
 
     await mutate(countKey, (current?: GoodCountResponce) => {
-        if (!current) return { count: isGood ? 1 : 0 };
-        return {
-            ...current,
-            count: isGood
-            ? current.count + 1
-            : Math.max(0, current.count - 1)
-        };
+        if (!current) return current;
+
+      return {
+        ...current,
+        count: Math.max(0, current.count + (nextIsGood ? 1 : -1)),
+      };
     }, false);
 };
