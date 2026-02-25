@@ -15,7 +15,7 @@
     transition: opacity 0.15s ease;
 }
 .false:hover {
-    transform: translateX(1px);
+    transform: translateY(1px);
     opacity: 0.85;
 }
 
@@ -25,7 +25,7 @@
     transition: background-color 0.15s ease;
 }
 .true:hover {
-    transform: translateX(1px);
+    transform: translateY(1px);
     background-color: var(--button-gray-hover);
 }
 
