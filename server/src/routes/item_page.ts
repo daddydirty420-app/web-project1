@@ -581,13 +581,22 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             ],
         });
 
+        let me = null;
+        
+        if (currentUserId) {
+            me = await User.findByPk(currentUserId, {
+                attributes: ["id", "user_name", "profile_image"],
+            });
+        }
+
         res.status(200).json({
             item,
             sellerMe,
             goodCount,
             isGoodByMe,
             commentCount,
-            itemList
+            itemList,
+            me
         });
     } catch (err) {
         console.error(err);

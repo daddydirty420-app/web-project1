@@ -1,7 +1,7 @@
 import { Container, Back } from "@/components";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import { Item } from "./itemPageTypes";
+import { Item, User } from "./itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import { Main } from "./main";
 import { SellerSectionBottom } from "./sellerSection/sellerSectionBottom";
@@ -29,6 +29,7 @@ type Props = {
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
+    me: User | null;
 };
 
 export const ItemPage = ({
@@ -42,7 +43,8 @@ export const ItemPage = ({
     isGood,
     reportCount,
     userId,
-    loggedIn
+    loggedIn,
+    me
 }: Props) => {
     
     if (!["normal", "admin", "draft", "confirm", "deleted"].includes(page)) {
@@ -77,7 +79,7 @@ export const ItemPage = ({
                 {page === "normal" && <ItemListSection itemList={itemList} sellerMe={sellerMe} />}
                 {(page === "admin" || sellerMe) && <Link href={buttonLink} className={styles.uriageButton}>{buttonText}</Link>}
 
-                <CommentSection id={id} sellerMe={sellerMe} loggedIn={loggedIn} commentCount={commentCount} page={page as "normal" | "admin"} />
+                <CommentSection id={id} sellerMe={sellerMe} loggedIn={loggedIn} commentCount={commentCount} page={page as "normal" | "admin"} item={item} me={me} />
                 {sellerMe && page === "normal" && <SellerSectionBottom id={id} item={item} />}
                 </>
             )}

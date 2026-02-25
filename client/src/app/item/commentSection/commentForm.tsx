@@ -5,23 +5,65 @@ import styles from "./comment.module.css";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { KeyedMutator } from "swr";
+import { Comment, Item, User } from "../itemPageTypes";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     parentId?: string;
     loggedIn: boolean;
+    mutate: KeyedMutator<Comment[]>;
+    item: Item;
+    me: User | null;
 }
 
-export const CommentForm = ({ id, sellerMe, parentId, loggedIn }: Props) => {
+export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate }: Props) => {
     const [inputComment, setInputComment] = useState<string>("");
     const router = useRouter();
 
     const upload = async () => {
+        if (!loggedIn || !me) {
+            toast.error("ログインしてください");
+            router.push("/login");
+            return;
+        }
+
         if (inputComment.length === 0) {
             toast.error("コメントを入力してください。");
             return;
         }
+
+        // 楽観的更新
+        const optimisticComment: Comment = {
+            id: crypto.randomUUID(),
+
+            text: inputComment,
+            sort_number: Date.now(), // 仮のソート用（あとでサーバー値に同期）
+            item_id: id,
+            user_id: me.id,
+            parent_comment_id: parentId ?? "",
+
+            createdAt: new Date(),
+            updatedAt: new Date(),
+
+            pin: false,
+            replyCount: 0,
+            isMyComment: true,
+            isGoodByMe: false,
+            goodCount: 0,
+            reportCount: 0,
+
+            User: me,
+            Item: item,
+        };
+
+        mutate((current: Comment[] = []) => [
+            optimisticComment,
+            ...current,
+        ], false);
+
+        setInputComment("");
 
         try {
             const accessToken = await refreshToken();
@@ -47,10 +89,11 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn }: Props) => {
                 return;
             }
 
+            mutate();
+
             toast.success("コメントを投稿しました！");
-            setInputComment("");
-            router.refresh();
         } catch (err) {
+            mutate();
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }

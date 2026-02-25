@@ -2,12 +2,13 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./comment.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import { CommentForm } from "./commentForm";
 import { CommentList } from "./commentList";
-import { Comment } from "../itemPageTypes";
+import { Comment, Item, User } from "../itemPageTypes";
 import { refreshToken } from "@/lib/refreshToken";
+import useSWR from "swr";
 
 type Props = {
     id: string;
@@ -15,44 +16,41 @@ type Props = {
     commentCount?: number;
     page: "normal" | "admin";
     loggedIn: boolean;
+    item: Item;
+    me: User | null;
 };
 
-export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn }: Props) => {
-    const [visible, setVisible] = useState(false);
-    const [comments, setComments] = useState<Comment[]>([]);
+const fetcher = async (url: string) => {
+    try {
+        const accessToken = await refreshToken();
 
-    useEffect(() => {
-        if (!visible) return;
+        const res = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken ?? ""}`,
+            },
+            cache: "no-store",
+        });
 
-        const fetchComment = async () => {
-            try {
-                const accessToken = await refreshToken();
-                
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/all-comment/${id}${page === "admin" ? "?admin=true" : ""}`, {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${accessToken ?? ""}`,
-                    },
-                    cache: "no-store",
-                });
-
-
-                if (!res.ok) {
-                    const errorData = await res.json();
-                    alert(errorData.message);
-                    return;
-                }
-
-                const data = await res.json();
-                setComments(data.commentListWithExtras);
-            } catch (err) {
-                console.error(err);
-            }
+        if (!res.ok) {
+            throw new Error("コメント取得失敗");
         }
 
-        fetchComment();
-    }, [visible, id, page]);
+        const data = await res.json();
+        return data.commentListWithExtras;
+    } catch (err) {
+        console.error(err);
+    }
+};
 
+export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn, item, me }: Props) => {
+    const [visible, setVisible] = useState(false);
+    
+    const { data: comments, mutate } = useSWR(
+        visible
+        ? `${process.env.NEXT_PUBLIC_API_URL}/comment/all-comment/${id}${page === "admin" ? "?admin=true" : ""}`
+        : null,
+        fetcher
+    );
 
     return (
         <>
@@ -62,7 +60,7 @@ export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn }: P
         </div>
 
         <div className={`${styles.commentBody} ${visible ? styles.open : ""}`}>
-            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} loggedIn={loggedIn} />}
+            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} loggedIn={loggedIn} item={item} me={me} mutate={mutate} />}
             <CommentList id={id} sellerMe={sellerMe} comments={comments} page={page} loggedIn={loggedIn} />
         </div>
         </>

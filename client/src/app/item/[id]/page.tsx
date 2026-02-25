@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { ItemPage } from "../itemPage";
-import { Item } from "../itemPageTypes";
+import { Item, User } from "../itemPageTypes";
 import { Items } from "@/types/itemListTypes";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
@@ -58,6 +58,7 @@ export default async function Page({ params }: Props) {
     const commentCount: number = data.commentCount;
     const goodCount: number = data.goodCount;
     const isGood: boolean = data.isGoodByMe;
+    const me: User = data.me;
 
     const loggedIn = !!session?.user;
     const userId = session?.user.id;
@@ -85,6 +86,7 @@ export default async function Page({ params }: Props) {
         isGood={isGood}
         userId={userId || ""}
         loggedIn={loggedIn}
+        me={me}
         />
     );
 };
