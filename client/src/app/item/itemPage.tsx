@@ -29,7 +29,7 @@ type Props = {
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
-    me: User | null;
+    me?: User | null;
 };
 
 export const ItemPage = ({
@@ -79,7 +79,7 @@ export const ItemPage = ({
                 {page === "normal" && <ItemListSection itemList={itemList} sellerMe={sellerMe} />}
                 {(page === "admin" || sellerMe) && <Link href={buttonLink} className={styles.uriageButton}>{buttonText}</Link>}
 
-                <CommentSection id={id} sellerMe={sellerMe} loggedIn={loggedIn} commentCount={commentCount} page={page as "normal" | "admin"} item={item} me={me} />
+                <CommentSection id={id} sellerMe={sellerMe} loggedIn={loggedIn} commentCount={commentCount} page={page as "normal" | "admin"} item={item} me={me ?? null} />
                 {sellerMe && page === "normal" && <SellerSectionBottom id={id} item={item} />}
                 </>
             )}
