@@ -35,7 +35,7 @@ export async function updateGoodCommentCache(commentId: string, nextIsGood: bool
 
     await mutate(countKey, (current?: GoodCountResponce) => {
         return {
-            count: Math.max(0, current?.count ?? 0) + (nextIsGood ? 1 : -1)
+            count: Math.max(0, (current?.count ?? 0) + (nextIsGood ? 1 : -1))
         };
     }, false);
 };
