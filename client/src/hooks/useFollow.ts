@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR, { mutate } from 'swr';
 import { fetcher } from '@/lib/fetcher';
 
@@ -24,44 +25,35 @@ export function useFollowCount(userId: string) {
     );
 }
 
-export async function updateFollowCache(targetUserId: string, userId: string, isFollowing: boolean, withCount: boolean = true) {
-    mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`,
-        { isFollowing },
-        false
-    );
-    mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`,
-        (currentData?: { followCount: number; followerCount: number }) => {
-            if (!currentData) {
-                return { followCount: 0, followerCount: 0 };
-            };
-            return {
-                followCount: isFollowing 
-                ? currentData.followCount + 1 
-                : Math.max(0, currentData.followCount - 1),
-                followerCount: currentData.followerCount,
-            }
-        },
-        false
-    );
-    mutate(
-        `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${targetUserId}`,
-        (currentData?: { followCount: number; followerCount: number }) => {
-            if (!currentData) {
-                return { followCount: 0, followerCount: 0 };
-            };
-            return {
-                followCount: currentData.followCount,
-                followerCount: isFollowing
-                ? currentData.followerCount + 1
-                : Math.max(0, currentData.followerCount - 1),
-            }
-        },
-        false
-    );
+export async function updateFollowCache(
+    targetUserId: string, 
+    userId: string, 
+    isFollowing: boolean, 
+) {
+    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`;
+    const myCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`;
+    const targetCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${targetUserId}`;
 
-    mutate(`${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`);
-    mutate(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`);
-    mutate(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${targetUserId}`);
+    // 即キャッシュ更新
+    await mutate(statusKey, { isFollowing }, false);
+
+    await mutate(myCountKey, (current?: any) => {
+        if (!current) return current;
+        return {
+            ...current,
+            followCount: isFollowing
+            ? current.followCount + 1
+            : Math.max(0, current.followCount - 1)
+        };
+    }, false);
+
+    await mutate(targetCountKey, (current?: any) => {
+        if (!current) return current;
+        return {
+            ...current,
+            followCount: isFollowing
+            ? current.followCount + 1
+            : Math.max(0, current.followCount - 1)
+        };
+    }, false);
 }

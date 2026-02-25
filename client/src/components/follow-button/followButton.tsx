@@ -7,16 +7,17 @@ import { refreshToken } from '@/lib/refreshToken';
 
 type Props = {
     targetUserId: string;
-    withCount?: boolean;
     currentUserId: string | null;
 };
 
-export const FollowButton = ({ targetUserId, withCount, currentUserId }: Props) => {
+export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
     const { data: status } = useFollowStatus(targetUserId);
 
     if (!currentUserId || !targetUserId) return null;
 
     const add = async () => {
+        updateFollowCache(targetUserId, currentUserId, true);
+
         try {
             const accessToken = await refreshToken();
         
@@ -31,14 +32,17 @@ export const FollowButton = ({ targetUserId, withCount, currentUserId }: Props) 
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateFollowCache(targetUserId, currentUserId, true, withCount ?? true);
         } catch (err) {
+            // ロールバック
+            updateFollowCache(targetUserId, currentUserId, false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
+        updateFollowCache(targetUserId, currentUserId, false);
+
         try {
             const accessToken = await refreshToken();
         
@@ -53,8 +57,8 @@ export const FollowButton = ({ targetUserId, withCount, currentUserId }: Props) 
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateFollowCache(targetUserId, currentUserId, false, withCount ?? true);
         } catch (err) {
+            updateFollowCache(targetUserId, currentUserId, true);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
