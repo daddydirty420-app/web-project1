@@ -27,6 +27,8 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
+        updateGoodItemCache(id, true);
+
         try {
             const accessToken = await refreshToken();
 
@@ -41,14 +43,16 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateGoodItemCache(id, true);
         } catch (err) {
+            updateGoodItemCache(id, false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
+        updateGoodItemCache(id, false);
+
         try {
             const accessToken = await refreshToken();
 
@@ -63,8 +67,9 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            updateGoodItemCache(id, false);
         } catch (err) {
+            updateGoodItemCache(id, true);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
