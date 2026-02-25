@@ -8,7 +8,7 @@ export function useGoodStatus(itemId: string) {
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/status/${itemId}`,
         fetcher, {
             revalidateIfStale: false,
-            revalidateOnMount: false,
+            revalidateOnMount: true,
             revalidateOnFocus: false,
         }
     );
@@ -20,7 +20,7 @@ export function useGoodCount(itemId: string, initialCount: number) {
         fetcher, {
             fallbackData: { count: initialCount },
             revalidateIfStale: false,
-            revalidateOnMount: false,
+            revalidateOnMount: true,
             revalidateOnFocus: false,
         }
     );
