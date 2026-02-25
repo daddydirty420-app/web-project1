@@ -14,10 +14,11 @@ export function useGoodStatus(itemId: string) {
     );
 };
 
-export function useGoodCount(itemId: string) {
+export function useGoodCount(itemId: string, initialCount: number) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/count/${itemId}`,
         fetcher(), {
+            fallbackData: { count: initialCount },
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,

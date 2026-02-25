@@ -14,10 +14,11 @@ export function useGoodStatus(commentId: string) {
     );
 };
 
-export function useGoodCount(commentId: string) {
+export function useGoodCount(commentId: string, initialCount: number) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`,
         fetcher(), {
+            fallbackData: { count: initialCount },
             revalidateIfStale: false,
             revalidateOnMount: false,
             revalidateOnFocus: false,

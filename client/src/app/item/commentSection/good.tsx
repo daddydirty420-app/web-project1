@@ -21,11 +21,11 @@ export const Good = ({ comment, loggedIn }: Props) => {
     const initialCount = comment.goodCount;
     const isMyComment = comment.isMyComment;
     const { data: goodStatus } = useGoodStatus(id);
-    const { data: goodCount } = useGoodCount(id);
+    const { data: goodCount } = useGoodCount(id, initialCount);
     const router = useRouter();
 
     const good = goodStatus?.isGood ?? initialGood ?? false;
-    const count = goodCount?.count ?? initialCount ?? 0;
+    const count = goodCount?.count ?? 0;
 
     const add = async () => {
         updateGoodCommentCache(id, true);
