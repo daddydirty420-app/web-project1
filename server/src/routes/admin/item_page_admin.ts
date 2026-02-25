@@ -7,6 +7,7 @@ const router = Router();
 
 router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
+    const userId = req.user!.id;
 
     try {
         const item = await Item.findByPk(itemId, {
@@ -84,7 +85,21 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
             where: { item_id: itemId },
         });
 
-        res.json({ item, goodCount, commentCount, reportCount });
+        let me = null;
+        
+        if (userId) {
+            me = await User.findByPk(userId, {
+                attributes: ["id", "user_name", "profile_image"],
+            });
+        }
+
+        res.status(200).json({
+            item,
+            goodCount,
+            commentCount,
+            reportCount,
+            me
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
