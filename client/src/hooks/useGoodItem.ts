@@ -6,23 +6,14 @@ type GoodCountResponce = { count: number };
 export function useGoodStatus(itemId: string) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/status/${itemId}`,
-        fetcher, {
-            revalidateIfStale: false,
-            revalidateOnMount: true,
-            revalidateOnFocus: false,
-        }
+        fetcher
     );
 };
 
-export function useGoodCount(itemId: string, initialCount: number) {
+export function useGoodCount(itemId: string) {
     return useSWR<GoodCountResponce, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/good-item/count/${itemId}`,
-        fetcher, {
-            fallbackData: { count: initialCount },
-            revalidateIfStale: false,
-            revalidateOnMount: true,
-            revalidateOnFocus: false,
-        }
+        fetcher,
     );
 };
 

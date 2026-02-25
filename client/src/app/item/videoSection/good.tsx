@@ -20,11 +20,11 @@ type Props = {
 
 export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }: Props) => {
     const { data: goodStatus } = useGoodStatus(id);
-    const { data: goodCount } = useGoodCount(id, initialCount ?? 0);
+    const { data: goodCount } = useGoodCount(id);
     const router = useRouter();
 
     const good = goodStatus?.isGood ?? initialGood ?? false;
-    const count = goodCount?.count ?? 0;
+    const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
         updateGoodItemCache(id, true);
