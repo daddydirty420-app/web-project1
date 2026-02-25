@@ -9,7 +9,7 @@ export function useGoodStatus(commentId: string, initialGood: boolean) {
         fetcher, {
             fallbackData: { isGood: initialGood },
             revalidateIfStale: false,
-            revalidateOnMount: false,
+            revalidateOnMount: true,
             revalidateOnFocus: false,
         }
     );
@@ -21,7 +21,7 @@ export function useGoodCount(commentId: string, initialCount: number) {
         fetcher, {
             fallbackData: { count: initialCount },
             revalidateIfStale: false,
-            revalidateOnMount: false,
+            revalidateOnMount: true,
             revalidateOnFocus: false,
         }
     );
