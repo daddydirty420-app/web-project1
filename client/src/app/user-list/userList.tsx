@@ -103,57 +103,78 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
             />
         </section>
 
-        <section className={styles.userListSection}>
-            {previewUserList.map((user) => (
-                <section key={user.id} className={styles.userSection}>
-                    <Link
-                    href={`/profile/${user.id}`}
-                    className={styles.userImageNameFlex}
-                    >
-                        <Image
-                        src={user.profile_image ?? "/default-profile.png"}
-                        alt="プロフィール画像"
-                        width={45}
-                        height={45}
-                        className={styles.image}
-                        />
-
-                        <div className={styles.nameBlock}>
-                            <p className={styles.userName}>{user.user_name}</p>
-
-                            <div className={styles.iconRow}>
-                                {user.honnin_verified && (
-                                    <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
-                                )}
-                                {user.early_seller && (
-                                    <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
-                                )}
-                                {user.ShopInfo && (
-                                    <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
-                                )}
-                            </div>
-                        </div>
-                    </Link>
-
-                    {loggedIn && 
-                    !(followTab === "follow" && myFollow) && 
-                    currentUserId !== user.id && 
-                    (
-                        <FollowButton user={user} />
-                    )}
-
-                    {loggedIn && followTab === "follow" && myFollow && (
-                        <button
-                        type="button"
-                        className={styles.followRemoveButton}
-                        onClick={() => followRemove(user.id)}
+        {previewUserList.length > 0 && (
+            <section className={styles.userListSection}>
+                {previewUserList.map((user) => (
+                    <section key={user.id} className={styles.userSection}>
+                        <Link
+                        href={`/profile/${user.id}`}
+                        className={styles.userImageNameFlex}
                         >
-                            削除
-                        </button>
-                    )}
-                </section>
-            ))}
-        </section>
+                            <Image
+                             src={user.profile_image ?? "/default-profile.png"}
+                            alt="プロフィール画像"
+                             width={45}
+                            height={45}
+                            className={styles.image}
+                             />
+
+                            <div className={styles.nameBlock}>
+                                <p className={styles.userName}>{user.user_name}</p>
+
+                                <div className={styles.iconRow}>
+                                    {user.honnin_verified && (
+                                        <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
+                                    )}
+                                    {user.early_seller && (
+                                         <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
+                                    )}
+                                    {user.ShopInfo && (
+                                        <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
+                                    )}
+                                </div>
+                            </div>
+                        </Link>
+
+                        {loggedIn && 
+                        !(followTab === "follow" && myFollow) && 
+                        currentUserId !== user.id && 
+                        (
+                            <FollowButton user={user} />
+                        )}
+
+                        {loggedIn && followTab === "follow" && myFollow && (
+                            <button
+                            type="button"
+                            className={styles.followRemoveButton}
+                            onClick={() => followRemove(user.id)}
+                            >
+                                削除
+                            </button>
+                        )}
+                    </section>
+                ))}
+            </section>
+        )}
+
+        {previewUserList.length === 0 && (
+            <>
+            {searchValue.trim().length > 0 && (
+                <p className={styles.noUser}>ユーザーが見つかりません</p>
+            )}
+
+            {searchValue.trim().length === 0 && (
+                <p className={styles.noUser}>
+                    {["good-item", "good-comment"].includes(page)
+                    ? "いいねしたユーザーがいません" 
+                    : followTab === "follow" 
+                    ? "フォロー中のユーザーがいません" 
+                    : "フォロワーがいません"
+                    }
+                </p>
+            )}
+            </>
+        )}
         </>
     );
 };
