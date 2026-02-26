@@ -6,7 +6,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function UserListUI({ title, children }: Props) {
+export default function GoodUI({ title, children }: Props) {
     return (
         <Container>
             <TitleAndBack title={title} />

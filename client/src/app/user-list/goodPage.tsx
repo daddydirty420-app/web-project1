@@ -1,6 +1,6 @@
 import { User } from "./type";
 import { UserList } from "./userList";
-import UserListUI from "./userListUI";
+import GoodUI from "./goodUI";
 
 type Props = {
     title: string;
@@ -13,7 +13,7 @@ type Props = {
     myFollow?: boolean;
 };
 
-export const UserListPage = ({
+export const GoodPage = ({
     title,
     loggedIn,
     id,
@@ -24,7 +24,7 @@ export const UserListPage = ({
     myFollow
 }: Props) => {
     return (
-        <UserListUI title={title}>
+        <GoodUI title={title}>
             <UserList
             loggedIn={loggedIn}
             id={id}
@@ -34,6 +34,6 @@ export const UserListPage = ({
             followTab={followTab}
             myFollow={myFollow}
             />
-        </UserListUI>
+        </GoodUI>
     );
 };

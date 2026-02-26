@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { UserListPage } from "../../userListPage";
+import { GoodPage } from "../../goodPage";
 
 type Props = {
     params: { id: string };
@@ -44,7 +44,7 @@ export default async function Page({ params }: Props) {
 
     const data = await res.json();
 
-    return <UserListPage
+    return <GoodPage
     title="いいねしたユーザー"
     loggedIn={!!session}
     id={id}
