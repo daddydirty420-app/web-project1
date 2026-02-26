@@ -9,7 +9,6 @@ import Link from "next/link";
 import { FollowButton } from "./followButton";
 import React, { useRef, useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
-import { normalizeJapanese } from "@/lib/normalizeJapanese";
 
 type Props = {
     loggedIn: boolean;
@@ -77,64 +76,6 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
             search(val);
         }, 300);
     };
-    
-    const buildMapping = (str: string) => {
-        const normalized = normalizeJapanese(str);
-    
-        const map: { origIndex: number; normStart: number; normEnd: number }[] = [];
-        let normPos = 0;
-    
-        for (let i = 0; i < str.length; i++) {
-            const origChar = str[i];
-            const normChar = normalizeJapanese(origChar);
-    
-            const start = normPos;
-            normPos += normChar.length;
-            const end = normPos - 1;
-    
-            map.push({
-                origIndex: i,
-                normStart: start,
-                normEnd: end,
-            });
-        }
-    
-        return { normalized, map };
-    };
-    
-    const highlightMatch = (word: string, query: string) => {
-        if (!query) return word;
-    
-        const { normalized: nWord, map } = buildMapping(word);
-        const nQuery = normalizeJapanese(query);
-    
-        const normIndex = nWord.indexOf(nQuery);
-        if (normIndex === -1) return word;
-    
-        const startMap = 
-        map.find((m) => m.normStart === normIndex || (m.normStart < normIndex && m.normEnd >= normIndex));
-        if (!startMap) return word;
-    
-        const startOrig = startMap.origIndex;
-    
-        const endNormIndex = normIndex + nQuery.length - 1;
-        const endMap = map.find((m) => m.normStart <= endNormIndex && m.normEnd >= endNormIndex);
-        if (!endMap) return word;
-    
-        const endOrig = endMap.origIndex;
-    
-        const before = word.slice(0, startOrig);
-        const match = word.slice(startOrig, endOrig + 1);
-        const after = word.slice(endOrig + 1);
-    
-        return (
-            <>
-                {before}
-                <strong>{match}</strong>
-                {after}
-            </>
-        );
-    };
 
     return (
         <>
@@ -178,9 +119,7 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
                         />
 
                         <div className={styles.nameBlock}>
-                            <p className={styles.userName}>
-                                {highlightMatch(user.user_name, searchValue)}
-                            </p>
+                            <p className={styles.userName}>{user.user_name}</p>
 
                             <div className={styles.iconRow}>
                                 {user.honnin_verified && (

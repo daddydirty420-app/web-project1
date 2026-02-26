@@ -47,9 +47,6 @@
     -webkit-line-clamp: 1;
     line-clamp: 1;
 }
-.userName strong {
-    color: var(--text);
-}
 
 .iconRow {
     display: flex;
