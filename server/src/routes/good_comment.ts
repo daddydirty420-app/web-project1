@@ -127,7 +127,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified', "early_seller"],
+                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
                     include: [
                         {
                             model: ShopInfo,
@@ -196,7 +196,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified', "early_seller"],
+                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
                     where: {
                         user_name: { [Op.iLike]: `%${String(keyword).trim()}%` }
                     },
