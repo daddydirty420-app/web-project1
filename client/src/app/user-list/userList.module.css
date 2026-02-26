@@ -47,6 +47,9 @@
     -webkit-line-clamp: 1;
     line-clamp: 1;
 }
+.userName strong {
+    font-weight: 600;
+}
 
 .iconRow {
     display: flex;
@@ -75,6 +78,42 @@
 .followRemoveButton:hover {
     background-color: var(--button-gray-hover);
     transform: translateY(1px);
+}
+
+.searchSection {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.searchInput {
+    width: 100%;
+    height: 42px;
+    border-radius: 21px;
+    border: 1px solid var(--gray-line-mid);
+    background-color: var(--background);
+    font-size: 13px;
+    outline: none;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 12px;
+    font-size: 18px;
+    color: var(--theme);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.searchIcon:hover {
+    color: var(--theme-str);
+    transform: scale(1.05);
+}
+
+.activeIcon {
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {

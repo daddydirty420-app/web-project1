@@ -194,7 +194,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                     />
                     <FontAwesomeIcon
                     icon={faSearch} 
-                    className={`${styles.searchIconMobile} ${value ? styles.activeIcon : ""}`}
+                    className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ""}`}
                     onClick={() => {
                         if (!value.trim()) return;
                         router.push(`/search?keyword=${encodeURIComponent(value)}`);

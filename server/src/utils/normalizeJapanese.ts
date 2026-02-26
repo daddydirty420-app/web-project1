@@ -18,7 +18,7 @@ export const normalizeJapanese = (str: string) => {
     s = s.replace(/ー/g, "");
 
     s = s
-    .replace(/\s+/g, "")      // スペース削除
+    .replace(/\s+/g, "") // スペース削除
     .replace(/[Ａ-Ｚａ-ｚ０-９]/g, ch =>
         String.fromCharCode(ch.charCodeAt(0) - 0xFEE0) // 全角→半角
     );

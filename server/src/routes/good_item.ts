@@ -141,6 +141,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
                         {
                             model: ShopInfo,
                             attributes: ['id'],
+                            required: false,
                         },
                     ],
                 },
@@ -181,7 +182,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
         const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.User;
-        })
+        });
 
         res.status(200).json({ userList, userCount });
     } catch (err) {
@@ -193,40 +194,41 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
 router.get('/good-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
+        
+    const currentUserId = req.user?.id ?? null;
+    const itemId = req.params.id;
+    const keyword = req.query?.keyword ?? "";
+    if (!String(keyword).trim()) {
+        res.status(400).json({ message: "検索キーワードがありません" });
+        return;
+    }
 
     try {
-        const currentUserId = req.user?.id ?? null;
-
-        const itemId = req.params.id;
-
-        const userList = await GoodItem.findAll({
+        const goodItemList = await GoodItem.findAll({
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified'],
-                    where: { user_name: { [Op.iLike]: `%${req.query.keyword}%` } },
+                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
+                    where: {
+                        user_name: { [Op.iLike]: `%${String(keyword).trim().toLowerCase()}%`}
+                    },
                     include: [
                         {
                             model: ShopInfo,
                             attributes: ['id'],
+                            required: false,
                         },
                     ],
                 },
             ],
         }) as UserInstance[];
 
-        const allUserList = await GoodItem.findAll({
-            where: { item_id: itemId }
-        });
+        let finalGoodList = null;
 
-        const userCount = allUserList.length;
-
-        let finalUserList = null;
-
-        if (currentUserId !== null) {
-            const targetUserIds = userList.map(user => user.User.id);
+        if (currentUserId !== null && goodItemList.length > 0) {
+            const targetUserIds = goodItemList.map(user => user.User.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -237,7 +239,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
 
             const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
 
-            finalUserList = userList.map(item => {
+            finalGoodList = goodItemList.map(item => {
                 const plainItem = item.toJSON();
                 const targetId = plainItem.User?.id;
                 plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -245,12 +247,14 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
             });
         }
 
-        if (!userList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
+        const source = finalGoodList ?? goodItemList;
 
-        res.json({ userList: finalUserList ?? userList, userCount });
+        const userList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.User;
+        });
+
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
