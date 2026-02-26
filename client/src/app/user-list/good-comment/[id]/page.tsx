@@ -3,7 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { GoodPage } from "../../goodPage";
+import GoodUI from "../../goodUI";
+import { UserList } from "../../userList";
 
 type Props = {
     params: { id: string };
@@ -43,13 +44,16 @@ export default async function Page({ params }: Props) {
     }
 
     const data = await res.json();
-
-    return <GoodPage
-    title="いいねしたユーザー"
-    loggedIn={!!session}
-    id={id}
-    currentUserId={session?.user.id ?? ""}
-    userList={data.userList ?? []}
-    page="good-comment"
-    />;
+    
+    return (
+        <GoodUI title="いいねしたユーザー">
+            <UserList
+            loggedIn={!!session}
+            id={id}
+            currentUserId={session?.user.id ?? ""}
+            userList={data.userList ?? []}
+            page="good-comment"
+            />
+        </GoodUI>
+    );
 }
