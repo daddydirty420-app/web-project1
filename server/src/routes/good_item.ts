@@ -148,8 +148,6 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             ],
         }) as UserInstance[];
 
-        const userCount = goodItemList.length;
-
         let finalGoodList = null;
 
         if (currentUserId !== null) {
@@ -172,11 +170,6 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             });
         }
 
-        if (!goodItemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const source = finalGoodList ?? goodItemList;
 
         const userList = source.map(item => {
@@ -184,7 +177,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             return plain.User;
         });
 
-        res.status(200).json({ userList, userCount });
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -205,8 +198,10 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
 
     try {
         const goodItemList = await GoodItem.findAll({
+            attributes: ["id"],
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],
+            distinct: true,
             include: [
                 {
                     model: User,

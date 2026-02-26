@@ -8,7 +8,6 @@ type Props = {
     id: string;
     currentUserId: string;
     userList: User[];
-    userCount: number;
     page: "follow" | "good-item" | "good-comment";
     followTab?: "follow" | "follower" | null;
     myFollow?: boolean;
@@ -20,7 +19,6 @@ export const UserListPage = ({
     id,
     currentUserId,
     userList,
-    userCount,
     page,
     followTab,
     myFollow

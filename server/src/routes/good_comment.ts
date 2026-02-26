@@ -111,38 +111,38 @@ router.get("/count/:id", async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
+        
+    const currentUserId = req.user!.id;
+    const commentId = req.params.id;
 
     try {
-        const currentUserId = req.user?.id ?? null;
-
-        const commentId = req.params.id;
-
-        const userList = await GoodComment.findAll({
+        const goodCommentList = await GoodComment.findAll({
+            attributes: ["id"],
             where: { comment_id: commentId },
             order: [['createdAt', 'DESC']],
+            distinct: true,
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified'],
+                    attributes: ['id', 'user_name', 'profile_image', 'verified', "early_seller"],
                     include: [
                         {
                             model: ShopInfo,
-                            attributes: ['id']
-                        }
-                    ]
-                }
-            ]
+                            attributes: ['id'],
+                            required: false,
+                        },
+                    ],
+                },
+            ],
         }) as UserInstance[];
 
-        const userCount = userList.length;
-
-        let finalUserList = null;
+        let finalGoodList = null;
 
         if (currentUserId !== null) {
-            const targetUserIds = userList.map(user => user.User.id);
+            const targetUserIds = goodCommentList.map(user => user.User.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -153,7 +153,7 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
 
             const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
 
-            finalUserList = userList.map(item => {
+            finalGoodList = goodCommentList.map(item => {
                 const plainItem = item.toJSON();
                 const targetId = plainItem.User?.id;
                 plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -161,12 +161,14 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
             });
         }
 
-        if (!userList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
-            return;
-        }
+        const source = finalGoodList ?? goodCommentList;
 
-        res.json({ userList: finalUserList ?? userList, userCount });
+        const userList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.User;
+        });
+
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -176,40 +178,43 @@ router.get('/good-user-list/:id', authenticateOptional, async (req: Request, res
 router.get('/good-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
+        
+    const currentUserId = req.user!.id;
+    const commentId = req.params.id;
+    const keyword = req.query?.keyword ?? "";
+    if (!String(keyword).trim()) {
+        res.status(400).json({ message: "検索キーワードがありません" });
+        return;
+    }
 
     try {
-        const currentUserId = req.user?.id ?? null;
-
-        const commentId = req.params.id;
-
-        const userList = await GoodComment.findAll({
+        const goodCommentList = await GoodComment.findAll({
+            attributes: ["id"],
             where: { comment_id: commentId },
             order: [['createdAt', 'DESC']],
+            distinct: true,
             include: [
                 {
                     model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'verified'],
-                    where: { user_name: { [Op.iLike]: `%${req.query.keyword}%` } },
+                    attributes: ['id', 'user_name', 'profile_image', 'verified', "early_seller"],
+                    where: {
+                        user_name: { [Op.iLike]: `%${String(keyword).trim()}%` }
+                    },
                     include: [
                         {
                             model: ShopInfo,
                             attributes: ['id'],
-                        }
-                    ]
-                }
-            ]
+                            required: false,
+                        },
+                    ],
+                },
+            ],
         }) as UserInstance[];
 
-        const allUserList = await GoodComment.findAll({
-            where: { comment_id: commentId }
-        });
-
-        const userCount = allUserList.length;
-
-        let finalUserList = null;
+        let finalGoodList = null;
 
         if (currentUserId !== null) {
-            const targetUserIds = userList.map(user => user.User.id);
+            const targetUserIds = goodCommentList.map(user => user.User.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -220,7 +225,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
 
             const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
 
-            finalUserList = userList.map(item => {
+            finalGoodList = goodCommentList.map(item => {
                 const plainItem = item.toJSON();
                 const targetId = plainItem.User?.id;
                 plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -228,12 +233,14 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
             });
         }
 
-        if (!userList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
-            return;
-        }
+        const source = finalGoodList ?? goodCommentList;
 
-        res.json({ userList: finalUserList ?? userList, userCount });
+        const userList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.User;
+        });
+
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});

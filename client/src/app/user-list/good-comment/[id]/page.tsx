@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/good-user-list/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -50,6 +50,6 @@ export default async function Page({ params }: Props) {
     id={id}
     currentUserId={session?.user.id ?? ""}
     userList={data.userList ?? []}
-    page="good-item"
+    page="good-comment"
     />;
 }
