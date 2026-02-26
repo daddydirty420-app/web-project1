@@ -95,7 +95,8 @@
     border-radius: 21px;
     border: 1px solid var(--gray-line-mid);
     background-color: var(--background);
-    font-size: 13px;
+    font-size: 12px;
+    padding: 4px 12px;
     outline: none;
 }
 

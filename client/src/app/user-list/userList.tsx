@@ -38,7 +38,7 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
         let apiUrl = "";
 
         if (page === "good-item") {
-            apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/search/${id}`;
+            apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/search/${id}?keyword=${word.trim()}`;
         }
 
         try {
