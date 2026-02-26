@@ -48,7 +48,7 @@
     line-clamp: 1;
 }
 .userName strong {
-    font-weight: 600;
+    color: var(--text);
 }
 
 .iconRow {
