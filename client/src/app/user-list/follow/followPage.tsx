@@ -30,6 +30,9 @@ export const FollowPage = ({
 }: Props) => {
     const router = useRouter();
 
+    console.log("userlist:", userList);
+    console.log("followTab:", followTab);
+
     return (
         <>
         <section className={styles.followHeader}>
