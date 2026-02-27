@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { FollowButton } from "./followButton";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
@@ -23,6 +23,10 @@ type Props = {
 export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTab, myFollow }: Props) => {
     const [previewUserList, setPreviewUserList] = useState<User[]>(userList);
     const [searchValue, setSearchValue] = useState("");
+
+    useEffect(() => {
+        setPreviewUserList(userList);
+    }, [userList]);
 
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
