@@ -25,14 +25,14 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page({ params, searchParams }: Props) {
-    const { id } = params;
+    const { id } = await params;
 
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    const tab = searchParams.tab ?? "follow";
+    const tab = (await searchParams)?.tab ?? "follow";
 
     console.log("Page params:", params);
     console.log("Page id:", id);
