@@ -40,7 +40,7 @@ export const FollowPage = ({
             type="button"
             name="follow-tab"
             onClick={() => 
-                router.push("?tab=follow")
+                router.push(`/user-list/follow/${id}/connections?tab=follow`)
             }
             className={`${styles.followHeaderButton} ${
                 followTab === "follow"
@@ -55,7 +55,7 @@ export const FollowPage = ({
             type="button"
             name="follower-tab"
             onClick={() => 
-                router.push("?tab=follower")
+                router.push(`/user-list/follow/${id}/connections?tab=follower`)
             }
             className={`${styles.followHeaderButton} ${
                 followTab === "follower"
