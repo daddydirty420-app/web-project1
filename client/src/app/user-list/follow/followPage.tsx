@@ -13,6 +13,8 @@ type Props = {
     page: "follow" | "good-item" | "good-comment";
     followTab: "follow" | "follower" | null;
     myFollow: boolean;
+    followCount: number;
+    followerCount: number;
 };
 
 export const FollowPage = ({
@@ -22,7 +24,9 @@ export const FollowPage = ({
     userList,
     page,
     followTab,
-    myFollow
+    myFollow,
+    followCount,
+    followerCount
 }: Props) => {
     const router = useRouter();
 
@@ -41,7 +45,7 @@ export const FollowPage = ({
                 : ""
             }`}
             >
-                フォロー中
+                {followCount.toLocaleString()} フォロー中
             </button>
 
             <button
@@ -56,7 +60,7 @@ export const FollowPage = ({
                 : ""
             }`}
             >
-                フォロワー
+                {followerCount.toLocaleString()} フォロワー
             </button>
         </section>
         

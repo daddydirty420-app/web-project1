@@ -184,7 +184,18 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
             return;
         }
 
-        res.status(200).json({ previewFollowList, pageUser });
+        const followCount = previewFollowList.length;
+
+        const followerCount = await Follow.count({
+            where: { follower_user_id: pageUserId },
+        });
+
+        res.status(200).json({
+            previewFollowList,
+            pageUser,
+            followCount,
+            followerCount
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -253,7 +264,18 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
             return;
         }
 
-        res.status(200).json({ previewFollowerList, pageUser });
+        const followCount = await Follow.count({
+            where: { follow_user_id: pageUserId },
+        });
+
+        const followerCount = previewFollowerList.length;
+
+        res.status(200).json({
+            previewFollowerList,
+            pageUser,
+            followCount,
+            followerCount
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});

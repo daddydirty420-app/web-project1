@@ -1,0 +1,23 @@
+.followHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.followHeaderButton {
+    width: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--theme);
+    border-bottom: 1px solid var(--gray-line-mid);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.active .followHeaderButton {
+    color: var(--theme-str);
+    border-bottom: 2px solid var(--theme);
+    box-shadow: none;
+}

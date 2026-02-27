@@ -70,6 +70,8 @@ export default async function Page({ params, searchParams }: Props) {
             page="follow"
             followTab={tab}
             myFollow={myFollow}
+            followCount={data.followCount}
+            followerCount={data.followerCount}
             />
         </FollowUI>
     );
