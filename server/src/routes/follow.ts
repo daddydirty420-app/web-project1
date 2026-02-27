@@ -239,7 +239,7 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
         let finalFollowerList = null;
 
         if (currentUserId !== null && followerList.length > 0) {
-            const targetUserIds = followerList.map(user => user.FollowerUser.id);
+            const targetUserIds = followerList.map(user => user.FollowUser.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -252,13 +252,18 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
 
             finalFollowerList = followerList.map(item => {
                 const plainItem = item.toJSON();
-                const targetId = plainItem.FollowerUser?.id;
-                plainItem.FollowerUser.is_following = followingUserIdSet.has(targetId);
+                const targetId = plainItem.FollowUser?.id;
+                plainItem.FollowUser.is_following = followingUserIdSet.has(targetId);
                 return plainItem;
             });
         }
 
-        const previewFollowerList = finalFollowerList ?? followerList;
+        const source = finalFollowerList ?? followerList;
+
+        const previewFollowerList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.FollowUser;
+        });
 
         const pageUser = await User.findByPk(pageUserId, {
             attributes: ['id', 'user_name'],
