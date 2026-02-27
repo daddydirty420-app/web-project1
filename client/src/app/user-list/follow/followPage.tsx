@@ -32,6 +32,7 @@ export const FollowPage = ({
 
     console.log("userlist:", userList);
     console.log("followTab:", followTab);
+    console.log("myFollow:", myFollow);
 
     return (
         <>

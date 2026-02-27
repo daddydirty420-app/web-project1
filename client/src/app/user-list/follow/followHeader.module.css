@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.active .followHeaderButton {
+.active.followHeaderButton {
     color: var(--theme-str);
     border-bottom: 2px solid var(--theme);
     box-shadow: none;
