@@ -12,7 +12,7 @@
     font-weight: 500;
     color: var(--theme);
     border-bottom: 1px solid var(--gray-line-mid);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-mini);
     cursor: pointer;
 }
 
