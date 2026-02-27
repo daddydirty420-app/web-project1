@@ -173,7 +173,12 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
             });
         }
 
-        const previewFollowList = finalFollowList ?? followList;
+        const source = finalFollowList ?? followList;
+
+        const previewFollowList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.User;
+        });
 
         const pageUser = await User.findByPk(pageUserId, {
             attributes: ['id', 'user_name'],
