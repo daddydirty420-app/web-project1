@@ -40,6 +40,15 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
             apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/search/${id}?keyword=${word.trim()}`;
         } else if (page === "good-comment") {
             apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/good-user-list/search/${id}?keyword=${word.trim()}`;
+        } else if (page === "follow") {
+            if (followTab === "follow") {
+                apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/follow/follow-list/search/${id}?keyword=${word.trim()}`;
+            } else if (followTab === "follower") {
+                apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/follow/follower-list/search/${id}?keyword=${word.trim()}`;
+            } else {
+                setPreviewUserList(userList);
+                return;
+            }
         }
 
         try {
@@ -60,7 +69,17 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
                 return;
             }
 
-            setPreviewUserList(data.userList);
+            let list = [];
+
+            if (["good-item", "good-comment"].includes(page)) {
+                list = data.userList;
+            } else if (page === "follow") {
+                list = followTab === "follow"
+                ? data.previewFollowList
+                : data.previewFollowerList;
+            }
+
+            setPreviewUserList(list);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             setPreviewUserList(userList);

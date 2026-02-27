@@ -13,11 +13,11 @@ export class Follow extends Model {
     static associate() {
         Follow.belongsTo(User, {
             foreignKey: "follow_user_id",
-            as: "FollowUser",
+            as: "FollowUser", // フォローしている
         });
         Follow.belongsTo(User, {
             foreignKey: "follower_user_id",
-            as: "FollowerUser",
+            as: "FollowerUser", // フォローされている
         });
     }
 
