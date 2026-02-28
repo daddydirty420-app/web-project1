@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
 import FollowUI from "../../followUI";
-import { FollowPage } from "../../followPage";
+import { UserList } from "@/app/user-list/userList";
+import { FollowHeader } from "../../followHeader";
 
 type Props = {
     params: { id: string };
@@ -64,8 +65,16 @@ export default async function Page({ params, searchParams }: Props) {
     const myFollow = myId === id;
 
     return (
-        <FollowUI>
-            <FollowPage
+        <>
+        <FollowHeader
+        id={id}
+        followTab={tab}
+        followCount={data.followCount}
+        followerCount={data.followerCount}
+        />
+
+        <FollowUI>     
+            <UserList
             loggedIn={!!session}
             id={id}
             currentUserId={myId}
@@ -73,9 +82,8 @@ export default async function Page({ params, searchParams }: Props) {
             page="follow"
             followTab={tab}
             myFollow={myFollow}
-            followCount={data.followCount}
-            followerCount={data.followerCount}
             />
         </FollowUI>
+        </>
     );
 }

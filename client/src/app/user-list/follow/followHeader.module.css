@@ -1,23 +1,30 @@
 .followHeader {
+    width: 100%;
+    height: 48px;
+    border-bottom: 1px solid var(--gray-line-mid);
+    box-shadow: var(--shadow-mini);
+}
+
+.followButtonFlex {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    justify-content: center;
     width: 100%;
     max-width: 480px;
+    height: 100%;
     margin: 0 auto;
 }
 
 .followHeaderButton {
     width: 50%;
-    font-size: 14px;
+    height: 32px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--theme);
-    border-bottom: 1px solid var(--gray-line-mid);
-    box-shadow: var(--shadow-mini);
     cursor: pointer;
 }
 
 .active.followHeaderButton {
     color: var(--theme-str);
     border-bottom: 2px solid var(--theme);
-    box-shadow: none;
 }
