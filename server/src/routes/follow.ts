@@ -354,7 +354,12 @@ router.get('/follow-list/search/:id', authenticateOptional, async (req: Request,
             });
         }
 
-        const previewFollowList = finalFollowList ?? followList;
+        const source = finalFollowList ?? followList;
+
+        const previewFollowList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.FollowerUser;
+        });
 
         res.status(200).json({ previewFollowList });
     } catch (err) {
@@ -422,7 +427,12 @@ router.get('/follower-list/search/:id', authenticateOptional, async (req: Reques
             });
         }
 
-        const previewFollowerList = finalFollowerList ?? followerList;
+        const source = finalFollowerList ?? followerList;
+
+        const previewFollowerList = source.map(item => {
+            const plain = item.toJSON ? item.toJSON() : item;
+            return plain.FollowUser;
+        });
 
         res.status(200).json({ previewFollowerList });
     } catch (err) {

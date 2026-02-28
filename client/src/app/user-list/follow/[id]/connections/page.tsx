@@ -35,9 +35,6 @@ export default async function Page({ params, searchParams }: Props) {
 
     const tab = (await searchParams)?.tab ?? "follow";
 
-    console.log("Page params:", params);
-    console.log("Page id:", id);
-
     const apiUrl = tab === "follow"
     ? `${process.env.NEXT_PUBLIC_API_URL}/follow/follow-list/${id}`
     : `${process.env.NEXT_PUBLIC_API_URL}/follow/follower-list/${id}`;
