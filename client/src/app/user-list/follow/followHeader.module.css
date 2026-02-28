@@ -3,11 +3,12 @@
     height: 48px;
     border-bottom: 1px solid var(--gray-line-mid);
     box-shadow: var(--shadow-mini);
+    margin-bottom: 0.75rem;
 }
 
 .followButtonFlex {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: center;
     width: 100%;
     max-width: 480px;
