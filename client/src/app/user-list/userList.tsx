@@ -102,6 +102,10 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
         }, 300);
     };
 
+    console.log("loggedIn:", loggedIn);
+    console.log("followTab:", followTab);
+    console.log("myFollow:", myFollow);
+
     return (
         <>
         <section className={styles.searchSection}>
