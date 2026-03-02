@@ -62,7 +62,7 @@ export default async function Page({ params, searchParams }: Props) {
     console.log("myId", myId);
     console.log("id:", id);
 
-    const myFollow = myId === id;
+    const myFollow = String(myId) === String(id);
 
     console.log("myFollow:", myFollow);
 
