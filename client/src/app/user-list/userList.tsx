@@ -9,6 +9,7 @@ import Link from "next/link";
 import { FollowButton } from "./followButton";
 import React, { useEffect, useRef, useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     loggedIn: boolean;
@@ -30,7 +31,40 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
 
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-    const followRemove = async (userId: string) => {};
+    const followRemove = async (userId: string) => {
+        const defaultUserList = userList;
+
+        setPreviewUserList((user) => 
+            user.filter((user) => user.id !== userId)
+        );
+
+        try {
+            const accessToken = await refreshToken();
+        
+            if (!accessToken) {
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                return;
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                toast.error("フォロー解除に失敗しました");
+                console.error(data.message);
+                return;
+            }
+        } catch (err) {
+            setPreviewUserList(defaultUserList);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            console.error(err);
+        }
+    };
 
     const search = async (word: string) => {
         if (!word.trim()) {

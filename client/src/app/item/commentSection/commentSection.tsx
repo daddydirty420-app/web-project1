@@ -6,7 +6,7 @@ import { useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import { CommentForm } from "./commentForm";
 import { CommentList } from "./commentList";
-import { Comment, Item, User } from "../itemPageTypes";
+import { Item, User } from "../itemPageTypes";
 import { refreshToken } from "@/lib/refreshToken";
 import useSWR from "swr";
 
@@ -61,7 +61,7 @@ export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn, ite
 
         <div className={`${styles.commentBody} ${visible ? styles.open : ""}`}>
             {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} loggedIn={loggedIn} item={item} me={me} mutate={mutate} />}
-            <CommentList id={id} sellerMe={sellerMe} comments={comments} page={page} loggedIn={loggedIn} />
+            <CommentList id={id} sellerMe={sellerMe} comments={comments} page={page} loggedIn={loggedIn} item={item} me={me} mutate={mutate} />
         </div>
         </>
     );

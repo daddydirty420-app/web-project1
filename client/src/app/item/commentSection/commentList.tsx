@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./comment.module.css";
-import { Comment } from "../itemPageTypes";
+import { Comment, Item, User } from "../itemPageTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CommentText } from "./commentText";
 import { CommentDataDiv } from "./commentDataDiv";
@@ -14,6 +14,7 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import { Pin } from "./pin";
 import { CommentForm } from "./commentForm";
 import { ReplyList } from "./replyList";
+import { KeyedMutator } from "swr";
 
 type Props = {
     id: string;
@@ -21,9 +22,12 @@ type Props = {
     comments: Comment[];
     page: "normal" | "admin";
     loggedIn: boolean;
+    item: Item;
+    me: User | null;
+    mutate: KeyedMutator<Comment[]>;
 }
 
-export const CommentList = ({ id, sellerMe, comments, page, loggedIn }: Props) => {
+export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, mutate }: Props) => {
     const [replyVisible, setReplyVisible] = useState<{ [key: string]: boolean }>({});
 
     const toggleReplyVisible = (commentId: string) => {
@@ -65,7 +69,7 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn }: Props) =
                         </section>
 
                         <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
-                            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} parentId={commentId} loggedIn={loggedIn} />}
+                            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} parentId={commentId} loggedIn={loggedIn} item={item} me={me} mutate={mutate} />}
                             <ReplyList parentId={commentId} page={page} loggedIn={loggedIn} />
                         </section>
                     </section>
