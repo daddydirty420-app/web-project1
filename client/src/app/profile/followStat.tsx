@@ -18,8 +18,8 @@ export const FollowStat = ({ userId, type, initialCount }: Props) => {
     : data?.followerCount ?? initialCount ?? 0;
 
     const href = type === "follow"
-    ? `/user-list/follow/${userId}`
-    : `/user-list/follower/${userId}`;
+    ? `/user-list/follow/${userId}?tab=follow`
+    : `/user-list/follower/${userId}?tab=follower`;
 
     const label = type === "follow" ? "フォロー" : "フォロワー";
 
