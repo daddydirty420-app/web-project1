@@ -1,5 +1,5 @@
 import { ToastBoundary } from "@/providers/toastBoundary";
 
-export default function UploadLayout({ children }) {
+export default function UserListLayout({ children }) {
     return <ToastBoundary>{children}</ToastBoundary>;
 };
