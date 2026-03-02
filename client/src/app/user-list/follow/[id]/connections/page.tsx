@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { cookies } from "next/headers";
-import FollowUI from "../followUI";
-import { UserList } from "../../userList";
-import { FollowHeader } from "../followHeader";
+import FollowUI from "../../followUI";
+import { UserList } from "@/app/user-list/userList";
+import { FollowHeader } from "../../followHeader";
 
 type Props = {
     params: { id: string };
