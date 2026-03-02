@@ -59,16 +59,7 @@ export default async function Page({ params, searchParams }: Props) {
 
     const myId = session?.user.id ?? "";
 
-    console.log("myId", myId);
-    console.log("id:", id);
-
     const myFollow = String(myId) === String(id);
-
-    console.log("myFollow:", myFollow);
-
-    console.log("myId:", JSON.stringify(myId));
-    console.log("id:", JSON.stringify(id));
-    console.log("length:", myId.length, id.length);
 
     return (
         <>

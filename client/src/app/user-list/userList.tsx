@@ -102,10 +102,6 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
         }, 300);
     };
 
-    console.log("loggedIn:", loggedIn);
-    console.log("followTab:", followTab);
-    console.log("myFollow:", myFollow);
-
     return (
         <>
         <section className={styles.searchSection}>
@@ -165,21 +161,22 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
                             </div>
                         </Link>
 
-                        {loggedIn && 
-                        !(followTab === "follow" && myFollow) && 
-                        currentUserId !== user.id && 
-                        (
-                            <FollowButton user={user} />
-                        )}
+                        {loggedIn && currentUserId !== user.id && (
+                            <>
+                            {!(followTab === "follow" && myFollow) && (
+                                <FollowButton user={user} />
+                            )}
 
-                        {loggedIn && followTab === "follow" && myFollow && (
-                            <button
-                            type="button"
-                            className={styles.followRemoveButton}
-                            onClick={() => followRemove(user.id)}
-                            >
-                                削除
-                            </button>
+                            {followTab === "follow" && myFollow && (
+                                <button
+                                type="button"
+                                className={styles.followRemoveButton}
+                                onClick={() => followRemove(user.id)}
+                                >
+                                    削除
+                                </button>
+                            )}
+                            </>
                         )}
                     </section>
                 ))}
