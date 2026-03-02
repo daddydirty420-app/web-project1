@@ -64,7 +64,11 @@ export default async function Page({ params, searchParams }: Props) {
 
     const myFollow = myId === id;
 
-    console.log("myFollow:", myFollow)
+    console.log("myFollow:", myFollow);
+
+    console.log("myId:", JSON.stringify(myId));
+    console.log("id:", JSON.stringify(id));
+    console.log("length:", myId.length, id.length);
 
     return (
         <>
