@@ -65,9 +65,10 @@
 .followRemoveButton {
     width: 52px;
     height: 26px;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--theme-str);
+    letter-spacing: 0.04em;
     background-color: var(--button-gray);
     border-radius: 6px;
     cursor: pointer;
