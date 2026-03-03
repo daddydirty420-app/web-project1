@@ -53,10 +53,6 @@ export default async function Page({ params, searchParams }: Props) {
 
     const data = await res.json();
 
-    const userList = tab === "follow"
-    ? data.previewFollowList
-    : data.previewFollowerList;
-
     const myId = session?.user.id ?? "";
 
     const myFollow = String(myId) === String(id);
@@ -75,7 +71,6 @@ export default async function Page({ params, searchParams }: Props) {
             loggedIn={!!session}
             id={id}
             currentUserId={myId}
-            userList={userList}
             page="follow"
             followTab={tab}
             myFollow={myFollow}

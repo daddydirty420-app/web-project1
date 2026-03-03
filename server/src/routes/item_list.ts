@@ -201,16 +201,16 @@ router.get('/profile-item-list/item-list/:id', async (req: Request, res: Respons
 });
 
 router.get('/draft', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const currentUserId = req.user!.id;
+    const currentUserId = req.user!.id;
 
+    try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', "status", 'seller_id', 'updatedAt', 'first_image_url'],
+            attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "gender_type", "age_type"],
             where: {
                 seller_id: currentUserId,
                 status: "draft",
             },
-            order: [['updatedAt', 'DESC']],
+            order: [['save_at', 'DESC']],
             include: [
                 {
                     model: Video,
@@ -224,7 +224,7 @@ router.get('/draft', authenticateToken, async (req: Request, res: Response): Pro
             return;
         }
 
-        res.json({ itemList });
+        res.status(200).json({ itemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

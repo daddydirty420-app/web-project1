@@ -7,41 +7,60 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { FollowButton } from "./followButton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 type Props = {
     loggedIn: boolean;
     id: string;
     currentUserId: string;
-    userList: User[];
     page: "follow" | "good-item" | "good-comment";
     followTab?: "follow" | "follower" | null;
     myFollow?: boolean;
 };
 
-export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTab, myFollow }: Props) => {
-    const [previewUserList, setPreviewUserList] = useState<User[]>(userList);
+export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
     const [searchValue, setSearchValue] = useState("");
 
-    useEffect(() => {
-        setPreviewUserList(userList);
-    }, [userList]);
+    const getBasePath = () => {
+        if (page === "good-item") return "good-item/good-user-list";
+        if (page === "good-comment") return "good-comment/good-user-list";
 
-    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+        if (page === "follow") {
+            if (followTab === "follow") return "follow/follow-list";
+            if (followTab === "follower") return "follow/follower-list";
+        }
+
+        return null;
+    };
+
+    const basePath = getBasePath();
+
+    const apiUrl = basePath
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}/${
+        searchValue.trim()
+        ? `search/${id}?keyword=${searchValue.trim()}`
+        : id
+    }`
+    : null;
+
+    const { data: userList, mutate } = useSWR<User[]>(apiUrl, fetcher);
 
     const followRemove = async (userId: string) => {
-        const defaultUserList = userList;
-
-        setPreviewUserList((user) => 
-            user.filter((user) => user.id !== userId)
+        
+        mutate((prev: User[] = []) =>
+            prev.filter(user => user.id !== userId),
+            false
         );
 
         try {
             const accessToken = await refreshToken();
         
             if (!accessToken) {
+                mutate();
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
@@ -54,73 +73,17 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
             });
 
             if (!res.ok) {
+                mutate();
                 const data = await res.json();
                 toast.error("フォロー解除に失敗しました");
                 console.error(data.message);
                 return;
             }
+
+            mutate();
         } catch (err) {
-            setPreviewUserList(defaultUserList);
+            mutate();
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
-        }
-    };
-
-    const search = async (word: string) => {
-        if (!word.trim()) {
-            setPreviewUserList(userList);
-            return;
-        };
-
-        let apiUrl = "";
-
-        if (page === "good-item") {
-            apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/search/${id}?keyword=${word.trim()}`;
-        } else if (page === "good-comment") {
-            apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/good-user-list/search/${id}?keyword=${word.trim()}`;
-        } else if (page === "follow") {
-            if (followTab === "follow") {
-                apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/follow/follow-list/search/${id}?keyword=${word.trim()}`;
-            } else if (followTab === "follower") {
-                apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/follow/follower-list/search/${id}?keyword=${word.trim()}`;
-            } else {
-                setPreviewUserList(userList);
-                return;
-            }
-        }
-
-        try {
-            const accessToken = await refreshToken();
-
-            const res = await fetch(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${accessToken ?? ""}`,
-                },
-                cache: "no-store",
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                setPreviewUserList(userList);
-                console.error(data.message);
-                return;
-            }
-
-            let list = [];
-
-            if (["good-item", "good-comment"].includes(page)) {
-                list = data.userList;
-            } else if (page === "follow") {
-                list = followTab === "follow"
-                ? data.previewFollowList
-                : data.previewFollowerList;
-            }
-
-            setPreviewUserList(list);
-        } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            setPreviewUserList(userList);
             console.error(err);
         }
     };
@@ -128,12 +91,6 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
         setSearchValue(val);
-
-        if (debounceRef.current) clearTimeout(debounceRef.current);
-
-        debounceRef.current = setTimeout(() => {
-            search(val);
-        }, 300);
     };
 
     return (
@@ -155,16 +112,12 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
                 ${styles.searchIcon} 
                 ${searchValue.trim() ? styles.activeIcon : ""}
             `}
-            onClick={() => {
-                if (!searchValue.trim()) return;
-                search(searchValue);
-            }}
             />
         </section>
 
-        {previewUserList.length > 0 && (
+        {userList && userList?.length > 0 && (
             <section className={styles.userListSection}>
-                {previewUserList.map((user) => (
+                {userList.map((user) => (
                     <section key={user.id} className={styles.userSection}>
                         <Link
                         href={`/profile/${user.id}`}
@@ -217,7 +170,7 @@ export const UserList = ({ loggedIn, id, currentUserId, userList, page, followTa
             </section>
         )}
 
-        {previewUserList.length === 0 && (
+        {userList?.length === 0 && (
             <>
             {searchValue.trim().length > 0 && (
                 <p className={styles.noUser}>ユーザーが見つかりません</p>

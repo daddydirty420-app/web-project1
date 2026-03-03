@@ -1,0 +1,16 @@
+export type Video = {
+    id: string;
+    title: string;
+};
+
+export type Item = {
+    id: string;
+    name: string;
+    price: number;
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
+    save_at: Date;
+    first_image_url: string;
+    Video?: Video | null;
+};

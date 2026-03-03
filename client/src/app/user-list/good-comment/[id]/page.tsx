@@ -30,20 +30,6 @@ export default async function Page({ params }: Props) {
     const accessToken = cookieStore.get("access-token")?.value;
     
     if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/good-user-list/${id}`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
     
     return (
         <GoodUI title="いいねしたユーザー">
@@ -51,7 +37,6 @@ export default async function Page({ params }: Props) {
             loggedIn={!!session}
             id={id}
             currentUserId={session?.user.id ?? ""}
-            userList={data.userList ?? []}
             page="good-comment"
             />
         </GoodUI>

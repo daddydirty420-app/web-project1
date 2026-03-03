@@ -31,27 +31,12 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/good-user-list/${id}`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
-
     return (
         <GoodUI title="いいねしたユーザー">
             <UserList
             loggedIn={!!session}
             id={id}
             currentUserId={session?.user.id ?? ""}
-            userList={data.userList ?? []}
             page="good-item"
             />
         </GoodUI>
