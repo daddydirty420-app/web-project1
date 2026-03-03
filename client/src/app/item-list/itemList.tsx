@@ -148,6 +148,12 @@ export const ItemList = ({ page }: Props) => {
                 })}
             </main>
         )}
+
+        {itemList?.length === 0 && (
+            <>
+            <p className={styles.noItem}>商品が見つかりません</p>
+            </>
+        )}
         </>
     );
 };
