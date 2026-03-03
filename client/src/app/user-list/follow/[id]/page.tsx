@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
 import FollowUI from "../followUI";
 import { UserList } from "../../userList";
 import { FollowHeader } from "../followHeader";
@@ -34,7 +33,7 @@ export default async function Page({ params, searchParams }: Props) {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${id}`, {
         method: "GET",
-        cache: "force-cache",
+        cache: "no-store",
     });
 
     if (!res.ok) {
