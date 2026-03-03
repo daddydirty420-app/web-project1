@@ -175,7 +175,7 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
 
         const source = finalFollowList ?? followList;
 
-        const previewFollowList = source.map(item => {
+        const previewUserList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.FollowerUser;
         });
@@ -189,14 +189,14 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
             return;
         }
 
-        const followCount = previewFollowList.length;
+        const followCount = previewUserList.length;
 
         const followerCount = await Follow.count({
             where: { follower_user_id: pageUserId },
         });
 
         res.status(200).json({
-            previewFollowList,
+            previewUserList,
             pageUser,
             followCount,
             followerCount

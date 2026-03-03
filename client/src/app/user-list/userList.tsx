@@ -49,7 +49,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     }`
     : null;
 
-    const { data: userList, mutate } = useSWR<User[]>(apiUrl, fetcher);
+    const { data: previewUserList, mutate } = useSWR<User[]>(apiUrl, fetcher);
 
     const followRemove = async (userId: string) => {
         
@@ -117,9 +117,9 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             />
         </section>
 
-        {userList && userList?.length > 0 && (
+        {previewUserList && previewUserList?.length > 0 && (
             <section className={styles.userListSection}>
-                {userList.map((user) => (
+                {previewUserList.map((user) => (
                     <section key={user.id} className={styles.userSection}>
                         <Link
                         href={`/profile/${user.id}`}
@@ -172,7 +172,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             </section>
         )}
 
-        {userList?.length === 0 && (
+        {previewUserList?.length === 0 && (
             <>
             {searchValue.trim().length > 0 && (
                 <p className={styles.noUser}>ユーザーが見つかりません</p>
