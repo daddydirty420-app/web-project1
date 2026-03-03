@@ -20,7 +20,7 @@ export const FollowHeader = ({ id, followTab, followCount, followerCount }: Prop
                 type="button"
                 name="follow-tab"
                 onClick={() => 
-                    router.push(`/user-list/follow/${id}/connections?tab=follow`)
+                    router.push(`/user-list/follow/${id}?tab=follow`)
                 }
                 className={`${styles.followHeaderButton} ${
                     followTab === "follow"
@@ -35,7 +35,7 @@ export const FollowHeader = ({ id, followTab, followCount, followerCount }: Prop
                 type="button"
                 name="follower-tab"
                 onClick={() => 
-                    router.push(`/user-list/follow/${id}/connections?tab=follower`)
+                    router.push(`/user-list/follow/${id}?tab=follower`)
                 }
                 className={`${styles.followHeaderButton} ${
                     followTab === "follower"
