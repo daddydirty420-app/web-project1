@@ -5,7 +5,7 @@ import styles from "./itemList.module.css";
 import { Item } from "./type";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
     item: Item;
@@ -54,7 +54,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
     return (
         <>
         <FontAwesomeIcon
-        icon={faEllipsis}
+        icon={faEllipsisVertical}
         className={styles.ellipsisIcon}
         onClick={() => setFloatVisible(!floatVisible)}
         />
