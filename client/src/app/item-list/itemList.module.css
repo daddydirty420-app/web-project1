@@ -1,0 +1,81 @@
+.itemListSection {
+    width: 100%;
+    max-width: 768px;
+    margin: 1rem auto 5rem;
+};
+
+.itemSection {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 4px;
+    border-bottom: 1px solid var(--gray-line);
+}
+.itemSection:last-child {
+    border-bottom: none;
+}
+
+.itemLinkArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    cursor: pointer;
+}
+
+.image {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.itemTextArea {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.itemName {
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
+
+.date {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+.videoTitle {
+    font-size: 12px;
+    font-weight: 400;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
+
+.weight500 {
+    font-weight: 500;
+}
+
+.price {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--link);
+    white-space: nowrap;
+}
+
+.ellipsisIcon {
+    width: 18px;
+    height: 18px;
+    padding: 4px;
+    color: var(--theme);
+}

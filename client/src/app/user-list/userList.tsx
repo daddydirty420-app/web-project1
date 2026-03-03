@@ -49,7 +49,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const apiUrl = basePath
     ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}/${
         searchValue.trim()
-        ? `search/${id}?keyword=${searchValue.trim()}`
+        ? `search/${id}?keyword=${encodeURIComponent(searchValue.trim())}`
         : id
     }`
     : null;
@@ -139,12 +139,12 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                         className={styles.userImageNameFlex}
                         >
                             <Image
-                             src={user.profile_image ?? "/default-profile.png"}
+                            src={user.profile_image ?? "/default-profile.png"}
                             alt="プロフィール画像"
-                             width={45}
+                            width={45}
                             height={45}
                             className={styles.image}
-                             />
+                            />
 
                             <div className={styles.nameBlock}>
                                 <p className={styles.userName}>{user.user_name}</p>

@@ -46,6 +46,32 @@ router.post('/delete-all', authenticateToken, async (req: Request, res: Response
     }
 });
 
+router.delete("/draft/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+    const userId = Number(req.user!.id);
+
+    try {
+        const item = await Item.findByPk(itemId);
+
+        if (!item) {
+            res.status(404).json({ message: "商品が見つかりません" });
+            return;
+        }
+
+        if (item.seller_id !== userId || item.status !== "draft") {
+            res.status(400).json({ message: "不正なアクセスが検出されました" });
+            return;
+        }
+
+        await item.destroy();
+
+        res.status(200).json({ message: "下書き商品を削除しました" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました" });
+    }
+});
+
 router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
