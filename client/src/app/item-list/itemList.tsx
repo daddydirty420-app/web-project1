@@ -43,6 +43,9 @@ export const ItemList = ({ page }: Props) => {
     const { data, mutate } = useSWR<Responce>(apiUrl, fetcher);
 
     const itemList = data?.itemList;
+
+    console.log("data", data);
+    console.log("itemList:", itemList);
     
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
