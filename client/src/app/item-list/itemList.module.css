@@ -50,7 +50,7 @@
 .itemName {
     font-size: 13px;
     font-weight: 600;
-    color: var(--theme-str);
+    letter-spacing: 0.02em;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -64,6 +64,10 @@
     line-height: 1.2;
 }
 
+.videoTitleDiv {
+    margin-top: 3px;
+}
+
 .titleLabel {
     font-size: 10.5px;
     color: var(--text-muted);
@@ -73,6 +77,8 @@
 .videoTitle {
     font-size: 12px;
     font-weight: 500;
+    color: var(--theme-str);
+    letter-spacing: 0.02em;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
