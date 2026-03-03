@@ -63,18 +63,21 @@
     line-height: 1.2;
 }
 
+.videoLabel {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
 .videoTitle {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 500;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     line-clamp: 1;
-}
-
-.weight500 {
-    font-weight: 500;
+    padding-left: 0.5em;
 }
 
 .price {

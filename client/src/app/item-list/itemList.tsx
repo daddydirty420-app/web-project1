@@ -128,9 +128,10 @@ export const ItemList = ({ page }: Props) => {
                                             <p className={styles.date}>{previewDateLabel}: {previewDate}</p>
                                         )}
 
-                                        <h4 className={styles.videoTitle}>動画： 
-                                            <span className={styles.weight500}>{item.Video?.title ?? ""}</span>
-                                        </h4>
+                                        <div className={styles.videoTitleDiv}>
+                                            <p className={styles.titleLabel}>動画：</p> 
+                                            <h4 className={styles.videoTitle}>{item.Video?.title ?? ""}</h4>
+                                        </div>
                                     </div>
                                 </div>
 
