@@ -22,6 +22,11 @@ type Props = {
     myFollow?: boolean;
 };
 
+type Responce = {
+    previewUserList: User[];
+    pageUser: User;
+}
+
 export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
     const [searchValue, setSearchValue] = useState("");
 
@@ -49,16 +54,24 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     }`
     : null;
 
-    const { data: previewUserList, mutate } = useSWR<User[]>(apiUrl, fetcher);
+    const { data, mutate } = useSWR<Responce>(apiUrl, fetcher);
 
-    console.log(previewUserList);
+    const userList = data?.previewUserList;
+
+    console.log(userList);
 
     const followRemove = async (userId: string) => {
         
-        mutate((prev: User[] = []) =>
-            prev.filter(user => user.id !== userId),
-            false
-        );
+        mutate((prev) => {
+            if (!prev) return;
+
+            return {
+                ...prev,
+                previewUserList: prev.previewUserList.filter(
+                    user => user.id !== userId
+                ),
+            };
+        }, false);
 
         try {
             const accessToken = await refreshToken();
@@ -119,9 +132,9 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             />
         </section>
 
-        {previewUserList && previewUserList?.length > 0 && (
+        {userList && userList?.length > 0 && (
             <section className={styles.userListSection}>
-                {previewUserList.map((user) => (
+                {userList.map((user) => (
                     <section key={user.id} className={styles.userSection}>
                         <Link
                         href={`/profile/${user.id}`}
@@ -174,7 +187,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             </section>
         )}
 
-        {previewUserList?.length === 0 && (
+        {userList?.length === 0 && (
             <>
             {searchValue.trim().length > 0 && (
                 <p className={styles.noUser}>ユーザーが見つかりません</p>
