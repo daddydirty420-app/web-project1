@@ -23,7 +23,7 @@ type Props = {
 };
 
 type Responce = {
-    previewUserList: User[];
+    userList: User[];
     pageUser: User;
 }
 
@@ -56,9 +56,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     const { data, mutate } = useSWR<Responce>(apiUrl, fetcher);
 
-    const userList = data?.previewUserList;
-
-    console.log(userList);
+    const userList = data?.userList;
 
     const followRemove = async (userId: string) => {
         
@@ -67,7 +65,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
             return {
                 ...prev,
-                previewUserList: prev.previewUserList.filter(
+                previewUserList: prev.userList.filter(
                     user => user.id !== userId
                 ),
             };

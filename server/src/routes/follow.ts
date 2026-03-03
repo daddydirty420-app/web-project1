@@ -175,7 +175,7 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
 
         const source = finalFollowList ?? followList;
 
-        const previewUserList = source.map(item => {
+        const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.FollowerUser;
         });
@@ -189,17 +189,9 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
             return;
         }
 
-        const followCount = previewUserList.length;
-
-        const followerCount = await Follow.count({
-            where: { follower_user_id: pageUserId },
-        });
-
         res.status(200).json({
-            previewUserList,
-            pageUser,
-            followCount,
-            followerCount
+            userList,
+            pageUser
         });
     } catch (err) {
         console.error(err);
@@ -260,7 +252,7 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
 
         const source = finalFollowerList ?? followerList;
 
-        const previewFollowerList = source.map(item => {
+        const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.FollowUser;
         });
@@ -274,17 +266,9 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
             return;
         }
 
-        const followCount = await Follow.count({
-            where: { follow_user_id: pageUserId },
-        });
-
-        const followerCount = previewFollowerList.length;
-
         res.status(200).json({
-            previewFollowerList,
+            userList,
             pageUser,
-            followCount,
-            followerCount
         });
     } catch (err) {
         console.error(err);
@@ -356,12 +340,12 @@ router.get('/follow-list/search/:id', authenticateOptional, async (req: Request,
 
         const source = finalFollowList ?? followList;
 
-        const previewFollowList = source.map(item => {
+        const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.FollowerUser;
         });
 
-        res.status(200).json({ previewFollowList });
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});
@@ -429,12 +413,12 @@ router.get('/follower-list/search/:id', authenticateOptional, async (req: Reques
 
         const source = finalFollowerList ?? followerList;
 
-        const previewFollowerList = source.map(item => {
+        const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
             return plain.FollowUser;
         });
 
-        res.status(200).json({ previewFollowerList });
+        res.status(200).json({ userList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。'});

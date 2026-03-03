@@ -30,21 +30,11 @@ export default async function Page({ params, searchParams }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
     const tab = (await searchParams)?.tab ?? "follow";
 
-    const apiUrl = tab === "follow"
-    ? `${process.env.NEXT_PUBLIC_API_URL}/follow/follow-list/${id}`
-    : `${process.env.NEXT_PUBLIC_API_URL}/follow/follower-list/${id}`;
-
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/count/${id}`, {
         method: "GET",
         cache: "force-cache",
-        headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
-        },
     });
 
     if (!res.ok) {
