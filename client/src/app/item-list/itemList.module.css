@@ -5,10 +5,11 @@
 }
 
 .itemSection {
+    position: relative;
     display: flex;
     align-items: flex-start;
     width: 100%;
-    padding: 4px;
+    padding: 8px 4px;
     border-bottom: 1px solid var(--gray-line);
 }
 .itemSection:last-child {
@@ -20,6 +21,7 @@
     align-items: center;
     justify-content: space-between;
     flex: 1;
+    padding-right: 32px;
     cursor: pointer;
 }
 
@@ -83,10 +85,25 @@
 }
 
 .ellipsisIcon {
-    width: 18px;
-    height: 18px;
-    padding: 4px;
+    position: absolute;
+    top: 8px;
+    right: 4px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
     color: var(--theme);
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+}
+.ellipsisIcon:hover {
+    background: rgba(0,0,0,0.05);
 }
 
 .searchSection {

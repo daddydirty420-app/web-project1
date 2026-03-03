@@ -75,5 +75,5 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
             </div>
         )}
         </>
-    )
+    );
 }
