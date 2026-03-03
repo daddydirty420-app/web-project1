@@ -1,14 +1,9 @@
 import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
 import ItemListUI from "../itemListUI";
 import { ItemList } from "../itemList";
-
-type Props = {
-    params: { id: string };
-};
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -21,15 +16,10 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 };
 
-export default async function Page({ params }: Props) {
-    const { id } = await params;
-
+export default async function Page() {
     const session = await getServerSession(authOptions);
-    
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
         
-    if (!accessToken) redirect("/login");
+    if (!session) redirect("/login");
 
     return (
         <ItemListUI title="下書き商品">
