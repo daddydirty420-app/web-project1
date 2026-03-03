@@ -51,6 +51,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     const { data: previewUserList, mutate } = useSWR<User[]>(apiUrl, fetcher);
 
+    console.log(previewUserList);
+
     const followRemove = async (userId: string) => {
         
         mutate((prev: User[] = []) =>
