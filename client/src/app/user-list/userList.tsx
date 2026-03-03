@@ -32,6 +32,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         if (page === "follow") {
             if (followTab === "follow") return "follow/follow-list";
             if (followTab === "follower") return "follow/follower-list";
+
+            return "follow/follow-list"; // デフォルト
         }
 
         return null;
