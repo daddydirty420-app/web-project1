@@ -97,6 +97,8 @@ router.patch("/search-text", async (req: Request, res: Response): Promise<void> 
         await t.commit();
 
         console.log("search_text更新");
+
+        res.status(200).json({ message: "更新しました" });
     } catch (err) {
         await t.rollback();
         console.log("search_text更新失敗：", err);
