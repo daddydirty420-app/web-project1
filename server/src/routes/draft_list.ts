@@ -80,12 +80,6 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
 router.patch("/search/:id", async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
-    const keyword = req.query?.keyword ?? "";
-    if (!String(keyword).trim()) {
-        res.status(400).json({ message: "検索キーワードがありません" });
-        return;
-    }
-
     try {
             const item = await Item.findByPk(itemId, {
                 include: [
