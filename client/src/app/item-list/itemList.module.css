@@ -31,7 +31,7 @@
 }
 
 .itemSection:hover::before {
-    background: var(--link);
+    background: var(--theme);
 }
 
 .itemLinkArea {
@@ -108,7 +108,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     line-clamp: 1;
-    padding-left: 1em;
     opacity: 0.85;
 }
 
