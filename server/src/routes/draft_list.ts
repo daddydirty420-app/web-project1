@@ -102,6 +102,7 @@ router.patch("/search-text", async (req: Request, res: Response): Promise<void> 
     } catch (err) {
         await t.rollback();
         console.log("search_text更新失敗：", err);
+        res.status(500).json({ message: "サーバーエラー" });
     }
 });
 
