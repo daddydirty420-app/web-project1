@@ -31,7 +31,7 @@
 }
 
 .itemSection:hover::before {
-    background: var(--theme);
+    background: var(--theme-soft);
 }
 
 .itemLinkArea {
