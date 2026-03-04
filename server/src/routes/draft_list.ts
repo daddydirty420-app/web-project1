@@ -77,33 +77,4 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
     }
 });
 
-router.patch("/search-text", async (req: Request, res: Response): Promise<void> => {
-    const t = await sequelize.transaction();
-    try {
-        const items = await Item.findAll();
-
-        if (!items) {
-            throw new Error("Item見つからない");
-        }
-
-        await Promise.all(items.map(async (item: typeof Item) => {
-            const searchText = normalizeJapanese(item.search_text ?? "");
-
-            await item.update({
-                search_text: searchText,
-            }, { transaction: t });
-        }));
-
-        await t.commit();
-
-        console.log("search_text更新");
-
-        res.status(200).json({ message: "更新しました" });
-    } catch (err) {
-        await t.rollback();
-        console.log("search_text更新失敗：", err);
-        res.status(500).json({ message: "サーバーエラー" });
-    }
-});
-
 export default router;

@@ -235,6 +235,18 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         const item = await Item.findByPk(itemId, {
             include: [
                 { model: Video },
+                {
+                    model: Categories,
+                    as: "Category",
+                    include: [
+                        {
+                            model: Categories,
+                            as: "parent",
+                            required: false,
+                        },
+                    ],
+                },
+                { model: User },
             ],
         });
         if (!item) {
@@ -264,6 +276,16 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
             sort = sort + 5000;
         }
 
+        const searchText = `
+        ${item.name}
+        ${item.Video?.title ?? ""}
+        ${item.Category?.name ?? ""}
+        ${item.Category?.parent?.name ?? ""}
+        ${item.User?.user_name ?? ""}
+        `;
+
+        const normalizeSearchText = normalizeJapanese(searchText ?? "");
+
         await item.update({
             status: "active",
             uploaded_at: now,
@@ -271,6 +293,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
             early_sell: true,
             sort_number: sort,
             sort_buzz_number: sort,
+            search_text: normalizeSearchText,
         }, { transaction: t });
 
         await Notification.create({
