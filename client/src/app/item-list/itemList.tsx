@@ -47,6 +47,10 @@ export const ItemList = ({ page }: Props) => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
         setSearchValue(val);
+
+        if (val.trim() === "") {
+            setSearchKeyword("");
+        }
     };
 
     return (
