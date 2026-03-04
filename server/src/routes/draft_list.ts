@@ -3,7 +3,7 @@ import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Op, literal, WhereOptions } from "sequelize";
 import { Item, User, Video, Sale, Search } from "../models/index.js";
-import { normalizeJapanese } from "utils/normalizeJapanese.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 import sequelize from "../db.js";
 
 const router = Router();
