@@ -87,7 +87,7 @@ router.patch("/search-text", async (req: Request, res: Response): Promise<void> 
         }
 
         await Promise.all(items.map(async (item: typeof Item) => {
-            const searchText = normalizeJapanese(item.search_text);
+            const searchText = normalizeJapanese(item.search_text ?? "");
 
             await item.update({
                 search_text: searchText,
