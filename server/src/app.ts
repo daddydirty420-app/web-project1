@@ -32,6 +32,7 @@ import CartRouter from "./routes/cart.js";
 import ChatRouter from "./routes/chat.js";
 import CommentRouter from "./routes/comment.js";
 import DeliveryRouter from "./routes/delivery.js";
+import DraftListRouter from "./routes/draft_list.js";
 import FollowRouter from "./routes/follow.js";
 import GoodCommentRouter from "./routes/good_comment.js";
 import GoodItemRouter from "./routes/good_item.js";
@@ -113,7 +114,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-
 app.use('/api/user', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/item', ItemsRouter);
@@ -130,6 +130,7 @@ app.use('/api/cart', CartRouter);
 app.use('/api/chat', ChatRouter);
 app.use('/api/comment', CommentRouter);
 app.use('/api/delivery', DeliveryRouter);
+app.use("/api/draft-list", DraftListRouter);
 app.use('/api/follow', FollowRouter);
 app.use('/api/good-comment', GoodCommentRouter);
 app.use('/api/good-item', GoodItemRouter);

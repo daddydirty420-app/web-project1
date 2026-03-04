@@ -25,7 +25,7 @@ export const ItemList = ({ page }: Props) => {
     const [searchKeyword, setSearchKeyword] = useState("");
 
     const getBasePath = () => {
-        if (page === "draft") return "item-list/draft";
+        if (page === "draft") return "draft-list";
 
         return null;
     };
