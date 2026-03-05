@@ -44,7 +44,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             }
         });
 
-        const totalPages = totalCount / 20;
+        const totalPages = Math.floor(totalCount / 20);
 
         res.status(200).json({ itemList, totalPages });
     } catch (err) {
