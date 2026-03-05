@@ -1,11 +1,13 @@
 "use client"
 
 import { KeyedMutator } from "swr";
-import styles from "./itemList.module.css";
+import styles from "./removeFloat.module.css";
 import { Item } from "./type";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { refreshToken } from "@/lib/refreshToken";
+import toast from "react-hot-toast";
 
 type Props = {
     item: Item;
@@ -36,6 +38,60 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         if (!apiUrl?.trim()) {
             console.error("削除URLが見つかりません");
             return;
+        }
+
+        // 楽観的更新
+        mutate((currentData) => {
+            if (!currentData) return currentData;
+
+            return {
+                ...currentData,
+                itemList: currentData.itemList.filter(
+                    (item) => item.id !== itemId
+                ),
+            };
+        }, false);
+
+        let toastBaseText = "";
+
+        if (page === "draft") {
+            toastBaseText = "下書き商品";
+        }
+
+        try {
+            const accessToken = await refreshToken();
+                
+            if (!accessToken) {
+                throw new Error("AUTH_ERROR");
+            }
+
+            const res = await fetch(apiUrl, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error("DELETE_ERROR");
+            }
+
+            mutate();
+
+            toast.success(`${toastBaseText}を削除しました`);
+        } catch (err) {
+            mutate(); // ロールバック
+            console.error(err);
+
+            if (err instanceof Error) {
+                if (err.message === "AUTH_ERROR") {
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                } else if (err.message === "DELETE_ERROR") {
+                    toast.error(`${toastBaseText}の削除に失敗しました`);
+                } else {
+                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                }
+            }
         }
     };
 

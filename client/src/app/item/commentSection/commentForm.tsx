@@ -69,8 +69,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
             const accessToken = await refreshToken();
             
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
-                return;
+                throw new Error("AUTH_ERROR");
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/upload/${id}?sellerMe=${sellerMe}&parentId=${parentId}`, {
@@ -83,10 +82,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
             });
 
             if (!res.ok) {
-                const errorData = await res.json();
-                toast.error("コメントの投稿に失敗しました。");
-                console.error(errorData.message);
-                return;
+                throw new Error("UPLOAD_ERROR");
             }
 
             mutate();
@@ -94,8 +90,17 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
             toast.success("コメントを投稿しました！");
         } catch (err) {
             mutate();
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
+
+            if (err instanceof Error) {
+                if (err.message === "AUTH_ERROR") {
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                } else if (err.message === "UPLOAD_ERROR") {
+                    toast.error("コメントの投稿に失敗しました。");
+                } else {
+                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                }
+            }
         }
     };
 

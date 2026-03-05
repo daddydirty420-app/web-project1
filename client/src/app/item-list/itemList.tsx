@@ -25,7 +25,7 @@ export const ItemList = ({ page }: Props) => {
     const [searchKeyword, setSearchKeyword] = useState("");
 
     const getBasePath = () => {
-        if (page === "draft") return "draft-list";
+        if (page === "draft") return "item-list/draft-list";
 
         return null;
     };
@@ -142,7 +142,7 @@ export const ItemList = ({ page }: Props) => {
                                 <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
                             </Link>
 
-                            {["cart", "draft", "good", "watch-history"].includes(page) && (
+                            {["draft", "good", "watch-history"].includes(page) && (
                                 <RemoveFloat item={item} page={page} mutate={mutate} />
                             )}
                         </section>

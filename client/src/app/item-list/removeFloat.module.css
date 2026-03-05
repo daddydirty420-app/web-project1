@@ -1,0 +1,31 @@
+.float {
+    position: relative;
+    padding: 2px 10px;
+    bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 500;
+}
+
+.removeFlex {
+    display: flex;
+    align-items: center;
+    margin: 0 0.5rem 0 auto;
+    cursor: pointer;
+}
+
+.trashIcon {
+    width: 17px;
+    height: 17px;
+    padding: 0 5px;
+    color: var(--text-muted);
+}
+
+.floatText {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+.removeFlex:hover .trashIcon,
+.removeFlex:hover .floatText {
+    color: var(--theme);
+}
