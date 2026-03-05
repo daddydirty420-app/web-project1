@@ -9,6 +9,10 @@ const router = Router();
 
 router.get('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
+        
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 20;
+    const offset = (page - 1) * limit;
 
     try {
         const itemList = await Item.findAll({
@@ -18,6 +22,8 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                 status: "deleted",
             },
             order: [['save_at', 'DESC']],
+            limit,
+            offset,
             include: [
                 {
                     model: Video,
@@ -31,7 +37,16 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             return;
         }
 
-        res.status(200).json({ itemList });
+        const totalCount = await Item.count({
+            where: {
+                seller_id: currentUserId,
+                status: "deleted",
+            }
+        });
+
+        const totalPages = Math.floor(totalCount / 20);
+
+        res.status(200).json({ itemList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -40,6 +55,10 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
 
 router.get('/search', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
+        
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 20;
+    const offset = (page - 1) * limit;
 
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
     if (!keyword) {
@@ -56,6 +75,8 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                 search_text: { [Op.iLike]: `%${keyword}%` },
             },
             order: [['save_at', 'DESC']],
+            limit,
+            offset,
             include: [
                 {
                     model: Video,
@@ -69,7 +90,17 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
             return;
         }
 
-        res.status(200).json({ itemList });
+        const totalCount = await Item.count({
+            where: {
+                seller_id: currentUserId,
+                status: "deleted",
+                search_text: { [Op.iLike]: `%${keyword}%` },
+            }
+        });
+
+        const totalPages = Math.floor(totalCount / 20);
+
+        res.status(200).json({ itemList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
