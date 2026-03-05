@@ -6,6 +6,7 @@ import { Video, Item, Sale, ItemShippingProfile, Categories, Brands, ItemConditi
 import sequelize from "../db.js";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import findOrCreateBrand from "../services/findOrCreateBrand.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
@@ -377,6 +378,17 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (!brandResult.brand && brand.name) {
             brandResult = await findOrCreateBrand(brand.name ?? "");
         }
+        
+        // search_text      
+        const searchText = `
+        ${item.name}
+        ${item.Video?.title ?? ""}
+        ${item.Category?.name ?? ""}
+        ${item.Category?.parent?.name ?? ""}
+        ${item.User?.user_name ?? ""}
+        `;
+        
+        const normalizeSearchText = normalizeJapanese(searchText ?? "");
 
         // データ更新
         await item.Video.update({
@@ -445,6 +457,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
             save_at: now,
             first_image_url: finalImageUrls[0],
+            search_text: normalizeSearchText,
         }, { transaction: t });
 
         // 商品画像更新
