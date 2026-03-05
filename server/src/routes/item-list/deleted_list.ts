@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { Item, Video, } from "../../models/index.js";
+import { Item, Video } from "../../models/index.js";
 import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
 const router = Router();

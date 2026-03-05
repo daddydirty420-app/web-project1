@@ -91,7 +91,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
-        const delta = window.innerWidth >= 768 ? 2 : 1;
+        const delta = typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
 
         pages.push(1);
 
@@ -103,7 +103,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
 
         if (currentPage + delta < totalPages - 1) pages.push('...');
 
-        if (totalPages > 1)  pages.push(totalPages);
+        if (totalPages > 1) pages.push(totalPages);
 
         return (
             <div className={styles.pagenation}>
@@ -140,7 +140,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                 </button>
             </div>
         );
-    }
+    };
 
     return (
         <div className='mt-4'>

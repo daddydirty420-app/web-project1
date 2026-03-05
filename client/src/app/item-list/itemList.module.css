@@ -176,6 +176,53 @@
     font-weight: 500;
     color: var(--text-muted);
 }
+.pagenation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.pageButtonIcon {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+.pageButtonIcon:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.pageIcon {
+    color: var(--theme);
+}
+
+.pageButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    color: var(--theme);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.pageButton.active {
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+}
+.pageButton:not(.active):hover {
+    background-color: var(--button-gray);
+}
+
+.ellipsis {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
 
 @media (min-width: 768px) {
     .itemImageText {

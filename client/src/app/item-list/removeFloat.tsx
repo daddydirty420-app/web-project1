@@ -17,6 +17,7 @@ type Props = {
 
 type Responce = {
     itemList: Item[];
+    totalPages: number;
 };
 
 export const RemoveFloat = ({ item, page, mutate }: Props) => {
@@ -118,7 +119,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         {floatVisible && (
             <>
             <div className={styles.overlay} onClick={() => setFloatVisible(false)} />
-                
+
             <div className={styles.float}>
                 <div
                 className={styles.removeFlex}
