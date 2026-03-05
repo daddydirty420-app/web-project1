@@ -37,7 +37,16 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             return;
         }
 
-        res.status(200).json({ itemList });
+        const totalCount = await Item.count({
+            where: {
+                seller_id: currentUserId,
+                status: "draft",
+            }
+        });
+
+        const totalPages = totalCount / 20;
+
+        res.status(200).json({ itemList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
