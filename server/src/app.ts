@@ -74,6 +74,7 @@ import TransfarAdminRouter from "./routes/admin/transfar_admin.js";
 import UserAdminRouter from './routes/admin/user_admin.js';
 import DraftListRouter from "./routes/item-list/draft_list.js";
 import DeletedListRouter from "./routes/item-list/deleted_list.js";
+import TestRouter from "./routes/test.js";
 
 import db from './models/index.js';
 db.sequelize.sync();
@@ -173,6 +174,7 @@ app.use('/api/transfar-admin', TransfarAdminRouter);
 app.use('/api/user-admin', UserAdminRouter);
 app.use("/api/item-list/draft-list", DraftListRouter);
 app.use("/api/item-list/deleted-list", DeletedListRouter);
+app.use("/api/test", TestRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
