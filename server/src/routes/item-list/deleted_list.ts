@@ -15,7 +15,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "gender_type", "age_type"],
             where: {
                 seller_id: currentUserId,
-                status: "draft",
+                status: "deleted",
             },
             order: [['save_at', 'DESC']],
             include: [
@@ -52,7 +52,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
             attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "gender_type", "age_type"],
             where: {
                 seller_id: currentUserId,
-                status: "draft",
+                status: "deleted",
                 search_text: { [Op.iLike]: `%${keyword}%` },
             },
             order: [['save_at', 'DESC']],

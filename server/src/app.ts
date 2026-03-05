@@ -32,7 +32,6 @@ import CartRouter from "./routes/cart.js";
 import ChatRouter from "./routes/chat.js";
 import CommentRouter from "./routes/comment.js";
 import DeliveryRouter from "./routes/delivery.js";
-import DraftListRouter from "./routes/item-list/draft_list.js";
 import FollowRouter from "./routes/follow.js";
 import GoodCommentRouter from "./routes/good_comment.js";
 import GoodItemRouter from "./routes/good_item.js";
@@ -73,6 +72,8 @@ import ReportAdminRouter from "./routes/admin/report.js";
 import ShopInfoAdminRouter from "./routes/admin/shop_info_admin.js";
 import TransfarAdminRouter from "./routes/admin/transfar_admin.js";
 import UserAdminRouter from './routes/admin/user_admin.js';
+import DraftListRouter from "./routes/item-list/draft_list.js";
+import DeletedListRouter from "./routes/item-list/deleted_list.js";
 
 import db from './models/index.js';
 db.sequelize.sync();
@@ -130,7 +131,6 @@ app.use('/api/cart', CartRouter);
 app.use('/api/chat', ChatRouter);
 app.use('/api/comment', CommentRouter);
 app.use('/api/delivery', DeliveryRouter);
-app.use("/api/item-list/draft-list", DraftListRouter);
 app.use('/api/follow', FollowRouter);
 app.use('/api/good-comment', GoodCommentRouter);
 app.use('/api/good-item', GoodItemRouter);
@@ -171,6 +171,8 @@ app.use("/api/report-admin", ReportAdminRouter);
 app.use('/api/shop-info-admin', ShopInfoAdminRouter);
 app.use('/api/transfar-admin', TransfarAdminRouter);
 app.use('/api/user-admin', UserAdminRouter);
+app.use("/api/item-list/draft-list", DraftListRouter);
+app.use("/api/item-list/deleted-list", DeletedListRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
