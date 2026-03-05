@@ -116,6 +116,9 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         />
 
         {floatVisible && (
+            <>
+            <div className={styles.overlay} onClick={() => setFloatVisible(false)} />
+                
             <div className={styles.float}>
                 <div
                 className={styles.removeFlex}
@@ -129,6 +132,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
                     <p className={styles.floatText}>{removeText}</p>
                 </div>
             </div>
+            </>
         )}
         </>
     );
