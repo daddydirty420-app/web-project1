@@ -118,29 +118,6 @@
     letter-spacing: 0.03em;
 }
 
-.ellipsisIcon {
-    position: absolute;
-    top: 4px;
-    right: 0;
-
-    width: 18px;
-    height: 18px;
-    padding: 4px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-    color: var(--theme);
-    cursor: pointer;
-
-    transition: background 0.15s ease;
-}
-.ellipsisIcon:hover {
-    background: rgba(0,0,0,0.05);
-}
-
 .searchSection {
     position: relative;
     display: flex;
