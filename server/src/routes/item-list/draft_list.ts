@@ -9,6 +9,10 @@ const router = Router();
 
 router.get('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
+        
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 20;
+    const offset = (page - 1) * limit;
 
     try {
         const itemList = await Item.findAll({
@@ -18,6 +22,8 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                 status: "draft",
             },
             order: [['save_at', 'DESC']],
+            limit,
+            offset,
             include: [
                 {
                     model: Video,

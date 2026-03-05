@@ -9,12 +9,12 @@ const router = Router();
 
 router.get('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
+        
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 20;
+    const offset = (page - 1) * limit;
 
     try {
-        const page = parseInt(req.query.page as string) || 1;
-        const limit = 20;
-        const offset = (page - 1) * limit;
-
         const itemList = await GoodItem.findAll({
             attributes: ["id"],
             where: { good_user_id: currentUserId },
