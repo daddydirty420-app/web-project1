@@ -81,11 +81,16 @@
     line-clamp: 1;
 }
 
-.date {
+.dateDiv {
+    display: flex;
+    gap: 4px;
+    padding-left: 0.5em;
+}
+
+.dateText {
     font-size: 10.5px;
     color: var(--text-muted);
     line-height: 1.2;
-    padding-left: 0.5em;
 }
 
 .videoTitleDiv {
@@ -96,6 +101,7 @@
 
 .titleLabel {
     font-size: 10px;
+    flex-shrink: 0;
 }
 
 .videoTitle {

@@ -130,7 +130,10 @@ export const ItemList = ({ page }: Props) => {
                                         <h2 className={styles.itemName}>{item.name ?? ""}</h2>
 
                                         {["deleted", "draft"].includes(page) && (
-                                            <p className={styles.date}>{previewDateLabel}: {previewDate}</p>
+                                            <div className={styles.dateDiv}>
+                                                <p className={styles.dateText}>{previewDateLabel}:</p>
+                                                <p className={styles.dateText}>{previewDate}</p>
+                                            </div>
                                         )}
 
                                         <div className={styles.videoTitleDiv}>
