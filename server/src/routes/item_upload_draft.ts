@@ -364,7 +364,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
             brandResult = await findOrCreateBrand(brand.name ?? "");
         }
         
-                
+        // search_text        
         const searchText = `
         ${item.name}
         ${item.Video?.title ?? ""}
