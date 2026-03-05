@@ -155,6 +155,7 @@ export const ItemList = ({ page }: Props) => {
         </section>
 
         {itemList && itemList.length > 0 && (
+            <>
             <main className={styles.itemListSection}>
                 {itemList.map((item) => {
                     let itemPageLink = "";
@@ -223,11 +224,12 @@ export const ItemList = ({ page }: Props) => {
                     );
                 })}
             </main>
-        )}
 
-        {itemList && itemList.length > 0 && renderPagenation(pageNumber, totalPages, (p) => {
-            setPageNumber(p);
-        })}
+            {renderPagenation(pageNumber, totalPages, (p) => {
+                setPageNumber(p);
+            })}
+            </>
+        )}
 
         {itemList?.length === 0 && (
             <>
