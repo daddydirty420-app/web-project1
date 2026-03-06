@@ -70,12 +70,12 @@ router.patch("/status-active", async (req: Request, res: Response): Promise<void
 });
 
 router.post("/good-create/:id", async (req: Request, res: Response): Promise<void> => {
-    const userId = Number(req.params.id);
+    const userId = req.params.id;
 
     const t = await sequelize.transaction();
 
     try {
-        if (!userId || !isNaN(userId)) {
+        if (!userId) {
             throw new Error("NOT_FOUND");
         }
 
@@ -88,7 +88,7 @@ router.post("/good-create/:id", async (req: Request, res: Response): Promise<voi
         await Promise.all(items.map(async (item: typeof Item) => {
             await GoodItem.create({
                 itemId: item.id,
-                good_user_id: userId
+                good_user_id: Number(userId)
             }, { transaction: t });
         }));
 
