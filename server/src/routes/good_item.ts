@@ -47,7 +47,7 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
 });
 
 router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const itemId = req.params.id;
+    const itemId = Number(req.params.id);
     const currentUserId = req.user!.id;
 
     try {
@@ -70,14 +70,14 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
 
         await data.destroy();
 
-        if (!item.sold_out && item.sort_number > 0) {
+        if (item.status === "active" && item.sort_number > 0) {
             const sortNumber = Number(item.sort_number);
             const newSort = sortNumber - Math.min(50, sortNumber);
             item.sort_number = newSort;
             await item.save();
         }
 
-        if (!item.sold_out && item.sort_buzz_number > 0) {
+        if (item.status === "active" && item.sort_buzz_number > 0) {
             const sortBuzzNumber = Number(item.sort_buzz_number);
             const newSortBuzz = sortBuzzNumber - Math.min(200, sortBuzzNumber);
             item.sort_buzz_number = newSortBuzz;
