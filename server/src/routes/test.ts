@@ -3,6 +3,7 @@ import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Item, ItemDeleteLogs } from "../models/index.js";
 import sequelize from "../db.js";
+import { Op } from "sequelize";
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void>
 
         const item = await Item.findByPk(itemId);
 
-        if (!itemId) {
+        if (!item) {
             throw new Error("NOT_FOUND");
         }
 
@@ -34,6 +35,35 @@ router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void>
 
         res.status(201).json({ message: "100 items copied 🌱" });
     } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "COPY_FAILED" });
+    }
+});
+
+router.patch("/status-deleted", async (req: Request, res: Response): Promise<void> => {
+    const t = await sequelize.transaction();
+    try {
+        const items = await Item.findAll({
+            where: {
+                id: { [Op.gt]: 40 }
+            }
+        });
+
+        if (!items) {
+            throw new Error("NOT_FOUND");
+        }
+
+        await Promise.all(items.map(async(item: typeof Item) => {
+            await item.update({
+                status: "deleted",
+            }, { transaction: t });
+        }));
+
+        await t.commit();
+
+        res.status(201).json({ message: "status changed" });
+    } catch (err) {
+        await t.rollback();
         console.error(err);
         res.status(500).json({ error: "COPY_FAILED" });
     }
