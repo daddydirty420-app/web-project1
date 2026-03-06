@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { GoodItem, Item, ItemDeleteLogs } from "../models/index.js";
+import { GoodItem, Item, ItemDeleteLogs, WatchHistory } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 
@@ -69,7 +69,7 @@ router.patch("/status-active", async (req: Request, res: Response): Promise<void
     }
 });
 
-router.post("/good-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/watch-create/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = req.params.id;
 
     const t = await sequelize.transaction();
@@ -86,15 +86,15 @@ router.post("/good-create/:id", async (req: Request, res: Response): Promise<voi
         });
 
         await Promise.all(items.map(async (item: typeof Item) => {
-            await GoodItem.create({
+            await WatchHistory.create({
                 item_id: item.id,
-                good_user_id: Number(userId)
+                good_user_id: Number(userId),
             }, { transaction: t });
         }));
 
         await t.commit();
 
-        res.status(200).json({ message: "good created" });
+        res.status(200).json({ message: "history created" });
     } catch (err) {
         await t.rollback();
         console.error(err);
