@@ -22,21 +22,30 @@ type Props = {
     existingVideoUrl: string | null;
 };
 
+const MAX_SIZE = 500 * 1024 * 1024; // 500MB
+
 export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVideoUrl }: Props) => {
     const handleChangeVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files?.[0]) return;
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (file.size > MAX_SIZE) {
+            alert("動画は500MB以内にしてください");
+            e.target.value = "";
+            return;
+        }
 
         onChange({
             ...value,
-            videoFile: e.target.files[0],
+            videoFile: file,
             videoUploaded: false,
         });
     };
 
     const handleChangeThumbnail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files?.[0]) return;
-
-        const file = e.target.files[0];
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
         const preview = URL.createObjectURL(file);
 
         onChange({

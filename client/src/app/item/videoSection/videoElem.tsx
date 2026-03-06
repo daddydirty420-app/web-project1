@@ -22,13 +22,18 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
         const url = item.Video?.converted_url ?? item.Video?.original_url;
         if (!url) return;
 
+        let hls: Hls | null = null;
+
         if (Hls.isSupported() && url.endsWith('.m3u8')) {
-            const hls = new Hls();
+            hls = new Hls();
             hls.loadSource(url);
             hls.attachMedia(videoEl);
-            return () => hls.destroy();
         } else {
             videoEl.src = url;
+        }
+
+        return () => {
+            if (hls) hls.destroy();
         }
     }, [item.Video]);
 
