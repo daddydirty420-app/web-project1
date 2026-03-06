@@ -224,12 +224,7 @@ export const ItemList = ({ page }: Props) => {
                                                 )}
 
                                                 {item.age_type === "kids" && (
-                                                    <>
-                                                    {["men", "women", "unisex"].includes(item.gender_type) && (
-                                                        <span className={styles.typeText}>/</span>
-                                                    )}
                                                     <span className={`${styles.typeText} ${styles.line1}`}>キッズ</span>
-                                                    </>
                                                 )}
                                             </div>
                                         )}

@@ -113,6 +113,8 @@
     color: var(--text-muted);
     line-height: 1.2;
     white-space: nowrap;
+    background-color: var(--bg-subtle);
+    border-radius: 6px;
 }
 
 .videoTitleDiv {
