@@ -87,7 +87,7 @@ router.post("/good-create/:id", async (req: Request, res: Response): Promise<voi
 
         await Promise.all(items.map(async (item: typeof Item) => {
             await GoodItem.create({
-                itemId: item.id,
+                item_id: item.id,
                 good_user_id: Number(userId)
             }, { transaction: t });
         }));
