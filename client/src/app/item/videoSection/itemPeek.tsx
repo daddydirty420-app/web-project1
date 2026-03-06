@@ -53,7 +53,9 @@ export const ItemPeek = ({ item }: Props) => {
 
                             {item.age_type === "kids" && (
                                 <>
-                                <span className={styles.typeText}>/</span>
+                                {["men", "women", "unisex"].includes(item.gender_type) && (
+                                    <span className={styles.typeText}>/</span>
+                                )}
                                 <span className={styles.typeText}>キッズ</span>
                                 </>
                             )}

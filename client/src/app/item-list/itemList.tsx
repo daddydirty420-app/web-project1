@@ -198,18 +198,45 @@ export const ItemList = ({ page }: Props) => {
                                     />
 
                                     <div className={styles.itemTextArea}>
-                                        <h2 className={styles.itemName}>{item.name ?? ""}</h2>
+                                        <h2 className={`${styles.itemName} ${styles.line1}`}>{item.name ?? ""}</h2>
 
                                         {["deleted", "draft"].includes(page) && (
                                             <div className={styles.dateDiv}>
-                                                <p className={styles.dateText}>{previewDateLabel}:</p>
-                                                <p className={styles.dateText}>{previewDate}</p>
+                                                <p className={`${styles.dateText} ${styles.line1}`}>{previewDateLabel}:</p>
+                                                <p className={`${styles.dateText} ${styles.line1}`}>{previewDate}</p>
+                                            </div>
+                                        )}
+
+                                        {["good", "watch-history"].includes(page)
+                                        && (
+                                            ["men", "women", "unisex"].includes(item.gender_type) ||
+                                            item.age_type === "kids"
+                                        ) && (
+                                            <div className={styles.typeRow}>
+                                                {item.gender_type === "men" && (
+                                                    <span className={`${styles.typeText} ${styles.line1}`}>メンズ</span>
+                                                )}
+                                                {item.gender_type === "women" && (
+                                                    <span className={`${styles.typeText} ${styles.line1}`}>レディース</span>
+                                                )}
+                                                {item.gender_type === "unisex" && (
+                                                    <span className={`${styles.typeText} ${styles.line1}`}>ユニセックス</span>
+                                                )}
+
+                                                {item.age_type === "kids" && (
+                                                    <>
+                                                    {["men", "women", "unisex"].includes(item.gender_type) && (
+                                                        <span className={styles.typeText}>/</span>
+                                                    )}
+                                                    <span className={`${styles.typeText} ${styles.line1}`}>キッズ</span>
+                                                    </>
+                                                )}
                                             </div>
                                         )}
 
                                         <div className={styles.videoTitleDiv}>
                                             <p className={styles.titleLabel}>動画：</p> 
-                                            <h4 className={styles.videoTitle}>{item.Video?.title ?? ""}</h4>
+                                            <h4 className={`${styles.videoTitle} ${styles.line1}`}>{item.Video?.title ?? ""}</h4>
                                         </div>
                                     </div>
                                 </div>

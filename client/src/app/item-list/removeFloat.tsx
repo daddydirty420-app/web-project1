@@ -58,8 +58,10 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
         if (page === "draft") {
             toastBaseText = "下書き商品";
+        } else if (page === "good") {
+            toastBaseText = "いいねした商品";
         } else if (page === "watch-history") {
-            toastBaseText = "閲覧履歴"
+            toastBaseText = "閲覧履歴";
         }
 
         try {

@@ -16,7 +16,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
 
     try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "gender_type", "age_type"],
+            attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url'],
             where: {
                 seller_id: currentUserId,
                 status: "deleted",
@@ -68,7 +68,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
 
     try {
         const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "gender_type", "age_type"],
+            attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url'],
             where: {
                 seller_id: currentUserId,
                 status: "deleted",

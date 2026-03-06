@@ -1,3 +1,13 @@
+.line1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+}
+
+
+
 .itemListSection {
     width: 100%;
     max-width: 900px;
@@ -74,11 +84,6 @@
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.02em;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
 }
 
 .dateDiv {
@@ -92,11 +97,22 @@
     color: var(--text-muted);
     line-height: 1.2;
     flex-shrink: 0;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+}
+
+.typeRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+    margin-left: 0.5em;
+}
+
+.typeText {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 .videoTitleDiv {
@@ -115,11 +131,6 @@
     font-weight: 500;
     color: var(--theme-str);
     letter-spacing: 0.02em;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
     opacity: 0.85;
 }
 
