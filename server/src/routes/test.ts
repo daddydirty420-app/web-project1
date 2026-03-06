@@ -70,12 +70,12 @@ router.patch("/status-active", async (req: Request, res: Response): Promise<void
 });
 
 router.post("/watch-create/:id", async (req: Request, res: Response): Promise<void> => {
-    const userId = req.params.id;
+    const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();
 
     try {
-        if (!userId) {
+        if (!Number.isInteger(userId) || userId <= 0) {
             throw new Error("INVALID_USER_ID");
         }
 
