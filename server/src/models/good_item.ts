@@ -14,7 +14,6 @@ export class GoodItem extends Model {
     static associate() {
         GoodItem.belongsTo(Item, {
             foreignKey: "item_id",
-            as: "item",
         });
         GoodItem.belongsTo(User, {
             foreignKey: "good_user_id",
@@ -22,7 +21,7 @@ export class GoodItem extends Model {
     }
 
     static associations: {
-        item: Association<GoodItem, Item>;
+        Item: Association<GoodItem, Item>;
         User: Association<GoodItem, User>;
     };
 }

@@ -15,7 +15,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
     const offset = (page - 1) * limit;
 
     try {
-        const itemList = await GoodItem.findAll({
+        const goodList = await GoodItem.findAll({
             attributes: ["id"],
             where: { good_user_id: currentUserId },
             order: [['createdAt', 'DESC']],
@@ -40,10 +40,12 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             ],
         });
 
-        if (!itemList) {
+        if (!goodList) {
             res.status(404).json({ message: 'アイテムが見つかりません。' });
             return;
         }
+
+        const itemList = goodList.map((good: typeof GoodItem) => good.Item);
 
         const totalCount = await GoodItem.count({
             where: { good_user_id: currentUserId },
