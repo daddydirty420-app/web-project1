@@ -31,6 +31,7 @@ export const ItemList = ({ page }: Props) => {
     const getBasePath = () => {
         if (page === "draft") return "item-list/draft-list";
         if (page === "deleted") return "item-list/deleted-list";
+        if (page === "good") return "item-list/good-list";
 
         return null;
     };
