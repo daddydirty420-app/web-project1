@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Item, ItemDeleteLogs } from "../models/index.js";
+import { GoodItem, Item, ItemDeleteLogs } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 
@@ -66,6 +66,39 @@ router.patch("/status-active", async (req: Request, res: Response): Promise<void
         await t.rollback();
         console.error(err);
         res.status(500).json({ error: "COPY_FAILED" });
+    }
+});
+
+router.post("/good-create/:id", async (req: Request, res: Response): Promise<void> => {
+    const userId = Number(req.params.id);
+
+    const t = await sequelize.transaction();
+
+    try {
+        if (!userId || !isNaN(userId)) {
+            throw new Error("NOT_FOUND");
+        }
+
+        const items = await Item.findAll({
+            where: {
+                id: { [Op.gt]: 40 }
+            },
+        });
+
+        await Promise.all(items.map(async (item: typeof Item) => {
+            await GoodItem.create({
+                itemId: item.id,
+                good_user_id: userId
+            }, { transaction: t });
+        }));
+
+        await t.commit();
+
+        res.status(200).json({ message: "good created" });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ error: "FAILED" });
     }
 });
 
