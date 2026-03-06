@@ -50,6 +50,9 @@ export const ItemList = ({ page }: Props) => {
 
     const itemList = data?.itemList;
     const totalPages = data?.totalPages ?? 1;
+
+    console.log(itemList);
+    console.log(totalPages);
     
     // 検索
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
