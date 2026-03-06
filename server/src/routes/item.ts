@@ -46,7 +46,7 @@ router.post('/delete-all', authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.delete("/draft/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = Number(req.user!.id);
 
