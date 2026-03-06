@@ -54,10 +54,12 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
             };
         }, false);
 
-        let toastBaseText = "";
+        let toastBaseText = ""; 
 
         if (page === "draft") {
             toastBaseText = "下書き商品";
+        } else if (page === "watch-history") {
+            toastBaseText = "閲覧履歴"
         }
 
         try {
