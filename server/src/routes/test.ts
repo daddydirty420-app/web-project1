@@ -88,8 +88,16 @@ router.post("/watch-create/:id", async (req: Request, res: Response): Promise<vo
         await Promise.all(items.map(async (item: typeof Item) => {
             await WatchHistory.create({
                 item_id: item.id,
-                good_user_id: Number(userId),
+                user_id: Number(userId),
             }, { transaction: t });
+        }));
+
+        const nullHistory = await WatchHistory.findAll({
+            where: { user_id: null },
+        });
+
+        await Promise.all(nullHistory.map(async (his: typeof WatchHistory) => {
+            await his.destroy({ transaction: t });
         }));
 
         await t.commit();
