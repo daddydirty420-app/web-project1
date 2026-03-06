@@ -76,7 +76,7 @@ router.post("/watch-create/:id", async (req: Request, res: Response): Promise<vo
 
     try {
         if (!userId) {
-            throw new Error("NOT_FOUND");
+            throw new Error("INVALID_USER_ID");
         }
 
         const items = await Item.findAll({
@@ -85,20 +85,20 @@ router.post("/watch-create/:id", async (req: Request, res: Response): Promise<vo
             },
         });
 
-        await Promise.all(items.map(async (item: typeof Item) => {
-            await WatchHistory.create({
+        await WatchHistory.bulkCreate(
+            items.map((item: any) => ({
                 item_id: item.id,
-                user_id: Number(userId),
-            }, { transaction: t });
-        }));
+                user_id: userId,
+            })),
+            { transaction: t }
+        );
 
-        const nullHistory = await WatchHistory.findAll({
-            where: { user_id: null },
+        await WatchHistory.destroy({
+            where: {
+                user_id: { [Op.is]: null }
+            },
+            transaction: t
         });
-
-        await Promise.all(nullHistory.map(async (his: typeof WatchHistory) => {
-            await his.destroy({ transaction: t });
-        }));
 
         await t.commit();
 
