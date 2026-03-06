@@ -40,7 +40,7 @@ router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void>
     }
 });
 
-router.patch("/status-deleted", async (req: Request, res: Response): Promise<void> => {
+router.patch("/status-active", async (req: Request, res: Response): Promise<void> => {
     const t = await sequelize.transaction();
     try {
         const items = await Item.findAll({
@@ -55,7 +55,7 @@ router.patch("/status-deleted", async (req: Request, res: Response): Promise<voi
 
         await Promise.all(items.map(async(item: typeof Item) => {
             await item.update({
-                status: "deleted",
+                status: "active",
             }, { transaction: t });
         }));
 

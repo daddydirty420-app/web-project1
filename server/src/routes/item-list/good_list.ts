@@ -45,6 +45,20 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             return;
         }
 
+        const totalCount = await GoodItem.count({
+            where: { good_user_id: currentUserId },
+            include: [
+                {
+                    model: Item,
+                    where: {
+                        status: { [Op.in]: ["active", "soldout"] },
+                    },
+                },
+            ],
+        });
+
+        const totalPages = Math.floor(totalCount / 20);
+
         res.status(200).json({ itemList });
     } catch (err) {
         console.error(err);
