@@ -89,6 +89,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
             include: [
                 {
                     model: Item,
+                    as: "item",
                     where: {
                         status: { [Op.in]: ["active", "soldout"] },
                         search_text: { [Op.iLike]: `%${keyword}%` },
@@ -111,8 +112,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
             return;
         }
 
-        const itemList = goodList
-        .map((good: typeof GoodItem) => good.Item);
+        const itemList = goodList.map((good: typeof GoodItem) => good.item);
 
         const totalCount = await GoodItem.count({
             where: { good_user_id: currentUserId },
