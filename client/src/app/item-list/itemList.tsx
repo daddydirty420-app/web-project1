@@ -33,6 +33,7 @@ export const ItemList = ({ page }: Props) => {
         if (page === "deleted") return "item-list/deleted-list";
         if (page === "good") return "item-list/good-list";
         if (page === "watch-history") return "item-list/watch-list";
+        if (page === "stock") return "item-list/stock-list";
 
         return null;
     };
