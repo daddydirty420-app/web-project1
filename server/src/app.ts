@@ -75,6 +75,7 @@ import UserAdminRouter from './routes/admin/user_admin.js';
 import DraftListRouter from "./routes/item-list/draft_list.js";
 import DeletedListRouter from "./routes/item-list/deleted_list.js";
 import GoodListRouter from "./routes/item-list/good_list.js";
+import StockListRouter from "./routes/item-list/stock_list.js";
 import WatchListRouter from "./routes/item-list/watch_list.js";
 import TestRouter from "./routes/test.js";
 
@@ -177,6 +178,7 @@ app.use('/api/user-admin', UserAdminRouter);
 app.use("/api/item-list/draft-list", DraftListRouter);
 app.use("/api/item-list/deleted-list", DeletedListRouter);
 app.use("/api/item-list/good-list", GoodListRouter);
+app.use("/api/item-list/stock-list", StockListRouter);
 app.use("/api/item-list/watch-list", WatchListRouter);
 app.use("/api/test", TestRouter);
 

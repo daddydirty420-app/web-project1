@@ -264,37 +264,6 @@ router.get('/money-management/item-list', authenticateToken, async (req: Request
     }
 });
 
-router.get('/number-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const currentUserId = req.user!.id;
-
-        const itemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', "status", "attributes", 'first_image_url'],
-            where: { 
-                seller_id: currentUserId,
-                status: { [Op.in]: ["active", "hidden", "soldout"] },
-            },
-            order: [['uploaded_at', 'DESC']],
-            include: [
-                {
-                    model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
-                },
-            ],
-        });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
-        res.json({ itemList });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 router.get('/search/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;

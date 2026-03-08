@@ -230,6 +230,14 @@ export const ItemList = ({ page }: Props) => {
                                             </div>
                                         )}
 
+                                        {/* カラー別作るかも */}
+                                        {page === "stock" && (
+                                            <div className={styles.stockDiv}>
+                                                <p className={styles.stockLabel}>在庫数：</p>
+                                                <p className={`${styles.stock} ${styles.line1}`}>{item.attributes.inventory?.current.toLocaleString()}</p>
+                                            </div>
+                                        )}
+
                                         <div className={styles.videoTitleDiv}>
                                             <p className={styles.titleLabel}>動画：</p> 
                                             <h4 className={`${styles.videoTitle} ${styles.line1}`}>{item.Video?.title ?? ""}</h4>

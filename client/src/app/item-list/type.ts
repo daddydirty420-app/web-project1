@@ -1,3 +1,5 @@
+import { ItemAttributes } from "@/types/itemAttributes";
+
 export type Video = {
     id: string;
     title: string;
@@ -12,5 +14,6 @@ export type Item = {
     age_type: "adult" | "kids" | "both";
     save_at: Date;
     first_image_url: string;
+    attributes: ItemAttributes;
     Video?: Video | null;
 };

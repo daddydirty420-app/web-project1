@@ -116,6 +116,27 @@
     padding: 3px;
 }
 
+.stockDiv {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 0.5em;
+}
+
+.stockLabel {
+    font-size: 10.5px;
+    color: var(--theme);
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.stock {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
 .videoTitleDiv {
     display: flex;
     align-items: center;
