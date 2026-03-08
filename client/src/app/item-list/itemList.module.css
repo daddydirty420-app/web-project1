@@ -119,7 +119,7 @@
 .stockDiv {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 3px;
     padding-left: 0.5em;
 }
 
@@ -131,8 +131,9 @@
 }
 
 .stock {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
+    color: var(--theme-str);
     line-height: 1.2;
     letter-spacing: 0.02em;
 }
