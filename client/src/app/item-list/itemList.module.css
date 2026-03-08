@@ -126,7 +126,7 @@
 .stockLabel {
     font-size: 10.5px;
     color: var(--theme);
-    line-height: 1.2;
+    line-height: 1;
     flex-shrink: 0;
 }
 
@@ -134,7 +134,7 @@
     font-size: 14px;
     font-weight: 600;
     color: var(--theme-str);
-    line-height: 1.2;
+    line-height: 1;
     letter-spacing: 0.02em;
 }
 
