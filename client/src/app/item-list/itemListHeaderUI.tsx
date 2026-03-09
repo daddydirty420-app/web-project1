@@ -7,7 +7,7 @@ type Props = {
 
 export default function ItemListHeaderUI({ children }: Props) {
     return (
-        <Container header>
+        <Container>
             <Back />
             {children}
         </Container>
