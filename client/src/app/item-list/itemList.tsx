@@ -209,7 +209,7 @@ export const ItemList = ({ page }: Props) => {
                                             </div>
                                         )}
 
-                                        {["good", "watch-history"].includes(page)
+                                        {["good", "watch-history", "uploaded"].includes(page)
                                         && (
                                             ["men", "women", "unisex"].includes(item.gender_type) ||
                                             item.age_type === "kids"
