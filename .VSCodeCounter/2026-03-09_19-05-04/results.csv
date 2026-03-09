@@ -1,17 +1,17 @@
-"filename", "language", "JavaScript", "JSON with Comments", "JSON", "TypeScript", "PostCSS", "TypeScript JSX", "Markdown", "XML", "comment", "blank", "total"
+"filename", "language", "JSON", "JSON with Comments", "TypeScript", "JavaScript", "PostCSS", "TypeScript JSX", "Markdown", "XML", "comment", "blank", "total"
 "c:\Users\conta\Desktop\project\client\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 23, 0, 0, 14, 37
-"c:\Users\conta\Desktop\project\client\eslint.config.mjs", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 5, 17
-"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
-"c:\Users\conta\Desktop\project\client\next.config.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 1, 2, 19
-"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 0, 0, 16045, 0, 0, 0, 0, 0, 0, 1, 16046
-"c:\Users\conta\Desktop\project\client\package.json", "JSON", 0, 0, 60, 0, 0, 0, 0, 0, 0, 1, 61
-"c:\Users\conta\Desktop\project\client\postcss.config.mjs", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 0, 1, 2, 10
+"c:\Users\conta\Desktop\project\client\eslint.config.mjs", "JavaScript", 0, 0, 0, 12, 0, 0, 0, 0, 0, 5, 17
+"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\conta\Desktop\project\client\next.config.js", "JavaScript", 0, 0, 0, 16, 0, 0, 0, 0, 1, 2, 19
+"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 16045, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16046
+"c:\Users\conta\Desktop\project\client\package.json", "JSON", 60, 0, 0, 0, 0, 0, 0, 0, 0, 1, 61
+"c:\Users\conta\Desktop\project\client\postcss.config.mjs", "JavaScript", 0, 0, 0, 7, 0, 0, 0, 0, 1, 2, 10
 "c:\Users\conta\Desktop\project\client\public\file.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\public\globe.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\public\next.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\public\window.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\src\app\api\auth\[...nextauth]\route.ts", "TypeScript", 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 6
+"c:\Users\conta\Desktop\project\client\src\app\api\auth\[...nextauth]\route.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
 "c:\Users\conta\Desktop\project\client\src\app\company\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 0, 10, 58
 "c:\Users\conta\Desktop\project\client\src\app\company\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 28, 0, 0, 0, 4, 32
 "c:\Users\conta\Desktop\project\client\src\app\edit\account\accountEditForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 301, 0, 0, 1, 47, 349
@@ -63,7 +63,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\company-name\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 72, 0, 0, 0, 17, 89
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\option\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 9, 50
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\option\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 0, 15, 121
-"c:\Users\conta\Desktop\project\client\src\app\edit\type.ts", "TypeScript", 0, 0, 0, 103, 0, 0, 0, 0, 0, 10, 113
+"c:\Users\conta\Desktop\project\client\src\app\edit\type.ts", "TypeScript", 0, 0, 103, 0, 0, 0, 0, 0, 0, 10, 113
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 115, 0, 0, 0, 21, 136
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 28
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\sign\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 11, 70
@@ -84,21 +84,22 @@
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\linkElement.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 26, 0, 0, 0, 3, 29
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 6, 47
-"c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts", "TypeScript", 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 5
+"c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5
 "c:\Users\conta\Desktop\project\client\src\app\item-list\deleted\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css", "PostCSS", 0, 0, 0, 0, 28, 0, 0, 0, 0, 3, 31
-"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 281, 0, 0, 0, 0, 41, 322
-"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 265, 0, 0, 2, 23, 290
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 308, 0, 0, 0, 0, 45, 353
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 274, 0, 0, 2, 24, 300
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\item-list\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
-"c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.module.css", "PostCSS", 0, 0, 0, 0, 64, 0, 0, 0, 0, 9, 73
+"c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.module.css", "PostCSS", 0, 0, 0, 0, 69, 0, 0, 0, 0, 10, 79
 "c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 119, 0, 0, 1, 26, 146
 "c:\Users\conta\Desktop\project\client\src\app\item-list\stock\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\tabHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 58, 0, 0, 0, 7, 65
-"c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts", "TypeScript", 0, 0, 0, 25, 0, 0, 0, 0, 0, 3, 28
-"c:\Users\conta\Desktop\project\client\src\app\item-list\uploaded\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 4, 25
+"c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts", "TypeScript", 0, 0, 25, 0, 0, 0, 0, 0, 0, 3, 28
+"c:\Users\conta\Desktop\project\client\src\app\item-list\uploaded\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 42, 0, 0, 0, 7, 49
 "c:\Users\conta\Desktop\project\client\src\app\item-list\watch-history\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 14, 92
 "c:\Users\conta\Desktop\project\client\src\app\item\commentSection\comment.module.css", "PostCSS", 0, 0, 0, 0, 313, 0, 0, 0, 0, 38, 351
@@ -127,7 +128,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\item\itemCommon.module.css", "PostCSS", 0, 0, 0, 0, 96, 0, 0, 0, 0, 10, 106
 "c:\Users\conta\Desktop\project\client\src\app\item\itemListSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 4, 25
 "c:\Users\conta\Desktop\project\client\src\app\item\itemPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 95, 0, 0, 0, 10, 105
-"c:\Users\conta\Desktop\project\client\src\app\item\itemPageTypes.ts", "TypeScript", 0, 0, 0, 111, 0, 0, 0, 0, 0, 13, 124
+"c:\Users\conta\Desktop\project\client\src\app\item\itemPageTypes.ts", "TypeScript", 0, 0, 111, 0, 0, 0, 0, 0, 0, 13, 124
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy.module.css", "PostCSS", 0, 0, 0, 0, 114, 0, 0, 0, 0, 13, 127
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy2026.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buySection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 157, 0, 0, 0, 27, 184
@@ -149,7 +150,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\item\madmax\deleteButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 72, 0, 0, 0, 15, 87
 "c:\Users\conta\Desktop\project\client\src\app\item\main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 2, 29
 "c:\Users\conta\Desktop\project\client\src\app\item\others\report.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 31, 0, 0, 0, 4, 35
-"c:\Users\conta\Desktop\project\client\src\app\item\portial.ts", "TypeScript", 0, 0, 0, 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\conta\Desktop\project\client\src\app\item\portial.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\deleteItem.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 57, 0, 0, 0, 12, 69
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\saleButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 243, 0, 0, 0, 36, 279
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\seller.module.css", "PostCSS", 0, 0, 0, 0, 263, 0, 0, 0, 0, 29, 292
@@ -216,7 +217,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\my-page\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\my-page\profileSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 5, 49
 "c:\Users\conta\Desktop\project\client\src\app\my-page\referenceCode.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 11, 89
-"c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts", "TypeScript", 0, 0, 0, 19, 0, 0, 0, 0, 0, 1, 20
+"c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 1, 20
 "c:\Users\conta\Desktop\project\client\src\app\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 101, 0, 0, 0, 3, 104
 "c:\Users\conta\Desktop\project\client\src\app\privacy-policy\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 117, 0, 0, 0, 20, 137
 "c:\Users\conta\Desktop\project\client\src\app\privacy-policy\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 0, 4, 28
@@ -232,7 +233,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\profile\profile.module.css", "PostCSS", 0, 0, 0, 0, 181, 0, 0, 0, 0, 27, 208
 "c:\Users\conta\Desktop\project\client\src\app\profile\profileMain.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 56, 0, 0, 0, 8, 64
 "c:\Users\conta\Desktop\project\client\src\app\profile\profilePage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 30, 0, 0, 0, 5, 35
-"c:\Users\conta\Desktop\project\client\src\app\profile\profileTypes.ts", "TypeScript", 0, 0, 0, 27, 0, 0, 0, 0, 0, 4, 31
+"c:\Users\conta\Desktop\project\client\src\app\profile\profileTypes.ts", "TypeScript", 0, 0, 27, 0, 0, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\profile\shopButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\app\profile\socialSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 3, 25
 "c:\Users\conta\Desktop\project\client\src\app\profile\starSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 0, 2, 21
@@ -242,7 +243,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\report\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\report\report.module.css", "PostCSS", 0, 0, 0, 0, 38, 0, 0, 0, 0, 4, 42
 "c:\Users\conta\Desktop\project\client\src\app\report\reportUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 4, 24
-"c:\Users\conta\Desktop\project\client\src\app\report\type.ts", "TypeScript", 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\app\report\type.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\buttonDiv.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 25, 0, 0, 0, 3, 28
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\complete\element.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 4, 24
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\complete\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 2, 17
@@ -262,7 +263,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\step5\client.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 250, 0, 0, 0, 40, 290
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\stepBar.module.css", "PostCSS", 0, 0, 0, 0, 81, 0, 0, 0, 0, 12, 93
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\stepBar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 1, 29, 136
-"c:\Users\conta\Desktop\project\client\src\app\shop-signup\type.ts", "TypeScript", 0, 0, 0, 70, 0, 0, 0, 0, 0, 7, 77
+"c:\Users\conta\Desktop\project\client\src\app\shop-signup\type.ts", "TypeScript", 0, 0, 70, 0, 0, 0, 0, 0, 0, 7, 77
 "c:\Users\conta\Desktop\project\client\src\app\signup\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\signup\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 3, 25
 "c:\Users\conta\Desktop\project\client\src\app\signup\signup-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 0, 14, 120
@@ -283,7 +284,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\transfar\request\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 36, 0, 0, 0, 7, 43
 "c:\Users\conta\Desktop\project\client\src\app\transfar\transfar.module.css", "PostCSS", 0, 0, 0, 0, 201, 0, 0, 0, 0, 23, 224
 "c:\Users\conta\Desktop\project\client\src\app\transfar\transfarUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 2, 18
-"c:\Users\conta\Desktop\project\client\src\app\transfar\types.ts", "TypeScript", 0, 0, 0, 19, 0, 0, 0, 0, 0, 2, 21
+"c:\Users\conta\Desktop\project\client\src\app\transfar\types.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 2, 21
 "c:\Users\conta\Desktop\project\client\src\app\upload\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\upload\attributes.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 275, 0, 0, 1, 38, 314
 "c:\Users\conta\Desktop\project\client\src\app\upload\attributesCard.module.css", "PostCSS", 0, 0, 0, 0, 189, 0, 0, 0, 6, 19, 214
@@ -296,8 +297,8 @@
 "c:\Users\conta\Desktop\project\client\src\app\upload\edit\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\upload\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 465, 0, 0, 10, 90, 565
 "c:\Users\conta\Desktop\project\client\src\app\upload\genderAge.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 163, 0, 0, 2, 32, 197
-"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useFileUpload.ts", "TypeScript", 0, 0, 0, 155, 0, 0, 0, 0, 6, 32, 193
-"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useUpload.ts", "TypeScript", 0, 0, 0, 282, 0, 0, 0, 0, 0, 33, 315
+"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useFileUpload.ts", "TypeScript", 0, 0, 155, 0, 0, 0, 0, 0, 6, 32, 193
+"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useUpload.ts", "TypeScript", 0, 0, 282, 0, 0, 0, 0, 0, 0, 33, 315
 "c:\Users\conta\Desktop\project\client\src\app\upload\itemImage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 7, 66
 "c:\Users\conta\Desktop\project\client\src\app\upload\itemNameDetail.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 0, 5, 44
 "c:\Users\conta\Desktop\project\client\src\app\upload\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
@@ -312,8 +313,8 @@
 "c:\Users\conta\Desktop\project\client\src\app\upload\ok\okUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 4, 24
 "c:\Users\conta\Desktop\project\client\src\app\upload\price.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 67, 0, 0, 0, 15, 82
 "c:\Users\conta\Desktop\project\client\src\app\upload\shipping.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 168, 0, 0, 4, 23, 195
-"c:\Users\conta\Desktop\project\client\src\app\upload\types\type.ts", "TypeScript", 0, 0, 0, 72, 0, 0, 0, 0, 0, 10, 82
-"c:\Users\conta\Desktop\project\client\src\app\upload\types\uploadType.ts", "TypeScript", 0, 0, 0, 35, 0, 0, 0, 0, 0, 1, 36
+"c:\Users\conta\Desktop\project\client\src\app\upload\types\type.ts", "TypeScript", 0, 0, 72, 0, 0, 0, 0, 0, 0, 10, 82
+"c:\Users\conta\Desktop\project\client\src\app\upload\types\uploadType.ts", "TypeScript", 0, 0, 35, 0, 0, 0, 0, 0, 0, 1, 36
 "c:\Users\conta\Desktop\project\client\src\app\upload\upload.module.css", "PostCSS", 0, 0, 0, 0, 427, 0, 0, 0, 0, 46, 473
 "c:\Users\conta\Desktop\project\client\src\app\upload\uploadUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\upload\videoInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 128, 0, 0, 0, 17, 145
@@ -327,7 +328,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\user-list\good-item\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 37, 0, 0, 0, 7, 44
 "c:\Users\conta\Desktop\project\client\src\app\user-list\goodUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\user-list\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
-"c:\Users\conta\Desktop\project\client\src\app\user-list\type.ts", "TypeScript", 0, 0, 0, 21, 0, 0, 0, 0, 0, 3, 24
+"c:\Users\conta\Desktop\project\client\src\app\user-list\type.ts", "TypeScript", 0, 0, 21, 0, 0, 0, 0, 0, 0, 3, 24
 "c:\Users\conta\Desktop\project\client\src\app\user-list\userList.module.css", "PostCSS", 0, 0, 0, 0, 125, 0, 0, 0, 0, 15, 140
 "c:\Users\conta\Desktop\project\client\src\app\user-list\userList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 187, 0, 0, 0, 21, 208
 "c:\Users\conta\Desktop\project\client\src\assets\images\website-image\logo&mark\FLEX Outdoor ロゴ (3000 x 1000 px)背景透過.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
@@ -347,7 +348,7 @@
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 2, 17
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-small.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 10, 0, 0, 0, 2, 12
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-subtitle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 3, 14
-"c:\Users\conta\Desktop\project\client\src\components\guide\index.ts", "TypeScript", 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\components\guide\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-link.module.css", "PostCSS", 0, 0, 0, 0, 26, 0, 0, 0, 0, 2, 28
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-small.module.css", "PostCSS", 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-subtitle.module.css", "PostCSS", 0, 0, 0, 0, 10, 0, 0, 0, 0, 1, 11
@@ -355,11 +356,11 @@
 "c:\Users\conta\Desktop\project\client\src\components\header\header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 7, 48
 "c:\Users\conta\Desktop\project\client\src\components\header\searchInputMobile.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 198, 0, 0, 1, 41, 240
 "c:\Users\conta\Desktop\project\client\src\components\header\searchInputPC.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 190, 0, 0, 1, 42, 233
-"c:\Users\conta\Desktop\project\client\src\components\index.ts", "TypeScript", 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 12
-"c:\Users\conta\Desktop\project\client\src\components\initSession.ts", "TypeScript", 0, 0, 0, 12, 0, 0, 0, 0, 0, 3, 15
+"c:\Users\conta\Desktop\project\client\src\components\index.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 12
+"c:\Users\conta\Desktop\project\client\src\components\initSession.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 3, 15
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 17, 0, 0, 0, 2, 19
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\imputForm.module.css", "PostCSS", 0, 0, 0, 0, 64, 0, 0, 0, 0, 7, 71
-"c:\Users\conta\Desktop\project\client\src\components\inputForm\index.ts", "TypeScript", 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 5
+"c:\Users\conta\Desktop\project\client\src\components\inputForm\index.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputStr.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 2, 43
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputStrAndSmall.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 2, 43
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputTitle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
@@ -367,12 +368,12 @@
 "c:\Users\conta\Desktop\project\client\src\components\itemListRow\itemListRow.module.css", "PostCSS", 0, 0, 0, 0, 77, 0, 0, 0, 0, 9, 86
 "c:\Users\conta\Desktop\project\client\src\components\itemListRow\itemListRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 0, 3, 51
 "c:\Users\conta\Desktop\project\client\src\components\link\children-link.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
-"c:\Users\conta\Desktop\project\client\src\components\link\index.ts", "TypeScript", 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\components\link\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\components\link\mypage-link-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 2, 9
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link.module.css", "PostCSS", 0, 0, 0, 0, 40, 0, 0, 0, 0, 3, 43
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
-"c:\Users\conta\Desktop\project\client\src\components\list\index.ts", "TypeScript", 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 7
+"c:\Users\conta\Desktop\project\client\src\components\list\index.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 7
 "c:\Users\conta\Desktop\project\client\src\components\list\list-check.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 2, 17
 "c:\Users\conta\Desktop\project\client\src\components\list\list-disc-second.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 2, 11
 "c:\Users\conta\Desktop\project\client\src\components\list\list-flow-arrow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 1, 10
@@ -384,7 +385,7 @@
 "c:\Users\conta\Desktop\project\client\src\components\loading\loading.module.css", "PostCSS", 0, 0, 0, 0, 35, 0, 0, 0, 0, 5, 40
 "c:\Users\conta\Desktop\project\client\src\components\loading\topLoader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 2, 13
 "c:\Users\conta\Desktop\project\client\src\components\star.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 8, 52
-"c:\Users\conta\Desktop\project\client\src\components\terms\index.ts", "TypeScript", 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 6
+"c:\Users\conta\Desktop\project\client\src\components\terms\index.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6
 "c:\Users\conta\Desktop\project\client\src\components\terms\list-div.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\terms\terms-kakko.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 2, 20
 "c:\Users\conta\Desktop\project\client\src\components\terms\terms-list-second.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
@@ -395,23 +396,23 @@
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title-back.module.css", "PostCSS", 0, 0, 0, 0, 23, 0, 0, 0, 0, 2, 25
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title-back.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 5, 26
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 2, 13
-"c:\Users\conta\Desktop\project\client\src\components\tokutei\index.ts", "TypeScript", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"c:\Users\conta\Desktop\project\client\src\components\tokutei\index.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\second-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 2, 9
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\tokutei-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\tokutei-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\components\two-text-container\tow-text-container.module.css", "PostCSS", 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, 10
 "c:\Users\conta\Desktop\project\client\src\components\two-text-container\tow-text-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 4, 26
-"c:\Users\conta\Desktop\project\client\src\hooks\useFollow.ts", "TypeScript", 0, 0, 0, 49, 0, 0, 0, 0, 1, 8, 58
-"c:\Users\conta\Desktop\project\client\src\hooks\useGoodComment.ts", "TypeScript", 0, 0, 0, 29, 0, 0, 0, 0, 0, 6, 35
-"c:\Users\conta\Desktop\project\client\src\hooks\useGoodItem.ts", "TypeScript", 0, 0, 0, 29, 0, 0, 0, 0, 0, 6, 35
-"c:\Users\conta\Desktop\project\client\src\lib\auth.ts", "TypeScript", 0, 0, 0, 126, 0, 0, 0, 0, 0, 23, 149
-"c:\Users\conta\Desktop\project\client\src\lib\fetcher.ts", "TypeScript", 0, 0, 0, 11, 0, 0, 0, 0, 0, 2, 13
-"c:\Users\conta\Desktop\project\client\src\lib\fontawesome.ts", "TypeScript", 0, 0, 0, 3, 0, 0, 0, 0, 0, 2, 5
-"c:\Users\conta\Desktop\project\client\src\lib\formatDuration.ts", "TypeScript", 0, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
-"c:\Users\conta\Desktop\project\client\src\lib\formatRelativeTime.ts", "TypeScript", 0, 0, 0, 26, 0, 0, 0, 0, 0, 1, 27
-"c:\Users\conta\Desktop\project\client\src\lib\normalizeJapanese.ts", "TypeScript", 0, 0, 0, 16, 0, 0, 0, 0, 0, 5, 21
-"c:\Users\conta\Desktop\project\client\src\lib\refreshToken.ts", "TypeScript", 0, 0, 0, 14, 0, 0, 0, 0, 0, 3, 17
-"c:\Users\conta\Desktop\project\client\src\middleware.ts", "TypeScript", 0, 0, 0, 59, 0, 0, 0, 0, 0, 14, 73
+"c:\Users\conta\Desktop\project\client\src\hooks\useFollow.ts", "TypeScript", 0, 0, 49, 0, 0, 0, 0, 0, 1, 8, 58
+"c:\Users\conta\Desktop\project\client\src\hooks\useGoodComment.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 6, 35
+"c:\Users\conta\Desktop\project\client\src\hooks\useGoodItem.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 6, 35
+"c:\Users\conta\Desktop\project\client\src\lib\auth.ts", "TypeScript", 0, 0, 126, 0, 0, 0, 0, 0, 0, 23, 149
+"c:\Users\conta\Desktop\project\client\src\lib\fetcher.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"c:\Users\conta\Desktop\project\client\src\lib\fontawesome.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 2, 5
+"c:\Users\conta\Desktop\project\client\src\lib\formatDuration.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 3, 13
+"c:\Users\conta\Desktop\project\client\src\lib\formatRelativeTime.ts", "TypeScript", 0, 0, 26, 0, 0, 0, 0, 0, 0, 1, 27
+"c:\Users\conta\Desktop\project\client\src\lib\normalizeJapanese.ts", "TypeScript", 0, 0, 16, 0, 0, 0, 0, 0, 0, 5, 21
+"c:\Users\conta\Desktop\project\client\src\lib\refreshToken.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\conta\Desktop\project\client\src\middleware.ts", "TypeScript", 0, 0, 59, 0, 0, 0, 0, 0, 0, 14, 73
 "c:\Users\conta\Desktop\project\client\src\providers\session-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 4, 20
 "c:\Users\conta\Desktop\project\client\src\providers\toastBoundary.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 2, 23
 "c:\Users\conta\Desktop\project\client\src\styles\components-style\itemList.module.css", "PostCSS", 0, 0, 0, 0, 289, 0, 0, 0, 0, 42, 331
@@ -421,10 +422,10 @@
 "c:\Users\conta\Desktop\project\client\src\styles\login.module.css", "PostCSS", 0, 0, 0, 0, 154, 0, 0, 0, 0, 14, 168
 "c:\Users\conta\Desktop\project\client\src\styles\terms.module.css", "PostCSS", 0, 0, 0, 0, 101, 0, 0, 0, 0, 19, 120
 "c:\Users\conta\Desktop\project\client\src\styles\tokutei.module.css", "PostCSS", 0, 0, 0, 0, 79, 0, 0, 0, 0, 14, 93
-"c:\Users\conta\Desktop\project\client\src\types\itemAttributes.ts", "TypeScript", 0, 0, 0, 60, 0, 0, 0, 0, 0, 6, 66
-"c:\Users\conta\Desktop\project\client\src\types\itemListTypes.ts", "TypeScript", 0, 0, 0, 45, 0, 0, 0, 0, 0, 6, 51
-"c:\Users\conta\Desktop\project\client\src\types\next-auth.d.ts", "TypeScript", 0, 0, 0, 39, 0, 0, 0, 0, 0, 3, 42
-"c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts", "TypeScript", 0, 0, 0, 20, 0, 0, 0, 0, 0, 4, 24
-"c:\Users\conta\Desktop\project\client\tailwind.config.js", "JavaScript", 9, 0, 0, 0, 0, 0, 0, 0, 2, 1, 12
+"c:\Users\conta\Desktop\project\client\src\types\itemAttributes.ts", "TypeScript", 0, 0, 60, 0, 0, 0, 0, 0, 0, 6, 66
+"c:\Users\conta\Desktop\project\client\src\types\itemListTypes.ts", "TypeScript", 0, 0, 45, 0, 0, 0, 0, 0, 0, 6, 51
+"c:\Users\conta\Desktop\project\client\src\types\next-auth.d.ts", "TypeScript", 0, 0, 39, 0, 0, 0, 0, 0, 0, 3, 42
+"c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts", "TypeScript", 0, 0, 20, 0, 0, 0, 0, 0, 0, 4, 24
+"c:\Users\conta\Desktop\project\client\tailwind.config.js", "JavaScript", 0, 0, 0, 9, 0, 0, 0, 0, 2, 1, 12
 "c:\Users\conta\Desktop\project\client\tsconfig.json", "JSON with Comments", 0, 44, 0, 0, 0, 0, 0, 0, 0, 1, 45
-"Total", "-", 44, 44, 16112, 1550, 6998, 18706, 23, 6, 61, 4138, 47682
+"Total", "-", 16112, 44, 1550, 44, 7030, 18749, 23, 6, 61, 4149, 47768

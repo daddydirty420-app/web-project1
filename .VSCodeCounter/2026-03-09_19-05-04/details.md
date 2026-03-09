@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-09 18:12:43
+Date : 2026-03-09 19:05:04
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 429 files,  43517 codes, 61 comments, 4143 blanks, all 47721 lines
+Total : 429 files,  43558 codes, 61 comments, 4149 blanks, all 47768 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -101,12 +101,12 @@ Total : 429 files,  43517 codes, 61 comments, 4143 blanks, all 47721 lines
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 281 | 0 | 41 | 322 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 265 | 2 | 23 | 290 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 308 | 0 | 45 | 353 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 274 | 2 | 24 | 300 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
-| [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | 64 | 0 | 9 | 73 |
+| [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | 69 | 0 | 10 | 79 |
 | [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 119 | 1 | 26 | 146 |
 | [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | 58 | 0 | 7 | 65 |
