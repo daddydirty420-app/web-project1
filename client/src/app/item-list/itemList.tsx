@@ -15,7 +15,7 @@ import clsx from "clsx";
 
 type Props = {
     page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
-    uploadedTab?: "all" | "selling" | "soldout";
+    uploadedTab?: "all" | "selling" | null;
 };
 
 type Responce = {
@@ -253,7 +253,7 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
 
                                 <div className={styles.priceColumn}>
                                     <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
-                                    {["stock", "uploaded"].includes(page) && item.Sale?.sale_flag && (
+                                    {["stock", "uploaded", "good", "watch-history"].includes(page) && item.Sale?.sale_flag && (
                                         <>
                                         <p className={styles.beforePrice}>￥{item.Sale?.before_price.toLocaleString()}</p>
                                         {item.Sale?.discount_rate > 0 && (

@@ -14,7 +14,7 @@ export const FollowHeader = ({ id, followTab, followCount, followerCount }: Prop
     const router = useRouter();
 
     return (
-        <section className={styles.followHeader}>
+        <nav className={styles.followHeader}>
             <div className={styles.followButtonFlex}>
                 <button
                 type="button"
@@ -46,6 +46,6 @@ export const FollowHeader = ({ id, followTab, followCount, followerCount }: Prop
                     {followerCount.toLocaleString()} フォロワー
                 </button>
             </div>
-        </section>
+        </nav>
     );
 };
