@@ -185,7 +185,7 @@
 
 .sale {
     display: block;
-    font-size: 12px;
+    font-size: 10.5px;
     font-weight: 600;
     color: #fff;
     background-color: var(--alert);
@@ -318,5 +318,8 @@
 @media (max-width: 359px) {
     .itemLinkArea {
         padding-right: 0;
+    }
+    .ellipsis {
+        display: none;
     }
 }

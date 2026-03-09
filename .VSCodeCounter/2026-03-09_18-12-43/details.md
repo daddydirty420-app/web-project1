@@ -1,16 +1,28 @@
 # Details
 
-Date : 2026-03-06 13:59:56
+Date : 2026-03-09 18:12:43
 
-Directory c:\\Users\\conta\\Desktop\\project\\client\\src
+Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 409 files,  26976 codes, 56 comments, 4072 blanks, all 31104 lines
+Total : 429 files,  43517 codes, 61 comments, 4143 blanks, all 47721 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Files
 | filename | language | code | comment | blank | total |
 | :--- | :--- | ---: | ---: | ---: | ---: |
+| [client/README.md](/client/README.md) | Markdown | 23 | 0 | 14 | 37 |
+| [client/eslint.config.mjs](/client/eslint.config.mjs) | JavaScript | 12 | 0 | 5 | 17 |
+| [client/eslintrc.json](/client/eslintrc.json) | JSON | 7 | 0 | 1 | 8 |
+| [client/next.config.js](/client/next.config.js) | JavaScript | 16 | 1 | 2 | 19 |
+| [client/package-lock.json](/client/package-lock.json) | JSON | 16,045 | 0 | 1 | 16,046 |
+| [client/package.json](/client/package.json) | JSON | 60 | 0 | 1 | 61 |
+| [client/postcss.config.mjs](/client/postcss.config.mjs) | JavaScript | 7 | 1 | 2 | 10 |
+| [client/public/file.svg](/client/public/file.svg) | XML | 1 | 0 | 0 | 1 |
+| [client/public/globe.svg](/client/public/globe.svg) | XML | 1 | 0 | 0 | 1 |
+| [client/public/next.svg](/client/public/next.svg) | XML | 1 | 0 | 0 | 1 |
+| [client/public/vercel.svg](/client/public/vercel.svg) | XML | 1 | 0 | 0 | 1 |
+| [client/public/window.svg](/client/public/window.svg) | XML | 1 | 0 | 0 | 1 |
 | [client/src/app/api/auth/\[...nextauth\]/route.ts](/client/src/app/api/auth/%5B...nextauth%5D/route.ts) | TypeScript | 4 | 0 | 2 | 6 |
 | [client/src/app/company/content.tsx](/client/src/app/company/content.tsx) | TypeScript JSX | 48 | 0 | 10 | 58 |
 | [client/src/app/company/page.tsx](/client/src/app/company/page.tsx) | TypeScript JSX | 28 | 0 | 4 | 32 |
@@ -88,13 +100,19 @@ Total : 409 files,  26976 codes, 56 comments, 4072 blanks, all 31104 lines
 | [client/src/app/item-list/deleted/page.tsx](/client/src/app/item-list/deleted/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 229 | 0 | 30 | 259 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 219 | 1 | 20 | 240 |
+| [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 281 | 0 | 41 | 322 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 265 | 2 | 23 | 290 |
+| [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | 64 | 0 | 9 | 73 |
-| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 113 | 1 | 26 | 140 |
-| [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | 15 | 0 | 1 | 16 |
+| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 119 | 1 | 26 | 146 |
+| [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
+| [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | 58 | 0 | 7 | 65 |
+| [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | 25 | 0 | 3 | 28 |
+| [client/src/app/item-list/uploaded/page.tsx](/client/src/app/item-list/uploaded/page.tsx) | TypeScript JSX | 42 | 0 | 7 | 49 |
+| [client/src/app/item-list/watch-history/page.tsx](/client/src/app/item-list/watch-history/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item/\[id\]/page.tsx](/client/src/app/item/%5Bid%5D/page.tsx) | TypeScript JSX | 78 | 0 | 14 | 92 |
 | [client/src/app/item/commentSection/comment.module.css](/client/src/app/item/commentSection/comment.module.css) | PostCSS | 313 | 0 | 38 | 351 |
 | [client/src/app/item/commentSection/commentDataDiv.tsx](/client/src/app/item/commentSection/commentDataDiv.tsx) | TypeScript JSX | 16 | 0 | 3 | 19 |
@@ -154,7 +172,7 @@ Total : 409 files,  26976 codes, 56 comments, 4072 blanks, all 31104 lines
 | [client/src/app/item/sellerSection/urlText.tsx](/client/src/app/item/sellerSection/urlText.tsx) | TypeScript JSX | 24 | 0 | 4 | 28 |
 | [client/src/app/item/videoSection/countElem.tsx](/client/src/app/item/videoSection/countElem.tsx) | TypeScript JSX | 46 | 0 | 6 | 52 |
 | [client/src/app/item/videoSection/good.tsx](/client/src/app/item/videoSection/good.tsx) | TypeScript JSX | 93 | 0 | 16 | 109 |
-| [client/src/app/item/videoSection/itemPeek.tsx](/client/src/app/item/videoSection/itemPeek.tsx) | TypeScript JSX | 63 | 0 | 8 | 71 |
+| [client/src/app/item/videoSection/itemPeek.tsx](/client/src/app/item/videoSection/itemPeek.tsx) | TypeScript JSX | 65 | 0 | 8 | 73 |
 | [client/src/app/item/videoSection/peek.module.css](/client/src/app/item/videoSection/peek.module.css) | PostCSS | 68 | 0 | 7 | 75 |
 | [client/src/app/item/videoSection/summary.tsx](/client/src/app/item/videoSection/summary.tsx) | TypeScript JSX | 65 | 0 | 8 | 73 |
 | [client/src/app/item/videoSection/userSection.tsx](/client/src/app/item/videoSection/userSection.tsx) | TypeScript JSX | 56 | 0 | 6 | 62 |
@@ -359,7 +377,7 @@ Total : 409 files,  26976 codes, 56 comments, 4072 blanks, all 31104 lines
 | [client/src/components/inputForm/inputStrAndSmall.tsx](/client/src/components/inputForm/inputStrAndSmall.tsx) | TypeScript JSX | 41 | 0 | 2 | 43 |
 | [client/src/components/inputForm/inputTitle.tsx](/client/src/components/inputForm/inputTitle.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/components/inputForm/textarea.tsx](/client/src/components/inputForm/textarea.tsx) | TypeScript JSX | 33 | 0 | 2 | 35 |
-| [client/src/components/itemListRow/itemListRow.module.css](/client/src/components/itemListRow/itemListRow.module.css) | PostCSS | 75 | 0 | 9 | 84 |
+| [client/src/components/itemListRow/itemListRow.module.css](/client/src/components/itemListRow/itemListRow.module.css) | PostCSS | 77 | 0 | 9 | 86 |
 | [client/src/components/itemListRow/itemListRow.tsx](/client/src/components/itemListRow/itemListRow.tsx) | TypeScript JSX | 48 | 0 | 3 | 51 |
 | [client/src/components/link/children-link.tsx](/client/src/components/link/children-link.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/components/link/index.ts](/client/src/components/link/index.ts) | TypeScript | 4 | 0 | 0 | 4 |
@@ -420,5 +438,7 @@ Total : 409 files,  26976 codes, 56 comments, 4072 blanks, all 31104 lines
 | [client/src/types/itemListTypes.ts](/client/src/types/itemListTypes.ts) | TypeScript | 45 | 0 | 6 | 51 |
 | [client/src/types/next-auth.d.ts](/client/src/types/next-auth.d.ts) | TypeScript | 39 | 0 | 3 | 42 |
 | [client/src/types/purchaseSnapshot.ts](/client/src/types/purchaseSnapshot.ts) | TypeScript | 20 | 0 | 4 | 24 |
+| [client/tailwind.config.js](/client/tailwind.config.js) | JavaScript | 9 | 2 | 1 | 12 |
+| [client/tsconfig.json](/client/tsconfig.json) | JSON with Comments | 44 | 0 | 1 | 45 |
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
