@@ -15,6 +15,7 @@ import clsx from "clsx";
 
 type Props = {
     page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
+    uploadedTab?: "all" | "selling" | "soldout";
 };
 
 type Responce = {
@@ -22,7 +23,7 @@ type Responce = {
     totalPages: number;
 };
 
-export const ItemList = ({ page }: Props) => {
+export const ItemList = ({ page, uploadedTab }: Props) => {
     const [searchValue, setSearchValue] = useState("");
     const [searchKeyword, setSearchKeyword] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
@@ -34,6 +35,10 @@ export const ItemList = ({ page }: Props) => {
         if (page === "good") return "item-list/good-list";
         if (page === "watch-history") return "item-list/watch-list";
         if (page === "stock") return "item-list/stock-list";
+        if (page === "uploaded") {
+            if (uploadedTab === "all") return "item-list/uploaded-list/all";
+            if (uploadedTab === "selling") return "item-list/uploaded-list/selling";
+        }
 
         return null;
     };
@@ -246,7 +251,20 @@ export const ItemList = ({ page }: Props) => {
                                     </div>
                                 </div>
 
-                                <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
+                                <div className={styles.priceColumn}>
+                                    <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
+                                    {["stock", "uploaded"].includes(page) && item.Sale?.sale_flag && (
+                                        <>
+                                        <p className={styles.beforePrice}>￥{item.Sale?.before_price.toLocaleString()}</p>
+                                        {item.Sale?.discount_rate > 0 && (
+                                            <span className={styles.sale}>{item.Sale?.discount_rate.toLocaleString()}% OFF</span>
+                                        )}
+                                        {item.Sale?.discount_amount > 0 && (
+                                            <span className={styles.sale}>{item.Sale?.discount_amount.toLocaleString()}円引き</span>
+                                        )}
+                                        </>
+                                    )}
+                                </div>
                             </Link>
 
                             {["draft", "good", "watch-history"].includes(page) && (

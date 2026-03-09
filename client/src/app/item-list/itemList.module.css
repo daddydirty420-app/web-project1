@@ -61,8 +61,8 @@
 }
 
 .image {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     flex-shrink: 0;
     border-radius: 8px;
     aspect-ratio: 1 / 1;
@@ -78,6 +78,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .itemName {
@@ -157,11 +158,39 @@
     opacity: 0.85;
 }
 
+.priceColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    width: 72px;
+    height: max-content;
+    text-align: right;
+}
+
 .price {
     font-size: 15px;
     font-weight: 700;
     color: var(--link);
     letter-spacing: 0.03em;
+    line-height: 1.2;
+}
+
+.beforePrice {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    line-height: 1.2;
+}
+
+.sale {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--alert);
+    border-radius: 6px;
+    padding: 0.15em 0.3em;
 }
 
 .searchSection {

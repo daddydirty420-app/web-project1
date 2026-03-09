@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { Item, Video } from "../../models/index.js";
+import { Item, Sale, Video } from "../../models/index.js";
 import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
 const router = Router();
@@ -25,6 +25,10 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             limit,
             offset,
             include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                },
                 {
                     model: Video,
                     attributes: ["title"],
@@ -52,6 +56,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
     }
 });
+
 router.get('/search', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
         
@@ -77,6 +82,10 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
             limit,
             offset,
             include: [
+                {
+                    model: Sale,
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                },
                 {
                     model: Video,
                     attributes: ["title"],

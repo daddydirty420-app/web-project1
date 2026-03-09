@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { GoodItem, Item, Video } from "../../models/index.js";
+import { GoodItem, Item, Sale, Video } from "../../models/index.js";
 import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
 const router = Router();
@@ -30,6 +30,10 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                     attributes: ['id', 'name', 'price', "status", 'seller_id', 'first_image_url', "gender_type", "age_type"],
                     required: false,
                     include: [
+                        {
+                            model: Sale,
+                            attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                        },
                         {
                             model: Video,
                             attributes: ["title"],
@@ -99,6 +103,10 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                     attributes: ['id', 'name', 'price', "status", 'seller_id', 'first_image_url', "gender_type", "age_type"],
                     required: true,
                     include: [
+                        {
+                            model: Sale,
+                            attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                        },
                         {
                             model: Video,
                             attributes: ["title"],

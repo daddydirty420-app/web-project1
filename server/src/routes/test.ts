@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { GoodItem, Item, ItemDeleteLogs, WatchHistory } from "../models/index.js";
+import { GoodItem, Item, ItemDeleteLogs, Sale, WatchHistory } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 
@@ -107,6 +107,43 @@ router.post("/watch-create/:id", async (req: Request, res: Response): Promise<vo
         await t.rollback();
         console.error(err);
         res.status(500).json({ error: "FAILED" });
+    }
+});
+
+router.post("/sale-create", async (req: Request, res: Response): Promise<void> => {
+    const t = await sequelize.transaction();
+
+    try {
+        const items = await Item.findAll({
+            where: {
+                id: { [Op.gt]: 45 },
+            },
+        });
+
+        if (!items) {
+            throw new Error("NOT_FOUND");
+        }
+
+        for (const item of items) {
+            await Sale.create({
+                item_id: item.id,
+                before_price: item.price,
+                sale_flag: true,
+                discount_rate: 10,
+            }, { transaction: t });
+
+            await item.update({
+                price: item.price * 0.9,
+            }, { transaction: t });
+        }
+
+        await t.commit();
+
+        res.status(200).json({ message: "ok" });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラー" });
     }
 });
 

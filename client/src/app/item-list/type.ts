@@ -1,5 +1,13 @@
 import { ItemAttributes } from "@/types/itemAttributes";
 
+export type Sale = {
+    id: string;
+    discount_rate: number;
+    discount_amount: number;
+    before_price: number;
+    sale_flag: boolean;
+};
+
 export type Video = {
     id: string;
     title: string;
@@ -16,4 +24,5 @@ export type Item = {
     first_image_url: string;
     attributes: ItemAttributes;
     Video?: Video | null;
+    Sale?: Sale | null;
 };

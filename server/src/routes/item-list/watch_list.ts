@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
-import { WatchHistory, Item, Video } from "../../models/index.js";
+import { WatchHistory, Item, Video, Sale } from "../../models/index.js";
 import { Op } from "sequelize";
 import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
@@ -30,6 +30,10 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                     },
                     required: true,
                     include: [
+                        {
+                            model: Sale,
+                            attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                        },
                         {
                             model: Video,
                             attributes: ["title"],
@@ -99,6 +103,10 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                     },
                     required: true,
                     include: [
+                        {
+                            model: Sale,
+                            attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                        },
                         {
                             model: Video,
                             attributes: ["title"],
