@@ -1,10 +1,10 @@
 # Diff Details
 
-Date : 2026-03-09 17:12:41
+Date : 2026-03-09 18:41:32
 
 Directory c:\\Users\\conta\\Desktop\\project\\server
 
-Total : 601 files,  -20268 codes, 37 comments, -1698 blanks, all -21929 lines
+Total : 602 files,  -20324 codes, 37 comments, -1706 blanks, all -21993 lines
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
 
@@ -101,16 +101,17 @@ Total : 601 files,  -20268 codes, 37 comments, -1698 blanks, all -21929 lines
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | -27 | 0 | -4 | -31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | -27 | 0 | -4 | -31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | -28 | 0 | -3 | -31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | -281 | 0 | -41 | -322 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | -277 | 0 | -40 | -317 |
 | [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | -265 | -2 | -23 | -290 |
+| [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | -13 | 0 | -2 | -15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | -14 | 0 | -2 | -16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | -4 | 0 | -1 | -5 |
-| [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | -64 | 0 | -9 | -73 |
+| [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | -69 | 0 | -10 | -79 |
 | [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | -119 | -1 | -26 | -146 |
 | [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | -27 | 0 | -4 | -31 |
 | [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | -58 | 0 | -7 | -65 |
 | [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | -25 | 0 | -3 | -28 |
-| [client/src/app/item-list/uploaded/page.tsx](/client/src/app/item-list/uploaded/page.tsx) | TypeScript JSX | 0 | 0 | -1 | -1 |
+| [client/src/app/item-list/uploaded/page.tsx](/client/src/app/item-list/uploaded/page.tsx) | TypeScript JSX | -42 | 0 | -7 | -49 |
 | [client/src/app/item-list/watch-history/page.tsx](/client/src/app/item-list/watch-history/page.tsx) | TypeScript JSX | -27 | 0 | -4 | -31 |
 | [client/src/app/item/\[id\]/page.tsx](/client/src/app/item/%5Bid%5D/page.tsx) | TypeScript JSX | -78 | 0 | -14 | -92 |
 | [client/src/app/item/commentSection/comment.module.css](/client/src/app/item/commentSection/comment.module.css) | PostCSS | -313 | 0 | -38 | -351 |

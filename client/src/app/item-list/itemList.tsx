@@ -196,13 +196,23 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
                             className={styles.itemLinkArea}
                             >
                                 <div className={styles.itemImageText}>
-                                    <Image
-                                    src={item.first_image_url ?? "/no-image(1x1).png"}
-                                    alt="商品画像"
-                                    width={120}
-                                    height={120}
-                                    className={styles.image}
-                                    />
+                                    <div className={styles.imageDiv}>
+                                        <Image
+                                        src={item.first_image_url || "/no-image(1x1).png"}
+                                        alt="商品画像"
+                                        width={120}
+                                        height={120}
+                                        className={styles.image}
+                                        />
+
+                                        {["uploaded", "good", "watch-history"].includes(page) && 
+                                        item.status === "soldout" && 
+                                        (
+                                            <div className={styles.sold}>
+                                                <p className={styles.soldP}>SOLD</p>
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <div className={styles.itemTextArea}>
                                         <h2 className={`${styles.itemName} ${styles.line1}`}>{item.name ?? ""}</h2>

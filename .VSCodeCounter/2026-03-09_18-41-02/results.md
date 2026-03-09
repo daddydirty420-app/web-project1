@@ -1,19 +1,19 @@
 # Summary
 
-Date : 2026-03-09 17:11:51
+Date : 2026-03-09 18:41:02
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 428 files,  43462 codes, 61 comments, 4135 blanks, all 47658 lines
+Total : 429 files,  43518 codes, 61 comments, 4143 blanks, all 47722 lines
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript JSX | 316 | 18,685 | 30 | 3,080 | 21,795 |
+| TypeScript JSX | 317 | 18,740 | 30 | 3,088 | 21,858 |
 | JSON | 3 | 16,112 | 0 | 3 | 16,115 |
-| PostCSS | 58 | 6,998 | 20 | 809 | 7,827 |
+| PostCSS | 58 | 6,999 | 20 | 809 | 7,828 |
 | TypeScript | 39 | 1,550 | 7 | 218 | 1,775 |
 | JSON with Comments | 1 | 44 | 0 | 1 | 45 |
 | JavaScript | 4 | 44 | 4 | 10 | 58 |
@@ -23,12 +23,12 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 428 | 43,462 | 61 | 4,135 | 47,658 |
+| . | 429 | 43,518 | 61 | 4,143 | 47,722 |
 | . (Files) | 9 | 16,223 | 4 | 28 | 16,255 |
 | public | 5 | 5 | 0 | 0 | 5 |
-| src | 414 | 27,234 | 57 | 4,107 | 31,398 |
+| src | 415 | 27,290 | 57 | 4,115 | 31,462 |
 | src (Files) | 1 | 59 | 0 | 14 | 73 |
-| src\\app | 319 | 23,572 | 46 | 3,571 | 27,189 |
+| src\\app | 320 | 23,628 | 46 | 3,579 | 27,253 |
 | src\\app (Files) | 2 | 154 | 0 | 10 | 164 |
 | src\\app\\api | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth | 1 | 4 | 0 | 2 | 6 |
@@ -113,13 +113,13 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\inquiry | 7 | 224 | 0 | 36 | 260 |
 | src\\app\\item | 66 | 4,749 | 5 | 663 | 5,417 |
 | src\\app\\item (Files) | 7 | 363 | 0 | 42 | 405 |
-| src\\app\\item-list | 15 | 993 | 3 | 136 | 1,132 |
-| src\\app\\item-list (Files) | 9 | 858 | 3 | 115 | 976 |
+| src\\app\\item-list | 16 | 1,049 | 3 | 144 | 1,196 |
+| src\\app\\item-list (Files) | 10 | 872 | 3 | 117 | 992 |
 | src\\app\\item-list\\deleted | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\draft | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\good | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\stock | 1 | 27 | 0 | 4 | 31 |
-| src\\app\\item-list\\uploaded | 1 | 0 | 0 | 1 | 1 |
+| src\\app\\item-list\\uploaded | 1 | 42 | 0 | 7 | 49 |
 | src\\app\\item-list\\watch-history | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item\\[id] | 1 | 78 | 0 | 14 | 92 |
 | src\\app\\item\\commentSection | 12 | 903 | 1 | 140 | 1,044 |
