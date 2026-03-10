@@ -48,7 +48,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="sold"
                 onClick={() =>
-                    router.push(`/item-list/sold`)
+                    router.push(`/transaction-list/sold`)
                 }
                 className={`${styles.headerButton} ${
                     page === "sold"

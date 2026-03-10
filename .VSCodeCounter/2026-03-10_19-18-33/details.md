@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-10 14:33:22
+Date : 2026-03-10 19:18:33
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 430 files,  43692 codes, 61 comments, 4197 blanks, all 47950 lines
+Total : 432 files,  43869 codes, 64 comments, 4227 blanks, all 48160 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -97,18 +97,20 @@ Total : 430 files,  43692 codes, 61 comments, 4197 blanks, all 47950 lines
 | [client/src/app/inquiry/linkElement.tsx](/client/src/app/inquiry/linkElement.tsx) | TypeScript JSX | 26 | 0 | 3 | 29 |
 | [client/src/app/inquiry/page.tsx](/client/src/app/inquiry/page.tsx) | TypeScript JSX | 41 | 0 | 6 | 47 |
 | [client/src/app/inquiry/type.ts](/client/src/app/inquiry/type.ts) | TypeScript | 5 | 0 | 0 | 5 |
-| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
+| [client/src/app/item-list/cart.module.css](/client/src/app/item-list/cart.module.css) | PostCSS | 55 | 0 | 4 | 59 |
+| [client/src/app/item-list/cartElement.tsx](/client/src/app/item-list/cartElement.tsx) | TypeScript JSX | 109 | 2 | 22 | 133 |
+| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 38 | 0 | 7 | 45 |
 | [client/src/app/item-list/deleted/page.tsx](/client/src/app/item-list/deleted/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 308 | 0 | 45 | 353 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 278 | 2 | 25 | 305 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 314 | 0 | 47 | 361 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 291 | 2 | 26 | 319 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | 69 | 0 | 10 | 79 |
-| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 119 | 1 | 26 | 146 |
+| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 117 | 1 | 26 | 144 |
 | [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | 58 | 0 | 7 | 65 |
 | [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | 25 | 0 | 3 | 28 |
@@ -144,7 +146,7 @@ Total : 430 files,  43692 codes, 61 comments, 4197 blanks, all 47950 lines
 | [client/src/app/item/itemPageTypes.ts](/client/src/app/item/itemPageTypes.ts) | TypeScript | 111 | 0 | 13 | 124 |
 | [client/src/app/item/itemSection/buySection/buy.module.css](/client/src/app/item/itemSection/buySection/buy.module.css) | PostCSS | 114 | 0 | 13 | 127 |
 | [client/src/app/item/itemSection/buySection/buy2026.tsx](/client/src/app/item/itemSection/buySection/buy2026.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
-| [client/src/app/item/itemSection/buySection/buySection.tsx](/client/src/app/item/itemSection/buySection/buySection.tsx) | TypeScript JSX | 157 | 0 | 27 | 184 |
+| [client/src/app/item/itemSection/buySection/buySection.tsx](/client/src/app/item/itemSection/buySection/buySection.tsx) | TypeScript JSX | 152 | 1 | 28 | 181 |
 | [client/src/app/item/itemSection/categoryText.tsx](/client/src/app/item/itemSection/categoryText.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item/itemSection/deliverySection.tsx](/client/src/app/item/itemSection/deliverySection.tsx) | TypeScript JSX | 63 | 0 | 12 | 75 |
 | [client/src/app/item/itemSection/detail.tsx](/client/src/app/item/itemSection/detail.tsx) | TypeScript JSX | 65 | 0 | 8 | 73 |

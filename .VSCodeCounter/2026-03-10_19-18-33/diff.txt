@@ -1,31 +1,56 @@
-Date : 2026-03-10 12:16:14
+Date : 2026-03-10 19:18:33
 Directory : c:\Users\conta\Desktop\project\client
-Total : 430 files,  43689 codes, 61 comments, 4196 blanks, all 47946 lines
+Total : 606 files,  20562 codes, -34 comments, 1775 blanks, all 22303 lines
 
 Languages
 +--------------------+------------+------------+------------+------------+------------+
 | language           | files      | code       | comment    | blank      | total      |
 +--------------------+------------+------------+------------+------------+------------+
-| TypeScript JSX     |        318 |     18,880 |         30 |      3,136 |     22,046 |
-| JSON               |          3 |     16,112 |          0 |          3 |     16,115 |
-| PostCSS            |         58 |      7,030 |         20 |        814 |      7,864 |
-| TypeScript         |         39 |      1,550 |          7 |        218 |      1,775 |
-| JSON with Comments |          1 |         44 |          0 |          1 |         45 |
-| JavaScript         |          4 |         44 |          4 |         10 |         58 |
+| TypeScript JSX     |        319 |     18,999 |         33 |      3,161 |     22,193 |
+| JSON               |          6 |      9,229 |          0 |          1 |      9,230 |
+| PostCSS            |         60 |      7,084 |         20 |        818 |      7,922 |
 | Markdown           |          1 |         23 |          0 |         14 |         37 |
+| JSON with Comments |          2 |         17 |          0 |          1 |         18 |
 | XML                |          6 |          6 |          0 |          0 |          6 |
+| HTML               |          1 |        -10 |          0 |         -1 |        -11 |
+| JavaScript         |          8 |        -89 |         -1 |        -12 |       -102 |
+| TypeScript         |        203 |    -14,697 |        -86 |     -2,207 |    -16,990 |
 +--------------------+------------+------------+------------+------------+------------+
 
 Directories
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                                                                     | files      | code       | comment    | blank      | total      |
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                                                        |        430 |     43,689 |         61 |      4,196 |     47,946 |
+| .                                                                                                                        |        606 |     20,562 |        -34 |      1,775 |     22,303 |
 | . (Files)                                                                                                                |          9 |     16,223 |          4 |         28 |     16,255 |
+| ..                                                                                                                       |        174 |    -23,307 |        -98 |     -2,452 |    -25,857 |
+| ..\server                                                                                                                |        174 |    -23,307 |        -98 |     -2,452 |    -25,857 |
+| ..\server (Files)                                                                                                        |          4 |     -6,910 |          0 |         -2 |     -6,912 |
+| ..\server\config                                                                                                         |          1 |        -24 |          0 |         -3 |        -27 |
+| ..\server\migrations                                                                                                     |          2 |        -44 |         -2 |         -6 |        -52 |
+| ..\server\public                                                                                                         |          1 |         -7 |          0 |         -2 |         -9 |
+| ..\server\public\stylesheets                                                                                             |          1 |         -7 |          0 |         -2 |         -9 |
+| ..\server\scripts                                                                                                        |          1 |        -65 |         -3 |        -13 |        -81 |
+| ..\server\src                                                                                                            |        164 |    -16,247 |        -93 |     -2,425 |    -18,765 |
+| ..\server\src (Files)                                                                                                    |          2 |       -202 |         -3 |        -19 |       -224 |
+| ..\server\src\bin                                                                                                        |          1 |        -48 |        -24 |        -21 |        -93 |
+| ..\server\src\config                                                                                                     |          1 |        -38 |          0 |         -6 |        -44 |
+| ..\server\src\cron                                                                                                       |          8 |       -377 |        -13 |        -72 |       -462 |
+| ..\server\src\middleware                                                                                                 |          5 |       -137 |         -1 |        -24 |       -162 |
+| ..\server\src\models                                                                                                     |         70 |     -4,058 |         -2 |       -354 |     -4,414 |
+| ..\server\src\routes                                                                                                     |         64 |    -10,546 |        -47 |     -1,772 |    -12,365 |
+| ..\server\src\routes (Files)                                                                                             |         46 |     -8,325 |        -46 |     -1,462 |     -9,833 |
+| ..\server\src\routes\admin                                                                                               |         11 |     -1,347 |         -1 |       -170 |     -1,518 |
+| ..\server\src\routes\item-list                                                                                           |          7 |       -874 |          0 |       -140 |     -1,014 |
+| ..\server\src\scripts                                                                                                    |          1 |        -69 |          0 |        -12 |        -81 |
+| ..\server\src\services                                                                                                   |          6 |       -642 |         -3 |       -126 |       -771 |
+| ..\server\src\types                                                                                                      |          4 |        -94 |          0 |         -9 |       -103 |
+| ..\server\src\utils                                                                                                      |          2 |        -36 |          0 |        -10 |        -46 |
+| ..\server\views                                                                                                          |          1 |        -10 |          0 |         -1 |        -11 |
 | public                                                                                                                   |          5 |          5 |          0 |          0 |          5 |
-| src                                                                                                                      |        416 |     27,461 |         57 |      4,168 |     31,686 |
+| src                                                                                                                      |        418 |     27,641 |         60 |      4,199 |     31,900 |
 | src (Files)                                                                                                              |          1 |         59 |          0 |         14 |         73 |
-| src\app                                                                                                                  |        321 |     23,799 |         46 |      3,632 |     27,477 |
+| src\app                                                                                                                  |        323 |     23,979 |         49 |      3,663 |     27,691 |
 | src\app (Files)                                                                                                          |          2 |        154 |          0 |         10 |        164 |
 | src\app\api                                                                                                              |          1 |          4 |          0 |          2 |          6 |
 | src\app\api\auth                                                                                                         |          1 |          4 |          0 |          2 |          6 |
@@ -108,11 +133,11 @@ Directories
 | src\app\guide\seller                                                                                                     |          3 |        350 |          0 |         72 |        422 |
 | src\app\guide\shop                                                                                                       |          2 |        160 |          0 |         26 |        186 |
 | src\app\inquiry                                                                                                          |          7 |        224 |          0 |         36 |        260 |
-| src\app\item                                                                                                             |         66 |      4,749 |          5 |        665 |      5,419 |
+| src\app\item                                                                                                             |         66 |      4,744 |          6 |        666 |      5,416 |
 | src\app\item (Files)                                                                                                     |          7 |        363 |          0 |         42 |        405 |
-| src\app\item-list                                                                                                        |         17 |      1,126 |          3 |        157 |      1,286 |
-| src\app\item-list (Files)                                                                                                |         10 |        913 |          3 |        123 |      1,039 |
-| src\app\item-list\cart                                                                                                   |          1 |         37 |          0 |          7 |         44 |
+| src\app\item-list                                                                                                        |         19 |      1,311 |          5 |        187 |      1,503 |
+| src\app\item-list (Files)                                                                                                |         12 |      1,097 |          5 |        153 |      1,255 |
+| src\app\item-list\cart                                                                                                   |          1 |         38 |          0 |          7 |         45 |
 | src\app\item-list\deleted                                                                                                |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\draft                                                                                                  |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\good                                                                                                   |          1 |         27 |          0 |          4 |         31 |
@@ -130,9 +155,9 @@ Directories
 | src\app\item\draft                                                                                                       |          3 |         86 |          0 |         16 |        102 |
 | src\app\item\draft (Files)                                                                                               |          2 |         27 |          0 |          2 |         29 |
 | src\app\item\draft\[id]                                                                                                  |          1 |         59 |          0 |         14 |         73 |
-| src\app\item\itemSection                                                                                                 |         15 |      1,095 |          4 |        140 |      1,239 |
+| src\app\item\itemSection                                                                                                 |         15 |      1,090 |          5 |        141 |      1,236 |
 | src\app\item\itemSection (Files)                                                                                         |         12 |        820 |          4 |         99 |        923 |
-| src\app\item\itemSection\buySection                                                                                      |          3 |        275 |          0 |         41 |        316 |
+| src\app\item\itemSection\buySection                                                                                      |          3 |        270 |          1 |         42 |        313 |
 | src\app\item\madmax                                                                                                      |          3 |        239 |          0 |         36 |        275 |
 | src\app\item\madmax (Files)                                                                                              |          2 |        180 |          0 |         23 |        203 |
 | src\app\item\madmax\[id]                                                                                                 |          1 |         59 |          0 |         13 |         72 |
@@ -343,18 +368,20 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\linkElement.tsx                                                    | TypeScript JSX     |         26 |          0 |          3 |         29 |
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\page.tsx                                                           | TypeScript JSX     |         41 |          0 |          6 |         47 |
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts                                                            | TypeScript         |          5 |          0 |          0 |          5 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\cart\page.tsx                                                    | TypeScript JSX     |         37 |          0 |          7 |         44 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\cart.module.css                                                  | PostCSS            |         55 |          0 |          4 |         59 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\cartElement.tsx                                                  | TypeScript JSX     |        109 |          2 |         22 |        133 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\cart\page.tsx                                                    | TypeScript JSX     |         38 |          0 |          7 |         45 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\deleted\page.tsx                                                 | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx                                                   | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx                                                    | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css                                                | PostCSS            |         28 |          0 |          3 |         31 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css                                              | PostCSS            |        308 |          0 |         45 |        353 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx                                                     | TypeScript JSX     |        275 |          2 |         24 |        301 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css                                              | PostCSS            |        314 |          0 |         47 |        361 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx                                                     | TypeScript JSX     |        291 |          2 |         26 |        319 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx                                             | TypeScript JSX     |         13 |          0 |          2 |         15 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx                                                   | TypeScript JSX     |         14 |          0 |          2 |         16 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\layout.tsx                                                       | TypeScript JSX     |          4 |          0 |          1 |          5 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.module.css                                           | PostCSS            |         69 |          0 |         10 |         79 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.tsx                                                  | TypeScript JSX     |        119 |          1 |         26 |        146 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.tsx                                                  | TypeScript JSX     |        117 |          1 |         26 |        144 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\stock\page.tsx                                                   | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\tabHeader.tsx                                                    | TypeScript JSX     |         58 |          0 |          7 |         65 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts                                                          | TypeScript         |         25 |          0 |          3 |         28 |
@@ -390,7 +417,7 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\item\itemPageTypes.ts                                                      | TypeScript         |        111 |          0 |         13 |        124 |
 | c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy.module.css                                 | PostCSS            |        114 |          0 |         13 |        127 |
 | c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy2026.tsx                                    | TypeScript JSX     |          4 |          0 |          1 |          5 |
-| c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buySection.tsx                                 | TypeScript JSX     |        157 |          0 |         27 |        184 |
+| c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buySection.tsx                                 | TypeScript JSX     |        152 |          1 |         28 |        181 |
 | c:\Users\conta\Desktop\project\client\src\app\item\itemSection\categoryText.tsx                                          | TypeScript JSX     |         14 |          0 |          2 |         16 |
 | c:\Users\conta\Desktop\project\client\src\app\item\itemSection\deliverySection.tsx                                       | TypeScript JSX     |         63 |          0 |         12 |         75 |
 | c:\Users\conta\Desktop\project\client\src\app\item\itemSection\detail.tsx                                                | TypeScript JSX     |         65 |          0 |          8 |         73 |
@@ -687,5 +714,179 @@ Files
 | c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts                                                      | TypeScript         |         20 |          0 |          4 |         24 |
 | c:\Users\conta\Desktop\project\client\tailwind.config.js                                                                 | JavaScript         |          9 |          2 |          1 |         12 |
 | c:\Users\conta\Desktop\project\client\tsconfig.json                                                                      | JSON with Comments |         44 |          0 |          1 |         45 |
-| Total                                                                                                                    |                    |     43,689 |         61 |      4,196 |     47,946 |
+| c:\Users\conta\Desktop\project\server\config\config.cjs                                                                  | JavaScript         |        -24 |          0 |         -3 |        -27 |
+| c:\Users\conta\Desktop\project\server\migrations\20260217101306-add-items-status-seller-uploaded-index.cjs               | JavaScript         |        -22 |         -1 |         -3 |        -26 |
+| c:\Users\conta\Desktop\project\server\migrations\20260217105204-add-items-status-seller-uploaded-index.cjs               | JavaScript         |        -22 |         -1 |         -3 |        -26 |
+| c:\Users\conta\Desktop\project\server\package-lock.json                                                                  | JSON               |     -6,822 |          0 |         -1 |     -6,823 |
+| c:\Users\conta\Desktop\project\server\package.json                                                                       | JSON               |        -60 |          0 |         -1 |        -61 |
+| c:\Users\conta\Desktop\project\server\public\stylesheets\style.css                                                       | PostCSS            |         -7 |          0 |         -2 |         -9 |
+| c:\Users\conta\Desktop\project\server\scripts\gen-create-tables.js                                                       | JavaScript         |        -65 |         -3 |        -13 |        -81 |
+| c:\Users\conta\Desktop\project\server\src\app.ts                                                                         | TypeScript         |       -185 |         -3 |        -16 |       -204 |
+| c:\Users\conta\Desktop\project\server\src\bin\www.ts                                                                     | TypeScript         |        -48 |        -24 |        -21 |        -93 |
+| c:\Users\conta\Desktop\project\server\src\config\config.ts                                                               | TypeScript         |        -38 |          0 |         -6 |        -44 |
+| c:\Users\conta\Desktop\project\server\src\cron\buyDelete.ts                                                              | TypeScript         |        -26 |         -2 |         -6 |        -34 |
+| c:\Users\conta\Desktop\project\server\src\cron\commentSortDecay.ts                                                       | TypeScript         |        -25 |          0 |         -4 |        -29 |
+| c:\Users\conta\Desktop\project\server\src\cron\dataDelete.ts                                                             | TypeScript         |        -32 |         -2 |         -7 |        -41 |
+| c:\Users\conta\Desktop\project\server\src\cron\index.ts                                                                  | TypeScript         |        -17 |          0 |         -1 |        -18 |
+| c:\Users\conta\Desktop\project\server\src\cron\itemDelete.ts                                                             | TypeScript         |        -65 |         -2 |        -13 |        -80 |
+| c:\Users\conta\Desktop\project\server\src\cron\itemSortDecay.ts                                                          | TypeScript         |        -47 |          0 |         -8 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\cron\token.ts                                                                  | TypeScript         |        -85 |         -4 |        -14 |       -103 |
+| c:\Users\conta\Desktop\project\server\src\cron\trustScore.ts                                                             | TypeScript         |        -80 |         -3 |        -19 |       -102 |
+| c:\Users\conta\Desktop\project\server\src\db.ts                                                                          | TypeScript         |        -17 |          0 |         -3 |        -20 |
+| c:\Users\conta\Desktop\project\server\src\middleware\authMiddleware.ts                                                   | TypeScript         |        -41 |          0 |         -6 |        -47 |
+| c:\Users\conta\Desktop\project\server\src\middleware\authOptional.ts                                                     | TypeScript         |        -41 |         -1 |         -7 |        -49 |
+| c:\Users\conta\Desktop\project\server\src\middleware\index.ts                                                            | TypeScript         |         -5 |          0 |         -1 |         -6 |
+| c:\Users\conta\Desktop\project\server\src\middleware\isAdmin.ts                                                          | TypeScript         |        -28 |          0 |         -6 |        -34 |
+| c:\Users\conta\Desktop\project\server\src\middleware\session.ts                                                          | TypeScript         |        -22 |          0 |         -4 |        -26 |
+| c:\Users\conta\Desktop\project\server\src\models\account_type_option.ts                                                  | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\address.ts                                                              | TypeScript         |        -85 |          0 |         -6 |        -91 |
+| c:\Users\conta\Desktop\project\server\src\models\bank_account.ts                                                         | TypeScript         |        -88 |          0 |         -6 |        -94 |
+| c:\Users\conta\Desktop\project\server\src\models\banks.ts                                                                | TypeScript         |        -37 |          0 |         -3 |        -40 |
+| c:\Users\conta\Desktop\project\server\src\models\blog.ts                                                                 | TypeScript         |        -60 |          0 |         -6 |        -66 |
+| c:\Users\conta\Desktop\project\server\src\models\blog_category_option.ts                                                 | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\branches.ts                                                             | TypeScript         |        -48 |          0 |         -4 |        -52 |
+| c:\Users\conta\Desktop\project\server\src\models\brand_aliases.ts                                                        | TypeScript         |        -39 |          0 |         -5 |        -44 |
+| c:\Users\conta\Desktop\project\server\src\models\brands.ts                                                               | TypeScript         |        -33 |          0 |         -3 |        -36 |
+| c:\Users\conta\Desktop\project\server\src\models\cancel.ts                                                               | TypeScript         |        -58 |          0 |         -6 |        -64 |
+| c:\Users\conta\Desktop\project\server\src\models\cancel_fee_return_option.ts                                             | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\cart.ts                                                                 | TypeScript         |        -49 |          0 |         -6 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\models\categories.ts                                                           | TypeScript         |        -78 |          0 |         -5 |        -83 |
+| c:\Users\conta\Desktop\project\server\src\models\chat.ts                                                                 | TypeScript         |        -44 |          0 |         -6 |        -50 |
+| c:\Users\conta\Desktop\project\server\src\models\com_or_free_option.ts                                                   | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\comment.ts                                                              | TypeScript         |        -86 |          0 |         -6 |        -92 |
+| c:\Users\conta\Desktop\project\server\src\models\comment_report.ts                                                       | TypeScript         |        -59 |          0 |         -6 |        -65 |
+| c:\Users\conta\Desktop\project\server\src\models\comment_report_option.ts                                                | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\deletedItems.ts                                                         | TypeScript         |        -90 |          0 |         -6 |        -96 |
+| c:\Users\conta\Desktop\project\server\src\models\deletedordersystem.ts                                                   | TypeScript         |        -75 |          0 |         -6 |        -81 |
+| c:\Users\conta\Desktop\project\server\src\models\delivery.ts                                                             | TypeScript         |       -108 |          0 |         -6 |       -114 |
+| c:\Users\conta\Desktop\project\server\src\models\delivery_status_option.ts                                               | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\emailchangetoken.ts                                                     | TypeScript         |        -52 |          0 |         -6 |        -58 |
+| c:\Users\conta\Desktop\project\server\src\models\follow.ts                                                               | TypeScript         |        -49 |          0 |         -6 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\models\gender_option.ts                                                        | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\good_comment.ts                                                         | TypeScript         |        -49 |          0 |         -6 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\models\good_item.ts                                                            | TypeScript         |        -49 |          0 |         -6 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\models\id_card.ts                                                              | TypeScript         |        -63 |          0 |         -6 |        -69 |
+| c:\Users\conta\Desktop\project\server\src\models\index.ts                                                                | TypeScript         |       -166 |         -2 |        -10 |       -178 |
+| c:\Users\conta\Desktop\project\server\src\models\inquiry.ts                                                              | TypeScript         |        -56 |          0 |         -6 |        -62 |
+| c:\Users\conta\Desktop\project\server\src\models\item.ts                                                                 | TypeScript         |       -178 |          0 |         -6 |       -184 |
+| c:\Users\conta\Desktop\project\server\src\models\item_buyer_report.ts                                                    | TypeScript         |        -78 |          0 |         -6 |        -84 |
+| c:\Users\conta\Desktop\project\server\src\models\item_buyer_report_option.ts                                             | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\item_condition_option.ts                                                | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\item_report.ts                                                          | TypeScript         |        -59 |          0 |         -6 |        -65 |
+| c:\Users\conta\Desktop\project\server\src\models\item_report_option.ts                                                   | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\item_shipping_profile.ts                                                | TypeScript         |        -63 |          0 |         -6 |        -69 |
+| c:\Users\conta\Desktop\project\server\src\models\itemdeletelog.ts                                                        | TypeScript         |        -53 |          0 |         -6 |        -59 |
+| c:\Users\conta\Desktop\project\server\src\models\journal.ts                                                              | TypeScript         |        -70 |          0 |         -6 |        -76 |
+| c:\Users\conta\Desktop\project\server\src\models\journal_reason_option.ts                                                | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\kanjyo_option.ts                                                        | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\name.ts                                                                 | TypeScript         |        -84 |          0 |         -6 |        -90 |
+| c:\Users\conta\Desktop\project\server\src\models\notification.ts                                                         | TypeScript         |        -54 |          0 |         -6 |        -60 |
+| c:\Users\conta\Desktop\project\server\src\models\paid_info.ts                                                            | TypeScript         |       -112 |          0 |         -6 |       -118 |
+| c:\Users\conta\Desktop\project\server\src\models\passwordresettoken.ts                                                   | TypeScript         |        -47 |          0 |         -6 |        -53 |
+| c:\Users\conta\Desktop\project\server\src\models\payment_method_option.ts                                                | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\pointconversionlog.ts                                                   | TypeScript         |        -61 |          0 |         -6 |        -67 |
+| c:\Users\conta\Desktop\project\server\src\models\points_history.ts                                                       | TypeScript         |        -46 |          0 |         -6 |        -52 |
+| c:\Users\conta\Desktop\project\server\src\models\points_uriage_over.ts                                                   | TypeScript         |        -33 |          0 |         -3 |        -36 |
+| c:\Users\conta\Desktop\project\server\src\models\reference_code.ts                                                       | TypeScript         |        -56 |          0 |         -6 |        -62 |
+| c:\Users\conta\Desktop\project\server\src\models\refreshtoken.ts                                                         | TypeScript         |        -47 |          0 |         -6 |        -53 |
+| c:\Users\conta\Desktop\project\server\src\models\sale.ts                                                                 | TypeScript         |        -51 |          0 |         -6 |        -57 |
+| c:\Users\conta\Desktop\project\server\src\models\sales_history.ts                                                        | TypeScript         |        -56 |          0 |         -6 |        -62 |
+| c:\Users\conta\Desktop\project\server\src\models\search.ts                                                               | TypeScript         |        -40 |          0 |         -6 |        -46 |
+| c:\Users\conta\Desktop\project\server\src\models\searchword.ts                                                           | TypeScript         |        -33 |          0 |         -3 |        -36 |
+| c:\Users\conta\Desktop\project\server\src\models\shipping_day_option.ts                                                  | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\shipping_service_option.ts                                              | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\shop_info.ts                                                            | TypeScript         |       -120 |          0 |         -6 |       -126 |
+| c:\Users\conta\Desktop\project\server\src\models\shop_info_edit.ts                                                       | TypeScript         |        -98 |          0 |         -6 |       -104 |
+| c:\Users\conta\Desktop\project\server\src\models\signupverificationtoken.ts                                              | TypeScript         |        -58 |          0 |         -6 |        -64 |
+| c:\Users\conta\Desktop\project\server\src\models\star_history.ts                                                         | TypeScript         |        -45 |          0 |         -6 |        -51 |
+| c:\Users\conta\Desktop\project\server\src\models\suggestword.ts                                                          | TypeScript         |        -29 |          0 |         -3 |        -32 |
+| c:\Users\conta\Desktop\project\server\src\models\todouhuken_option.ts                                                    | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\trans_reason_option.ts                                                  | TypeScript         |        -28 |          0 |         -3 |        -31 |
+| c:\Users\conta\Desktop\project\server\src\models\transfar.ts                                                             | TypeScript         |        -69 |          0 |         -6 |        -75 |
+| c:\Users\conta\Desktop\project\server\src\models\uriagekin_history.ts                                                    | TypeScript         |        -46 |          0 |         -6 |        -52 |
+| c:\Users\conta\Desktop\project\server\src\models\user.ts                                                                 | TypeScript         |       -210 |          0 |         -6 |       -216 |
+| c:\Users\conta\Desktop\project\server\src\models\userdeletelog.ts                                                        | TypeScript         |        -53 |          0 |         -6 |        -59 |
+| c:\Users\conta\Desktop\project\server\src\models\video.ts                                                                | TypeScript         |        -66 |          0 |         -6 |        -72 |
+| c:\Users\conta\Desktop\project\server\src\models\watch_history.ts                                                        | TypeScript         |        -46 |          0 |         -6 |        -52 |
+| c:\Users\conta\Desktop\project\server\src\routes\address.ts                                                              | TypeScript         |       -120 |          0 |        -19 |       -139 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\blog_admin.ts                                                     | TypeScript         |        -62 |          0 |        -13 |        -75 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\comment_admin.ts                                                  | TypeScript         |        -37 |          0 |         -8 |        -45 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\item_admin.ts                                                     | TypeScript         |        -48 |          0 |         -7 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\item_list_admin.ts                                                | TypeScript         |        -89 |          0 |        -10 |        -99 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\item_page_admin.ts                                                | TypeScript         |        -98 |          0 |        -11 |       -109 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\paid_list_admin.ts                                                | TypeScript         |        -56 |          0 |         -6 |        -62 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\reference_code_admin.ts                                           | TypeScript         |        -84 |          0 |         -9 |        -93 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\report.ts                                                         | TypeScript         |       -155 |          0 |        -19 |       -174 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\shop_info_admin.ts                                                | TypeScript         |       -201 |          0 |        -20 |       -221 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\transfar_admin.ts                                                 | TypeScript         |       -192 |          0 |        -17 |       -209 |
+| c:\Users\conta\Desktop\project\server\src\routes\admin\user_admin.ts                                                     | TypeScript         |       -325 |         -1 |        -50 |       -376 |
+| c:\Users\conta\Desktop\project\server\src\routes\auth.ts                                                                 | TypeScript         |       -442 |         -4 |       -107 |       -553 |
+| c:\Users\conta\Desktop\project\server\src\routes\bank_account.ts                                                         | TypeScript         |       -166 |          0 |        -24 |       -190 |
+| c:\Users\conta\Desktop\project\server\src\routes\blog.ts                                                                 | TypeScript         |       -138 |          0 |        -22 |       -160 |
+| c:\Users\conta\Desktop\project\server\src\routes\cancel.ts                                                               | TypeScript         |         -5 |          0 |         -2 |         -7 |
+| c:\Users\conta\Desktop\project\server\src\routes\cart.ts                                                                 | TypeScript         |       -109 |          0 |        -21 |       -130 |
+| c:\Users\conta\Desktop\project\server\src\routes\chat.ts                                                                 | TypeScript         |         -5 |          0 |         -2 |         -7 |
+| c:\Users\conta\Desktop\project\server\src\routes\comment.ts                                                              | TypeScript         |       -268 |          0 |        -18 |       -286 |
+| c:\Users\conta\Desktop\project\server\src\routes\delivery.ts                                                             | TypeScript         |        -76 |          0 |         -9 |        -85 |
+| c:\Users\conta\Desktop\project\server\src\routes\follow.ts                                                               | TypeScript         |       -359 |          0 |        -69 |       -428 |
+| c:\Users\conta\Desktop\project\server\src\routes\good_comment.ts                                                         | TypeScript         |       -209 |          0 |        -41 |       -250 |
+| c:\Users\conta\Desktop\project\server\src\routes\good_item.ts                                                            | TypeScript         |       -218 |          0 |        -41 |       -259 |
+| c:\Users\conta\Desktop\project\server\src\routes\id_card.ts                                                              | TypeScript         |         -7 |          0 |         -2 |         -9 |
+| c:\Users\conta\Desktop\project\server\src\routes\inquiry.ts                                                              | TypeScript         |        -47 |          0 |        -10 |        -57 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\cart_list.ts                                                  | TypeScript         |       -129 |          0 |        -19 |       -148 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\deleted_list.ts                                               | TypeScript         |        -93 |          0 |        -17 |       -110 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\draft_list.ts                                                 | TypeScript         |        -93 |          0 |        -17 |       -110 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\good_list.ts                                                  | TypeScript         |       -132 |          0 |        -19 |       -151 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\stock_list.ts                                                 | TypeScript         |       -101 |          0 |        -17 |       -118 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\uploaded_list.ts                                              | TypeScript         |       -194 |          0 |        -32 |       -226 |
+| c:\Users\conta\Desktop\project\server\src\routes\item-list\watch_list.ts                                                 | TypeScript         |       -132 |          0 |        -19 |       -151 |
+| c:\Users\conta\Desktop\project\server\src\routes\item.ts                                                                 | TypeScript         |        -76 |          0 |        -19 |        -95 |
+| c:\Users\conta\Desktop\project\server\src\routes\item_list.ts                                                            | TypeScript         |       -540 |          0 |        -88 |       -628 |
+| c:\Users\conta\Desktop\project\server\src\routes\item_page.ts                                                            | TypeScript         |       -529 |          0 |        -78 |       -607 |
+| c:\Users\conta\Desktop\project\server\src\routes\item_upload.ts                                                          | TypeScript         |       -489 |         -7 |        -95 |       -591 |
+| c:\Users\conta\Desktop\project\server\src\routes\item_upload_draft.ts                                                    | TypeScript         |       -392 |        -11 |        -75 |       -478 |
+| c:\Users\conta\Desktop\project\server\src\routes\item_upload_main.ts                                                     | TypeScript         |       -397 |        -10 |        -77 |       -484 |
+| c:\Users\conta\Desktop\project\server\src\routes\journal.ts                                                              | TypeScript         |        -34 |          0 |         -6 |        -40 |
+| c:\Users\conta\Desktop\project\server\src\routes\name.ts                                                                 | TypeScript         |        -58 |          0 |        -11 |        -69 |
+| c:\Users\conta\Desktop\project\server\src\routes\notification.ts                                                         | TypeScript         |        -46 |          0 |         -9 |        -55 |
+| c:\Users\conta\Desktop\project\server\src\routes\paid_info.ts                                                            | TypeScript         |       -280 |          0 |        -19 |       -299 |
+| c:\Users\conta\Desktop\project\server\src\routes\paid_item_list.ts                                                       | TypeScript         |       -241 |          0 |        -22 |       -263 |
+| c:\Users\conta\Desktop\project\server\src\routes\points_history.ts                                                       | TypeScript         |        -41 |          0 |         -7 |        -48 |
+| c:\Users\conta\Desktop\project\server\src\routes\points_uriage_over.ts                                                   | TypeScript         |         -5 |          0 |         -2 |         -7 |
+| c:\Users\conta\Desktop\project\server\src\routes\reference_code.ts                                                       | TypeScript         |        -71 |          0 |        -14 |        -85 |
+| c:\Users\conta\Desktop\project\server\src\routes\report.ts                                                               | TypeScript         |       -116 |          0 |        -25 |       -141 |
+| c:\Users\conta\Desktop\project\server\src\routes\sale.ts                                                                 | TypeScript         |        -82 |          0 |        -13 |        -95 |
+| c:\Users\conta\Desktop\project\server\src\routes\sales_history.ts                                                        | TypeScript         |         -5 |          0 |         -2 |         -7 |
+| c:\Users\conta\Desktop\project\server\src\routes\search.ts                                                               | TypeScript         |        -74 |          0 |        -10 |        -84 |
+| c:\Users\conta\Desktop\project\server\src\routes\shop-com-free.ts                                                        | TypeScript         |       -393 |         -5 |        -70 |       -468 |
+| c:\Users\conta\Desktop\project\server\src\routes\shop-signup-create.ts                                                   | TypeScript         |       -481 |         -6 |        -94 |       -581 |
+| c:\Users\conta\Desktop\project\server\src\routes\shop-signup.ts                                                          | TypeScript         |       -176 |          0 |        -19 |       -195 |
+| c:\Users\conta\Desktop\project\server\src\routes\shop_info.ts                                                            | TypeScript         |       -121 |          0 |        -20 |       -141 |
+| c:\Users\conta\Desktop\project\server\src\routes\shop_info_edit.ts                                                       | TypeScript         |       -481 |         -2 |        -90 |       -573 |
+| c:\Users\conta\Desktop\project\server\src\routes\star_history.ts                                                         | TypeScript         |         -5 |          0 |         -2 |         -7 |
+| c:\Users\conta\Desktop\project\server\src\routes\suggest_words.ts                                                        | TypeScript         |        -79 |          0 |        -23 |       -102 |
+| c:\Users\conta\Desktop\project\server\src\routes\test.ts                                                                 | TypeScript         |       -114 |          0 |        -30 |       -144 |
+| c:\Users\conta\Desktop\project\server\src\routes\transfar.ts                                                             | TypeScript         |       -210 |         -1 |        -51 |       -262 |
+| c:\Users\conta\Desktop\project\server\src\routes\uriagekin_history.ts                                                    | TypeScript         |        -45 |          0 |         -7 |        -52 |
+| c:\Users\conta\Desktop\project\server\src\routes\user-edit.ts                                                            | TypeScript         |       -307 |          0 |        -49 |       -356 |
+| c:\Users\conta\Desktop\project\server\src\routes\users.ts                                                                | TypeScript         |       -202 |          0 |        -33 |       -235 |
+| c:\Users\conta\Desktop\project\server\src\routes\video.ts                                                                | TypeScript         |        -34 |          0 |         -7 |        -41 |
+| c:\Users\conta\Desktop\project\server\src\routes\watch_history.ts                                                        | TypeScript         |        -32 |          0 |         -8 |        -40 |
+| c:\Users\conta\Desktop\project\server\src\scripts\fetchBanksAndBranches.ts                                               | TypeScript         |        -69 |          0 |        -12 |        -81 |
+| c:\Users\conta\Desktop\project\server\src\services\addressService.ts                                                     | TypeScript         |        -46 |          0 |         -8 |        -54 |
+| c:\Users\conta\Desktop\project\server\src\services\adminDeleteItem.ts                                                    | TypeScript         |       -141 |         -1 |        -29 |       -171 |
+| c:\Users\conta\Desktop\project\server\src\services\deleteUser.ts                                                         | TypeScript         |       -263 |         -2 |        -48 |       -313 |
+| c:\Users\conta\Desktop\project\server\src\services\findOrCreateBrand.ts                                                  | TypeScript         |        -31 |          0 |         -7 |        -38 |
+| c:\Users\conta\Desktop\project\server\src\services\itemCopyUpload.ts                                                     | TypeScript         |       -135 |          0 |        -26 |       -161 |
+| c:\Users\conta\Desktop\project\server\src\services\moveToGlacier.ts                                                      | TypeScript         |        -26 |          0 |         -8 |        -34 |
+| c:\Users\conta\Desktop\project\server\src\types\custom.d.ts                                                              | TypeScript         |        -11 |          0 |         -1 |        -12 |
+| c:\Users\conta\Desktop\project\server\src\types\express.d.ts                                                             | TypeScript         |         -8 |          0 |          0 |         -8 |
+| c:\Users\conta\Desktop\project\server\src\types\itemAttributes.ts                                                        | TypeScript         |        -55 |          0 |         -4 |        -59 |
+| c:\Users\conta\Desktop\project\server\src\types\purchaseSnapshot.ts                                                      | TypeScript         |        -20 |          0 |         -4 |        -24 |
+| c:\Users\conta\Desktop\project\server\src\utils\jwtHelper.ts                                                             | TypeScript         |        -26 |          0 |         -7 |        -33 |
+| c:\Users\conta\Desktop\project\server\src\utils\normalizeJapanese.ts                                                     | TypeScript         |        -10 |          0 |         -3 |        -13 |
+| c:\Users\conta\Desktop\project\server\tsconfig.json                                                                      | JSON with Comments |        -27 |          0 |          0 |        -27 |
+| c:\Users\conta\Desktop\project\server\tsconfig.tsbuildinfo                                                               | JSON               |         -1 |          0 |          0 |         -1 |
+| c:\Users\conta\Desktop\project\server\views\error.ejs                                                                    | HTML               |        -10 |          0 |         -1 |        -11 |
+| Total                                                                                                                    |                    |     20,562 |        -34 |      1,775 |     22,303 |
 +--------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
