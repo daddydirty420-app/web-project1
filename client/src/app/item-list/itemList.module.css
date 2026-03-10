@@ -17,6 +17,13 @@
 .itemSection {
     width: 100%;
     padding: 14px 10px;
+}
+
+.itemFlex {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
     border-radius: 12px;
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
@@ -25,14 +32,7 @@
     box-shadow: var(--shadow-mini);
 }
 
-.itemFlex {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.itemSection::before {
+.itemFlex::before {
     content: "";
     position: absolute;
     left: 0;
@@ -44,7 +44,7 @@
     transition: background 0.2s ease;
 }
 
-.itemSection:hover::before {
+.itemFlex:hover::before {
     background: var(--theme-soft);
 }
 
@@ -68,12 +68,12 @@
     width: max-content;
     height: max-content;
     position: relative;
+    flex-shrink: 0;
 }
 
 .image {
     width: 64px;
     height: 64px;
-    flex-shrink: 0;
     border-radius: 8px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
