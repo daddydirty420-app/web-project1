@@ -120,7 +120,7 @@ router.get("/related-item-list", authenticateToken, async (req: Request, res: Re
             return;
         }
 
-        res.status(200).json({ message: "関連商品リストを取得しました" });
+        res.status(200).json({ relatedItemList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
