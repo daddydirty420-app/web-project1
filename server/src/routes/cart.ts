@@ -6,14 +6,9 @@ import { Cart, Item, Sale } from "../models/index.js";
 
 const router = Router();
 
-router.post('/cart-add', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/add/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
-    const itemId = req.query.itemId;
-
-    if (!currentUserId || !itemId) {
-        res.status(400).json({ message: 'ユーザーidまたはアイテムidがありません。' });
-        return;
-    }
+    const itemId = req.params.id;
 
     try {
         const item = await Item.findByPk(itemId);
@@ -38,14 +33,9 @@ router.post('/cart-add', authenticateToken, async (req: Request, res: Response):
     }
 });
 
-router.delete("/cart-remove", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
-    const itemId = req.query.itemId;
-
-    if (!currentUserId || !itemId) {
-        res.status(400).json({ message: 'ユーザーidまたはアイテムidがありません。' });
-        return;
-    }
+    const itemId = req.params.id;
 
     try {
         const item = await Item.findByPk(itemId);
@@ -72,14 +62,9 @@ router.delete("/cart-remove", authenticateToken, async (req: Request, res: Respo
     }
 });
 
-router.get('/cart-status', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/status/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
-    const itemId = req.query.itemId;
-
-    if (!currentUserId || !itemId) {
-        res.status(400).json({ message: 'ユーザーidまたはアイテムidがありません。' });
-        return;
-    }
+    const itemId = req.params.id;
 
     try {
         const status = await Cart.findOne({

@@ -31,7 +31,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                         return;
                     }
 
-                    const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-status?itemId=${id}`, {
+                    const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/status/${id}`, {
                         method: 'GET',
                         cache: 'no-store',
                         headers: {
@@ -63,7 +63,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-add?itemId=${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/add/${id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -91,7 +91,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/cart-remove?itemId=${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

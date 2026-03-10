@@ -9,15 +9,15 @@ import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
 
+type Responce = {
+    itemList: Item[];
+    totalPages: number;
+};
+
 type Props = {
     item: Item;
     page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
     mutate: KeyedMutator<Responce>;
-};
-
-type Responce = {
-    itemList: Item[];
-    totalPages: number;
 };
 
 export const RemoveFloat = ({ item, page, mutate }: Props) => {
@@ -106,8 +106,6 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
     if (page === "draft") {
         removeText = "下書きから削除";
-    } else if (page === "cart") {
-        removeText = "カートから削除";
     } else if (page === "good") {
         removeText = "いいねした商品から削除";
     } else if (page === "watch-history") {

@@ -1,0 +1,53 @@
+.cartSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.remove {
+    width: 120px;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--theme-str);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.remove:hover {
+    font-weight: 600;
+    text-decoration: underline;
+    background-color: var(--bg-subtle);
+}
+
+.buy {
+    width: 140px;
+    height: 38px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--action);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.buy:hover {
+    background-color: var(--action-hover);
+    transform: translateX(1px);
+}
+
+@media (min-width: 450px) {
+    .remove {
+        width: 140px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .buy {
+        width: 180px;
+        height: 42px;
+        border-radius: 12px;
+    }
+}

@@ -12,6 +12,7 @@ import Image from "next/image";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { RemoveFloat } from "./removeFloat";
 import clsx from "clsx";
+import { CartElement } from "./cartElement";
 
 type Props = {
     page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
@@ -265,7 +266,7 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
 
                                     <div className={styles.priceColumn}>
                                         <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
-                                        {["stock", "uploaded", "good", "watch-history"].includes(page) && item.Sale?.sale_flag && (
+                                        {["cart", "stock", "uploaded", "good", "watch-history"].includes(page) && item.Sale?.sale_flag && (
                                             <>
                                             <p className={styles.beforePrice}>￥{item.Sale?.before_price.toLocaleString()}</p>
                                             {item.Sale?.discount_rate > 0 && (
@@ -284,7 +285,9 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
                                 )}
                             </div>
 
-                            {page === "cart" }
+                            {page === "cart" && (
+                                <CartElement item={item} mutate={mutate} />
+                            )}
                         </section>
                     );
                 })}

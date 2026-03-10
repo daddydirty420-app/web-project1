@@ -81,7 +81,8 @@ router.post("/cart-create/:id", async (req: Request, res: Response): Promise<voi
 
         const items = await Item.findAll({
             where: {
-                id: { [Op.gt]: 40 }
+                seller_id: { [Op.ne]: userId },
+                status: "active",
             },
         });
 
@@ -93,16 +94,9 @@ router.post("/cart-create/:id", async (req: Request, res: Response): Promise<voi
             { transaction: t }
         );
 
-        await WatchHistory.destroy({
-            where: {
-                user_id: { [Op.is]: null }
-            },
-            transaction: t
-        });
-
         await t.commit();
 
-        res.status(200).json({ message: "history created" });
+        res.status(200).json({ message: "cart created" });
     } catch (err) {
         await t.rollback();
         console.error(err);
