@@ -98,6 +98,7 @@ router.patch('/sort-add/:id', async (req: Request, res: Response): Promise<void>
 });
 
 router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
     const itemId = req.params.id;
     if (!itemId) {
         res.status(400).json({ message: 'itemIdがありません。' });
@@ -107,7 +108,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
     const t = await sequelize.transaction();
 
     try {
-        const user = await User.findByPk(req.user!.id);
+        const user = await User.findByPk(userId);
         if (!user) {
             res.status(404).json({ message: "ユーザーが見つかりません。" });
             return;
@@ -160,11 +161,11 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
             shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
             shipping_from_address_line1: `${item.User.Address?.shikutyouson ?? ""} ${item.User.Address?.banchi ?? ""}`,
             shipping_from_address_line2: item.User.Address?.building ?? "",
-            shipping_from_phone: item.user.phone_number ?? "",
+            shipping_from_phone: item.User.phone_number ?? "",
         }, { transaction: t });
 
         const userAddress = await Address.findOne({
-            where: { user_id: user.id },
+            where: { user_id: userId },
         });
 
         const newAddress = await Address.create({
@@ -182,7 +183,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         }
 
         const userName = await Name.findOne({
-            where: { user_id: user.id },
+            where: { user_id: userId },
         });
 
         const newName = await Name.create({
