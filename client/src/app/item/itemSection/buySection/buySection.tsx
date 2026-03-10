@@ -147,7 +147,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
     return (
         <>
         <div className={styles.buy}>
-            <button type="button" className={styles.buyButton} onClick={buy}>購入する</button>
+            <button type="button" className={styles.buyButton} onClick={buy}>購入手続きへ</button>
 
             {!loggedIn && (
                 <Link href="/login" className={styles.cartDiv}>
@@ -164,7 +164,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
         </div>
 
         <div className={styles.buyFloat}>
-            <button type="button" className={styles.floatButton} onClick={buy}>購入する</button>
+            <button type="button" className={styles.floatButton} onClick={buy}>購入手続きへ</button>
 
             {!loggedIn && (
                 <Link href="/login" className={styles.floatCartDiv}>
