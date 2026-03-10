@@ -227,7 +227,7 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
                                                 </div>
                                             )}
 
-                                            {["good", "watch-history", "uploaded"].includes(page)
+                                            {["cart", "good", "watch-history", "uploaded"].includes(page)
                                             && (
                                                 ["men", "women", "unisex"].includes(item.gender_type) ||
                                                 item.age_type === "kids"
