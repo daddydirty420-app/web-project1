@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { GoodItem, Item, ItemDeleteLogs, Sale, WatchHistory } from "../models/index.js";
+import { Cart, GoodItem, Item, ItemDeleteLogs, Sale, WatchHistory } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 
@@ -69,7 +69,7 @@ router.patch("/status-sold", async (req: Request, res: Response): Promise<void> 
     }
 });
 
-router.post("/watch-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/cart-create/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();
@@ -85,10 +85,10 @@ router.post("/watch-create/:id", async (req: Request, res: Response): Promise<vo
             },
         });
 
-        await WatchHistory.bulkCreate(
+        await Cart.bulkCreate(
             items.map((item: any) => ({
                 item_id: item.id,
-                user_id: userId,
+                addtocart_user_id: userId,
             })),
             { transaction: t }
         );

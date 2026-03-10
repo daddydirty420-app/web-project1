@@ -1,26 +1,24 @@
 # Diff Summary
 
-Date : 2026-03-10 10:33:26
+Date : 2026-03-10 14:33:22
 
-Directory c:\\Users\\conta\\Desktop\\project\\server
+Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 5 files,  82 codes, 0 comments, 12 blanks, all 94 lines
+Total : 1 files,  3 codes, 0 comments, 1 blanks, all 4 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript | 5 | 82 | 0 | 12 | 94 |
+| TypeScript JSX | 1 | 3 | 0 | 1 | 4 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 5 | 82 | 0 | 12 | 94 |
-| src | 5 | 82 | 0 | 12 | 94 |
-| src (Files) | 1 | 2 | 0 | 0 | 2 |
-| src\\routes | 4 | 80 | 0 | 12 | 92 |
-| src\\routes (Files) | 1 | -3 | 0 | 0 | -3 |
-| src\\routes\\item-list | 3 | 83 | 0 | 12 | 95 |
+| . | 1 | 3 | 0 | 1 | 4 |
+| src | 1 | 3 | 0 | 1 | 4 |
+| src\\app | 1 | 3 | 0 | 1 | 4 |
+| src\\app\\item-list | 1 | 3 | 0 | 1 | 4 |
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

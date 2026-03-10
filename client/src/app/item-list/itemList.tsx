@@ -192,95 +192,99 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
 
                     return (
                         <section key={item.id} className={styles.itemSection}>
-                            <Link
-                            href={itemPageLink}
-                            className={styles.itemLinkArea}
-                            >
-                                <div className={styles.itemImageText}>
-                                    <div className={styles.imageDiv}>
-                                        <Image
-                                        src={item.first_image_url || "/no-image(1x1).png"}
-                                        alt="商品画像"
-                                        width={80}
-                                        height={80}
-                                        className={styles.image}
-                                        />
+                            <div className={styles.itemFlex}>
+                                <Link
+                                href={itemPageLink}
+                                className={styles.itemLinkArea}
+                                >
+                                    <div className={styles.itemImageText}>
+                                        <div className={styles.imageDiv}>
+                                            <Image
+                                            src={item.first_image_url || "/no-image(1x1).png"}
+                                            alt="商品画像"
+                                            width={80}
+                                            height={80}
+                                            className={styles.image}
+                                            />
 
-                                        {["uploaded", "good", "watch-history"].includes(page) && 
-                                        item.status === "soldout" && 
-                                        (
-                                            <div className={styles.sold}>
-                                                <p className={styles.soldP}>SOLD</p>
+                                            {["uploaded", "good", "watch-history"].includes(page) && 
+                                            item.status === "soldout" && 
+                                            (
+                                                <div className={styles.sold}>
+                                                    <p className={styles.soldP}>SOLD</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className={styles.itemTextArea}>
+                                            <h2 className={`${styles.itemName} ${styles.line1}`}>{item.name ?? ""}</h2>
+
+                                            {["deleted", "draft"].includes(page) && (
+                                                <div className={styles.dateDiv}>
+                                                    <p className={`${styles.dateText} ${styles.line1}`}>{previewDateLabel}:</p>
+                                                    <p className={`${styles.dateText} ${styles.line1}`}>{previewDate}</p>
+                                                </div>
+                                            )}
+
+                                            {["good", "watch-history", "uploaded"].includes(page)
+                                            && (
+                                                ["men", "women", "unisex"].includes(item.gender_type) ||
+                                                item.age_type === "kids"
+                                            ) && (
+                                                <div className={styles.typeRow}>
+                                                    {item.gender_type === "men" && (
+                                                        <span className={`${styles.typeText} ${styles.line1}`}>メンズ</span>
+                                                    )}
+                                                    {item.gender_type === "women" && (
+                                                        <span className={`${styles.typeText} ${styles.line1}`}>レディース</span>
+                                                    )}
+                                                    {item.gender_type === "unisex" && (
+                                                        <span className={`${styles.typeText} ${styles.line1}`}>ユニセックス</span>
+                                                    )}
+
+                                                    {item.age_type === "kids" && (
+                                                        <span className={`${styles.typeText} ${styles.line1}`}>キッズ</span>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                            {/* カラー別作るかも */}
+                                            {page === "stock" && (
+                                                <div className={styles.stockDiv}>
+                                                    <p className={styles.stockLabel}>在庫数：</p>
+                                                    <p className={`${styles.stock} ${styles.line1}`}>{item.attributes.inventory?.current.toLocaleString()}</p>
+                                                </div>
+                                            )}
+
+                                            <div className={styles.videoTitleDiv}>
+                                                <p className={styles.titleLabel}>動画：</p> 
+                                                <h4 className={`${styles.videoTitle} ${styles.line1}`}>{item.Video?.title ?? ""}</h4>
                                             </div>
-                                        )}
-                                    </div>
-
-                                    <div className={styles.itemTextArea}>
-                                        <h2 className={`${styles.itemName} ${styles.line1}`}>{item.name ?? ""}</h2>
-
-                                        {["deleted", "draft"].includes(page) && (
-                                            <div className={styles.dateDiv}>
-                                                <p className={`${styles.dateText} ${styles.line1}`}>{previewDateLabel}:</p>
-                                                <p className={`${styles.dateText} ${styles.line1}`}>{previewDate}</p>
-                                            </div>
-                                        )}
-
-                                        {["good", "watch-history", "uploaded"].includes(page)
-                                        && (
-                                            ["men", "women", "unisex"].includes(item.gender_type) ||
-                                            item.age_type === "kids"
-                                        ) && (
-                                            <div className={styles.typeRow}>
-                                                {item.gender_type === "men" && (
-                                                    <span className={`${styles.typeText} ${styles.line1}`}>メンズ</span>
-                                                )}
-                                                {item.gender_type === "women" && (
-                                                    <span className={`${styles.typeText} ${styles.line1}`}>レディース</span>
-                                                )}
-                                                {item.gender_type === "unisex" && (
-                                                    <span className={`${styles.typeText} ${styles.line1}`}>ユニセックス</span>
-                                                )}
-
-                                                {item.age_type === "kids" && (
-                                                    <span className={`${styles.typeText} ${styles.line1}`}>キッズ</span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* カラー別作るかも */}
-                                        {page === "stock" && (
-                                            <div className={styles.stockDiv}>
-                                                <p className={styles.stockLabel}>在庫数：</p>
-                                                <p className={`${styles.stock} ${styles.line1}`}>{item.attributes.inventory?.current.toLocaleString()}</p>
-                                            </div>
-                                        )}
-
-                                        <div className={styles.videoTitleDiv}>
-                                            <p className={styles.titleLabel}>動画：</p> 
-                                            <h4 className={`${styles.videoTitle} ${styles.line1}`}>{item.Video?.title ?? ""}</h4>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className={styles.priceColumn}>
-                                    <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
-                                    {["stock", "uploaded", "good", "watch-history"].includes(page) && item.Sale?.sale_flag && (
-                                        <>
-                                        <p className={styles.beforePrice}>￥{item.Sale?.before_price.toLocaleString()}</p>
-                                        {item.Sale?.discount_rate > 0 && (
-                                            <span className={styles.sale}>{item.Sale?.discount_rate.toLocaleString()}% OFF</span>
+                                    <div className={styles.priceColumn}>
+                                        <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
+                                        {["stock", "uploaded", "good", "watch-history"].includes(page) && item.Sale?.sale_flag && (
+                                            <>
+                                            <p className={styles.beforePrice}>￥{item.Sale?.before_price.toLocaleString()}</p>
+                                            {item.Sale?.discount_rate > 0 && (
+                                                <span className={styles.sale}>{item.Sale?.discount_rate.toLocaleString()}% OFF</span>
+                                            )}
+                                            {item.Sale?.discount_amount > 0 && (
+                                                <span className={styles.sale}>{item.Sale?.discount_amount.toLocaleString()}円引き</span>
+                                            )}
+                                            </>
                                         )}
-                                        {item.Sale?.discount_amount > 0 && (
-                                            <span className={styles.sale}>{item.Sale?.discount_amount.toLocaleString()}円引き</span>
-                                        )}
-                                        </>
-                                    )}
-                                </div>
-                            </Link>
+                                    </div>
+                                </Link>
 
-                            {["draft", "good", "watch-history"].includes(page) && (
-                                <RemoveFloat item={item} page={page} mutate={mutate} />
-                            )}
+                                {["draft", "good", "watch-history"].includes(page) && (
+                                    <RemoveFloat item={item} page={page} mutate={mutate} />
+                                )}
+                            </div>
+
+                            {page === "cart" }
                         </section>
                     );
                 })}
