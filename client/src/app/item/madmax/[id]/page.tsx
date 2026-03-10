@@ -37,7 +37,7 @@ export default async function Page({ params }: Props) {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect(`/item/${id}`);
+    if (!accessToken || !session) redirect(`/item/${id}`);
     
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page-admin/${id}`, {
         method: 'GET',

@@ -22,7 +22,7 @@ export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect("/login");
+    if (!accessToken || !session) redirect("/login");
 
     return (
         <EmailEditForm

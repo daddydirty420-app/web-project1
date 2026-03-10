@@ -32,12 +32,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
+    
     const session = await getServerSession(authOptions);
         
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect("/login");
+    if (!accessToken || !session) redirect("/login");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/draft-confirm-deleted/${id}?page=deleted`, {
         method: 'GET',

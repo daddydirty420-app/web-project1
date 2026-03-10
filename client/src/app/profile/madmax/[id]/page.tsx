@@ -40,7 +40,7 @@ export default async function Profile({ params }: Props) {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect(`/profile/${userId}`);
+    if (!accessToken || !session) redirect(`/profile/${userId}`);
 
     const defaultLimit = 15;
 

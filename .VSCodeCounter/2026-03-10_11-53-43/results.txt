@@ -1,12 +1,12 @@
-Date : 2026-03-09 19:05:04
+Date : 2026-03-10 11:53:43
 Directory : c:\Users\conta\Desktop\project\client
-Total : 429 files,  43558 codes, 61 comments, 4149 blanks, all 47768 lines
+Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 
 Languages
 +--------------------+------------+------------+------------+------------+------------+
 | language           | files      | code       | comment    | blank      | total      |
 +--------------------+------------+------------+------------+------------+------------+
-| TypeScript JSX     |        317 |     18,749 |         30 |      3,089 |     21,868 |
+| TypeScript JSX     |        318 |     18,783 |         30 |      3,095 |     21,908 |
 | JSON               |          3 |     16,112 |          0 |          3 |     16,115 |
 | PostCSS            |         58 |      7,030 |         20 |        814 |      7,864 |
 | TypeScript         |         39 |      1,550 |          7 |        218 |      1,775 |
@@ -20,12 +20,12 @@ Directories
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                                                                     | files      | code       | comment    | blank      | total      |
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                                                        |        429 |     43,558 |         61 |      4,149 |     47,768 |
+| .                                                                                                                        |        430 |     43,592 |         61 |      4,155 |     47,808 |
 | . (Files)                                                                                                                |          9 |     16,223 |          4 |         28 |     16,255 |
 | public                                                                                                                   |          5 |          5 |          0 |          0 |          5 |
-| src                                                                                                                      |        415 |     27,330 |         57 |      4,121 |     31,508 |
+| src                                                                                                                      |        416 |     27,364 |         57 |      4,127 |     31,548 |
 | src (Files)                                                                                                              |          1 |         59 |          0 |         14 |         73 |
-| src\app                                                                                                                  |        320 |     23,668 |         46 |      3,585 |     27,299 |
+| src\app                                                                                                                  |        321 |     23,702 |         46 |      3,591 |     27,339 |
 | src\app (Files)                                                                                                          |          2 |        154 |          0 |         10 |        164 |
 | src\app\api                                                                                                              |          1 |          4 |          0 |          2 |          6 |
 | src\app\api\auth                                                                                                         |          1 |          4 |          0 |          2 |          6 |
@@ -110,13 +110,14 @@ Directories
 | src\app\inquiry                                                                                                          |          7 |        224 |          0 |         36 |        260 |
 | src\app\item                                                                                                             |         66 |      4,749 |          5 |        663 |      5,417 |
 | src\app\item (Files)                                                                                                     |          7 |        363 |          0 |         42 |        405 |
-| src\app\item-list                                                                                                        |         16 |      1,089 |          3 |        150 |      1,242 |
-| src\app\item-list (Files)                                                                                                |         10 |        912 |          3 |        123 |      1,038 |
+| src\app\item-list                                                                                                        |         17 |      1,126 |          3 |        157 |      1,286 |
+| src\app\item-list (Files)                                                                                                |         10 |        913 |          3 |        123 |      1,039 |
+| src\app\item-list\cart                                                                                                   |          1 |         37 |          0 |          7 |         44 |
 | src\app\item-list\deleted                                                                                                |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\draft                                                                                                  |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\good                                                                                                   |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\stock                                                                                                  |          1 |         27 |          0 |          4 |         31 |
-| src\app\item-list\uploaded                                                                                               |          1 |         42 |          0 |          7 |         49 |
+| src\app\item-list\uploaded                                                                                               |          1 |         41 |          0 |          7 |         48 |
 | src\app\item-list\watch-history                                                                                          |          1 |         27 |          0 |          4 |         31 |
 | src\app\item\[id]                                                                                                        |          1 |         78 |          0 |         14 |         92 |
 | src\app\item\commentSection                                                                                              |         12 |        903 |          1 |        140 |      1,044 |
@@ -208,13 +209,13 @@ Directories
 | src\app\upload\ok (Files)                                                                                                |          6 |        264 |          0 |         39 |        303 |
 | src\app\upload\ok\[id]                                                                                                   |          1 |         50 |          0 |         13 |         63 |
 | src\app\upload\types                                                                                                     |          2 |        107 |          0 |         11 |        118 |
-| src\app\user-list                                                                                                        |         13 |        682 |          0 |         96 |        778 |
+| src\app\user-list                                                                                                        |         13 |        679 |          0 |         95 |        774 |
 | src\app\user-list (Files)                                                                                                |          7 |        463 |          0 |         60 |        523 |
 | src\app\user-list\follow                                                                                                 |          4 |        145 |          0 |         22 |        167 |
 | src\app\user-list\follow (Files)                                                                                         |          3 |         87 |          0 |         10 |         97 |
 | src\app\user-list\follow\[id]                                                                                            |          1 |         58 |          0 |         12 |         70 |
-| src\app\user-list\good-comment                                                                                           |          1 |         37 |          0 |          7 |         44 |
-| src\app\user-list\good-comment\[id]                                                                                      |          1 |         37 |          0 |          7 |         44 |
+| src\app\user-list\good-comment                                                                                           |          1 |         34 |          0 |          6 |         40 |
+| src\app\user-list\good-comment\[id]                                                                                      |          1 |         34 |          0 |          6 |         40 |
 | src\app\user-list\good-item                                                                                              |          1 |         37 |          0 |          7 |         44 |
 | src\app\user-list\good-item\[id]                                                                                         |          1 |         37 |          0 |          7 |         44 |
 | src\assets                                                                                                               |          1 |          1 |          0 |          0 |          1 |
@@ -342,12 +343,13 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\linkElement.tsx                                                    | TypeScript JSX     |         26 |          0 |          3 |         29 |
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\page.tsx                                                           | TypeScript JSX     |         41 |          0 |          6 |         47 |
 | c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts                                                            | TypeScript         |          5 |          0 |          0 |          5 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\cart\page.tsx                                                    | TypeScript JSX     |         37 |          0 |          7 |         44 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\deleted\page.tsx                                                 | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx                                                   | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx                                                    | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css                                                | PostCSS            |         28 |          0 |          3 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css                                              | PostCSS            |        308 |          0 |         45 |        353 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx                                                     | TypeScript JSX     |        274 |          2 |         24 |        300 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx                                                     | TypeScript JSX     |        275 |          2 |         24 |        301 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx                                             | TypeScript JSX     |         13 |          0 |          2 |         15 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx                                                   | TypeScript JSX     |         14 |          0 |          2 |         16 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\layout.tsx                                                       | TypeScript JSX     |          4 |          0 |          1 |          5 |
@@ -356,7 +358,7 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\item-list\stock\page.tsx                                                   | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\tabHeader.tsx                                                    | TypeScript JSX     |         58 |          0 |          7 |         65 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts                                                          | TypeScript         |         25 |          0 |          3 |         28 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\uploaded\page.tsx                                                | TypeScript JSX     |         42 |          0 |          7 |         49 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\uploaded\page.tsx                                                | TypeScript JSX     |         41 |          0 |          7 |         48 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\watch-history\page.tsx                                           | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item\[id]\page.tsx                                                         | TypeScript JSX     |         78 |          0 |         14 |         92 |
 | c:\Users\conta\Desktop\project\client\src\app\item\commentSection\comment.module.css                                     | PostCSS            |        313 |          0 |         38 |        351 |
@@ -581,7 +583,7 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\user-list\follow\followHeader.module.css                                   | PostCSS            |         28 |          0 |          3 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\user-list\follow\followHeader.tsx                                          | TypeScript JSX     |         46 |          0 |          5 |         51 |
 | c:\Users\conta\Desktop\project\client\src\app\user-list\follow\followUI.tsx                                              | TypeScript JSX     |         13 |          0 |          2 |         15 |
-| c:\Users\conta\Desktop\project\client\src\app\user-list\good-comment\[id]\page.tsx                                       | TypeScript JSX     |         37 |          0 |          7 |         44 |
+| c:\Users\conta\Desktop\project\client\src\app\user-list\good-comment\[id]\page.tsx                                       | TypeScript JSX     |         34 |          0 |          6 |         40 |
 | c:\Users\conta\Desktop\project\client\src\app\user-list\good-item\[id]\page.tsx                                          | TypeScript JSX     |         37 |          0 |          7 |         44 |
 | c:\Users\conta\Desktop\project\client\src\app\user-list\goodUI.tsx                                                       | TypeScript JSX     |         14 |          0 |          2 |         16 |
 | c:\Users\conta\Desktop\project\client\src\app\user-list\layout.tsx                                                       | TypeScript JSX     |          4 |          0 |          1 |          5 |
@@ -685,5 +687,5 @@ Files
 | c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts                                                      | TypeScript         |         20 |          0 |          4 |         24 |
 | c:\Users\conta\Desktop\project\client\tailwind.config.js                                                                 | JavaScript         |          9 |          2 |          1 |         12 |
 | c:\Users\conta\Desktop\project\client\tsconfig.json                                                                      | JSON with Comments |         44 |          0 |          1 |         45 |
-| Total                                                                                                                    |                    |     43,558 |         61 |      4,149 |     47,768 |
+| Total                                                                                                                    |                    |     43,592 |         61 |      4,155 |     47,808 |
 +--------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

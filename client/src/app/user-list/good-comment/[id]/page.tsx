@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
 import GoodUI from "../../goodUI";
 import { UserList } from "../../userList";
 
@@ -25,11 +24,8 @@ export default async function Page({ params }: Props) {
     const { id } = await params;
 
     const session = await getServerSession(authOptions);
-
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect("/login");
+    if (!session) redirect("/login");
     
     return (
         <GoodUI title="いいねしたユーザー">

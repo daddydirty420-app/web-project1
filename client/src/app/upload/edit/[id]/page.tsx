@@ -27,8 +27,8 @@ export default async function Page({ params }: Props) {
 
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
-    
-    if (!accessToken) redirect("/login");
+
+    if (!session || !accessToken) redirect("/login")
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/upload-edit-draft/${id}?page=edit`, {
         method: "GET",

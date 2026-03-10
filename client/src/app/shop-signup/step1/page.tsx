@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { Form } from "./form";
 import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -15,10 +17,12 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page({ searchParams }: { searchParams: Record<string , string | string[] | undefined> }) {
+    const session = await getServerSession(authOptions);
+
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    if (!accessToken) redirect("/login");
+    if (!session || !accessToken) redirect("/login")
 
     const queryString = new URLSearchParams(
         Object.entries(searchParams).reduce((acc, [key, value]) => {

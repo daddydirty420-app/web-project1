@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Client } from "./client";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -15,10 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
 };
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const session = await getServerSession(authOptions);
 
-    if (!accessToken) redirect("/login");
+    if (!session) redirect("/login");
 
     return <Client />;
 };

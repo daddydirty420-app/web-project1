@@ -1,12 +1,12 @@
-# Diff Details
+# Details
 
-Date : 2026-03-09 19:05:04
+Date : 2026-03-10 11:53:43
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 602 files,  20364 codes, -37 comments, 1712 blanks, all 22039 lines
+Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 
-[Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Files
 | filename | language | code | comment | blank | total |
@@ -97,12 +97,13 @@ Total : 602 files,  20364 codes, -37 comments, 1712 blanks, all 22039 lines
 | [client/src/app/inquiry/linkElement.tsx](/client/src/app/inquiry/linkElement.tsx) | TypeScript JSX | 26 | 0 | 3 | 29 |
 | [client/src/app/inquiry/page.tsx](/client/src/app/inquiry/page.tsx) | TypeScript JSX | 41 | 0 | 6 | 47 |
 | [client/src/app/inquiry/type.ts](/client/src/app/inquiry/type.ts) | TypeScript | 5 | 0 | 0 | 5 |
+| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
 | [client/src/app/item-list/deleted/page.tsx](/client/src/app/item-list/deleted/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
 | [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 308 | 0 | 45 | 353 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 274 | 2 | 24 | 300 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 275 | 2 | 24 | 301 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
@@ -111,7 +112,7 @@ Total : 602 files,  20364 codes, -37 comments, 1712 blanks, all 22039 lines
 | [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | 58 | 0 | 7 | 65 |
 | [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | 25 | 0 | 3 | 28 |
-| [client/src/app/item-list/uploaded/page.tsx](/client/src/app/item-list/uploaded/page.tsx) | TypeScript JSX | 42 | 0 | 7 | 49 |
+| [client/src/app/item-list/uploaded/page.tsx](/client/src/app/item-list/uploaded/page.tsx) | TypeScript JSX | 41 | 0 | 7 | 48 |
 | [client/src/app/item-list/watch-history/page.tsx](/client/src/app/item-list/watch-history/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item/\[id\]/page.tsx](/client/src/app/item/%5Bid%5D/page.tsx) | TypeScript JSX | 78 | 0 | 14 | 92 |
 | [client/src/app/item/commentSection/comment.module.css](/client/src/app/item/commentSection/comment.module.css) | PostCSS | 313 | 0 | 38 | 351 |
@@ -336,7 +337,7 @@ Total : 602 files,  20364 codes, -37 comments, 1712 blanks, all 22039 lines
 | [client/src/app/user-list/follow/followHeader.module.css](/client/src/app/user-list/follow/followHeader.module.css) | PostCSS | 28 | 0 | 3 | 31 |
 | [client/src/app/user-list/follow/followHeader.tsx](/client/src/app/user-list/follow/followHeader.tsx) | TypeScript JSX | 46 | 0 | 5 | 51 |
 | [client/src/app/user-list/follow/followUI.tsx](/client/src/app/user-list/follow/followUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
-| [client/src/app/user-list/good-comment/\[id\]/page.tsx](/client/src/app/user-list/good-comment/%5Bid%5D/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
+| [client/src/app/user-list/good-comment/\[id\]/page.tsx](/client/src/app/user-list/good-comment/%5Bid%5D/page.tsx) | TypeScript JSX | 34 | 0 | 6 | 40 |
 | [client/src/app/user-list/good-item/\[id\]/page.tsx](/client/src/app/user-list/good-item/%5Bid%5D/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
 | [client/src/app/user-list/goodUI.tsx](/client/src/app/user-list/goodUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/user-list/layout.tsx](/client/src/app/user-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
@@ -440,178 +441,5 @@ Total : 602 files,  20364 codes, -37 comments, 1712 blanks, all 22039 lines
 | [client/src/types/purchaseSnapshot.ts](/client/src/types/purchaseSnapshot.ts) | TypeScript | 20 | 0 | 4 | 24 |
 | [client/tailwind.config.js](/client/tailwind.config.js) | JavaScript | 9 | 2 | 1 | 12 |
 | [client/tsconfig.json](/client/tsconfig.json) | JSON with Comments | 44 | 0 | 1 | 45 |
-| [server/config/config.cjs](/server/config/config.cjs) | JavaScript | -24 | 0 | -3 | -27 |
-| [server/migrations/20260217101306-add-items-status-seller-uploaded-index.cjs](/server/migrations/20260217101306-add-items-status-seller-uploaded-index.cjs) | JavaScript | -22 | -1 | -3 | -26 |
-| [server/migrations/20260217105204-add-items-status-seller-uploaded-index.cjs](/server/migrations/20260217105204-add-items-status-seller-uploaded-index.cjs) | JavaScript | -22 | -1 | -3 | -26 |
-| [server/package-lock.json](/server/package-lock.json) | JSON | -6,822 | 0 | -1 | -6,823 |
-| [server/package.json](/server/package.json) | JSON | -60 | 0 | -1 | -61 |
-| [server/public/stylesheets/style.css](/server/public/stylesheets/style.css) | PostCSS | -7 | 0 | -2 | -9 |
-| [server/scripts/gen-create-tables.js](/server/scripts/gen-create-tables.js) | JavaScript | -65 | -3 | -13 | -81 |
-| [server/src/app.ts](/server/src/app.ts) | TypeScript | -183 | -3 | -16 | -202 |
-| [server/src/bin/www.ts](/server/src/bin/www.ts) | TypeScript | -48 | -24 | -21 | -93 |
-| [server/src/config/config.ts](/server/src/config/config.ts) | TypeScript | -38 | 0 | -6 | -44 |
-| [server/src/cron/buyDelete.ts](/server/src/cron/buyDelete.ts) | TypeScript | -26 | -2 | -6 | -34 |
-| [server/src/cron/commentSortDecay.ts](/server/src/cron/commentSortDecay.ts) | TypeScript | -25 | 0 | -4 | -29 |
-| [server/src/cron/dataDelete.ts](/server/src/cron/dataDelete.ts) | TypeScript | -32 | -2 | -7 | -41 |
-| [server/src/cron/index.ts](/server/src/cron/index.ts) | TypeScript | -17 | 0 | -1 | -18 |
-| [server/src/cron/itemDelete.ts](/server/src/cron/itemDelete.ts) | TypeScript | -65 | -2 | -13 | -80 |
-| [server/src/cron/itemSortDecay.ts](/server/src/cron/itemSortDecay.ts) | TypeScript | -47 | 0 | -8 | -55 |
-| [server/src/cron/token.ts](/server/src/cron/token.ts) | TypeScript | -85 | -4 | -14 | -103 |
-| [server/src/cron/trustScore.ts](/server/src/cron/trustScore.ts) | TypeScript | -80 | -3 | -19 | -102 |
-| [server/src/db.ts](/server/src/db.ts) | TypeScript | -17 | 0 | -3 | -20 |
-| [server/src/middleware/authMiddleware.ts](/server/src/middleware/authMiddleware.ts) | TypeScript | -41 | 0 | -6 | -47 |
-| [server/src/middleware/authOptional.ts](/server/src/middleware/authOptional.ts) | TypeScript | -41 | -1 | -7 | -49 |
-| [server/src/middleware/index.ts](/server/src/middleware/index.ts) | TypeScript | -5 | 0 | -1 | -6 |
-| [server/src/middleware/isAdmin.ts](/server/src/middleware/isAdmin.ts) | TypeScript | -28 | 0 | -6 | -34 |
-| [server/src/middleware/session.ts](/server/src/middleware/session.ts) | TypeScript | -22 | 0 | -4 | -26 |
-| [server/src/models/account\_type\_option.ts](/server/src/models/account_type_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/address.ts](/server/src/models/address.ts) | TypeScript | -85 | 0 | -6 | -91 |
-| [server/src/models/bank\_account.ts](/server/src/models/bank_account.ts) | TypeScript | -88 | 0 | -6 | -94 |
-| [server/src/models/banks.ts](/server/src/models/banks.ts) | TypeScript | -37 | 0 | -3 | -40 |
-| [server/src/models/blog.ts](/server/src/models/blog.ts) | TypeScript | -60 | 0 | -6 | -66 |
-| [server/src/models/blog\_category\_option.ts](/server/src/models/blog_category_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/branches.ts](/server/src/models/branches.ts) | TypeScript | -48 | 0 | -4 | -52 |
-| [server/src/models/brand\_aliases.ts](/server/src/models/brand_aliases.ts) | TypeScript | -39 | 0 | -5 | -44 |
-| [server/src/models/brands.ts](/server/src/models/brands.ts) | TypeScript | -33 | 0 | -3 | -36 |
-| [server/src/models/cancel.ts](/server/src/models/cancel.ts) | TypeScript | -58 | 0 | -6 | -64 |
-| [server/src/models/cancel\_fee\_return\_option.ts](/server/src/models/cancel_fee_return_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/cart.ts](/server/src/models/cart.ts) | TypeScript | -49 | 0 | -6 | -55 |
-| [server/src/models/categories.ts](/server/src/models/categories.ts) | TypeScript | -78 | 0 | -5 | -83 |
-| [server/src/models/chat.ts](/server/src/models/chat.ts) | TypeScript | -44 | 0 | -6 | -50 |
-| [server/src/models/com\_or\_free\_option.ts](/server/src/models/com_or_free_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/comment.ts](/server/src/models/comment.ts) | TypeScript | -86 | 0 | -6 | -92 |
-| [server/src/models/comment\_report.ts](/server/src/models/comment_report.ts) | TypeScript | -59 | 0 | -6 | -65 |
-| [server/src/models/comment\_report\_option.ts](/server/src/models/comment_report_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/deletedItems.ts](/server/src/models/deletedItems.ts) | TypeScript | -90 | 0 | -6 | -96 |
-| [server/src/models/deletedordersystem.ts](/server/src/models/deletedordersystem.ts) | TypeScript | -75 | 0 | -6 | -81 |
-| [server/src/models/delivery.ts](/server/src/models/delivery.ts) | TypeScript | -108 | 0 | -6 | -114 |
-| [server/src/models/delivery\_status\_option.ts](/server/src/models/delivery_status_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/emailchangetoken.ts](/server/src/models/emailchangetoken.ts) | TypeScript | -52 | 0 | -6 | -58 |
-| [server/src/models/follow.ts](/server/src/models/follow.ts) | TypeScript | -49 | 0 | -6 | -55 |
-| [server/src/models/gender\_option.ts](/server/src/models/gender_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/good\_comment.ts](/server/src/models/good_comment.ts) | TypeScript | -49 | 0 | -6 | -55 |
-| [server/src/models/good\_item.ts](/server/src/models/good_item.ts) | TypeScript | -49 | 0 | -6 | -55 |
-| [server/src/models/id\_card.ts](/server/src/models/id_card.ts) | TypeScript | -63 | 0 | -6 | -69 |
-| [server/src/models/index.ts](/server/src/models/index.ts) | TypeScript | -166 | -2 | -10 | -178 |
-| [server/src/models/inquiry.ts](/server/src/models/inquiry.ts) | TypeScript | -56 | 0 | -6 | -62 |
-| [server/src/models/item.ts](/server/src/models/item.ts) | TypeScript | -178 | 0 | -6 | -184 |
-| [server/src/models/item\_buyer\_report.ts](/server/src/models/item_buyer_report.ts) | TypeScript | -78 | 0 | -6 | -84 |
-| [server/src/models/item\_buyer\_report\_option.ts](/server/src/models/item_buyer_report_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/item\_condition\_option.ts](/server/src/models/item_condition_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/item\_report.ts](/server/src/models/item_report.ts) | TypeScript | -59 | 0 | -6 | -65 |
-| [server/src/models/item\_report\_option.ts](/server/src/models/item_report_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/item\_shipping\_profile.ts](/server/src/models/item_shipping_profile.ts) | TypeScript | -63 | 0 | -6 | -69 |
-| [server/src/models/itemdeletelog.ts](/server/src/models/itemdeletelog.ts) | TypeScript | -53 | 0 | -6 | -59 |
-| [server/src/models/journal.ts](/server/src/models/journal.ts) | TypeScript | -70 | 0 | -6 | -76 |
-| [server/src/models/journal\_reason\_option.ts](/server/src/models/journal_reason_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/kanjyo\_option.ts](/server/src/models/kanjyo_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/name.ts](/server/src/models/name.ts) | TypeScript | -84 | 0 | -6 | -90 |
-| [server/src/models/notification.ts](/server/src/models/notification.ts) | TypeScript | -54 | 0 | -6 | -60 |
-| [server/src/models/paid\_info.ts](/server/src/models/paid_info.ts) | TypeScript | -112 | 0 | -6 | -118 |
-| [server/src/models/passwordresettoken.ts](/server/src/models/passwordresettoken.ts) | TypeScript | -47 | 0 | -6 | -53 |
-| [server/src/models/payment\_method\_option.ts](/server/src/models/payment_method_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/pointconversionlog.ts](/server/src/models/pointconversionlog.ts) | TypeScript | -61 | 0 | -6 | -67 |
-| [server/src/models/points\_history.ts](/server/src/models/points_history.ts) | TypeScript | -46 | 0 | -6 | -52 |
-| [server/src/models/points\_uriage\_over.ts](/server/src/models/points_uriage_over.ts) | TypeScript | -33 | 0 | -3 | -36 |
-| [server/src/models/reference\_code.ts](/server/src/models/reference_code.ts) | TypeScript | -56 | 0 | -6 | -62 |
-| [server/src/models/refreshtoken.ts](/server/src/models/refreshtoken.ts) | TypeScript | -47 | 0 | -6 | -53 |
-| [server/src/models/sale.ts](/server/src/models/sale.ts) | TypeScript | -51 | 0 | -6 | -57 |
-| [server/src/models/sales\_history.ts](/server/src/models/sales_history.ts) | TypeScript | -56 | 0 | -6 | -62 |
-| [server/src/models/search.ts](/server/src/models/search.ts) | TypeScript | -40 | 0 | -6 | -46 |
-| [server/src/models/searchword.ts](/server/src/models/searchword.ts) | TypeScript | -33 | 0 | -3 | -36 |
-| [server/src/models/shipping\_day\_option.ts](/server/src/models/shipping_day_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/shipping\_service\_option.ts](/server/src/models/shipping_service_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/shop\_info.ts](/server/src/models/shop_info.ts) | TypeScript | -120 | 0 | -6 | -126 |
-| [server/src/models/shop\_info\_edit.ts](/server/src/models/shop_info_edit.ts) | TypeScript | -98 | 0 | -6 | -104 |
-| [server/src/models/signupverificationtoken.ts](/server/src/models/signupverificationtoken.ts) | TypeScript | -58 | 0 | -6 | -64 |
-| [server/src/models/star\_history.ts](/server/src/models/star_history.ts) | TypeScript | -45 | 0 | -6 | -51 |
-| [server/src/models/suggestword.ts](/server/src/models/suggestword.ts) | TypeScript | -29 | 0 | -3 | -32 |
-| [server/src/models/todouhuken\_option.ts](/server/src/models/todouhuken_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/trans\_reason\_option.ts](/server/src/models/trans_reason_option.ts) | TypeScript | -28 | 0 | -3 | -31 |
-| [server/src/models/transfar.ts](/server/src/models/transfar.ts) | TypeScript | -69 | 0 | -6 | -75 |
-| [server/src/models/uriagekin\_history.ts](/server/src/models/uriagekin_history.ts) | TypeScript | -46 | 0 | -6 | -52 |
-| [server/src/models/user.ts](/server/src/models/user.ts) | TypeScript | -210 | 0 | -6 | -216 |
-| [server/src/models/userdeletelog.ts](/server/src/models/userdeletelog.ts) | TypeScript | -53 | 0 | -6 | -59 |
-| [server/src/models/video.ts](/server/src/models/video.ts) | TypeScript | -66 | 0 | -6 | -72 |
-| [server/src/models/watch\_history.ts](/server/src/models/watch_history.ts) | TypeScript | -46 | 0 | -6 | -52 |
-| [server/src/routes/address.ts](/server/src/routes/address.ts) | TypeScript | -120 | 0 | -19 | -139 |
-| [server/src/routes/admin/blog\_admin.ts](/server/src/routes/admin/blog_admin.ts) | TypeScript | -62 | 0 | -13 | -75 |
-| [server/src/routes/admin/comment\_admin.ts](/server/src/routes/admin/comment_admin.ts) | TypeScript | -37 | 0 | -8 | -45 |
-| [server/src/routes/admin/item\_admin.ts](/server/src/routes/admin/item_admin.ts) | TypeScript | -48 | 0 | -7 | -55 |
-| [server/src/routes/admin/item\_list\_admin.ts](/server/src/routes/admin/item_list_admin.ts) | TypeScript | -89 | 0 | -10 | -99 |
-| [server/src/routes/admin/item\_page\_admin.ts](/server/src/routes/admin/item_page_admin.ts) | TypeScript | -98 | 0 | -11 | -109 |
-| [server/src/routes/admin/paid\_list\_admin.ts](/server/src/routes/admin/paid_list_admin.ts) | TypeScript | -56 | 0 | -6 | -62 |
-| [server/src/routes/admin/reference\_code\_admin.ts](/server/src/routes/admin/reference_code_admin.ts) | TypeScript | -84 | 0 | -9 | -93 |
-| [server/src/routes/admin/report.ts](/server/src/routes/admin/report.ts) | TypeScript | -155 | 0 | -19 | -174 |
-| [server/src/routes/admin/shop\_info\_admin.ts](/server/src/routes/admin/shop_info_admin.ts) | TypeScript | -201 | 0 | -20 | -221 |
-| [server/src/routes/admin/transfar\_admin.ts](/server/src/routes/admin/transfar_admin.ts) | TypeScript | -192 | 0 | -17 | -209 |
-| [server/src/routes/admin/user\_admin.ts](/server/src/routes/admin/user_admin.ts) | TypeScript | -325 | -1 | -50 | -376 |
-| [server/src/routes/auth.ts](/server/src/routes/auth.ts) | TypeScript | -442 | -4 | -107 | -553 |
-| [server/src/routes/bank\_account.ts](/server/src/routes/bank_account.ts) | TypeScript | -166 | 0 | -24 | -190 |
-| [server/src/routes/blog.ts](/server/src/routes/blog.ts) | TypeScript | -138 | 0 | -22 | -160 |
-| [server/src/routes/cancel.ts](/server/src/routes/cancel.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/cart.ts](/server/src/routes/cart.ts) | TypeScript | -124 | 0 | -24 | -148 |
-| [server/src/routes/chat.ts](/server/src/routes/chat.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/comment.ts](/server/src/routes/comment.ts) | TypeScript | -268 | 0 | -18 | -286 |
-| [server/src/routes/delivery.ts](/server/src/routes/delivery.ts) | TypeScript | -76 | 0 | -9 | -85 |
-| [server/src/routes/follow.ts](/server/src/routes/follow.ts) | TypeScript | -359 | 0 | -69 | -428 |
-| [server/src/routes/good\_comment.ts](/server/src/routes/good_comment.ts) | TypeScript | -209 | 0 | -41 | -250 |
-| [server/src/routes/good\_item.ts](/server/src/routes/good_item.ts) | TypeScript | -218 | 0 | -41 | -259 |
-| [server/src/routes/id\_card.ts](/server/src/routes/id_card.ts) | TypeScript | -7 | 0 | -2 | -9 |
-| [server/src/routes/inquiry.ts](/server/src/routes/inquiry.ts) | TypeScript | -47 | 0 | -10 | -57 |
-| [server/src/routes/item-list/deleted\_list.ts](/server/src/routes/item-list/deleted_list.ts) | TypeScript | -93 | 0 | -17 | -110 |
-| [server/src/routes/item-list/draft\_list.ts](/server/src/routes/item-list/draft_list.ts) | TypeScript | -93 | 0 | -17 | -110 |
-| [server/src/routes/item-list/good\_list.ts](/server/src/routes/item-list/good_list.ts) | TypeScript | -131 | 0 | -19 | -150 |
-| [server/src/routes/item-list/stock\_list.ts](/server/src/routes/item-list/stock_list.ts) | TypeScript | -101 | 0 | -17 | -118 |
-| [server/src/routes/item-list/uploaded\_list.ts](/server/src/routes/item-list/uploaded_list.ts) | TypeScript | -194 | 0 | -32 | -226 |
-| [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | -131 | 0 | -19 | -150 |
-| [server/src/routes/item.ts](/server/src/routes/item.ts) | TypeScript | -76 | 0 | -19 | -95 |
-| [server/src/routes/item\_list.ts](/server/src/routes/item_list.ts) | TypeScript | -540 | 0 | -88 | -628 |
-| [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | -529 | 0 | -78 | -607 |
-| [server/src/routes/item\_upload.ts](/server/src/routes/item_upload.ts) | TypeScript | -489 | -7 | -95 | -591 |
-| [server/src/routes/item\_upload\_draft.ts](/server/src/routes/item_upload_draft.ts) | TypeScript | -392 | -11 | -75 | -478 |
-| [server/src/routes/item\_upload\_main.ts](/server/src/routes/item_upload_main.ts) | TypeScript | -397 | -10 | -77 | -484 |
-| [server/src/routes/journal.ts](/server/src/routes/journal.ts) | TypeScript | -34 | 0 | -6 | -40 |
-| [server/src/routes/name.ts](/server/src/routes/name.ts) | TypeScript | -58 | 0 | -11 | -69 |
-| [server/src/routes/notification.ts](/server/src/routes/notification.ts) | TypeScript | -46 | 0 | -9 | -55 |
-| [server/src/routes/paid\_info.ts](/server/src/routes/paid_info.ts) | TypeScript | -280 | 0 | -19 | -299 |
-| [server/src/routes/paid\_item\_list.ts](/server/src/routes/paid_item_list.ts) | TypeScript | -241 | 0 | -22 | -263 |
-| [server/src/routes/points\_history.ts](/server/src/routes/points_history.ts) | TypeScript | -41 | 0 | -7 | -48 |
-| [server/src/routes/points\_uriage\_over.ts](/server/src/routes/points_uriage_over.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/reference\_code.ts](/server/src/routes/reference_code.ts) | TypeScript | -71 | 0 | -14 | -85 |
-| [server/src/routes/report.ts](/server/src/routes/report.ts) | TypeScript | -116 | 0 | -25 | -141 |
-| [server/src/routes/sale.ts](/server/src/routes/sale.ts) | TypeScript | -82 | 0 | -13 | -95 |
-| [server/src/routes/sales\_history.ts](/server/src/routes/sales_history.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/search.ts](/server/src/routes/search.ts) | TypeScript | -74 | 0 | -10 | -84 |
-| [server/src/routes/shop-com-free.ts](/server/src/routes/shop-com-free.ts) | TypeScript | -393 | -5 | -70 | -468 |
-| [server/src/routes/shop-signup-create.ts](/server/src/routes/shop-signup-create.ts) | TypeScript | -481 | -6 | -94 | -581 |
-| [server/src/routes/shop-signup.ts](/server/src/routes/shop-signup.ts) | TypeScript | -176 | 0 | -19 | -195 |
-| [server/src/routes/shop\_info.ts](/server/src/routes/shop_info.ts) | TypeScript | -121 | 0 | -20 | -141 |
-| [server/src/routes/shop\_info\_edit.ts](/server/src/routes/shop_info_edit.ts) | TypeScript | -481 | -2 | -90 | -573 |
-| [server/src/routes/star\_history.ts](/server/src/routes/star_history.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/suggest\_words.ts](/server/src/routes/suggest_words.ts) | TypeScript | -79 | 0 | -23 | -102 |
-| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | -119 | 0 | -31 | -150 |
-| [server/src/routes/transfar.ts](/server/src/routes/transfar.ts) | TypeScript | -210 | -1 | -51 | -262 |
-| [server/src/routes/uriagekin\_history.ts](/server/src/routes/uriagekin_history.ts) | TypeScript | -45 | 0 | -7 | -52 |
-| [server/src/routes/user-edit.ts](/server/src/routes/user-edit.ts) | TypeScript | -307 | 0 | -49 | -356 |
-| [server/src/routes/users.ts](/server/src/routes/users.ts) | TypeScript | -202 | 0 | -33 | -235 |
-| [server/src/routes/video.ts](/server/src/routes/video.ts) | TypeScript | -34 | 0 | -7 | -41 |
-| [server/src/routes/watch\_history.ts](/server/src/routes/watch_history.ts) | TypeScript | -32 | 0 | -8 | -40 |
-| [server/src/scripts/fetchBanksAndBranches.ts](/server/src/scripts/fetchBanksAndBranches.ts) | TypeScript | -69 | 0 | -12 | -81 |
-| [server/src/services/addressService.ts](/server/src/services/addressService.ts) | TypeScript | -46 | 0 | -8 | -54 |
-| [server/src/services/adminDeleteItem.ts](/server/src/services/adminDeleteItem.ts) | TypeScript | -141 | -1 | -29 | -171 |
-| [server/src/services/deleteUser.ts](/server/src/services/deleteUser.ts) | TypeScript | -263 | -2 | -48 | -313 |
-| [server/src/services/findOrCreateBrand.ts](/server/src/services/findOrCreateBrand.ts) | TypeScript | -31 | 0 | -7 | -38 |
-| [server/src/services/itemCopyUpload.ts](/server/src/services/itemCopyUpload.ts) | TypeScript | -135 | 0 | -26 | -161 |
-| [server/src/services/moveToGlacier.ts](/server/src/services/moveToGlacier.ts) | TypeScript | -26 | 0 | -8 | -34 |
-| [server/src/types/custom.d.ts](/server/src/types/custom.d.ts) | TypeScript | -11 | 0 | -1 | -12 |
-| [server/src/types/express.d.ts](/server/src/types/express.d.ts) | TypeScript | -8 | 0 | 0 | -8 |
-| [server/src/types/itemAttributes.ts](/server/src/types/itemAttributes.ts) | TypeScript | -55 | 0 | -4 | -59 |
-| [server/src/types/purchaseSnapshot.ts](/server/src/types/purchaseSnapshot.ts) | TypeScript | -20 | 0 | -4 | -24 |
-| [server/src/utils/jwtHelper.ts](/server/src/utils/jwtHelper.ts) | TypeScript | -26 | 0 | -7 | -33 |
-| [server/src/utils/normalizeJapanese.ts](/server/src/utils/normalizeJapanese.ts) | TypeScript | -10 | 0 | -3 | -13 |
-| [server/tsconfig.json](/server/tsconfig.json) | JSON with Comments | -27 | 0 | 0 | -27 |
-| [server/tsconfig.tsbuildinfo](/server/tsconfig.tsbuildinfo) | JSON | -1 | 0 | 0 | -1 |
-| [server/views/error.ejs](/server/views/error.ejs) | HTML | -10 | 0 | -1 | -11 |
 
-[Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)

@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Profile({ params }: Props) {
     const session = await getServerSession(authOptions);
+    
     const loggedIn = !!session?.user;
     const currentUserId = session?.user.id;
 

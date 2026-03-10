@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { NameEditForm } from "../../../../nameEditForm";
 import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 type Props = {
     params: { id: string };
@@ -20,11 +22,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
-        
+            
+    const session = await getServerSession(authOptions);
+    
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    if (!accessToken) redirect("/login");
+    if (!session || !accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/rep-name/${id}`, {
         method: "GET",
