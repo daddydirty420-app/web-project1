@@ -5,7 +5,6 @@ import { authOptions } from "@/lib/auth";
 import ItemListUI from "../itemListUI";
 import { ItemList } from "../itemList";
 import { cookies } from "next/headers";
-import { ItemListRow } from "@/components";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -39,10 +38,7 @@ export default async function Page() {
         <ItemListUI title="カート">
             <ItemList
             page="cart"
-            />
-
-            <ItemListRow
-            itemList={data.relatedItemList}
+            relatedItemList={data.relatedItemList}
             />
         </ItemListUI>
     );

@@ -13,10 +13,13 @@ import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { RemoveFloat } from "./removeFloat";
 import clsx from "clsx";
 import { CartElement } from "./cartElement";
+import { Items } from "@/types/itemListTypes";
+import { ItemListRow } from "@/components";
 
 type Props = {
     page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
     uploadedTab?: "all" | "selling" | null;
+    relatedItemList?: Items[];
 };
 
 type Responce = {
@@ -24,7 +27,7 @@ type Responce = {
     totalPages: number;
 };
 
-export const ItemList = ({ page, uploadedTab }: Props) => {
+export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
     const [searchValue, setSearchValue] = useState("");
     const [searchKeyword, setSearchKeyword] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
@@ -295,6 +298,12 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
                 {renderPagenation(pageNumber, totalPages, (p) => {
                     setPageNumber(p);
                 })}
+
+                {page === "cart" && relatedItemList && relatedItemList.length > 1 && (
+                    <ItemListRow
+                    itemList={relatedItemList}
+                    />
+                )}
             </main>
         )}
 
