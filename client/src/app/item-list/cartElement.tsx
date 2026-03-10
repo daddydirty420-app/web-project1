@@ -41,7 +41,7 @@ export const CartElement = ({ item, mutate }: Props) => {
                 throw new Error("AUTH_ERROR");
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove/:id`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove/${itemId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
