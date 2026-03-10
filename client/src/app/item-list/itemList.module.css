@@ -312,6 +312,10 @@
     background-color: var(--button-gray);
 }
 
+.related {
+    margin-top: 2.5rem;
+}
+
 @media (min-width: 768px) {
     .itemImageText {
         gap: 12px;

@@ -300,9 +300,11 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                 })}
 
                 {page === "cart" && relatedItemList && relatedItemList.length > 1 && (
-                    <ItemListRow
-                    itemList={relatedItemList}
-                    />
+                    <nav className={styles.related}>
+                        <ItemListRow
+                        itemList={relatedItemList}
+                        />
+                    </nav>
                 )}
             </main>
         )}
