@@ -30,6 +30,7 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
 
     // apiフェッチ
     const getBasePath = () => {
+        if (page === "cart") return "item-list/cart-list";
         if (page === "draft") return "item-list/draft-list";
         if (page === "deleted") return "item-list/deleted-list";
         if (page === "good") return "item-list/good-list";
@@ -200,8 +201,8 @@ export const ItemList = ({ page, uploadedTab }: Props) => {
                                         <Image
                                         src={item.first_image_url || "/no-image(1x1).png"}
                                         alt="商品画像"
-                                        width={120}
-                                        height={120}
+                                        width={80}
+                                        height={80}
                                         className={styles.image}
                                         />
 

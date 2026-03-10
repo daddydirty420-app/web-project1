@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-09 18:41:32
+Date : 2026-03-10 10:33:26
 
 Directory c:\\Users\\conta\\Desktop\\project\\server
 
-Total : 173 files,  23194 codes, 98 comments, 2437 blanks, all 25729 lines
+Total : 174 files,  23276 codes, 98 comments, 2449 blanks, all 25823 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -18,7 +18,7 @@ Total : 173 files,  23194 codes, 98 comments, 2437 blanks, all 25729 lines
 | [server/package.json](/server/package.json) | JSON | 60 | 0 | 1 | 61 |
 | [server/public/stylesheets/style.css](/server/public/stylesheets/style.css) | PostCSS | 7 | 0 | 2 | 9 |
 | [server/scripts/gen-create-tables.js](/server/scripts/gen-create-tables.js) | JavaScript | 65 | 3 | 13 | 81 |
-| [server/src/app.ts](/server/src/app.ts) | TypeScript | 183 | 3 | 16 | 202 |
+| [server/src/app.ts](/server/src/app.ts) | TypeScript | 185 | 3 | 16 | 204 |
 | [server/src/bin/www.ts](/server/src/bin/www.ts) | TypeScript | 48 | 24 | 21 | 93 |
 | [server/src/config/config.ts](/server/src/config/config.ts) | TypeScript | 38 | 0 | 6 | 44 |
 | [server/src/cron/buyDelete.ts](/server/src/cron/buyDelete.ts) | TypeScript | 26 | 2 | 6 | 34 |
@@ -121,7 +121,7 @@ Total : 173 files,  23194 codes, 98 comments, 2437 blanks, all 25729 lines
 | [server/src/routes/bank\_account.ts](/server/src/routes/bank_account.ts) | TypeScript | 166 | 0 | 24 | 190 |
 | [server/src/routes/blog.ts](/server/src/routes/blog.ts) | TypeScript | 138 | 0 | 22 | 160 |
 | [server/src/routes/cancel.ts](/server/src/routes/cancel.ts) | TypeScript | 5 | 0 | 2 | 7 |
-| [server/src/routes/cart.ts](/server/src/routes/cart.ts) | TypeScript | 124 | 0 | 24 | 148 |
+| [server/src/routes/cart.ts](/server/src/routes/cart.ts) | TypeScript | 121 | 0 | 24 | 145 |
 | [server/src/routes/chat.ts](/server/src/routes/chat.ts) | TypeScript | 5 | 0 | 2 | 7 |
 | [server/src/routes/comment.ts](/server/src/routes/comment.ts) | TypeScript | 268 | 0 | 18 | 286 |
 | [server/src/routes/delivery.ts](/server/src/routes/delivery.ts) | TypeScript | 76 | 0 | 9 | 85 |
@@ -130,12 +130,13 @@ Total : 173 files,  23194 codes, 98 comments, 2437 blanks, all 25729 lines
 | [server/src/routes/good\_item.ts](/server/src/routes/good_item.ts) | TypeScript | 218 | 0 | 41 | 259 |
 | [server/src/routes/id\_card.ts](/server/src/routes/id_card.ts) | TypeScript | 7 | 0 | 2 | 9 |
 | [server/src/routes/inquiry.ts](/server/src/routes/inquiry.ts) | TypeScript | 47 | 0 | 10 | 57 |
+| [server/src/routes/item-list/cart\_list.ts](/server/src/routes/item-list/cart_list.ts) | TypeScript | 81 | 0 | 12 | 93 |
 | [server/src/routes/item-list/deleted\_list.ts](/server/src/routes/item-list/deleted_list.ts) | TypeScript | 93 | 0 | 17 | 110 |
 | [server/src/routes/item-list/draft\_list.ts](/server/src/routes/item-list/draft_list.ts) | TypeScript | 93 | 0 | 17 | 110 |
-| [server/src/routes/item-list/good\_list.ts](/server/src/routes/item-list/good_list.ts) | TypeScript | 131 | 0 | 19 | 150 |
+| [server/src/routes/item-list/good\_list.ts](/server/src/routes/item-list/good_list.ts) | TypeScript | 132 | 0 | 19 | 151 |
 | [server/src/routes/item-list/stock\_list.ts](/server/src/routes/item-list/stock_list.ts) | TypeScript | 101 | 0 | 17 | 118 |
 | [server/src/routes/item-list/uploaded\_list.ts](/server/src/routes/item-list/uploaded_list.ts) | TypeScript | 194 | 0 | 32 | 226 |
-| [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | 131 | 0 | 19 | 150 |
+| [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | 132 | 0 | 19 | 151 |
 | [server/src/routes/item.ts](/server/src/routes/item.ts) | TypeScript | 76 | 0 | 19 | 95 |
 | [server/src/routes/item\_list.ts](/server/src/routes/item_list.ts) | TypeScript | 540 | 0 | 88 | 628 |
 | [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | 529 | 0 | 78 | 607 |

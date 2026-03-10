@@ -96,52 +96,49 @@ router.get('/cart-status', authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.get('/cart-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    type CartInstance = InstanceType<typeof Cart>;
-    type ItemInstance = InstanceType<typeof Item>;
-    
+router.get("/related-item-list", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+
     try {
-        const currentUserId = req.user!.id;
         const cartList = await Cart.findAll({
-            where: { addtocart_user_id: currentUserId },
-            order: [['createdAt', 'DESC']],
+            where: { addtocart_user_id: userId },
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'price', 'first_image_url']
-                }
-            ]
-        }) as (CartInstance & { Item?: ItemInstance})[];
+                    where: { status: "active" },
+                    required: true,
+                },
+            ],
+        });
 
-        if (!cartList) {
-            res.status(404).json({ message: 'カートの商品が見つかりません。'});
-            return;
-        }
-
-        const cartItemIds = cartList.map(cart => cart.Item?.id).filter(id => id !== undefined);
+        const cartItemIds = cartList.map((cart: typeof Cart) => cart.Item?.id);
 
         const relatedItemList = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'first_image_url'],
+            attributes: ['id', 'name', 'price', 'first_image_url', "status"],
             where: {
-                public: true,
-                sold_out: false,
-                seller_id: { [Op.ne]: currentUserId },
-                id: { [Op.notIn]: cartItemIds }
+                status: "active",
+                seller_id: { [Op.ne]: userId },
+                id: { [Op.notIn]: cartItemIds },
             },
             limit: 20,
             order: [['sort_number', 'DESC']],
             include: [
                 {
                     model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag']
-                }
-            ]
+                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                },
+            ],
         });
 
-        res.json({ cartList, relatedItemList });
+        if (!relatedItemList) {
+            res.status(404).json({ message: "関連商品リストを取得できません" });
+            return;
+        }
+
+        res.status(200).json({ message: "関連商品リストを取得しました" });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
     }
 });
 

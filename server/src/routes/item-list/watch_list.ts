@@ -33,11 +33,11 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                         {
                             model: Sale,
                             attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                            required: false,
                         },
                         {
                             model: Video,
                             attributes: ["title"],
-                            required: false,
                         },
                     ],
                 },
@@ -60,6 +60,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                     where: {
                         status: { [Op.in]: ["active", "soldout"] },
                     },
+                    required: true,
                 },
             ],
         });
@@ -106,11 +107,11 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                         {
                             model: Sale,
                             attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                            required: false,
                         },
                         {
                             model: Video,
                             attributes: ["title"],
-                            required: false,
                         },
                     ],
                 },
