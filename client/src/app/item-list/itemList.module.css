@@ -15,9 +15,6 @@
 }
 
 .itemSection {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
     width: 100%;
     padding: 14px 10px;
     border-radius: 12px;
@@ -26,6 +23,13 @@
 .itemSection:hover {
     background: var(--bg-subtle);
     box-shadow: var(--shadow-mini);
+}
+
+.itemFlex {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .itemSection::before {

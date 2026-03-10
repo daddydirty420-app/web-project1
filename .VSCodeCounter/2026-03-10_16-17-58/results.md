@@ -1,106 +1,106 @@
 # Summary
 
-Date : 2026-03-10 10:36:45
+Date : 2026-03-10 16:17:58
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 429 files,  43557 codes, 61 comments, 4149 blanks, all 47767 lines
+Total : 432 files,  43824 codes, 62 comments, 4218 blanks, all 48104 lines
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript JSX | 317 | 18,748 | 30 | 3,089 | 21,867 |
+| TypeScript JSX | 319 | 18,966 | 31 | 3,154 | 22,151 |
 | JSON | 3 | 16,112 | 0 | 3 | 16,115 |
-| PostCSS | 58 | 7,030 | 20 | 814 | 7,864 |
+| PostCSS | 59 | 7,079 | 20 | 818 | 7,917 |
 | TypeScript | 39 | 1,550 | 7 | 218 | 1,775 |
-| JSON with Comments | 1 | 44 | 0 | 1 | 45 |
 | JavaScript | 4 | 44 | 4 | 10 | 58 |
+| JSON with Comments | 1 | 44 | 0 | 1 | 45 |
 | Markdown | 1 | 23 | 0 | 14 | 37 |
 | XML | 6 | 6 | 0 | 0 | 6 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 429 | 43,557 | 61 | 4,149 | 47,767 |
+| . | 432 | 43,824 | 62 | 4,218 | 48,104 |
 | . (Files) | 9 | 16,223 | 4 | 28 | 16,255 |
 | public | 5 | 5 | 0 | 0 | 5 |
-| src | 415 | 27,329 | 57 | 4,121 | 31,507 |
+| src | 418 | 27,596 | 58 | 4,190 | 31,844 |
 | src (Files) | 1 | 59 | 0 | 14 | 73 |
-| src\\app | 320 | 23,667 | 46 | 3,585 | 27,298 |
+| src\\app | 323 | 23,934 | 47 | 3,654 | 27,635 |
 | src\\app (Files) | 2 | 154 | 0 | 10 | 164 |
 | src\\app\\api | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth\\[...nextauth] | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\company | 2 | 76 | 0 | 14 | 90 |
-| src\\app\\edit | 50 | 3,854 | 1 | 665 | 4,520 |
+| src\\app\\edit | 50 | 3,927 | 1 | 691 | 4,619 |
 | src\\app\\edit (Files) | 4 | 441 | 0 | 45 | 486 |
-| src\\app\\edit\\account | 6 | 503 | 1 | 90 | 594 |
+| src\\app\\edit\\account | 6 | 515 | 1 | 94 | 610 |
 | src\\app\\edit\\account (Files) | 2 | 339 | 1 | 55 | 395 |
-| src\\app\\edit\\account\\shop | 3 | 126 | 0 | 27 | 153 |
-| src\\app\\edit\\account\\shop\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\account\\shop\\com-free | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\account\\shop\\com-free\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\account\\shop\\signup | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\account\\shop\\signup\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\account\\transfar | 1 | 38 | 0 | 8 | 46 |
-| src\\app\\edit\\address | 6 | 388 | 0 | 71 | 459 |
+| src\\app\\edit\\account\\shop | 3 | 135 | 0 | 30 | 165 |
+| src\\app\\edit\\account\\shop\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\account\\shop\\com-free | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\account\\shop\\com-free\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\account\\shop\\signup | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\account\\shop\\signup\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\account\\transfar | 1 | 41 | 0 | 9 | 50 |
+| src\\app\\edit\\address | 6 | 400 | 0 | 76 | 476 |
 | src\\app\\edit\\address (Files) | 2 | 219 | 0 | 35 | 254 |
-| src\\app\\edit\\address\\delivery | 1 | 43 | 0 | 9 | 52 |
-| src\\app\\edit\\address\\delivery\\[id] | 1 | 43 | 0 | 9 | 52 |
-| src\\app\\edit\\address\\shop | 3 | 126 | 0 | 27 | 153 |
-| src\\app\\edit\\address\\shop\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\address\\shop\\com-free | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\address\\shop\\com-free\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\address\\shop\\signup | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\address\\shop\\signup\\[id] | 1 | 42 | 0 | 9 | 51 |
+| src\\app\\edit\\address\\delivery | 1 | 46 | 0 | 11 | 57 |
+| src\\app\\edit\\address\\delivery\\[id] | 1 | 46 | 0 | 11 | 57 |
+| src\\app\\edit\\address\\shop | 3 | 135 | 0 | 30 | 165 |
+| src\\app\\edit\\address\\shop\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\address\\shop\\com-free | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\address\\shop\\com-free\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\address\\shop\\signup | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\address\\shop\\signup\\[id] | 1 | 45 | 0 | 10 | 55 |
 | src\\app\\edit\\email | 4 | 136 | 0 | 31 | 167 |
 | src\\app\\edit\\email (Files) | 2 | 90 | 0 | 18 | 108 |
 | src\\app\\edit\\email\\new-email | 2 | 46 | 0 | 13 | 59 |
 | src\\app\\edit\\email\\new-email\\[token] | 2 | 46 | 0 | 13 | 59 |
-| src\\app\\edit\\honnin | 2 | 403 | 0 | 55 | 458 |
-| src\\app\\edit\\name | 9 | 611 | 0 | 119 | 730 |
+| src\\app\\edit\\honnin | 2 | 406 | 0 | 56 | 462 |
+| src\\app\\edit\\name | 9 | 632 | 0 | 126 | 758 |
 | src\\app\\edit\\name (Files) | 2 | 307 | 0 | 51 | 358 |
-| src\\app\\edit\\name\\delivery | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\delivery\\[id] | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop | 6 | 260 | 0 | 58 | 318 |
-| src\\app\\edit\\name\\shop\\con-name | 3 | 130 | 0 | 29 | 159 |
-| src\\app\\edit\\name\\shop\\con-name\\[id] | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop\\con-name\\com-free | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\name\\shop\\con-name\\com-free\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\name\\shop\\con-name\\singup | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop\\con-name\\singup\\[id] | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop\\rep-name | 3 | 130 | 0 | 29 | 159 |
-| src\\app\\edit\\name\\shop\\rep-name\\[id] | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop\\rep-name\\com-free | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\name\\shop\\rep-name\\com-free\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\name\\shop\\rep-name\\signup | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\name\\shop\\rep-name\\signup\\[id] | 1 | 44 | 0 | 10 | 54 |
-| src\\app\\edit\\phone-number | 4 | 218 | 0 | 43 | 261 |
-| src\\app\\edit\\phone-number (Files) | 2 | 133 | 0 | 24 | 157 |
-| src\\app\\edit\\phone-number\\delivery | 1 | 43 | 0 | 10 | 53 |
-| src\\app\\edit\\phone-number\\delivery\\[id] | 1 | 43 | 0 | 10 | 53 |
-| src\\app\\edit\\phone-number\\shop | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\phone-number\\shop\\[id] | 1 | 42 | 0 | 9 | 51 |
-| src\\app\\edit\\profile | 3 | 203 | 0 | 33 | 236 |
-| src\\app\\edit\\shop | 12 | 951 | 0 | 178 | 1,129 |
-| src\\app\\edit\\shop\\com-free | 8 | 691 | 0 | 128 | 819 |
+| src\\app\\edit\\name\\delivery | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\delivery\\[id] | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop | 6 | 278 | 0 | 64 | 342 |
+| src\\app\\edit\\name\\shop\\con-name | 3 | 139 | 0 | 32 | 171 |
+| src\\app\\edit\\name\\shop\\con-name\\[id] | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop\\con-name\\com-free | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\name\\shop\\con-name\\com-free\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\name\\shop\\con-name\\singup | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop\\con-name\\singup\\[id] | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop\\rep-name | 3 | 139 | 0 | 32 | 171 |
+| src\\app\\edit\\name\\shop\\rep-name\\[id] | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop\\rep-name\\com-free | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\name\\shop\\rep-name\\com-free\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\name\\shop\\rep-name\\signup | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\name\\shop\\rep-name\\signup\\[id] | 1 | 47 | 0 | 11 | 58 |
+| src\\app\\edit\\phone-number | 4 | 227 | 0 | 46 | 273 |
+| src\\app\\edit\\phone-number (Files) | 2 | 136 | 0 | 25 | 161 |
+| src\\app\\edit\\phone-number\\delivery | 1 | 46 | 0 | 11 | 57 |
+| src\\app\\edit\\phone-number\\delivery\\[id] | 1 | 46 | 0 | 11 | 57 |
+| src\\app\\edit\\phone-number\\shop | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\phone-number\\shop\\[id] | 1 | 45 | 0 | 10 | 55 |
+| src\\app\\edit\\profile | 3 | 204 | 0 | 34 | 238 |
+| src\\app\\edit\\shop | 12 | 966 | 0 | 183 | 1,149 |
+| src\\app\\edit\\shop\\com-free | 8 | 700 | 0 | 131 | 831 |
 | src\\app\\edit\\shop\\com-free (Files) | 1 | 79 | 0 | 15 | 94 |
-| src\\app\\edit\\shop\\com-free\\[id] | 1 | 42 | 0 | 9 | 51 |
+| src\\app\\edit\\shop\\com-free\\[id] | 1 | 45 | 0 | 10 | 55 |
 | src\\app\\edit\\shop\\com-free\\complete | 2 | 35 | 0 | 6 | 41 |
-| src\\app\\edit\\shop\\com-free\\confirm | 2 | 230 | 0 | 41 | 271 |
+| src\\app\\edit\\shop\\com-free\\confirm | 2 | 233 | 0 | 42 | 275 |
 | src\\app\\edit\\shop\\com-free\\confirm (Files) | 1 | 187 | 0 | 32 | 219 |
-| src\\app\\edit\\shop\\com-free\\confirm\\[id] | 1 | 43 | 0 | 9 | 52 |
-| src\\app\\edit\\shop\\com-free\\upload | 2 | 305 | 0 | 57 | 362 |
+| src\\app\\edit\\shop\\com-free\\confirm\\[id] | 1 | 46 | 0 | 10 | 56 |
+| src\\app\\edit\\shop\\com-free\\upload | 2 | 308 | 0 | 58 | 366 |
 | src\\app\\edit\\shop\\com-free\\upload (Files) | 1 | 277 | 0 | 51 | 328 |
-| src\\app\\edit\\shop\\com-free\\upload\\[id] | 1 | 28 | 0 | 6 | 34 |
-| src\\app\\edit\\shop\\company-name | 2 | 113 | 0 | 26 | 139 |
+| src\\app\\edit\\shop\\com-free\\upload\\[id] | 1 | 31 | 0 | 7 | 38 |
+| src\\app\\edit\\shop\\company-name | 2 | 116 | 0 | 27 | 143 |
 | src\\app\\edit\\shop\\company-name (Files) | 1 | 72 | 0 | 17 | 89 |
-| src\\app\\edit\\shop\\company-name\\[id] | 1 | 41 | 0 | 9 | 50 |
-| src\\app\\edit\\shop\\option | 2 | 147 | 0 | 24 | 171 |
+| src\\app\\edit\\shop\\company-name\\[id] | 1 | 44 | 0 | 10 | 54 |
+| src\\app\\edit\\shop\\option | 2 | 150 | 0 | 25 | 175 |
 | src\\app\\edit\\shop\\option (Files) | 1 | 106 | 0 | 15 | 121 |
-| src\\app\\edit\\shop\\option\\[id] | 1 | 41 | 0 | 9 | 50 |
+| src\\app\\edit\\shop\\option\\[id] | 1 | 44 | 0 | 10 | 54 |
 | src\\app\\guide | 14 | 1,172 | 0 | 208 | 1,380 |
 | src\\app\\guide (Files) | 1 | 31 | 0 | 5 | 36 |
 | src\\app\\guide\\account | 4 | 222 | 0 | 40 | 262 |
@@ -111,10 +111,11 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\guide\\seller | 3 | 350 | 0 | 72 | 422 |
 | src\\app\\guide\\shop | 2 | 160 | 0 | 26 | 186 |
 | src\\app\\inquiry | 7 | 224 | 0 | 36 | 260 |
-| src\\app\\item | 66 | 4,749 | 5 | 663 | 5,417 |
+| src\\app\\item | 66 | 4,749 | 5 | 665 | 5,419 |
 | src\\app\\item (Files) | 7 | 363 | 0 | 42 | 405 |
-| src\\app\\item-list | 16 | 1,088 | 3 | 150 | 1,241 |
-| src\\app\\item-list (Files) | 10 | 912 | 3 | 123 | 1,038 |
+| src\\app\\item-list | 19 | 1,261 | 4 | 179 | 1,444 |
+| src\\app\\item-list (Files) | 12 | 1,044 | 4 | 144 | 1,192 |
+| src\\app\\item-list\\cart | 1 | 41 | 0 | 8 | 49 |
 | src\\app\\item-list\\deleted | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\draft | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\good | 1 | 27 | 0 | 4 | 31 |
@@ -126,12 +127,12 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\item\\confirm | 4 | 345 | 0 | 46 | 391 |
 | src\\app\\item\\confirm (Files) | 3 | 286 | 0 | 32 | 318 |
 | src\\app\\item\\confirm\\[id] | 1 | 59 | 0 | 14 | 73 |
-| src\\app\\item\\deleted | 4 | 306 | 0 | 49 | 355 |
+| src\\app\\item\\deleted | 4 | 306 | 0 | 50 | 356 |
 | src\\app\\item\\deleted (Files) | 3 | 245 | 0 | 36 | 281 |
-| src\\app\\item\\deleted\\[id] | 1 | 61 | 0 | 13 | 74 |
-| src\\app\\item\\draft | 3 | 86 | 0 | 15 | 101 |
+| src\\app\\item\\deleted\\[id] | 1 | 61 | 0 | 14 | 75 |
+| src\\app\\item\\draft | 3 | 86 | 0 | 16 | 102 |
 | src\\app\\item\\draft (Files) | 2 | 27 | 0 | 2 | 29 |
-| src\\app\\item\\draft\\[id] | 1 | 59 | 0 | 13 | 72 |
+| src\\app\\item\\draft\\[id] | 1 | 59 | 0 | 14 | 73 |
 | src\\app\\item\\itemSection | 15 | 1,095 | 4 | 140 | 1,239 |
 | src\\app\\item\\itemSection (Files) | 12 | 820 | 4 | 99 | 923 |
 | src\\app\\item\\itemSection\\buySection | 3 | 275 | 0 | 41 | 316 |
@@ -159,33 +160,33 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\lp\\shop | 1 | 46 | 0 | 10 | 56 |
 | src\\app\\my-page | 12 | 639 | 0 | 85 | 724 |
 | src\\app\\privacy-policy | 2 | 141 | 0 | 24 | 165 |
-| src\\app\\profile | 16 | 1,084 | 0 | 162 | 1,246 |
+| src\\app\\profile | 16 | 1,084 | 0 | 163 | 1,247 |
 | src\\app\\profile (Files) | 14 | 999 | 0 | 140 | 1,139 |
-| src\\app\\profile\\[id] | 1 | 41 | 0 | 9 | 50 |
+| src\\app\\profile\\[id] | 1 | 41 | 0 | 10 | 51 |
 | src\\app\\profile\\madmax | 1 | 44 | 0 | 13 | 57 |
 | src\\app\\profile\\madmax\\[id] | 1 | 44 | 0 | 13 | 57 |
-| src\\app\\report | 7 | 233 | 0 | 42 | 275 |
+| src\\app\\report | 7 | 239 | 0 | 44 | 283 |
 | src\\app\\report (Files) | 5 | 157 | 0 | 24 | 181 |
-| src\\app\\report\\comment | 1 | 38 | 0 | 9 | 47 |
-| src\\app\\report\\comment\\[id] | 1 | 38 | 0 | 9 | 47 |
-| src\\app\\report\\item | 1 | 38 | 0 | 9 | 47 |
-| src\\app\\report\\item\\[id] | 1 | 38 | 0 | 9 | 47 |
-| src\\app\\shop-signup | 20 | 2,259 | 2 | 353 | 2,614 |
+| src\\app\\report\\comment | 1 | 41 | 0 | 10 | 51 |
+| src\\app\\report\\comment\\[id] | 1 | 41 | 0 | 10 | 51 |
+| src\\app\\report\\item | 1 | 41 | 0 | 10 | 51 |
+| src\\app\\report\\item\\[id] | 1 | 41 | 0 | 10 | 51 |
+| src\\app\\shop-signup | 20 | 2,274 | 2 | 362 | 2,638 |
 | src\\app\\shop-signup (Files) | 8 | 669 | 1 | 92 | 762 |
 | src\\app\\shop-signup\\complete | 2 | 35 | 0 | 6 | 41 |
-| src\\app\\shop-signup\\step1 | 2 | 491 | 0 | 69 | 560 |
-| src\\app\\shop-signup\\step2 | 2 | 313 | 1 | 52 | 366 |
+| src\\app\\shop-signup\\step1 | 2 | 494 | 0 | 70 | 564 |
+| src\\app\\shop-signup\\step2 | 2 | 316 | 1 | 54 | 371 |
 | src\\app\\shop-signup\\step2 (Files) | 1 | 272 | 1 | 44 | 317 |
-| src\\app\\shop-signup\\step2\\[id] | 1 | 41 | 0 | 8 | 49 |
-| src\\app\\shop-signup\\step3 | 2 | 322 | 0 | 60 | 382 |
+| src\\app\\shop-signup\\step2\\[id] | 1 | 44 | 0 | 10 | 54 |
+| src\\app\\shop-signup\\step3 | 2 | 325 | 0 | 62 | 387 |
 | src\\app\\shop-signup\\step3 (Files) | 1 | 281 | 0 | 52 | 333 |
-| src\\app\\shop-signup\\step3\\[id] | 1 | 41 | 0 | 8 | 49 |
-| src\\app\\shop-signup\\step4 | 2 | 138 | 0 | 26 | 164 |
+| src\\app\\shop-signup\\step3\\[id] | 1 | 44 | 0 | 10 | 54 |
+| src\\app\\shop-signup\\step4 | 2 | 141 | 0 | 28 | 169 |
 | src\\app\\shop-signup\\step4 (Files) | 1 | 110 | 0 | 21 | 131 |
-| src\\app\\shop-signup\\step4\\[id] | 1 | 28 | 0 | 5 | 33 |
-| src\\app\\shop-signup\\step5 | 2 | 291 | 0 | 48 | 339 |
+| src\\app\\shop-signup\\step4\\[id] | 1 | 31 | 0 | 7 | 38 |
+| src\\app\\shop-signup\\step5 | 2 | 294 | 0 | 50 | 344 |
 | src\\app\\shop-signup\\step5 (Files) | 1 | 250 | 0 | 40 | 290 |
-| src\\app\\shop-signup\\step5\\[id] | 1 | 41 | 0 | 8 | 49 |
+| src\\app\\shop-signup\\step5\\[id] | 1 | 44 | 0 | 10 | 54 |
 | src\\app\\signup | 6 | 286 | 0 | 44 | 330 |
 | src\\app\\signup (Files) | 3 | 132 | 0 | 18 | 150 |
 | src\\app\\signup\\verify | 3 | 154 | 0 | 26 | 180 |
@@ -194,10 +195,10 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\tokutei (Files) | 2 | 105 | 0 | 16 | 121 |
 | src\\app\\tokutei\\link | 1 | 28 | 0 | 5 | 33 |
 | src\\app\\tokutei\\selling | 2 | 135 | 0 | 24 | 159 |
-| src\\app\\transfar | 8 | 596 | 0 | 92 | 688 |
+| src\\app\\transfar | 8 | 602 | 0 | 94 | 696 |
 | src\\app\\transfar (Files) | 4 | 240 | 0 | 28 | 268 |
-| src\\app\\transfar\\points | 2 | 161 | 0 | 31 | 192 |
-| src\\app\\transfar\\request | 2 | 195 | 0 | 33 | 228 |
+| src\\app\\transfar\\points | 2 | 164 | 0 | 32 | 196 |
+| src\\app\\transfar\\request | 2 | 198 | 0 | 34 | 232 |
 | src\\app\\upload | 33 | 3,675 | 35 | 572 | 4,282 |
 | src\\app\\upload (Files) | 17 | 2,554 | 29 | 390 | 2,973 |
 | src\\app\\upload\\[id] | 1 | 63 | 0 | 13 | 76 |
@@ -211,15 +212,15 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\upload\\ok (Files) | 6 | 264 | 0 | 39 | 303 |
 | src\\app\\upload\\ok\\[id] | 1 | 50 | 0 | 13 | 63 |
 | src\\app\\upload\\types | 2 | 107 | 0 | 11 | 118 |
-| src\\app\\user-list | 13 | 682 | 0 | 96 | 778 |
+| src\\app\\user-list | 13 | 676 | 0 | 94 | 770 |
 | src\\app\\user-list (Files) | 7 | 463 | 0 | 60 | 523 |
 | src\\app\\user-list\\follow | 4 | 145 | 0 | 22 | 167 |
 | src\\app\\user-list\\follow (Files) | 3 | 87 | 0 | 10 | 97 |
 | src\\app\\user-list\\follow\\[id] | 1 | 58 | 0 | 12 | 70 |
-| src\\app\\user-list\\good-comment | 1 | 37 | 0 | 7 | 44 |
-| src\\app\\user-list\\good-comment\\[id] | 1 | 37 | 0 | 7 | 44 |
-| src\\app\\user-list\\good-item | 1 | 37 | 0 | 7 | 44 |
-| src\\app\\user-list\\good-item\\[id] | 1 | 37 | 0 | 7 | 44 |
+| src\\app\\user-list\\good-comment | 1 | 34 | 0 | 6 | 40 |
+| src\\app\\user-list\\good-comment\\[id] | 1 | 34 | 0 | 6 | 40 |
+| src\\app\\user-list\\good-item | 1 | 34 | 0 | 6 | 40 |
+| src\\app\\user-list\\good-item\\[id] | 1 | 34 | 0 | 6 | 40 |
 | src\\assets | 1 | 1 | 0 | 0 | 1 |
 | src\\assets\\images | 1 | 1 | 0 | 0 | 1 |
 | src\\assets\\images\\website-image | 1 | 1 | 0 | 0 | 1 |

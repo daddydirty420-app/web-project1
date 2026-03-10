@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-10 11:53:43
+Date : 2026-03-10 16:17:58
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
+Total : 432 files,  43824 codes, 62 comments, 4218 blanks, all 48104 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -28,16 +28,16 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/company/page.tsx](/client/src/app/company/page.tsx) | TypeScript JSX | 28 | 0 | 4 | 32 |
 | [client/src/app/edit/account/accountEditForm.tsx](/client/src/app/edit/account/accountEditForm.tsx) | TypeScript JSX | 301 | 1 | 47 | 349 |
 | [client/src/app/edit/account/page.tsx](/client/src/app/edit/account/page.tsx) | TypeScript JSX | 38 | 0 | 8 | 46 |
-| [client/src/app/edit/account/shop/\[id\]/page.tsx](/client/src/app/edit/account/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/account/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/account/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/account/shop/signup/\[id\]/page.tsx](/client/src/app/edit/account/shop/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/account/transfar/page.tsx](/client/src/app/edit/account/transfar/page.tsx) | TypeScript JSX | 38 | 0 | 8 | 46 |
+| [client/src/app/edit/account/shop/\[id\]/page.tsx](/client/src/app/edit/account/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/account/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/account/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/account/shop/signup/\[id\]/page.tsx](/client/src/app/edit/account/shop/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/account/transfar/page.tsx](/client/src/app/edit/account/transfar/page.tsx) | TypeScript JSX | 41 | 0 | 9 | 50 |
 | [client/src/app/edit/address/addressEditForm.tsx](/client/src/app/edit/address/addressEditForm.tsx) | TypeScript JSX | 181 | 0 | 27 | 208 |
-| [client/src/app/edit/address/delivery/\[id\]/page.tsx](/client/src/app/edit/address/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 43 | 0 | 9 | 52 |
+| [client/src/app/edit/address/delivery/\[id\]/page.tsx](/client/src/app/edit/address/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 46 | 0 | 11 | 57 |
 | [client/src/app/edit/address/page.tsx](/client/src/app/edit/address/page.tsx) | TypeScript JSX | 38 | 0 | 8 | 46 |
-| [client/src/app/edit/address/shop/\[id\]/page.tsx](/client/src/app/edit/address/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/address/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/address/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/address/shop/signup/\[id\]/page.tsx](/client/src/app/edit/address/shop/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
+| [client/src/app/edit/address/shop/\[id\]/page.tsx](/client/src/app/edit/address/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/address/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/address/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/address/shop/signup/\[id\]/page.tsx](/client/src/app/edit/address/shop/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
 | [client/src/app/edit/edit.module.css](/client/src/app/edit/edit.module.css) | PostCSS | 318 | 0 | 32 | 350 |
 | [client/src/app/edit/editUI.tsx](/client/src/app/edit/editUI.tsx) | TypeScript JSX | 16 | 0 | 2 | 18 |
 | [client/src/app/edit/email/emailEditForm.tsx](/client/src/app/edit/email/emailEditForm.tsx) | TypeScript JSX | 63 | 0 | 13 | 76 |
@@ -45,35 +45,35 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/edit/email/new-email/\[token\]/page.tsx](/client/src/app/edit/email/new-email/%5Btoken%5D/page.tsx) | TypeScript JSX | 12 | 0 | 3 | 15 |
 | [client/src/app/edit/email/page.tsx](/client/src/app/edit/email/page.tsx) | TypeScript JSX | 27 | 0 | 5 | 32 |
 | [client/src/app/edit/honnin/honninEditForm.tsx](/client/src/app/edit/honnin/honninEditForm.tsx) | TypeScript JSX | 365 | 0 | 48 | 413 |
-| [client/src/app/edit/honnin/page.tsx](/client/src/app/edit/honnin/page.tsx) | TypeScript JSX | 38 | 0 | 7 | 45 |
+| [client/src/app/edit/honnin/page.tsx](/client/src/app/edit/honnin/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
 | [client/src/app/edit/layout.tsx](/client/src/app/edit/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
-| [client/src/app/edit/name/delivery/\[id\]/page.tsx](/client/src/app/edit/name/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
+| [client/src/app/edit/name/delivery/\[id\]/page.tsx](/client/src/app/edit/name/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 47 | 0 | 11 | 58 |
 | [client/src/app/edit/name/nameEditForm.tsx](/client/src/app/edit/name/nameEditForm.tsx) | TypeScript JSX | 269 | 0 | 43 | 312 |
 | [client/src/app/edit/name/page.tsx](/client/src/app/edit/name/page.tsx) | TypeScript JSX | 38 | 0 | 8 | 46 |
-| [client/src/app/edit/name/shop/con-name/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
-| [client/src/app/edit/name/shop/con-name/com-free/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/name/shop/con-name/singup/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/singup/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
-| [client/src/app/edit/name/shop/rep-name/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
-| [client/src/app/edit/name/shop/rep-name/com-free/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/name/shop/rep-name/signup/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
-| [client/src/app/edit/phone-number/delivery/\[id\]/page.tsx](/client/src/app/edit/phone-number/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 43 | 0 | 10 | 53 |
-| [client/src/app/edit/phone-number/page.tsx](/client/src/app/edit/phone-number/page.tsx) | TypeScript JSX | 38 | 0 | 8 | 46 |
+| [client/src/app/edit/name/shop/con-name/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/%5Bid%5D/page.tsx) | TypeScript JSX | 47 | 0 | 11 | 58 |
+| [client/src/app/edit/name/shop/con-name/com-free/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/name/shop/con-name/singup/\[id\]/page.tsx](/client/src/app/edit/name/shop/con-name/singup/%5Bid%5D/page.tsx) | TypeScript JSX | 47 | 0 | 11 | 58 |
+| [client/src/app/edit/name/shop/rep-name/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/%5Bid%5D/page.tsx) | TypeScript JSX | 47 | 0 | 11 | 58 |
+| [client/src/app/edit/name/shop/rep-name/com-free/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/name/shop/rep-name/signup/\[id\]/page.tsx](/client/src/app/edit/name/shop/rep-name/signup/%5Bid%5D/page.tsx) | TypeScript JSX | 47 | 0 | 11 | 58 |
+| [client/src/app/edit/phone-number/delivery/\[id\]/page.tsx](/client/src/app/edit/phone-number/delivery/%5Bid%5D/page.tsx) | TypeScript JSX | 46 | 0 | 11 | 57 |
+| [client/src/app/edit/phone-number/page.tsx](/client/src/app/edit/phone-number/page.tsx) | TypeScript JSX | 41 | 0 | 9 | 50 |
 | [client/src/app/edit/phone-number/phoneNumberEdit.tsx](/client/src/app/edit/phone-number/phoneNumberEdit.tsx) | TypeScript JSX | 95 | 0 | 16 | 111 |
-| [client/src/app/edit/phone-number/shop/\[id\]/page.tsx](/client/src/app/edit/phone-number/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
-| [client/src/app/edit/profile/page.tsx](/client/src/app/edit/profile/page.tsx) | TypeScript JSX | 40 | 0 | 9 | 49 |
+| [client/src/app/edit/phone-number/shop/\[id\]/page.tsx](/client/src/app/edit/phone-number/shop/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
+| [client/src/app/edit/profile/page.tsx](/client/src/app/edit/profile/page.tsx) | TypeScript JSX | 41 | 0 | 10 | 51 |
 | [client/src/app/edit/profile/profileEditForm.tsx](/client/src/app/edit/profile/profileEditForm.tsx) | TypeScript JSX | 90 | 0 | 14 | 104 |
 | [client/src/app/edit/profile/profileImage.tsx](/client/src/app/edit/profile/profileImage.tsx) | TypeScript JSX | 73 | 0 | 10 | 83 |
-| [client/src/app/edit/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 42 | 0 | 9 | 51 |
+| [client/src/app/edit/shop/com-free/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/%5Bid%5D/page.tsx) | TypeScript JSX | 45 | 0 | 10 | 55 |
 | [client/src/app/edit/shop/com-free/complete/element.tsx](/client/src/app/edit/shop/com-free/complete/element.tsx) | TypeScript JSX | 20 | 0 | 4 | 24 |
 | [client/src/app/edit/shop/com-free/complete/page.tsx](/client/src/app/edit/shop/com-free/complete/page.tsx) | TypeScript JSX | 15 | 0 | 2 | 17 |
-| [client/src/app/edit/shop/com-free/confirm/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/confirm/%5Bid%5D/page.tsx) | TypeScript JSX | 43 | 0 | 9 | 52 |
+| [client/src/app/edit/shop/com-free/confirm/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/confirm/%5Bid%5D/page.tsx) | TypeScript JSX | 46 | 0 | 10 | 56 |
 | [client/src/app/edit/shop/com-free/confirm/client.tsx](/client/src/app/edit/shop/com-free/confirm/client.tsx) | TypeScript JSX | 187 | 0 | 32 | 219 |
 | [client/src/app/edit/shop/com-free/form.tsx](/client/src/app/edit/shop/com-free/form.tsx) | TypeScript JSX | 79 | 0 | 15 | 94 |
-| [client/src/app/edit/shop/com-free/upload/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/upload/%5Bid%5D/page.tsx) | TypeScript JSX | 28 | 0 | 6 | 34 |
+| [client/src/app/edit/shop/com-free/upload/\[id\]/page.tsx](/client/src/app/edit/shop/com-free/upload/%5Bid%5D/page.tsx) | TypeScript JSX | 31 | 0 | 7 | 38 |
 | [client/src/app/edit/shop/com-free/upload/client.tsx](/client/src/app/edit/shop/com-free/upload/client.tsx) | TypeScript JSX | 277 | 0 | 51 | 328 |
-| [client/src/app/edit/shop/company-name/\[id\]/page.tsx](/client/src/app/edit/shop/company-name/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 9 | 50 |
+| [client/src/app/edit/shop/company-name/\[id\]/page.tsx](/client/src/app/edit/shop/company-name/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
 | [client/src/app/edit/shop/company-name/form.tsx](/client/src/app/edit/shop/company-name/form.tsx) | TypeScript JSX | 72 | 0 | 17 | 89 |
-| [client/src/app/edit/shop/option/\[id\]/page.tsx](/client/src/app/edit/shop/option/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 9 | 50 |
+| [client/src/app/edit/shop/option/\[id\]/page.tsx](/client/src/app/edit/shop/option/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
 | [client/src/app/edit/shop/option/form.tsx](/client/src/app/edit/shop/option/form.tsx) | TypeScript JSX | 106 | 0 | 15 | 121 |
 | [client/src/app/edit/type.ts](/client/src/app/edit/type.ts) | TypeScript | 103 | 0 | 10 | 113 |
 | [client/src/app/guide/account/content.tsx](/client/src/app/guide/account/content.tsx) | TypeScript JSX | 115 | 0 | 21 | 136 |
@@ -97,18 +97,20 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/inquiry/linkElement.tsx](/client/src/app/inquiry/linkElement.tsx) | TypeScript JSX | 26 | 0 | 3 | 29 |
 | [client/src/app/inquiry/page.tsx](/client/src/app/inquiry/page.tsx) | TypeScript JSX | 41 | 0 | 6 | 47 |
 | [client/src/app/inquiry/type.ts](/client/src/app/inquiry/type.ts) | TypeScript | 5 | 0 | 0 | 5 |
-| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
+| [client/src/app/item-list/cart.module.css](/client/src/app/item-list/cart.module.css) | PostCSS | 49 | 0 | 4 | 53 |
+| [client/src/app/item-list/cartElement.tsx](/client/src/app/item-list/cartElement.tsx) | TypeScript JSX | 78 | 1 | 16 | 95 |
+| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
 | [client/src/app/item-list/deleted/page.tsx](/client/src/app/item-list/deleted/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
 | [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 308 | 0 | 45 | 353 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 275 | 2 | 24 | 301 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 281 | 2 | 25 | 308 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/item-list/removeFloat.module.css](/client/src/app/item-list/removeFloat.module.css) | PostCSS | 69 | 0 | 10 | 79 |
-| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 119 | 1 | 26 | 146 |
+| [client/src/app/item-list/removeFloat.tsx](/client/src/app/item-list/removeFloat.tsx) | TypeScript JSX | 117 | 1 | 26 | 144 |
 | [client/src/app/item-list/stock/page.tsx](/client/src/app/item-list/stock/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/tabHeader.tsx](/client/src/app/item-list/tabHeader.tsx) | TypeScript JSX | 58 | 0 | 7 | 65 |
 | [client/src/app/item-list/type.ts](/client/src/app/item-list/type.ts) | TypeScript | 25 | 0 | 3 | 28 |
@@ -131,11 +133,11 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/item/confirm/confirm.module.css](/client/src/app/item/confirm/confirm.module.css) | PostCSS | 152 | 0 | 13 | 165 |
 | [client/src/app/item/confirm/title.tsx](/client/src/app/item/confirm/title.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/item/confirm/uploadButton.tsx](/client/src/app/item/confirm/uploadButton.tsx) | TypeScript JSX | 130 | 0 | 18 | 148 |
-| [client/src/app/item/deleted/\[id\]/page.tsx](/client/src/app/item/deleted/%5Bid%5D/page.tsx) | TypeScript JSX | 61 | 0 | 13 | 74 |
+| [client/src/app/item/deleted/\[id\]/page.tsx](/client/src/app/item/deleted/%5Bid%5D/page.tsx) | TypeScript JSX | 61 | 0 | 14 | 75 |
 | [client/src/app/item/deleted/deleted.module.css](/client/src/app/item/deleted/deleted.module.css) | PostCSS | 110 | 0 | 9 | 119 |
 | [client/src/app/item/deleted/perfectDelete.tsx](/client/src/app/item/deleted/perfectDelete.tsx) | TypeScript JSX | 62 | 0 | 12 | 74 |
 | [client/src/app/item/deleted/restore.tsx](/client/src/app/item/deleted/restore.tsx) | TypeScript JSX | 73 | 0 | 15 | 88 |
-| [client/src/app/item/draft/\[id\]/page.tsx](/client/src/app/item/draft/%5Bid%5D/page.tsx) | TypeScript JSX | 59 | 0 | 13 | 72 |
+| [client/src/app/item/draft/\[id\]/page.tsx](/client/src/app/item/draft/%5Bid%5D/page.tsx) | TypeScript JSX | 59 | 0 | 14 | 73 |
 | [client/src/app/item/draft/draft.module.css](/client/src/app/item/draft/draft.module.css) | PostCSS | 19 | 0 | 0 | 19 |
 | [client/src/app/item/draft/editButton.tsx](/client/src/app/item/draft/editButton.tsx) | TypeScript JSX | 8 | 0 | 2 | 10 |
 | [client/src/app/item/itemCommon.module.css](/client/src/app/item/itemCommon.module.css) | PostCSS | 96 | 0 | 10 | 106 |
@@ -234,7 +236,7 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/page.tsx](/client/src/app/page.tsx) | TypeScript JSX | 101 | 0 | 3 | 104 |
 | [client/src/app/privacy-policy/content.tsx](/client/src/app/privacy-policy/content.tsx) | TypeScript JSX | 117 | 0 | 20 | 137 |
 | [client/src/app/privacy-policy/page.tsx](/client/src/app/privacy-policy/page.tsx) | TypeScript JSX | 24 | 0 | 4 | 28 |
-| [client/src/app/profile/\[id\]/page.tsx](/client/src/app/profile/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 9 | 50 |
+| [client/src/app/profile/\[id\]/page.tsx](/client/src/app/profile/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 10 | 51 |
 | [client/src/app/profile/adminSection.tsx](/client/src/app/profile/adminSection.tsx) | TypeScript JSX | 212 | 0 | 34 | 246 |
 | [client/src/app/profile/editButton.tsx](/client/src/app/profile/editButton.tsx) | TypeScript JSX | 8 | 0 | 2 | 10 |
 | [client/src/app/profile/followSection.tsx](/client/src/app/profile/followSection.tsx) | TypeScript JSX | 20 | 0 | 5 | 25 |
@@ -250,9 +252,9 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/profile/shopButton.tsx](/client/src/app/profile/shopButton.tsx) | TypeScript JSX | 12 | 0 | 2 | 14 |
 | [client/src/app/profile/socialSection.tsx](/client/src/app/profile/socialSection.tsx) | TypeScript JSX | 22 | 0 | 3 | 25 |
 | [client/src/app/profile/starSection.tsx](/client/src/app/profile/starSection.tsx) | TypeScript JSX | 19 | 0 | 2 | 21 |
-| [client/src/app/report/comment/\[id\]/page.tsx](/client/src/app/report/comment/%5Bid%5D/page.tsx) | TypeScript JSX | 38 | 0 | 9 | 47 |
+| [client/src/app/report/comment/\[id\]/page.tsx](/client/src/app/report/comment/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 10 | 51 |
 | [client/src/app/report/form.tsx](/client/src/app/report/form.tsx) | TypeScript JSX | 91 | 0 | 15 | 106 |
-| [client/src/app/report/item/\[id\]/page.tsx](/client/src/app/report/item/%5Bid%5D/page.tsx) | TypeScript JSX | 38 | 0 | 9 | 47 |
+| [client/src/app/report/item/\[id\]/page.tsx](/client/src/app/report/item/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 10 | 51 |
 | [client/src/app/report/layout.tsx](/client/src/app/report/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/report/report.module.css](/client/src/app/report/report.module.css) | PostCSS | 38 | 0 | 4 | 42 |
 | [client/src/app/report/reportUI.tsx](/client/src/app/report/reportUI.tsx) | TypeScript JSX | 20 | 0 | 4 | 24 |
@@ -265,14 +267,14 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/shop-signup/ssUI.tsx](/client/src/app/shop-signup/ssUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/shop-signup/ssUiBack.tsx](/client/src/app/shop-signup/ssUiBack.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/shop-signup/step1/form.tsx](/client/src/app/shop-signup/step1/form.tsx) | TypeScript JSX | 444 | 0 | 60 | 504 |
-| [client/src/app/shop-signup/step1/page.tsx](/client/src/app/shop-signup/step1/page.tsx) | TypeScript JSX | 47 | 0 | 9 | 56 |
-| [client/src/app/shop-signup/step2/\[id\]/page.tsx](/client/src/app/shop-signup/step2/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
+| [client/src/app/shop-signup/step1/page.tsx](/client/src/app/shop-signup/step1/page.tsx) | TypeScript JSX | 50 | 0 | 10 | 60 |
+| [client/src/app/shop-signup/step2/\[id\]/page.tsx](/client/src/app/shop-signup/step2/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
 | [client/src/app/shop-signup/step2/form.tsx](/client/src/app/shop-signup/step2/form.tsx) | TypeScript JSX | 272 | 1 | 44 | 317 |
-| [client/src/app/shop-signup/step3/\[id\]/page.tsx](/client/src/app/shop-signup/step3/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
+| [client/src/app/shop-signup/step3/\[id\]/page.tsx](/client/src/app/shop-signup/step3/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
 | [client/src/app/shop-signup/step3/form.tsx](/client/src/app/shop-signup/step3/form.tsx) | TypeScript JSX | 281 | 0 | 52 | 333 |
-| [client/src/app/shop-signup/step4/\[id\]/page.tsx](/client/src/app/shop-signup/step4/%5Bid%5D/page.tsx) | TypeScript JSX | 28 | 0 | 5 | 33 |
+| [client/src/app/shop-signup/step4/\[id\]/page.tsx](/client/src/app/shop-signup/step4/%5Bid%5D/page.tsx) | TypeScript JSX | 31 | 0 | 7 | 38 |
 | [client/src/app/shop-signup/step4/form.tsx](/client/src/app/shop-signup/step4/form.tsx) | TypeScript JSX | 110 | 0 | 21 | 131 |
-| [client/src/app/shop-signup/step5/\[id\]/page.tsx](/client/src/app/shop-signup/step5/%5Bid%5D/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
+| [client/src/app/shop-signup/step5/\[id\]/page.tsx](/client/src/app/shop-signup/step5/%5Bid%5D/page.tsx) | TypeScript JSX | 44 | 0 | 10 | 54 |
 | [client/src/app/shop-signup/step5/client.tsx](/client/src/app/shop-signup/step5/client.tsx) | TypeScript JSX | 250 | 0 | 40 | 290 |
 | [client/src/app/shop-signup/stepBar.module.css](/client/src/app/shop-signup/stepBar.module.css) | PostCSS | 81 | 0 | 12 | 93 |
 | [client/src/app/shop-signup/stepBar.tsx](/client/src/app/shop-signup/stepBar.tsx) | TypeScript JSX | 106 | 1 | 29 | 136 |
@@ -292,9 +294,9 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/tokutei/selling/page.tsx](/client/src/app/tokutei/selling/page.tsx) | TypeScript JSX | 24 | 0 | 4 | 28 |
 | [client/src/app/transfar/layout.tsx](/client/src/app/transfar/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/transfar/points/form.tsx](/client/src/app/transfar/points/form.tsx) | TypeScript JSX | 125 | 0 | 24 | 149 |
-| [client/src/app/transfar/points/page.tsx](/client/src/app/transfar/points/page.tsx) | TypeScript JSX | 36 | 0 | 7 | 43 |
+| [client/src/app/transfar/points/page.tsx](/client/src/app/transfar/points/page.tsx) | TypeScript JSX | 39 | 0 | 8 | 47 |
 | [client/src/app/transfar/request/form.tsx](/client/src/app/transfar/request/form.tsx) | TypeScript JSX | 159 | 0 | 26 | 185 |
-| [client/src/app/transfar/request/page.tsx](/client/src/app/transfar/request/page.tsx) | TypeScript JSX | 36 | 0 | 7 | 43 |
+| [client/src/app/transfar/request/page.tsx](/client/src/app/transfar/request/page.tsx) | TypeScript JSX | 39 | 0 | 8 | 47 |
 | [client/src/app/transfar/transfar.module.css](/client/src/app/transfar/transfar.module.css) | PostCSS | 201 | 0 | 23 | 224 |
 | [client/src/app/transfar/transfarUI.tsx](/client/src/app/transfar/transfarUI.tsx) | TypeScript JSX | 16 | 0 | 2 | 18 |
 | [client/src/app/transfar/types.ts](/client/src/app/transfar/types.ts) | TypeScript | 19 | 0 | 2 | 21 |
@@ -338,7 +340,7 @@ Total : 430 files,  43592 codes, 61 comments, 4155 blanks, all 47808 lines
 | [client/src/app/user-list/follow/followHeader.tsx](/client/src/app/user-list/follow/followHeader.tsx) | TypeScript JSX | 46 | 0 | 5 | 51 |
 | [client/src/app/user-list/follow/followUI.tsx](/client/src/app/user-list/follow/followUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/user-list/good-comment/\[id\]/page.tsx](/client/src/app/user-list/good-comment/%5Bid%5D/page.tsx) | TypeScript JSX | 34 | 0 | 6 | 40 |
-| [client/src/app/user-list/good-item/\[id\]/page.tsx](/client/src/app/user-list/good-item/%5Bid%5D/page.tsx) | TypeScript JSX | 37 | 0 | 7 | 44 |
+| [client/src/app/user-list/good-item/\[id\]/page.tsx](/client/src/app/user-list/good-item/%5Bid%5D/page.tsx) | TypeScript JSX | 34 | 0 | 6 | 40 |
 | [client/src/app/user-list/goodUI.tsx](/client/src/app/user-list/goodUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/user-list/layout.tsx](/client/src/app/user-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
 | [client/src/app/user-list/type.ts](/client/src/app/user-list/type.ts) | TypeScript | 21 | 0 | 3 | 24 |
