@@ -30,6 +30,7 @@
 .itemFlex:hover {
     background: var(--bg-subtle);
     box-shadow: var(--shadow-mini);
+    border-left: 2px solid var(--gray-line-mid);
 }
 
 .itemFlex::before {
