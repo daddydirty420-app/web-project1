@@ -5,6 +5,7 @@ import styles from "./cart.module.css";
 import { Item } from "./type";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Responce = {
     itemList: Item[];
@@ -17,8 +18,45 @@ type Props = {
 };
 
 export const CartElement = ({ item, mutate }: Props) => {
+    const router = useRouter();
 
     const buy = async () => {
+        try {
+            const accessToken = await refreshToken();
+                        
+            if (!accessToken) {
+                throw new Error("AUTH_ERROR");
+            }
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/buy/${item.id}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error("FETCH_ERROR");
+            }
+
+            const data = await res.json();
+            const deliveryId = data.deliveryId;
+                
+            // 配送ページとカラー選択ページをできれば1つにまとめる
+            router.push(`/buy/trans/${deliveryId}`);
+        } catch (err) {
+            console.error(err);
+
+            if (err instanceof Error) {
+                if (err.message === "AUTH_ERROR") {
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                } else if (err.message === "FETCH_ERROR") {
+                    toast.error("購入手続きの開始に失敗しました。時間を置いてもう一度お試しください。");
+                } else {
+                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                }
+            }
+        }
     };
 
     const remove = async (itemId: string) => {

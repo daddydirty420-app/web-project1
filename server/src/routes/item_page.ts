@@ -137,8 +137,14 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
                 },
             ],
         });
+
         if (!item) {
             res.status(404).json({ message: '商品が見つかりません。' });
+            return;
+        }
+
+        if (item.status !== "active") {
+            res.status(404).json({ message: "この商品は販売中ではないため購入できません" });
             return;
         }
 
@@ -149,7 +155,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
             delivery_status_id: 1,
             shipping_place_id: item.ItemShippingProfile.shipping_place_id,
             item_id: itemId,
-            shippinf_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
+            shipping_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
             shipping_from_postcode: item.User.Address?.post_number ?? "",
             shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
             shipping_from_address_line1: `${item.User.Address?.shikutyouson ?? ""} ${item.User.Address?.banchi ?? ""}`,
