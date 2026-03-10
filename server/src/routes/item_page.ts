@@ -149,7 +149,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         }
 
         const newDelivery = await Delivery.create({
-            buyer_phone_number: user.phone_number,
+            buyer_phone_number: user.phone_number ?? "",
             shipping_day_id: item.ItemShippingProfile.shipping_day_id,
             shipping_service_id: item.ItemShippingProfile.shipping_service_id,
             delivery_status_id: 1,
@@ -160,7 +160,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
             shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
             shipping_from_address_line1: `${item.User.Address?.shikutyouson ?? ""} ${item.User.Address?.banchi ?? ""}`,
             shipping_from_address_line2: item.User.Address?.building ?? "",
-            shipping_from_phone: item.user.phone_number,
+            shipping_from_phone: item.user.phone_number ?? "",
         }, { transaction: t });
 
         const userAddress = await Address.findOne({
@@ -177,7 +177,7 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
                 todouhuken_id: userAddress.todouhuken_id,
                 shikutyouson: userAddress.shikutyouson,
                 banchi: userAddress.banchi,
-                building: userAddress.building,
+                building: userAddress.building ?? "",
             }, { transaction: t });
         }
 
