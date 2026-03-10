@@ -17,11 +17,12 @@
     color: var(--theme-str);
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .remove:hover {
     text-decoration: underline;
     background-color: var(--bg-subtle);
+    transform: translateY(1px);
 }
 
 .buy {
