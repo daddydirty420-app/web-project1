@@ -37,5 +37,7 @@ export const DataDeleteCron = () => {
 
             console.log(`[cron] ${deleteSearchItems}件の180日経過searchデータを削除しました。`);
         } catch (err) {}
+    }, {
+        timezone: "Asia/Tokyo",
     });
 };

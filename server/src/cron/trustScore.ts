@@ -36,6 +36,8 @@ export const startTrustScoreCron = () => {
             await t.rollback();
             console.log("[cron] 30日経過user.report_trust_scoreエラー：", err);
         }
+    }, {
+        timezone: "Asia/Tokyo",
     });
 
     // 商品信頼度 1日0.9倍
@@ -67,6 +69,8 @@ export const startTrustScoreCron = () => {
             await t.rollback();
             console.log("[cron] 商品report_score減点エラー：", err);
         }
+    }, {
+        timezone: "Asia/Tokyo",
     });
 
     // コメント信頼度 1日0.9倍
@@ -98,5 +102,7 @@ export const startTrustScoreCron = () => {
             await t.rollback();
             console.log("[cron] コメントreport_score減点エラー：", err);
         }
+    }, {
+        timezone: "Asia/Tokyo",
     });
 }

@@ -1,11 +1,14 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Cart, GoodItem, Item, ItemDeleteLogs, Sale, WatchHistory } from "../models/index.js";
+import { Address, Brands, Cancel, Cart, Categories, Chat, Delivery, GoodItem, Item, ItemDeleteLogs, Name, PaidInfo, Sale, User, WatchHistory } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
+import crypto from "crypto";
 
 const router = Router();
+
+const now = Date.now();
 
 router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
@@ -49,7 +52,7 @@ router.patch("/status-sold", async (req: Request, res: Response): Promise<void> 
             }
         });
 
-        if (!items) {
+        if (items.length === 0) {
             throw new Error("NOT_FOUND");
         }
 
@@ -96,7 +99,7 @@ router.post("/cart-create/:id", async (req: Request, res: Response): Promise<voi
 
         await t.commit();
 
-        res.status(200).json({ message: "cart created" });
+        res.status(201).json({ message: "cart created" });
     } catch (err) {
         await t.rollback();
         console.error(err);
@@ -114,7 +117,7 @@ router.post("/sale-create", async (req: Request, res: Response): Promise<void> =
             },
         });
 
-        if (!items) {
+        if (items.length === 0) {
             throw new Error("NOT_FOUND");
         }
 
@@ -133,11 +136,229 @@ router.post("/sale-create", async (req: Request, res: Response): Promise<void> =
 
         await t.commit();
 
-        res.status(200).json({ message: "ok" });
+        res.status(201).json({ message: "ok" });
     } catch (err) {
         await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラー" });
+    }
+});
+
+router.post("/name-create/:id", async (req: Request, res: Response): Promise<void> => {
+    const userId = Number(req.params.id);
+
+    try {
+        if (!Number.isInteger(userId) || userId <= 0) {
+            throw new Error("INVALID_USER_ID");
+        }
+
+        const user = await User.findByPk(userId, {
+            include: [
+                {
+                    model: Name,
+                    required: false,
+                },
+            ],
+        });
+
+        if (!user) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        await user.Name.upsert({
+            sei: "Russel",
+            mei: "George",
+            sei_kana: "ラッセル",
+            mei_kana: "ジョージ",
+            user_id: user.id,
+        });
+
+        res.status(201).json({ message: "ok" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラー" });
+    }
+});
+
+router.post("/address-create/:id", async (req: Request, res: Response): Promise<void> => {
+    const userId = Number(req.params.id);
+
+    try {
+        if (!Number.isInteger(userId) || userId <= 0) {
+            throw new Error("INVALID_USER_ID");
+        }
+
+        const user = await User.findByPk(userId, {
+            include: [
+                {
+                    model: Address,
+                    required: false,
+                },
+            ],
+        });
+
+        if (!user) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        await user.Address.upsert({
+            post_number: "2100007",
+            todouhuken_id: 14,
+            shikutyouson: "川崎市川崎区",
+            banchi: "駅前本町11-2",
+            building: "川崎フロンティアビル4F",
+            user_id: user.id,
+        });
+
+        res.status(201).json({ message: "ok" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラー" });
+    }
+});
+
+function generatePayId(length: number = 30): string {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
+    const bytes = crypto.randomBytes(length);
+  
+    let result = "";
+    for (let i = 0; i < length; i++) {
+        result += chars[bytes[i] % chars.length];
+    }
+
+    return result;
+}
+
+router.post("/paid-create/:id", async (req: Request, res: Response): Promise<void> => {
+    const userId = Number(req.params.id);
+
+    const t = await sequelize.transaction();
+
+    try {
+        if (!Number.isInteger(userId) || userId <= 0) {
+            throw new Error("INVALID_USER_ID");
+        }
+
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        const items = await Item.findAll({
+            where: {
+                seller_id: { [Op.ne]: userId },
+            },
+            include: [
+                {
+                    model: Categories,
+                    as: "Category",
+                },
+                {
+                    model: Brands,
+                    as: "Brand",
+                    required: false,
+                },
+                {
+                    model: User
+                },
+            ],
+        });
+
+        if (items.length === 0) {
+            throw new Error("NOT_FOUND");
+        }
+
+        const payId = generatePayId(30);
+
+        // PaidInfo.bulkCreate
+        const paidInfos = await PaidInfo.bulkCreate(
+            items.map((item: any) => ({
+                unit_price: item.price,
+                item_count: 3,
+                subtotal_amount: item.price * 3,
+                discount_amount: 0,
+                total_amount: item.price * 3,
+                point_used: 0,
+                paid_amount: item.price * 3,
+                sales_commission_amount: Math.floor((item.price * 3) * 0.1),
+                gain_amount: Math.floor((item.price * 3) * 0.9),
+                payment_method_id: 1,
+                item_id: item.id,
+                seller_user_id: item.seller_id,
+                buyer_user_id: userId,
+                buy_date: new Date(),
+                paid_date: new Date(),
+                pay_id: payId,
+                status: "paid",
+                purchased_snapshot: {
+                    item_id: item.id,
+                    item_name: item.name,
+                    item_image: item.first_image_url,
+
+                    category: {
+                        id: item.Category.id,
+                        name: item.Category.name,
+                    },
+
+                    brand: {
+                        id: item.Brand?.id ?? undefined,
+                        name: item.Brand?.name ?? undefined,
+                    },
+
+                    materials: item.attributes.materials ?? [],
+                },
+            })),
+            { transaction: t },
+        );
+
+        // Delivery.bulkCreate
+        const deliveries = await Delivery.bulkCreate(
+            paidInfos.map((paid: any, index: number) => ({
+                buyer_phone_number: user.phone_number,
+                cancel: false,
+                shipping_day_id: 1,
+                shipping_service_id: 1,
+                delivery_status_id: 1,
+                shipping_place_id: 11,
+                paid_info_id: paid.id,
+                shipping_at: null,
+                arrived_at: null,
+                arrive_specified_date: now,
+                shipping_service_free_text: "テストテストテスト",
+                shipping_from_name: `
+                ${items[index].User.Name?.sei ?? "NO_NAME"} 
+                ${items[index].User.Name?.mei ?? "NO_NAME"}
+                `,
+                shipping_from_postcode: items[index].User.Address?.post_number ?? "NO_ADDRESS",
+                shipping_from_prefecture: items[index].User.Address?.todouhuken_id ?? 14,
+                shipping_from_address_line1: `
+                ${items[index].User.Address?.shikutyouson ?? "NO_ADDRESS"}
+                ${items[index].User.Address?.banchi ?? "NO_ADDRESS"}
+                `,
+                shipping_from_address_line2: items[index].User.Address?.building ?? null,
+                shipping_from_phone: items[index].User.phone_number,
+                tracking_number: null,
+                shipping_memo: "テキストテキストテキストテキスト",
+            })),
+            { transaction: t },
+        );
+
+        // Cancel.bulkCreate
+        const cancels = await Cancel.bulkCreate(
+            paidInfos.map((paid: any) => ({
+                paid_info_id: paid.id
+            })),
+            { transaction: t },
+        );
+
+        await t.commit();
+
+        res.status(201).json({ message: "created" });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ error: "FAILED" });
     }
 });
 
