@@ -1,10 +1,10 @@
 # Diff Details
 
-Date : 2026-03-10 16:17:58
+Date : 2026-03-11 13:05:57
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
+Total : 606 files,  20365 codes, -37 comments, 1741 blanks, all 22069 lines
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
 
@@ -97,15 +97,15 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [client/src/app/inquiry/linkElement.tsx](/client/src/app/inquiry/linkElement.tsx) | TypeScript JSX | 26 | 0 | 3 | 29 |
 | [client/src/app/inquiry/page.tsx](/client/src/app/inquiry/page.tsx) | TypeScript JSX | 41 | 0 | 6 | 47 |
 | [client/src/app/inquiry/type.ts](/client/src/app/inquiry/type.ts) | TypeScript | 5 | 0 | 0 | 5 |
-| [client/src/app/item-list/cart.module.css](/client/src/app/item-list/cart.module.css) | PostCSS | 49 | 0 | 4 | 53 |
-| [client/src/app/item-list/cartElement.tsx](/client/src/app/item-list/cartElement.tsx) | TypeScript JSX | 78 | 1 | 16 | 95 |
-| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 41 | 0 | 8 | 49 |
+| [client/src/app/item-list/cart.module.css](/client/src/app/item-list/cart.module.css) | PostCSS | 55 | 0 | 4 | 59 |
+| [client/src/app/item-list/cartElement.tsx](/client/src/app/item-list/cartElement.tsx) | TypeScript JSX | 109 | 2 | 22 | 133 |
+| [client/src/app/item-list/cart/page.tsx](/client/src/app/item-list/cart/page.tsx) | TypeScript JSX | 38 | 0 | 7 | 45 |
 | [client/src/app/item-list/deleted/page.tsx](/client/src/app/item-list/deleted/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 308 | 0 | 45 | 353 |
-| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 281 | 2 | 25 | 308 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 314 | 0 | 47 | 361 |
+| [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 291 | 2 | 26 | 319 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item-list/layout.tsx](/client/src/app/item-list/layout.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
@@ -146,7 +146,7 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [client/src/app/item/itemPageTypes.ts](/client/src/app/item/itemPageTypes.ts) | TypeScript | 111 | 0 | 13 | 124 |
 | [client/src/app/item/itemSection/buySection/buy.module.css](/client/src/app/item/itemSection/buySection/buy.module.css) | PostCSS | 114 | 0 | 13 | 127 |
 | [client/src/app/item/itemSection/buySection/buy2026.tsx](/client/src/app/item/itemSection/buySection/buy2026.tsx) | TypeScript JSX | 4 | 0 | 1 | 5 |
-| [client/src/app/item/itemSection/buySection/buySection.tsx](/client/src/app/item/itemSection/buySection/buySection.tsx) | TypeScript JSX | 157 | 0 | 27 | 184 |
+| [client/src/app/item/itemSection/buySection/buySection.tsx](/client/src/app/item/itemSection/buySection/buySection.tsx) | TypeScript JSX | 152 | 1 | 28 | 181 |
 | [client/src/app/item/itemSection/categoryText.tsx](/client/src/app/item/itemSection/categoryText.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
 | [client/src/app/item/itemSection/deliverySection.tsx](/client/src/app/item/itemSection/deliverySection.tsx) | TypeScript JSX | 63 | 0 | 12 | 75 |
 | [client/src/app/item/itemSection/detail.tsx](/client/src/app/item/itemSection/detail.tsx) | TypeScript JSX | 65 | 0 | 8 | 73 |
@@ -440,7 +440,7 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [client/src/types/itemAttributes.ts](/client/src/types/itemAttributes.ts) | TypeScript | 60 | 0 | 6 | 66 |
 | [client/src/types/itemListTypes.ts](/client/src/types/itemListTypes.ts) | TypeScript | 45 | 0 | 6 | 51 |
 | [client/src/types/next-auth.d.ts](/client/src/types/next-auth.d.ts) | TypeScript | 39 | 0 | 3 | 42 |
-| [client/src/types/purchaseSnapshot.ts](/client/src/types/purchaseSnapshot.ts) | TypeScript | 20 | 0 | 4 | 24 |
+| [client/src/types/purchaseSnapshot.ts](/client/src/types/purchaseSnapshot.ts) | TypeScript | 22 | 0 | 4 | 26 |
 | [client/tailwind.config.js](/client/tailwind.config.js) | JavaScript | 9 | 2 | 1 | 12 |
 | [client/tsconfig.json](/client/tsconfig.json) | JSON with Comments | 44 | 0 | 1 | 45 |
 | [server/config/config.cjs](/server/config/config.cjs) | JavaScript | -24 | 0 | -3 | -27 |
@@ -455,12 +455,12 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [server/src/config/config.ts](/server/src/config/config.ts) | TypeScript | -38 | 0 | -6 | -44 |
 | [server/src/cron/buyDelete.ts](/server/src/cron/buyDelete.ts) | TypeScript | -26 | -2 | -6 | -34 |
 | [server/src/cron/commentSortDecay.ts](/server/src/cron/commentSortDecay.ts) | TypeScript | -25 | 0 | -4 | -29 |
-| [server/src/cron/dataDelete.ts](/server/src/cron/dataDelete.ts) | TypeScript | -32 | -2 | -7 | -41 |
+| [server/src/cron/dataDelete.ts](/server/src/cron/dataDelete.ts) | TypeScript | -34 | -2 | -7 | -43 |
 | [server/src/cron/index.ts](/server/src/cron/index.ts) | TypeScript | -17 | 0 | -1 | -18 |
 | [server/src/cron/itemDelete.ts](/server/src/cron/itemDelete.ts) | TypeScript | -65 | -2 | -13 | -80 |
 | [server/src/cron/itemSortDecay.ts](/server/src/cron/itemSortDecay.ts) | TypeScript | -47 | 0 | -8 | -55 |
 | [server/src/cron/token.ts](/server/src/cron/token.ts) | TypeScript | -85 | -4 | -14 | -103 |
-| [server/src/cron/trustScore.ts](/server/src/cron/trustScore.ts) | TypeScript | -80 | -3 | -19 | -102 |
+| [server/src/cron/trustScore.ts](/server/src/cron/trustScore.ts) | TypeScript | -86 | -3 | -19 | -108 |
 | [server/src/db.ts](/server/src/db.ts) | TypeScript | -17 | 0 | -3 | -20 |
 | [server/src/middleware/authMiddleware.ts](/server/src/middleware/authMiddleware.ts) | TypeScript | -41 | 0 | -6 | -47 |
 | [server/src/middleware/authOptional.ts](/server/src/middleware/authOptional.ts) | TypeScript | -41 | -1 | -7 | -49 |
@@ -553,7 +553,7 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [server/src/routes/bank\_account.ts](/server/src/routes/bank_account.ts) | TypeScript | -166 | 0 | -24 | -190 |
 | [server/src/routes/blog.ts](/server/src/routes/blog.ts) | TypeScript | -138 | 0 | -22 | -160 |
 | [server/src/routes/cancel.ts](/server/src/routes/cancel.ts) | TypeScript | -5 | 0 | -2 | -7 |
-| [server/src/routes/cart.ts](/server/src/routes/cart.ts) | TypeScript | -121 | 0 | -24 | -145 |
+| [server/src/routes/cart.ts](/server/src/routes/cart.ts) | TypeScript | -109 | 0 | -21 | -130 |
 | [server/src/routes/chat.ts](/server/src/routes/chat.ts) | TypeScript | -5 | 0 | -2 | -7 |
 | [server/src/routes/comment.ts](/server/src/routes/comment.ts) | TypeScript | -268 | 0 | -18 | -286 |
 | [server/src/routes/delivery.ts](/server/src/routes/delivery.ts) | TypeScript | -76 | 0 | -9 | -85 |
@@ -571,7 +571,7 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | -132 | 0 | -19 | -151 |
 | [server/src/routes/item.ts](/server/src/routes/item.ts) | TypeScript | -76 | 0 | -19 | -95 |
 | [server/src/routes/item\_list.ts](/server/src/routes/item_list.ts) | TypeScript | -540 | 0 | -88 | -628 |
-| [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | -529 | 0 | -78 | -607 |
+| [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | -534 | 0 | -80 | -614 |
 | [server/src/routes/item\_upload.ts](/server/src/routes/item_upload.ts) | TypeScript | -489 | -7 | -95 | -591 |
 | [server/src/routes/item\_upload\_draft.ts](/server/src/routes/item_upload_draft.ts) | TypeScript | -392 | -11 | -75 | -478 |
 | [server/src/routes/item\_upload\_main.ts](/server/src/routes/item_upload_main.ts) | TypeScript | -397 | -10 | -77 | -484 |
@@ -594,7 +594,7 @@ Total : 606 files,  20500 codes, -36 comments, 1762 blanks, all 22226 lines
 | [server/src/routes/shop\_info\_edit.ts](/server/src/routes/shop_info_edit.ts) | TypeScript | -481 | -2 | -90 | -573 |
 | [server/src/routes/star\_history.ts](/server/src/routes/star_history.ts) | TypeScript | -5 | 0 | -2 | -7 |
 | [server/src/routes/suggest\_words.ts](/server/src/routes/suggest_words.ts) | TypeScript | -79 | 0 | -23 | -102 |
-| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | -119 | 0 | -31 | -150 |
+| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | -300 | -3 | -62 | -365 |
 | [server/src/routes/transfar.ts](/server/src/routes/transfar.ts) | TypeScript | -210 | -1 | -51 | -262 |
 | [server/src/routes/uriagekin\_history.ts](/server/src/routes/uriagekin_history.ts) | TypeScript | -45 | 0 | -7 | -52 |
 | [server/src/routes/user-edit.ts](/server/src/routes/user-edit.ts) | TypeScript | -307 | 0 | -49 | -356 |

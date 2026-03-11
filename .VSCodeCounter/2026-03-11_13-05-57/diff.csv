@@ -1,17 +1,17 @@
-"filename", "language", "TypeScript", "JavaScript", "JSON with Comments", "JSON", "PostCSS", "TypeScript JSX", "XML", "Markdown", "HTML", "comment", "blank", "total"
-"c:\Users\conta\Desktop\project\client\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 14, 37
-"c:\Users\conta\Desktop\project\client\eslint.config.mjs", "JavaScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 5, 17
-"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
-"c:\Users\conta\Desktop\project\client\next.config.js", "JavaScript", 0, 16, 0, 0, 0, 0, 0, 0, 0, 1, 2, 19
-"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 0, 0, 0, 16045, 0, 0, 0, 0, 0, 0, 1, 16046
-"c:\Users\conta\Desktop\project\client\package.json", "JSON", 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 1, 61
-"c:\Users\conta\Desktop\project\client\postcss.config.mjs", "JavaScript", 0, 7, 0, 0, 0, 0, 0, 0, 0, 1, 2, 10
-"c:\Users\conta\Desktop\project\client\public\file.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\public\globe.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\public\next.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\public\window.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
-"c:\Users\conta\Desktop\project\client\src\app\api\auth\[...nextauth]\route.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"filename", "language", "JavaScript", "JSON", "TypeScript", "JSON with Comments", "PostCSS", "TypeScript JSX", "Markdown", "XML", "HTML", "comment", "blank", "total"
+"c:\Users\conta\Desktop\project\client\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 14, 37
+"c:\Users\conta\Desktop\project\client\eslint.config.mjs", "JavaScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 17
+"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\conta\Desktop\project\client\next.config.js", "JavaScript", 16, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 19
+"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 0, 16045, 0, 0, 0, 0, 0, 0, 0, 0, 1, 16046
+"c:\Users\conta\Desktop\project\client\package.json", "JSON", 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 1, 61
+"c:\Users\conta\Desktop\project\client\postcss.config.mjs", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 10
+"c:\Users\conta\Desktop\project\client\public\file.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\public\globe.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\public\next.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\public\window.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\src\app\api\auth\[...nextauth]\route.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 2, 6
 "c:\Users\conta\Desktop\project\client\src\app\company\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 10, 58
 "c:\Users\conta\Desktop\project\client\src\app\company\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, 4, 32
 "c:\Users\conta\Desktop\project\client\src\app\edit\account\accountEditForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 301, 0, 0, 0, 1, 47, 349
@@ -63,7 +63,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\company-name\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 72, 0, 0, 0, 0, 17, 89
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\option\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 10, 54
 "c:\Users\conta\Desktop\project\client\src\app\edit\shop\option\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 0, 0, 15, 121
-"c:\Users\conta\Desktop\project\client\src\app\edit\type.ts", "TypeScript", 103, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 113
+"c:\Users\conta\Desktop\project\client\src\app\edit\type.ts", "TypeScript", 0, 0, 103, 0, 0, 0, 0, 0, 0, 0, 10, 113
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 115, 0, 0, 0, 0, 21, 136
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 4, 28
 "c:\Users\conta\Desktop\project\client\src\app\guide\account\sign\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 11, 70
@@ -84,16 +84,16 @@
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\linkElement.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 3, 29
 "c:\Users\conta\Desktop\project\client\src\app\inquiry\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 6, 47
-"c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5
-"c:\Users\conta\Desktop\project\client\src\app\item-list\cart.module.css", "PostCSS", 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 4, 53
-"c:\Users\conta\Desktop\project\client\src\app\item-list\cartElement.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 1, 16, 95
-"c:\Users\conta\Desktop\project\client\src\app\item-list\cart\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 8, 49
+"c:\Users\conta\Desktop\project\client\src\app\inquiry\type.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5
+"c:\Users\conta\Desktop\project\client\src\app\item-list\cart.module.css", "PostCSS", 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 4, 59
+"c:\Users\conta\Desktop\project\client\src\app\item-list\cartElement.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 109, 0, 0, 0, 2, 22, 133
+"c:\Users\conta\Desktop\project\client\src\app\item-list\cart\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 7, 45
 "c:\Users\conta\Desktop\project\client\src\app\item-list\deleted\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css", "PostCSS", 0, 0, 0, 0, 28, 0, 0, 0, 0, 0, 3, 31
-"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 308, 0, 0, 0, 0, 0, 45, 353
-"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 281, 0, 0, 0, 2, 25, 308
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 314, 0, 0, 0, 0, 0, 47, 361
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 291, 0, 0, 0, 2, 26, 319
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 2, 15
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\item-list\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
@@ -101,7 +101,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\item-list\removeFloat.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 117, 0, 0, 0, 1, 26, 144
 "c:\Users\conta\Desktop\project\client\src\app\item-list\stock\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\tabHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 58, 0, 0, 0, 0, 7, 65
-"c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts", "TypeScript", 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 28
+"c:\Users\conta\Desktop\project\client\src\app\item-list\type.ts", "TypeScript", 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 3, 28
 "c:\Users\conta\Desktop\project\client\src\app\item-list\uploaded\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 7, 48
 "c:\Users\conta\Desktop\project\client\src\app\item-list\watch-history\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 14, 92
@@ -131,10 +131,10 @@
 "c:\Users\conta\Desktop\project\client\src\app\item\itemCommon.module.css", "PostCSS", 0, 0, 0, 0, 96, 0, 0, 0, 0, 0, 10, 106
 "c:\Users\conta\Desktop\project\client\src\app\item\itemListSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 4, 25
 "c:\Users\conta\Desktop\project\client\src\app\item\itemPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 95, 0, 0, 0, 0, 10, 105
-"c:\Users\conta\Desktop\project\client\src\app\item\itemPageTypes.ts", "TypeScript", 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 124
+"c:\Users\conta\Desktop\project\client\src\app\item\itemPageTypes.ts", "TypeScript", 0, 0, 111, 0, 0, 0, 0, 0, 0, 0, 13, 124
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy.module.css", "PostCSS", 0, 0, 0, 0, 114, 0, 0, 0, 0, 0, 13, 127
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buy2026.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
-"c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buySection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 157, 0, 0, 0, 0, 27, 184
+"c:\Users\conta\Desktop\project\client\src\app\item\itemSection\buySection\buySection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 152, 0, 0, 0, 1, 28, 181
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\categoryText.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\deliverySection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 12, 75
 "c:\Users\conta\Desktop\project\client\src\app\item\itemSection\detail.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 65, 0, 0, 0, 0, 8, 73
@@ -153,7 +153,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\item\madmax\deleteButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 72, 0, 0, 0, 0, 15, 87
 "c:\Users\conta\Desktop\project\client\src\app\item\main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 2, 29
 "c:\Users\conta\Desktop\project\client\src\app\item\others\report.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 31, 0, 0, 0, 0, 4, 35
-"c:\Users\conta\Desktop\project\client\src\app\item\portial.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\conta\Desktop\project\client\src\app\item\portial.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 2, 11
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\deleteItem.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 12, 69
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\saleButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 243, 0, 0, 0, 0, 36, 279
 "c:\Users\conta\Desktop\project\client\src\app\item\sellerSection\seller.module.css", "PostCSS", 0, 0, 0, 0, 263, 0, 0, 0, 0, 0, 29, 292
@@ -220,7 +220,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\my-page\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\my-page\profileSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 5, 49
 "c:\Users\conta\Desktop\project\client\src\app\my-page\referenceCode.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 11, 89
-"c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 20
+"c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 1, 20
 "c:\Users\conta\Desktop\project\client\src\app\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 101, 0, 0, 0, 0, 3, 104
 "c:\Users\conta\Desktop\project\client\src\app\privacy-policy\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 117, 0, 0, 0, 0, 20, 137
 "c:\Users\conta\Desktop\project\client\src\app\privacy-policy\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 4, 28
@@ -236,7 +236,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\profile\profile.module.css", "PostCSS", 0, 0, 0, 0, 181, 0, 0, 0, 0, 0, 27, 208
 "c:\Users\conta\Desktop\project\client\src\app\profile\profileMain.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 8, 64
 "c:\Users\conta\Desktop\project\client\src\app\profile\profilePage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 5, 35
-"c:\Users\conta\Desktop\project\client\src\app\profile\profileTypes.ts", "TypeScript", 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 31
+"c:\Users\conta\Desktop\project\client\src\app\profile\profileTypes.ts", "TypeScript", 0, 0, 27, 0, 0, 0, 0, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\profile\shopButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\app\profile\socialSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 3, 25
 "c:\Users\conta\Desktop\project\client\src\app\profile\starSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 19, 0, 0, 0, 0, 2, 21
@@ -246,7 +246,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\report\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\report\report.module.css", "PostCSS", 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 4, 42
 "c:\Users\conta\Desktop\project\client\src\app\report\reportUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 4, 24
-"c:\Users\conta\Desktop\project\client\src\app\report\type.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\app\report\type.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\buttonDiv.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 3, 28
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\complete\element.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 4, 24
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\complete\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 2, 17
@@ -266,7 +266,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\step5\client.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 250, 0, 0, 0, 0, 40, 290
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\stepBar.module.css", "PostCSS", 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 12, 93
 "c:\Users\conta\Desktop\project\client\src\app\shop-signup\stepBar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 0, 1, 29, 136
-"c:\Users\conta\Desktop\project\client\src\app\shop-signup\type.ts", "TypeScript", 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 77
+"c:\Users\conta\Desktop\project\client\src\app\shop-signup\type.ts", "TypeScript", 0, 0, 70, 0, 0, 0, 0, 0, 0, 0, 7, 77
 "c:\Users\conta\Desktop\project\client\src\app\signup\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
 "c:\Users\conta\Desktop\project\client\src\app\signup\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 3, 25
 "c:\Users\conta\Desktop\project\client\src\app\signup\signup-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 106, 0, 0, 0, 0, 14, 120
@@ -287,7 +287,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\transfar\request\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 8, 47
 "c:\Users\conta\Desktop\project\client\src\app\transfar\transfar.module.css", "PostCSS", 0, 0, 0, 0, 201, 0, 0, 0, 0, 0, 23, 224
 "c:\Users\conta\Desktop\project\client\src\app\transfar\transfarUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 2, 18
-"c:\Users\conta\Desktop\project\client\src\app\transfar\types.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 21
+"c:\Users\conta\Desktop\project\client\src\app\transfar\types.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 2, 21
 "c:\Users\conta\Desktop\project\client\src\app\upload\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\upload\attributes.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 275, 0, 0, 0, 1, 38, 314
 "c:\Users\conta\Desktop\project\client\src\app\upload\attributesCard.module.css", "PostCSS", 0, 0, 0, 0, 189, 0, 0, 0, 0, 6, 19, 214
@@ -300,8 +300,8 @@
 "c:\Users\conta\Desktop\project\client\src\app\upload\edit\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 63, 0, 0, 0, 0, 13, 76
 "c:\Users\conta\Desktop\project\client\src\app\upload\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 465, 0, 0, 0, 10, 90, 565
 "c:\Users\conta\Desktop\project\client\src\app\upload\genderAge.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 163, 0, 0, 0, 2, 32, 197
-"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useFileUpload.ts", "TypeScript", 155, 0, 0, 0, 0, 0, 0, 0, 0, 6, 32, 193
-"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useUpload.ts", "TypeScript", 282, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33, 315
+"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useFileUpload.ts", "TypeScript", 0, 0, 155, 0, 0, 0, 0, 0, 0, 6, 32, 193
+"c:\Users\conta\Desktop\project\client\src\app\upload\hooks\useUpload.ts", "TypeScript", 0, 0, 282, 0, 0, 0, 0, 0, 0, 0, 33, 315
 "c:\Users\conta\Desktop\project\client\src\app\upload\itemImage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 7, 66
 "c:\Users\conta\Desktop\project\client\src\app\upload\itemNameDetail.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 5, 44
 "c:\Users\conta\Desktop\project\client\src\app\upload\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
@@ -316,8 +316,8 @@
 "c:\Users\conta\Desktop\project\client\src\app\upload\ok\okUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 4, 24
 "c:\Users\conta\Desktop\project\client\src\app\upload\price.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 67, 0, 0, 0, 0, 15, 82
 "c:\Users\conta\Desktop\project\client\src\app\upload\shipping.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 168, 0, 0, 0, 4, 23, 195
-"c:\Users\conta\Desktop\project\client\src\app\upload\types\type.ts", "TypeScript", 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 82
-"c:\Users\conta\Desktop\project\client\src\app\upload\types\uploadType.ts", "TypeScript", 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 36
+"c:\Users\conta\Desktop\project\client\src\app\upload\types\type.ts", "TypeScript", 0, 0, 72, 0, 0, 0, 0, 0, 0, 0, 10, 82
+"c:\Users\conta\Desktop\project\client\src\app\upload\types\uploadType.ts", "TypeScript", 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 1, 36
 "c:\Users\conta\Desktop\project\client\src\app\upload\upload.module.css", "PostCSS", 0, 0, 0, 0, 427, 0, 0, 0, 0, 0, 46, 473
 "c:\Users\conta\Desktop\project\client\src\app\upload\uploadUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\upload\videoInput.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 128, 0, 0, 0, 0, 17, 145
@@ -331,10 +331,10 @@
 "c:\Users\conta\Desktop\project\client\src\app\user-list\good-item\[id]\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 34, 0, 0, 0, 0, 6, 40
 "c:\Users\conta\Desktop\project\client\src\app\user-list\goodUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\app\user-list\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
-"c:\Users\conta\Desktop\project\client\src\app\user-list\type.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 24
+"c:\Users\conta\Desktop\project\client\src\app\user-list\type.ts", "TypeScript", 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 3, 24
 "c:\Users\conta\Desktop\project\client\src\app\user-list\userList.module.css", "PostCSS", 0, 0, 0, 0, 125, 0, 0, 0, 0, 0, 15, 140
 "c:\Users\conta\Desktop\project\client\src\app\user-list\userList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 187, 0, 0, 0, 0, 21, 208
-"c:\Users\conta\Desktop\project\client\src\assets\images\website-image\logo&mark\FLEX Outdoor ロゴ (3000 x 1000 px)背景透過.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+"c:\Users\conta\Desktop\project\client\src\assets\images\website-image\logo&mark\FLEX Outdoor ロゴ (3000 x 1000 px)背景透過.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\src\components\accordion\accordion-grid.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
 "c:\Users\conta\Desktop\project\client\src\components\accordion\accordion.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 7, 56
 "c:\Users\conta\Desktop\project\client\src\components\accordion\styles\accordion-grid.module.css", "PostCSS", 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 2, 22
@@ -351,7 +351,7 @@
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 2, 17
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-small.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 2, 12
 "c:\Users\conta\Desktop\project\client\src\components\guide\guide-subtitle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 3, 14
-"c:\Users\conta\Desktop\project\client\src\components\guide\index.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\components\guide\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-link.module.css", "PostCSS", 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 2, 28
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-small.module.css", "PostCSS", 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
 "c:\Users\conta\Desktop\project\client\src\components\guide\styles\guide-subtitle.module.css", "PostCSS", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 1, 11
@@ -359,11 +359,11 @@
 "c:\Users\conta\Desktop\project\client\src\components\header\header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 7, 48
 "c:\Users\conta\Desktop\project\client\src\components\header\searchInputMobile.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 198, 0, 0, 0, 1, 41, 240
 "c:\Users\conta\Desktop\project\client\src\components\header\searchInputPC.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 190, 0, 0, 0, 1, 42, 233
-"c:\Users\conta\Desktop\project\client\src\components\index.ts", "TypeScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12
-"c:\Users\conta\Desktop\project\client\src\components\initSession.ts", "TypeScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 15
+"c:\Users\conta\Desktop\project\client\src\components\index.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 12
+"c:\Users\conta\Desktop\project\client\src\components\initSession.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 3, 15
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 17, 0, 0, 0, 0, 2, 19
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\imputForm.module.css", "PostCSS", 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 7, 71
-"c:\Users\conta\Desktop\project\client\src\components\inputForm\index.ts", "TypeScript", 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5
+"c:\Users\conta\Desktop\project\client\src\components\inputForm\index.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputStr.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 2, 43
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputStrAndSmall.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 2, 43
 "c:\Users\conta\Desktop\project\client\src\components\inputForm\inputTitle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 2, 15
@@ -371,12 +371,12 @@
 "c:\Users\conta\Desktop\project\client\src\components\itemListRow\itemListRow.module.css", "PostCSS", 0, 0, 0, 0, 77, 0, 0, 0, 0, 0, 9, 86
 "c:\Users\conta\Desktop\project\client\src\components\itemListRow\itemListRow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 3, 51
 "c:\Users\conta\Desktop\project\client\src\components\link\children-link.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
-"c:\Users\conta\Desktop\project\client\src\components\link\index.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\conta\Desktop\project\client\src\components\link\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4
 "c:\Users\conta\Desktop\project\client\src\components\link\mypage-link-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 2, 9
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link.module.css", "PostCSS", 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 3, 43
 "c:\Users\conta\Desktop\project\client\src\components\link\normal-link.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 2, 15
-"c:\Users\conta\Desktop\project\client\src\components\list\index.ts", "TypeScript", 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7
+"c:\Users\conta\Desktop\project\client\src\components\list\index.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 7
 "c:\Users\conta\Desktop\project\client\src\components\list\list-check.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 2, 17
 "c:\Users\conta\Desktop\project\client\src\components\list\list-disc-second.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 2, 11
 "c:\Users\conta\Desktop\project\client\src\components\list\list-flow-arrow.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 1, 10
@@ -388,7 +388,7 @@
 "c:\Users\conta\Desktop\project\client\src\components\loading\loading.module.css", "PostCSS", 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 5, 40
 "c:\Users\conta\Desktop\project\client\src\components\loading\topLoader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 2, 13
 "c:\Users\conta\Desktop\project\client\src\components\star.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 0, 8, 52
-"c:\Users\conta\Desktop\project\client\src\components\terms\index.ts", "TypeScript", 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6
+"c:\Users\conta\Desktop\project\client\src\components\terms\index.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6
 "c:\Users\conta\Desktop\project\client\src\components\terms\list-div.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\terms\terms-kakko.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 2, 20
 "c:\Users\conta\Desktop\project\client\src\components\terms\terms-list-second.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 2, 15
@@ -399,23 +399,23 @@
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title-back.module.css", "PostCSS", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 2, 25
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title-back.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 5, 26
 "c:\Users\conta\Desktop\project\client\src\components\title-back\title.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 2, 13
-"c:\Users\conta\Desktop\project\client\src\components\tokutei\index.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3
+"c:\Users\conta\Desktop\project\client\src\components\tokutei\index.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 3
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\second-header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 2, 9
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\tokutei-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 2, 14
 "c:\Users\conta\Desktop\project\client\src\components\tokutei\tokutei-section.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 2, 16
 "c:\Users\conta\Desktop\project\client\src\components\two-text-container\tow-text-container.module.css", "PostCSS", 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 1, 10
 "c:\Users\conta\Desktop\project\client\src\components\two-text-container\tow-text-container.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 4, 26
-"c:\Users\conta\Desktop\project\client\src\hooks\useFollow.ts", "TypeScript", 49, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 58
-"c:\Users\conta\Desktop\project\client\src\hooks\useGoodComment.ts", "TypeScript", 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 35
-"c:\Users\conta\Desktop\project\client\src\hooks\useGoodItem.ts", "TypeScript", 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 35
-"c:\Users\conta\Desktop\project\client\src\lib\auth.ts", "TypeScript", 126, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 149
-"c:\Users\conta\Desktop\project\client\src\lib\fetcher.ts", "TypeScript", 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 13
-"c:\Users\conta\Desktop\project\client\src\lib\fontawesome.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 5
-"c:\Users\conta\Desktop\project\client\src\lib\formatDuration.ts", "TypeScript", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 13
-"c:\Users\conta\Desktop\project\client\src\lib\formatRelativeTime.ts", "TypeScript", 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 27
-"c:\Users\conta\Desktop\project\client\src\lib\normalizeJapanese.ts", "TypeScript", 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 21
-"c:\Users\conta\Desktop\project\client\src\lib\refreshToken.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 17
-"c:\Users\conta\Desktop\project\client\src\middleware.ts", "TypeScript", 59, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 73
+"c:\Users\conta\Desktop\project\client\src\hooks\useFollow.ts", "TypeScript", 0, 0, 49, 0, 0, 0, 0, 0, 0, 1, 8, 58
+"c:\Users\conta\Desktop\project\client\src\hooks\useGoodComment.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 6, 35
+"c:\Users\conta\Desktop\project\client\src\hooks\useGoodItem.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 6, 35
+"c:\Users\conta\Desktop\project\client\src\lib\auth.ts", "TypeScript", 0, 0, 126, 0, 0, 0, 0, 0, 0, 0, 23, 149
+"c:\Users\conta\Desktop\project\client\src\lib\fetcher.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 2, 13
+"c:\Users\conta\Desktop\project\client\src\lib\fontawesome.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 2, 5
+"c:\Users\conta\Desktop\project\client\src\lib\formatDuration.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 3, 13
+"c:\Users\conta\Desktop\project\client\src\lib\formatRelativeTime.ts", "TypeScript", 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 1, 27
+"c:\Users\conta\Desktop\project\client\src\lib\normalizeJapanese.ts", "TypeScript", 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 5, 21
+"c:\Users\conta\Desktop\project\client\src\lib\refreshToken.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\conta\Desktop\project\client\src\middleware.ts", "TypeScript", 0, 0, 59, 0, 0, 0, 0, 0, 0, 0, 14, 73
 "c:\Users\conta\Desktop\project\client\src\providers\session-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 4, 20
 "c:\Users\conta\Desktop\project\client\src\providers\toastBoundary.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 2, 23
 "c:\Users\conta\Desktop\project\client\src\styles\components-style\itemList.module.css", "PostCSS", 0, 0, 0, 0, 289, 0, 0, 0, 0, 0, 42, 331
@@ -425,184 +425,184 @@
 "c:\Users\conta\Desktop\project\client\src\styles\login.module.css", "PostCSS", 0, 0, 0, 0, 154, 0, 0, 0, 0, 0, 14, 168
 "c:\Users\conta\Desktop\project\client\src\styles\terms.module.css", "PostCSS", 0, 0, 0, 0, 101, 0, 0, 0, 0, 0, 19, 120
 "c:\Users\conta\Desktop\project\client\src\styles\tokutei.module.css", "PostCSS", 0, 0, 0, 0, 79, 0, 0, 0, 0, 0, 14, 93
-"c:\Users\conta\Desktop\project\client\src\types\itemAttributes.ts", "TypeScript", 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 66
-"c:\Users\conta\Desktop\project\client\src\types\itemListTypes.ts", "TypeScript", 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 51
-"c:\Users\conta\Desktop\project\client\src\types\next-auth.d.ts", "TypeScript", 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 42
-"c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts", "TypeScript", 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 24
-"c:\Users\conta\Desktop\project\client\tailwind.config.js", "JavaScript", 0, 9, 0, 0, 0, 0, 0, 0, 0, 2, 1, 12
-"c:\Users\conta\Desktop\project\client\tsconfig.json", "JSON with Comments", 0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 1, 45
-"c:\Users\conta\Desktop\project\server\config\config.cjs", "JavaScript", 0, -24, 0, 0, 0, 0, 0, 0, 0, 0, -3, -27
-"c:\Users\conta\Desktop\project\server\migrations\20260217101306-add-items-status-seller-uploaded-index.cjs", "JavaScript", 0, -22, 0, 0, 0, 0, 0, 0, 0, -1, -3, -26
-"c:\Users\conta\Desktop\project\server\migrations\20260217105204-add-items-status-seller-uploaded-index.cjs", "JavaScript", 0, -22, 0, 0, 0, 0, 0, 0, 0, -1, -3, -26
-"c:\Users\conta\Desktop\project\server\package-lock.json", "JSON", 0, 0, 0, -6822, 0, 0, 0, 0, 0, 0, -1, -6823
-"c:\Users\conta\Desktop\project\server\package.json", "JSON", 0, 0, 0, -60, 0, 0, 0, 0, 0, 0, -1, -61
+"c:\Users\conta\Desktop\project\client\src\types\itemAttributes.ts", "TypeScript", 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 6, 66
+"c:\Users\conta\Desktop\project\client\src\types\itemListTypes.ts", "TypeScript", 0, 0, 45, 0, 0, 0, 0, 0, 0, 0, 6, 51
+"c:\Users\conta\Desktop\project\client\src\types\next-auth.d.ts", "TypeScript", 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 3, 42
+"c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts", "TypeScript", 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 4, 26
+"c:\Users\conta\Desktop\project\client\tailwind.config.js", "JavaScript", 9, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 12
+"c:\Users\conta\Desktop\project\client\tsconfig.json", "JSON with Comments", 0, 0, 0, 44, 0, 0, 0, 0, 0, 0, 1, 45
+"c:\Users\conta\Desktop\project\server\config\config.cjs", "JavaScript", -24, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -27
+"c:\Users\conta\Desktop\project\server\migrations\20260217101306-add-items-status-seller-uploaded-index.cjs", "JavaScript", -22, 0, 0, 0, 0, 0, 0, 0, 0, -1, -3, -26
+"c:\Users\conta\Desktop\project\server\migrations\20260217105204-add-items-status-seller-uploaded-index.cjs", "JavaScript", -22, 0, 0, 0, 0, 0, 0, 0, 0, -1, -3, -26
+"c:\Users\conta\Desktop\project\server\package-lock.json", "JSON", 0, -6822, 0, 0, 0, 0, 0, 0, 0, 0, -1, -6823
+"c:\Users\conta\Desktop\project\server\package.json", "JSON", 0, -60, 0, 0, 0, 0, 0, 0, 0, 0, -1, -61
 "c:\Users\conta\Desktop\project\server\public\stylesheets\style.css", "PostCSS", 0, 0, 0, 0, -7, 0, 0, 0, 0, 0, -2, -9
-"c:\Users\conta\Desktop\project\server\scripts\gen-create-tables.js", "JavaScript", 0, -65, 0, 0, 0, 0, 0, 0, 0, -3, -13, -81
-"c:\Users\conta\Desktop\project\server\src\app.ts", "TypeScript", -185, 0, 0, 0, 0, 0, 0, 0, 0, -3, -16, -204
-"c:\Users\conta\Desktop\project\server\src\bin\www.ts", "TypeScript", -48, 0, 0, 0, 0, 0, 0, 0, 0, -24, -21, -93
-"c:\Users\conta\Desktop\project\server\src\config\config.ts", "TypeScript", -38, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -44
-"c:\Users\conta\Desktop\project\server\src\cron\buyDelete.ts", "TypeScript", -26, 0, 0, 0, 0, 0, 0, 0, 0, -2, -6, -34
-"c:\Users\conta\Desktop\project\server\src\cron\commentSortDecay.ts", "TypeScript", -25, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -29
-"c:\Users\conta\Desktop\project\server\src\cron\dataDelete.ts", "TypeScript", -32, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7, -41
-"c:\Users\conta\Desktop\project\server\src\cron\index.ts", "TypeScript", -17, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -18
-"c:\Users\conta\Desktop\project\server\src\cron\itemDelete.ts", "TypeScript", -65, 0, 0, 0, 0, 0, 0, 0, 0, -2, -13, -80
-"c:\Users\conta\Desktop\project\server\src\cron\itemSortDecay.ts", "TypeScript", -47, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -55
-"c:\Users\conta\Desktop\project\server\src\cron\token.ts", "TypeScript", -85, 0, 0, 0, 0, 0, 0, 0, 0, -4, -14, -103
-"c:\Users\conta\Desktop\project\server\src\cron\trustScore.ts", "TypeScript", -80, 0, 0, 0, 0, 0, 0, 0, 0, -3, -19, -102
-"c:\Users\conta\Desktop\project\server\src\db.ts", "TypeScript", -17, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -20
-"c:\Users\conta\Desktop\project\server\src\middleware\authMiddleware.ts", "TypeScript", -41, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -47
-"c:\Users\conta\Desktop\project\server\src\middleware\authOptional.ts", "TypeScript", -41, 0, 0, 0, 0, 0, 0, 0, 0, -1, -7, -49
-"c:\Users\conta\Desktop\project\server\src\middleware\index.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -6
-"c:\Users\conta\Desktop\project\server\src\middleware\isAdmin.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -34
-"c:\Users\conta\Desktop\project\server\src\middleware\session.ts", "TypeScript", -22, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -26
-"c:\Users\conta\Desktop\project\server\src\models\account_type_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\address.ts", "TypeScript", -85, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -91
-"c:\Users\conta\Desktop\project\server\src\models\bank_account.ts", "TypeScript", -88, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -94
-"c:\Users\conta\Desktop\project\server\src\models\banks.ts", "TypeScript", -37, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -40
-"c:\Users\conta\Desktop\project\server\src\models\blog.ts", "TypeScript", -60, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -66
-"c:\Users\conta\Desktop\project\server\src\models\blog_category_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\branches.ts", "TypeScript", -48, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -52
-"c:\Users\conta\Desktop\project\server\src\models\brand_aliases.ts", "TypeScript", -39, 0, 0, 0, 0, 0, 0, 0, 0, 0, -5, -44
-"c:\Users\conta\Desktop\project\server\src\models\brands.ts", "TypeScript", -33, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -36
-"c:\Users\conta\Desktop\project\server\src\models\cancel.ts", "TypeScript", -58, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -64
-"c:\Users\conta\Desktop\project\server\src\models\cancel_fee_return_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\cart.ts", "TypeScript", -49, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -55
-"c:\Users\conta\Desktop\project\server\src\models\categories.ts", "TypeScript", -78, 0, 0, 0, 0, 0, 0, 0, 0, 0, -5, -83
-"c:\Users\conta\Desktop\project\server\src\models\chat.ts", "TypeScript", -44, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -50
-"c:\Users\conta\Desktop\project\server\src\models\com_or_free_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\comment.ts", "TypeScript", -86, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -92
-"c:\Users\conta\Desktop\project\server\src\models\comment_report.ts", "TypeScript", -59, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -65
-"c:\Users\conta\Desktop\project\server\src\models\comment_report_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\deletedItems.ts", "TypeScript", -90, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -96
-"c:\Users\conta\Desktop\project\server\src\models\deletedordersystem.ts", "TypeScript", -75, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -81
-"c:\Users\conta\Desktop\project\server\src\models\delivery.ts", "TypeScript", -108, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -114
-"c:\Users\conta\Desktop\project\server\src\models\delivery_status_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\emailchangetoken.ts", "TypeScript", -52, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -58
-"c:\Users\conta\Desktop\project\server\src\models\follow.ts", "TypeScript", -49, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -55
-"c:\Users\conta\Desktop\project\server\src\models\gender_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\good_comment.ts", "TypeScript", -49, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -55
-"c:\Users\conta\Desktop\project\server\src\models\good_item.ts", "TypeScript", -49, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -55
-"c:\Users\conta\Desktop\project\server\src\models\id_card.ts", "TypeScript", -63, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -69
-"c:\Users\conta\Desktop\project\server\src\models\index.ts", "TypeScript", -166, 0, 0, 0, 0, 0, 0, 0, 0, -2, -10, -178
-"c:\Users\conta\Desktop\project\server\src\models\inquiry.ts", "TypeScript", -56, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -62
-"c:\Users\conta\Desktop\project\server\src\models\item.ts", "TypeScript", -178, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -184
-"c:\Users\conta\Desktop\project\server\src\models\item_buyer_report.ts", "TypeScript", -78, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -84
-"c:\Users\conta\Desktop\project\server\src\models\item_buyer_report_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\item_condition_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\item_report.ts", "TypeScript", -59, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -65
-"c:\Users\conta\Desktop\project\server\src\models\item_report_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\item_shipping_profile.ts", "TypeScript", -63, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -69
-"c:\Users\conta\Desktop\project\server\src\models\itemdeletelog.ts", "TypeScript", -53, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -59
-"c:\Users\conta\Desktop\project\server\src\models\journal.ts", "TypeScript", -70, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -76
-"c:\Users\conta\Desktop\project\server\src\models\journal_reason_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\kanjyo_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\name.ts", "TypeScript", -84, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -90
-"c:\Users\conta\Desktop\project\server\src\models\notification.ts", "TypeScript", -54, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -60
-"c:\Users\conta\Desktop\project\server\src\models\paid_info.ts", "TypeScript", -112, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -118
-"c:\Users\conta\Desktop\project\server\src\models\passwordresettoken.ts", "TypeScript", -47, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -53
-"c:\Users\conta\Desktop\project\server\src\models\payment_method_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\pointconversionlog.ts", "TypeScript", -61, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -67
-"c:\Users\conta\Desktop\project\server\src\models\points_history.ts", "TypeScript", -46, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -52
-"c:\Users\conta\Desktop\project\server\src\models\points_uriage_over.ts", "TypeScript", -33, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -36
-"c:\Users\conta\Desktop\project\server\src\models\reference_code.ts", "TypeScript", -56, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -62
-"c:\Users\conta\Desktop\project\server\src\models\refreshtoken.ts", "TypeScript", -47, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -53
-"c:\Users\conta\Desktop\project\server\src\models\sale.ts", "TypeScript", -51, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -57
-"c:\Users\conta\Desktop\project\server\src\models\sales_history.ts", "TypeScript", -56, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -62
-"c:\Users\conta\Desktop\project\server\src\models\search.ts", "TypeScript", -40, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -46
-"c:\Users\conta\Desktop\project\server\src\models\searchword.ts", "TypeScript", -33, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -36
-"c:\Users\conta\Desktop\project\server\src\models\shipping_day_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\shipping_service_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\shop_info.ts", "TypeScript", -120, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -126
-"c:\Users\conta\Desktop\project\server\src\models\shop_info_edit.ts", "TypeScript", -98, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -104
-"c:\Users\conta\Desktop\project\server\src\models\signupverificationtoken.ts", "TypeScript", -58, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -64
-"c:\Users\conta\Desktop\project\server\src\models\star_history.ts", "TypeScript", -45, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -51
-"c:\Users\conta\Desktop\project\server\src\models\suggestword.ts", "TypeScript", -29, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -32
-"c:\Users\conta\Desktop\project\server\src\models\todouhuken_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\trans_reason_option.ts", "TypeScript", -28, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -31
-"c:\Users\conta\Desktop\project\server\src\models\transfar.ts", "TypeScript", -69, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -75
-"c:\Users\conta\Desktop\project\server\src\models\uriagekin_history.ts", "TypeScript", -46, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -52
-"c:\Users\conta\Desktop\project\server\src\models\user.ts", "TypeScript", -210, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -216
-"c:\Users\conta\Desktop\project\server\src\models\userdeletelog.ts", "TypeScript", -53, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -59
-"c:\Users\conta\Desktop\project\server\src\models\video.ts", "TypeScript", -66, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -72
-"c:\Users\conta\Desktop\project\server\src\models\watch_history.ts", "TypeScript", -46, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -52
-"c:\Users\conta\Desktop\project\server\src\routes\address.ts", "TypeScript", -120, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -139
-"c:\Users\conta\Desktop\project\server\src\routes\admin\blog_admin.ts", "TypeScript", -62, 0, 0, 0, 0, 0, 0, 0, 0, 0, -13, -75
-"c:\Users\conta\Desktop\project\server\src\routes\admin\comment_admin.ts", "TypeScript", -37, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -45
-"c:\Users\conta\Desktop\project\server\src\routes\admin\item_admin.ts", "TypeScript", -48, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -55
-"c:\Users\conta\Desktop\project\server\src\routes\admin\item_list_admin.ts", "TypeScript", -89, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, -99
-"c:\Users\conta\Desktop\project\server\src\routes\admin\item_page_admin.ts", "TypeScript", -98, 0, 0, 0, 0, 0, 0, 0, 0, 0, -11, -109
-"c:\Users\conta\Desktop\project\server\src\routes\admin\paid_list_admin.ts", "TypeScript", -56, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -62
-"c:\Users\conta\Desktop\project\server\src\routes\admin\reference_code_admin.ts", "TypeScript", -84, 0, 0, 0, 0, 0, 0, 0, 0, 0, -9, -93
-"c:\Users\conta\Desktop\project\server\src\routes\admin\report.ts", "TypeScript", -155, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -174
-"c:\Users\conta\Desktop\project\server\src\routes\admin\shop_info_admin.ts", "TypeScript", -201, 0, 0, 0, 0, 0, 0, 0, 0, 0, -20, -221
-"c:\Users\conta\Desktop\project\server\src\routes\admin\transfar_admin.ts", "TypeScript", -192, 0, 0, 0, 0, 0, 0, 0, 0, 0, -17, -209
-"c:\Users\conta\Desktop\project\server\src\routes\admin\user_admin.ts", "TypeScript", -325, 0, 0, 0, 0, 0, 0, 0, 0, -1, -50, -376
-"c:\Users\conta\Desktop\project\server\src\routes\auth.ts", "TypeScript", -442, 0, 0, 0, 0, 0, 0, 0, 0, -4, -107, -553
-"c:\Users\conta\Desktop\project\server\src\routes\bank_account.ts", "TypeScript", -166, 0, 0, 0, 0, 0, 0, 0, 0, 0, -24, -190
-"c:\Users\conta\Desktop\project\server\src\routes\blog.ts", "TypeScript", -138, 0, 0, 0, 0, 0, 0, 0, 0, 0, -22, -160
-"c:\Users\conta\Desktop\project\server\src\routes\cancel.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7
-"c:\Users\conta\Desktop\project\server\src\routes\cart.ts", "TypeScript", -121, 0, 0, 0, 0, 0, 0, 0, 0, 0, -24, -145
-"c:\Users\conta\Desktop\project\server\src\routes\chat.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7
-"c:\Users\conta\Desktop\project\server\src\routes\comment.ts", "TypeScript", -268, 0, 0, 0, 0, 0, 0, 0, 0, 0, -18, -286
-"c:\Users\conta\Desktop\project\server\src\routes\delivery.ts", "TypeScript", -76, 0, 0, 0, 0, 0, 0, 0, 0, 0, -9, -85
-"c:\Users\conta\Desktop\project\server\src\routes\follow.ts", "TypeScript", -359, 0, 0, 0, 0, 0, 0, 0, 0, 0, -69, -428
-"c:\Users\conta\Desktop\project\server\src\routes\good_comment.ts", "TypeScript", -209, 0, 0, 0, 0, 0, 0, 0, 0, 0, -41, -250
-"c:\Users\conta\Desktop\project\server\src\routes\good_item.ts", "TypeScript", -218, 0, 0, 0, 0, 0, 0, 0, 0, 0, -41, -259
-"c:\Users\conta\Desktop\project\server\src\routes\id_card.ts", "TypeScript", -7, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -9
-"c:\Users\conta\Desktop\project\server\src\routes\inquiry.ts", "TypeScript", -47, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, -57
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\cart_list.ts", "TypeScript", -129, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -148
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\deleted_list.ts", "TypeScript", -93, 0, 0, 0, 0, 0, 0, 0, 0, 0, -17, -110
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\draft_list.ts", "TypeScript", -93, 0, 0, 0, 0, 0, 0, 0, 0, 0, -17, -110
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\good_list.ts", "TypeScript", -132, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -151
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\stock_list.ts", "TypeScript", -101, 0, 0, 0, 0, 0, 0, 0, 0, 0, -17, -118
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\uploaded_list.ts", "TypeScript", -194, 0, 0, 0, 0, 0, 0, 0, 0, 0, -32, -226
-"c:\Users\conta\Desktop\project\server\src\routes\item-list\watch_list.ts", "TypeScript", -132, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -151
-"c:\Users\conta\Desktop\project\server\src\routes\item.ts", "TypeScript", -76, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -95
-"c:\Users\conta\Desktop\project\server\src\routes\item_list.ts", "TypeScript", -540, 0, 0, 0, 0, 0, 0, 0, 0, 0, -88, -628
-"c:\Users\conta\Desktop\project\server\src\routes\item_page.ts", "TypeScript", -529, 0, 0, 0, 0, 0, 0, 0, 0, 0, -78, -607
-"c:\Users\conta\Desktop\project\server\src\routes\item_upload.ts", "TypeScript", -489, 0, 0, 0, 0, 0, 0, 0, 0, -7, -95, -591
-"c:\Users\conta\Desktop\project\server\src\routes\item_upload_draft.ts", "TypeScript", -392, 0, 0, 0, 0, 0, 0, 0, 0, -11, -75, -478
-"c:\Users\conta\Desktop\project\server\src\routes\item_upload_main.ts", "TypeScript", -397, 0, 0, 0, 0, 0, 0, 0, 0, -10, -77, -484
-"c:\Users\conta\Desktop\project\server\src\routes\journal.ts", "TypeScript", -34, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6, -40
-"c:\Users\conta\Desktop\project\server\src\routes\name.ts", "TypeScript", -58, 0, 0, 0, 0, 0, 0, 0, 0, 0, -11, -69
-"c:\Users\conta\Desktop\project\server\src\routes\notification.ts", "TypeScript", -46, 0, 0, 0, 0, 0, 0, 0, 0, 0, -9, -55
-"c:\Users\conta\Desktop\project\server\src\routes\paid_info.ts", "TypeScript", -280, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -299
-"c:\Users\conta\Desktop\project\server\src\routes\paid_item_list.ts", "TypeScript", -241, 0, 0, 0, 0, 0, 0, 0, 0, 0, -22, -263
-"c:\Users\conta\Desktop\project\server\src\routes\points_history.ts", "TypeScript", -41, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -48
-"c:\Users\conta\Desktop\project\server\src\routes\points_uriage_over.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7
-"c:\Users\conta\Desktop\project\server\src\routes\reference_code.ts", "TypeScript", -71, 0, 0, 0, 0, 0, 0, 0, 0, 0, -14, -85
-"c:\Users\conta\Desktop\project\server\src\routes\report.ts", "TypeScript", -116, 0, 0, 0, 0, 0, 0, 0, 0, 0, -25, -141
-"c:\Users\conta\Desktop\project\server\src\routes\sale.ts", "TypeScript", -82, 0, 0, 0, 0, 0, 0, 0, 0, 0, -13, -95
-"c:\Users\conta\Desktop\project\server\src\routes\sales_history.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7
-"c:\Users\conta\Desktop\project\server\src\routes\search.ts", "TypeScript", -74, 0, 0, 0, 0, 0, 0, 0, 0, 0, -10, -84
-"c:\Users\conta\Desktop\project\server\src\routes\shop-com-free.ts", "TypeScript", -393, 0, 0, 0, 0, 0, 0, 0, 0, -5, -70, -468
-"c:\Users\conta\Desktop\project\server\src\routes\shop-signup-create.ts", "TypeScript", -481, 0, 0, 0, 0, 0, 0, 0, 0, -6, -94, -581
-"c:\Users\conta\Desktop\project\server\src\routes\shop-signup.ts", "TypeScript", -176, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -195
-"c:\Users\conta\Desktop\project\server\src\routes\shop_info.ts", "TypeScript", -121, 0, 0, 0, 0, 0, 0, 0, 0, 0, -20, -141
-"c:\Users\conta\Desktop\project\server\src\routes\shop_info_edit.ts", "TypeScript", -481, 0, 0, 0, 0, 0, 0, 0, 0, -2, -90, -573
-"c:\Users\conta\Desktop\project\server\src\routes\star_history.ts", "TypeScript", -5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, -7
-"c:\Users\conta\Desktop\project\server\src\routes\suggest_words.ts", "TypeScript", -79, 0, 0, 0, 0, 0, 0, 0, 0, 0, -23, -102
-"c:\Users\conta\Desktop\project\server\src\routes\test.ts", "TypeScript", -119, 0, 0, 0, 0, 0, 0, 0, 0, 0, -31, -150
-"c:\Users\conta\Desktop\project\server\src\routes\transfar.ts", "TypeScript", -210, 0, 0, 0, 0, 0, 0, 0, 0, -1, -51, -262
-"c:\Users\conta\Desktop\project\server\src\routes\uriagekin_history.ts", "TypeScript", -45, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -52
-"c:\Users\conta\Desktop\project\server\src\routes\user-edit.ts", "TypeScript", -307, 0, 0, 0, 0, 0, 0, 0, 0, 0, -49, -356
-"c:\Users\conta\Desktop\project\server\src\routes\users.ts", "TypeScript", -202, 0, 0, 0, 0, 0, 0, 0, 0, 0, -33, -235
-"c:\Users\conta\Desktop\project\server\src\routes\video.ts", "TypeScript", -34, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -41
-"c:\Users\conta\Desktop\project\server\src\routes\watch_history.ts", "TypeScript", -32, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -40
-"c:\Users\conta\Desktop\project\server\src\scripts\fetchBanksAndBranches.ts", "TypeScript", -69, 0, 0, 0, 0, 0, 0, 0, 0, 0, -12, -81
-"c:\Users\conta\Desktop\project\server\src\services\addressService.ts", "TypeScript", -46, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -54
-"c:\Users\conta\Desktop\project\server\src\services\adminDeleteItem.ts", "TypeScript", -141, 0, 0, 0, 0, 0, 0, 0, 0, -1, -29, -171
-"c:\Users\conta\Desktop\project\server\src\services\deleteUser.ts", "TypeScript", -263, 0, 0, 0, 0, 0, 0, 0, 0, -2, -48, -313
-"c:\Users\conta\Desktop\project\server\src\services\findOrCreateBrand.ts", "TypeScript", -31, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -38
-"c:\Users\conta\Desktop\project\server\src\services\itemCopyUpload.ts", "TypeScript", -135, 0, 0, 0, 0, 0, 0, 0, 0, 0, -26, -161
-"c:\Users\conta\Desktop\project\server\src\services\moveToGlacier.ts", "TypeScript", -26, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -34
-"c:\Users\conta\Desktop\project\server\src\types\custom.d.ts", "TypeScript", -11, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -12
-"c:\Users\conta\Desktop\project\server\src\types\express.d.ts", "TypeScript", -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8
-"c:\Users\conta\Desktop\project\server\src\types\itemAttributes.ts", "TypeScript", -55, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -59
-"c:\Users\conta\Desktop\project\server\src\types\purchaseSnapshot.ts", "TypeScript", -20, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -24
-"c:\Users\conta\Desktop\project\server\src\utils\jwtHelper.ts", "TypeScript", -26, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -33
-"c:\Users\conta\Desktop\project\server\src\utils\normalizeJapanese.ts", "TypeScript", -10, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, -13
-"c:\Users\conta\Desktop\project\server\tsconfig.json", "JSON with Comments", 0, 0, -27, 0, 0, 0, 0, 0, 0, 0, 0, -27
-"c:\Users\conta\Desktop\project\server\tsconfig.tsbuildinfo", "JSON", 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1
+"c:\Users\conta\Desktop\project\server\scripts\gen-create-tables.js", "JavaScript", -65, 0, 0, 0, 0, 0, 0, 0, 0, -3, -13, -81
+"c:\Users\conta\Desktop\project\server\src\app.ts", "TypeScript", 0, 0, -185, 0, 0, 0, 0, 0, 0, -3, -16, -204
+"c:\Users\conta\Desktop\project\server\src\bin\www.ts", "TypeScript", 0, 0, -48, 0, 0, 0, 0, 0, 0, -24, -21, -93
+"c:\Users\conta\Desktop\project\server\src\config\config.ts", "TypeScript", 0, 0, -38, 0, 0, 0, 0, 0, 0, 0, -6, -44
+"c:\Users\conta\Desktop\project\server\src\cron\buyDelete.ts", "TypeScript", 0, 0, -26, 0, 0, 0, 0, 0, 0, -2, -6, -34
+"c:\Users\conta\Desktop\project\server\src\cron\commentSortDecay.ts", "TypeScript", 0, 0, -25, 0, 0, 0, 0, 0, 0, 0, -4, -29
+"c:\Users\conta\Desktop\project\server\src\cron\dataDelete.ts", "TypeScript", 0, 0, -34, 0, 0, 0, 0, 0, 0, -2, -7, -43
+"c:\Users\conta\Desktop\project\server\src\cron\index.ts", "TypeScript", 0, 0, -17, 0, 0, 0, 0, 0, 0, 0, -1, -18
+"c:\Users\conta\Desktop\project\server\src\cron\itemDelete.ts", "TypeScript", 0, 0, -65, 0, 0, 0, 0, 0, 0, -2, -13, -80
+"c:\Users\conta\Desktop\project\server\src\cron\itemSortDecay.ts", "TypeScript", 0, 0, -47, 0, 0, 0, 0, 0, 0, 0, -8, -55
+"c:\Users\conta\Desktop\project\server\src\cron\token.ts", "TypeScript", 0, 0, -85, 0, 0, 0, 0, 0, 0, -4, -14, -103
+"c:\Users\conta\Desktop\project\server\src\cron\trustScore.ts", "TypeScript", 0, 0, -86, 0, 0, 0, 0, 0, 0, -3, -19, -108
+"c:\Users\conta\Desktop\project\server\src\db.ts", "TypeScript", 0, 0, -17, 0, 0, 0, 0, 0, 0, 0, -3, -20
+"c:\Users\conta\Desktop\project\server\src\middleware\authMiddleware.ts", "TypeScript", 0, 0, -41, 0, 0, 0, 0, 0, 0, 0, -6, -47
+"c:\Users\conta\Desktop\project\server\src\middleware\authOptional.ts", "TypeScript", 0, 0, -41, 0, 0, 0, 0, 0, 0, -1, -7, -49
+"c:\Users\conta\Desktop\project\server\src\middleware\index.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -1, -6
+"c:\Users\conta\Desktop\project\server\src\middleware\isAdmin.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -6, -34
+"c:\Users\conta\Desktop\project\server\src\middleware\session.ts", "TypeScript", 0, 0, -22, 0, 0, 0, 0, 0, 0, 0, -4, -26
+"c:\Users\conta\Desktop\project\server\src\models\account_type_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\address.ts", "TypeScript", 0, 0, -85, 0, 0, 0, 0, 0, 0, 0, -6, -91
+"c:\Users\conta\Desktop\project\server\src\models\bank_account.ts", "TypeScript", 0, 0, -88, 0, 0, 0, 0, 0, 0, 0, -6, -94
+"c:\Users\conta\Desktop\project\server\src\models\banks.ts", "TypeScript", 0, 0, -37, 0, 0, 0, 0, 0, 0, 0, -3, -40
+"c:\Users\conta\Desktop\project\server\src\models\blog.ts", "TypeScript", 0, 0, -60, 0, 0, 0, 0, 0, 0, 0, -6, -66
+"c:\Users\conta\Desktop\project\server\src\models\blog_category_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\branches.ts", "TypeScript", 0, 0, -48, 0, 0, 0, 0, 0, 0, 0, -4, -52
+"c:\Users\conta\Desktop\project\server\src\models\brand_aliases.ts", "TypeScript", 0, 0, -39, 0, 0, 0, 0, 0, 0, 0, -5, -44
+"c:\Users\conta\Desktop\project\server\src\models\brands.ts", "TypeScript", 0, 0, -33, 0, 0, 0, 0, 0, 0, 0, -3, -36
+"c:\Users\conta\Desktop\project\server\src\models\cancel.ts", "TypeScript", 0, 0, -58, 0, 0, 0, 0, 0, 0, 0, -6, -64
+"c:\Users\conta\Desktop\project\server\src\models\cancel_fee_return_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\cart.ts", "TypeScript", 0, 0, -49, 0, 0, 0, 0, 0, 0, 0, -6, -55
+"c:\Users\conta\Desktop\project\server\src\models\categories.ts", "TypeScript", 0, 0, -78, 0, 0, 0, 0, 0, 0, 0, -5, -83
+"c:\Users\conta\Desktop\project\server\src\models\chat.ts", "TypeScript", 0, 0, -44, 0, 0, 0, 0, 0, 0, 0, -6, -50
+"c:\Users\conta\Desktop\project\server\src\models\com_or_free_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\comment.ts", "TypeScript", 0, 0, -86, 0, 0, 0, 0, 0, 0, 0, -6, -92
+"c:\Users\conta\Desktop\project\server\src\models\comment_report.ts", "TypeScript", 0, 0, -59, 0, 0, 0, 0, 0, 0, 0, -6, -65
+"c:\Users\conta\Desktop\project\server\src\models\comment_report_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\deletedItems.ts", "TypeScript", 0, 0, -90, 0, 0, 0, 0, 0, 0, 0, -6, -96
+"c:\Users\conta\Desktop\project\server\src\models\deletedordersystem.ts", "TypeScript", 0, 0, -75, 0, 0, 0, 0, 0, 0, 0, -6, -81
+"c:\Users\conta\Desktop\project\server\src\models\delivery.ts", "TypeScript", 0, 0, -108, 0, 0, 0, 0, 0, 0, 0, -6, -114
+"c:\Users\conta\Desktop\project\server\src\models\delivery_status_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\emailchangetoken.ts", "TypeScript", 0, 0, -52, 0, 0, 0, 0, 0, 0, 0, -6, -58
+"c:\Users\conta\Desktop\project\server\src\models\follow.ts", "TypeScript", 0, 0, -49, 0, 0, 0, 0, 0, 0, 0, -6, -55
+"c:\Users\conta\Desktop\project\server\src\models\gender_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\good_comment.ts", "TypeScript", 0, 0, -49, 0, 0, 0, 0, 0, 0, 0, -6, -55
+"c:\Users\conta\Desktop\project\server\src\models\good_item.ts", "TypeScript", 0, 0, -49, 0, 0, 0, 0, 0, 0, 0, -6, -55
+"c:\Users\conta\Desktop\project\server\src\models\id_card.ts", "TypeScript", 0, 0, -63, 0, 0, 0, 0, 0, 0, 0, -6, -69
+"c:\Users\conta\Desktop\project\server\src\models\index.ts", "TypeScript", 0, 0, -166, 0, 0, 0, 0, 0, 0, -2, -10, -178
+"c:\Users\conta\Desktop\project\server\src\models\inquiry.ts", "TypeScript", 0, 0, -56, 0, 0, 0, 0, 0, 0, 0, -6, -62
+"c:\Users\conta\Desktop\project\server\src\models\item.ts", "TypeScript", 0, 0, -178, 0, 0, 0, 0, 0, 0, 0, -6, -184
+"c:\Users\conta\Desktop\project\server\src\models\item_buyer_report.ts", "TypeScript", 0, 0, -78, 0, 0, 0, 0, 0, 0, 0, -6, -84
+"c:\Users\conta\Desktop\project\server\src\models\item_buyer_report_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\item_condition_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\item_report.ts", "TypeScript", 0, 0, -59, 0, 0, 0, 0, 0, 0, 0, -6, -65
+"c:\Users\conta\Desktop\project\server\src\models\item_report_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\item_shipping_profile.ts", "TypeScript", 0, 0, -63, 0, 0, 0, 0, 0, 0, 0, -6, -69
+"c:\Users\conta\Desktop\project\server\src\models\itemdeletelog.ts", "TypeScript", 0, 0, -53, 0, 0, 0, 0, 0, 0, 0, -6, -59
+"c:\Users\conta\Desktop\project\server\src\models\journal.ts", "TypeScript", 0, 0, -70, 0, 0, 0, 0, 0, 0, 0, -6, -76
+"c:\Users\conta\Desktop\project\server\src\models\journal_reason_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\kanjyo_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\name.ts", "TypeScript", 0, 0, -84, 0, 0, 0, 0, 0, 0, 0, -6, -90
+"c:\Users\conta\Desktop\project\server\src\models\notification.ts", "TypeScript", 0, 0, -54, 0, 0, 0, 0, 0, 0, 0, -6, -60
+"c:\Users\conta\Desktop\project\server\src\models\paid_info.ts", "TypeScript", 0, 0, -112, 0, 0, 0, 0, 0, 0, 0, -6, -118
+"c:\Users\conta\Desktop\project\server\src\models\passwordresettoken.ts", "TypeScript", 0, 0, -47, 0, 0, 0, 0, 0, 0, 0, -6, -53
+"c:\Users\conta\Desktop\project\server\src\models\payment_method_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\pointconversionlog.ts", "TypeScript", 0, 0, -61, 0, 0, 0, 0, 0, 0, 0, -6, -67
+"c:\Users\conta\Desktop\project\server\src\models\points_history.ts", "TypeScript", 0, 0, -46, 0, 0, 0, 0, 0, 0, 0, -6, -52
+"c:\Users\conta\Desktop\project\server\src\models\points_uriage_over.ts", "TypeScript", 0, 0, -33, 0, 0, 0, 0, 0, 0, 0, -3, -36
+"c:\Users\conta\Desktop\project\server\src\models\reference_code.ts", "TypeScript", 0, 0, -56, 0, 0, 0, 0, 0, 0, 0, -6, -62
+"c:\Users\conta\Desktop\project\server\src\models\refreshtoken.ts", "TypeScript", 0, 0, -47, 0, 0, 0, 0, 0, 0, 0, -6, -53
+"c:\Users\conta\Desktop\project\server\src\models\sale.ts", "TypeScript", 0, 0, -51, 0, 0, 0, 0, 0, 0, 0, -6, -57
+"c:\Users\conta\Desktop\project\server\src\models\sales_history.ts", "TypeScript", 0, 0, -56, 0, 0, 0, 0, 0, 0, 0, -6, -62
+"c:\Users\conta\Desktop\project\server\src\models\search.ts", "TypeScript", 0, 0, -40, 0, 0, 0, 0, 0, 0, 0, -6, -46
+"c:\Users\conta\Desktop\project\server\src\models\searchword.ts", "TypeScript", 0, 0, -33, 0, 0, 0, 0, 0, 0, 0, -3, -36
+"c:\Users\conta\Desktop\project\server\src\models\shipping_day_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\shipping_service_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\shop_info.ts", "TypeScript", 0, 0, -120, 0, 0, 0, 0, 0, 0, 0, -6, -126
+"c:\Users\conta\Desktop\project\server\src\models\shop_info_edit.ts", "TypeScript", 0, 0, -98, 0, 0, 0, 0, 0, 0, 0, -6, -104
+"c:\Users\conta\Desktop\project\server\src\models\signupverificationtoken.ts", "TypeScript", 0, 0, -58, 0, 0, 0, 0, 0, 0, 0, -6, -64
+"c:\Users\conta\Desktop\project\server\src\models\star_history.ts", "TypeScript", 0, 0, -45, 0, 0, 0, 0, 0, 0, 0, -6, -51
+"c:\Users\conta\Desktop\project\server\src\models\suggestword.ts", "TypeScript", 0, 0, -29, 0, 0, 0, 0, 0, 0, 0, -3, -32
+"c:\Users\conta\Desktop\project\server\src\models\todouhuken_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\trans_reason_option.ts", "TypeScript", 0, 0, -28, 0, 0, 0, 0, 0, 0, 0, -3, -31
+"c:\Users\conta\Desktop\project\server\src\models\transfar.ts", "TypeScript", 0, 0, -69, 0, 0, 0, 0, 0, 0, 0, -6, -75
+"c:\Users\conta\Desktop\project\server\src\models\uriagekin_history.ts", "TypeScript", 0, 0, -46, 0, 0, 0, 0, 0, 0, 0, -6, -52
+"c:\Users\conta\Desktop\project\server\src\models\user.ts", "TypeScript", 0, 0, -210, 0, 0, 0, 0, 0, 0, 0, -6, -216
+"c:\Users\conta\Desktop\project\server\src\models\userdeletelog.ts", "TypeScript", 0, 0, -53, 0, 0, 0, 0, 0, 0, 0, -6, -59
+"c:\Users\conta\Desktop\project\server\src\models\video.ts", "TypeScript", 0, 0, -66, 0, 0, 0, 0, 0, 0, 0, -6, -72
+"c:\Users\conta\Desktop\project\server\src\models\watch_history.ts", "TypeScript", 0, 0, -46, 0, 0, 0, 0, 0, 0, 0, -6, -52
+"c:\Users\conta\Desktop\project\server\src\routes\address.ts", "TypeScript", 0, 0, -120, 0, 0, 0, 0, 0, 0, 0, -19, -139
+"c:\Users\conta\Desktop\project\server\src\routes\admin\blog_admin.ts", "TypeScript", 0, 0, -62, 0, 0, 0, 0, 0, 0, 0, -13, -75
+"c:\Users\conta\Desktop\project\server\src\routes\admin\comment_admin.ts", "TypeScript", 0, 0, -37, 0, 0, 0, 0, 0, 0, 0, -8, -45
+"c:\Users\conta\Desktop\project\server\src\routes\admin\item_admin.ts", "TypeScript", 0, 0, -48, 0, 0, 0, 0, 0, 0, 0, -7, -55
+"c:\Users\conta\Desktop\project\server\src\routes\admin\item_list_admin.ts", "TypeScript", 0, 0, -89, 0, 0, 0, 0, 0, 0, 0, -10, -99
+"c:\Users\conta\Desktop\project\server\src\routes\admin\item_page_admin.ts", "TypeScript", 0, 0, -98, 0, 0, 0, 0, 0, 0, 0, -11, -109
+"c:\Users\conta\Desktop\project\server\src\routes\admin\paid_list_admin.ts", "TypeScript", 0, 0, -56, 0, 0, 0, 0, 0, 0, 0, -6, -62
+"c:\Users\conta\Desktop\project\server\src\routes\admin\reference_code_admin.ts", "TypeScript", 0, 0, -84, 0, 0, 0, 0, 0, 0, 0, -9, -93
+"c:\Users\conta\Desktop\project\server\src\routes\admin\report.ts", "TypeScript", 0, 0, -155, 0, 0, 0, 0, 0, 0, 0, -19, -174
+"c:\Users\conta\Desktop\project\server\src\routes\admin\shop_info_admin.ts", "TypeScript", 0, 0, -201, 0, 0, 0, 0, 0, 0, 0, -20, -221
+"c:\Users\conta\Desktop\project\server\src\routes\admin\transfar_admin.ts", "TypeScript", 0, 0, -192, 0, 0, 0, 0, 0, 0, 0, -17, -209
+"c:\Users\conta\Desktop\project\server\src\routes\admin\user_admin.ts", "TypeScript", 0, 0, -325, 0, 0, 0, 0, 0, 0, -1, -50, -376
+"c:\Users\conta\Desktop\project\server\src\routes\auth.ts", "TypeScript", 0, 0, -442, 0, 0, 0, 0, 0, 0, -4, -107, -553
+"c:\Users\conta\Desktop\project\server\src\routes\bank_account.ts", "TypeScript", 0, 0, -166, 0, 0, 0, 0, 0, 0, 0, -24, -190
+"c:\Users\conta\Desktop\project\server\src\routes\blog.ts", "TypeScript", 0, 0, -138, 0, 0, 0, 0, 0, 0, 0, -22, -160
+"c:\Users\conta\Desktop\project\server\src\routes\cancel.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -2, -7
+"c:\Users\conta\Desktop\project\server\src\routes\cart.ts", "TypeScript", 0, 0, -109, 0, 0, 0, 0, 0, 0, 0, -21, -130
+"c:\Users\conta\Desktop\project\server\src\routes\chat.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -2, -7
+"c:\Users\conta\Desktop\project\server\src\routes\comment.ts", "TypeScript", 0, 0, -268, 0, 0, 0, 0, 0, 0, 0, -18, -286
+"c:\Users\conta\Desktop\project\server\src\routes\delivery.ts", "TypeScript", 0, 0, -76, 0, 0, 0, 0, 0, 0, 0, -9, -85
+"c:\Users\conta\Desktop\project\server\src\routes\follow.ts", "TypeScript", 0, 0, -359, 0, 0, 0, 0, 0, 0, 0, -69, -428
+"c:\Users\conta\Desktop\project\server\src\routes\good_comment.ts", "TypeScript", 0, 0, -209, 0, 0, 0, 0, 0, 0, 0, -41, -250
+"c:\Users\conta\Desktop\project\server\src\routes\good_item.ts", "TypeScript", 0, 0, -218, 0, 0, 0, 0, 0, 0, 0, -41, -259
+"c:\Users\conta\Desktop\project\server\src\routes\id_card.ts", "TypeScript", 0, 0, -7, 0, 0, 0, 0, 0, 0, 0, -2, -9
+"c:\Users\conta\Desktop\project\server\src\routes\inquiry.ts", "TypeScript", 0, 0, -47, 0, 0, 0, 0, 0, 0, 0, -10, -57
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\cart_list.ts", "TypeScript", 0, 0, -129, 0, 0, 0, 0, 0, 0, 0, -19, -148
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\deleted_list.ts", "TypeScript", 0, 0, -93, 0, 0, 0, 0, 0, 0, 0, -17, -110
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\draft_list.ts", "TypeScript", 0, 0, -93, 0, 0, 0, 0, 0, 0, 0, -17, -110
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\good_list.ts", "TypeScript", 0, 0, -132, 0, 0, 0, 0, 0, 0, 0, -19, -151
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\stock_list.ts", "TypeScript", 0, 0, -101, 0, 0, 0, 0, 0, 0, 0, -17, -118
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\uploaded_list.ts", "TypeScript", 0, 0, -194, 0, 0, 0, 0, 0, 0, 0, -32, -226
+"c:\Users\conta\Desktop\project\server\src\routes\item-list\watch_list.ts", "TypeScript", 0, 0, -132, 0, 0, 0, 0, 0, 0, 0, -19, -151
+"c:\Users\conta\Desktop\project\server\src\routes\item.ts", "TypeScript", 0, 0, -76, 0, 0, 0, 0, 0, 0, 0, -19, -95
+"c:\Users\conta\Desktop\project\server\src\routes\item_list.ts", "TypeScript", 0, 0, -540, 0, 0, 0, 0, 0, 0, 0, -88, -628
+"c:\Users\conta\Desktop\project\server\src\routes\item_page.ts", "TypeScript", 0, 0, -534, 0, 0, 0, 0, 0, 0, 0, -80, -614
+"c:\Users\conta\Desktop\project\server\src\routes\item_upload.ts", "TypeScript", 0, 0, -489, 0, 0, 0, 0, 0, 0, -7, -95, -591
+"c:\Users\conta\Desktop\project\server\src\routes\item_upload_draft.ts", "TypeScript", 0, 0, -392, 0, 0, 0, 0, 0, 0, -11, -75, -478
+"c:\Users\conta\Desktop\project\server\src\routes\item_upload_main.ts", "TypeScript", 0, 0, -397, 0, 0, 0, 0, 0, 0, -10, -77, -484
+"c:\Users\conta\Desktop\project\server\src\routes\journal.ts", "TypeScript", 0, 0, -34, 0, 0, 0, 0, 0, 0, 0, -6, -40
+"c:\Users\conta\Desktop\project\server\src\routes\name.ts", "TypeScript", 0, 0, -58, 0, 0, 0, 0, 0, 0, 0, -11, -69
+"c:\Users\conta\Desktop\project\server\src\routes\notification.ts", "TypeScript", 0, 0, -46, 0, 0, 0, 0, 0, 0, 0, -9, -55
+"c:\Users\conta\Desktop\project\server\src\routes\paid_info.ts", "TypeScript", 0, 0, -280, 0, 0, 0, 0, 0, 0, 0, -19, -299
+"c:\Users\conta\Desktop\project\server\src\routes\paid_item_list.ts", "TypeScript", 0, 0, -241, 0, 0, 0, 0, 0, 0, 0, -22, -263
+"c:\Users\conta\Desktop\project\server\src\routes\points_history.ts", "TypeScript", 0, 0, -41, 0, 0, 0, 0, 0, 0, 0, -7, -48
+"c:\Users\conta\Desktop\project\server\src\routes\points_uriage_over.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -2, -7
+"c:\Users\conta\Desktop\project\server\src\routes\reference_code.ts", "TypeScript", 0, 0, -71, 0, 0, 0, 0, 0, 0, 0, -14, -85
+"c:\Users\conta\Desktop\project\server\src\routes\report.ts", "TypeScript", 0, 0, -116, 0, 0, 0, 0, 0, 0, 0, -25, -141
+"c:\Users\conta\Desktop\project\server\src\routes\sale.ts", "TypeScript", 0, 0, -82, 0, 0, 0, 0, 0, 0, 0, -13, -95
+"c:\Users\conta\Desktop\project\server\src\routes\sales_history.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -2, -7
+"c:\Users\conta\Desktop\project\server\src\routes\search.ts", "TypeScript", 0, 0, -74, 0, 0, 0, 0, 0, 0, 0, -10, -84
+"c:\Users\conta\Desktop\project\server\src\routes\shop-com-free.ts", "TypeScript", 0, 0, -393, 0, 0, 0, 0, 0, 0, -5, -70, -468
+"c:\Users\conta\Desktop\project\server\src\routes\shop-signup-create.ts", "TypeScript", 0, 0, -481, 0, 0, 0, 0, 0, 0, -6, -94, -581
+"c:\Users\conta\Desktop\project\server\src\routes\shop-signup.ts", "TypeScript", 0, 0, -176, 0, 0, 0, 0, 0, 0, 0, -19, -195
+"c:\Users\conta\Desktop\project\server\src\routes\shop_info.ts", "TypeScript", 0, 0, -121, 0, 0, 0, 0, 0, 0, 0, -20, -141
+"c:\Users\conta\Desktop\project\server\src\routes\shop_info_edit.ts", "TypeScript", 0, 0, -481, 0, 0, 0, 0, 0, 0, -2, -90, -573
+"c:\Users\conta\Desktop\project\server\src\routes\star_history.ts", "TypeScript", 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -2, -7
+"c:\Users\conta\Desktop\project\server\src\routes\suggest_words.ts", "TypeScript", 0, 0, -79, 0, 0, 0, 0, 0, 0, 0, -23, -102
+"c:\Users\conta\Desktop\project\server\src\routes\test.ts", "TypeScript", 0, 0, -300, 0, 0, 0, 0, 0, 0, -3, -62, -365
+"c:\Users\conta\Desktop\project\server\src\routes\transfar.ts", "TypeScript", 0, 0, -210, 0, 0, 0, 0, 0, 0, -1, -51, -262
+"c:\Users\conta\Desktop\project\server\src\routes\uriagekin_history.ts", "TypeScript", 0, 0, -45, 0, 0, 0, 0, 0, 0, 0, -7, -52
+"c:\Users\conta\Desktop\project\server\src\routes\user-edit.ts", "TypeScript", 0, 0, -307, 0, 0, 0, 0, 0, 0, 0, -49, -356
+"c:\Users\conta\Desktop\project\server\src\routes\users.ts", "TypeScript", 0, 0, -202, 0, 0, 0, 0, 0, 0, 0, -33, -235
+"c:\Users\conta\Desktop\project\server\src\routes\video.ts", "TypeScript", 0, 0, -34, 0, 0, 0, 0, 0, 0, 0, -7, -41
+"c:\Users\conta\Desktop\project\server\src\routes\watch_history.ts", "TypeScript", 0, 0, -32, 0, 0, 0, 0, 0, 0, 0, -8, -40
+"c:\Users\conta\Desktop\project\server\src\scripts\fetchBanksAndBranches.ts", "TypeScript", 0, 0, -69, 0, 0, 0, 0, 0, 0, 0, -12, -81
+"c:\Users\conta\Desktop\project\server\src\services\addressService.ts", "TypeScript", 0, 0, -46, 0, 0, 0, 0, 0, 0, 0, -8, -54
+"c:\Users\conta\Desktop\project\server\src\services\adminDeleteItem.ts", "TypeScript", 0, 0, -141, 0, 0, 0, 0, 0, 0, -1, -29, -171
+"c:\Users\conta\Desktop\project\server\src\services\deleteUser.ts", "TypeScript", 0, 0, -263, 0, 0, 0, 0, 0, 0, -2, -48, -313
+"c:\Users\conta\Desktop\project\server\src\services\findOrCreateBrand.ts", "TypeScript", 0, 0, -31, 0, 0, 0, 0, 0, 0, 0, -7, -38
+"c:\Users\conta\Desktop\project\server\src\services\itemCopyUpload.ts", "TypeScript", 0, 0, -135, 0, 0, 0, 0, 0, 0, 0, -26, -161
+"c:\Users\conta\Desktop\project\server\src\services\moveToGlacier.ts", "TypeScript", 0, 0, -26, 0, 0, 0, 0, 0, 0, 0, -8, -34
+"c:\Users\conta\Desktop\project\server\src\types\custom.d.ts", "TypeScript", 0, 0, -11, 0, 0, 0, 0, 0, 0, 0, -1, -12
+"c:\Users\conta\Desktop\project\server\src\types\express.d.ts", "TypeScript", 0, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, -8
+"c:\Users\conta\Desktop\project\server\src\types\itemAttributes.ts", "TypeScript", 0, 0, -55, 0, 0, 0, 0, 0, 0, 0, -4, -59
+"c:\Users\conta\Desktop\project\server\src\types\purchaseSnapshot.ts", "TypeScript", 0, 0, -20, 0, 0, 0, 0, 0, 0, 0, -4, -24
+"c:\Users\conta\Desktop\project\server\src\utils\jwtHelper.ts", "TypeScript", 0, 0, -26, 0, 0, 0, 0, 0, 0, 0, -7, -33
+"c:\Users\conta\Desktop\project\server\src\utils\normalizeJapanese.ts", "TypeScript", 0, 0, -10, 0, 0, 0, 0, 0, 0, 0, -3, -13
+"c:\Users\conta\Desktop\project\server\tsconfig.json", "JSON with Comments", 0, 0, 0, -27, 0, 0, 0, 0, 0, 0, 0, -27
+"c:\Users\conta\Desktop\project\server\tsconfig.tsbuildinfo", "JSON", 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1
 "c:\Users\conta\Desktop\project\server\views\error.ejs", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, -10, 0, -1, -11
-"Total", "-", -14714, -89, 17, 9229, 7072, 18966, 6, 23, -10, -36, 1762, 22226
+"Total", "-", -89, 9229, -14894, 17, 7084, 18999, 23, 6, -10, -37, 1741, 22069

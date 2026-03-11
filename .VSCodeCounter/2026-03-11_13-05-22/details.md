@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-10 16:18:27
+Date : 2026-03-11 13:05:22
 
 Directory c:\\Users\\conta\\Desktop\\project\\server
 
-Total : 174 files,  23307 codes, 98 comments, 2452 blanks, all 25857 lines
+Total : 174 files,  23506 codes, 101 comments, 2486 blanks, all 26093 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -23,12 +23,12 @@ Total : 174 files,  23307 codes, 98 comments, 2452 blanks, all 25857 lines
 | [server/src/config/config.ts](/server/src/config/config.ts) | TypeScript | 38 | 0 | 6 | 44 |
 | [server/src/cron/buyDelete.ts](/server/src/cron/buyDelete.ts) | TypeScript | 26 | 2 | 6 | 34 |
 | [server/src/cron/commentSortDecay.ts](/server/src/cron/commentSortDecay.ts) | TypeScript | 25 | 0 | 4 | 29 |
-| [server/src/cron/dataDelete.ts](/server/src/cron/dataDelete.ts) | TypeScript | 32 | 2 | 7 | 41 |
+| [server/src/cron/dataDelete.ts](/server/src/cron/dataDelete.ts) | TypeScript | 34 | 2 | 7 | 43 |
 | [server/src/cron/index.ts](/server/src/cron/index.ts) | TypeScript | 17 | 0 | 1 | 18 |
 | [server/src/cron/itemDelete.ts](/server/src/cron/itemDelete.ts) | TypeScript | 65 | 2 | 13 | 80 |
 | [server/src/cron/itemSortDecay.ts](/server/src/cron/itemSortDecay.ts) | TypeScript | 47 | 0 | 8 | 55 |
 | [server/src/cron/token.ts](/server/src/cron/token.ts) | TypeScript | 85 | 4 | 14 | 103 |
-| [server/src/cron/trustScore.ts](/server/src/cron/trustScore.ts) | TypeScript | 80 | 3 | 19 | 102 |
+| [server/src/cron/trustScore.ts](/server/src/cron/trustScore.ts) | TypeScript | 86 | 3 | 19 | 108 |
 | [server/src/db.ts](/server/src/db.ts) | TypeScript | 17 | 0 | 3 | 20 |
 | [server/src/middleware/authMiddleware.ts](/server/src/middleware/authMiddleware.ts) | TypeScript | 41 | 0 | 6 | 47 |
 | [server/src/middleware/authOptional.ts](/server/src/middleware/authOptional.ts) | TypeScript | 41 | 1 | 7 | 49 |
@@ -139,7 +139,7 @@ Total : 174 files,  23307 codes, 98 comments, 2452 blanks, all 25857 lines
 | [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | 132 | 0 | 19 | 151 |
 | [server/src/routes/item.ts](/server/src/routes/item.ts) | TypeScript | 76 | 0 | 19 | 95 |
 | [server/src/routes/item\_list.ts](/server/src/routes/item_list.ts) | TypeScript | 540 | 0 | 88 | 628 |
-| [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | 529 | 0 | 78 | 607 |
+| [server/src/routes/item\_page.ts](/server/src/routes/item_page.ts) | TypeScript | 534 | 0 | 80 | 614 |
 | [server/src/routes/item\_upload.ts](/server/src/routes/item_upload.ts) | TypeScript | 489 | 7 | 95 | 591 |
 | [server/src/routes/item\_upload\_draft.ts](/server/src/routes/item_upload_draft.ts) | TypeScript | 392 | 11 | 75 | 478 |
 | [server/src/routes/item\_upload\_main.ts](/server/src/routes/item_upload_main.ts) | TypeScript | 397 | 10 | 77 | 484 |
@@ -162,7 +162,7 @@ Total : 174 files,  23307 codes, 98 comments, 2452 blanks, all 25857 lines
 | [server/src/routes/shop\_info\_edit.ts](/server/src/routes/shop_info_edit.ts) | TypeScript | 481 | 2 | 90 | 573 |
 | [server/src/routes/star\_history.ts](/server/src/routes/star_history.ts) | TypeScript | 5 | 0 | 2 | 7 |
 | [server/src/routes/suggest\_words.ts](/server/src/routes/suggest_words.ts) | TypeScript | 79 | 0 | 23 | 102 |
-| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | 114 | 0 | 30 | 144 |
+| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | 300 | 3 | 62 | 365 |
 | [server/src/routes/transfar.ts](/server/src/routes/transfar.ts) | TypeScript | 210 | 1 | 51 | 262 |
 | [server/src/routes/uriagekin\_history.ts](/server/src/routes/uriagekin_history.ts) | TypeScript | 45 | 0 | 7 | 52 |
 | [server/src/routes/user-edit.ts](/server/src/routes/user-edit.ts) | TypeScript | 307 | 0 | 49 | 356 |

@@ -269,8 +269,6 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
             throw new Error("NOT_FOUND");
         }
 
-        const payId = generatePayId(30);
-
         // PaidInfo.bulkCreate
         const paidInfos = await PaidInfo.bulkCreate(
             items.map((item: any) => ({
@@ -289,7 +287,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
                 buyer_user_id: userId,
                 buy_date: new Date(),
                 paid_date: new Date(),
-                pay_id: payId,
+                pay_id: generatePayId(30),
                 status: "paid",
                 purchased_snapshot: {
                     item_id: item.id,
