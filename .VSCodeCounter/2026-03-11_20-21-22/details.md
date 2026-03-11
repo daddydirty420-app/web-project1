@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-11 16:11:52
+Date : 2026-03-11 20:21:22
 
 Directory c:\\Users\\conta\\Desktop\\project\\server
 
-Total : 174 files,  23530 codes, 101 comments, 2493 blanks, all 26124 lines
+Total : 174 files,  23654 codes, 101 comments, 2511 blanks, all 26266 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -135,7 +135,7 @@ Total : 174 files,  23530 codes, 101 comments, 2493 blanks, all 26124 lines
 | [server/src/routes/item-list/draft\_list.ts](/server/src/routes/item-list/draft_list.ts) | TypeScript | 93 | 0 | 17 | 110 |
 | [server/src/routes/item-list/good\_list.ts](/server/src/routes/item-list/good_list.ts) | TypeScript | 132 | 0 | 19 | 151 |
 | [server/src/routes/item-list/stock\_list.ts](/server/src/routes/item-list/stock_list.ts) | TypeScript | 101 | 0 | 17 | 118 |
-| [server/src/routes/item-list/uploaded\_list.ts](/server/src/routes/item-list/uploaded_list.ts) | TypeScript | 194 | 0 | 32 | 226 |
+| [server/src/routes/item-list/uploaded\_list.ts](/server/src/routes/item-list/uploaded_list.ts) | TypeScript | 287 | 0 | 47 | 334 |
 | [server/src/routes/item-list/watch\_list.ts](/server/src/routes/item-list/watch_list.ts) | TypeScript | 132 | 0 | 19 | 151 |
 | [server/src/routes/item.ts](/server/src/routes/item.ts) | TypeScript | 76 | 0 | 19 | 95 |
 | [server/src/routes/item\_list.ts](/server/src/routes/item_list.ts) | TypeScript | 540 | 0 | 88 | 628 |
@@ -162,7 +162,7 @@ Total : 174 files,  23530 codes, 101 comments, 2493 blanks, all 26124 lines
 | [server/src/routes/shop\_info\_edit.ts](/server/src/routes/shop_info_edit.ts) | TypeScript | 481 | 2 | 90 | 573 |
 | [server/src/routes/star\_history.ts](/server/src/routes/star_history.ts) | TypeScript | 5 | 0 | 2 | 7 |
 | [server/src/routes/suggest\_words.ts](/server/src/routes/suggest_words.ts) | TypeScript | 79 | 0 | 23 | 102 |
-| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | 324 | 3 | 69 | 396 |
+| [server/src/routes/test.ts](/server/src/routes/test.ts) | TypeScript | 355 | 3 | 72 | 430 |
 | [server/src/routes/transfar.ts](/server/src/routes/transfar.ts) | TypeScript | 210 | 1 | 51 | 262 |
 | [server/src/routes/uriagekin\_history.ts](/server/src/routes/uriagekin_history.ts) | TypeScript | 45 | 0 | 7 | 52 |
 | [server/src/routes/user-edit.ts](/server/src/routes/user-edit.ts) | TypeScript | 307 | 0 | 49 | 356 |

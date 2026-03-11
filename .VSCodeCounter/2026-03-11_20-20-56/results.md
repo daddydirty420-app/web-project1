@@ -1,59 +1,34 @@
-# Diff Summary
+# Summary
 
-Date : 2026-03-11 13:05:57
+Date : 2026-03-11 20:20:56
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 606 files,  20365 codes, -37 comments, 1741 blanks, all 22069 lines
+Total : 434 files,  43884 codes, 65 comments, 4234 blanks, all 48183 lines
 
-[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
+Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript JSX | 319 | 18,999 | 33 | 3,161 | 22,193 |
-| JSON | 6 | 9,229 | 0 | 1 | 9,230 |
-| PostCSS | 60 | 7,084 | 20 | 818 | 7,922 |
+| TypeScript JSX | 320 | 19,012 | 34 | 3,167 | 22,213 |
+| JSON | 3 | 16,112 | 0 | 3 | 16,115 |
+| PostCSS | 60 | 7,091 | 20 | 821 | 7,932 |
+| TypeScript | 39 | 1,552 | 7 | 218 | 1,777 |
+| JavaScript | 4 | 44 | 4 | 10 | 58 |
+| JSON with Comments | 1 | 44 | 0 | 1 | 45 |
 | Markdown | 1 | 23 | 0 | 14 | 37 |
-| JSON with Comments | 2 | 17 | 0 | 1 | 18 |
 | XML | 6 | 6 | 0 | 0 | 6 |
-| HTML | 1 | -10 | 0 | -1 | -11 |
-| JavaScript | 8 | -89 | -1 | -12 | -102 |
-| TypeScript | 203 | -14,894 | -89 | -2,241 | -17,224 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 606 | 20,365 | -37 | 1,741 | 22,069 |
+| . | 434 | 43,884 | 65 | 4,234 | 48,183 |
 | . (Files) | 9 | 16,223 | 4 | 28 | 16,255 |
-| .. | 174 | -23,506 | -101 | -2,486 | -26,093 |
-| ..\\server | 174 | -23,506 | -101 | -2,486 | -26,093 |
-| ..\\server (Files) | 4 | -6,910 | 0 | -2 | -6,912 |
-| ..\\server\\config | 1 | -24 | 0 | -3 | -27 |
-| ..\\server\\migrations | 2 | -44 | -2 | -6 | -52 |
-| ..\\server\\public | 1 | -7 | 0 | -2 | -9 |
-| ..\\server\\public\\stylesheets | 1 | -7 | 0 | -2 | -9 |
-| ..\\server\\scripts | 1 | -65 | -3 | -13 | -81 |
-| ..\\server\\src | 164 | -16,446 | -96 | -2,459 | -19,001 |
-| ..\\server\\src (Files) | 2 | -202 | -3 | -19 | -224 |
-| ..\\server\\src\\bin | 1 | -48 | -24 | -21 | -93 |
-| ..\\server\\src\\config | 1 | -38 | 0 | -6 | -44 |
-| ..\\server\\src\\cron | 8 | -385 | -13 | -72 | -470 |
-| ..\\server\\src\\middleware | 5 | -137 | -1 | -24 | -162 |
-| ..\\server\\src\\models | 70 | -4,058 | -2 | -354 | -4,414 |
-| ..\\server\\src\\routes | 64 | -10,737 | -50 | -1,806 | -12,593 |
-| ..\\server\\src\\routes (Files) | 46 | -8,516 | -49 | -1,496 | -10,061 |
-| ..\\server\\src\\routes\\admin | 11 | -1,347 | -1 | -170 | -1,518 |
-| ..\\server\\src\\routes\\item-list | 7 | -874 | 0 | -140 | -1,014 |
-| ..\\server\\src\\scripts | 1 | -69 | 0 | -12 | -81 |
-| ..\\server\\src\\services | 6 | -642 | -3 | -126 | -771 |
-| ..\\server\\src\\types | 4 | -94 | 0 | -9 | -103 |
-| ..\\server\\src\\utils | 2 | -36 | 0 | -10 | -46 |
-| ..\\server\\views | 1 | -10 | 0 | -1 | -11 |
 | public | 5 | 5 | 0 | 0 | 5 |
-| src | 418 | 27,643 | 60 | 4,199 | 31,902 |
+| src | 420 | 27,656 | 61 | 4,206 | 31,923 |
 | src (Files) | 1 | 59 | 0 | 14 | 73 |
-| src\\app | 323 | 23,979 | 49 | 3,663 | 27,691 |
+| src\\app | 325 | 23,992 | 50 | 3,670 | 27,712 |
 | src\\app (Files) | 2 | 154 | 0 | 10 | 164 |
 | src\\app\\api | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth | 1 | 4 | 0 | 2 | 6 |
@@ -138,14 +113,14 @@ Total : 606 files,  20365 codes, -37 comments, 1741 blanks, all 22069 lines
 | src\\app\\inquiry | 7 | 224 | 0 | 36 | 260 |
 | src\\app\\item | 66 | 4,744 | 6 | 666 | 5,416 |
 | src\\app\\item (Files) | 7 | 363 | 0 | 42 | 405 |
-| src\\app\\item-list | 19 | 1,311 | 5 | 187 | 1,503 |
+| src\\app\\item-list | 19 | 1,310 | 5 | 187 | 1,502 |
 | src\\app\\item-list (Files) | 12 | 1,097 | 5 | 153 | 1,255 |
 | src\\app\\item-list\\cart | 1 | 38 | 0 | 7 | 45 |
 | src\\app\\item-list\\deleted | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\draft | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\good | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\stock | 1 | 27 | 0 | 4 | 31 |
-| src\\app\\item-list\\uploaded | 1 | 41 | 0 | 7 | 48 |
+| src\\app\\item-list\\uploaded | 1 | 40 | 0 | 7 | 47 |
 | src\\app\\item-list\\watch-history | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item\\[id] | 1 | 78 | 0 | 14 | 92 |
 | src\\app\\item\\commentSection | 12 | 903 | 1 | 140 | 1,044 |
@@ -184,6 +159,7 @@ Total : 606 files,  20365 codes, -37 comments, 1741 blanks, all 22069 lines
 | src\\app\\lp\\main\\mainComponent | 9 | 101 | 0 | 17 | 118 |
 | src\\app\\lp\\shop | 1 | 46 | 0 | 10 | 56 |
 | src\\app\\my-page | 12 | 639 | 0 | 85 | 724 |
+| src\\app\\order-list | 2 | 14 | 1 | 7 | 22 |
 | src\\app\\privacy-policy | 2 | 141 | 0 | 24 | 165 |
 | src\\app\\profile | 16 | 1,084 | 0 | 163 | 1,247 |
 | src\\app\\profile (Files) | 14 | 999 | 0 | 140 | 1,139 |
@@ -280,4 +256,4 @@ Total : 606 files,  20365 codes, -37 comments, 1741 blanks, all 22069 lines
 | src\\styles\\components-style | 1 | 289 | 0 | 42 | 331 |
 | src\\types | 4 | 166 | 0 | 19 | 185 |
 
-[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
+Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)

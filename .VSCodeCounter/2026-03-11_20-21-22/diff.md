@@ -1,38 +1,38 @@
 # Diff Summary
 
-Date : 2026-03-11 16:11:52
+Date : 2026-03-11 20:21:22
 
 Directory c:\\Users\\conta\\Desktop\\project\\server
 
-Total : 606 files,  -20341 codes, 37 comments, -1734 blanks, all -22038 lines
+Total : 608 files,  -20230 codes, 36 comments, -1723 blanks, all -21917 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript | 203 | 14,918 | 89 | 2,248 | 17,255 |
+| TypeScript | 203 | 15,042 | 89 | 2,266 | 17,397 |
 | JavaScript | 8 | 89 | 1 | 12 | 102 |
 | HTML | 1 | 10 | 0 | 1 | 11 |
 | XML | 6 | -6 | 0 | 0 | -6 |
 | JSON with Comments | 2 | -17 | 0 | -1 | -18 |
 | Markdown | 1 | -23 | 0 | -14 | -37 |
-| PostCSS | 60 | -7,084 | -20 | -818 | -7,922 |
+| PostCSS | 61 | -7,084 | -20 | -819 | -7,923 |
 | JSON | 6 | -9,229 | 0 | -1 | -9,230 |
-| TypeScript JSX | 319 | -18,999 | -33 | -3,161 | -22,193 |
+| TypeScript JSX | 320 | -19,012 | -34 | -3,167 | -22,213 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 606 | -20,341 | 37 | -1,734 | -22,038 |
+| . | 608 | -20,230 | 36 | -1,723 | -21,917 |
 | . (Files) | 4 | 6,910 | 0 | 2 | 6,912 |
-| .. | 432 | -43,871 | -64 | -4,227 | -48,162 |
-| ..\\client | 432 | -43,871 | -64 | -4,227 | -48,162 |
+| .. | 434 | -43,884 | -65 | -4,234 | -48,183 |
+| ..\\client | 434 | -43,884 | -65 | -4,234 | -48,183 |
 | ..\\client (Files) | 9 | -16,223 | -4 | -28 | -16,255 |
 | ..\\client\\public | 5 | -5 | 0 | 0 | -5 |
-| ..\\client\\src | 418 | -27,643 | -60 | -4,199 | -31,902 |
+| ..\\client\\src | 420 | -27,656 | -61 | -4,206 | -31,923 |
 | ..\\client\\src (Files) | 1 | -59 | 0 | -14 | -73 |
-| ..\\client\\src\\app | 323 | -23,979 | -49 | -3,663 | -27,691 |
+| ..\\client\\src\\app | 325 | -23,992 | -50 | -3,670 | -27,712 |
 | ..\\client\\src\\app (Files) | 2 | -154 | 0 | -10 | -164 |
 | ..\\client\\src\\app\\api | 1 | -4 | 0 | -2 | -6 |
 | ..\\client\\src\\app\\api\\auth | 1 | -4 | 0 | -2 | -6 |
@@ -117,14 +117,14 @@ Total : 606 files,  -20341 codes, 37 comments, -1734 blanks, all -22038 lines
 | ..\\client\\src\\app\\inquiry | 7 | -224 | 0 | -36 | -260 |
 | ..\\client\\src\\app\\item | 66 | -4,744 | -6 | -666 | -5,416 |
 | ..\\client\\src\\app\\item (Files) | 7 | -363 | 0 | -42 | -405 |
-| ..\\client\\src\\app\\item-list | 19 | -1,311 | -5 | -187 | -1,503 |
+| ..\\client\\src\\app\\item-list | 19 | -1,310 | -5 | -187 | -1,502 |
 | ..\\client\\src\\app\\item-list (Files) | 12 | -1,097 | -5 | -153 | -1,255 |
 | ..\\client\\src\\app\\item-list\\cart | 1 | -38 | 0 | -7 | -45 |
 | ..\\client\\src\\app\\item-list\\deleted | 1 | -27 | 0 | -4 | -31 |
 | ..\\client\\src\\app\\item-list\\draft | 1 | -27 | 0 | -4 | -31 |
 | ..\\client\\src\\app\\item-list\\good | 1 | -27 | 0 | -4 | -31 |
 | ..\\client\\src\\app\\item-list\\stock | 1 | -27 | 0 | -4 | -31 |
-| ..\\client\\src\\app\\item-list\\uploaded | 1 | -41 | 0 | -7 | -48 |
+| ..\\client\\src\\app\\item-list\\uploaded | 1 | -40 | 0 | -7 | -47 |
 | ..\\client\\src\\app\\item-list\\watch-history | 1 | -27 | 0 | -4 | -31 |
 | ..\\client\\src\\app\\item\\[id] | 1 | -78 | 0 | -14 | -92 |
 | ..\\client\\src\\app\\item\\commentSection | 12 | -903 | -1 | -140 | -1,044 |
@@ -163,6 +163,7 @@ Total : 606 files,  -20341 codes, 37 comments, -1734 blanks, all -22038 lines
 | ..\\client\\src\\app\\lp\\main\\mainComponent | 9 | -101 | 0 | -17 | -118 |
 | ..\\client\\src\\app\\lp\\shop | 1 | -46 | 0 | -10 | -56 |
 | ..\\client\\src\\app\\my-page | 12 | -639 | 0 | -85 | -724 |
+| ..\\client\\src\\app\\order-list | 2 | -14 | -1 | -7 | -22 |
 | ..\\client\\src\\app\\privacy-policy | 2 | -141 | 0 | -24 | -165 |
 | ..\\client\\src\\app\\profile | 16 | -1,084 | 0 | -163 | -1,247 |
 | ..\\client\\src\\app\\profile (Files) | 14 | -999 | 0 | -140 | -1,139 |
@@ -263,17 +264,17 @@ Total : 606 files,  -20341 codes, 37 comments, -1734 blanks, all -22038 lines
 | public | 1 | 7 | 0 | 2 | 9 |
 | public\\stylesheets | 1 | 7 | 0 | 2 | 9 |
 | scripts | 1 | 65 | 3 | 13 | 81 |
-| src | 164 | 16,470 | 96 | 2,466 | 19,032 |
+| src | 164 | 16,594 | 96 | 2,484 | 19,174 |
 | src (Files) | 2 | 202 | 3 | 19 | 224 |
 | src\\bin | 1 | 48 | 24 | 21 | 93 |
 | src\\config | 1 | 38 | 0 | 6 | 44 |
 | src\\cron | 8 | 385 | 13 | 72 | 470 |
 | src\\middleware | 5 | 137 | 1 | 24 | 162 |
 | src\\models | 70 | 4,058 | 2 | 354 | 4,414 |
-| src\\routes | 64 | 10,761 | 50 | 1,813 | 12,624 |
-| src\\routes (Files) | 46 | 8,540 | 49 | 1,503 | 10,092 |
+| src\\routes | 64 | 10,885 | 50 | 1,831 | 12,766 |
+| src\\routes (Files) | 46 | 8,571 | 49 | 1,506 | 10,126 |
 | src\\routes\\admin | 11 | 1,347 | 1 | 170 | 1,518 |
-| src\\routes\\item-list | 7 | 874 | 0 | 140 | 1,014 |
+| src\\routes\\item-list | 7 | 967 | 0 | 155 | 1,122 |
 | src\\scripts | 1 | 69 | 0 | 12 | 81 |
 | src\\services | 6 | 642 | 3 | 126 | 771 |
 | src\\types | 4 | 94 | 0 | 9 | 103 |
