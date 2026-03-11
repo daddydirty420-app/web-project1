@@ -400,28 +400,24 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
 
         const now = new Date();
 
-        await Promise.all(items.map(async (item: any) => {
-            await PaidInfo.update({
+        await Promise.all(paidInfos.map(async (paid: any) => {
+            await paid.update({
                 purchase_snapshot: {
-                    item_id: item.id,
-                    item_name: item.name,
-                    item_image: item.first_image_url,
+                    item_id: paid.Item.id,
+                    item_name: paid.Item.name,
+                    item_image: paid.Item.first_image_url,
 
                     category: {
-                        id: item.Category.id,
-                        name: item.Category.name,
+                        id: paid.Item.Category?.id ?? "",
+                        name: paid.Item.Category?.name ?? "",
                     },
 
                     brand: {
-                        id: item.Brand?.id ?? undefined,
-                        name: item.Brand?.name ?? undefined,
+                        id: paid.Item.Brand?.id ?? undefined,
+                        name: paid.Item.Brand?.name ?? undefined,
                     },
 
-                    materials: item.attributes.materials ?? [],
-                },
-            },{
-                where: {
-                    buyer_user_id: userId
+                    materials: paid.Item.attributes.materials ?? [],
                 },
             }, { transaction: t });
         }));
