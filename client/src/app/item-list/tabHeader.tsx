@@ -48,7 +48,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="sold"
                 onClick={() =>
-                    router.push(`/transaction-list/sold`)
+                    router.push(`/item-list/uploaded?tab=sold`)
                 }
                 className={`${styles.headerButton} ${
                     page === "sold"
@@ -56,7 +56,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                     : ""
                 }`}
                 >
-                    売却済み
+                    売り切れ
                 </button>
             </div>
         </nav>
