@@ -419,6 +419,10 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
 
                     materials: item.attributes.materials ?? [],
                 },
+            },{
+                where: {
+                    buyer_user_id: userId
+                },
             }, { transaction: t });
         }));
 
