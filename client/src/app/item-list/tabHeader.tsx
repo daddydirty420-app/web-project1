@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 import styles from "./header.module.css";
 
 type Props = {
-    page: "uploaded" | "sold";
-    tab: "all" | "selling" | null;
+    tab: "all" | "selling" | "sold";
 };
 
-export const TabHeader = ({ page, tab }: Props) => {
+export const TabHeader = ({ tab }: Props) => {
     const router = useRouter();
 
     return (
@@ -51,7 +50,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                     router.push(`/item-list/uploaded?tab=sold`)
                 }
                 className={`${styles.headerButton} ${
-                    page === "sold"
+                    tab === "sold"
                     ? styles.active
                     : ""
                 }`}

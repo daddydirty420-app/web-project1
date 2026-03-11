@@ -33,7 +33,6 @@ export default async function Page({ searchParams }: Props) {
     return (
         <>
         <TabHeader
-        page="uploaded"
         tab={tab}
         />
 
