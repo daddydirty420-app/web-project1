@@ -107,7 +107,7 @@ router.get('/selling', authenticateToken, async (req: Request, res: Response): P
     }
 });
 
-router.get('/selling', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/sold', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const currentUserId = req.user!.id;
         
     const page = parseInt(req.query.page as string) || 1;
