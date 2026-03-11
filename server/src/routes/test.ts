@@ -281,7 +281,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
                 paid_at: new Date(),
                 pay_id: generatePayId(),
                 status: "paid",
-                purchased_snapshot: {
+                purchase_snapshot: {
                     item_id: item.id,
                     item_name: item.name,
                     item_image: item.first_image_url,
@@ -368,6 +368,30 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
             throw new Error("USER_NOT_FOUND");
         }
 
+        const items = await Item.findAll({
+            where: {
+                seller_id: { [Op.ne]: userId },
+            },
+            include: [
+                {
+                    model: Categories,
+                    as: "Category",
+                },
+                {
+                    model: Brands,
+                    as: "Brand",
+                    required: false,
+                },
+                {
+                    model: User
+                },
+            ],
+        });
+
+        if (items.length === 0) {
+            throw new Error("NOT_FOUND");
+        }
+
         const paidInfos = await PaidInfo.findAll({
             where: {
                 buyer_user_id: userId,
@@ -376,12 +400,27 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
 
         const now = new Date();
 
-        for (const paid of paidInfos) {
-            await paid.update({
-                buy_at: now,
-                paid_at: now,
+        await Promise.all(items.map(async (item: any) => {
+            await PaidInfo.update({
+                purchase_snapshot: {
+                    item_id: item.id,
+                    item_name: item.name,
+                    item_image: item.first_image_url,
+
+                    category: {
+                        id: item.Category.id,
+                        name: item.Category.name,
+                    },
+
+                    brand: {
+                        id: item.Brand?.id ?? undefined,
+                        name: item.Brand?.name ?? undefined,
+                    },
+
+                    materials: item.attributes.materials ?? [],
+                },
             }, { transaction: t });
-        }
+        }));
 
         await t.commit();
 
