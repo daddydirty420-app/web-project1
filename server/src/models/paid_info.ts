@@ -24,8 +24,8 @@ export class PaidInfo extends Model {
     declare item_id: number | null;
     declare seller_user_id: number | null;
     declare buyer_user_id: number | null;
-    declare buy_date: Date | null;
-    declare paid_date: Date | null;
+    declare buy_at: Date | null;
+    declare paid_at: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
     declare pay_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");

@@ -277,8 +277,8 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
                 item_id: item.id,
                 seller_user_id: item.seller_id,
                 buyer_user_id: userId,
-                buy_date: new Date(),
-                paid_date: new Date(),
+                buy_at: new Date(),
+                paid_at: new Date(),
                 pay_id: generatePayId(),
                 status: "paid",
                 purchased_snapshot: {
@@ -345,6 +345,47 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
         await t.commit();
 
         res.status(201).json({ message: "created" });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ error: "FAILED" });
+    }
+});
+
+router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<void> => {
+    const userId = Number(req.params.id);
+
+    const t = await sequelize.transaction();
+
+    try {
+        if (!Number.isInteger(userId) || userId <= 0) {
+            throw new Error("INVALID_USER_ID");
+        }
+
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            throw new Error("USER_NOT_FOUND");
+        }
+
+        const paidInfos = await PaidInfo.findAll({
+            where: {
+                buyer_user_id: userId,
+            },
+        });
+
+        const now = new Date();
+
+        for (const paid of paidInfos) {
+            await paid.update({
+                buy_at: now,
+                paid_at: now,
+            }, { transaction: t });
+        }
+
+        await t.commit();
+
+        res.status(200).json({ message: "ok" });
     } catch (err) {
         await t.rollback();
         console.error(err);
