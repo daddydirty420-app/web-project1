@@ -28,7 +28,7 @@ export class PaidInfo extends Model {
     declare paid_date: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare pay_id: string | null; // 原則30文字、英大文字・小文字・数字・_
+    declare pay_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");
     declare status: "pending" | "paid" | "shipped" | "completed" | "cancelled" | "returned";
     declare purchase_snapshot: PurchaseSnapshot;
 

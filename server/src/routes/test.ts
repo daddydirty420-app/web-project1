@@ -217,16 +217,8 @@ router.post("/address-create/:id", async (req: Request, res: Response): Promise<
     }
 });
 
-function generatePayId(length: number = 30): string {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_";
-    const bytes = crypto.randomBytes(length);
-  
-    let result = "";
-    for (let i = 0; i < length; i++) {
-        result += chars[bytes[i] % chars.length];
-    }
-
-    return result;
+function generatePayId(): string {
+    return crypto.randomBytes(16).toString("base64url");
 }
 
 router.post("/paid-create/:id", async (req: Request, res: Response): Promise<void> => {
@@ -287,7 +279,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
                 buyer_user_id: userId,
                 buy_date: new Date(),
                 paid_date: new Date(),
-                pay_id: generatePayId(30),
+                pay_id: generatePayId(),
                 status: "paid",
                 purchased_snapshot: {
                     item_id: item.id,
@@ -311,7 +303,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
         );
 
         // Delivery.bulkCreate
-        const deliveries = await Delivery.bulkCreate(
+        await Delivery.bulkCreate(
             paidInfos.map((paid: any, index: number) => ({
                 buyer_phone_number: user.phone_number,
                 cancel: false,
@@ -343,7 +335,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
         );
 
         // Cancel.bulkCreate
-        const cancels = await Cancel.bulkCreate(
+        await Cancel.bulkCreate(
             paidInfos.map((paid: any) => ({
                 paid_info_id: paid.id
             })),
