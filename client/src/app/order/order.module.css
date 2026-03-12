@@ -8,17 +8,17 @@
 
 
 
-.itemListSection {
+.paidListSection {
     width: 100%;
     max-width: 900px;
     margin: 1rem auto 5rem;
 }
 
-.itemSection {
+.paidSection {
     width: 100%;
 }
 
-.itemFlex {
+.paidFlex {
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -27,12 +27,12 @@
     padding: 14px 10px;
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-.itemFlex:hover {
+.paidFlex:hover {
     background: var(--bg-subtle);
     box-shadow: var(--shadow-mini);
 }
 
-.itemFlex::before {
+.paidFlex::before {
     content: "";
     position: absolute;
     left: 0;
@@ -44,11 +44,11 @@
     transition: background 0.2s ease;
 }
 
-.itemFlex:hover::before {
+.paidFlex:hover::before {
     background: var(--theme-soft);
 }
 
-.itemLinkArea {
+.paidLinkArea {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,7 +57,7 @@
     cursor: pointer;
 }
 
-.itemImageText {
+.imageText {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -80,28 +80,8 @@
     box-shadow: var(--shadow-mini);
     transition: transform 0.2s ease;
 }
-.itemSection:hover .image {
+.paidSection:hover .image {
     transform: scale(1.02);
-}
-
-.sold {
-    display: flex;
-    align-items: flex-start;
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    background-color: var(--alert);
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-    border-top-left-radius: 8px;
-}
-
-.soldP {
-    font-size: 9px;
-    font-weight: 600;
-    color: #fff;
-    margin: 7.5px 0 0 2.5px;
-    transform: rotate(-45deg);
 }
 
 .itemTextArea {
@@ -117,51 +97,20 @@
     letter-spacing: 0.02em;
 }
 
-.dateDiv {
+.transDiv {
     display: flex;
     gap: 6px;
     padding-left: 0.5em;
 }
 
-.dateText {
+.transLabel {
     font-size: 10.5px;
     color: var(--text-muted);
-    line-height: 1.2;
-    flex-shrink: 0;
-}
-
-.typeRow {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: 0.5em;
-}
-
-.typeText {
-    font-size: 10.5px;
-    color: var(--theme);
-    line-height: 1.2;
-    white-space: nowrap;
-    background-color: var(--gray-background);
-    border-radius: 6px;
-    padding: 3px;
-}
-
-.stockDiv {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding-left: 0.5em;
-}
-
-.stockLabel {
-    font-size: 10.5px;
-    color: var(--theme);
     line-height: 1;
     flex-shrink: 0;
 }
 
-.stock {
+.transText {
     font-size: 14px;
     font-weight: 600;
     color: var(--theme-str);
@@ -169,23 +118,13 @@
     letter-spacing: 0.02em;
 }
 
-.videoTitleDiv {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.titleLabel {
-    font-size: 10px;
-    flex-shrink: 0;
-}
-
-.videoTitle {
-    font-size: 12px;
-    font-weight: 500;
+.cancel {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
     color: var(--theme-str);
+    line-height: 1;
     letter-spacing: 0.02em;
-    opacity: 0.85;
 }
 
 .priceColumn {
@@ -206,61 +145,23 @@
     line-height: 1.2;
 }
 
-.beforePrice {
-    font-size: 10.5px;
-    color: var(--text-muted);
-    text-decoration: line-through;
-    line-height: 1.2;
-}
-
-.sale {
-    display: block;
-    font-size: 10.5px;
-    font-weight: 600;
-    color: #fff;
-    background-color: var(--alert);
-    border-radius: 6px;
-    padding: 0.15em 0.3em;
-}
-
-.searchSection {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 75%;
-    max-width: 420px;
-    margin: 0 auto;
-}
-
-.searchInput {
+.pointDiv {
     width: 100%;
-    height: 42px;
-    border-radius: 21px;
-    border: 1px solid var(--gray-line-mid);
-    background-color: var(--background);
+    text-align: right;
+}
+
+.pointLabel {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.point {
     font-size: 12px;
-    padding: 4px 12px;
-    outline: none;
-}
-
-.searchIcon {
-    position: absolute;
-    right: 12px;
-    font-size: 18px;
-    color: var(--theme);
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-.searchIcon:hover {
+    font-weight: 500;
     color: var(--theme-str);
-    transform: scale(1.05);
 }
 
-.activeIcon {
-    cursor: pointer;
-}
-
-.noItem {
+.noList {
     display: block;
     width: 100%;
     max-width: 768px;
@@ -313,12 +214,8 @@
     background-color: var(--button-gray);
 }
 
-.related {
-    margin-top: 2.5rem;
-}
-
 @media (min-width: 768px) {
-    .itemImageText {
+    .imageText {
         gap: 12px;
     }
 
@@ -328,16 +225,6 @@
         border-radius: 12px;
     }
 
-    .sold {
-        width: 45px;
-        height: 45px;
-    }
-
-    .soldP {
-        margin: 9px 0 0 3px;
-        font-size: 9.5px;
-    }
-
     .itemTextArea {
         gap: 8px;
     }
@@ -345,18 +232,10 @@
     .itemName {
         font-size: 14px;
     }
-
-    .videoTitle {
-        font-size: 13px;
-    }
-
-    .price {
-        font-size: 16px;
-    }
 }
 
 @media (max-width: 359px) {
-    .itemLinkArea {
+    .paidLinkArea {
         padding-right: 0;
     }
 }

@@ -17,7 +17,7 @@ export const TabHeader = ({ tab }: Props) => {
                 type="button"
                 name="all-tab"
                 onClick={() =>
-                    router.push(`/item-list/uploaded?tab=all`)
+                    router.push("/item-list/uploaded?tab=all")
                 }
                 className={`${styles.headerButton} ${
                     tab === "all"
@@ -32,7 +32,7 @@ export const TabHeader = ({ tab }: Props) => {
                 type="button"
                 name="selling-tab"
                 onClick={() =>
-                    router.push(`/item-list/uploaded?tab=selling`)
+                    router.push("/item-list/uploaded?tab=selling")
                 }
                 className={`${styles.headerButton} ${
                     tab === "selling"
@@ -47,7 +47,7 @@ export const TabHeader = ({ tab }: Props) => {
                 type="button"
                 name="sold"
                 onClick={() =>
-                    router.push(`/item-list/uploaded?tab=sold`)
+                    router.push("/item-list/uploaded?tab=sold")
                 }
                 className={`${styles.headerButton} ${
                     tab === "sold"

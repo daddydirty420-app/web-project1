@@ -11,7 +11,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 import { RemoveFloat } from "./removeFloat";
-import clsx from "clsx";
 import { CartElement } from "./cartElement";
 import { Items } from "@/types/itemListTypes";
 import { ItemListRow } from "@/components";
@@ -118,7 +117,11 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                     <button
                     type='button'
                     key={idx}
-                    className={clsx(styles.pageButton, currentPage === p && styles.active)}
+                    className={`${styles.pageButton} ${
+                        currentPage === p
+                        ? styles.active
+                        : ""
+                    }`}
                     onClick={() => onPageChange(p as number)}
                     >{p}</button>
                 ))}
@@ -181,13 +184,11 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                         itemPageLink = `/item/deleted/${item.id}`;
                     }
 
-                    let previewDateLabel = "";
-
-                    if (page === "draft") {
-                        previewDateLabel = "保存日時";
-                    } else if (page === "deleted") {
-                        previewDateLabel = "削除日時";
-                    }
+                    const previewDateLabel = page === "draft"
+                    ? "保存日時"
+                    : page === "deleted"
+                    ? "削除日時"
+                    : "";
 
                     let previewDate = "";
 
@@ -311,9 +312,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         )}
 
         {itemList?.length === 0 && (
-            <>
             <p className={styles.noItem}>商品が見つかりません</p>
-            </>
         )}
         </>
     );
