@@ -11,12 +11,6 @@ type Props = {
 export const TabHeader = ({ page, tab }: Props) => {
     const router = useRouter();
 
-    const pageName = page === "purchased"
-    ? "purchased-list"
-    : page === "sold"
-    ? "sold-list"
-    : "";
-
     return (
         <nav className={styles.header}>
             <div className={styles.buttonFlex}>
@@ -24,7 +18,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="all-tab"
                 onClick={() => 
-                    router.push(`/order/${pageName}?tab=all`)
+                    router.push(`/order/list/${page}?tab=all`)
                 }
                 className={`${styles.headerButton} ${
                     tab === "all"
@@ -39,7 +33,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="wait-tab"
                 onClick={() => 
-                    router.push(`/order/${pageName}?tab=wait`)
+                    router.push(`/order/list/${page}?tab=wait`)
                 }
                 className={`${styles.headerButton} ${
                     tab === "wait"
@@ -54,7 +48,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="shipping-tab"
                 onClick={() => 
-                    router.push(`/order/${pageName}?tab=shipping`)
+                    router.push(`/order/list/${page}?tab=shipping`)
                 }
                 className={`${styles.headerButton} ${
                     tab === "shipping"
@@ -69,7 +63,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="complete-tab"
                 onClick={() => 
-                    router.push(`/order/${pageName}?tab=complete`)
+                    router.push(`/order/list${page}?tab=complete`)
                 }
                 className={`${styles.headerButton} ${
                     tab === "complete"

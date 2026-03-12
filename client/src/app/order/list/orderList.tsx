@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./transaction.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { PaidInfo } from "./type";
+import { PaidInfo } from "../type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
