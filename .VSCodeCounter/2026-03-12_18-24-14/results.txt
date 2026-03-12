@@ -1,14 +1,14 @@
-Date : 2026-03-12 13:58:37
+Date : 2026-03-12 18:24:14
 Directory : c:\Users\conta\Desktop\project\client
-Total : 435 files,  44009 codes, 66 comments, 4253 blanks, all 48328 lines
+Total : 440 files,  44458 codes, 66 comments, 4317 blanks, all 48841 lines
 
 Languages
 +--------------------+------------+------------+------------+------------+------------+
 | language           | files      | code       | comment    | blank      | total      |
 +--------------------+------------+------------+------------+------------+------------+
-| TypeScript JSX     |        320 |     19,118 |         35 |      3,183 |     22,336 |
+| TypeScript JSX     |        324 |     19,330 |         35 |      3,212 |     22,577 |
 | JSON               |          3 |     16,112 |          0 |          3 |     16,115 |
-| PostCSS            |         60 |      7,091 |         20 |        821 |      7,932 |
+| PostCSS            |         61 |      7,328 |         20 |        856 |      8,204 |
 | TypeScript         |         40 |      1,571 |          7 |        221 |      1,799 |
 | JavaScript         |          4 |         44 |          4 |         10 |         58 |
 | JSON with Comments |          1 |         44 |          0 |          1 |         45 |
@@ -20,12 +20,12 @@ Directories
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                                                                     | files      | code       | comment    | blank      | total      |
 +--------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                                                        |        435 |     44,009 |         66 |      4,253 |     48,328 |
+| .                                                                                                                        |        440 |     44,458 |         66 |      4,317 |     48,841 |
 | . (Files)                                                                                                                |          9 |     16,223 |          4 |         28 |     16,255 |
 | public                                                                                                                   |          5 |          5 |          0 |          0 |          5 |
-| src                                                                                                                      |        421 |     27,781 |         62 |      4,225 |     32,068 |
+| src                                                                                                                      |        426 |     28,230 |         62 |      4,289 |     32,581 |
 | src (Files)                                                                                                              |          1 |         59 |          0 |         14 |         73 |
-| src\app                                                                                                                  |        326 |     24,117 |         51 |      3,689 |     27,857 |
+| src\app                                                                                                                  |        331 |     24,566 |         51 |      3,753 |     28,370 |
 | src\app (Files)                                                                                                          |          2 |        154 |          0 |         10 |        164 |
 | src\app\api                                                                                                              |          1 |          4 |          0 |          2 |          6 |
 | src\app\api\auth                                                                                                         |          1 |          4 |          0 |          2 |          6 |
@@ -110,8 +110,8 @@ Directories
 | src\app\inquiry                                                                                                          |          7 |        224 |          0 |         36 |        260 |
 | src\app\item                                                                                                             |         66 |      4,744 |          6 |        666 |      5,416 |
 | src\app\item (Files)                                                                                                     |          7 |        363 |          0 |         42 |        405 |
-| src\app\item-list                                                                                                        |         19 |      1,310 |          5 |        186 |      1,501 |
-| src\app\item-list (Files)                                                                                                |         12 |      1,097 |          5 |        152 |      1,254 |
+| src\app\item-list                                                                                                        |         19 |      1,310 |          5 |        187 |      1,502 |
+| src\app\item-list (Files)                                                                                                |         12 |      1,097 |          5 |        153 |      1,255 |
 | src\app\item-list\cart                                                                                                   |          1 |         38 |          0 |          7 |         45 |
 | src\app\item-list\deleted                                                                                                |          1 |         27 |          0 |          4 |         31 |
 | src\app\item-list\draft                                                                                                  |          1 |         27 |          0 |          4 |         31 |
@@ -156,7 +156,12 @@ Directories
 | src\app\lp\main\mainComponent                                                                                            |          9 |        101 |          0 |         17 |        118 |
 | src\app\lp\shop                                                                                                          |          1 |         46 |          0 |         10 |         56 |
 | src\app\my-page                                                                                                          |         12 |        639 |          0 |         85 |        724 |
-| src\app\order                                                                                                            |          3 |        139 |          2 |         27 |        168 |
+| src\app\order                                                                                                            |          8 |        588 |          2 |         90 |        680 |
+| src\app\order (Files)                                                                                                    |          1 |         19 |          0 |          3 |         22 |
+| src\app\order\list                                                                                                       |          7 |        569 |          2 |         87 |        658 |
+| src\app\order\list (Files)                                                                                               |          5 |        487 |          2 |         73 |        562 |
+| src\app\order\list\purchased                                                                                             |          1 |         41 |          0 |          7 |         48 |
+| src\app\order\list\sold                                                                                                  |          1 |         41 |          0 |          7 |         48 |
 | src\app\privacy-policy                                                                                                   |          2 |        141 |          0 |         24 |        165 |
 | src\app\profile                                                                                                          |         16 |      1,084 |          0 |        163 |      1,247 |
 | src\app\profile (Files)                                                                                                  |         14 |        999 |          0 |        140 |      1,139 |
@@ -351,7 +356,7 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx                                                   | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx                                                    | TypeScript JSX     |         27 |          0 |          4 |         31 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css                                                | PostCSS            |         28 |          0 |          3 |         31 |
-| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css                                              | PostCSS            |        314 |          0 |         47 |        361 |
+| c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css                                              | PostCSS            |        314 |          0 |         48 |        362 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx                                                     | TypeScript JSX     |        292 |          2 |         25 |        319 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx                                             | TypeScript JSX     |         13 |          0 |          2 |         15 |
 | c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx                                                   | TypeScript JSX     |         14 |          0 |          2 |         16 |
@@ -480,8 +485,13 @@ Files
 | c:\Users\conta\Desktop\project\client\src\app\my-page\profileSection.tsx                                                 | TypeScript JSX     |         44 |          0 |          5 |         49 |
 | c:\Users\conta\Desktop\project\client\src\app\my-page\referenceCode.tsx                                                  | TypeScript JSX     |         78 |          0 |         11 |         89 |
 | c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts                                                           | TypeScript         |         19 |          0 |          1 |         20 |
-| c:\Users\conta\Desktop\project\client\src\app\order\order.module.css                                                     | PostCSS            |          0 |          0 |          1 |          1 |
-| c:\Users\conta\Desktop\project\client\src\app\order\orderList.tsx                                                        | TypeScript JSX     |        120 |          2 |         23 |        145 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\header.module.css                                               | PostCSS            |         28 |          0 |          3 |         31 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\order.module.css                                                | PostCSS            |        209 |          0 |         32 |        241 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\orderList.tsx                                                   | TypeScript JSX     |        165 |          2 |         29 |        196 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\orderListUI.tsx                                                 | TypeScript JSX     |         13 |          0 |          2 |         15 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\purchased\page.tsx                                              | TypeScript JSX     |         41 |          0 |          7 |         48 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\sold\page.tsx                                                   | TypeScript JSX     |         41 |          0 |          7 |         48 |
+| c:\Users\conta\Desktop\project\client\src\app\order\list\tabHeader.tsx                                                   | TypeScript JSX     |         72 |          0 |          7 |         79 |
 | c:\Users\conta\Desktop\project\client\src\app\order\type.ts                                                              | TypeScript         |         19 |          0 |          3 |         22 |
 | c:\Users\conta\Desktop\project\client\src\app\page.tsx                                                                   | TypeScript JSX     |        101 |          0 |          3 |        104 |
 | c:\Users\conta\Desktop\project\client\src\app\privacy-policy\content.tsx                                                 | TypeScript JSX     |        117 |          0 |         20 |        137 |
@@ -693,5 +703,5 @@ Files
 | c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts                                                      | TypeScript         |         22 |          0 |          4 |         26 |
 | c:\Users\conta\Desktop\project\client\tailwind.config.js                                                                 | JavaScript         |          9 |          2 |          1 |         12 |
 | c:\Users\conta\Desktop\project\client\tsconfig.json                                                                      | JSON with Comments |         44 |          0 |          1 |         45 |
-| Total                                                                                                                    |                    |     44,009 |         66 |      4,253 |     48,328 |
+| Total                                                                                                                    |                    |     44,458 |         66 |      4,317 |     48,841 |
 +--------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

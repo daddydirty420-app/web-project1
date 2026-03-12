@@ -1,10 +1,10 @@
 # Details
 
-Date : 2026-03-12 13:58:37
+Date : 2026-03-12 18:24:14
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 435 files,  44009 codes, 66 comments, 4253 blanks, all 48328 lines
+Total : 440 files,  44458 codes, 66 comments, 4317 blanks, all 48841 lines
 
 [Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
@@ -104,7 +104,7 @@ Total : 435 files,  44009 codes, 66 comments, 4253 blanks, all 48328 lines
 | [client/src/app/item-list/draft/page.tsx](/client/src/app/item-list/draft/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/good/page.tsx](/client/src/app/item-list/good/page.tsx) | TypeScript JSX | 27 | 0 | 4 | 31 |
 | [client/src/app/item-list/header.module.css](/client/src/app/item-list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
-| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 314 | 0 | 47 | 361 |
+| [client/src/app/item-list/itemList.module.css](/client/src/app/item-list/itemList.module.css) | PostCSS | 314 | 0 | 48 | 362 |
 | [client/src/app/item-list/itemList.tsx](/client/src/app/item-list/itemList.tsx) | TypeScript JSX | 292 | 2 | 25 | 319 |
 | [client/src/app/item-list/itemListHeaderUI.tsx](/client/src/app/item-list/itemListHeaderUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
 | [client/src/app/item-list/itemListUI.tsx](/client/src/app/item-list/itemListUI.tsx) | TypeScript JSX | 14 | 0 | 2 | 16 |
@@ -233,8 +233,13 @@ Total : 435 files,  44009 codes, 66 comments, 4253 blanks, all 48328 lines
 | [client/src/app/my-page/profileSection.tsx](/client/src/app/my-page/profileSection.tsx) | TypeScript JSX | 44 | 0 | 5 | 49 |
 | [client/src/app/my-page/referenceCode.tsx](/client/src/app/my-page/referenceCode.tsx) | TypeScript JSX | 78 | 0 | 11 | 89 |
 | [client/src/app/my-page/types.ts](/client/src/app/my-page/types.ts) | TypeScript | 19 | 0 | 1 | 20 |
-| [client/src/app/order/order.module.css](/client/src/app/order/order.module.css) | PostCSS | 0 | 0 | 1 | 1 |
-| [client/src/app/order/orderList.tsx](/client/src/app/order/orderList.tsx) | TypeScript JSX | 120 | 2 | 23 | 145 |
+| [client/src/app/order/list/header.module.css](/client/src/app/order/list/header.module.css) | PostCSS | 28 | 0 | 3 | 31 |
+| [client/src/app/order/list/order.module.css](/client/src/app/order/list/order.module.css) | PostCSS | 209 | 0 | 32 | 241 |
+| [client/src/app/order/list/orderList.tsx](/client/src/app/order/list/orderList.tsx) | TypeScript JSX | 165 | 2 | 29 | 196 |
+| [client/src/app/order/list/orderListUI.tsx](/client/src/app/order/list/orderListUI.tsx) | TypeScript JSX | 13 | 0 | 2 | 15 |
+| [client/src/app/order/list/purchased/page.tsx](/client/src/app/order/list/purchased/page.tsx) | TypeScript JSX | 41 | 0 | 7 | 48 |
+| [client/src/app/order/list/sold/page.tsx](/client/src/app/order/list/sold/page.tsx) | TypeScript JSX | 41 | 0 | 7 | 48 |
+| [client/src/app/order/list/tabHeader.tsx](/client/src/app/order/list/tabHeader.tsx) | TypeScript JSX | 72 | 0 | 7 | 79 |
 | [client/src/app/order/type.ts](/client/src/app/order/type.ts) | TypeScript | 19 | 0 | 3 | 22 |
 | [client/src/app/page.tsx](/client/src/app/page.tsx) | TypeScript JSX | 101 | 0 | 3 | 104 |
 | [client/src/app/privacy-policy/content.tsx](/client/src/app/privacy-policy/content.tsx) | TypeScript JSX | 117 | 0 | 20 | 137 |

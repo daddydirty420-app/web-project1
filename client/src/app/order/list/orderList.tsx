@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import styles from "./transaction.module.css";
+import styles from "./order.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
 import { PaidInfo } from "../type";
