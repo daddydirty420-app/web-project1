@@ -41,11 +41,6 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
                 },
             ],
         });
-
-        if (!cartList) {
-            res.status(404).json({ message: 'カートの商品が見つかりません。'});
-            return;
-        }
         
         const itemList = cartList
         .map((cart: typeof Cart) => cart.Item);
@@ -113,11 +108,6 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                 },
             ],
         });
-
-        if (!cartList) {
-            res.status(404).json({ message: 'カートの商品が見つかりません。'});
-            return;
-        }
         
         const itemList = cartList
         .map((cart: typeof Cart) => cart.Item);

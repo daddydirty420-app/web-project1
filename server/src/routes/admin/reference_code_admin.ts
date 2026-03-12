@@ -35,12 +35,8 @@ router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: 
             subQuery: false,
         });
 
-        if (!inputList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const allUser = await User.findAll();
+        
         const campaignPointsSum = allUser.reduce((sum: number, user: InstanceType<typeof User>) => {
             return sum + (user.campaign_points_sum || 0);
         }, 0);

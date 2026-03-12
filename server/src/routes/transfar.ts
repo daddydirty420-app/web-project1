@@ -247,11 +247,6 @@ router.get('/history', authenticateToken, async (req: Request, res: Response): P
             order: [['createdAt', 'DESC']],
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ dataList });
     } catch (err) {
         console.error(err);

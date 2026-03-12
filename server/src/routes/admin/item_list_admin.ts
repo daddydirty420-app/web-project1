@@ -27,12 +27,7 @@ router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Respo
                     attributes: ['id', 'user_name', 'email']
                 }
             ]
-        });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
+        })
 
         const twoDaysAgo = subDays(new Date(), 2);
 
@@ -42,6 +37,7 @@ router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Respo
                 checked: false
             }
         });
+
         const itemCount2d = await Item.count({
             where: {
                 public: true,
@@ -83,11 +79,6 @@ router.get('/recommend-item-list', authenticateToken, isAdmin, async (req: Reque
                 },
             ],
         });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         res.status(200).json({ itemList });
     } catch (err) {

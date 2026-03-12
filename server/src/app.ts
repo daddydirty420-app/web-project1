@@ -41,7 +41,6 @@ import JournalRouter from "./routes/journal.js";
 import NameRouter from "./routes/name.js";
 import NotificationRouter from "./routes/notification.js";
 import PaidInfoRouter from "./routes/paid_info.js";
-import PaidItemListRouter from "./routes/paid_item_list.js";
 import PointsHistoryRouter from "./routes/points_history.js";
 import PointsUriageOverRouter from "./routes/points_uriage_over.js";
 import ReferenceCodeRouter from './routes/reference_code.js';
@@ -79,6 +78,8 @@ import GoodListRouter from "./routes/item-list/good_list.js";
 import StockListRouter from "./routes/item-list/stock_list.js";
 import UploadedListRouter from "./routes/item-list/uploaded_list.js";
 import WatchListRouter from "./routes/item-list/watch_list.js";
+import PurchasedRouter from "./routes/order-list/purchased.js";
+import SoldRouter from "./routes/order-list/sold.js";
 import TestRouter from "./routes/test.js";
 
 import db from './models/index.js';
@@ -145,7 +146,6 @@ app.use('/api/journal', JournalRouter);
 app.use('/api/name', NameRouter);
 app.use('/api/notification', NotificationRouter);
 app.use('/api/paid-info', PaidInfoRouter);
-app.use("/api/paid-item-list", PaidItemListRouter);
 app.use('/api/personal-info', IdCardRouter);
 app.use('/api/points-history', PointsHistoryRouter);
 app.use('/api/points-uriage-over', PointsUriageOverRouter);
@@ -184,6 +184,8 @@ app.use("/api/item-list/good-list", GoodListRouter);
 app.use("/api/item-list/stock-list", StockListRouter);
 app.use("/api/item-list/uploaded-list", UploadedListRouter);
 app.use("/api/item-list/watch-list", WatchListRouter);
+app.use("/api/order-list/purchased", PurchasedRouter);
+app.use("/api/order-list/sold", SoldRouter);
 app.use("/api/test", TestRouter);
 
 // catch 404 and forward to error handler

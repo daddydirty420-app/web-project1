@@ -558,11 +558,6 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
             ],
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ dataList });
     } catch (err) {
         console.error(err);

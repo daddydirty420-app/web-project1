@@ -5,31 +5,6 @@ import { ReferenceCode, Item } from "../models/index.js";
 
 const router = Router();
 
-router.get('/my-page/count', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const userId = req.user!.id;
-
-    try {
-        const itemCount = await Item.count({
-            where: { seller_id: userId },
-        });
-
-        const referenceCount = await ReferenceCode.count({
-            where: {
-                output_user_id: userId,
-                checked: true,
-            },
-        });
-
-        res.status(200).json({
-            itemCount,
-            referenceCount
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 router.post('/input', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
         const { input } = req.body;
@@ -75,6 +50,31 @@ router.post('/output', authenticateToken, async (req: Request, res: Response): P
         res.status(200).json({
             message: '紹介コードを生成しました。',
             output,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+router.get('/my-page/count', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const itemCount = await Item.count({
+            where: { seller_id: userId },
+        });
+
+        const referenceCount = await ReferenceCode.count({
+            where: {
+                output_user_id: userId,
+                checked: true,
+            },
+        });
+
+        res.status(200).json({
+            itemCount,
+            referenceCount
         });
     } catch (err) {
         console.error(err);

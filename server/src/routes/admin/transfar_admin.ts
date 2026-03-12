@@ -30,11 +30,6 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
             ],
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ dataList });
     } catch (err) {
         console.error(err);
@@ -64,11 +59,6 @@ router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Res
                 },
             ],
         });
-
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json(dataList);
     } catch (err) {
@@ -108,12 +98,7 @@ router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Respon
             ]
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -151,12 +136,7 @@ router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Resp
             ]
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -194,12 +174,7 @@ router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Resp
             ]
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(dataList);
+        res.json({ dataList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

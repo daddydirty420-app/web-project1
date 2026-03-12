@@ -54,7 +54,7 @@ router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): P
             ],
         });
 
-        if (!data || data.length === 0) {
+        if (!data) {
             res.status(404).json({ message: 'データを取得できません。' });
             return;
         }
@@ -140,7 +140,7 @@ router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: R
             ],
         });
 
-        if (!data || data.length === 0) {
+        if (!data) {
             res.status(404).json({ message: 'データを取得できません。' });
             return;
         }
@@ -181,11 +181,6 @@ router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: R
             ]
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: '商品リストを取得できません。' });
-            return;
-        }
-
         res.json({ data, itemList });
     } catch (err) {
         console.error(err);
@@ -216,7 +211,7 @@ router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Resp
             ],
         });
 
-        if (!data || data.length === 0) {
+        if (!data) {
             res.status(404).json({ message: 'データを取得できません。' });
             return;
         }
@@ -284,7 +279,7 @@ router.get('/item-transport/:id', authenticateToken, async (req: Request, res: R
             ],
         });
 
-        if (!data || data.length === 0) {
+        if (!data) {
             res.status(404).json({ message: 'データを取得できません。' });
             return;
         }

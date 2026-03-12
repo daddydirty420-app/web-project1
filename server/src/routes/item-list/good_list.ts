@@ -44,11 +44,6 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             ],
         });
 
-        if (!goodList) {
-            res.status(404).json({ message: 'いいねした商品が見つかりません。' });
-            return;
-        }
-
         const itemList = goodList
         .map((good: typeof GoodItem) => good.Item);
 
@@ -117,11 +112,6 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                 },
             ],
         });
-
-        if (!goodList) {
-            res.status(404).json({ message: 'いいねした商品が見つかりません。' });
-            return;
-        }
 
         const itemList = goodList
         .map((good: typeof GoodItem) => good.Item);

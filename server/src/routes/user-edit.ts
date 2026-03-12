@@ -302,7 +302,7 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response): Pr
 
     const genderAllOptions = await GenderOption.findAll();
 
-    if (!data || !genderAllOptions) {
+    if (!data) {
       res.status(404).json({ message: 'データが見つかりません。' });
       return;
     }

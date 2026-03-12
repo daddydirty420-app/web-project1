@@ -31,11 +31,6 @@ router.get('/item/report-all', authenticateToken, isAdmin, async (req: Request, 
             subQuery: false,
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -62,12 +57,7 @@ router.get('/comment/report-all', authenticateToken, isAdmin, async (req: Reques
             subQuery: false
         });
 
-        if (!commentList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.json(commentList);
+        res.json({ commentList });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -89,11 +79,6 @@ router.get('/item/report-list/:id', authenticateToken, isAdmin, async (req: Requ
                 },
             ],
         });
-
-        if (!reportList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ reportList });
     } catch (err) {
@@ -117,11 +102,6 @@ router.get('/comment/report-list/:id', authenticateToken, isAdmin, async (req: R
                 },
             ],
         });
-
-        if (!reportList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ reportList });
     } catch (err) {
@@ -158,11 +138,6 @@ router.get('/buyer/report-list', authenticateToken, isAdmin, async (req: Request
                 },
             ],
         });
-
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ dataList });
     } catch (err) {

@@ -11,17 +11,7 @@ router.get('/me', authenticateOptional, async (req: Request, res: Response): Pro
 });
 
 router.get('/me-admin', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-  try {
-    if (!req.user) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
-
-    res.json({ admin: !!req.user.admin });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-  }
+  res.json({ admin: !!req.user!.admin });
 });
 
 router.get('/profile/:id', async (req: Request, res: Response): Promise<void> => {
@@ -138,6 +128,11 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
       ]
     });
 
+    if (!user) {
+      res.status(404).json({ message: "ユーザーが見つかりません" });
+      return;
+    }
+
     const hasShop = !!user.ShopInfo;
 
     const itemCount = await Item.count({
@@ -146,6 +141,7 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
         status: { [Op.in]: ["active", "soldout"] },
       }
     });
+
     const soldItemCount = await Item.count({
       where: {
         seller_id: currentUserId,
@@ -201,7 +197,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
     });
 
     if (!user) {
-      res.status(404).json({ message: 'データが見つかりません。' });
+      res.status(404).json({ message: 'ユーザーが見つかりません。' });
       return;
     }
 
@@ -221,7 +217,7 @@ router.get('/transfar-points', authenticateToken, async (req: Request, res: Resp
     });
 
     if (!user) {
-      res.status(404).json({ message: 'データが見つかりません。' });
+      res.status(404).json({ message: 'ユーザーが見つかりません。' });
       return;
     }
 

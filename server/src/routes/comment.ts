@@ -186,11 +186,6 @@ router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: R
             })
         );
 
-        if (!commentListWithExtras) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const item = await Item.findByPk(itemId);
         if (!item.sold_out && currentUserId !== item.seller_id) {
             item.sort_number = Number(item.sort_number) + 8;
@@ -270,11 +265,6 @@ router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res:
                 return commentData;
             })
         );
-
-        if (!commentListWithExtras) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ commentListWithExtras });
     } catch (err) {

@@ -26,11 +26,6 @@ router.get('/index-wait-item-list', authenticateToken, async (req: Request, res:
             ],
         });
 
-        if (!data) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         res.json({ data });
     } catch (err) {
         console.error(err);
@@ -69,11 +64,6 @@ router.get('/buy-trans/:id', authenticateToken, async (req: Request, res: Respon
                 },
             ],
         });
-
-        if (!data || data.length === 0) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ data });
     } catch (err) {

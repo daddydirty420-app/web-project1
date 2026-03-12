@@ -47,11 +47,6 @@ router.get('/index-item-list/video-list', authenticateOptional, async (req: Requ
         
         const totalPages = Math.ceil(hasItemCount / limit);
 
-        if (!items) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         res.json({ items, totalPages });
     } catch (err) {
         console.error(err);
@@ -91,11 +86,6 @@ router.get('/index-item-list/item-list', authenticateOptional, async (req: Reque
         });
 
         const totalPages = Math.ceil(hasItemCount / limit);
-
-        if (!items) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         res.json({ items, totalPages });
     } catch (err) {
@@ -142,11 +132,6 @@ router.get('/profile-item-list/video-list/:id', async (req: Request, res: Respon
         
         const totalPages = Math.ceil(hasItemCount / limit);
 
-        if (!items) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         res.json({ items, hasItemCount, totalPages });
     } catch (err) {
         console.error(err);
@@ -188,11 +173,6 @@ router.get('/profile-item-list/item-list/:id', async (req: Request, res: Respons
 
         const totalPages = Math.ceil(hasItemCount / limit);
 
-        if (!items) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         res.json({ items, hasItemCount, totalPages });
     } catch (err) {
         console.error(err);
@@ -221,11 +201,6 @@ router.get('/item-money-management/item-list/:id', authenticateToken, async (req
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -251,11 +226,6 @@ router.get('/money-management/item-list', authenticateToken, async (req: Request
                 },
             ],
         });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         res.json({ itemList });
     } catch (err) {
@@ -342,11 +312,6 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -425,11 +390,6 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -506,11 +466,6 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
             ] ,
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -580,11 +535,6 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({ itemList });
     } catch (err) {
         console.error(err);
@@ -612,11 +562,6 @@ router.get('/recommend-item-list', authenticateOptional, async (req: Request, re
                 },
             ],
         });
-
-        if (!data) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         res.json({ data });
     } catch (err) {

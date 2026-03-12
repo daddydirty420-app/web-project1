@@ -34,11 +34,6 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
             return sum + (data.uriagekin || 0);
         }, 0);
 
-        if (!uriagekinList || !totalUriagekin) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({
             uriagekinList,
             totalUriagekin

@@ -44,11 +44,6 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             ],
         });
 
-        if (!watchList) {
-            res.status(404).json({ message: '閲覧履歴が見つかりません。' });
-            return;
-        }
-
         const itemList = watchList
         .map((watch: typeof WatchHistory) => watch.Item);
 
@@ -117,11 +112,6 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                 },
             ],
         });
-
-        if (!watchList) {
-            res.status(404).json({ message: '閲覧履歴が見つかりません。' });
-            return;
-        }
 
         const itemList = watchList
         .map((watch: typeof WatchHistory) => watch.Item);

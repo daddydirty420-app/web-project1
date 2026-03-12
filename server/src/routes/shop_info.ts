@@ -8,10 +8,6 @@ const router = Router();
 router.get("/com-or-free", async (req: Request, res: Response): Promise<void> => {
     try {
         const data = await ComOrFreeOption.findAll();
-        if (!data) {
-            res.status(400).json({ message: "データが見つかりません。" });
-            return;
-        }
 
         res.status(200).json({ data });
     } catch (err) {
@@ -51,12 +47,12 @@ router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Respon
             ],
         });
 
-        const allOptions = await ComOrFreeOption.findAll();
-
-        if (!data || !allOptions) {
+        if (!data) {
             res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
+
+        const allOptions = await ComOrFreeOption.findAll();
 
         res.json({
             data: data,

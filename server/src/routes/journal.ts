@@ -25,10 +25,6 @@ router.get('/admin/list', authenticateToken, isAdmin, async (req: Request, res: 
                 { model: JournalReasonOption },
             ]
         });
-         if (!dataList) {
-            res.status(404).json({ error: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ dataList });
     } catch (err) {

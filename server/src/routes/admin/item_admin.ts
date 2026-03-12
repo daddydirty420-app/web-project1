@@ -8,12 +8,16 @@ const router = Router();
 
 router.delete('/delete-item/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
+
     if (isNaN(itemId)) {
         res.status(400).json({ message: "itemIdが不正な値です。" });
         return;
     }
+
     const adminId = req.user!.id;
+
     const deleteReason = req.body.deleteReason;
+
     if (!deleteReason || deleteReason === "") {
         res.status(400).json({ message: "deleteReasonが不正な値です。" });
         return;
@@ -21,6 +25,7 @@ router.delete('/delete-item/:id', authenticateToken, isAdmin, async (req: Reques
 
     try {
         await adminDeleteItem(itemId, adminId, deleteReason);
+        
         res.status(200).json({ message: "商品を削除しました。" });
     } catch (err) {
         console.error(err);

@@ -8,25 +8,25 @@ import { subDays, subMonths, startOfMonth, endOfMonth } from "date-fns";
 const router = Router();
 
 router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+    const keyword = req.query?.keyword ?? null;
+
+    const base = { verified: true };
+
+    const whereCondition: WhereOptions = keyword
+    ? ({
+        [Op.and]: [
+            base,
+            {
+                [Op.or]: [
+                    { conpany_name: { [Op.iLike]: `%${keyword}%`} },
+                    { shop_name: { [Op.iLike]: `%${keyword}%`} },
+                ],
+            },
+        ],
+    } as WhereOptions)
+    : (base as WhereOptions);
+
     try {
-        const keyword = req.query?.keyword ?? null;
-
-        const base = { verified: true };
-
-        const whereCondition: WhereOptions = keyword
-        ? ({
-            [Op.and]: [
-                base,
-                {
-                    [Op.or]: [
-                        { conpany_name: { [Op.iLike]: `%${keyword}%`} },
-                        { shop_name: { [Op.iLike]: `%${keyword}%`} },
-                    ],
-                },
-            ],
-        } as WhereOptions)
-        : (base as WhereOptions);
-
         const dataList = await ShopInfo.findAll({
             attributes: ['id', 'company_name', 'shop_name'],
             where: whereCondition,
@@ -49,11 +49,6 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
                 }
             ]
         });
-
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ dataList });
     } catch (err) {
@@ -90,11 +85,6 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
             ],
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const shopCount = dataList.length || 0;
         const twoDaysAgo = subDays(new Date(), 2);
         const shopCount2d = await ShopInfo.count({
@@ -117,10 +107,10 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
 });
 
 router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const startOfLastMonth = startOfMonth(subMonths(new Date(), 1));
-        const endOfLastMonth = endOfMonth(subMonths(new Date(), 1));
+    const startOfLastMonth = startOfMonth(subMonths(new Date(), 1));
+    const endOfLastMonth = endOfMonth(subMonths(new Date(), 1));
 
+    try {
         const dataList = await ShopInfo.findAll({
             attributes: ['id', 'company_name', 'shop_name'],
             where: { auto_trans: true },
@@ -155,12 +145,8 @@ router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, 
             subQuery: false,
         });
 
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const dataCount = dataList.length || 0;
+
         const uriagekinAmount = dataList.reduce((sum: number, data: any) => {
             const monthly = Number(data.User?.get?.("monthly_uriagekin") ?? 0);
             return sum + monthly;
@@ -179,7 +165,7 @@ router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, 
 
 router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await ShopInfo.findByPk(req.params.id, {
+        const data = await ShopInfo.findByPk(req.params.id, {
             include: [
                 { model: ComOrFreeOption },
                 {
@@ -206,12 +192,12 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
             ],
         });
 
-        if (!dataList) {
+        if (!data) {
             res.status(404).json({ message: 'データが見つかりません。' });
             return;
         }
 
-        res.json({ dataList });
+        res.json({ data });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

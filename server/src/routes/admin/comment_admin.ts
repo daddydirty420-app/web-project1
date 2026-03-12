@@ -9,16 +9,19 @@ const router = Router();
 
 router.post("/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const commentId = req.params.id;
+
     const t = await sequelize.transaction();
 
     try {
         const comment = await Comment.findByPk(commentId);
+
         if (!comment) {
             res.status(404).json({ message: "コメントが見つかりません。" });
             return;
         }
 
         const item = await Item.findByPk(comment.item_id);
+
         if (!item) {
             res.status(404).json({ message: "商品が見つかりません。" });
             return;
@@ -34,6 +37,7 @@ router.post("/delete/:id", authenticateToken, async (req: Request, res: Response
         await comment.destroy({ transaction: t });
 
         await t.commit();
+        
         res.status(200).json({ message: "コメントを削除しました。" });
     } catch (err) {
         await t.rollback();

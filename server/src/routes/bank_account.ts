@@ -121,6 +121,7 @@ router.get("/search-bank-name", async (req: Request, res: Response): Promise<voi
 
 router.get("/search-branch", async (req: Request, res: Response): Promise<void> => {
     const bankCode = req.query.bankCode as string;
+
     const keywordParam = req.query.keyword;
     const keyword = typeof keywordParam === "string" ? keywordParam.trim() : "";
     if (!bankCode || !keyword) {
@@ -128,11 +129,12 @@ router.get("/search-branch", async (req: Request, res: Response): Promise<void> 
         return;
     }
 
+    const kw = keyword.toLowerCase();
+
     try {
         const branches = await Branches.findAll({
             where: { bank_code: bankCode },
         });
-        const kw = keyword.toLowerCase();
 
         const matchedBranches = branches.filter((b: typeof Branches) => {
             const name = (b.name || "").toLowerCase();

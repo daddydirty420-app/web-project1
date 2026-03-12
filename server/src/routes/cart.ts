@@ -115,11 +115,6 @@ router.get("/related-item-list", authenticateToken, async (req: Request, res: Re
             ],
         });
 
-        if (!relatedItemList) {
-            res.status(404).json({ message: "関連商品リストを取得できません" });
-            return;
-        }
-
         res.status(200).json({ relatedItemList });
     } catch (err) {
         console.error(err);

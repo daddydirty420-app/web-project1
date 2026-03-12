@@ -12,6 +12,7 @@ router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Reques
   const currentUserId = req.params.id;
   const numUserId = Number(currentUserId);
   const adminId = req.user!.id;
+
   const { deleteReason } = req.body;
   if (!deleteReason) {
     res.status(400).json({ message: '削除理由を入力してください。' });
@@ -20,6 +21,7 @@ router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Reques
 
   try {
     await deleteUser(numUserId, adminId, deleteReason);
+
     res.status(200).json({ message: 'ユーザーを削除しました。' });
   } catch (err) {
     console.error(err);
@@ -31,7 +33,7 @@ router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Reques
 router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
   const { addPenalty } = req.body;
   if (!addPenalty) {
-    res.status(400).json({ error: 'ペナルティポイントを入力してください。' });
+    res.status(400).json({ message: 'ペナルティポイントを入力してください。' });
     return;
   }
 
@@ -53,6 +55,7 @@ router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request
     }
 
     user.penalty_points += addPenaltyNum;
+
     await user.save();
 
     res.status(200).json({ message: 'ペナルティポイントを追加しました。' });
@@ -96,9 +99,11 @@ router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Reque
     }
 
     const cutoffDate = new Date();
+
     cutoffDate.setDate(cutoffDate.getDate() - 180);
 
     let remaining = deleteUriageNum;
+
     const histories = await UriagekinHistory.findAll({
       where: {
         user_id: currentUserId,
@@ -120,6 +125,7 @@ router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Reque
     }
 
     user.uriagekin -= deleteUriageNum;
+
     await user.save({ transaction: t });
 
     await Notification.create({
@@ -182,11 +188,6 @@ router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Resp
       ],
     });
 
-    if (!userList) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
-
     const userCount = userList.length;
 
     res.json({
@@ -216,11 +217,6 @@ router.get('/penalty-list', authenticateToken, isAdmin, async (req: Request, res
       ],
     });
 
-    if (!userList) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
-
     res.json({ userList });
   } catch (err) {
     console.error(err);
@@ -249,11 +245,6 @@ router.get('/penalty-search-list', authenticateToken, isAdmin, async (req: Reque
       ],
     });
 
-    if (!userList) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
-
     res.json({ userList });
   } catch (err) {
     console.error(err);
@@ -278,11 +269,6 @@ router.get('/points-give-list', authenticateToken, isAdmin, async (req: Request,
         ['createdAt', 'ASC'],
       ],
     });
-
-    if (!userList) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
 
     const campaignPointsSum = userList.reduce((sum: number, user: InstanceType<typeof User>) => {
       return sum + (user.campaign_points_sum || 0);
@@ -330,11 +316,6 @@ router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, 
       ],
     });
 
-    if (!userList) {
-      res.status(404).json({ error: 'データが見つかりません。' });
-      return;
-    }
-
     res.json({ userList });
   } catch (err) {
     console.error(err);
@@ -343,9 +324,9 @@ router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, 
 });
 
 router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const keyword = req.query.keyword;
+  const keyword = req.query.keyword;
 
+  try {
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'email', 'profile_image', 'verified', 'early_seller', 'createdAt'],
       where: {
@@ -359,12 +340,7 @@ router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res:
           attributes: ['id'],
         },
       ],
-    });
-
-    if (!userList) {
-      res.status(404).json({ message: 'データが見つかりません。' });
-      return;
-    }
+    })
 
     res.json({ userList });
   } catch (err) {

@@ -36,11 +36,6 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         const totalCount = await Item.count({
             where: {
                 seller_id: currentUserId,
@@ -92,11 +87,6 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
                 },
             ],
         });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         const totalCount = await Item.count({
             where: {

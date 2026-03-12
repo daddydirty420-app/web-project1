@@ -315,11 +315,6 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
             order: [["sort_order", "ASC"]],
         });
 
-        if (!category2) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
-
         res.status(200).json({ category2 });
     } catch (err) {
         console.error(err);

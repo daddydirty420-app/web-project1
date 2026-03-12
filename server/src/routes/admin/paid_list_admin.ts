@@ -8,9 +8,9 @@ import { subDays } from "date-fns";
 const router = Router();
 
 router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const thirtyDaysAgo = subDays(new Date(), 30);
+    const thirtyDaysAgo = subDays(new Date(), 30);
 
+    try {
         const dataList = await PaidInfo.findAll({
             attributes: ['id', 'gain_amount', 'buy_at'],
             where: {
@@ -46,11 +46,6 @@ router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response
                 },
             ],
         });
-
-        if (!dataList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
 
         res.json({ dataList });
     } catch (err) {

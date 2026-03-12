@@ -30,11 +30,6 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
             },
         });
 
-        if (!pointsList || !totalPoints) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         res.json({
             pointsList,
             totalPoints

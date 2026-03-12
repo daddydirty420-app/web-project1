@@ -60,11 +60,6 @@ router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: 
             offset
         });
 
-        if (!list) {
-            res.status(404).json({ message: 'ブログが見つかりません。' });
-            return;
-        }
-
         res.json({ list });
     } catch (err) {
         console.error(err);

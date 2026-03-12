@@ -74,11 +74,6 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
         }
 
         const comOrFree = await ComOrFreeOption.findAll();
-        if (!comOrFree) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            console.error("comOrFreeOption not found!!!");
-            return;
-        }
 
         res.json({ shopData, userData, comOrFree });
     } catch (err) {

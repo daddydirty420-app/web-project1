@@ -36,11 +36,6 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
             ],
         });
 
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
         const totalCount = await Item.count({
             where: {
                 seller_id: currentUserId,
@@ -85,11 +80,6 @@ router.get('/selling', authenticateToken, async (req: Request, res: Response): P
                 },
             ],
         });
-
-        if (!itemList) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
 
         const totalCount = await Item.count({
             where: {

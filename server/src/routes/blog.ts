@@ -19,11 +19,6 @@ router.get('/list', async (req: Request, res: Response): Promise<void> => {
             offset
         });
 
-        if (!list) {
-            res.status(404).json({ message: 'ブログが見つかりません。' });
-            return;
-        }
-
         res.json({ list });
     } catch (err) {
         console.error(err);
@@ -66,11 +61,6 @@ router.get('/search', async (req: Request, res: Response): Promise<void> => {
             ],
         });
 
-        if (!list) {
-            res.status(404).json({ message: '検索結果が見つかりません。' });
-            return;
-        }
-
         res.json({ list });
     } catch (err) {
         console.error(err);
@@ -106,11 +96,6 @@ router.get('/search-category', async (req: Request, res: Response): Promise<void
             offset,
             include: includeConditions
         });
-
-        if (!list) {
-            res.status(404).json({ message: 'ブログが見つかりません。' });
-            return;
-        }
 
         res.json({ list });
     } catch (err) {

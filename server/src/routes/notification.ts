@@ -14,11 +14,6 @@ router.get('/my-notification', authenticateToken, async (req: Request, res: Resp
             order: [['createdAt', 'DESC']]
         });
 
-        if (!notificationList) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
         const unreadCount = await Notification.count({
             where: {
                 read_user_id: currentUserId,
