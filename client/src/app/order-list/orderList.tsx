@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./transaction.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { PaidInfo } from "./type";
 
 type Props = {
     page: "purchased" | "sold";
@@ -11,6 +12,7 @@ type Props = {
 };
 
 type Responce = {
+    paidList: PaidInfo[];
     totalPages: number;
 };
 

@@ -15,7 +15,7 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
 
     try {
         const paidList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "buy_at", "purchase_snapshot"],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
                 status: { [Op.ne]: "pending" },
@@ -66,7 +66,7 @@ router.get('/waiting', authenticateToken, async (req: Request, res: Response): P
 
     try {
         const paidList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "buy_at", "purchase_snapshot"],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
                 status: "paid",
@@ -117,7 +117,7 @@ router.get('/shipping', authenticateToken, async (req: Request, res: Response): 
 
     try {
         const paidList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "buy_at", "purchase_snapshot"],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
                 status: "shipped",
@@ -168,7 +168,7 @@ router.get('/complete', authenticateToken, async (req: Request, res: Response): 
 
     try {
         const paidList = await PaidInfo.findAll({
-            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "buy_at", "purchase_snapshot"],
+            attributes: ['id', 'total_amount', 'buy_at', 'item_count', "point_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
                 status: "completed",
