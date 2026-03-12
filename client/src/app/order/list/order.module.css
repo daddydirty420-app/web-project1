@@ -89,6 +89,7 @@
     flex-direction: column;
     gap: 8px;
     min-width: 0;
+    flex: 1;
 }
 
 .itemName {
@@ -99,6 +100,7 @@
 
 .transDiv {
     display: flex;
+    align-items: center;
     gap: 6px;
     padding-left: 0.5em;
 }
@@ -113,7 +115,7 @@
 .transText {
     font-size: 14px;
     font-weight: 600;
-    color: var(--theme-str);
+    color: var(--theme);
     line-height: 1;
     letter-spacing: 0.02em;
 }
@@ -122,7 +124,7 @@
     display: block;
     font-size: 14px;
     font-weight: 600;
-    color: var(--theme-str);
+    color: var(--alert);
     line-height: 1;
     letter-spacing: 0.02em;
 }
