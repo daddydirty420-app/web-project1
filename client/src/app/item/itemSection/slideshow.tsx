@@ -35,7 +35,7 @@ export const Slideshow = ({ images }: Props) => {
                         src={src}
                         alt={`Slide ${i + 1}`}
                         fill
-                        style={{ objectFit: "contain" }}
+                        style={{ objectFit: "cover" }}
                         className={styles.image}
                         />
                     </div>
