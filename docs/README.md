@@ -37,6 +37,20 @@ This project is currently under development.
 
 ---
 
+# UI Overview
+
+### Item Page
+
+![item-page(Mobile)](docs/images/readme_UI_mobile.png)
+
+On mobile devices, the product page is designed so that
+the video, product information, and purchase actions
+fit within a single screen.
+
+![item-page(PC)](docs/images/readme_UI_PC.png)
+
+---
+
 # Tech Stack
 
 Frontend
