@@ -19,8 +19,12 @@ This project is currently under development.
 1. **Video-based product listings**
    Product listing requires a video upload to provide richer product information.
 
-2. **Single-screen product page**
-   A product page where the **video, product description, purchase button, and cart button are all accessible without scrolling**.
+2. **Mobile-first single-screen product page**
+
+   On mobile devices, the key elements of the product page —  
+   **video, product information, and purchase actions — are designed to fit within a single screen view.**
+
+   This allows users to understand the product and access purchase actions without scrolling.
 
 3. **Dual UI product listing**
    Product lists can switch between:
