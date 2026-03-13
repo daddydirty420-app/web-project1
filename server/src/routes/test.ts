@@ -30,6 +30,9 @@ router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void
             save_at: nowDate,
         });
 
+        console.log(nowDate);        // ローカルタイムで表示
+        console.log(nowDate.toJSON()); // ISO文字列 UTC
+
         res.status(201).json({ message: `ok! ${nowDate}` });
     } catch (err) {
         console.error(err);
