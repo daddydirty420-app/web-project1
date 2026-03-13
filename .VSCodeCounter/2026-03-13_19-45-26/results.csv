@@ -1,10 +1,10 @@
-"filename", "language", "TypeScript", "JavaScript", "JSON with Comments", "JSON", "PostCSS", "TypeScript JSX", "XML", "Markdown", "comment", "blank", "total"
+"filename", "language", "TypeScript", "JavaScript", "JSON", "JSON with Comments", "PostCSS", "TypeScript JSX", "XML", "Markdown", "comment", "blank", "total"
 "c:\Users\conta\Desktop\project\client\README.md", "Markdown", 0, 0, 0, 0, 0, 0, 0, 23, 0, 14, 37
 "c:\Users\conta\Desktop\project\client\eslint.config.mjs", "JavaScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 5, 17
-"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\conta\Desktop\project\client\eslintrc.json", "JSON", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
 "c:\Users\conta\Desktop\project\client\next.config.js", "JavaScript", 0, 16, 0, 0, 0, 0, 0, 0, 1, 2, 19
-"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 0, 0, 0, 16045, 0, 0, 0, 0, 0, 1, 16046
-"c:\Users\conta\Desktop\project\client\package.json", "JSON", 0, 0, 0, 60, 0, 0, 0, 0, 0, 1, 61
+"c:\Users\conta\Desktop\project\client\package-lock.json", "JSON", 0, 0, 16045, 0, 0, 0, 0, 0, 0, 1, 16046
+"c:\Users\conta\Desktop\project\client\package.json", "JSON", 0, 0, 60, 0, 0, 0, 0, 0, 0, 1, 61
 "c:\Users\conta\Desktop\project\client\postcss.config.mjs", "JavaScript", 0, 7, 0, 0, 0, 0, 0, 0, 1, 2, 10
 "c:\Users\conta\Desktop\project\client\public\file.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
 "c:\Users\conta\Desktop\project\client\public\globe.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
@@ -92,7 +92,7 @@
 "c:\Users\conta\Desktop\project\client\src\app\item-list\draft\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\good\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 27, 0, 0, 0, 4, 31
 "c:\Users\conta\Desktop\project\client\src\app\item-list\header.module.css", "PostCSS", 0, 0, 0, 0, 28, 0, 0, 0, 0, 3, 31
-"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 314, 0, 0, 0, 0, 47, 361
+"c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.module.css", "PostCSS", 0, 0, 0, 0, 315, 0, 0, 0, 0, 48, 363
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 292, 0, 0, 2, 25, 319
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemListHeaderUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
 "c:\Users\conta\Desktop\project\client\src\app\item-list\itemListUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 14, 0, 0, 0, 2, 16
@@ -221,8 +221,13 @@
 "c:\Users\conta\Desktop\project\client\src\app\my-page\profileSection.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 44, 0, 0, 0, 5, 49
 "c:\Users\conta\Desktop\project\client\src\app\my-page\referenceCode.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 78, 0, 0, 0, 11, 89
 "c:\Users\conta\Desktop\project\client\src\app\my-page\types.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 1, 20
-"c:\Users\conta\Desktop\project\client\src\app\order\order.module.css", "PostCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
-"c:\Users\conta\Desktop\project\client\src\app\order\orderList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 150, 0, 0, 2, 27, 179
+"c:\Users\conta\Desktop\project\client\src\app\order\list\header.module.css", "PostCSS", 0, 0, 0, 0, 28, 0, 0, 0, 0, 3, 31
+"c:\Users\conta\Desktop\project\client\src\app\order\list\order.module.css", "PostCSS", 0, 0, 0, 0, 211, 0, 0, 0, 0, 32, 243
+"c:\Users\conta\Desktop\project\client\src\app\order\list\orderList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 165, 0, 0, 2, 29, 196
+"c:\Users\conta\Desktop\project\client\src\app\order\list\orderListUI.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
+"c:\Users\conta\Desktop\project\client\src\app\order\list\purchased\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 7, 48
+"c:\Users\conta\Desktop\project\client\src\app\order\list\sold\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 41, 0, 0, 0, 7, 48
+"c:\Users\conta\Desktop\project\client\src\app\order\list\tabHeader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 72, 0, 0, 0, 7, 79
 "c:\Users\conta\Desktop\project\client\src\app\order\type.ts", "TypeScript", 19, 0, 0, 0, 0, 0, 0, 0, 0, 3, 22
 "c:\Users\conta\Desktop\project\client\src\app\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 101, 0, 0, 0, 3, 104
 "c:\Users\conta\Desktop\project\client\src\app\privacy-policy\content.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 117, 0, 0, 0, 20, 137
@@ -433,5 +438,5 @@
 "c:\Users\conta\Desktop\project\client\src\types\next-auth.d.ts", "TypeScript", 39, 0, 0, 0, 0, 0, 0, 0, 0, 3, 42
 "c:\Users\conta\Desktop\project\client\src\types\purchaseSnapshot.ts", "TypeScript", 22, 0, 0, 0, 0, 0, 0, 0, 0, 4, 26
 "c:\Users\conta\Desktop\project\client\tailwind.config.js", "JavaScript", 0, 9, 0, 0, 0, 0, 0, 0, 2, 1, 12
-"c:\Users\conta\Desktop\project\client\tsconfig.json", "JSON with Comments", 0, 0, 44, 0, 0, 0, 0, 0, 0, 1, 45
-"Total", "-", 1571, 44, 44, 16112, 7091, 19148, 6, 23, 66, 4257, 48362
+"c:\Users\conta\Desktop\project\client\tsconfig.json", "JSON with Comments", 0, 0, 0, 44, 0, 0, 0, 0, 0, 1, 45
+"Total", "-", 1571, 44, 16112, 44, 7331, 19330, 6, 23, 66, 4317, 48844

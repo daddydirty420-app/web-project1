@@ -41,13 +41,13 @@ This project is currently under development.
 
 ### Item Page
 
-![item-page(Mobile)](docs/images/readme_UI_mobile.png)
+![item-page(Mobile)](images/readme_UI_mobile.png)
 
 On mobile devices, the product page is designed so that
 the video, product information, and purchase actions
 fit within a single screen.
 
-![item-page(PC)](docs/images/readme_UI_PC.png)
+![item-page(PC)](images/readme_UI_PC.png)
 
 ---
 
