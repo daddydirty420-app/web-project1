@@ -145,7 +145,11 @@ export const OrderList = ({ page, tab }: Props) => {
                                         <div className={styles.itemTextArea}>
                                             <h2 className={`${styles.itemName} ${styles.line1}`}>{paid.purchase_snapshot.item_name || ""}</h2>
 
-                                            <div className={styles.transDiv}>
+                                            <div className={`${styles.transDiv} ${
+                                                ["cancelled", "returnd"].includes(paid.status)
+                                                ? styles.transCancel
+                                                : ""
+                                            }`}>
                                                 <p className={styles.transLabel}>配送状況：</p>
                                                 <p className={`${styles.transText} ${styles.line1}`}>{paid.Delivery?.DeliveryStatusOption?.name}</p>
                                             </div>
