@@ -1,3 +1,5 @@
+🇯🇵 Japanese version: README.ja.md
+
 # Web Project 1
 
 ## Overview
