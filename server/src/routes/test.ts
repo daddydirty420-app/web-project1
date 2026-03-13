@@ -8,11 +8,10 @@ import crypto from "crypto";
 
 const router = Router();
 
-const now = Date.now();
-const nowDate = new Date();
-
 router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
+
+    const nowDate = new Date();
 
     try {
         if (!itemId) {
@@ -253,6 +252,8 @@ function generatePayId(): string {
 
 router.post("/paid-create/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
+
+    const now = Date.now();
 
     const t = await sequelize.transaction();
 
