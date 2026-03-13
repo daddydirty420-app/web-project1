@@ -44,11 +44,11 @@
 
 ### 商品ページ
 
-![item-page(Mobile)](images/readme_UI_mobile.png)
+<img src="images/readme_UI_mobile.png" width="300">
 
 モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。
 
-![item-page(PC)](images/readme_UI_PC.png)
+<img src="docs/images/readme_UI_pc.png" width="600">
 
 ---
 
