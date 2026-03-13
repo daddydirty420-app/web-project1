@@ -30,6 +30,7 @@ const s3 = new S3Client({
 });
 
 const now = Date.now();
+const nowDate = new Date();
 
 router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     const currentUserId = req.user?.id;
@@ -254,6 +255,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
             return;
         }
 
+        // sort_number
         const followerCount = await Follow.count({
             where: { follower_user_id: currentUserId },
         });
@@ -275,14 +277,26 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
         if (item.User?.penalty_points <= 5) {
             sort = sort + 5000;
         }
+        
+        // search_text      
+        const searchText = `
+        ${item.name}
+        ${item.Video?.title ?? ""}
+        ${item.Category?.name ?? ""}
+        ${item.Category?.parent?.name ?? ""}
+        ${item.User?.user_name ?? ""}
+        `;
+        
+        const normalizeSearchText = normalizeJapanese(searchText ?? "");
 
         await item.update({
             status: "active",
-            uploaded_at: now,
-            save_at: now,
+            uploaded_at: nowDate,
+            save_at: nowDate,
             early_sell: true,
             sort_number: sort,
             sort_buzz_number: sort,
+            search_text: normalizeSearchText,
         }, { transaction: t });
 
         await Notification.create({

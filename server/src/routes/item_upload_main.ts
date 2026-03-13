@@ -22,6 +22,7 @@ const s3 = new S3Client({
 });
 
 const now = Date.now();
+const nowDate = new Date();
 
 type Body = {
     video?: { name?: string; type?: string; uploaded: boolean };
@@ -378,17 +379,6 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         if (!brandResult.brand && brand.name) {
             brandResult = await findOrCreateBrand(brand.name ?? "");
         }
-        
-        // search_text      
-        const searchText = `
-        ${item.name}
-        ${item.Video?.title ?? ""}
-        ${item.Category?.name ?? ""}
-        ${item.Category?.parent?.name ?? ""}
-        ${item.User?.user_name ?? ""}
-        `;
-        
-        const normalizeSearchText = normalizeJapanese(searchText ?? "");
 
         // データ更新
         await item.Video.update({
@@ -455,9 +445,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
             price: priceNum,
 
-            save_at: now,
+            save_at: nowDate,
             first_image_url: finalImageUrls[0],
-            search_text: normalizeSearchText,
         }, { transaction: t });
 
         // 商品画像更新

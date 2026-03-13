@@ -9,6 +9,33 @@ import crypto from "crypto";
 const router = Router();
 
 const now = Date.now();
+const nowDate = new Date();
+
+router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void> => {
+    const itemId = req.params.id;
+
+    try {
+        if (!itemId) {
+            throw new Error("NOT_FOUND");
+        }
+
+        const item = await Item.findByPk(itemId);
+
+        if (!item) {
+            throw new Error("NOT_FOUND");
+        }
+
+        await item.update({
+            uploaded_at: nowDate,
+            save_at: nowDate,
+        });
+
+        res.status(201).json({ message: `ok! ${nowDate}` });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "COPY_FAILED" });
+    }
+});
 
 router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
