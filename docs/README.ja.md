@@ -40,6 +40,18 @@
 
 ---
 
+# UIサンプル
+
+### 商品ページ
+
+![item-page(Mobile)](docs/images/readme_UI_mobile.png)
+
+モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。
+
+![item-page(PC)](docs/images/readme_UI_PC.png)
+
+---
+
 # 技術スタック
 
 ### フロントエンド
