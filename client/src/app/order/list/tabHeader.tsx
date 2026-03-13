@@ -63,7 +63,7 @@ export const TabHeader = ({ page, tab }: Props) => {
                 type="button"
                 name="complete-tab"
                 onClick={() => 
-                    router.push(`/order/list${page}?tab=complete`)
+                    router.push(`/order/list/${page}?tab=complete`)
                 }
                 className={`${styles.headerButton} ${
                     tab === "complete"

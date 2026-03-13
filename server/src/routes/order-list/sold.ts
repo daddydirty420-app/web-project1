@@ -57,7 +57,7 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
     }
 });
 
-router.get('/waiting', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/wait', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
         
     const page = parseInt(req.query.page as string) || 1;
