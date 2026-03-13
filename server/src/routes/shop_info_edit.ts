@@ -21,8 +21,6 @@ const s3 = new S3Client({
     },
 });
 
-const now = Date.now();
-
 router.patch("/phone-number-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const userId = req.user!.id;
@@ -68,6 +66,8 @@ router.post("/rep-name-edit/:id", authenticateToken, async (req: Request, res: R
         res.status(400).json({ message: "入力されていない項目があります。" });
         return;
     }
+
+    const now = Date.now();
 
     const t = await sequelize.transaction();
 

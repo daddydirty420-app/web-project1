@@ -21,8 +21,6 @@ const s3 = new S3Client({
     },
 });
 
-const now = Date.now();
-
 type DraftBody = {
     video?: { name?: string; type?: string; uploaded: boolean };
     thumbnail?: { name?: string; type?: string; uploaded: boolean };
@@ -105,6 +103,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         shipping,
         price,
     } = body;
+
+    const now = Date.now();
+    const nowDate = new Date();
 
     const t = await sequelize.transaction();
 
@@ -440,7 +441,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
             price: priceNum,
 
-            save_at: now,
+            save_at: nowDate,
             first_image_url: finalImageUrls[0] ?? null,
             search_text: normalizeSearchText,
             status: "draft",

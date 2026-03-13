@@ -1,13 +1,12 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { fn, col, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Comment, CommentReport, Item, Notification } from "../../models/index.js";
+import { Comment, Item, Notification } from "../../models/index.js";
 import sequelize from "../../db.js";
 
 const router = Router();
 
-router.post("/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/delete/:id", authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     const commentId = req.params.id;
 
     const t = await sequelize.transaction();

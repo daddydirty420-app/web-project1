@@ -6,7 +6,6 @@ import { Video, Item, Sale, ItemShippingProfile, Categories, Brands, ItemConditi
 import sequelize from "../db.js";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import findOrCreateBrand from "../services/findOrCreateBrand.js";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
@@ -20,9 +19,6 @@ const s3 = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
     },
 });
-
-const now = Date.now();
-const nowDate = new Date();
 
 type Body = {
     video?: { name?: string; type?: string; uploaded: boolean };
@@ -106,6 +102,9 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
         shipping,
         price,
     } = body;
+
+    const now = Date.now();
+    const nowDate = new Date();
 
     const t = await sequelize.transaction();
 

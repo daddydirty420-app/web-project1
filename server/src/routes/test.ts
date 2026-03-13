@@ -1,7 +1,6 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import { Address, Brands, Cancel, Cart, Categories, Chat, Delivery, GoodItem, Item, ItemDeleteLogs, Name, PaidInfo, Sale, User, WatchHistory } from "../models/index.js";
+import type { Request, Response } from "express-serve-static-core"
+import { Address, Brands, Cancel, Cart, Categories, Delivery, Item, Name, PaidInfo, Sale, User } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 import crypto from "crypto";
@@ -28,9 +27,6 @@ router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void
             uploaded_at: nowDate,
             save_at: nowDate,
         });
-
-        console.log(nowDate);        // ローカルタイムで表示
-        console.log(nowDate.toJSON()); // ISO文字列 UTC
 
         res.status(201).json({ message: `ok! ${nowDate}` });
     } catch (err) {

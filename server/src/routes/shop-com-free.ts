@@ -19,8 +19,6 @@ const s3 = new S3Client({
     },
 });
 
-const now = Date.now();
-
 router.post("/com-free-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const shopId = req.params.id;
     const userId = req.user!.id;
@@ -144,6 +142,8 @@ router.patch("/id-image-upload/:id", authenticateToken, async (req: Request, res
         res.status(400).json({ message: "身分証がアップロードされていない、または不正なファイルです。" });
         return;
     }
+
+    const now = Date.now();
 
     const t = await sequelize.transaction();
 

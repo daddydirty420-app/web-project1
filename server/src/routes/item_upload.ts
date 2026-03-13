@@ -29,12 +29,11 @@ const s3 = new S3Client({
     },
 });
 
-const now = Date.now();
-const nowDate = new Date();
-
 router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     const currentUserId = req.user?.id;
     const videoId = req.params.id;
+
+    const now = Date.now();
 
     try {
         const videoData = await Video.findByPk(videoId);
@@ -229,6 +228,8 @@ router.post("/new-item-create", authenticateToken, async (req: Request, res: Res
 router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const currentUserId = req.user!.id;
+
+    const nowDate = new Date();
 
     const t = await sequelize.transaction();
 

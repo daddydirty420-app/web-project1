@@ -21,8 +21,6 @@ const s3 = new S3Client({
     },
 });
 
-const now = Date.now();
-
 router.post("/1", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
     const {
@@ -247,6 +245,8 @@ router.patch("/3/:id", authenticateToken, async (req: Request, res: Response) : 
         return;
     }
 
+    const now = Date.now();
+
     try {
         const shop = await ShopInfo.findByPk(shopId);
         if (!shop) {
@@ -447,6 +447,8 @@ router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: 
         res.status(400).json({ message: "入力されていない項目があります。" });
         return;
     }
+
+    const now = Date.now();
 
     try {
         const shop = await ShopInfo.findByPk(shopId, {
