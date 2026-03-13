@@ -48,7 +48,7 @@
 
 モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。
 
-<img src="docs/images/readme_UI_pc.png" width="600">
+<img src="images/readme_UI_pc.png" width="600">
 
 ---
 
