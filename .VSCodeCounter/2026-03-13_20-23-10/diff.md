@@ -1,34 +1,60 @@
-# Summary
+# Diff Summary
 
-Date : 2026-03-12 18:56:19
+Date : 2026-03-13 20:23:10
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 440 files,  44461 codes, 66 comments, 4317 blanks, all 48844 lines
+Total : 615 files,  20934 codes, -36 comments, 1809 blanks, all 22707 lines
 
-Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript JSX | 324 | 19,330 | 35 | 3,212 | 22,577 |
-| JSON | 3 | 16,112 | 0 | 3 | 16,115 |
-| PostCSS | 61 | 7,331 | 20 | 856 | 8,207 |
-| TypeScript | 40 | 1,571 | 7 | 221 | 1,799 |
-| JSON with Comments | 1 | 44 | 0 | 1 | 45 |
-| JavaScript | 4 | 44 | 4 | 10 | 58 |
+| TypeScript JSX | 324 | 19,334 | 35 | 3,212 | 22,581 |
+| JSON | 6 | 9,229 | 0 | 1 | 9,230 |
+| PostCSS | 62 | 7,328 | 20 | 855 | 8,203 |
 | Markdown | 1 | 23 | 0 | 14 | 37 |
+| JSON with Comments | 2 | 17 | 0 | 1 | 18 |
 | XML | 6 | 6 | 0 | 0 | 6 |
+| HTML | 1 | -10 | 0 | -1 | -11 |
+| JavaScript | 8 | -89 | -1 | -12 | -102 |
+| TypeScript | 205 | -14,904 | -90 | -2,261 | -17,255 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 440 | 44,461 | 66 | 4,317 | 48,844 |
+| . | 615 | 20,934 | -36 | 1,809 | 22,707 |
 | . (Files) | 9 | 16,223 | 4 | 28 | 16,255 |
+| .. | 175 | -23,535 | -102 | -2,509 | -26,146 |
+| ..\\server | 175 | -23,535 | -102 | -2,509 | -26,146 |
+| ..\\server (Files) | 4 | -6,910 | 0 | -2 | -6,912 |
+| ..\\server\\config | 1 | -24 | 0 | -3 | -27 |
+| ..\\server\\migrations | 2 | -44 | -2 | -6 | -52 |
+| ..\\server\\public | 1 | -7 | 0 | -2 | -9 |
+| ..\\server\\public\\stylesheets | 1 | -7 | 0 | -2 | -9 |
+| ..\\server\\scripts | 1 | -65 | -3 | -13 | -81 |
+| ..\\server\\src | 165 | -16,475 | -97 | -2,482 | -19,054 |
+| ..\\server\\src (Files) | 2 | -204 | -3 | -19 | -226 |
+| ..\\server\\src\\bin | 1 | -48 | -24 | -21 | -93 |
+| ..\\server\\src\\config | 1 | -38 | 0 | -6 | -44 |
+| ..\\server\\src\\cron | 8 | -385 | -13 | -72 | -470 |
+| ..\\server\\src\\middleware | 5 | -137 | -1 | -24 | -162 |
+| ..\\server\\src\\models | 70 | -4,058 | -2 | -354 | -4,414 |
+| ..\\server\\src\\routes | 65 | -10,764 | -51 | -1,829 | -12,644 |
+| ..\\server\\src\\routes (Files) | 45 | -8,229 | -50 | -1,472 | -9,751 |
+| ..\\server\\src\\routes\\admin | 11 | -1,250 | -1 | -164 | -1,415 |
+| ..\\server\\src\\routes\\item-list | 7 | -911 | 0 | -141 | -1,052 |
+| ..\\server\\src\\routes\\order-list | 2 | -374 | 0 | -52 | -426 |
+| ..\\server\\src\\scripts | 1 | -69 | 0 | -12 | -81 |
+| ..\\server\\src\\services | 6 | -642 | -3 | -126 | -771 |
+| ..\\server\\src\\types | 4 | -94 | 0 | -9 | -103 |
+| ..\\server\\src\\utils | 2 | -36 | 0 | -10 | -46 |
+| ..\\server\\views | 1 | -10 | 0 | -1 | -11 |
 | public | 5 | 5 | 0 | 0 | 5 |
-| src | 426 | 28,233 | 62 | 4,289 | 32,584 |
+| src | 426 | 28,241 | 62 | 4,290 | 32,593 |
 | src (Files) | 1 | 59 | 0 | 14 | 73 |
-| src\\app | 331 | 24,569 | 51 | 3,753 | 28,373 |
+| src\\app | 331 | 24,577 | 51 | 3,754 | 28,382 |
 | src\\app (Files) | 2 | 154 | 0 | 10 | 164 |
 | src\\app\\api | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth | 1 | 4 | 0 | 2 | 6 |
@@ -159,10 +185,10 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\lp\\main\\mainComponent | 9 | 101 | 0 | 17 | 118 |
 | src\\app\\lp\\shop | 1 | 46 | 0 | 10 | 56 |
 | src\\app\\my-page | 12 | 639 | 0 | 85 | 724 |
-| src\\app\\order | 8 | 590 | 2 | 90 | 682 |
+| src\\app\\order | 8 | 598 | 2 | 91 | 691 |
 | src\\app\\order (Files) | 1 | 19 | 0 | 3 | 22 |
-| src\\app\\order\\list | 7 | 571 | 2 | 87 | 660 |
-| src\\app\\order\\list (Files) | 5 | 489 | 2 | 73 | 564 |
+| src\\app\\order\\list | 7 | 579 | 2 | 88 | 669 |
+| src\\app\\order\\list (Files) | 5 | 497 | 2 | 74 | 573 |
 | src\\app\\order\\list\\purchased | 1 | 41 | 0 | 7 | 48 |
 | src\\app\\order\\list\\sold | 1 | 41 | 0 | 7 | 48 |
 | src\\app\\privacy-policy | 2 | 141 | 0 | 24 | 165 |
@@ -261,4 +287,4 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\styles\\components-style | 1 | 289 | 0 | 42 | 331 |
 | src\\types | 4 | 166 | 0 | 19 | 185 |
 
-Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
+[Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

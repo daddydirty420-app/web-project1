@@ -1,19 +1,19 @@
 # Summary
 
-Date : 2026-03-12 18:24:14
+Date : 2026-03-13 20:23:10
 
 Directory c:\\Users\\conta\\Desktop\\project\\client
 
-Total : 440 files,  44458 codes, 66 comments, 4317 blanks, all 48841 lines
+Total : 440 files,  44469 codes, 66 comments, 4318 blanks, all 48853 lines
 
 Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| TypeScript JSX | 324 | 19,330 | 35 | 3,212 | 22,577 |
+| TypeScript JSX | 324 | 19,334 | 35 | 3,212 | 22,581 |
 | JSON | 3 | 16,112 | 0 | 3 | 16,115 |
-| PostCSS | 61 | 7,328 | 20 | 856 | 8,204 |
+| PostCSS | 61 | 7,335 | 20 | 857 | 8,212 |
 | TypeScript | 40 | 1,571 | 7 | 221 | 1,799 |
 | JavaScript | 4 | 44 | 4 | 10 | 58 |
 | JSON with Comments | 1 | 44 | 0 | 1 | 45 |
@@ -23,12 +23,12 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 440 | 44,458 | 66 | 4,317 | 48,841 |
+| . | 440 | 44,469 | 66 | 4,318 | 48,853 |
 | . (Files) | 9 | 16,223 | 4 | 28 | 16,255 |
 | public | 5 | 5 | 0 | 0 | 5 |
-| src | 426 | 28,230 | 62 | 4,289 | 32,581 |
+| src | 426 | 28,241 | 62 | 4,290 | 32,593 |
 | src (Files) | 1 | 59 | 0 | 14 | 73 |
-| src\\app | 331 | 24,566 | 51 | 3,753 | 28,370 |
+| src\\app | 331 | 24,577 | 51 | 3,754 | 28,382 |
 | src\\app (Files) | 2 | 154 | 0 | 10 | 164 |
 | src\\app\\api | 1 | 4 | 0 | 2 | 6 |
 | src\\app\\api\\auth | 1 | 4 | 0 | 2 | 6 |
@@ -113,8 +113,8 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\inquiry | 7 | 224 | 0 | 36 | 260 |
 | src\\app\\item | 66 | 4,744 | 6 | 666 | 5,416 |
 | src\\app\\item (Files) | 7 | 363 | 0 | 42 | 405 |
-| src\\app\\item-list | 19 | 1,310 | 5 | 187 | 1,502 |
-| src\\app\\item-list (Files) | 12 | 1,097 | 5 | 153 | 1,255 |
+| src\\app\\item-list | 19 | 1,311 | 5 | 187 | 1,503 |
+| src\\app\\item-list (Files) | 12 | 1,098 | 5 | 153 | 1,256 |
 | src\\app\\item-list\\cart | 1 | 38 | 0 | 7 | 45 |
 | src\\app\\item-list\\deleted | 1 | 27 | 0 | 4 | 31 |
 | src\\app\\item-list\\draft | 1 | 27 | 0 | 4 | 31 |
@@ -159,10 +159,10 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | src\\app\\lp\\main\\mainComponent | 9 | 101 | 0 | 17 | 118 |
 | src\\app\\lp\\shop | 1 | 46 | 0 | 10 | 56 |
 | src\\app\\my-page | 12 | 639 | 0 | 85 | 724 |
-| src\\app\\order | 8 | 588 | 2 | 90 | 680 |
+| src\\app\\order | 8 | 598 | 2 | 91 | 691 |
 | src\\app\\order (Files) | 1 | 19 | 0 | 3 | 22 |
-| src\\app\\order\\list | 7 | 569 | 2 | 87 | 658 |
-| src\\app\\order\\list (Files) | 5 | 487 | 2 | 73 | 562 |
+| src\\app\\order\\list | 7 | 579 | 2 | 88 | 669 |
+| src\\app\\order\\list (Files) | 5 | 497 | 2 | 74 | 573 |
 | src\\app\\order\\list\\purchased | 1 | 41 | 0 | 7 | 48 |
 | src\\app\\order\\list\\sold | 1 | 41 | 0 | 7 | 48 |
 | src\\app\\privacy-policy | 2 | 141 | 0 | 24 | 165 |
