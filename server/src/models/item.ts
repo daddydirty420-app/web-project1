@@ -13,6 +13,8 @@ import Categories from "./categories.js";
 import Brands from "./brands.js";
 import ItemShippingProfile from "./item_shipping_profile.js";
 import BrandAliases from "./brand_aliases.js";
+import Comment from "./comment.js";
+import WatchHistory from "./watch_history.js";
 
 export class Item extends Model {
     declare id: number;
@@ -80,7 +82,13 @@ export class Item extends Model {
         Item.hasOne(ItemShippingProfile, {
             foreignKey: "item_id"
         });
-    }
+        Item.hasMany(Comment, {
+            foreignKey: "item_id",
+        });
+        Item.hasMany(WatchHistory, {
+            foreignKey: "item_id",
+        });
+    };
 
     static associations: {
         User: Association<Item, User>;
@@ -94,6 +102,8 @@ export class Item extends Model {
         Brand: Association<Item, Brands>;
         BrandAliases: Association<Item, BrandAliases>;
         ItemShippingProfile: Association<Item, ItemShippingProfile>;
+        Comment: Association<Item, Comment>;
+        WatchHistory: Association<Item, WatchHistory>;
     };
 }
 

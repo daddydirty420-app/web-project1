@@ -32,11 +32,15 @@ Responsibilities
 
 Directory structure
 
-/frontend
-/components
+/client/src
 /app
-/lib
+/assets
+/components
 /hooks
+/lib
+/providers
+/styles
+/types
 
 ---
 
@@ -59,11 +63,16 @@ Responsibilities
 
 Directory structure
 
-/backend
+/server/src
+/controllers
+/cron
+/middleware
 /models
 /routes
-/controllers
+/scripts
 /services
+/types
+/utils
 
 ---
 
@@ -89,20 +98,42 @@ Cancel
 Relationships
 
 User
-├ items (seller)
-└ purchases (buyer)
+- item
+- cart
+- follow
+- goodItem
+- goodComment
+- notification
+- shopInfo
+- address
+- bankAccount
+- name
+- watchHistory
 
-PaidInfo
-├ item
-├ seller
-├ buyer
-├ delivery
-├ chat
-└ cancel
+Item
+- user
+- category
+- brand
+- cart
+- goodItem
+- video
+- sale
+- itemReport
+- itemShippingProfile
+- comment
+
+Order
+- item
+- seller
+- buyer
+- delivery
+- chat
+- cancel
 
 Delivery
-├ address
-└ name
+- order
+- address
+- name
 
 ---
 
