@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core"
-import { Address, Brands, Cancel, Cart, Categories, Delivery, Item, Name, PaidInfo, Sale, User } from "../models/index.js";
+import { Address, Brands, Cancel, Cart, Categories, Delivery, Item, Name, Order, Sale, User } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 import crypto from "crypto";
@@ -246,7 +246,7 @@ function generatePayId(): string {
     return crypto.randomBytes(16).toString("base64url");
 }
 
-router.post("/paid-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/order-create/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const now = Date.now();
@@ -288,8 +288,8 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
             throw new Error("NOT_FOUND");
         }
 
-        // PaidInfo.bulkCreate
-        const paidInfos = await PaidInfo.bulkCreate(
+        // Order.bulkCreate
+        const orders = await Order.bulkCreate(
             items.map((item: any) => ({
                 unit_price: item.price,
                 item_count: 3,
@@ -306,7 +306,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
                 buyer_user_id: userId,
                 buy_at: new Date(),
                 paid_at: new Date(),
-                pay_id: generatePayId(),
+                order_id: generatePayId(),
                 status: "paid",
                 purchase_snapshot: {
                     item_id: item.id,
@@ -331,14 +331,14 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
 
         // Delivery.bulkCreate
         await Delivery.bulkCreate(
-            paidInfos.map((paid: any, index: number) => ({
+            orders.map((order: any, index: number) => ({
                 buyer_phone_number: user.phone_number,
                 cancel: false,
                 shipping_day_id: 1,
                 shipping_service_id: 1,
                 delivery_status_id: 1,
                 shipping_place_id: 11,
-                paid_info_id: paid.id,
+                order_id: order.id,
                 shipping_at: null,
                 arrived_at: null,
                 arrive_specified_date: now,
@@ -363,8 +363,8 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
 
         // Cancel.bulkCreate
         await Cancel.bulkCreate(
-            paidInfos.map((paid: any) => ({
-                paid_info_id: paid.id
+            orders.map((order: any) => ({
+                order_id: order.id
             })),
             { transaction: t },
         );
@@ -379,7 +379,7 @@ router.post("/paid-create/:id", async (req: Request, res: Response): Promise<voi
     }
 });
 
-router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/order-patch/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();
@@ -395,7 +395,7 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
             throw new Error("USER_NOT_FOUND");
         }
 
-        const paidInfos = await PaidInfo.findAll({
+        const orders = await Order.findAll({
             where: {
                 buyer_user_id: userId,
             },
@@ -422,24 +422,24 @@ router.patch("/paid-patch/:id", async (req: Request, res: Response): Promise<voi
 
         const now = new Date();
 
-        await Promise.all(paidInfos.map(async (paid: any) => {
-            await paid.update({
+        await Promise.all(orders.map(async (order: any) => {
+            await order.update({
                 purchase_snapshot: {
-                    item_id: paid.Item.id,
-                    item_name: paid.Item.name,
-                    item_image: paid.Item.first_image_url,
+                    item_id: order.Item.id,
+                    item_name: order.Item.name,
+                    item_image: order.Item.first_image_url,
 
                     category: {
-                        id: paid.Item.Category?.id ?? "",
-                        name: paid.Item.Category?.name ?? "",
+                        id: order.Item.Category?.id ?? "",
+                        name: order.Item.Category?.name ?? "",
                     },
 
                     brand: {
-                        id: paid.Item.Brand?.id ?? undefined,
-                        name: paid.Item.Brand?.name ?? undefined,
+                        id: order.Item.Brand?.id ?? undefined,
+                        name: order.Item.Brand?.name ?? undefined,
                     },
 
-                    materials: paid.Item.attributes.materials ?? [],
+                    materials: order.Item.attributes.materials ?? [],
                 },
             }, { transaction: t });
         }));

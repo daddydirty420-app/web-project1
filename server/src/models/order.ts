@@ -9,7 +9,7 @@ import User from "./user.js";
 import Chat from "./chat.js";
 import Cancel from "./cancel.js";
 
-export class PaidInfo extends Model {
+export class Order extends Model {
     declare id: number;
     declare unit_price: number | null; // 1点当たりの金額
     declare item_count: number | null; // 個数
@@ -28,47 +28,47 @@ export class PaidInfo extends Model {
     declare paid_at: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare pay_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");
+    declare order_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");
     declare status: "pending" | "paid" | "shipped" | "completed" | "cancelled" | "returned";
     declare purchase_snapshot: PurchaseSnapshot;
 
     static associate() {
-        PaidInfo.belongsTo(PaymentMethodOption, {
+        Order.belongsTo(PaymentMethodOption, {
             foreignKey: 'payment_method_id'
         });
-        PaidInfo.belongsTo(Item, {
+        Order.belongsTo(Item, {
             foreignKey: 'item_id'
         });
-        PaidInfo.belongsTo(User, {
+        Order.belongsTo(User, {
             foreignKey: 'seller_user_id',
             as: 'Seller'
         });
-        PaidInfo.belongsTo(User, {
+        Order.belongsTo(User, {
             foreignKey: 'buyer_user_id',
             as: 'Buyer'
         });
-        PaidInfo.hasOne(Delivery, {
-            foreignKey: 'paid_info_id'
+        Order.hasOne(Delivery, {
+            foreignKey: 'order_id'
         });
-        PaidInfo.hasOne(Chat, {
-            foreignKey: 'paid_info_id'
+        Order.hasOne(Chat, {
+            foreignKey: 'order_id'
         });
-        PaidInfo.hasOne(Cancel, {
-            foreignKey: 'paid_info_id'
+        Order.hasOne(Cancel, {
+            foreignKey: 'order_id'
         });
     };
 
     static associations: {
-        PaymentMethodOption: Association<PaidInfo, PaymentMethodOption>;
-        Item: Association<PaidInfo, Item>;
-        Delivery: Association<PaidInfo, Delivery>;
-        User: Association<PaidInfo, User>;
-        Chat: Association<PaidInfo, Chat>;
-        Cancel: Association<PaidInfo, Cancel>;
+        PaymentMethodOption: Association<Order, PaymentMethodOption>;
+        Item: Association<Order, Item>;
+        Delivery: Association<Order, Delivery>;
+        User: Association<Order, User>;
+        Chat: Association<Order, Chat>;
+        Cancel: Association<Order, Cancel>;
     };
 }
 
-PaidInfo.init(
+Order.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -91,7 +91,7 @@ PaidInfo.init(
         buyer_user_id: DataTypes.INTEGER,
         buy_at: DataTypes.DATE,
         paid_at: DataTypes.DATE,
-        pay_id: {
+        order_id: {
             type: DataTypes.STRING(50),
             unique: true,
         },
@@ -108,11 +108,11 @@ PaidInfo.init(
     },
     {
         sequelize,
-        modelName: "PaidInfo",
-        tableName: "paid_info",
+        modelName: "Order",
+        tableName: "order",
         freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default PaidInfo;
+export default Order;

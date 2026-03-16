@@ -2,13 +2,13 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Op } from "sequelize";
-import { PaidInfo, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
+import { Order, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
 
 const router = Router();
 
 router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await PaidInfo.findByPk(req.params.id, {
+        const data = await Order.findByPk(req.params.id, {
             attributes: ['id', 'price', 'total_amount', 'item_count', "purchase_snapshot"],
             include: [
                 {
@@ -68,8 +68,8 @@ router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): P
 
 router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await PaidInfo.findByPk(req.params.id, {
-            attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'points_used', "paid_amount", 'item_count', 'buy_at', "paid_at", "status", 'pay_id', "purchase_snapshot"],
+        const data = await Order.findByPk(req.params.id, {
+            attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'points_used', "paid_amount", 'item_count', 'buy_at', "paid_at", "status", 'order_id', "purchase_snapshot"],
             include: [
                 {
                     model: PaymentMethodOption,
@@ -190,7 +190,7 @@ router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: R
 
 router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await PaidInfo.findByPk(req.params.id, {
+        const data = await Order.findByPk(req.params.id, {
             attributes: ['id', 'total_amount', 'item_count'],
             include: [
                 {
@@ -225,8 +225,8 @@ router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Resp
 
 router.get('/item-transport/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await PaidInfo.findByPk(req.params.id, {
-            attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'item_count', 'buy_at', "paid_at", 'paid_ok', "status", 'pay_id', 'sales_commission_amount', 'gain_amount', "purchase_snapshot"],
+        const data = await Order.findByPk(req.params.id, {
+            attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'item_count', 'buy_at', "paid_at", "status", 'order_id', 'sales_commission_amount', 'gain_amount', "purchase_snapshot"],
             include: [
                 {
                     model: Chat,

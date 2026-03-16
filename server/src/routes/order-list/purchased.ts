@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { PaidInfo, Delivery, DeliveryStatusOption } from "../../models/index.js";
+import { Order, Delivery, DeliveryStatusOption } from "../../models/index.js";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
     const offset = (page - 1) * limit;
 
     try {
-        const paidList = await PaidInfo.findAll({
+        const orderList = await Order.findAll({
             attributes: ['id', 'total_amount', 'buy_at', 'item_count', "points_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
@@ -35,7 +35,7 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
             ],
         });
 
-        const totalCount = await PaidInfo.count({
+        const totalCount = await Order.count({
             where: {
                 seller_user_id: userId,
                 status: { [Op.ne]: "pending" },
@@ -50,7 +50,7 @@ router.get('/all', authenticateToken, async (req: Request, res: Response): Promi
 
         const totalPages = Math.floor(totalCount / 20);
 
-        res.status(200).json({ paidList, totalPages });
+        res.status(200).json({ orderList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -65,7 +65,7 @@ router.get('/wait', authenticateToken, async (req: Request, res: Response): Prom
     const offset = (page - 1) * limit;
 
     try {
-        const paidList = await PaidInfo.findAll({
+        const orderList = await Order.findAll({
             attributes: ['id', 'total_amount', 'buy_at', 'item_count', "points_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
@@ -86,7 +86,7 @@ router.get('/wait', authenticateToken, async (req: Request, res: Response): Prom
             ],
         });
 
-        const totalCount = await PaidInfo.count({
+        const totalCount = await Order.count({
             where: {
                 seller_user_id: userId,
                 status: { [Op.ne]: "pending" },
@@ -101,7 +101,7 @@ router.get('/wait', authenticateToken, async (req: Request, res: Response): Prom
 
         const totalPages = Math.floor(totalCount / 20);
 
-        res.status(200).json({ paidList, totalPages });
+        res.status(200).json({ orderList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -116,7 +116,7 @@ router.get('/shipping', authenticateToken, async (req: Request, res: Response): 
     const offset = (page - 1) * limit;
 
     try {
-        const paidList = await PaidInfo.findAll({
+        const orderList = await Order.findAll({
             attributes: ['id', 'total_amount', 'buy_at', 'item_count', "points_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
@@ -137,7 +137,7 @@ router.get('/shipping', authenticateToken, async (req: Request, res: Response): 
             ],
         });
 
-        const totalCount = await PaidInfo.count({
+        const totalCount = await Order.count({
             where: {
                 seller_user_id: userId,
                 status: { [Op.ne]: "pending" },
@@ -152,7 +152,7 @@ router.get('/shipping', authenticateToken, async (req: Request, res: Response): 
 
         const totalPages = Math.floor(totalCount / 20);
 
-        res.status(200).json({ paidList, totalPages });
+        res.status(200).json({ orderList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
@@ -167,7 +167,7 @@ router.get('/complete', authenticateToken, async (req: Request, res: Response): 
     const offset = (page - 1) * limit;
 
     try {
-        const paidList = await PaidInfo.findAll({
+        const orderList = await Order.findAll({
             attributes: ['id', 'total_amount', 'buy_at', 'item_count', "points_used", "status", "purchase_snapshot"],
             where: {
                 buyer_user_id: userId,
@@ -188,7 +188,7 @@ router.get('/complete', authenticateToken, async (req: Request, res: Response): 
             ],
         });
 
-        const totalCount = await PaidInfo.count({
+        const totalCount = await Order.count({
             where: {
                 seller_user_id: userId,
                 status: { [Op.ne]: "pending" },
@@ -203,7 +203,7 @@ router.get('/complete', authenticateToken, async (req: Request, res: Response): 
 
         const totalPages = Math.floor(totalCount / 20);
 
-        res.status(200).json({ paidList, totalPages });
+        res.status(200).json({ orderList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

@@ -5,7 +5,7 @@ import ShippingDayOption from "./shipping_day_option.js";
 import ShippingServiceOption from "./shipping_service_option.js";
 import DeliveryStatusOption from "./delivery_status_option.js";
 import TodouhukenOption from "./todouhuken_option.js";
-import PaidInfo from "./paid_info.js";
+import Order from "./order.js";
 import Address from "./address.js";
 import Name from "./name.js";
 
@@ -17,7 +17,7 @@ export class Delivery extends Model {
     declare shipping_service_id: number | null;
     declare delivery_status_id: number | null;
     declare shipping_place_id: number | null;
-    declare paid_info_id: number | null;
+    declare order_id: number | null;
     declare shipping_at: Date | null;
     declare arrived_at: Date | null;
     declare createdAt: Date;
@@ -46,8 +46,8 @@ export class Delivery extends Model {
         Delivery.belongsTo(TodouhukenOption, {
             foreignKey: "shipping_place_id",
         });
-        Delivery.belongsTo(PaidInfo, {
-            foreignKey: "paid_info_id",
+        Delivery.belongsTo(Order, {
+            foreignKey: "order_id",
         });
         Delivery.hasOne(Address, {
             foreignKey: "delivery_id",
@@ -62,7 +62,7 @@ export class Delivery extends Model {
         ShippingServiceOption: Association<Delivery, ShippingServiceOption>;
         DeliveryStatusOption: Association<Delivery, DeliveryStatusOption>;
         TodouhukenOption: Association<Delivery, TodouhukenOption>;
-        PaidInfo: Association<Delivery, PaidInfo>;
+        Order: Association<Delivery, Order>;
         Address: Association<Delivery, Address>;
         Name: Association<Delivery, Name>;
     };
@@ -85,7 +85,7 @@ Delivery.init(
         shipping_service_id: DataTypes.INTEGER,
         delivery_status_id: DataTypes.INTEGER,
         shipping_place_id: DataTypes.INTEGER,
-        paid_info_id: {
+        order_id: {
             type: DataTypes.INTEGER,
             unique: true,
         },

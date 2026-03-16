@@ -8,17 +8,17 @@
 
 
 
-.paidListSection {
+.orderListSection {
     width: 100%;
     max-width: 900px;
     margin: 1rem auto 5rem;
 }
 
-.paidSection {
+.orderSection {
     width: 100%;
 }
 
-.paidFlex {
+.orderFlex {
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -27,12 +27,12 @@
     padding: 14px 10px;
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-.paidFlex:hover {
+.orderFlex:hover {
     background: var(--bg-subtle);
     box-shadow: var(--shadow-mini);
 }
 
-.paidFlex::before {
+.orderFlex::before {
     content: "";
     position: absolute;
     left: 0;
@@ -44,11 +44,11 @@
     transition: background 0.2s ease;
 }
 
-.paidFlex:hover::before {
+.orderFlex:hover::before {
     background: var(--theme-soft);
 }
 
-.paidLinkArea {
+.orderLinkArea {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -80,7 +80,7 @@
     box-shadow: var(--shadow-mini);
     transition: transform 0.2s ease;
 }
-.paidSection:hover .image {
+.orderSection:hover .image {
     transform: scale(1.02);
 }
 
@@ -242,7 +242,7 @@
 }
 
 @media (max-width: 359px) {
-    .paidLinkArea {
+    .orderLinkArea {
         padding-right: 0;
     }
 }

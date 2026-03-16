@@ -90,7 +90,7 @@ Main tables
 
 User
 Item
-PaidInfo (Order)
+Order
 Delivery
 Chat
 Cancel

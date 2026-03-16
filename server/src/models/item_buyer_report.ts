@@ -4,7 +4,7 @@ import sequelize from "../db.js";
 import Item from "./item.js";
 import User from "./user.js";
 import ItemBuyerReportOption from "./item_buyer_report_option.js";
-import PaidInfo from "./paid_info.js";
+import Order from "./order.js";
 
 export class ItemBuyerReport extends Model {
     declare id: number;
@@ -12,7 +12,7 @@ export class ItemBuyerReport extends Model {
     declare report_user_id: number;
     declare option_id: number;
     declare detail_text: string | null;
-    declare paid_info_id: number;
+    declare order_id: number;
     declare checked: boolean;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -27,8 +27,8 @@ export class ItemBuyerReport extends Model {
         ItemBuyerReport.belongsTo(ItemBuyerReportOption, {
             foreignKey: "option_id",
         });
-        ItemBuyerReport.belongsTo(PaidInfo, {
-            foreignKey: "paid_info_id",
+        ItemBuyerReport.belongsTo(Order, {
+            foreignKey: "order_id",
         });
     }
 
@@ -36,7 +36,7 @@ export class ItemBuyerReport extends Model {
         Item: Association<ItemBuyerReport, Item>;
         User: Association<ItemBuyerReport, User>;
         ItemBuyerReportOption: Association<ItemBuyerReport, ItemBuyerReportOption>;
-        PaidInfo: Association<ItemBuyerReport, PaidInfo>;
+        Order: Association<ItemBuyerReport, Order>;
     };
 }
 
@@ -61,7 +61,7 @@ ItemBuyerReport.init(
             allowNull: false,
         },
         detail_text: DataTypes.TEXT,
-        paid_info_id: {
+        order_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,

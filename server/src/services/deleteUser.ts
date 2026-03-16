@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, PaymentMethodOption, Cancel, PaidInfo } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, Cancel, Order } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -136,7 +136,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
             const deletedItemsData = [];
             const newItemDeleteLogs = [];
             for (const item of items) {
-                const paidInfos = await PaidInfo.findAll({
+                const orders = await Order.findAll({
                     where: {
                         item_id: item.id,
                         status: { [Op.notIn]: ["cancelled", "returned"] },
@@ -153,7 +153,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     ],
                 });
 
-                if (paidInfos && paidInfos.length > 0) {
+                if (orders && orders.length > 0) {
                     const today = new Date();
 
                     const twoWeeksLater = new Date(today);
@@ -165,25 +165,25 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
 
                     const deleteOrder = [];
 
-                    for (const paidInfo of paidInfos) {
-                        await paidInfo.update({
+                    for (const order of orders) {
+                        await order.update({
                             status: "cancelled",
                         }, { transaction: t });
 
-                        await paidInfo.Delivery.update({
+                        await order.Delivery.update({
                             cancel: true,
                         }, { transaction: t });
 
                         await Cancel.upsert({
-                            paid_info_id: paidInfo.id,
+                            order_id: order.id,
                             cancel_reason: "商品削除",
-                            return_amount: paidInfo.total_amount,
-                            item_count: paidInfo.item_count,
+                            return_amount: order.total_amount,
+                            item_count: order.item_count,
                             cancel_flag: true,
                             cancel_fee_return_id: 2,
                         }, { transaction: t });
 
-                        const buyer = await User.findByPk(paidInfo.buyer_user_id, {
+                        const buyer = await User.findByPk(order.buyer_user_id, {
                             include: [
                                 { model: BankAccount },
                             ],
@@ -202,9 +202,9 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         const transfarId = crypto.randomBytes(11).toString("hex");
                                             
                         await Transfar.create({
-                            all_money: paidInfo.total_amount,
+                            all_money: order.total_amount,
                             handling_charge: 0,
-                            trans_money: paidInfo.total_amount,
+                            trans_money: order.total_amount,
                             trans_reason_id: 2,
                             trans_schedule_date: twoWeeksLater,
                             user_id: buyer.id,
@@ -212,12 +212,12 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         }, { transaction: t });
 
                         deleteOrder.push({
-                            paid_id: paidInfo.id,
-                            delivery_id: paidInfo.Delivery.id,
+                            order_id: order.id,
+                            delivery_id: order.Delivery.id,
                             cancel_reason: "出品者削除",
                             refund_status: "未返金",
                             refund_method: "口座振込",
-                            refund_amount: paidInfo.total_amount,
+                            refund_amount: order.total_amount,
                             deleted_by: adminId,
                         });
 

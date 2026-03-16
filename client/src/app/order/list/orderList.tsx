@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./order.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { PaidInfo } from "../type";
+import { Order } from "../type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 type Responce = {
-    paidList: PaidInfo[];
+    orderList: Order[];
     totalPages: number;
 };
 
@@ -46,7 +46,7 @@ export const OrderList = ({ page, tab }: Props) => {
 
     const { data } = useSWR<Responce>(apiUrl, fetcher);
 
-    const paidList = data?.paidList;
+    const orderList = data?.orderList;
     const totalPages = data?.totalPages ?? 1;
 
     // ページネーション
@@ -115,26 +115,26 @@ export const OrderList = ({ page, tab }: Props) => {
 
     return (
         <>
-        {paidList && paidList.length > 0 && (
-            <main className={styles.paidListSection}>
-                {paidList.map((paid) => {
+        {orderList && orderList.length > 0 && (
+            <main className={styles.orderListtSection}>
+                {orderList.map((order) => {
                     const link = page === "purchased"
-                    ? `/order/purchased/${paid.id}`
+                    ? `/order/purchased/${order.id}`
                     : page === "sold"
-                    ? `/order/sold/${paid.id}`
+                    ? `/order/sold/${order.id}`
                     : "";
 
                     return (
-                        <section key={paid.id} className={styles.paidSection}>
-                            <div className={styles.paidFlex}>
+                        <section key={order.id} className={styles.orderSection}>
+                            <div className={styles.orderFlex}>
                                 <Link
                                 href={link}
-                                className={styles.paidLinkArea}
+                                className={styles.orderLinkArea}
                                 >
                                     <div className={styles.imageText}>
                                         <div className={styles.imageDiv}>
                                             <Image
-                                            src={paid.purchase_snapshot.item_image || "/no-image(1x1).png"}
+                                            src={order.purchase_snapshot.item_image || "/no-image(1x1).png"}
                                             alt="商品画像"
                                             width={80}
                                             height={80}
@@ -143,20 +143,20 @@ export const OrderList = ({ page, tab }: Props) => {
                                         </div>
 
                                         <div className={styles.itemTextArea}>
-                                            <h2 className={`${styles.itemName} ${styles.line1}`}>{paid.purchase_snapshot.item_name || ""}</h2>
+                                            <h2 className={`${styles.itemName} ${styles.line1}`}>{order.purchase_snapshot.item_name || ""}</h2>
 
                                             <div className={`${styles.transDiv} ${
-                                                ["cancelled", "returnd"].includes(paid.status)
+                                                ["cancelled", "returnd"].includes(order.status)
                                                 ? styles.transCancel
                                                 : ""
                                             }`}>
                                                 <p className={styles.transLabel}>配送状況：</p>
-                                                <p className={`${styles.transText} ${styles.line1}`}>{paid.Delivery?.DeliveryStatusOption?.name}</p>
+                                                <p className={`${styles.transText} ${styles.line1}`}>{order.Delivery?.DeliveryStatusOption?.name}</p>
                                             </div>
 
-                                            {["cancelled", "returned"].includes(paid.status) && (
+                                            {["cancelled", "returned"].includes(order.status) && (
                                                 <p className={styles.cancel}>{
-                                                    paid.status === "returned"
+                                                    order.status === "returned"
                                                     ? "返品"
                                                     : "キャンセル"
                                                 }</p>
@@ -164,12 +164,12 @@ export const OrderList = ({ page, tab }: Props) => {
                                         </div>
 
                                         <div className={styles.priceColumn}>
-                                            <h3 className={styles.price}>￥{paid.total_amount.toLocaleString()}</h3>
+                                            <h3 className={styles.price}>￥{order.total_amount.toLocaleString()}</h3>
 
-                                            {page === "purchased" && paid.point_used > 0 && (
+                                            {page === "purchased" && order.point_used > 0 && (
                                                 <div className={styles.pointDiv}>
                                                     <p className={styles.pointLabel}>ポイント利用：</p>
-                                                    <p className={styles.point}>{paid.point_used.toLocaleString()}P</p>
+                                                    <p className={styles.point}>{order.point_used.toLocaleString()}P</p>
                                                 </div>
                                             )}
                                         </div>
@@ -186,7 +186,7 @@ export const OrderList = ({ page, tab }: Props) => {
             </main>
         )}
 
-        {paidList?.length === 0 && (
+        {orderList?.length === 0 && (
             <p className={styles.noList}>{
                 page === "purchased"
                 ? "購入した商品がありません"

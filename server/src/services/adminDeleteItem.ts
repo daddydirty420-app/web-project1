@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, PaidInfo, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, Order, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
 import sequelize from "../db.js";
 import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
@@ -33,7 +33,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
             message: `平素より〇〇をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
         }, { transaction: t });
 
-        const paidInfos = await PaidInfo.findAll({
+        const orders = await Order.findAll({
             where: {
                 item_id: item.id,
                 status: { [Op.notIn]: ["cancelled", "returned"] },
@@ -52,26 +52,26 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
 
         const deleteOrder = [];
 
-        if (paidInfos && paidInfos.length > 0) {
-            for (const paidInfo of paidInfos) {
-                await paidInfo.update({
+        if (orders && orders.length > 0) {
+            for (const order of orders) {
+                await order.update({
                     status: "cancelled",
                 }, { transaction: t });
 
-                await paidInfo.Delivery.update({
+                await order.Delivery.update({
                     cancel: true,
                 }, { transaction: t });
 
                 await Cancel.upsert({
-                    paid_info_id: paidInfo.id,
+                    order_id: order.id,
                     cancel_reason: "商品削除",
-                    return_amount: paidInfo.total_amount,
-                    item_count: paidInfo.item_count,
+                    return_amount: order.total_amount,
+                    item_count: order.item_count,
                     cancel_flag: true,
                     cancel_fee_return_id: 2,
                 }, { transaction: t });
 
-                const buyer = await User.findByPk(paidInfo.buyer_user_id, {
+                const buyer = await User.findByPk(order.buyer_user_id, {
                     include: [
                         { model: BankAccount },
                     ],
@@ -90,9 +90,9 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 const transfarId = crypto.randomBytes(11).toString("hex");
                     
                 await Transfar.create({
-                    all_money: paidInfo.total_amount,
+                    all_money: order.total_amount,
                     handling_charge: 0,
-                    trans_money: paidInfo.total_amount,
+                    trans_money: order.total_amount,
                     trans_reason_id: 2,
                     trans_schedule_date: twoWeeksLater,
                     user_id: buyer.id,
@@ -100,12 +100,12 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 }, { transaction: t });
 
                 deleteOrder.push({
-                    paid_id: paidInfo.id,
-                    delivery_id: paidInfo.Delivery.id,
+                    order_id: order.id,
+                    delivery_id: order.Delivery.id,
                     cancel_reason: "商品削除",
                     refund_status: "未返金",
                     refund_method: "口座振込",
-                    refund_amount: paidInfo.total_amount,
+                    refund_amount: order.total_amount,
                     deleted_by: adminId,
                 });
 

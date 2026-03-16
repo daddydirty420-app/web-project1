@@ -11,7 +11,7 @@ export const startBuyDeleteCron = () => {
         try {
             const deletedCount = await Delivery.destroy({
                 where: {
-                    paid_info_id: null,
+                    order_id: null,
                     createdAt: { [Op.lt]: sevenDaysAgo },
                 },
             });     
@@ -29,6 +29,6 @@ export const startBuyDeleteCron = () => {
         timezone: "Asia/Tokyo",
     });
 
-    // 未購入1週間放置PaidInfo削除
+    // 未購入1週間放置Order削除
     
 };

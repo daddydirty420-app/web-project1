@@ -24,3 +24,6 @@ dist/
 # tmp
 tmp/
 .vercel
+
+# VSCodeCounter
+.VSCodeCounter/
