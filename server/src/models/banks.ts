@@ -33,6 +33,9 @@ Banks.init(
     },
     {
         sequelize,
+        modelName: "Banks",
+        tableName: "banks",
+        freezeTableName: true,
         timestamps: false,
     },
 );
