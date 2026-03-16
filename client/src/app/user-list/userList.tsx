@@ -17,7 +17,7 @@ type Props = {
     loggedIn: boolean;
     id: string;
     currentUserId: string;
-    page: "follow" | "good-item" | "good-comment";
+    page: "follow" | "item-like" | "comment-like";
     followTab?: "follow" | "follower" | null;
     myFollow?: boolean;
 };
@@ -31,8 +31,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const [searchValue, setSearchValue] = useState("");
 
     const getBasePath = () => {
-        if (page === "good-item") return "good-item/good-user-list";
-        if (page === "good-comment") return "good-comment/good-user-list";
+        if (page === "item-like") return "item-like/like-user-list";
+        if (page === "comment-like") return "comment-like/like-user-list";
 
         if (page === "follow") {
             if (followTab === "follow") return "follow/follow-list";
@@ -193,7 +193,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
             {searchValue.trim().length === 0 && (
                 <p className={styles.noUser}>
-                    {["good-item", "good-comment"].includes(page)
+                    {["item-like", "comment-like"].includes(page)
                     ? "いいねしたユーザーがいません" 
                     : followTab === "follow" 
                     ? "フォロー中のユーザーがいません" 

@@ -4,29 +4,29 @@ import sequelize from "../db.js";
 import User from "./user.js";
 import Item from "./item.js";
 
-export class GoodItem extends Model {
+export class ItemLike extends Model {
     declare id: number;
     declare item_id: number;
-    declare good_user_id: number;
+    declare user_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        GoodItem.belongsTo(Item, {
+        ItemLike.belongsTo(Item, {
             foreignKey: "item_id",
         });
-        GoodItem.belongsTo(User, {
-            foreignKey: "good_user_id",
+        ItemLike.belongsTo(User, {
+            foreignKey: "user_id",
         });
     }
 
     static associations: {
-        Item: Association<GoodItem, Item>;
-        User: Association<GoodItem, User>;
+        Item: Association<ItemLike, Item>;
+        User: Association<ItemLike, User>;
     };
 }
 
-GoodItem.init(
+ItemLike.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -38,18 +38,18 @@ GoodItem.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        good_user_id: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
     },
     {
         sequelize,
-        modelName: "GoodItem",
-        tableName: "good_item",
+        modelName: "ItemLike",
+        tableName: "item_like",
         freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default GoodItem;
+export default ItemLike;

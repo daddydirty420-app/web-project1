@@ -26,7 +26,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
     const remove = async (itemId: string) => {
         const getRemoveBasePath = () => {
             if (page === "draft") return `item/draft/remove/${itemId}`;
-            if (page === "good") return `good-item/remove/${itemId}`;
+            if (page === "good") return `item-like/remove/${itemId}`;
             if (page === "watch-history") return `watch-history/remove/${itemId}`;
 
             return null;

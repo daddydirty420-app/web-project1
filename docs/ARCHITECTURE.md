@@ -100,9 +100,9 @@ Relationships
 User
 - item
 - cart
+- commentLike
 - follow
-- goodItem
-- goodComment
+- itemLike
 - notification
 - shopInfo
 - address
@@ -115,7 +115,7 @@ Item
 - category
 - brand
 - cart
-- goodItem
+- itemLike
 - video
 - sale
 - itemReport

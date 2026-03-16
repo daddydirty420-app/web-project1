@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Item, User, ItemConditionOption, Cart, GoodItem, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
+import { Item, User, ItemConditionOption, Cart, ItemLike, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
 import itemCopyUpload from "../services/itemCopyUpload.js";
 
@@ -257,7 +257,7 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
         });
 
         await Comment.destroy({ where: { item_id: itemId }, transaction: t });
-        await GoodItem.destroy({ where: { item_id: itemId }, transaction: t });
+        await ItemLike.destroy({ where: { item_id: itemId }, transaction: t });
         await Cart.destroy({ where: { item_id: itemId }, transaction: t });
 
         const updateItemData = {
@@ -529,13 +529,13 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
 
         const sellerMe = currentUserId === item.seller_id;
 
-        const goodCount = await GoodItem.count({
+        const goodCount = await ItemLike.count({
             where: { item_id: itemId },
         });
         
-        const isGood = await GoodItem.findOne({
+        const isGood = await ItemLike.findOne({
             where: {
-                good_user_id: currentUserId,
+                user_id: currentUserId,
                 item_id: itemId,
             },
         });

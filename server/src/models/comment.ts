@@ -3,7 +3,7 @@ import sequelize from "../db.js";
 
 import Item from "./item.js";
 import User from "./user.js";
-import GoodComment from "./good_comment.js";
+import CommentLike from "./comment_like.js";
 import CommentReport from "./comment_report.js";
 
 export class Comment extends Model {
@@ -28,7 +28,7 @@ export class Comment extends Model {
         Comment.belongsTo(User, {
             foreignKey: "user_id",
         });
-        Comment.hasMany(GoodComment, {
+        Comment.hasMany(CommentLike, {
             foreignKey: "comment_id",
         });
         Comment.hasMany(CommentReport, {
@@ -40,7 +40,7 @@ export class Comment extends Model {
         Item: Association<Comment, Item>;
         Comment: Association<Comment, Comment>;
         User: Association<Comment, User>;
-        GoodComment: Association<Comment, GoodComment>;
+        CommentLike: Association<Comment, CommentLike>;
         CommentReport: Association<Comment, CommentReport>;
     };
 }

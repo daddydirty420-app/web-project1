@@ -26,14 +26,14 @@ export default async function Page({ params }: Props) {
     const session = await getServerSession(authOptions);
     
     if (!session) redirect("/login");
-
+    
     return (
         <GoodUI title="いいねしたユーザー">
             <UserList
             loggedIn={!!session}
             id={id}
             currentUserId={session?.user.id ?? ""}
-            page="good-item"
+            page="comment-like"
             />
         </GoodUI>
     );

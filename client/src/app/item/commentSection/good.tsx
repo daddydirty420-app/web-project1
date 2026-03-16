@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import { Comment } from "../itemPageTypes";
-import { updateGoodCommentCache, useGoodCount, useGoodStatus } from "@/hooks/useGoodComment";
+import { updateCommentLikeCache, useGoodCount, useGoodStatus } from "@/hooks/useCommentLike";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
@@ -27,7 +27,7 @@ export const Good = ({ comment, loggedIn }: Props) => {
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
-        updateGoodCommentCache(id, true);
+        updateCommentLikeCache(id, true);
 
         try {
             const accessToken = await refreshToken();
@@ -37,21 +37,21 @@ export const Good = ({ comment, loggedIn }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/add/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/add/${id}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
         } catch (err) {
-            updateGoodCommentCache(id, false);
+            updateCommentLikeCache(id, false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
-        updateGoodCommentCache(id, false);
+        updateCommentLikeCache(id, false);
 
         try {
             const accessToken = await refreshToken();
@@ -61,20 +61,20 @@ export const Good = ({ comment, loggedIn }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-comment/remove/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/remove/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
         } catch (err) {
-            updateGoodCommentCache(id, true);
+            updateCommentLikeCache(id, true);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
-    const userList = () => isMyComment && router.push(`/user-list/good-comment/${id}`);
+    const userList = () => isMyComment && router.push(`/user-list/comment-like/${id}`);
 
     return (
         <div className={styles.goodDiv} onClick={userList}>

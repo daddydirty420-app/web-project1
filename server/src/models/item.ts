@@ -5,7 +5,7 @@ import type { ItemAttributes } from "../types/itemAttributes.js";
 import User from "./user.js";
 import ItemConditionOption from "./item_condition_option.js";
 import Cart from "./cart.js";
-import GoodItem from "./good_item.js";
+import ItemLike from "./item_like.js";
 import Video from "./video.js";
 import Sale from "./sale.js";
 import ItemReport from "./item_report.js";
@@ -67,7 +67,7 @@ export class Item extends Model {
         Item.hasMany(Cart, {
             foreignKey: 'item_id'
         });
-        Item.hasMany(GoodItem, {
+        Item.hasMany(ItemLike, {
             foreignKey: 'item_id'
         });
         Item.hasOne(Video, {
@@ -94,7 +94,7 @@ export class Item extends Model {
         User: Association<Item, User>;
         ItemConditionOption: Association<Item, ItemConditionOption>;
         Cart: Association<Item, Cart>;
-        GoodItem: Association<Item, GoodItem>;
+        ItemLike: Association<Item, ItemLike>;
         Video: Association<Item, Video>;
         Sale: Association<Item, Sale>;
         Categories: Association<Item, Categories>;

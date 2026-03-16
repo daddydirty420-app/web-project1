@@ -18,7 +18,7 @@ export type User = {
     ShopInfo?: ShopInfo | null;
 };
 
-export type GoodItem = {
+export type ItemLike = {
     id: string;
     User?: User | null;
 }

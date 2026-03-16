@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { GoodItem, Item, User, Follow, ShopInfo, Video, Sale } from "../models/index.js";
+import { ItemLike, Item, User, Follow, ShopInfo, Video, Sale } from "../models/index.js";
 
 const router = Router();
 
@@ -11,9 +11,9 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
     const itemId = req.params.id;
 
     try {
-        const data = await GoodItem.findOne({
+        const data = await ItemLike.findOne({
             where: {
-                good_user_id: currentUserId,
+                user_id: currentUserId,
                 item_id: itemId,
             },
         });
@@ -28,9 +28,9 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
             return;
         }
 
-        await GoodItem.create({
+        await ItemLike.create({
             item_id: itemId,
-            good_user_id: currentUserId,
+            user_id: currentUserId,
         });
 
         if (!item.sold_out) {
@@ -51,10 +51,10 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
     const currentUserId = req.user!.id;
 
     try {
-        const data = await GoodItem.findOne({
+        const data = await ItemLike.findOne({
             where: {
                 item_id: itemId,
-                good_user_id: currentUserId,
+                user_id: currentUserId,
             },
         });
         if (!data) {
@@ -93,9 +93,9 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
 
 router.get('/status/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const isGood = await GoodItem.findOne({
+        const isGood = await ItemLike.findOne({
             where: {
-                good_user_id: req.user!.id,
+                user_id: req.user!.id,
                 item_id: req.params.id,
             },
         });
@@ -109,7 +109,7 @@ router.get('/status/:id', authenticateToken, async (req: Request, res: Response)
 
 router.get('/count/:id', async (req: Request, res: Response): Promise<void> => {
     try {
-        const count = await GoodItem.count({
+        const count = await ItemLike.count({
             where: { item_id: req.params.id },
         });
 
@@ -120,7 +120,7 @@ router.get('/count/:id', async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
     
@@ -128,7 +128,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
     const itemId = req.params.id;
 
     try {
-        const goodItemList = await GoodItem.findAll({
+        const goodItemList = await ItemLike.findAll({
             attributes: ["id"],
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],
@@ -184,7 +184,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
     }
 });
 
-router.get('/good-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
         
@@ -197,7 +197,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
     }
 
     try {
-        const goodItemList = await GoodItem.findAll({
+        const goodItemList = await ItemLike.findAll({
             attributes: ["id"],
             where: { item_id: itemId },
             order: [['createdAt', 'DESC']],

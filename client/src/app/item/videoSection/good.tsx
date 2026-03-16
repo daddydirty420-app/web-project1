@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./video.module.css";
-import { useGoodStatus, useGoodCount, updateGoodItemCache } from "@/hooks/useGoodItem";
+import { useGoodStatus, useGoodCount, updateItemLikeCache } from "@/hooks/useItemLike";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
@@ -27,7 +27,7 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
-        updateGoodItemCache(id, true);
+        updateItemLikeCache(id, true);
 
         try {
             const accessToken = await refreshToken();
@@ -37,21 +37,21 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/add/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/add/${id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
         } catch (err) {
-            updateGoodItemCache(id, false);
+            updateItemLikeCache(id, false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const remove = async () => {
-        updateGoodItemCache(id, false);
+        updateItemLikeCache(id, false);
 
         try {
             const accessToken = await refreshToken();
@@ -61,20 +61,20 @@ export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/good-item/remove/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/remove/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
         } catch (err) {
-            updateGoodItemCache(id, true);
+            updateItemLikeCache(id, true);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
-    const userList = () => (sellerMe || page === "admin") && router.push(`/user-list/good-item/${id}`);
+    const userList = () => (sellerMe || page === "admin") && router.push(`/user-list/item-like/${id}`);
 
     return (
         <>

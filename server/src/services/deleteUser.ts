@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -114,8 +114,8 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await Cart.destroy({ where: { addtocart_user_id: currentUserId }, transaction: t });
         await Follow.destroy({ where: { follow_user_id: currentUserId }, transaction: t });
         await Follow.destroy({ where: { follower_user_id: currentUserId }, transaction: t });
-        await GoodComment.destroy({ where: { good_user_id: currentUserId }, transaction: t });
-        await GoodItem.destroy({ where: { good_user_id: currentUserId }, transaction: t });
+        await CommentLike.destroy({ where: { user_id: currentUserId }, transaction: t });
+        await ItemLike.destroy({ where: { user_id: currentUserId }, transaction: t });
         await ReferenceCode.destroy({ where: { input_user_id: currentUserId }, transaction: t });
         await ReferenceCode.destroy({ where: { output_user_id: currentUserId }, transaction: t });
         await Notification.destroy({ where: { read_user_id: currentUserId }, transaction: t });

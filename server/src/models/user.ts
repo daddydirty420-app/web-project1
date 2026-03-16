@@ -3,8 +3,8 @@ import sequelize from "../db.js";
 
 import Follow from "./follow.js";
 import Cart from "./cart.js";
-import GoodComment from "./good_comment.js";
-import GoodItem from "./good_item.js";
+import CommentLike from "./comment_like.js";
+import ItemLike from "./item_like.js";
 import Item from "./item.js";
 import ReferenceCode from "./reference_code.js";
 import Notification from "./notification.js";
@@ -56,11 +56,11 @@ export class User extends Model {
             foreignKey: 'follower_user_id',
             as: 'FollowerUser'
         });
-        User.hasMany(GoodComment, {
-            foreignKey: 'good_user_id'
+        User.hasMany(CommentLike, {
+            foreignKey: 'user_id'
         });
-        User.hasMany(GoodItem, {
-            foreignKey: 'good_user_id'
+        User.hasMany(ItemLike, {
+            foreignKey: 'user_id'
         });
         User.hasMany(Item, {
             foreignKey: 'seller_id'
@@ -108,8 +108,8 @@ export class User extends Model {
     static associations: {
         Cart: Association<User, Cart>;
         Follow: Association<User, Follow>;
-        GoodComment: Association<User, GoodComment>;
-        GoodItem: Association<User, GoodItem>;
+        CommentLike: Association<User, CommentLike>;
+        ItemLike: Association<User, ItemLike>;
         Item: Association<User, Item>;
         ReferenceCode: Association<User, ReferenceCode>;
         Notification: Association<User, Notification>;

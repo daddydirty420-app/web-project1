@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { GoodComment, User, Follow, ShopInfo, Comment } from "../models/index.js";
+import { CommentLike, User, Follow, ShopInfo, Comment } from "../models/index.js";
 
 const router = Router();
 
@@ -11,9 +11,9 @@ router.post("/add/:id", authenticateToken, async (req: Request, res: Response): 
     const commentId = req.params.id;
 
     try {
-        const data = await GoodComment.findOne({
+        const data = await CommentLike.findOne({
             where: {
-                good_user_id: currentUserId,
+                user_id: currentUserId,
                 comment_id: commentId,
             },
         });
@@ -28,8 +28,8 @@ router.post("/add/:id", authenticateToken, async (req: Request, res: Response): 
             return;
         }
 
-        await GoodComment.create({
-            good_user_id: currentUserId,
+        await CommentLike.create({
+            user_id: currentUserId,
             comment_id: commentId,
         });
 
@@ -48,9 +48,9 @@ router.delete("/remove/:id", authenticateToken, async (req: Request, res: Respon
     const commentId = req.params.id;
 
     try {
-        const data = await GoodComment.findOne({
+        const data = await CommentLike.findOne({
             where: {
-                good_user_id: currentUserId,
+                user_id: currentUserId,
                 comment_id: commentId,
             },
         });
@@ -83,9 +83,9 @@ router.delete("/remove/:id", authenticateToken, async (req: Request, res: Respon
 
 router.get("/status/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const isGood = await GoodComment.findOne({
+        const isGood = await CommentLike.findOne({
             where: {
-                good_user_id: req.user!.id,
+                user_id: req.user!.id,
                 comment_id: req.params.id,
             },
         });
@@ -100,7 +100,7 @@ router.get("/status/:id", authenticateToken, async (req: Request, res: Response)
 
 router.get("/count/:id", async (req: Request, res: Response): Promise<void> => {
     try {
-        const count = await GoodComment.count({
+        const count = await CommentLike.count({
             where: { comment_id: req.params.id },
         });
 
@@ -111,7 +111,7 @@ router.get("/count/:id", async (req: Request, res: Response): Promise<void> => {
     }
 });
 
-router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
         
@@ -119,7 +119,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
     const commentId = req.params.id;
 
     try {
-        const goodCommentList = await GoodComment.findAll({
+        const commentLikeList = await CommentLike.findAll({
             attributes: ["id"],
             where: { comment_id: commentId },
             order: [['createdAt', 'DESC']],
@@ -142,7 +142,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
         let finalGoodList = null;
 
         if (currentUserId !== null) {
-            const targetUserIds = goodCommentList.map(user => user.User.id);
+            const targetUserIds = commentLikeList.map(user => user.User.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -153,7 +153,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
 
             const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
 
-            finalGoodList = goodCommentList.map(item => {
+            finalGoodList = commentLikeList.map(item => {
                 const plainItem = item.toJSON();
                 const targetId = plainItem.User?.id;
                 plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -161,7 +161,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
             });
         }
 
-        const source = finalGoodList ?? goodCommentList;
+        const source = finalGoodList ?? commentLikeList;
 
         const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;
@@ -175,7 +175,7 @@ router.get('/good-user-list/:id', authenticateToken, async (req: Request, res: R
     }
 });
 
-router.get('/good-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
         
@@ -188,7 +188,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
     }
 
     try {
-        const goodCommentList = await GoodComment.findAll({
+        const commentLikeList = await CommentLike.findAll({
             attributes: ["id"],
             where: { comment_id: commentId },
             order: [['createdAt', 'DESC']],
@@ -214,7 +214,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
         let finalGoodList = null;
 
         if (currentUserId !== null) {
-            const targetUserIds = goodCommentList.map(user => user.User.id);
+            const targetUserIds = commentLikeList.map(user => user.User.id);
 
             const followings = await Follow.findAll({
                 where: {
@@ -225,7 +225,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
 
             const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
 
-            finalGoodList = goodCommentList.map(item => {
+            finalGoodList = commentLikeList.map(item => {
                 const plainItem = item.toJSON();
                 const targetId = plainItem.User?.id;
                 plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -233,7 +233,7 @@ router.get('/good-user-list/search/:id', authenticateOptional, async (req: Reque
             });
         }
 
-        const source = finalGoodList ?? goodCommentList;
+        const source = finalGoodList ?? commentLikeList;
 
         const userList = source.map(item => {
             const plain = item.toJSON ? item.toJSON() : item;

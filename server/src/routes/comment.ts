@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Comment, User, GoodComment, CommentReport, Item, Notification } from "../models/index.js";
+import { Comment, User, CommentLike, CommentReport, Item, Notification } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
@@ -153,7 +153,7 @@ router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: R
                     where: { parent_comment_id: commentId },
                 });
 
-                const goodCount = await GoodComment.count({
+                const goodCount = await CommentLike.count({
                     where: { comment_id: commentId },
                 });
 
@@ -164,9 +164,9 @@ router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: R
 
                 let isGood = false;
                 if (currentUserId) {
-                    isGood = await GoodComment.findOne({
+                    isGood = await CommentLike.findOne({
                         where: {
-                            good_user_id: currentUserId,
+                            user_id: currentUserId,
                             comment_id: commentId,
                         },
                     });
@@ -234,7 +234,7 @@ router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res:
             commentList.map(async (comment: InstanceType<typeof Comment>) => {
                 const commentId = comment.id;
 
-                const goodCount = await GoodComment.count({
+                const goodCount = await CommentLike.count({
                     where: { comment_id: commentId },
                 });
 
@@ -244,9 +244,9 @@ router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res:
 
                 let isGood = false;
                 if (currentUserId) {
-                    isGood = await GoodComment.findOne({
+                    isGood = await CommentLike.findOne({
                         where: {
-                            good_user_id: currentUserId,
+                            user_id: currentUserId,
                             comment_id: commentId,
                         }
                     });

@@ -3,23 +3,23 @@ import { fetcher } from "@/lib/fetcher";
 
 type GoodCountResponce = { count: number };
 
-export function useGoodStatus(commentId: string,) {
+export function useGoodStatus(itemId: string) {
     return useSWR<{ isGood: boolean }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`,
-        fetcher,
+        `${process.env.NEXT_PUBLIC_API_URL}/item-like/status/${itemId}`,
+        fetcher
     );
 };
 
-export function useGoodCount(commentId: string) {
+export function useGoodCount(itemId: string) {
     return useSWR<GoodCountResponce, Error>(
-        `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/item-like/count/${itemId}`,
         fetcher,
     );
 };
 
-export async function updateGoodCommentCache(commentId: string, isGood: boolean) {
-    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/status/${commentId}`;
-    const countKey = `${process.env.NEXT_PUBLIC_API_URL}/good-comment/count/${commentId}`;
+export async function updateItemLikeCache(itemId: string, isGood: boolean) {
+    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/item-like/status/${itemId}`;
+    const countKey = `${process.env.NEXT_PUBLIC_API_URL}/item-like/count/${itemId}`;
 
     await mutate(statusKey, { isGood }, false);
 

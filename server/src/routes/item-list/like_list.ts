@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { GoodItem, Item, Sale, Video } from "../../models/index.js";
+import { ItemLike, Item, Sale, Video } from "../../models/index.js";
 import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
 const router = Router();
@@ -15,9 +15,9 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
     const offset = (page - 1) * limit;
 
     try {
-        const goodList = await GoodItem.findAll({
+        const goodList = await ItemLike.findAll({
             attributes: ["id"],
-            where: { good_user_id: currentUserId },
+            where: { user_id: currentUserId },
             order: [['createdAt', 'DESC']],
             limit,
             offset,
@@ -45,10 +45,10 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
         });
 
         const itemList = goodList
-        .map((good: typeof GoodItem) => good.Item);
+        .map((good: typeof ItemLike) => good.Item);
 
-        const totalCount = await GoodItem.count({
-            where: { good_user_id: currentUserId },
+        const totalCount = await ItemLike.count({
+            where: { user_id: currentUserId },
             include: [
                 {
                     model: Item,
@@ -83,9 +83,9 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
     }
 
     try {
-        const goodList = await GoodItem.findAll({
+        const goodList = await ItemLike.findAll({
             attributes: ["id"],
-            where: { good_user_id: currentUserId },
+            where: { user_id: currentUserId },
             order: [['createdAt', 'DESC']],
             limit,
             offset,
@@ -114,10 +114,10 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
         });
 
         const itemList = goodList
-        .map((good: typeof GoodItem) => good.Item);
+        .map((good: typeof ItemLike) => good.Item);
 
-        const totalCount = await GoodItem.count({
-            where: { good_user_id: currentUserId },
+        const totalCount = await ItemLike.count({
+            where: { user_id: currentUserId },
             include: [
                 {
                     model: Item,

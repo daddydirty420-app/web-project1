@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Item, User, ItemConditionOption, GoodItem, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
+import { Item, User, ItemConditionOption, ItemLike, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
 
 const router = Router();
 
@@ -73,7 +73,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
             return;
         }
 
-        const goodCount = await GoodItem.count({
+        const goodCount = await ItemLike.count({
             where: { item_id: itemId },
         });
 
