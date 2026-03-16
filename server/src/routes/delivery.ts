@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { Delivery, ShippingDayOption, ShippingServiceOption,  TodouhukenOption, Order, Item, User, Address, Name } from "../models/index.js";
+import { Delivery, ShippingDayOption, ShippingServiceOption,  TodouhukenOption, Orders, Item, User, Address, Name } from "../models/index.js";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.get('/index-wait-item-list', authenticateToken, async (req: Request, res:
                     attributes: ['id', 'name', [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url']]
                 },
                 {
-                    model: Order,
+                    model: Orders,
                     attributes: ['id'],
                 },
             ],
