@@ -1,3 +1,5 @@
+🇯🇵 Japanese version: ARCHITECTURE.ja.md
+
 # Architecture
 
 ## Overview

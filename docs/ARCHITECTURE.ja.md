@@ -1,3 +1,5 @@
+🇺🇸 English version: ARCHITECTURE.md
+
 # アーキテクチャ
 
 ## 概要
