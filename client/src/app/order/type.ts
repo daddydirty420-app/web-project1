@@ -10,7 +10,7 @@ export type Delivery = {
     DeliveryStatusOption?: DeliveryStatusOption;
 };
 
-export type Order = {
+export type Orders = {
     id: string;
     total_amount: number;
     point_used: number;

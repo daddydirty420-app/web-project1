@@ -2,7 +2,7 @@ import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
 import CancelFeeReturnOption from "./cancel_fee_return_option.js";
-import Order from "./order.js";
+import Orders from "./orders.js";
 
 export class Cancel extends Model {
     declare id: number;
@@ -11,7 +11,7 @@ export class Cancel extends Model {
     declare item_count: number | null;
     declare cancel_flag: boolean;
     declare cancel_fee_return_id: number | null;
-    declare order_id: number | null;
+    declare orders_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -19,14 +19,14 @@ export class Cancel extends Model {
         Cancel.belongsTo(CancelFeeReturnOption, {
             foreignKey: "cancel_fee_return_id",
         });
-        Cancel.belongsTo(Order, {
-            foreignKey: "order_id",
+        Cancel.belongsTo(Orders, {
+            foreignKey: "orders_id",
         });
     }
 
     static associations: {
         CancelFeeReturnOption: Association<Cancel, CancelFeeReturnOption>;
-        Order: Association<Cancel, Order>;
+        Orders: Association<Cancel, Orders>;
     };
 }
 
@@ -47,7 +47,7 @@ Cancel.init(
             defaultValue: false,
         }, // false: 申請中, true: キャンセル確定
         cancel_fee_return_id: DataTypes.INTEGER,
-        order_id: {
+        orders_id: {
             type: DataTypes.INTEGER,
             unique: true,
         },

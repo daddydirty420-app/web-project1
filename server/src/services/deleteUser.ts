@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, Cancel, Order } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, Cancel, Orders } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -136,7 +136,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
             const deletedItemsData = [];
             const newItemDeleteLogs = [];
             for (const item of items) {
-                const orders = await Order.findAll({
+                const orders = await Orders.findAll({
                     where: {
                         item_id: item.id,
                         status: { [Op.notIn]: ["cancelled", "returned"] },
@@ -175,7 +175,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         }, { transaction: t });
 
                         await Cancel.upsert({
-                            order_id: order.id,
+                            orders_id: order.id,
                             cancel_reason: "商品削除",
                             return_amount: order.total_amount,
                             item_count: order.item_count,
@@ -212,7 +212,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         }, { transaction: t });
 
                         deleteOrder.push({
-                            order_id: order.id,
+                            orders_id: order.id,
                             delivery_id: order.Delivery.id,
                             cancel_reason: "出品者削除",
                             refund_status: "未返金",

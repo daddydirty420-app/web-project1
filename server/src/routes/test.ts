@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core"
-import { Address, Brands, Cancel, Cart, Categories, Delivery, Item, Name, Order, Sale, User } from "../models/index.js";
+import { Address, Brands, Cancel, Cart, Categories, Delivery, Item, Name, Orders, Sale, User } from "../models/index.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
 import crypto from "crypto";
@@ -246,7 +246,7 @@ function generatePayId(): string {
     return crypto.randomBytes(16).toString("base64url");
 }
 
-router.post("/order-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/orders-create/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const now = Date.now();
@@ -288,8 +288,8 @@ router.post("/order-create/:id", async (req: Request, res: Response): Promise<vo
             throw new Error("NOT_FOUND");
         }
 
-        // Order.bulkCreate
-        const orders = await Order.bulkCreate(
+        // Orders.bulkCreate
+        const orders = await Orders.bulkCreate(
             items.map((item: any) => ({
                 unit_price: item.price,
                 item_count: 3,
@@ -306,7 +306,7 @@ router.post("/order-create/:id", async (req: Request, res: Response): Promise<vo
                 buyer_user_id: userId,
                 buy_at: new Date(),
                 paid_at: new Date(),
-                order_id: generatePayId(),
+                orders_id: generatePayId(),
                 status: "paid",
                 purchase_snapshot: {
                     item_id: item.id,
@@ -331,14 +331,14 @@ router.post("/order-create/:id", async (req: Request, res: Response): Promise<vo
 
         // Delivery.bulkCreate
         await Delivery.bulkCreate(
-            orders.map((order: any, index: number) => ({
+            orders.map((orders: any, index: number) => ({
                 buyer_phone_number: user.phone_number,
                 cancel: false,
                 shipping_day_id: 1,
                 shipping_service_id: 1,
                 delivery_status_id: 1,
                 shipping_place_id: 11,
-                order_id: order.id,
+                orders_id: orders.id,
                 shipping_at: null,
                 arrived_at: null,
                 arrive_specified_date: now,
@@ -363,8 +363,8 @@ router.post("/order-create/:id", async (req: Request, res: Response): Promise<vo
 
         // Cancel.bulkCreate
         await Cancel.bulkCreate(
-            orders.map((order: any) => ({
-                order_id: order.id
+            orders.map((orders: any) => ({
+                orders_id: orders.id
             })),
             { transaction: t },
         );
@@ -379,7 +379,7 @@ router.post("/order-create/:id", async (req: Request, res: Response): Promise<vo
     }
 });
 
-router.patch("/order-patch/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/orders-patch/:id", async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();
@@ -395,7 +395,7 @@ router.patch("/order-patch/:id", async (req: Request, res: Response): Promise<vo
             throw new Error("USER_NOT_FOUND");
         }
 
-        const orders = await Order.findAll({
+        const orders = await Orders.findAll({
             where: {
                 buyer_user_id: userId,
             },
@@ -422,24 +422,24 @@ router.patch("/order-patch/:id", async (req: Request, res: Response): Promise<vo
 
         const now = new Date();
 
-        await Promise.all(orders.map(async (order: any) => {
-            await order.update({
+        await Promise.all(orders.map(async (orders: any) => {
+            await orders.update({
                 purchase_snapshot: {
-                    item_id: order.Item.id,
-                    item_name: order.Item.name,
-                    item_image: order.Item.first_image_url,
+                    item_id: orders.Item.id,
+                    item_name: orders.Item.name,
+                    item_image: orders.Item.first_image_url,
 
                     category: {
-                        id: order.Item.Category?.id ?? "",
-                        name: order.Item.Category?.name ?? "",
+                        id: orders.Item.Category?.id ?? "",
+                        name: orders.Item.Category?.name ?? "",
                     },
 
                     brand: {
-                        id: order.Item.Brand?.id ?? undefined,
-                        name: order.Item.Brand?.name ?? undefined,
+                        id: orders.Item.Brand?.id ?? undefined,
+                        name: orders.Item.Brand?.name ?? undefined,
                     },
 
-                    materials: order.Item.attributes.materials ?? [],
+                    materials: orders.Item.attributes.materials ?? [],
                 },
             }, { transaction: t });
         }));

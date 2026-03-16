@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { ItemReport, Item, ItemReportOption, CommentReport, CommentReportOption, Comment, ItemBuyerReport, User, ItemBuyerReportOption, Order, Video } from "../../models/index.js";
+import { ItemReport, Item, ItemReportOption, CommentReport, CommentReportOption, Comment, ItemBuyerReport, User, ItemBuyerReportOption, Orders, Video } from "../../models/index.js";
 import { col, fn, literal } from "sequelize";
 
 const router = Router();
@@ -126,7 +126,7 @@ router.get('/buyer/report-list', authenticateToken, isAdmin, async (req: Request
                 },
                 { model: ItemBuyerReportOption },
                 {
-                    model: Order,
+                    model: Orders,
                     attributes: ['id', 'total_amount', 'sales_commission_amount', 'gain_amount', 'status'],
                     include: [
                         {

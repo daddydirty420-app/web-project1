@@ -1,13 +1,13 @@
 import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
-import Order  from "./order.js";
+import Orders from "./orders.js";
 import User from "./user.js";
 import Delivery from "./delivery.js";
 
 export class DeletedOrderSystems extends Model {
     declare id: number;
-    declare order_id: number;
+    declare orders_id: number;
     declare delivery_id: number;
     declare cancel_reason: string;
     declare refund_status: string;
@@ -18,8 +18,8 @@ export class DeletedOrderSystems extends Model {
     declare updatedAt: Date;
 
     static associate() {
-        DeletedOrderSystems.belongsTo(Order, {
-            foreignKey: "order_id",
+        DeletedOrderSystems.belongsTo(Orders, {
+            foreignKey: "orders_id",
         });
         DeletedOrderSystems.belongsTo(User, {
             foreignKey: "deleted_by",
@@ -32,7 +32,7 @@ export class DeletedOrderSystems extends Model {
     static associations: {
         User: Association<DeletedOrderSystems, User>;
         Delivery: Association<DeletedOrderSystems, Delivery>;
-        Order: Association<DeletedOrderSystems, Order>;
+        Orders: Association<DeletedOrderSystems, Orders>;
     };
 }
 
@@ -44,7 +44,7 @@ DeletedOrderSystems.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        order_id: {
+        orders_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,

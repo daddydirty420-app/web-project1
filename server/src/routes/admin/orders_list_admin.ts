@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Op } from "sequelize";
-import { Order, Item, Delivery, DeliveryStatusOption, User } from "../../models/index.js";
+import { Orders, Item, Delivery, DeliveryStatusOption, User } from "../../models/index.js";
 import { subDays } from "date-fns";
 
 const router = Router();
@@ -11,7 +11,7 @@ router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response
     const thirtyDaysAgo = subDays(new Date(), 30);
 
     try {
-        const dataList = await Order.findAll({
+        const dataList = await Orders.findAll({
             attributes: ['id', 'gain_amount', 'buy_at'],
             where: {
                 cancel: false,

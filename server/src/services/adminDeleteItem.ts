@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, Order, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, Orders, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
 import sequelize from "../db.js";
 import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
@@ -33,7 +33,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
             message: `平素より〇〇をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
         }, { transaction: t });
 
-        const orders = await Order.findAll({
+        const orders = await Orders.findAll({
             where: {
                 item_id: item.id,
                 status: { [Op.notIn]: ["cancelled", "returned"] },
@@ -63,7 +63,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 }, { transaction: t });
 
                 await Cancel.upsert({
-                    order_id: order.id,
+                    orders_id: order.id,
                     cancel_reason: "商品削除",
                     return_amount: order.total_amount,
                     item_count: order.item_count,
@@ -100,7 +100,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 }, { transaction: t });
 
                 deleteOrder.push({
-                    order_id: order.id,
+                    orders_id: order.id,
                     delivery_id: order.Delivery.id,
                     cancel_reason: "商品削除",
                     refund_status: "未返金",

@@ -4,7 +4,7 @@ import sequelize from "../db.js";
 import Item from "./item.js";
 import User from "./user.js";
 import ItemBuyerReportOption from "./item_buyer_report_option.js";
-import Order from "./order.js";
+import Orders from "./orders.js";
 
 export class ItemBuyerReport extends Model {
     declare id: number;
@@ -12,7 +12,7 @@ export class ItemBuyerReport extends Model {
     declare report_user_id: number;
     declare option_id: number;
     declare detail_text: string | null;
-    declare order_id: number;
+    declare orders_id: number;
     declare checked: boolean;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -27,8 +27,8 @@ export class ItemBuyerReport extends Model {
         ItemBuyerReport.belongsTo(ItemBuyerReportOption, {
             foreignKey: "option_id",
         });
-        ItemBuyerReport.belongsTo(Order, {
-            foreignKey: "order_id",
+        ItemBuyerReport.belongsTo(Orders, {
+            foreignKey: "orders_id",
         });
     }
 
@@ -36,7 +36,7 @@ export class ItemBuyerReport extends Model {
         Item: Association<ItemBuyerReport, Item>;
         User: Association<ItemBuyerReport, User>;
         ItemBuyerReportOption: Association<ItemBuyerReport, ItemBuyerReportOption>;
-        Order: Association<ItemBuyerReport, Order>;
+        Orders: Association<ItemBuyerReport, Orders>;
     };
 }
 
@@ -61,7 +61,7 @@ ItemBuyerReport.init(
             allowNull: false,
         },
         detail_text: DataTypes.TEXT,
-        order_id: {
+        orders_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,

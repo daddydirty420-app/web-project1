@@ -9,7 +9,7 @@ import User from "./user.js";
 import Chat from "./chat.js";
 import Cancel from "./cancel.js";
 
-export class Order extends Model {
+export class Orders extends Model {
     declare id: number;
     declare unit_price: number | null; // 1点当たりの金額
     declare item_count: number | null; // 個数
@@ -33,42 +33,42 @@ export class Order extends Model {
     declare purchase_snapshot: PurchaseSnapshot;
 
     static associate() {
-        Order.belongsTo(PaymentMethodOption, {
+        Orders.belongsTo(PaymentMethodOption, {
             foreignKey: 'payment_method_id'
         });
-        Order.belongsTo(Item, {
+        Orders.belongsTo(Item, {
             foreignKey: 'item_id'
         });
-        Order.belongsTo(User, {
+        Orders.belongsTo(User, {
             foreignKey: 'seller_user_id',
             as: 'Seller'
         });
-        Order.belongsTo(User, {
+        Orders.belongsTo(User, {
             foreignKey: 'buyer_user_id',
             as: 'Buyer'
         });
-        Order.hasOne(Delivery, {
-            foreignKey: 'order_id'
+        Orders.hasOne(Delivery, {
+            foreignKey: 'orders_id'
         });
-        Order.hasOne(Chat, {
-            foreignKey: 'order_id'
+        Orders.hasOne(Chat, {
+            foreignKey: 'orders_id'
         });
-        Order.hasOne(Cancel, {
-            foreignKey: 'order_id'
+        Orders.hasOne(Cancel, {
+            foreignKey: 'orders_id'
         });
     };
 
     static associations: {
-        PaymentMethodOption: Association<Order, PaymentMethodOption>;
-        Item: Association<Order, Item>;
-        Delivery: Association<Order, Delivery>;
-        User: Association<Order, User>;
-        Chat: Association<Order, Chat>;
-        Cancel: Association<Order, Cancel>;
+        PaymentMethodOption: Association<Orders, PaymentMethodOption>;
+        Item: Association<Orders, Item>;
+        Delivery: Association<Orders, Delivery>;
+        User: Association<Orders, User>;
+        Chat: Association<Orders, Chat>;
+        Cancel: Association<Orders, Cancel>;
     };
 }
 
-Order.init(
+Orders.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -108,11 +108,11 @@ Order.init(
     },
     {
         sequelize,
-        modelName: "Order",
-        tableName: "order",
+        modelName: "Orders",
+        tableName: "orders",
         freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default Order;
+export default Orders;

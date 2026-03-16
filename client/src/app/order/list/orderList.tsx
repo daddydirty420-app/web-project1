@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./order.module.css";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Order } from "../type";
+import { Orders } from "../type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 type Responce = {
-    orderList: Order[];
+    ordersList: Orders[];
     totalPages: number;
 };
 
@@ -46,7 +46,7 @@ export const OrderList = ({ page, tab }: Props) => {
 
     const { data } = useSWR<Responce>(apiUrl, fetcher);
 
-    const orderList = data?.orderList;
+    const ordersList = data?.ordersList;
     const totalPages = data?.totalPages ?? 1;
 
     // ページネーション
@@ -115,9 +115,9 @@ export const OrderList = ({ page, tab }: Props) => {
 
     return (
         <>
-        {orderList && orderList.length > 0 && (
+        {ordersList && ordersList.length > 0 && (
             <main className={styles.orderListtSection}>
-                {orderList.map((order) => {
+                {ordersList.map((order) => {
                     const link = page === "purchased"
                     ? `/order/purchased/${order.id}`
                     : page === "sold"
@@ -186,7 +186,7 @@ export const OrderList = ({ page, tab }: Props) => {
             </main>
         )}
 
-        {orderList?.length === 0 && (
+        {ordersList?.length === 0 && (
             <p className={styles.noList}>{
                 page === "purchased"
                 ? "購入した商品がありません"

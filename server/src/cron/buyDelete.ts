@@ -11,7 +11,7 @@ export const startBuyDeleteCron = () => {
         try {
             const deletedCount = await Delivery.destroy({
                 where: {
-                    order_id: null,
+                    orders_id: null,
                     createdAt: { [Op.lt]: sevenDaysAgo },
                 },
             });     

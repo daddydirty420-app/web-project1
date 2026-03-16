@@ -1,7 +1,7 @@
 import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
-import Order from "./order.js";
+import Orders from "./orders.js";
 
 export class Chat extends Model {
     declare id: number;
@@ -9,18 +9,18 @@ export class Chat extends Model {
     declare seller_chat: string | null;
     declare buyer_username: string | null;
     declare buyer_chat: string | null;
-    declare order_id: number | null;
+    declare orders_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        Chat.belongsTo(Order, {
-            foreignKey: "order_id",
+        Chat.belongsTo(Orders, {
+            foreignKey: "orders_id",
         });
     }
 
     static associations: {
-        Order: Association<Chat, Order>;
+        Orders: Association<Chat, Orders>;
     };
 }
 
@@ -36,7 +36,7 @@ Chat.init(
         seller_chat: DataTypes.TEXT,
         buyer_username: DataTypes.STRING(255),
         buyer_chat: DataTypes.TEXT,
-        order_id: DataTypes.INTEGER,
+        orders_id: DataTypes.INTEGER,
     },
     {
         sequelize,
