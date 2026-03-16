@@ -5,7 +5,7 @@ import Orders from "./orders.js";
 import User from "./user.js";
 import Delivery from "./delivery.js";
 
-export class DeletedOrderSystems extends Model {
+export class OrderDeleted extends Model {
     declare id: number;
     declare orders_id: number;
     declare delivery_id: number;
@@ -18,25 +18,25 @@ export class DeletedOrderSystems extends Model {
     declare updatedAt: Date;
 
     static associate() {
-        DeletedOrderSystems.belongsTo(Orders, {
+        OrderDeleted.belongsTo(Orders, {
             foreignKey: "orders_id",
         });
-        DeletedOrderSystems.belongsTo(User, {
+        OrderDeleted.belongsTo(User, {
             foreignKey: "deleted_by",
         });
-        DeletedOrderSystems.belongsTo(Delivery, {
+        OrderDeleted.belongsTo(Delivery, {
             foreignKey: "delevery_id",
         });
     }
 
     static associations: {
-        User: Association<DeletedOrderSystems, User>;
-        Delivery: Association<DeletedOrderSystems, Delivery>;
-        Orders: Association<DeletedOrderSystems, Orders>;
+        User: Association<OrderDeleted, User>;
+        Delivery: Association<OrderDeleted, Delivery>;
+        Orders: Association<OrderDeleted, Orders>;
     };
 }
 
-DeletedOrderSystems.init(
+OrderDeleted.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -74,8 +74,11 @@ DeletedOrderSystems.init(
     },
     {
         sequelize,
+        modelName: "OrderDeleted",
+        tableName: "order_deleted",
+        freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default DeletedOrderSystems;
+export default OrderDeleted;

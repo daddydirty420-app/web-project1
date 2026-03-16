@@ -3,7 +3,7 @@ import sequelize from "../db.js";
 
 import User from "./user.js";
 
-export class SignupVerificationTokens extends Model {
+export class TokenSignupVerification extends Model {
     declare id: number;
     declare verification_code: string;
     declare verification_code_expires: Date;
@@ -14,17 +14,17 @@ export class SignupVerificationTokens extends Model {
     declare updatedAt: Date;
 
     static associate() {
-        SignupVerificationTokens.belongsTo(User, {
+        TokenSignupVerification.belongsTo(User, {
             foreignKey: 'user_id',
         });
     }
 
     static associations: {
-        User: Association<SignupVerificationTokens, User>;
+        User: Association<TokenSignupVerification, User>;
     };
 }
 
-SignupVerificationTokens.init(
+TokenSignupVerification.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -57,8 +57,11 @@ SignupVerificationTokens.init(
     },
     {
         sequelize,
+        modelName: "TokenSignupVerification",
+        tableName: "token_signup_verification",
+        freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default SignupVerificationTokens;
+export default TokenSignupVerification;

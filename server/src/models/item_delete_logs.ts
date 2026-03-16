@@ -52,6 +52,9 @@ ItemDeleteLogs.init(
     },
     {
         sequelize,
+        modelName: "ItemDeleteLogs",
+        tableName: "item_delete_logs",
+        freezeTableName: true,
         timestamps: true,
     }
 );

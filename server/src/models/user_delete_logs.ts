@@ -52,6 +52,9 @@ UserDeleteLogs.init(
     },
     {
         sequelize,
+        modelName: "UserDeleteLogs",
+        tableName: "user_delete_logs",
+        freezeTableName: true,
         timestamps: true,
     }
 );

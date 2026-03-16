@@ -1,3 +1,5 @@
+// ポイント変換時ログ
+
 import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
@@ -60,6 +62,9 @@ PointConversionLogs.init(
     },
     {
         sequelize,
+        modelName: "PointConversionLogs",
+        tableName: "point_conversion_logs",
+        freezeTableName: true,
         timestamps: true,
     },
 );

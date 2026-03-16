@@ -4,7 +4,7 @@ import sequelize from "../db.js";
 import User from "./user.js";
 import Delivery from "./delivery.js";
 
-export class DeletedItems extends Model {
+export class ItemDeleted extends Model {
     declare id: number;
     declare item_id: number;
     declare seller_id: number;
@@ -22,23 +22,23 @@ export class DeletedItems extends Model {
     declare updatedAt: Date;
 
     static associate() {
-        DeletedItems.belongsTo(User, {
+        ItemDeleted.belongsTo(User, {
             foreignKey: "seller_id",
             as: "Seller",
         });
-        DeletedItems.belongsTo(User, {
+        ItemDeleted.belongsTo(User, {
             foreignKey: "deleted_by",
             as: "DeletedBy",
         });
     };
 
     static associations: {
-        User: Association<DeletedItems, User>;
-        Delivery: Association<DeletedItems, Delivery>;
+        User: Association<ItemDeleted, User>;
+        Delivery: Association<ItemDeleted, Delivery>;
     };
 }
 
-DeletedItems.init(
+ItemDeleted.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -89,8 +89,11 @@ DeletedItems.init(
     },
     {
         sequelize,
+        modelName: "ItemDeleted",
+        tableName: "item_deleted",
+        freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default DeletedItems;
+export default ItemDeleted;

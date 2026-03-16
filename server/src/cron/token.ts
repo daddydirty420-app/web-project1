@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import { Op } from "sequelize";
-import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens } from "../models/index.js";
+import { User, TokenSignupVerification, TokenPasswordReset, TokenEmailChange, RefreshTokens } from "../models/index.js";
 import sequelize from "../db.js";
 
 export const startTokenCron = () => {
@@ -11,7 +11,7 @@ export const startTokenCron = () => {
         const t = await sequelize.transaction();
 
         try {
-            const expiredTokens = await SignupVerificationTokens.findAll({
+            const expiredTokens = await TokenSignupVerification.findAll({
                 where: {
                     verification_code_expires: { [Op.lt]: now },
                     reissue_token_expires: { [Op.lt]: now },
@@ -35,7 +35,7 @@ export const startTokenCron = () => {
                 transaction: t,
             });
 
-            await SignupVerificationTokens.destroy({
+            await TokenSignupVerification.destroy({
                 where: { user_id: { [Op.in]: expiredUserIds } },
                 transaction: t
             });
@@ -50,10 +50,10 @@ export const startTokenCron = () => {
         timezone: "Asia/Tokyo",
     });
 
-    // PasswordResetToken削除
+    // TokenPasswordReset削除
     cron.schedule('0 * * * *', async () => {
         try {
-            const destroyTokens = await PasswordResetTokens.destroy({
+            const destroyTokens = await TokenPasswordReset.destroy({
                 where: {
                     expires_at: { [Op.lt]: now },
                 },
@@ -67,10 +67,10 @@ export const startTokenCron = () => {
         timezone: "Asia/Tokyo",
     });
 
-    // EmailChangeTokens削除
+    // TokenEmailChange削除
     cron.schedule('0 * * * *', async () => {
         try {
-            const destroyTokens = await EmailChangeTokens.destroy({
+            const destroyTokens = await TokenEmailChange.destroy({
                 where: {
                     expires_at: { [Op.lt]: now },
                 },

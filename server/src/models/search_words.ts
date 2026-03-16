@@ -1,15 +1,15 @@
-import { Model, DataTypes } from "sequelize";
+import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 
-export class SuggestWords extends Model {
+export class SearchWords extends Model {
     declare id: number;
     declare word: string;
-    declare normalized_word: string | null;
+    declare count: number;
     declare createdAt: Date;
-    declare updatedAt: Date;     
+    declare updatedAt: Date;
 };
 
-SuggestWords.init(
+SearchWords.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,12 +21,19 @@ SuggestWords.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        normalized_word: DataTypes.STRING(255),
+        count: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+        },
     },
     {
         sequelize,
+        modelName: "SearchWords",
+        tableName: "search_words",
+        freezeTableName: true,
         timestamps: true,
-    },
+    }
 );
 
-export default SuggestWords;
+export default SearchWords;

@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, DeletedItems, Orders, PaymentMethodOption, Cancel, DeletedOrderSystems, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, ItemDeleted, Orders, PaymentMethodOption, Cancel, OrderDeleted, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
 import sequelize from "../db.js";
 import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
@@ -112,7 +112,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 // メール送信処理
             }
 
-            await DeletedOrderSystems.bulkCreate(deleteOrder, { transaction: t });
+            await OrderDeleted.bulkCreate(deleteOrder, { transaction: t });
         }
 
         let newImages = [];
@@ -135,7 +135,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
             }
         }
 
-        await DeletedItems.create({
+        await ItemDeleted.create({
             item_id: item.id,
             seller_id: item.seller_id,
             item_name: item.name,

@@ -2,9 +2,9 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import { generateAccessToken, generateRefreshToken, JwtUserPayload } from "../utils/jwtHelper.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper.js";
 import { authenticateToken } from "../middleware/index.js";
-import { User, SignupVerificationTokens, PasswordResetTokens, EmailChangeTokens, RefreshTokens, Address, Name, BankAccount, IdCard, ShopInfo } from "../models/index.js";
+import { User, TokenSignupVerification, TokenPasswordReset, TokenEmailChange, RefreshTokens, Address, Name, BankAccount, IdCard, ShopInfo } from "../models/index.js";
 import sequelize from "../db.js";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
@@ -158,7 +158,7 @@ router.post('/signup', async (req: Request, res: Response): Promise<void> => {
         const reissueToken = crypto.randomBytes(20).toString('hex');
         const reissueTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
 
-        await SignupVerificationTokens.create({
+        await TokenSignupVerification.create({
           user_id: newUser.id,
           verification_code: verificationCode,
           verification_code_expires: expiresAt,
@@ -190,7 +190,7 @@ router.post('/resend-verification-code', async (req: Request, res: Response): Pr
   }
 
   try {
-    const tokenRecord = await SignupVerificationTokens.findOne({
+    const tokenRecord = await TokenSignupVerification.findOne({
       where: {
         reissue_token: token
       },
@@ -241,7 +241,7 @@ router.post('/signup-verify', async (req: Request, res: Response): Promise<void>
   const t = await sequelize.transaction();
 
   try {
-    const tokenRecord = await SignupVerificationTokens.findOne({
+    const tokenRecord = await TokenSignupVerification.findOne({
       where: { verification_code: verificationCode },
       transaction: t
     });
@@ -321,7 +321,7 @@ router.post('/request-password-reset', async (req: Request, res: Response): Prom
     const newResetToken = crypto.randomBytes(20).toString('hex');
     const newResetTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
 
-    await PasswordResetTokens.create({
+    await TokenPasswordReset.create({
       token_hash: newResetToken,
       expires_at: newResetTokenExpires,
       user_id: user.id
@@ -342,7 +342,7 @@ router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
   const { token, password } = req.body;
 
   try {
-    const resetRecord = await PasswordResetTokens.findOne({ where: { token_hash: token } });
+    const resetRecord = await TokenPasswordReset.findOne({ where: { token_hash: token } });
     if (!resetRecord || resetRecord.expires_at < Date.now()) {
       res.status(400).json({ message: '無効または期限切れのトークンです。' });
       return;
@@ -469,7 +469,7 @@ router.patch("/email-edit", authenticateToken, async (req: Request, res: Respons
     const token = crypto.randomBytes(20).toString("hex");
     const tokenExpires = new Date(Date.now() + 30 * 60 * 1000);
 
-    await EmailChangeTokens.create({
+    await TokenEmailChange.create({
       token_hash: token,
       expires_at: tokenExpires,
       user_id: userId,
@@ -491,7 +491,7 @@ router.patch("/new-email-change", async (req: Request, res: Response): Promise<v
   const token = req.query.token;
 
   try {
-    const emailTokenData = await EmailChangeTokens.findOne({
+    const emailTokenData = await TokenEmailChange.findOne({
       where: {
         token_hash: token,
         expires_at: { [Op.gt]: new Date() },

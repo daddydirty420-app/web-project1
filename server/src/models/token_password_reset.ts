@@ -3,26 +3,26 @@ import sequelize from "../db.js";
 
 import User from "./user.js";
 
-export class RefreshTokens extends Model {
+export class TokenPasswordReset extends Model {
     declare id: number;
-    declare token: string;
-    declare user_id: number;
+    declare token_hash: string;
     declare expires_at: Date;
+    declare user_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        RefreshTokens.belongsTo(User, {
-            foreignKey: "user_id",
+        TokenPasswordReset.belongsTo(User, {
+            foreignKey: 'user_id',
         });
     };
 
-    static associations: { 
-        User: Association<RefreshTokens, User>;
-     };
-};
+    static associations: {
+        User: Association<TokenPasswordReset, User>;
+    };
+}
 
-RefreshTokens.init(
+TokenPasswordReset.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -30,24 +30,27 @@ RefreshTokens.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        token: {
+        token_hash: {
             type: DataTypes.STRING(255),
             allowNull: false,
             unique: true,
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         },
         expires_at: {
             type: DataTypes.DATE,
             allowNull: false
         },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
     },
     {
         sequelize,
+        modelName: "TokenPasswordReset",
+        tableName: "token_password_reset",
+        freezeTableName: true,
         timestamps: true,
-    },
+    }
 );
 
-export default RefreshTokens;
+export default TokenPasswordReset;

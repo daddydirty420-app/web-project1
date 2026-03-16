@@ -45,6 +45,9 @@ Branches.init(
     },
     {
         sequelize,
+        modelName: "Branches",
+        tableName: "branches",
+        freezeTableName: true,
         timestamps: false,
     },
 );

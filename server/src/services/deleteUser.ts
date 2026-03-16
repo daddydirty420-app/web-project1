@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, DeletedItems, ItemDeleteLogs, DeletedOrderSystems, Cancel, Orders } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, GoodItem, GoodComment, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -133,7 +133,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         });
     
         if (items.length > 0) {
-            const deletedItemsData = [];
+            const ItemDeletedDatas = [];
             const newItemDeleteLogs = [];
             for (const item of items) {
                 const orders = await Orders.findAll({
@@ -224,7 +224,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         // メール送信処理
                     }
 
-                    await DeletedOrderSystems.bulkCreate(deleteOrder, { transaction: t });
+                    await OrderDeleted.bulkCreate(deleteOrder, { transaction: t });
                 }
 
                 let newImages = [];
@@ -247,7 +247,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     }
                 }
 
-                deletedItemsData.push({
+                ItemDeletedDatas.push({
                     item_id: item.id,
                     seller_id: item.seller_id,
                     item_name: item.name,
@@ -270,7 +270,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 });
             }
 
-            await DeletedItems.bulkCreate(deletedItemsData, { transaction: t });
+            await ItemDeleted.bulkCreate(ItemDeletedDatas, { transaction: t });
             await ItemDeleteLogs.bulkCreate(newItemDeleteLogs, { transaction: t });
 
             await items.destroy({ transaction: t });
