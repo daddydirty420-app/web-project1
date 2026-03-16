@@ -59,7 +59,6 @@ Responsibilities
 * Payment processing
 * Order management
 * Delivery management
-* Chat system
 
 Directory structure
 
@@ -92,8 +91,6 @@ User
 Item
 Order
 Delivery
-Chat
-Cancel
 
 Relationships
 
@@ -160,6 +157,7 @@ returned
 
 Planned improvements
 
+* multi-catogory UI
 * mobile app
 * ML recommendation system
 * automatic moderation
