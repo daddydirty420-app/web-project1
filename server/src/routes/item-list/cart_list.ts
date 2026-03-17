@@ -17,7 +17,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
     try {
         const cartList = await Cart.findAll({
             attributes: ["id"],
-            where: { addtocart_user_id: currentUserId },
+            where: { user_id: currentUserId },
             order: [['createdAt', 'DESC']],
             limit,
             offset,
@@ -46,7 +46,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response): Promise<
         .map((cart: typeof Cart) => cart.Item);
         
         const totalCount = await Cart.count({
-            where: { addtocart_user_id: currentUserId },
+            where: { user_id: currentUserId },
             include: [
                 {
                     model: Item,
@@ -81,7 +81,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
     try {
         const cartList = await Cart.findAll({
             attributes: ["id"],
-            where: { addtocart_user_id: currentUserId },
+            where: { user_id: currentUserId },
             order: [['createdAt', 'DESC']],
             limit,
             offset,
@@ -113,7 +113,7 @@ router.get('/search', authenticateToken, async (req: Request, res: Response): Pr
         .map((cart: typeof Cart) => cart.Item);
         
         const totalCount = await Cart.count({
-            where: { addtocart_user_id: currentUserId },
+            where: { user_id: currentUserId },
             include: [
                 {
                     model: Item,

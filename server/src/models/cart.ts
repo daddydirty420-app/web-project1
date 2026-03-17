@@ -7,7 +7,7 @@ import User from "./user.js";
 export class Cart extends Model {
     declare id: number;
     declare item_id: number;
-    declare addtocart_user_id: number;
+    declare user_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -16,7 +16,7 @@ export class Cart extends Model {
             foreignKey: "item_id",
         });
         Cart.belongsTo(User, {
-            foreignKey: "addtocart_user_id",
+            foreignKey: "user_id",
         });
     }
 
@@ -38,7 +38,7 @@ Cart.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        addtocart_user_id: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },

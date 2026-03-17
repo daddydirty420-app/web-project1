@@ -16,7 +16,7 @@ type Responce = {
 
 type Props = {
     item: Item;
-    page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
+    page: "cart" | "deleted" | "draft" | "like" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
     mutate: KeyedMutator<Responce>;
 };
 
@@ -26,7 +26,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
     const remove = async (itemId: string) => {
         const getRemoveBasePath = () => {
             if (page === "draft") return `item/draft/remove/${itemId}`;
-            if (page === "good") return `item-like/remove/${itemId}`;
+            if (page === "like") return `item-like/remove/${itemId}`;
             if (page === "watch-history") return `watch-history/remove/${itemId}`;
 
             return null;
@@ -59,7 +59,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
         if (page === "draft") {
             toastBaseText = "下書き商品";
-        } else if (page === "good") {
+        } else if (page === "like") {
             toastBaseText = "いいねした商品";
         } else if (page === "watch-history") {
             toastBaseText = "閲覧履歴";
@@ -106,7 +106,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
     if (page === "draft") {
         removeText = "下書きから削除";
-    } else if (page === "good") {
+    } else if (page === "like") {
         removeText = "いいねした商品から削除";
     } else if (page === "watch-history") {
         removeText = "閲覧履歴から削除";

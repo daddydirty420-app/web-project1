@@ -111,7 +111,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         
         await IdCard.destroy({ where: { user_id: currentUserId }, transaction: t });
         await BankAccount.destroy({ where: { user_id: currentUserId }, transaction: t });
-        await Cart.destroy({ where: { addtocart_user_id: currentUserId }, transaction: t });
+        await Cart.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Follow.destroy({ where: { follow_user_id: currentUserId }, transaction: t });
         await Follow.destroy({ where: { follower_user_id: currentUserId }, transaction: t });
         await CommentLike.destroy({ where: { user_id: currentUserId }, transaction: t });

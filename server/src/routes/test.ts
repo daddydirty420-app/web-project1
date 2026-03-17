@@ -117,7 +117,7 @@ router.post("/cart-create/:id", async (req: Request, res: Response): Promise<voi
         await Cart.bulkCreate(
             items.map((item: any) => ({
                 item_id: item.id,
-                addtocart_user_id: userId,
+                user_id: userId,
             })),
             { transaction: t }
         );

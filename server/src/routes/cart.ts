@@ -18,7 +18,7 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
         }
 
         await Cart.create({
-            addtocart_user_id: currentUserId,
+            user_id: currentUserId,
             item_id: itemId,
         });
 
@@ -46,7 +46,7 @@ router.delete("/remove/:id", authenticateToken, async (req: Request, res: Respon
 
         await Cart.destroy({
             where: {
-                addtocart_user_id: currentUserId,
+                user_id : currentUserId,
                 item_id: itemId,
             },
         });
@@ -69,7 +69,7 @@ router.get('/status/:id', authenticateToken, async (req: Request, res: Response)
     try {
         const status = await Cart.findOne({
             where: {
-                addtocart_user_id: currentUserId,
+                user_id: currentUserId,
                 item_id: itemId,
             },
         });
@@ -86,7 +86,7 @@ router.get("/related-item-list", authenticateToken, async (req: Request, res: Re
 
     try {
         const cartList = await Cart.findAll({
-            where: { addtocart_user_id: userId },
+            where: { user_id: userId },
             include: [
                 {
                     model: Item,

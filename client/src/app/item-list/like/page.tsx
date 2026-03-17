@@ -24,7 +24,7 @@ export default async function Page() {
     return (
         <ItemListUI title="いいねした商品">
             <ItemList
-            page="good"
+            page="like"
             />
         </ItemListUI>
     );

@@ -46,7 +46,7 @@ export class User extends Model {
 
     static associate() {
         User.hasMany(Cart, {
-            foreignKey: 'addtocart_user_id'
+            foreignKey: 'user_id'
         });
         User.hasMany(Follow, {
             foreignKey: 'follow_user_id',

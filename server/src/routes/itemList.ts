@@ -1,10 +1,9 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Op, literal, WhereOptions } from "sequelize";
-import { Item, User, Video, Sale, Search } from "../models/index.js";
-import { normalizeJapanese } from "utils/normalizeJapanese.js";
-import { getItemList } from "services/item/itemList.js";
+import { authenticateOptional } from "../middleware/index.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import { getItemList } from "../services/item/itemList/itemList.service.js";
+import { ItemListType } from "../services/item/itemList/itemList.config.js";
 
 const router = Router();
 
@@ -13,16 +12,34 @@ const router = Router();
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
-    const type = req.query.type as string;
+    const type = req.query.type as ItemListType;
+
+    if (!type) {
+        res.status(400).json({ message: "ページタイプクエリが不正です" });
+        return;
+    }
+
     const page = parseInt(req.query.page as string) || 1;
+
+    const statusQuery = req.query.status as string | undefined;
+
+    const statusList = statusQuery
+    ? statusQuery.split(",")
+    : undefined;
         
-    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
+    const rawKeyword = req.query.keyword as string | undefined;
+
+    const keyword = rawKeyword
+    ? normalizeJapanese(rawKeyword)
+    : undefined;
 
     try {
         const result = await getItemList({
             type,
             page,
             userId,
+            statusList,
+            keyword,
         });
 
         res.status(200).json({ result });

@@ -16,7 +16,7 @@ import { Items } from "@/types/itemListTypes";
 import { ItemListRow } from "@/components";
 
 type Props = {
-    page: "cart" | "deleted" | "draft" | "good" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
+    page: "cart" | "deleted" | "draft" | "like" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
     uploadedTab?: "all" | "selling" | "sold";
     relatedItemList?: Items[];
 };
@@ -36,7 +36,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         if (page === "cart") return "item-list/cart-list";
         if (page === "draft") return "item-list/draft-list";
         if (page === "deleted") return "item-list/deleted-list";
-        if (page === "good") return "item-list/good-list";
+        if (page === "like") return "item-list/like-list";
         if (page === "watch-history") return "item-list/watch-list";
         if (page === "stock") return "item-list/stock-list";
         if (page === "uploaded") {
