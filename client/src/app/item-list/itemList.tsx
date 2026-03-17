@@ -51,7 +51,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
     const apiQuery = getApiQuery();
 
     const apiUrl = apiQuery
-    ? `${process.env.NEXT_PUBLIC_API_URL}/item-list/${apiQuery}${
+    ? `${process.env.NEXT_PUBLIC_API_URL}/items${apiQuery}${
         searchKeyword.trim()
         ? `&keyword=${encodeURIComponent(searchKeyword.trim())}`
         : ""

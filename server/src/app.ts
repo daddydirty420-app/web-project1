@@ -18,8 +18,8 @@ const app = express();
 
 import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
-import ItemsRouter from "./routes/item.js";
-import ItemListRouter from "./routes/itemList.js";
+import ItemRouter from "./routes/item.js";
+import ItemsRouter from "./routes/items.js";
 import ItemLikeRouter from "./routes/item_like.js";
 import ItemListOldRouter from "./routes/item_list_old.js";
 import ItemPageRouter from "./routes/item_page.js";
@@ -133,8 +133,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/user', usersRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/item', ItemsRouter);
-app.use('/api/item-list', ItemListRouter);
+app.use('/api/item', ItemRouter);
+app.use('/api/items', ItemsRouter);
 app.use('/api/item-like', ItemLikeRouter);
 app.use('/api/item-list-old', ItemListOldRouter);
 app.use('/api/item-page', ItemPageRouter);
