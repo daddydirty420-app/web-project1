@@ -4,11 +4,11 @@ import { Item, Sale, Video } from "../../../../models/index.js";
 type Params = {
     page: number;
     userId: number | null;
-    statusList?: string[];
+    status?: string;
     keyword?: string;
 };
 
-export const getUploadedItems = async ({ page, userId, statusList, keyword }: Params) => {
+export const getUploadedItems = async ({ page, userId, status, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;
 
@@ -17,8 +17,8 @@ export const getUploadedItems = async ({ page, userId, statusList, keyword }: Pa
     };
 
     // status分岐
-    if (statusList && statusList.length > 0) {
-        where.status = { [Op.in]: statusList };
+    if (status) {
+        where.status = status;
     } else {
         // デフォルト
         where.status = { [Op.in]: ["active", "hidden", "soldout"] };

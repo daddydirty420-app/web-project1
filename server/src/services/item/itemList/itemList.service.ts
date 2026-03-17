@@ -11,11 +11,11 @@ type Params = {
     type: ItemListType;
     page: number;
     userId: number | null;
-    statusList?: string[];
+    status?: string;
     keyword?: string;
 };
 
-export const getItemList = async ({ type, page, userId, statusList, keyword }: Params) => {
+export const getItemList = async ({ type, page, userId, status, keyword }: Params) => {
     const config = itemListConfig[type];
 
     if (!config) throw new Error("INVALID_TYPE");
@@ -30,7 +30,7 @@ export const getItemList = async ({ type, page, userId, statusList, keyword }: P
         case "draft": return await getDraftItems({ page, userId, keyword });
         case "like": return await getLikeList({ page, userId, keyword });
         case "stock": return await getStockListItems({ page, userId, keyword });
-        case "uploaded": return await getUploadedItems({ page, userId, statusList, keyword });
+        case "uploaded": return await getUploadedItems({ page, userId, status, keyword });
         case "watchHistory": return await getWatchList({ page, userId, keyword });
 
         default: throw new Error("NOT_IMPLEMENTED");

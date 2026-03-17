@@ -32,29 +32,29 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
     const [pageNumber, setPageNumber] = useState(1);
 
     // apiフェッチ
-    const getBasePath = () => {
-        if (page === "cart") return "item-list/cart-list";
-        if (page === "draft") return "item-list/draft-list";
-        if (page === "deleted") return "item-list/deleted-list";
-        if (page === "like") return "item-list/like-list";
-        if (page === "watch-history") return "item-list/watch-list";
-        if (page === "stock") return "item-list/stock-list";
+    const getApiQuery = () => {
+        if (page === "cart") return `?type=cart&page=${pageNumber}`;
+        if (page === "draft") return `?type=draft&page=${pageNumber}`;
+        if (page === "deleted") return `?type=deleted&page=${pageNumber}`;
+        if (page === "like") return `?type=like&page=${pageNumber}`;
+        if (page === "watch-history") return `?type=watchHistory&page=${pageNumber}`;
+        if (page === "stock") return `?type=stock&page=${pageNumber}`;
         if (page === "uploaded") {
-            if (uploadedTab === "all") return "item-list/uploaded-list/all";
-            if (uploadedTab === "selling") return "item-list/uploaded-list/selling";
-            if (uploadedTab === "sold") return "item-list/uploaded-list/sold";
+            if (uploadedTab === "all") return `?type=cart&page=${pageNumber}`;
+            if (uploadedTab === "selling") return `?type=cart&page=${pageNumber}&status=active`;
+            if (uploadedTab === "sold") return `?type=cart&page=${pageNumber}&status=soldout`;
         }
 
         return null;
     };
 
-    const basePath = getBasePath();
+    const apiQuery = getApiQuery();
 
-    const apiUrl = basePath
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}${
+    const apiUrl = apiQuery
+    ? `${process.env.NEXT_PUBLIC_API_URL}/item-list/${apiQuery}${
         searchKeyword.trim()
-        ? `/search?keyword=${encodeURIComponent(searchKeyword.trim())}&page=${pageNumber}`
-        : `?page=${pageNumber}`
+        ? `&keyword=${encodeURIComponent(searchKeyword.trim())}`
+        : ""
     }`
     : null;
 

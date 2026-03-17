@@ -21,11 +21,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
 
     const page = parseInt(req.query.page as string) || 1;
 
-    const statusQuery = req.query.status as string | undefined;
-
-    const statusList = statusQuery
-    ? statusQuery.split(",")
-    : undefined;
+    const status = req.query.status as string | undefined;
         
     const rawKeyword = req.query.keyword as string | undefined;
 
@@ -38,7 +34,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
             type,
             page,
             userId,
-            statusList,
+            status,
             keyword,
         });
 
