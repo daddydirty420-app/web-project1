@@ -20,7 +20,7 @@ import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import ItemsRouter from "./routes/item.js";
 import ItemLikeRouter from "./routes/item_like.js";
-import ItemListRouter from "./routes/item_list.js";
+import ItemListRouter from "./routes/item_list_old.js";
 import ItemPageRouter from "./routes/item_page.js";
 import ItemUploadRouter from "./routes/item_upload.js";
 import ItemUploadDraftRouter from "./routes/item_upload_draft.js";
