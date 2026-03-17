@@ -48,7 +48,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
             <MypageLinkHeader text='商品リスト' />
             <NormalLinkContainer>
                 <NormalLink url='/item-list/cart' text='カート' />
-                <NormalLink url='/item-list/good' text='高評価リスト' />
+                <NormalLink url='/item-list/like' text='高評価リスト' />
                 <NormalLink url='/item-list/purchased' text='購入した商品' />
                 <NormalLink url='/item-list/uploaded' text='出品した商品' />
                 {data.soldItemCount > 0 && (
