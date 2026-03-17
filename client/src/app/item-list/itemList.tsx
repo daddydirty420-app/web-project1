@@ -40,9 +40,9 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         if (page === "watch-history") return `?type=watchHistory&page=${pageNumber}`;
         if (page === "stock") return `?type=stock&page=${pageNumber}`;
         if (page === "uploaded") {
-            if (uploadedTab === "all") return `?type=cart&page=${pageNumber}`;
-            if (uploadedTab === "selling") return `?type=cart&page=${pageNumber}&status=active`;
-            if (uploadedTab === "sold") return `?type=cart&page=${pageNumber}&status=soldout`;
+            if (uploadedTab === "all") return `?type=uploaded&page=${pageNumber}`;
+            if (uploadedTab === "selling") return `?type=uploaded&page=${pageNumber}&status=active`;
+            if (uploadedTab === "sold") return `?type=uploaded&page=${pageNumber}&status=soldout`;
         }
 
         return null;
