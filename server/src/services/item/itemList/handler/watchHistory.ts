@@ -24,7 +24,7 @@ export const getWatchList = async ({ page, userId, keyword }: Params) => {
     const watchList = await WatchHistory.findAll({
         attributes: ["id"],
         where: { user_id: userId },
-        order: [["createAt", "DESC"]],
+        order: [["createdAt", "DESC"]],
         limit,
         offset,
         include: [

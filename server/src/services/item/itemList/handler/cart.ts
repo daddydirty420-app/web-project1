@@ -24,7 +24,7 @@ export const getCartList = async ({ page, userId, keyword }: Params) => {
     const cartList = await Cart.findAll({
         attributes: ["id"],
         where: { user_id: userId },
-        order: [["createAt", "DESC"]],
+        order: [["createdAt", "DESC"]],
         limit,
         offset,
         include: [
