@@ -24,7 +24,7 @@ export const getLikeList = async ({ page, userId, keyword }: Params) => {
     const likeList = await ItemLike.findAll({
         attributes: ["id"],
         where: { user_id: userId },
-        order: [["createAt", "DESC"]],
+        order: [["createdAt", "DESC"]],
         limit,
         offset,
         include: [
