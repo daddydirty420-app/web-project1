@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Item, ItemLike, Sale, Video } from "../../../../models/index.js";
+import { Item, Sale, Video, WatchHistory } from "../../../../models/index.js";
 
 type Params = {
     page: number;
@@ -7,7 +7,7 @@ type Params = {
     keyword?: string;
 };
 
-export const getLikeList = async ({ page, userId, keyword }: Params) => {
+export const getWatchList = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;
 
@@ -21,7 +21,7 @@ export const getLikeList = async ({ page, userId, keyword }: Params) => {
         };
     }
 
-    const likeList = await ItemLike.findAll({
+    const watchList = await WatchHistory.findAll({
         attributes: ["id"],
         where: { user_id: userId },
         order: [["createAt", "DESC"]],
@@ -31,7 +31,7 @@ export const getLikeList = async ({ page, userId, keyword }: Params) => {
             {
                 model: Item,
                 where: itemWhere,
-                attributes: ['id', 'name', 'price', "status", 'seller_id', 'first_image_url', "gender_type", "age_type"],
+                attributes: ['id', 'name', 'price', "status", 'first_image_url', "gender_type", "age_type"],
                 required: true,
                 include: [
                     {
@@ -48,10 +48,10 @@ export const getLikeList = async ({ page, userId, keyword }: Params) => {
         ],
     });
 
-    const itemList = likeList
-    .map((like: typeof ItemLike) => like.Item);
+    const itemList = watchList
+    .map((watch: typeof WatchHistory) => watch.Item);
 
-    const totalCount = await ItemLike.count({
+    const totalCount = await WatchHistory.count({
         where: { user_id: userId },
         include: [
             {

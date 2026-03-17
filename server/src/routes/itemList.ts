@@ -7,7 +7,7 @@ import { ItemListType } from "../services/item/itemList/itemList.config.js";
 
 const router = Router();
 
-// /items?type="typename"(&page=number&keyword="search")
+// /items?type="typename"(&page=number&status=""&keyword="search")
 
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
