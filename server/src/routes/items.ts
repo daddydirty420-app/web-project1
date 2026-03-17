@@ -30,7 +30,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
     : undefined;
 
     try {
-        const result = await getItemList({
+        const { itemList, totalPages } = await getItemList({
             type,
             page,
             userId,
@@ -38,7 +38,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
             keyword,
         });
 
-        res.status(200).json({ result });
+        res.status(200).json({ itemList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
