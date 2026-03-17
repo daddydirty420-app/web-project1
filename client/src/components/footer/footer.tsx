@@ -36,7 +36,7 @@ export default async function Footer() {
                 <p className={styles.linkP}>ホーム</p>
             </Link>
 
-            <Link href={loggedIn ? '/item-list/purchased' : '/login'} className={styles.linkDiv}>
+            <Link href={loggedIn ? '/order/list/purchased' : '/login'} className={styles.linkDiv}>
                 <FontAwesomeIcon icon={faShoppingBag} className={styles.linkIcon} />
                 <p className={styles.linkP}>購入した商品</p>
             </Link>

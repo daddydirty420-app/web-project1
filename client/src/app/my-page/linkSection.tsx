@@ -49,10 +49,10 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
             <NormalLinkContainer>
                 <NormalLink url='/item-list/cart' text='カート' />
                 <NormalLink url='/item-list/like' text='高評価リスト' />
-                <NormalLink url='/item-list/purchased' text='購入した商品' />
+                <NormalLink url='/order/list/purchased' text='購入した商品' />
                 <NormalLink url='/item-list/uploaded' text='出品した商品' />
                 {data.soldItemCount > 0 && (
-                    <NormalLink url='/item-list/sold' text='売却済み商品' />
+                    <NormalLink url='/order/list/sold' text='売却済み商品' />
                 )}
                 <NormalLink url='/item-list/deleted' text='削除した商品' />
                 <NormalLink url='/item-list/draft' text='下書き保存' />
