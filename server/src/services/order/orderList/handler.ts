@@ -95,6 +95,9 @@ export const getSoldOrders = async ({ page, userId, status }: Params) => {
         ],
     });
 
+    console.log("ordersList:", ordersList);
+    console.log("totalCount:", totalCount);
+
     return {
         ordersList,
         totalPages: Math.ceil(totalCount / limit),
