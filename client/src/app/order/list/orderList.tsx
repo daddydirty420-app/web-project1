@@ -116,7 +116,7 @@ export const OrderList = ({ page, tab }: Props) => {
     return (
         <>
         {ordersList && ordersList.length > 0 && (
-            <main className={styles.orderListtSection}>
+            <main className={styles.orderListSection}>
                 {ordersList.map((order) => {
                     const link = page === "purchased"
                     ? `/order/purchased/${order.id}`
