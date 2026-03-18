@@ -1,15 +1,15 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { authenticateOptional } from "../../../middleware/index.js";
+import { authenticateToken } from "../../../middleware/index.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
-import { getItemList } from "../../../services/item/itemList/itemList.service.js";
-import { ItemListType } from "../../../services/item/itemList/itemList.config.js";
+import { getItems } from "../../../services/item/userItems/items.service.js";
+import { ItemListType } from "../../../services/item/userItems/items.service.js";
 
 const router = Router();
 
 // /items?type="typename"(&page=number&status=""&keyword="search")
 
-router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const type = req.query.type as ItemListType;
@@ -30,7 +30,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
     : undefined;
 
     try {
-        const { itemList, totalPages } = await getItemList({
+        const { itemList, totalPages } = await getItems({
             type,
             page,
             userId,

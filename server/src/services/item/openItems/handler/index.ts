@@ -1,0 +1,3 @@
+type Params = {
+    userId: string;
+};

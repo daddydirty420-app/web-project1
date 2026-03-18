@@ -1,44 +1,30 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateOptional } from "../middleware/index.js";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
-import { getItemList } from "../services/item/itemList/itemList.service.js";
-import { ItemListType } from "../services/item/itemList/itemList.config.js";
+import { ItemListView } from "../services/item/openItems/items.service.js";
 
 const router = Router();
 
-// /items?type="typename"(&page=number&status=""&keyword="search")
+// /items?type=""&page=number&view=""(&pageUserId=${id})
 
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
-    const type = req.query.type as ItemListType;
+    const type = req.query.type;
 
-    if (!type) {
+    if (!(type === "video" || type === "item")) {
         res.status(400).json({ message: "タイプクエリが不正です" });
         return;
     }
 
     const page = parseInt(req.query.page as string) || 1;
 
-    const status = req.query.status as string | undefined;
-        
-    const rawKeyword = req.query.keyword as string | undefined;
+    const view = req.query.view as ItemListView;
 
-    const keyword = rawKeyword
-    ? normalizeJapanese(rawKeyword)
-    : undefined;
+    const pageUserId = parseInt(req.query.pageUserId as string) || undefined;
 
     try {
-        const { itemList, totalPages } = await getItemList({
-            type,
-            page,
-            userId,
-            status,
-            keyword,
-        });
 
-        res.status(200).json({ itemList, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
