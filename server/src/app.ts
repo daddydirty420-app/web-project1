@@ -17,6 +17,7 @@ dotenv.config();
 const app = express();
 
 import usersRouter from "./routes/users.js";
+import UsersMeItemsRouter from "./routes/users/me/items.js";
 import authRouter from "./routes/auth.js";
 import ItemRouter from "./routes/item.js";
 import ItemsRouter from "./routes/items.js";
@@ -123,6 +124,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use('/api/user', usersRouter);
+app.use("/api/users/me/items", UsersMeItemsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/item', ItemRouter);
 app.use('/api/items', ItemsRouter);
