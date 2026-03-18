@@ -72,8 +72,6 @@ import ReportAdminRouter from "./routes/admin/report.js";
 import ShopInfoAdminRouter from "./routes/admin/shop_info_admin.js";
 import TransfarAdminRouter from "./routes/admin/transfar_admin.js";
 import UserAdminRouter from './routes/admin/user_admin.js';
-import PurchasedRouter from "./routes/order-list/purchased.js";
-import SoldRouter from "./routes/order-list/sold.js";
 import TestRouter from "./routes/test.js";
 
 import db from './models/index.js';
@@ -180,8 +178,6 @@ app.use("/api/report-admin", ReportAdminRouter);
 app.use('/api/shop-info-admin', ShopInfoAdminRouter);
 app.use('/api/transfar-admin', TransfarAdminRouter);
 app.use('/api/user-admin', UserAdminRouter);
-app.use("/api/order-list/purchased", PurchasedRouter);
-app.use("/api/order-list/sold", SoldRouter);
 app.use("/api/test", TestRouter);
 
 // catch 404 and forward to error handler
