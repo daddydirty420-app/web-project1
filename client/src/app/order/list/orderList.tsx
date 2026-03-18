@@ -24,25 +24,25 @@ export const OrderList = ({ page, tab }: Props) => {
     const [pageNumber, setPageNumber] = useState(1);
 
     // apiフェッチ
-    const getBasePath = () => {
+    const getApiQuery = () => {
         if (page === "purchased") {
-            if (tab === "all") return "order-list/purchased/all";
-            if (tab === "wait") return "order-list/purchased/wait";
-            if (tab === "shipping") return "order-list/purchased/shipping";
-            if (tab === "complete") return "order-list/purchased/complete";
+            if (tab === "all") return `?type=purchased&${pageNumber}`;
+            if (tab === "wait") return `?type=purchased&${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=purchased&${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=purchased&${pageNumber}&status=completed`;
         } else if (page === "sold") {
-            if (tab === "all") return "order-list/sold/all";
-            if (tab === "wait") return "order-list/sold/wait";
-            if (tab === "shipping") return "order-list/sold/shipping";
-            if (tab === "complete") return "order-list/sold/complete";
+            if (tab === "all") return `?type=sold&${pageNumber}`;
+            if (tab === "wait") return `?type=sold&${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=sold&${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=sold&${pageNumber}&status=completed`;
         }
         
         return null;
     };
 
-    const basePath = getBasePath();
+    const apiQuery = getApiQuery();
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${basePath}`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/orders${apiQuery}`;
 
     const { data } = useSWR<Responce>(apiUrl, fetcher);
 
