@@ -1,3 +1,0 @@
-type Params = {
-    userId: string;
-};

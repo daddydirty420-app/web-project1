@@ -9,10 +9,13 @@ type Params = {
 };
 
 export const getOrderList = async ({ type, page, userId, status }: Params) => {
-    switch (type) {
-        case "purchased": return await getPurchasedOrders({ page, userId, status });
-        case "sold": return await getSoldOrders({ page, userId, status });
+    const handlerMap = {
+        purchased: getPurchasedOrders,
+        sold: getSoldOrders,
+    };
 
-        default: throw new Error("NOT_IMPLEMENTED");
-    }
+    const handler = handlerMap[type];
+    if (!handler) throw new Error("NOT_IMPLEMENTED");
+
+    return await handler({ page, userId, status });
 };

@@ -1,7 +1,8 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateOptional } from "../middleware/index.js";
-import { ItemListView } from "../services/item/openItems/items.service.js";
+import { ItemListView } from "../services/item/openItems/items.config.js";
+import { getOpenItems } from "../services/item/openItems/items.service.js";
 
 const router = Router();
 
@@ -21,10 +22,21 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
 
     const view = req.query.view as ItemListView;
 
+    const limit = parseInt(req.query.limit as string) || 6;
+
     const pageUserId = parseInt(req.query.pageUserId as string) || undefined;
 
     try {
+        const { items, totalPages } = await getOpenItems({
+            userId,
+            type,
+            page,
+            view,
+            limit,
+            pageUserId,
+        });
 
+        res.status(200).json({ items, totalPages });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

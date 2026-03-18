@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../../middleware/index.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
-import { getItems } from "../../../services/item/userItems/items.service.js";
+import { getMeItems } from "../../../services/item/userItems/items.service.js";
 import { ItemListType } from "../../../services/item/userItems/items.service.js";
 
 const router = Router();
@@ -30,7 +30,7 @@ router.get("/", authenticateToken, async (req: Request, res: Response): Promise<
     : undefined;
 
     try {
-        const { itemList, totalPages } = await getItems({
+        const { itemList, totalPages } = await getMeItems({
             type,
             page,
             userId,

@@ -23,7 +23,7 @@ type Params = {
     keyword?: string;
 };
 
-export const getItems = async ({ type, page, userId, status, keyword }: Params) => {
+export const getMeItems = async ({ type, page, userId, status, keyword }: Params) => {
     const handlerMap = {
         cart: getCartList,
         deleted: getDeletedItems,
