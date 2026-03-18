@@ -46,7 +46,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
         try {
             const accessToken = await refreshToken();
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/video-list?page=${page}&limit=${limit}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=index&limit=${limit}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,
@@ -70,7 +70,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
         try {
             const accessToken = await refreshToken();
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/item-list?limit=${limit}&page=${page}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=index&limit=${limit}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,

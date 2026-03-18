@@ -6,7 +6,7 @@ import { getOpenItems } from "../services/item/openItems/items.service.js";
 
 const router = Router();
 
-// /items?type=""&page=number&view=""(&pageUserId=${id})
+// /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
 
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;

@@ -47,7 +47,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
 
     const setVL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/profile-item-list/video-list/${userId}?limit=${limit}&page=${page}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`, {
                 method: 'GET',
                 cache: 'no-store'
             });
@@ -66,7 +66,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
 
     const setIL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/profile-item-list/item-list/${userId}?limit=${limit}&page=${page}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`, {
                 method: 'GET',
                 cache: 'no-store'
             });
