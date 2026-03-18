@@ -95,12 +95,6 @@ export const getSoldOrders = async ({ page, userId, status }: Params) => {
         ],
     });
 
-    console.log("userId:", userId);
-    console.log("where:", where);
-
-    console.log("ordersList:", ordersList);
-    console.log("totalCount:", totalCount);
-
     return {
         ordersList,
         totalPages: Math.ceil(totalCount / limit),

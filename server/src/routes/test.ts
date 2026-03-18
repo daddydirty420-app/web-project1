@@ -397,7 +397,7 @@ router.patch("/orders-patch/:id", async (req: Request, res: Response): Promise<v
 
         const orders = await Orders.findAll({
             where: {
-                buyer_user_id: userId,
+                seller_user_id: userId,
             },
             include: [
                 {
@@ -424,6 +424,7 @@ router.patch("/orders-patch/:id", async (req: Request, res: Response): Promise<v
 
         await Promise.all(orders.map(async (orders: any) => {
             await orders.update({
+                status: "paid",
                 purchase_snapshot: {
                     item_id: orders.Item.id,
                     item_name: orders.Item.name,
