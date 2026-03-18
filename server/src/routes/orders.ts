@@ -3,8 +3,39 @@ import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Op } from "sequelize";
 import { Orders, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
+import { getOrderList } from "../services/order/orderList/orderList.service.js";
 
 const router = Router();
+
+// /orders?type="purchased"&page=number&status=""
+router.get("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
+
+    const type = req.query.type;
+
+    if (!(type === "purchased" || type === "sold")) {
+        res.status(400).json({ message: "タイプクエリが不正です" });
+        return;
+    }
+
+    const page = parseInt(req.query.page as string) || 1;
+
+    const status = req.query.status as string | undefined;
+
+    try {
+        const { ordersList, totalPages } = await getOrderList({
+            type,
+            page,
+            userId,
+            status,
+        });
+
+        res.status(200).json({ ordersList, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
 
 router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {

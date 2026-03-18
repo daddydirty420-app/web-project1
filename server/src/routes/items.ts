@@ -15,7 +15,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
     const type = req.query.type as ItemListType;
 
     if (!type) {
-        res.status(400).json({ message: "ページタイプクエリが不正です" });
+        res.status(400).json({ message: "タイプクエリが不正です" });
         return;
     }
 
