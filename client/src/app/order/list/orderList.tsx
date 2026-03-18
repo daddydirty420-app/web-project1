@@ -26,15 +26,15 @@ export const OrderList = ({ page, tab }: Props) => {
     // apiフェッチ
     const getApiQuery = () => {
         if (page === "purchased") {
-            if (tab === "all") return `?type=purchased&${pageNumber}`;
-            if (tab === "wait") return `?type=purchased&${pageNumber}&status=paid`;
-            if (tab === "shipping") return `?type=purchased&${pageNumber}&status=shipped`;
-            if (tab === "complete") return `?type=purchased&${pageNumber}&status=completed`;
+            if (tab === "all") return `?type=purchased&page=${pageNumber}`;
+            if (tab === "wait") return `?type=purchased&page=${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=purchased&page=${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=purchased&page=${pageNumber}&status=completed`;
         } else if (page === "sold") {
-            if (tab === "all") return `?type=sold&${pageNumber}`;
-            if (tab === "wait") return `?type=sold&${pageNumber}&status=paid`;
-            if (tab === "shipping") return `?type=sold&${pageNumber}&status=shipped`;
-            if (tab === "complete") return `?type=sold&${pageNumber}&status=completed`;
+            if (tab === "all") return `?type=sold&page=${pageNumber}`;
+            if (tab === "wait") return `?type=sold&page=${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=sold&page=${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=sold&page=${pageNumber}&status=completed`;
         }
         
         return null;
