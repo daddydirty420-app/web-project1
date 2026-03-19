@@ -1,7 +1,10 @@
-import { Item } from "../../../models/index.js";
-import { FormDataMode } from "./items.config.js";
 import { getItemByMode } from "./master/getItemByMode.js";
 import { checkHasShop, getCategories, getConditions, getPlaces, getShippingDays, getShippingServices } from "./master/getMaster.js";
+
+export type FormDataMode = 
+| "normal"
+| "draft"
+| "edit";
 
 type Params = {
     itemId: number;

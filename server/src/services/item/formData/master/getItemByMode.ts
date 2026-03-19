@@ -1,5 +1,5 @@
 import { Item } from "../../../../models/index.js";
-import { FormDataMode } from "../items.config.js";
+import { FormDataMode } from "../items.service.js";
 import { ItemDetailInclude, normalInclude } from "../items.query.js";
 
 type Params = {

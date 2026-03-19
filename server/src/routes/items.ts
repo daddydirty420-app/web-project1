@@ -9,7 +9,7 @@ import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { getFormData } from "../services/item/formData/items.service.js";
-import { FormDataMode } from "../services/item/formData/items.config.js";
+import { FormDataMode } from "../services/item/formData/items.service.js";
 
 const router = Router();
 

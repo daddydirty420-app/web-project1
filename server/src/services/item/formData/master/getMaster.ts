@@ -3,7 +3,7 @@ import { Categories, ItemConditionOption, ShippingDayOption, ShippingServiceOpti
 export const getCategories = async () => {
     const category = await Categories.findAll({
         where: { level: 1 },
-        order: [["sort_number", "ASC"]],
+        order: [["sort_order", "ASC"]],
     });
 
     return category;
