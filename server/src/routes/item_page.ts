@@ -545,49 +545,6 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             where: { item_id: itemId },
         });
 
-        const baseCategory = item.Category;
-
-        const targetParentId = baseCategory.parent_id ?? baseCategory.id;
-
-        const itemList = await Item.findAll({
-            where: {
-                id: { [Op.ne]: itemId },
-                status: "active",
-                ...(currentUserId
-                    ? (
-                        sellerMe
-                        ? { seller_id: currentUserId }
-                        : { 
-                            seller_id: { [Op.ne]: currentUserId } 
-                        }
-                    )
-                    : ""
-                ),
-            },
-            order: [['sort_number', 'DESC']],
-            limit: 20,
-            attributes: ['id', 'name', 'price', 'first_image_url'],
-            include: [
-                {
-                    model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
-                    required: false,
-                },
-                {
-                    model: Categories,
-                    as: "Category",
-                    where: {
-                        [Op.or]: [
-                            { parent_id: targetParentId },
-                            { id: targetParentId },
-                        ],
-                    },
-                    attributes: ['id'],
-                    required: true,
-                },
-            ],
-        });
-
         let me = null;
         
         if (currentUserId) {
@@ -602,7 +559,6 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response): Pr
             goodCount,
             isGoodByMe,
             commentCount,
-            itemList,
             me
         });
     } catch (err) {

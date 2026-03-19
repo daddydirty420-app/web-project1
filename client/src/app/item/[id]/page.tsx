@@ -72,8 +72,6 @@ export default async function Page({ params }: Props) {
 
     const itemList: Items[] = recommendData.items ?? [];
 
-    console.log(itemList);
-
     const loggedIn = !!session?.user;
     const userId = session?.user.id;
 
