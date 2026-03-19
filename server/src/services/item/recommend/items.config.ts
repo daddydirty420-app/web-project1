@@ -1,4 +1,4 @@
-import { Cart, Item, Sale } from "../../../models/index.js";
+import { Sale } from "../../../models/index.js";
 import { literal, Op } from "sequelize";
 
 export type ReccomendItemsview = 

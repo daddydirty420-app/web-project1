@@ -34,8 +34,6 @@ export default async function Page() {
 
     const data = await res.json();
 
-    console.log(data);
-
     return (
         <ItemListUI title="カート">
             <ItemList

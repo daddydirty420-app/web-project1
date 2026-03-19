@@ -368,32 +368,4 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
     }
 });
 
-router.get('/recommend-item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    try {
-        const currentUserId = req.user?.id ?? null;
-
-        const items = await Item.findAll({
-            attributes: ['id', 'name', 'price', 'first_image_url'],
-            where: {
-                status: "active",
-                seller_id: { [Op.ne]: currentUserId },
-                recommend: true,
-            },
-            limit: 20,
-            order: [['sort_number', 'DESC']],
-            include: [
-                {
-                    model: Sale,
-                    attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
-                },
-            ],
-        });
-
-        res.json({ items });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 export default router;
