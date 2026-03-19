@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Delivery, DeliveryStatusOption, Orders } from "../../../models/index.js";
+import { Delivery, DeliveryStatusOption, Orders } from "../../../../models/index.js";
 
 type Params = {
     page: number;

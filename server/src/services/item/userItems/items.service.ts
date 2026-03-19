@@ -1,11 +1,11 @@
 import { AppError } from "../../../errors.js";
-import { getCartList } from "./handler/cart.js";
-import { getDeletedItems } from "./handler/deleted.js";
-import { getDraftItems } from "./handler/draft.js";
-import { getLikeList } from "./handler/like.js";
-import { getStockListItems } from "./handler/stock.js";
-import { getUploadedItems } from "./handler/uploaded.js";
-import { getWatchList } from "./handler/watchHistory.js";
+import { getCartList } from "./master/cart.js";
+import { getDeletedItems } from "./master/deleted.js";
+import { getDraftItems } from "./master/draft.js";
+import { getLikeList } from "./master/like.js";
+import { getStockListItems } from "./master/stock.js";
+import { getUploadedItems } from "./master/uploaded.js";
+import { getWatchList } from "./master/watchHistory.js";
 
 export type ItemListType =
     | "cart"
@@ -25,7 +25,7 @@ type Params = {
 };
 
 export const getMeItems = async ({ type, page, userId, status, keyword }: Params) => {
-    const handlerMap = {
+    const serviceMap = {
         cart: getCartList,
         deleted: getDeletedItems,
         draft: getDraftItems,
@@ -35,8 +35,8 @@ export const getMeItems = async ({ type, page, userId, status, keyword }: Params
         watchHistory: getWatchList,
     };
 
-    const handler = handlerMap[type];
-    if (!handler) throw new AppError("NOT_IMPLEMENTED", 400);
+    const service = serviceMap[type];
+    if (!service) throw new AppError("NOT_IMPLEMENTED", 400);
 
-    return await handler({ page, userId, status, keyword });
+    return await service({ page, userId, status, keyword });
 };

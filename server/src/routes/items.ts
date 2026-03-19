@@ -8,6 +8,8 @@ import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
+import { getFormData } from "../services/item/formData/items.service.js";
+import { FormDataMode } from "../services/item/formData/items.config.js";
 
 const router = Router();
 
@@ -103,13 +105,41 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
     }
 });
 
-// /items/:id/form-data?page=""
+// /items/:id/form-data?mode=""
 router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const itemId = req.params.id;
+    const itemId = parseInt(req.params.id);
 
-    const page = req.query.page;
-    if (!["normal", "edit", "draft"].includes(String(page))) {
+    const mode = req.query.mode as FormDataMode;
+    if (!["normal", "edit", "draft"].includes(String(mode))) {
         throw new AppError("INVALID_PAGE", 400);
+    }
+
+    try {
+        const {
+            item,
+            category,
+            allCondition,
+            allDay,
+            allService,
+            allPlace,
+            hasShop
+        } = await getFormData({
+            itemId,
+            mode
+        });
+
+        res.status(200).json({
+            item,
+            category,
+            allCondition,
+            hasShop,
+            allDay,
+            allService,
+            allPlace
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
     }
 });
 

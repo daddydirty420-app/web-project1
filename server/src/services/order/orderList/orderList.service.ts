@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
-import { getPurchasedOrders } from "./handler.js";
-import { getSoldOrders } from "./handler.js";
+import { getPurchasedOrders } from "./master/serviceMaster.js";
+import { getSoldOrders } from "./master/serviceMaster.js";
 
 type Params = {
     type: "purchased" | "sold";

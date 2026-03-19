@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login")
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/upload-edit-draft/${id}?page=draft`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/form-data?mode=draft`, {
         method: "GET",
         cache: "no-store",
         headers: {
