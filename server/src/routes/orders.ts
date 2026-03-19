@@ -4,6 +4,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { Op } from "sequelize";
 import { Orders, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
 import { getOrderList } from "../services/order/orderList/orderList.service.js";
+import { AppError } from "../errors.js";
 
 const router = Router();
 
@@ -14,8 +15,7 @@ router.get("/", authenticateToken, async (req: Request, res: Response): Promise<
     const type = req.query.type;
 
     if (!(type === "purchased" || type === "sold")) {
-        res.status(400).json({ message: "タイプクエリが不正です" });
-        return;
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;

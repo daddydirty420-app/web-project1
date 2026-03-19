@@ -4,19 +4,18 @@ import { authenticateToken } from "../../../middleware/index.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 import { getMeItems } from "../../../services/item/userItems/items.service.js";
 import { ItemListType } from "../../../services/item/userItems/items.service.js";
+import { AppError } from "../../../errors.js";
 
 const router = Router();
 
 // /items?type="typename"(&page=number&status=""&keyword="search")
-
 router.get("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const type = req.query.type as ItemListType;
 
     if (!type) {
-        res.status(400).json({ message: "タイプクエリが不正です" });
-        return;
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;
