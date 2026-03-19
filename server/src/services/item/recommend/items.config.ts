@@ -1,5 +1,5 @@
 import { Cart, Item, Sale } from "../../../models/index.js";
-import { Op } from "sequelize";
+import { literal, Op } from "sequelize";
 
 export type ReccomendItemsview = 
 | "reccomend"
@@ -26,7 +26,7 @@ export const recommendConfig = {
     reccomend: {
         requireAuth: false,
 
-        buildWhere: ({ userId }: Params) => {
+        buildWhere: async ({ userId }: Params) => {
             const where: any = {
                 status: "active",
                 recommend: true,
@@ -52,23 +52,16 @@ export const recommendConfig = {
         requireAuth: true,
 
         buildWhere: async ({ userId }: Params) => {
-            const cartList = await Cart.findAll({
-                where: { user_id: userId },
-                include: [
-                    {
-                        model: Item,
-                        where: { status: "active" },
-                        required: true,
-                    },
-                ],
-            });
-
-            const cartItemIds = cartList.map((cart: typeof Cart) => cart.Item?.id);
-
             const where: any = {
                 status: "active",
                 seller_id: { [Op.ne]: userId },
-                id: { [Op.notIn]: cartItemIds },
+                id: {
+                    [Op.notIn]: literal(`(
+                        SELECT "item_id"
+                        FROM "cart"
+                        WHERE "user_id" = ${userId}
+                    )`)
+                 },
             };
 
             return where;

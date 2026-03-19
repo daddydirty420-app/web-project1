@@ -13,7 +13,7 @@ export const getRecommendItems = async ({ userId, view }: Params) => {
         throw new Error("UNAUTHORIZED");
     }
 
-    const where = config.buildWhere({ userId });
+    const where = await config.buildWhere({ userId });
 
     const items = await Item.findAll({
         attributes: config.attributes,
