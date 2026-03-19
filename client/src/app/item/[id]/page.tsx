@@ -52,13 +52,27 @@ export default async function Page({ params }: Props) {
     }
 
     const data = await res.json();
+
     const item: Item = data.item;
-    const itemList: Items[] = data.itemList;
     const sellerMe: boolean = data.sellerMe;
     const commentCount: number = data.commentCount;
     const goodCount: number = data.goodCount;
     const isGood: boolean = data.isGoodByMe;
     const me: User = data.me;
+
+    const recommendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/recommend?view=itemPage&itemId=${id}`, {
+        method: "GET",
+        cache: "no-store",
+        headers: {
+            Authorization: `Bearer ${accessToken ?? ""}`,
+        },
+    });
+
+    const recommendData = await recommendRes.json();
+
+    const itemList: Items[] = recommendData.items ?? [];
+
+    console.log(itemList);
 
     const loggedIn = !!session?.user;
     const userId = session?.user.id;
