@@ -1,3 +1,4 @@
+import { AppError } from "../../../errors.js";
 import { Categories, Item, Sale } from "../../../models/index.js";
 import { literal, Op } from "sequelize";
 
@@ -9,11 +10,6 @@ export type ReccomendItemsview =
 type Params = {
     userId: number | null;
     itemId?: number;
-};
-
-type QueryConfig = {
-    requireAuth?: boolean;
-    buildQuery: (params: any) => Promise<any>;
 };
 
 const baseConfig = {
@@ -78,7 +74,7 @@ export const recommendConfig = {
                 ],
             });
 
-            if (!item) throw new Error("ITEM_NOT_FOUND");
+            if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
             const baseCategory = item.Category;
 

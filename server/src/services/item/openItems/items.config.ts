@@ -1,5 +1,6 @@
 import { Op } from "sequelize";
 import { Sale, User, Video } from "../../../models/index.js";
+import { AppError } from "../../../errors.js";
 
 export type ItemListView = 
 | "index"
@@ -25,7 +26,7 @@ const viewBaseConfig = {
 
     profile: {
         buildWhere: ({ pageUserId }: Params) => {
-            if (!pageUserId) throw new Error("INVALID_USERID");
+            if (!pageUserId) throw new AppError("INVALID_USERID", 403);
 
             const where: any = {
                 status: { [Op.in]: ["active", "soldout"] },

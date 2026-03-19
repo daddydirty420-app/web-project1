@@ -7,6 +7,7 @@ import { ReccomendItemsview } from "../services/item/recommend/items.config.js";
 import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
+import { AppError } from "../errors.js";
 
 const router = Router();
 
@@ -52,8 +53,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
     const type = req.query.type;
 
     if (!(type === "video" || type === "item")) {
-        res.status(400).json({ message: "タイプクエリが不正です" });
-        return;
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;
@@ -100,6 +100,16 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// /items/:id/form-data?page=""
+router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = req.params.id;
+
+    const page = req.query.page;
+    if (!["normal", "edit", "draft"].includes(String(page))) {
+        throw new AppError("INVALID_PAGE", 400);
     }
 });
 

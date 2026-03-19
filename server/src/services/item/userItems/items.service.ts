@@ -1,3 +1,4 @@
+import { AppError } from "errors.js";
 import { getCartList } from "./handler/cart.js";
 import { getDeletedItems } from "./handler/deleted.js";
 import { getDraftItems } from "./handler/draft.js";
@@ -35,7 +36,7 @@ export const getMeItems = async ({ type, page, userId, status, keyword }: Params
     };
 
     const handler = handlerMap[type];
-    if (!handler) throw new Error("NOT_IMPLEMENTED");
+    if (!handler) throw new AppError("NOT_IMPLEMENTED", 400);
 
     return await handler({ page, userId, status, keyword });
 };

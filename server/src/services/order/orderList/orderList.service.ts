@@ -1,3 +1,4 @@
+import { AppError } from "../../../errors.js";
 import { getPurchasedOrders } from "./handler.js";
 import { getSoldOrders } from "./handler.js";
 
@@ -15,7 +16,7 @@ export const getOrderList = async ({ type, page, userId, status }: Params) => {
     };
 
     const handler = handlerMap[type];
-    if (!handler) throw new Error("NOT_IMPLEMENTED");
+    if (!handler) throw new AppError("NOT_IMPLEMENTED", 400);
 
     return await handler({ page, userId, status });
 };

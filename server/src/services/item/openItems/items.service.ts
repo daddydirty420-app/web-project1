@@ -1,3 +1,4 @@
+import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
 import { ItemListView, viewItemsConfig, viewVideosConfig } from "./items.config.js";
 
@@ -15,7 +16,7 @@ export const getOpenItems = async ({ userId, type, limit, page, view, pageUserId
     ? viewVideosConfig[view]
     : viewItemsConfig[view];
 
-    if (!config) throw new Error("INVALID_VIEW");
+    if (!config) throw new AppError("INVALID_VIEW", 400);
 
     const offset = (page - 1) * limit;
 
