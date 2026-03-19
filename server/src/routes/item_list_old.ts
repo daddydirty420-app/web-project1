@@ -372,7 +372,7 @@ router.get('/recommend-item-list', authenticateOptional, async (req: Request, re
     try {
         const currentUserId = req.user?.id ?? null;
 
-        const data = await Item.findAll({
+        const items = await Item.findAll({
             attributes: ['id', 'name', 'price', 'first_image_url'],
             where: {
                 status: "active",
@@ -389,7 +389,7 @@ router.get('/recommend-item-list', authenticateOptional, async (req: Request, re
             ],
         });
 
-        res.json({ data });
+        res.json({ items });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

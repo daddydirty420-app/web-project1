@@ -25,7 +25,7 @@ export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/related-item-list`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/recommend?view=cart`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -34,11 +34,13 @@ export default async function Page() {
 
     const data = await res.json();
 
+    console.log(data);
+
     return (
         <ItemListUI title="カート">
             <ItemList
             page="cart"
-            relatedItemList={data.relatedItemList}
+            relatedItemList={data.items}
             />
         </ItemListUI>
     );

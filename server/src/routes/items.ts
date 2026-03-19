@@ -3,6 +3,8 @@ import type { Request, Response } from "express-serve-static-core";
 import { authenticateOptional } from "../middleware/index.js";
 import { ItemListView } from "../services/item/openItems/items.config.js";
 import { getOpenItems } from "../services/item/openItems/items.service.js";
+import { ReccomendItemsview } from "../services/item/recommend/items.config.js";
+import { getRecommendItems } from "../services/item/recommend/items.service.js";
 
 const router = Router();
 
@@ -37,6 +39,25 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
         });
 
         res.status(200).json({ items, totalPages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// /items/recommend?view=""
+router.get("/recommend", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user?.id ?? null;
+
+    const view = req.query.view as ReccomendItemsview;
+
+    try {
+        const items = await getRecommendItems({
+            userId,
+            view,
+        });
+
+        res.status(200).json({ items });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
