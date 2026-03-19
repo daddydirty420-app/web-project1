@@ -1,12 +1,19 @@
-import { Sale } from "../../../models/index.js";
+import { Categories, Item, Sale } from "../../../models/index.js";
 import { literal, Op } from "sequelize";
 
 export type ReccomendItemsview = 
 | "reccomend"
-| "cart";
+| "cart"
+| "itemPage";
 
 type Params = {
     userId: number | null;
+    itemId?: number;
+};
+
+type QueryConfig = {
+    requireAuth?: boolean;
+    buildQuery: (params: any) => Promise<any>;
 };
 
 const baseConfig = {
@@ -26,33 +33,22 @@ export const recommendConfig = {
     reccomend: {
         requireAuth: false,
 
-        buildWhere: async ({ userId }: Params) => {
-            const where: any = {
+        buildQuery: async ({ userId }: Params) => ({
+            where: {
                 status: "active",
                 recommend: true,
-            };
-
-            if (userId) {
-                where.seller_id = { [Op.ne]: userId };
-            }
-
-            return where;
-        },
-
-        attributes: ['id', 'name', 'price', 'first_image_url'],
-
-        limit: baseConfig.limit,
-
-        order: baseConfig.order,
-
-        include: baseConfig.include,
+                ...(userId && { seller_id: { [Op.ne]: userId } }),
+            },
+            attributes: ['id', 'name', 'price', 'first_image_url'],
+            ...baseConfig,
+        }),
     },
 
     cart: {
         requireAuth: true,
 
-        buildWhere: async ({ userId }: Params) => {
-            const where: any = {
+        buildQuery: async ({ userId }: Params) => ({
+            where: {
                 status: "active",
                 seller_id: { [Op.ne]: userId },
                 id: {
@@ -62,17 +58,63 @@ export const recommendConfig = {
                         WHERE "user_id" = ${userId}
                     )`)
                  },
+            },
+            attributes: ['id', 'name', 'price', 'first_image_url', "status"],
+            ...baseConfig,
+        }),
+    },
+
+    itemPage: {
+        requireAuth: false,
+
+        buildQuery: async ({ itemId, userId }: Params) => {
+            const item = await Item.findByPk(itemId, {
+                attributes: ["id", "seller_id", "category_id"],
+                include: [
+                    {
+                        model: Categories,
+                        as: "Category",
+                    },
+                ],
+            });
+
+            if (!item) throw new Error("ITEM_NOT_FOUND");
+
+            const baseCategory = item.Category;
+
+            const targetParentId = baseCategory.parent_id ?? baseCategory.id;
+
+            const where: any = {
+                id: { [Op.ne]: itemId },
+                status: "active",
             };
 
-            return where;
+            if (userId) {
+                where.seller_id = userId === item.seller_id
+                ? userId
+                : { [Op.ne]: userId };
+            }
+
+            return {
+                where,
+                attributes: ['id', 'name', 'price', 'first_image_url'],
+                ...baseConfig,
+                include: [
+                    ...baseConfig.include,
+                    {
+                        model: Categories,
+                        as: "Category",
+                        where: {
+                            [Op.or]: [
+                                { parent_id: targetParentId },
+                                { id: targetParentId },
+                            ],
+                        },
+                        attributes: ["id"],
+                        required: true,
+                    },
+                ],
+            };
         },
-
-        attributes: ['id', 'name', 'price', 'first_image_url', "status"],
-
-        limit: baseConfig.limit,
-
-        order: baseConfig.order,
-
-        include: baseConfig.include,
     },
 };

@@ -45,16 +45,19 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
     }
 });
 
-// /items/recommend?view=""
+// /items/recommend?view=""(&itemId=number)
 router.get("/recommend", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const view = req.query.view as ReccomendItemsview;
 
+    const itemId = parseInt(req.query.itemId as string) || undefined;
+
     try {
         const items = await getRecommendItems({
             userId,
             view,
+            itemId,
         });
 
         res.status(200).json({ items });

@@ -4,24 +4,17 @@ import { ReccomendItemsview, recommendConfig } from "./items.config.js";
 type Params = {
     userId: number | null;
     view: ReccomendItemsview;
+    itemId?: number;
 };
 
-export const getRecommendItems = async ({ userId, view }: Params) => {
+export const getRecommendItems = async ({ userId, view, itemId }: Params) => {
     const config = recommendConfig[view];
 
     if (config.requireAuth && !userId) {
         throw new Error("UNAUTHORIZED");
     }
 
-    const where = await config.buildWhere({ userId });
+    const query = await config.buildQuery({ userId, itemId });
 
-    const items = await Item.findAll({
-        attributes: config.attributes,
-        where,
-        limit: config.limit,
-        order: config.order,
-        include: config.include,
-    });
-
-    return items;
+    return await Item.findAll({ query });
 };
