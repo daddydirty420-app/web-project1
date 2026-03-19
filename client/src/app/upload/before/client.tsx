@@ -19,7 +19,7 @@ export const Client = () => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/new-item-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,7 +35,6 @@ export const Client = () => {
             }
 
             const itemId = data.itemId;
-            console.log(itemId);
 
             router.push(`/upload/${itemId}`);
         } catch (err) {

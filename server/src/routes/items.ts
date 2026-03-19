@@ -1,15 +1,51 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { authenticateOptional } from "../middleware/index.js";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { ItemListView } from "../services/item/openItems/items.config.js";
 import { getOpenItems } from "../services/item/openItems/items.service.js";
 import { ReccomendItemsview } from "../services/item/recommend/items.config.js";
 import { getRecommendItems } from "../services/item/recommend/items.service.js";
+import sequelize from "../db.js";
+import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 
 const router = Router();
 
-// /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
+router.post("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user!.id;
 
+    const t = await sequelize.transaction();
+
+    try {
+        const item = await Item.create({
+            seller_id: userId,
+        }, { transaction: t });
+
+        const itemId = item.id;
+
+        await Video.create({
+            user_id: userId,
+            item_id: itemId,
+        }, { transaction: t });
+
+        await Sale.create({
+            item_id: itemId,
+        }, { transaction: t });
+        
+        await ItemShippingProfile.create({
+            item_id: itemId,
+        }, { transaction: t });
+
+        await t.commit();
+
+        res.status(200).json({ itemId });
+    } catch (err) {
+        await t.rollback();
+        console.error(err);
+        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+// /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 

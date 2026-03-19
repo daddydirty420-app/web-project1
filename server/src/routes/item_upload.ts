@@ -190,41 +190,6 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
     }
 });
 
-router.post("/new-item-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const userId = req.user!.id;
-
-    const t = await sequelize.transaction();
-
-    try {
-        const item = await Item.create({
-            seller_id: userId,
-        }, { transaction: t });
-
-        const itemId = item.id;
-
-        await Video.create({
-            user_id: userId,
-            item_id: itemId,
-        }, { transaction: t });
-
-        await Sale.create({
-            item_id: itemId,
-        }, { transaction: t });
-        
-        await ItemShippingProfile.create({
-            item_id: itemId,
-        }, { transaction: t });
-
-        await t.commit();
-
-        res.status(200).json({ itemId });
-    } catch (err) {
-        await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
-    }
-});
-
 router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
     const currentUserId = req.user!.id;
