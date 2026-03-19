@@ -1,6 +1,7 @@
 import { Item } from "../../../../models/index.js";
 import { FormDataMode } from "../items.service.js";
 import { ItemDetailInclude, normalInclude } from "../items.query.js";
+import { AppError } from "../../../../errors.js";
 
 type Params = {
     itemId: number;
@@ -20,6 +21,8 @@ export const getItemByMode = async ({ itemId, mode }: Params) => {
         attributes,
         include,
     });
+
+    if (!item) throw new AppError("NOT_FOUND", 404);
 
     return item;
 };
