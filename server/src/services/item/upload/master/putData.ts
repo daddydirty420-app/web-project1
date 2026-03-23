@@ -116,7 +116,7 @@ export const putData = async ({
                     color: v.color ?? null,
                     inventory: {
                         initial: v.inventory ?? 1,
-                        currnet: v.inventory ?? 1,
+                        current: v.inventory ?? 1,
                         low_stock_ratio: 0.2,
                     },
                     image_url: finalAttributesImageUrls[v.uiId] ?? null,
