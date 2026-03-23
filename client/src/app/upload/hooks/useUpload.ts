@@ -265,8 +265,8 @@ export const useUpload = () => {
 
     const submitDraft = async ({ itemId, body, accessToken }: SubmitType) => {
         
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-draft/${itemId}`, {
-            method: "PATCH",
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}?mode=draft`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
@@ -286,8 +286,8 @@ export const useUpload = () => {
 
     const submitMain = async ({ itemId, body, accessToken }: SubmitType) => {
         
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload-main/${itemId}`, {
-            method: "PATCH",
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}?mode=main`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
