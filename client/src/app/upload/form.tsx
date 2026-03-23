@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -170,11 +170,6 @@ export const Form = ({
 
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        console.log(videoInput.thumbnailFile);
-        console.log(videoInput.thumbnailUploaded);
-    }, [videoInput.thumbnailFile, videoInput.thumbnailUploaded]);
 
     const {
         validateUpload,
