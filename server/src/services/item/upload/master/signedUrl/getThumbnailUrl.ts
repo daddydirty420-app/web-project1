@@ -44,6 +44,9 @@ export const getThumbnailUrl = async ({ itemId, userId, body, mode, item }: Para
         throw new AppError("THUMBNAILURL_NULL", 400);
     }
 
+    console.log(thumbnailUrl);
+    console.log(thumbnailSignedUrl);
+
     return {
         thumbnailUrl,
         thumbnailSignedUrl

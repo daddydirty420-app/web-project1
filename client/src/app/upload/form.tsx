@@ -173,7 +173,8 @@ export const Form = ({
 
     useEffect(() => {
         console.log(videoInput.thumbnailFile);
-    }, [videoInput.thumbnailFile]);
+        console.log(videoInput.thumbnailUploaded);
+    }, [videoInput.thumbnailFile, videoInput.thumbnailUploaded]);
 
     const {
         validateUpload,

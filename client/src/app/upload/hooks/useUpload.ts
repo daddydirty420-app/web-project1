@@ -216,6 +216,7 @@ export const useUpload = () => {
         });
 
         console.log(videoInput.thumbnailFile);
+        console.log(videoInput.thumbnailUploaded);
 
         return {
             video: {
