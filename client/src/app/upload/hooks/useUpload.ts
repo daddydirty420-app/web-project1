@@ -58,13 +58,21 @@ export const useUpload = () => {
             return { ok: false, message: "素材の割合が100%を超えています" };
         }
 
-        const totalInventory = params.attributesValue.colorVariants.reduce(
+        const colorTotalInventory = params.attributesValue.colorVariants.reduce(
+            (sum, v) => sum + (v.inventory ?? 0),
+            0,
+        );
+        if (colorTotalInventory >= 2 && !(colorTotalInventory === params.attributesValue.all_inventory)) {
+            return { ok: false, message: "カラーの出品点数と合計点数が一致していません" };
+        }
+
+        const sizeTotalInventory = params.attributesValue.colorVariants.reduce(
             (sum, v) => sum + v.sizes.reduce(
                 (sizeSum, s) => sizeSum + (s.inventory ?? 0), 0
             ),
             0,
         );
-        if (totalInventory >= 2 && !(totalInventory === params.attributesValue.all_inventory)) {
+        if (sizeTotalInventory >= 2 && !(sizeTotalInventory === params.attributesValue.all_inventory)) {
             return { ok: false, message: "サイズの出品点数と合計点数が一致していません" };
         }
 
@@ -152,13 +160,21 @@ export const useUpload = () => {
             return { ok: false, message: "素材の割合が100%を超えています" };
         }
 
-        const totalInventory = params.attributesValue.colorVariants.reduce(
+        const colorTotalInventory = params.attributesValue.colorVariants.reduce(
+            (sum, v) => sum + (v.inventory ?? 0),
+            0,
+        );
+        if (colorTotalInventory >= 2 && !(colorTotalInventory > params.attributesValue.all_inventory)) {
+            return { ok: false, message: "カラーの出品点数が合計点数を超過しています" };
+        }
+
+        const sizeTotalInventory = params.attributesValue.colorVariants.reduce(
             (sum, v) => sum + v.sizes.reduce(
                 (sizeSum, s) => sizeSum + (s.inventory ?? 0), 0
             ),
             0,
         );
-        if (totalInventory >= 2 && totalInventory > params.attributesValue.all_inventory) {
+        if (sizeTotalInventory >= 2 && sizeTotalInventory > params.attributesValue.all_inventory) {
             return { ok: false, message: "サイズの出品点数が合計点数を超過しています" };
         }
 
