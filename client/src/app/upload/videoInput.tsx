@@ -53,8 +53,6 @@ export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVi
             thumbnailFile: file,
             thumbnailPreview: preview,
         });
-
-        console.log(value.thumbnailFile);
     };
 
     const handleChangeTitle = (title: string) => {
