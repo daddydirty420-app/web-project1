@@ -24,6 +24,11 @@ export const VariantsList = ({ item }: Props) => {
                 currentInventory > 0 &&
                 currentInventory / initialInventory <= 0.2;
 
+                console.log("initialInventory:", initialInventory);
+                console.log("currentInventory:", currentInventory);
+                console.log("isSoldout:", isSoldout);
+                console.log("isLowStock:", isLowStock);
+
                 return (
                     <div
                     key={i}

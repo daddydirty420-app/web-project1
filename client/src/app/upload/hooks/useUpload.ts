@@ -215,6 +215,8 @@ export const useUpload = () => {
             };
         });
 
+        console.log(videoInput.thumbnailFile);
+
         return {
             video: {
                 name: videoInput.videoFile?.name ?? "unknown",
