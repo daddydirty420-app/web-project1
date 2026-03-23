@@ -138,6 +138,7 @@ export const putData = async ({
     
             save_at: nowDate,
             first_image_url: finalImageUrls[0],
+            status: mode === "draft" ? "draft" : "editing",
         }, { transaction: t });
         
         // お知らせ
