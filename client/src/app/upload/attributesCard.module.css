@@ -70,8 +70,15 @@
     box-shadow: var(--shadow-mini);
 }
 
-.cardInputDiv {
-    width: 100%;
+.cardInputRow {
+    display: grid;
+    grid-template-columns: 1fr 60px 28px;
+    align-items: center;
+    gap: 6px;
+}
+
+.colorInputDiv {
+    flex: 1;
     margin: 0.75rem 0;
 }
 
@@ -81,13 +88,27 @@
     color: var(--text-muted);
 }
 
-.cardInput {
+.colorInput {
     box-sizing: border-box;
     width: 100%;
     height: 40px;
     padding: 0 8px;
     font-size: 13px;
     border: solid 1px var(--gray-line);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.colorInventoryInputDiv {
+    width: 72px;
+}
+
+.colorInventoryInput {
+    width: 100%;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 13px;
+    border: 1px solid var(--gray-line);
     border-radius: 8px;
     background-color: #fff;
 }
@@ -164,11 +185,11 @@
 }
 
 /* 在庫入力（幅を固定） */
-.inventoryInputDiv {
+.sizeInventoryInputDiv {
     width: 60px;
 }
 
-.inventoryInput {
+.sizeInventoryInput {
     width: 100%;
     height: 32px;
     padding: 0 6px;

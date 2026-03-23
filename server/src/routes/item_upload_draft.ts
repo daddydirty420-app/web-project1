@@ -411,8 +411,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
 
             attributes: {
                 inventory: {
-                    initial: attributes.allInventory,
-                    current: attributes.allInventory,
+                    initial: attributes.allInventory ?? 1,
+                    current: attributes.allInventory ?? 1,
                     low_stock_ratio: 0.2,
                 },
                 colorVariants: attributes.colorVariants.length > 0
@@ -423,8 +423,8 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response): Pro
                     sizes: v.sizes.map(s => ({
                         size: s.size ?? null,
                         inventory: {
-                            initial: s.inventory,
-                            current: s.inventory,
+                            initial: s.inventory ?? 1,
+                            current: s.inventory ?? 1,
                             low_stock_ratio: 0.2,
                         },
                     })),

@@ -238,6 +238,7 @@ export const useUpload = () => {
                 colorVariants: attributesValue.colorVariants.map(v => ({
                     uiId: v._uiId,
                     color: v.color,
+                    inventory: v.inventory,
                     image: resolveAttributesImage(v),
                     sizes: v.sizes.map(s => ({
                         size: s.size,

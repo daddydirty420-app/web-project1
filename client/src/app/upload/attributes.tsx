@@ -14,6 +14,7 @@ export type AttributesValue = {
     colorVariants: Array<{
         _uiId: string;
         color: string | null;
+        inventory: number;
         image: File | null;
         image_uploaded: boolean;
         sizes: {
@@ -91,6 +92,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
     const createEmptyVariant = () => ({
         _uiId: crypto.randomUUID(),
         color: null,
+        inventory: 1,
         image: null,
         image_uploaded: true,
         sizes: [],
@@ -134,7 +136,18 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
         });
     };
 
-    const handleChangeInventory = (colorVariantsId: string, newInventory: number, index: number) => {
+    const handleChangeColorInventory = (uiId: string, newInventory: number) => {
+        const safeNum = Math.max(1, newInventory);
+
+        onChange({
+            ...value,
+            colorVariants: value.colorVariants.map((v) => 
+                v._uiId === uiId ? { ...v, inventory: safeNum }: v
+            ),
+        });
+    };
+
+    const handleChangeSizeInventory = (colorVariantsId: string, newInventory: number, index: number) => {
         const safeNum = Math.max(1, newInventory);
 
         onChange({
@@ -245,17 +258,32 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                             className={styles.cardPreview}
                             />
 
-                            <div className={styles.cardInputDiv}>
-                                <p className={styles.cardInputTitle}>カラー</p>
-                                <input
-                                type="text"
-                                value={variant.color ?? ""}
-                                onChange={(e) => handleChangeVariantColor(variant._uiId, e.target.value)}
-                                placeholder="カラーを入力してください"
-                                className={styles.cardInput}
-                                />
+                            <div className={styles.cardInputRow}>
+                                <div className={styles.colorInputDiv}>
+                                    <p className={styles.cardInputTitle}>カラー</p>
+                                    <input
+                                    type="text"
+                                    value={variant.color ?? ""}
+                                    onChange={(e) => handleChangeVariantColor(variant._uiId, e.target.value)}
+                                    placeholder="カラーを入力してください"
+                                    className={styles.colorInput}
+                                    />
+                                </div>
+
+                                <div className={styles.colorInventoryInputDiv}>
+                                    <p className={styles.cardInputTitle}>在庫数</p>
+                                    <input
+                                    type="number"
+                                    value={variant.inventory ?? 1}
+                                    onChange={(e) => handleChangeColorInventory(variant._uiId, Number(e.target.value))}
+                                    min={1}
+                                    placeholder="1"
+                                    className={styles.colorInventoryInput}
+                                    />
+                                </div>
                             </div>
 
+                            {/* サイズ　*/}
                             <div className={styles.sizeList}>
                                 {variant.sizes.map((s, index) => (
                                     <div className={styles.sizeRow} key={index}>
@@ -270,15 +298,15 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                                             />
                                         </div>
 
-                                        <div className={styles.inventoryInputDiv}>
+                                        <div className={styles.sizeInventoryInputDiv}>
                                             <p className={styles.sizeInputTitle}>在庫数</p>
                                             <input
                                             type="number"
                                             min={1}
                                             value={s.inventory}
-                                            onChange={(e) => handleChangeInventory(variant._uiId, Number(e.target.value), index)}
+                                            onChange={(e) => handleChangeSizeInventory(variant._uiId, Number(e.target.value), index)}
                                             placeholder="1"
-                                            className={styles.inventoryInput}
+                                            className={styles.sizeInventoryInput}
                                             />
                                         </div>
 

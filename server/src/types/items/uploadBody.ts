@@ -16,6 +16,7 @@ export type Body = {
         colorVariants: Array<{
             uiId: string;
             color: string | null;
+            inventory: number;
             image: {
                 name: string;
                 type: string | null;

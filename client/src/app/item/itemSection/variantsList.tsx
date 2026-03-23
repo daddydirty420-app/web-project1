@@ -16,14 +16,8 @@ export const VariantsList = ({ item }: Props) => {
         <section className={styles.variantList}>
             {item.attributes.colorVariants?.map((variant, i) => {
                 if (!variant) return null;
-                const initialInventory = variant.sizes?.reduce(
-                    (sum, s) => sum + (s.inventory.initial ?? 0),
-                    0,
-                ) ?? 0;
-                const currentInventory = variant.sizes?.reduce(
-                    (sum, s) => sum + (s.inventory.current ?? 0),
-                    0,
-                ) ?? 0;
+                const initialInventory = variant.inventory?.initial ?? 0;
+                const currentInventory = variant.inventory?.current ?? 0;
 
                 const isSoldout = currentInventory === 0;
                 const isLowStock = currentInventory &&
@@ -78,9 +72,11 @@ export const VariantsList = ({ item }: Props) => {
                                         {variant.sizes?.map((size, i) => {
                                             if (!size) return;
 
+                                            const initial = size.inventory.initial;
                                             const current = size.inventory.current;
                                             const soldout = current === 0;
-                                            const lowStock = current <= size.inventory.low_stock_ratio && current > 0;
+                                            const lowStock = current > 0 &&
+                                            current / initial >= size.inventory?.low_stock_ratio;
 
                                             return (
                                                 <span

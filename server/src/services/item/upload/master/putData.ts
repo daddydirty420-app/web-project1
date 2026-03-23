@@ -106,20 +106,25 @@ export const putData = async ({
     
             attributes: {
                 inventory: {
-                    initial: attributes.allInventory,
-                    current: attributes.allInventory,
+                    initial: attributes.allInventory ?? 1,
+                    current: attributes.allInventory ?? 1,
                     low_stock_ratio: 0.2,
                 },
                 colorVariants: attributes.colorVariants.length > 0
                 ? attributes.colorVariants.map(v => ({
                     uiId: v.uiId,
                     color: v.color ?? null,
+                    inventory: {
+                        initial: v.inventory ?? 1,
+                        currnet: v.inventory ?? 1,
+                        low_stock_ratio: 0.2,
+                    },
                     image_url: finalAttributesImageUrls[v.uiId] ?? null,
                     sizes: v.sizes.map(s => ({
                         size: s.size ?? null,
                         inventory: {
-                            initial: s.inventory,
-                            current: s.inventory,
+                            initial: s.inventory ?? 1,
+                            current: s.inventory ?? 1,
                             low_stock_ratio: 0.2,
                         },
                     })),
