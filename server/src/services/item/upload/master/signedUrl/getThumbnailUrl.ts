@@ -26,7 +26,8 @@ export const getThumbnailUrl = async ({ itemId, userId, body, mode, item }: Para
     let thumbnailUrl: string | null = item.Video?.thumbnail_url ?? null;
     
     if (thumbnail?.name && !thumbnail.uploaded) {
-        const key = `thumbnail/${userId}/${itemId}_${now}_${thumbnail.name}`;
+        const ext = thumbnail.name.split('.').pop();
+        const key = `thumbnail/${userId}/${itemId}_${now}_${ext}`;
     
         const thumbnailCommand = new PutObjectCommand({
             Bucket: bucket,

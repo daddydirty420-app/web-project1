@@ -37,8 +37,9 @@ export const getItemImagesUrl = async ({ itemId, userId, body, mode, item }: Par
             
     await Promise.all((itemImages ?? []).map(async (img, index) => {
         if (!img || img.uploaded) return;
-    
-        const key = `item-image/${userId}/${itemId}_${index}_${now}_${img.name}`;
+
+        const ext = img.name.split('.').pop();
+        const key = `item-image/${userId}/${itemId}_${index}_${now}_${ext}`;
     
         const itemImageCommand = new PutObjectCommand({
             Bucket: bucket,

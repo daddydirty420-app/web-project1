@@ -26,7 +26,8 @@ export const getVideoUrl = async ({ itemId, userId, body, mode, item }: Params) 
     let videoUrl: string | null = item.Video?.converted_url ?? item.Video?.original_url ?? null;
     
     if (video?.name && !video.uploaded) {
-        const originalKey = `video/original/${userId}/${itemId}_${now}_${video.name}`;
+        const ext = video.name.split('.').pop();
+        const originalKey = `video/original/${userId}/${itemId}_${now}_${ext}`;
     
         const videoCommand = new PutObjectCommand({
             Bucket: bucket,

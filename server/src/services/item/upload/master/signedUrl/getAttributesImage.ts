@@ -39,7 +39,8 @@ export const getAttributesImagesUrl = async ({ itemId, userId, body, item }: Par
     );
             
     await Promise.all(attributesTargets.map(async (v) => {
-        const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${v.image?.name}`;
+        const ext = v.image?.name.split('.').pop();
+        const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${ext}`;
             
         const cmd = new PutObjectCommand({
             Bucket: bucket,
