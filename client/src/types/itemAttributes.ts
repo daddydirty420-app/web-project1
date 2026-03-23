@@ -36,15 +36,21 @@ export type Fit =
 
 export type ItemAttributes = {
     inventory?: {
-        initial: number,
-        current: number,
-        low_stock_ratio: number,
+        initial: number;
+        current: number;
+        low_stock_ratio: number;
     }; // 在庫
 
     colorVariants?: Array<{
         uiId?: string;
         color?: string;
         image_url?: string;
+        inventory?: {
+            initial: number;
+            current: number;
+            low_stock_ratio: number;
+        };
+        
         sizes?: Array<{
             size: string;
             inventory: {
