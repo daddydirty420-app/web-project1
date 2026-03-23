@@ -52,6 +52,7 @@ export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVi
             ...value,
             thumbnailFile: file,
             thumbnailPreview: preview,
+            thumbnailUploaded: false,
         });
     };
 
