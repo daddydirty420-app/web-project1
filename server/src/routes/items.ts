@@ -96,6 +96,8 @@ router.patch("/:id/publish", authenticateToken, async (req: Request, res: Respon
 
     try {
         await patchPublish({ itemId, userId });
+
+        res.status(200).json({ message: "出品成功！" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
