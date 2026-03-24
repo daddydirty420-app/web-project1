@@ -12,7 +12,7 @@ import { getFormData } from "../services/item/formData/items.service.js";
 import { FormDataMode } from "../services/item/formData/items.service.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
-import { patchPublish } from "services/item/publish/patchItems.service.js";
+import { patchPublish } from "../services/item/publish/patchItems.service.js";
 
 const router = Router();
 
