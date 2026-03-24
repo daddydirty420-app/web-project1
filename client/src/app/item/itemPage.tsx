@@ -10,7 +10,7 @@ import { CommentSection } from "./commentSection/commentSection";
 import Link from "next/link";
 import styles from "./itemCommon.module.css";
 import { EditButton } from "./draft/editButton";
-import { DeleteButton } from "./madmax/deleteButton";
+import { DeleteButton } from "./admin/deleteButton";
 import { Title } from "./confirm/title";
 import { UploadButton } from "./confirm/uploadButton";
 import { DeleteItem } from "./sellerSection/deleteItem";

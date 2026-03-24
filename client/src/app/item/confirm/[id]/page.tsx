@@ -40,7 +40,7 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken || !session) redirect("/login");
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/draft-confirm-deleted/${id}?page=confirm`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode=confirm`, {
         method: 'GET',
         cache: 'no-store',
         headers: {

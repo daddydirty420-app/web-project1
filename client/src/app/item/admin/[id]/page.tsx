@@ -54,7 +54,7 @@ export default async function Page({ params }: Props) {
     const data = await res.json();
     const item: Item = data.item;
     const commentCount: number = data.commentCount;
-    const goodCount: number = data.goodCount;
+    const likeCount: number = data.goodCount;
     const reportCount: number = data.reportCount;
 
     const userId = session?.user.id;
@@ -64,7 +64,7 @@ export default async function Page({ params }: Props) {
     item={item}
     page="admin"
     commentCount={commentCount}
-    goodCount={goodCount}
+    likeCount={likeCount}
     reportCount={reportCount}
     userId={userId || ""}
     loggedIn

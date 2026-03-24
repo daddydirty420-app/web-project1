@@ -155,8 +155,6 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
             itemId,
         });
 
-        console.log("recommendResult:", items);
-
         res.status(200).json({ items });
     } catch (err) {
         console.error(err);
