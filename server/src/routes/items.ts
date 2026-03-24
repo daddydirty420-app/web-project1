@@ -181,15 +181,6 @@ router.get("/:id", authenticateOptional, async (req: Request, res: Response): Pr
             me
         } = await getItemPage({ itemId, userId, mode });
 
-        console.log("result:", {
-            item,
-            sellerMe,
-            likeCount,
-            isLikeByMe,
-            commentCount,
-            me
-        });
-
         res.status(200).json({
             item,
             sellerMe,
