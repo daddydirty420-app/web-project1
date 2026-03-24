@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./video.module.css";
-import { useGoodStatus, useGoodCount, updateItemLikeCache } from "@/hooks/useItemLike";
+import { useLikeStatus, useLikeCount, updateItemLikeCache } from "@/hooks/useItemLike";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
@@ -19,11 +19,11 @@ type Props = {
 };
 
 export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }: Props) => {
-    const { data: goodStatus } = useGoodStatus(id);
-    const { data: goodCount } = useGoodCount(id);
+    const { data: goodStatus } = useLikeStatus(id);
+    const { data: goodCount } = useLikeCount(id);
     const router = useRouter();
 
-    const good = goodStatus?.isGood ?? initialLike ?? false;
+    const like = goodStatus?.isGood ?? initialLike ?? false;
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {
@@ -80,7 +80,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
         <>
         {loggedIn && !sellerMe && page === "normal" && (
             <>
-            {good ? (
+            {like ? (
                 <FontAwesomeIcon
                 icon={faThumbsUpSolid}
                 className={clsx(styles.goodIcon, styles.isGood)}

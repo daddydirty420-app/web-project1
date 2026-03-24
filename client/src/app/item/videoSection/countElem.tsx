@@ -1,6 +1,6 @@
 import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
-import { Like } from "./like";
+import { Like } from "./Like";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 
 type Props = {
