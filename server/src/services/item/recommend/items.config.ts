@@ -2,8 +2,8 @@ import { AppError } from "../../../errors.js";
 import { Categories, Item, Sale } from "../../../models/index.js";
 import { literal, Op } from "sequelize";
 
-export type ReccomendItemsview = 
-| "reccomend"
+export type RecommendItemsview = 
+| "recommend"
 | "cart"
 | "itemPage";
 
@@ -26,7 +26,7 @@ const baseConfig = {
 };
 
 export const recommendConfig = {
-    reccomend: {
+    recommend: {
         requireAuth: false,
 
         buildQuery: async ({ userId }: Params) => ({

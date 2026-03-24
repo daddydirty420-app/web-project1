@@ -41,7 +41,7 @@ export const getThumbnailUrl = async ({ itemId, userId, body, mode, item }: Para
     }
     
     if (mode === "main" && !thumbnailUrl) {
-        throw new AppError("THUMBNAILURL_NULL", 400);
+        throw new AppError("THUMBNAIL_URL_NULL", 400);
     }
 
     return {

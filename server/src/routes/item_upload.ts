@@ -5,7 +5,7 @@ import fs from "fs";
 import { spawn } from "child_process";
 import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { authenticateToken } from "../middleware/index.js";
-import { Video, Item, User, Notification, Follow, Sale, ItemShippingProfile, Categories, Brands, ShopInfo, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption, BrandAliases } from "../models/index.js";
+import { Video, Item, User, Notification, Follow, Categories, Brands, BrandAliases } from "../models/index.js";
 import { AuthUser } from "../middleware/authMiddleware.js";
 import sequelize from "../db.js";
 import { Op } from "sequelize";
@@ -267,7 +267,7 @@ router.patch("/upload-confirm/:id", authenticateToken, async (req: Request, res:
 
         await Notification.create({
             read_user_id: currentUserId,
-            ur: `/item/${itemId}`,
+            url: `/item/${itemId}`,
             message_image: item.first_image_url,
             message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
         }, { transaction: t });

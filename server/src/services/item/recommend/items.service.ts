@@ -1,10 +1,10 @@
 import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
-import { ReccomendItemsview, recommendConfig } from "./items.config.js";
+import { RecommendItemsview, recommendConfig } from "./items.config.js";
 
 type Params = {
     userId: number | null;
-    view: ReccomendItemsview;
+    view: RecommendItemsview;
     itemId?: number;
 };
 

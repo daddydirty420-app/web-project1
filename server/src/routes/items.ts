@@ -3,7 +3,7 @@ import type { Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { ItemListView } from "../services/item/openItems/items.config.js";
 import { getOpenItems } from "../services/item/openItems/items.service.js";
-import { ReccomendItemsview } from "../services/item/recommend/items.config.js";
+import { RecommendItemsview } from "../services/item/recommend/items.config.js";
 import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
@@ -12,6 +12,7 @@ import { getFormData } from "../services/item/formData/items.service.js";
 import { FormDataMode } from "../services/item/formData/items.service.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
+import { patchPublish } from "services/item/publish/patchItems.service.js";
 
 const router = Router();
 
@@ -88,6 +89,19 @@ router.put("/:id", authenticateToken, async (req: Request, res: Response): Promi
     }
 });
 
+// PATCH /items/:id/publish
+router.patch("/:id/publish", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+    const userId = req.user!.id;
+
+    try {
+        await patchPublish({ itemId, userId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
 // GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
 router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
@@ -127,7 +141,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
 router.get("/recommend", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id ?? null;
 
-    const view = req.query.view as ReccomendItemsview;
+    const view = req.query.view as RecommendItemsview;
 
     const itemId = parseInt(req.query.itemId as string) || undefined;
 
