@@ -91,6 +91,8 @@ export const recommendConfig = {
                 : { [Op.ne]: userId };
             }
 
+            console.log("where:", where);
+
             return {
                 where,
                 attributes: ['id', 'name', 'price', 'first_image_url'],
