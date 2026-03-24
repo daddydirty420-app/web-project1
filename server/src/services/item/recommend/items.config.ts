@@ -91,7 +91,7 @@ export const recommendConfig = {
                 : { [Op.ne]: userId };
             }
 
-            console.log("where:", where);
+            const categoryRequired = userId !== item.seller_id;
 
             return {
                 where,
@@ -109,7 +109,7 @@ export const recommendConfig = {
                             ],
                         },
                         attributes: ["id"],
-                        required: false,
+                        required: categoryRequired,
                     },
                 ],
             };
