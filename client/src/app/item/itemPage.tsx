@@ -24,8 +24,8 @@ type Props = {
     sellerMe?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     commentCount?: number;
-    goodCount?: number;
-    isGood?: boolean;
+    likeCount?: number;
+    isLike?: boolean;
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
@@ -39,8 +39,8 @@ export const ItemPage = ({
     sellerMe,
     page,
     commentCount,
-    goodCount,
-    isGood,
+    likeCount,
+    isLike,
     reportCount,
     userId,
     loggedIn,
@@ -73,7 +73,7 @@ export const ItemPage = ({
             {page === "admin" && <DeleteButton id={id} item={item} />}
             {["normal", "admin", "draft"].includes(page) && <Back />}
 
-            <Main id={id} item={item} sellerMe={sellerMe} page={page} goodCount={goodCount} isGood={isGood} reportCount={reportCount} userId={userId} loggedIn={loggedIn} />
+            <Main id={id} item={item} sellerMe={sellerMe} page={page} likeCount={likeCount} isLike={isLike} reportCount={reportCount} userId={userId} loggedIn={loggedIn} />
             {["normal", "admin"].includes(page) && (
                 <>
                 {page === "normal" && <ItemListSection itemList={itemList} sellerMe={sellerMe} />}

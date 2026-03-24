@@ -1,25 +1,25 @@
 import styles from "./video.module.css";
 import { Item } from "../itemPageTypes";
-import { Good } from "./good";
+import { Like } from "./like";
 import { formatRelativeTime } from "@/lib/formatRelativeTime";
 
 type Props = {
     id: string;
     item: Item;
     sellerMe?: boolean;
-    goodCount?: number;
-    isGood?: boolean;
+    likeCount?: number;
+    isLike?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     loggedIn: boolean;
 };
 
-export const CountElem = ({ id, item, sellerMe, goodCount, isGood, page, loggedIn }: Props) => {
+export const CountElem = ({ id, item, sellerMe, likeCount, isLike, page, loggedIn }: Props) => {
     return (
         <section className={styles.countElem}>
             {["normal", "admin"].includes(page) && (
                 <>
                 <div className={styles.goodDiv}>
-                    <Good id={id} sellerMe={sellerMe} initialCount={goodCount} initialGood={isGood} page={page as "normal" | "admin"} loggedIn={loggedIn} />
+                    <Like id={id} sellerMe={sellerMe} initialCount={likeCount} initialLike={isLike} page={page as "normal" | "admin"} loggedIn={loggedIn} />
                 </div>
 
                 <div className={styles.countDiv}>

@@ -9,19 +9,19 @@ type Props = {
     item: Item;
     sellerMe?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
-    goodCount?: number;
-    isGood?: boolean;
+    likeCount?: number;
+    isLike?: boolean;
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
 };
 
-export const Main = ({ id, item, sellerMe, page, goodCount, isGood, reportCount, userId, loggedIn }: Props) => {
+export const Main = ({ id, item, sellerMe, page, likeCount, isLike, reportCount, userId, loggedIn }: Props) => {
     return (
         <main className={styles.main2column}>
             <div className={styles.left2column}>
                 {sellerMe && page === "normal" && <SellerSectionTop id={id} item={item} />}
-                <VideoSection id={id} item={item} sellerMe={sellerMe} goodCount={goodCount} isGood={isGood} page={page} reportCount={reportCount} userId={userId} loggedIn={loggedIn} />
+                <VideoSection id={id} item={item} sellerMe={sellerMe} likeCount={likeCount} isLike={isLike} page={page} reportCount={reportCount} userId={userId} loggedIn={loggedIn} />
             </div>
             <ItemSection id={id} item={item} sellerMe={sellerMe} page={page} loggedIn={loggedIn} />
         </main>

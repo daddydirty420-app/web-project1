@@ -12,18 +12,18 @@ import { refreshToken } from "@/lib/refreshToken";
 type Props = {
     id: string;
     sellerMe?: boolean;
-    initialGood?: boolean;
+    initialLike?: boolean;
     initialCount?: number;
     page: "normal" | "admin";
     loggedIn: boolean;
 };
 
-export const Good = ({ id, sellerMe, initialGood, initialCount, page, loggedIn }: Props) => {
+export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }: Props) => {
     const { data: goodStatus } = useGoodStatus(id);
     const { data: goodCount } = useGoodCount(id);
     const router = useRouter();
 
-    const good = goodStatus?.isGood ?? initialGood ?? false;
+    const good = goodStatus?.isGood ?? initialLike ?? false;
     const count = goodCount?.count ?? initialCount ?? 0;
 
     const add = async () => {

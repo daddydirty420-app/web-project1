@@ -39,7 +39,7 @@ export default async function Page({ params }: Props) {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode="normal`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
@@ -56,8 +56,8 @@ export default async function Page({ params }: Props) {
     const item: Item = data.item;
     const sellerMe: boolean = data.sellerMe;
     const commentCount: number = data.commentCount;
-    const goodCount: number = data.goodCount;
-    const isGood: boolean = data.isGoodByMe;
+    const likeCount: number = data.likeCount;
+    const isLike: boolean = data.isLikeByMe;
     const me: User = data.me;
 
     const recommendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/recommend?view=itemPage&itemId=${id}`, {
@@ -94,8 +94,8 @@ export default async function Page({ params }: Props) {
         sellerMe={sellerMe}
         page="normal"
         commentCount={commentCount}
-        goodCount={goodCount}
-        isGood={isGood}
+        likeCount={likeCount}
+        isLike={isLike}
         userId={userId || ""}
         loggedIn={loggedIn}
         me={me}

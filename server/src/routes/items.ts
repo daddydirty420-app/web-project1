@@ -13,6 +13,7 @@ import { FormDataMode } from "../services/item/formData/items.service.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
+import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
 
 const router = Router();
 
@@ -155,6 +156,37 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
         });
 
         res.status(200).json({ items });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// GET /items/:id?mode=""
+router.get("/:id", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+    const userId = req.user?.id ?? null;
+
+    const mode = req.query.mode as ItemPageMode;
+
+    try {
+        const {
+            item,
+            sellerMe,
+            likeCount,
+            isLikeByMe,
+            commentCount,
+            me
+        } = await getItemPage({ itemId, userId, mode });
+
+        res.status(200).json({
+            item,
+            sellerMe,
+            likeCount,
+            isLikeByMe,
+            commentCount,
+            me
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

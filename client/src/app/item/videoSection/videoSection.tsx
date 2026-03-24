@@ -11,21 +11,21 @@ type Props = {
     id: string;
     item: Item;
     sellerMe?: boolean;
-    goodCount?: number;
-    isGood?: boolean;
+    likeCount?: number;
+    isLike?: boolean;
     page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
 };
 
-export const VideoSection = ({ id, item, sellerMe, goodCount, isGood, page, reportCount, userId, loggedIn }: Props) => {
+export const VideoSection = ({ id, item, sellerMe, likeCount, isLike, page, reportCount, userId, loggedIn }: Props) => {
     return (
         <section className={styles.videoSection}>
             <VideoElem item={item} sellerMe={sellerMe} page={page} />
             <h3 className={styles.title}>{item.Video?.title}</h3>
             <ItemPeek item={item} />
-            <CountElem id={id} item={item} sellerMe={sellerMe} goodCount={goodCount} isGood={isGood} page={page} loggedIn={loggedIn} />
+            <CountElem id={id} item={item} sellerMe={sellerMe} likeCount={likeCount} isLike={isLike} page={page} loggedIn={loggedIn} />
             <Summary id={id} item={item} sellerMe={sellerMe} page={page} />
             {["normal", "admin"].includes(page) && (
                 <>

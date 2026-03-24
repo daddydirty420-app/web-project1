@@ -396,7 +396,7 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
     try {
         const item = await Item.findByPk(itemId, {
             attributes: {
-                exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text']
+                exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text'],
             },
             include: [
                 { model: ItemConditionOption },
