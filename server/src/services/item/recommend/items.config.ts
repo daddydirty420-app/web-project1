@@ -109,7 +109,7 @@ export const recommendConfig = {
                             ],
                         },
                         attributes: ["id"],
-                        required: true,
+                        required: false,
                     },
                 ],
             };
