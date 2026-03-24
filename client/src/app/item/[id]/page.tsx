@@ -39,7 +39,7 @@ export default async function Page({ params }: Props) {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode="normal"`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode=normal`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
