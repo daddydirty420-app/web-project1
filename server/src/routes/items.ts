@@ -155,6 +155,8 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
             itemId,
         });
 
+        console.log("recommendResult:", items);
+
         res.status(200).json({ items });
     } catch (err) {
         console.error(err);
@@ -178,6 +180,15 @@ router.get("/:id", authenticateOptional, async (req: Request, res: Response): Pr
             commentCount,
             me
         } = await getItemPage({ itemId, userId, mode });
+
+        console.log("result:", {
+            item,
+            sellerMe,
+            likeCount,
+            isLikeByMe,
+            commentCount,
+            me
+        });
 
         res.status(200).json({
             item,

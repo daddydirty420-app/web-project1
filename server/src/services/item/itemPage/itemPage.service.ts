@@ -16,11 +16,17 @@ type Params = {
 };
 
 export const getItemPage = async ({ itemId, userId, mode }: Params) => {
+    console.log("itemId:", itemId);
+    console.log("userId:", userId);
+    console.log("mode:", mode);
+
     // itemデータ取得
     const item = await getItem({ itemId, mode });
 
     if (mode === "normal") {
         const sellerMe = userId === item.seller_id;
+
+        console.log("sellerMe:", sellerMe);
 
         // like関連取得
         const {
