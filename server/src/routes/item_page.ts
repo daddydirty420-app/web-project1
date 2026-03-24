@@ -443,7 +443,7 @@ router.get("/draft-confirm-deleted/:id", authenticateToken, async (req: Request,
         });
 
         if (!item
-            || item.status === "acrive"
+            || item.status === "active"
             || (page === "draft" && !(item.status === "draft"))
             || (page === "confirm" && item.status === "deleted")
             || (page === "deleted" && !(item.status === "deleted"))
