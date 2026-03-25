@@ -16,7 +16,7 @@ import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
 import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
-import { patchItemLogsAccess } from "services/item/logs/accessLogs.service.js";
+import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 
 const router = Router();
 
