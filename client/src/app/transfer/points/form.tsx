@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "../transfar.module.css";
-import TransfarUI from "../transferUI";
+import styles from "../transfer.module.css";
+import TransferUI from "../transferUI";
 import { User } from "../types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -40,7 +40,7 @@ export const Form = ({ user }: Props) => {
                 return;
             }
             
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfar/points-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/points-create`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -66,7 +66,7 @@ export const Form = ({ user }: Props) => {
     };
 
     return (
-        <TransfarUI title="ポイントに変換">
+        <TransferUI title="ポイントに変換">
             <div className={styles.transInputDiv}>
                 <p className={styles.transDivTitle}>現在の売上金</p>
                 <p className={styles.transTextValue}>￥{user.uriagekin.toLocaleString()}</p>
@@ -144,6 +144,6 @@ export const Form = ({ user }: Props) => {
                 </div>
                 </>
             )}
-        </TransfarUI>
+        </TransferUI>
     );
 };

@@ -1,5 +1,5 @@
 import { ToastBoundary } from "@/providers/toastBoundary";
 
-export default function TransfarLayout({ children }) {
+export default function TransferLayout({ children }) {
     return <ToastBoundary>{children}</ToastBoundary>;
 };

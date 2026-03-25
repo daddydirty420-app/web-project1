@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "../transfar.module.css";
-import TransfarUI from "../transferUI";
+import styles from "../transfer.module.css";
+import TransferUI from "../transferUI";
 import { User } from "../types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -49,7 +49,7 @@ export const Form = ({ user }: Props) => {
                 return;
             }
             
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfar/request-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/request-create`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -70,7 +70,7 @@ export const Form = ({ user }: Props) => {
             }
 
             alert("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
-            router.push(`/transfar/detail/${data.transId}`);
+            router.push(`/transfer/detail/${data.transId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
@@ -78,7 +78,7 @@ export const Form = ({ user }: Props) => {
     };
 
     return (
-        <TransfarUI title="振込申請金額を入力">
+        <TransferUI title="振込申請金額を入力">
             <div className={styles.transInputDiv}>
                 <p className={styles.transDivTitle}>現在の売上金</p>
                 <p className={styles.transTextValue}>￥{user.uriagekin.toLocaleString()}</p>
@@ -180,6 +180,6 @@ export const Form = ({ user }: Props) => {
                 </div>
                 </>
             )}
-        </TransfarUI>
+        </TransferUI>
     );
 };

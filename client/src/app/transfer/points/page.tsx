@@ -24,7 +24,7 @@ export default async function Page() {
 
     if (!session || !accessToken) redirect("/login")
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/transfar-points`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/transfer-points`, {
         method: "GET",
         cache: "no-store",
         headers: {

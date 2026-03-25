@@ -6,7 +6,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function TransfarUI({ title, children }: Props) {
+export default function TransferUI({ title, children }: Props) {
     return (
         <>
         <Container>

@@ -1,13 +1,13 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Transfar, TransReasonOption, User, BankAccount, AccountTypeOption } from "../../models/index.js";
+import { Transfer, TransReasonOption, User, BankAccount, AccountTypeOption } from "../../models/index.js";
 
 const router = Router();
 
 router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
             where: {
                 trans_finish: false,
@@ -39,7 +39,7 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
 
 router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'trans_at'],
             where: { trans_finish: true },
             order: [['trans_date', 'DESC']],
@@ -69,7 +69,7 @@ router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Res
 
 router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
             where: {
                 trans_finish: false,
@@ -107,7 +107,7 @@ router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Respon
 
 router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
             where: {
                 trans_finish: false,
@@ -145,7 +145,7 @@ router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Resp
 
 router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
             where: {
                 trans_finish: false,

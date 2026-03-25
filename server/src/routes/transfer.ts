@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Transfar, BankAccount, AccountTypeOption, User, UriagekinHistory, Notification, PointsHistory, Journal, PointConversionLogs } from "../models/index.js";
+import { Transfer, BankAccount, AccountTypeOption, User, UriagekinHistory, Notification, PointsHistory, Journal, PointConversionLogs } from "../models/index.js";
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -76,30 +76,30 @@ router.post("/request-create", authenticateToken, async (req: Request, res: Resp
             uriagekin: oldUriagekin - requestValue,
         }, { transaction: t });
 
-        const generateTransfarId = async (): Promise<string> => {
+        const generateTransferId = async (): Promise<string> => {
             for (let i = 0; i < 5; i++) {
                 const id = crypto.randomBytes(11).toString("hex");
-                const existing = await Transfar.findOne({ where: { transfar_id: id } });
+                const existing = await Transfer.findOne({ where: { transfer_id: id } });
                 if (!existing) return id;
             }
-            throw new Error("Failed to generate unique transfar_id after 5 attempts.");
+            throw new Error("Failed to generate unique transfer_id after 5 attempts.");
         };
 
-        const transfarId = await generateTransfarId();
+        const transferId = await generateTransferId();
 
-        const transfar = await Transfar.create({
+        const transfer = await Transfer.create({
             all_money: requestValue,
             handling_charge: 200,
             trans_money: transValue,
             trans_reason_id: 1,
             user_id: userId,
             trans_schedule_date: nextNextFriday,
-            transfar_id: transfarId,
+            transfer_id: transferId,
         }, { transaction: t });
 
         await Notification.create({
             read_user_id: userId,
-            url: `/transfar/detail/${transfar.id}`,
+            url: `/transfer/detail/${transfer.id}`,
             message: `${transValue.toLocaleString()}円を振込申請しました。翌々週の金曜日以降に指定された口座までお振込みいたします。詳細はこちらをクリックしてご確認ください。`,
         }, { transaction: t });
 
@@ -108,7 +108,7 @@ router.post("/request-create", authenticateToken, async (req: Request, res: Resp
         await t.commit();
         res.status(200).json({
             message: "振込申請が完了しました。",
-            transId: transfar.id,
+            transId: transfer.id,
         });
     } catch (err) {
         await t.rollback();
@@ -214,8 +214,8 @@ router.post("/points-create", authenticateToken, async (req: Request, res: Respo
 
 router.get('/detail/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const data = await Transfar.findByPk(req.params.id, {
-            attributes: ['id', 'trans_money', 'transfar_id', 'createdAt'],
+        const data = await Transfer.findByPk(req.params.id, {
+            attributes: ['id', 'trans_money', 'transfer_id', 'createdAt'],
             include: [
                 {
                     model: BankAccount,
@@ -241,7 +241,7 @@ router.get('/detail/:id', authenticateToken, async (req: Request, res: Response)
 
 router.get('/history', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     try {
-        const dataList = await Transfar.findAll({
+        const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
             where: { user_id: req.user!.id },
             order: [['createdAt', 'DESC']],

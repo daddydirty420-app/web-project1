@@ -5,7 +5,7 @@ import TransReasonOption from "./trans_reason_option.js";
 import User from "./user.js";
 import BankAccount from "./bank_account.js";
 
-export class Transfar extends Model {
+export class Transfer extends Model {
     declare id: number;
     declare all_money: number | null;
     declare handling_charge: number | null;
@@ -17,28 +17,28 @@ export class Transfar extends Model {
     declare trans_date: Date | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare transfar_id: string | null;
+    declare transfer_id: string | null;
 
     static associate() {
-        Transfar.belongsTo(TransReasonOption, {
+        Transfer.belongsTo(TransReasonOption, {
             foreignKey: 'trans_reason_id'
         });
-        Transfar.belongsTo(User, {
+        Transfer.belongsTo(User, {
             foreignKey: 'user_id'
         });
-        Transfar.hasOne(BankAccount, {
-            foreignKey: 'transfar_id'
+        Transfer.hasOne(BankAccount, {
+            foreignKey: 'transfer_id'
         });
     }
 
     static associations: {
-        TransReasonOption: Association<Transfar, TransReasonOption>;
-        User: Association<Transfar, User>;
-        BankAccount: Association<Transfar, BankAccount>;
+        TransReasonOption: Association<Transfer, TransReasonOption>;
+        User: Association<Transfer, User>;
+        BankAccount: Association<Transfer, BankAccount>;
     };
 }
 
-Transfar.init(
+Transfer.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -58,18 +58,18 @@ Transfar.init(
         user_id: DataTypes.INTEGER,
         trans_schedule_date: DataTypes.DATE,
         trans_at: DataTypes.DATE,
-        transfar_id: {
+        transfer_id: {
             type: DataTypes.STRING(50),
             unique: true,
         },
     },
     {
         sequelize,
-        modelName: "Transfar",
-        tableName: "transfar",
+        modelName: "Transfer",
+        tableName: "transfer",
         freezeTableName: true,
         timestamps: true,
     }
 );
 
-export default Transfar;
+export default Transfer;
