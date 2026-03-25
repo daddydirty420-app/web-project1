@@ -1,4 +1,4 @@
-import { createWatchHistory } from "services/watchHistory/create.js";
+import { createWatchHistory } from "../../watchHistory/create.js";
 import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
 import { patchItemsAccess } from "./master/accessSort.js";
