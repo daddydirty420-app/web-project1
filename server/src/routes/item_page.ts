@@ -63,40 +63,6 @@ router.patch('/access-normal/:id', authenticateOptional, async (req: Request, re
     }
 });
 
-router.patch('/sort-add/:id', async (req: Request, res: Response): Promise<void> => {
-    const itemId = req.params.id;
-    if (!itemId) {
-        res.status(400).json({ message: 'itemIdがありません。' });
-        return;
-    }
-
-    const number = Number(req.query.number);
-    const buzzNumber = number * 3;
-    if (isNaN(number)) {
-        res.status(400).json({ message: '数値が不正です。' });
-        return;
-    }
-
-    try {
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
-
-        if (!item.sold_out) {
-            item.sort_number = Number(item.sort_number) + number;
-            item.sort_buzz_number = Number(item.sort_buzz_number) + buzzNumber;
-            await item.save();
-        }
-
-        res.status(200).json({ sortNumber: item.sort_number });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
     const itemId = req.params.id;

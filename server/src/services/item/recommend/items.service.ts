@@ -17,7 +17,5 @@ export const getRecommendItems = async ({ userId, view, itemId }: Params) => {
 
     const query = await config.buildQuery({ userId, itemId });
 
-    console.log("query:", query);
-
     return await Item.findAll(query);
 };

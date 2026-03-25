@@ -15,6 +15,7 @@ import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
 import { getMetadata } from "../services/item/itemPage/metadata.service.js";
+import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
 
 const router = Router();
 
@@ -100,6 +101,26 @@ router.patch("/:id/publish", authenticateToken, async (req: Request, res: Respon
         await patchPublish({ itemId, userId });
 
         res.status(200).json({ message: "出品成功！" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// PATCH /items/:id/sort-number?number=number
+router.patch("/:id/sort-number", async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const number = Number(req.query.number);
+
+    if (!number || isNaN(number)) {
+        throw new AppError("INVALID_NUMBER", 400);
+    }
+
+    try {
+        await patchSortNumber({ itemId, number });
+
+        res.status(200).json({ message: "sort_numberを更新しました" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
