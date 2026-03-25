@@ -8,61 +8,6 @@ import itemCopyUpload from "../services/itemCopyUpload.js";
 
 const router = Router();
 
-router.patch('/access-normal/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    const itemId = req.params.id;
-    if (!itemId) {
-        res.status(400).json({ message: '商品のidがありません。' });
-        return;
-    }
-    const currentUserId = req.user?.id ?? null;
-
-    try {
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
-
-        const history = await WatchHistory.findOne({
-            where: {
-                item_id: itemId,
-                user_id: currentUserId,
-            },
-        });
-
-        if (history) {
-            history.updatedAt = new Date();
-            await history.save();
-        } else {
-            await WatchHistory.create({
-                item_id: itemId,
-                user_id: currentUserId || null,
-            });
-        }
-
-        if (item.seller_id !== currentUserId) {
-            item.views_count += 1;
-
-            if (!item.sold_out) {
-                item.sort_number = Number(item.sort_number) + 5;
-                item.sort_buzz_number = Number(item.sort_buzz_number) + 30;
-                
-                if (item.recommend) {
-                    item.sort_number = Number(item.sort_number) + 5;
-                    item.sort_buzz_number = Number(item.sort_buzz_number) + 30;
-                }
-            }
-
-            await item.save();
-        }
-
-        res.status(200).json({ message: '商品ページアクセス処理が完了しました。' });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
     const userId = req.user!.id;
     const itemId = req.params.id;

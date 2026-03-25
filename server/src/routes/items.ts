@@ -16,6 +16,7 @@ import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
 import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
+import { patchItemLogsAccess } from "services/item/logs/accessLogs.service.js";
 
 const router = Router();
 
@@ -121,6 +122,22 @@ router.patch("/:id/sort-number", async (req: Request, res: Response): Promise<vo
         await patchSortNumber({ itemId, number });
 
         res.status(200).json({ message: "sort_numberを更新しました" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// PATCH /items/:id/logs/access
+router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user?.id ?? null;
+
+    try {
+        await patchItemLogsAccess({ itemId, userId });
+
+        res.status(200).json({ message: '商品ページアクセス処理が完了しました。' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
