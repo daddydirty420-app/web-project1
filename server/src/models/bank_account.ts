@@ -3,7 +3,7 @@ import sequelize from "../db.js";
 
 import ShopInfo from "./shop_info.js";
 import AccountTypeOption from "./account_type_option.js";
-import Transfar from "./transfar.js";
+import Transfer from "./transfer.js";
 import User from "./user.js";
 import ShopInfoEdit from "./shop_info_edit.js";
 
@@ -18,7 +18,7 @@ export class BankAccount extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
     declare shop_info_id: number | null;
-    declare transfar_id: number | null;
+    declare transfer_id: number | null;
     declare bank_code: string | null;
     declare branch_code: string | null;
     declare shop_info_edit_id: number | null;
@@ -30,8 +30,8 @@ export class BankAccount extends Model {
         BankAccount.belongsTo(AccountTypeOption, {
             foreignKey: "account_type_id",
         });
-        BankAccount.belongsTo(Transfar, {
-            foreignKey: "transfar_id",
+        BankAccount.belongsTo(Transfer, {
+            foreignKey: "transfer_id",
         });
         BankAccount.belongsTo(User, {
             foreignKey: "user_id",
@@ -45,7 +45,7 @@ export class BankAccount extends Model {
         ShopInfo: Association<BankAccount, ShopInfo>;
         ShopInfoEdit: Association<BankAccount, ShopInfoEdit>;
         AccountTypeOption: Association<BankAccount, AccountTypeOption>;
-        Transfar: Association<BankAccount, Transfar>;
+        Transfer: Association<BankAccount, Transfer>;
         User: Association<BankAccount, User>;
     };
 }
@@ -71,7 +71,7 @@ BankAccount.init(
             type: DataTypes.INTEGER,
             unique: true,
         },
-        transfar_id: {
+        transfer_id: {
             type: DataTypes.INTEGER,
             unique: true,
         },

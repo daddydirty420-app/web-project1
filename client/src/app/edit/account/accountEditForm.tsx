@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 type Props = {
     account: BankAccount;
-    page: "normal" | "transfar" | "shop" | "shop-signup" | "com-free";
+    page: "normal" | "transfer" | "shop" | "shop-signup" | "com-free";
     shopId?: string;
     shopEditId?: string;
 };
@@ -211,8 +211,8 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             if (page === "normal") {
                 toast.success("口座情報を更新しました。");
                 router.push("/my-page");
-            } else if (page === "transfar") {
-                router.push("/transfar/request");
+            } else if (page === "transfer") {
+                router.push("/transfer/request");
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else if (page === "com-free") {

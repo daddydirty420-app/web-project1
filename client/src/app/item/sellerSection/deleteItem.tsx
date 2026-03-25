@@ -23,22 +23,22 @@ export const DeleteItem = ({ id }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/delete-item-user/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logical`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
 
+            const data = await res.json();
+
             if (res.ok) {
-                const data = await res.json();
-                alert(data.message);
+                alert("商品を削除しました");
                 setPopup(false);
                 router.push(`/item/deleted/${id}`);
-            } else {
-                const errorData = await res.json();
-                alert(errorData.message);
-                console.error(errorData.message);
+            } else if (data.message) {
+                alert(data.message);
+                console.error(data.message);
             }
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");

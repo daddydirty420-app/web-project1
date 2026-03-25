@@ -4,7 +4,6 @@ import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Item, User, ItemConditionOption, Cart, ItemLike, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
-import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 
 const router = Router();
 
@@ -159,7 +158,7 @@ router.delete('/delete-item-user/:id', authenticateToken, async (req: Request, r
             sort_buzz_number: 0,
             status: "deleted",
             deleted_at: now,
-            price: item.price,
+            price: item.Sale?.before_price ?? item.price,
         };
 
         if (item.Sale && item.Sale.sale_flag) {

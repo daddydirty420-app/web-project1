@@ -58,7 +58,7 @@ export const ItemPage = ({
         buttonLink = `/money-management/item/${id}`;
         buttonText = "売上管理";
     } else if (page === "admin") {
-        buttonLink = `/madmax/fileEdit/${id}`;
+        buttonLink = `/admin/fileEdit/${id}`;
         buttonText = "ファイル編集";
     }
     

@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../transfar.module.css";
-import TransfarUI from "../transfarUI";
+import TransfarUI from "../transferUI";
 import { User } from "../types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

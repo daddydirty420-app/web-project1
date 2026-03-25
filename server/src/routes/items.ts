@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { ItemListView } from "../services/item/openItems/items.config.js";
 import { getOpenItems } from "../services/item/openItems/items.service.js";
@@ -18,11 +18,12 @@ import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
+import { deleteItemLogically } from "../services/item/delete/logicalDelete.js";
 
 const router = Router();
 
 // POST /items
-router.post("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const t = await sequelize.transaction();
@@ -52,13 +53,12 @@ router.post("/", authenticateToken, async (req: Request, res: Response): Promise
         res.status(200).json({ itemId });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
 // POST /items/:id/copy-upload
-router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     if (!itemId) {
         res.status(400).json({ message: "itemIdがありません。" });
@@ -71,13 +71,12 @@ router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Res
 
         res.status(200).json({ newItemId });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // PUT /items/:id?mode=""
-router.put("/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.put("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = parseInt(req.params.id);
     const userId = req.user!.id;
 
@@ -108,13 +107,12 @@ router.put("/:id", authenticateToken, async (req: Request, res: Response): Promi
             attributesImageSignedUrls
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // PATCH /items/:id/publish
-router.patch("/:id/publish", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/:id/publish", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user!.id;
 
@@ -123,13 +121,12 @@ router.patch("/:id/publish", authenticateToken, async (req: Request, res: Respon
 
         res.status(200).json({ message: "出品成功！" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // PATCH /items/:id/sort-number?number=number
-router.patch("/:id/sort-number", async (req: Request, res: Response): Promise<void> => {
+router.patch("/:id/sort-number", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const number = Number(req.query.number);
@@ -143,13 +140,12 @@ router.patch("/:id/sort-number", async (req: Request, res: Response): Promise<vo
 
         res.status(200).json({ message: "sort_numberを更新しました" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // PATCH /items/:id/logs/access
-router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const userId = req.user?.id ?? null;
@@ -159,13 +155,27 @@ router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res:
 
         res.status(200).json({ message: '商品ページアクセス処理が完了しました。' });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
+    }
+});
+
+// DELETE /items/:id/logical
+router.delete("/:id/logical", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteItemLogically({ itemId, userId });
+
+        res.status(200).json({ message: "商品を削除しました" });
+    } catch (err) {
+        next(err);
     }
 });
 
 // GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
-router.get("/", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const type = req.query.type;
@@ -194,13 +204,12 @@ router.get("/", authenticateOptional, async (req: Request, res: Response): Promi
 
         res.status(200).json({ items, totalPages });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // GET /items/recommend?view=""(&itemId=number)
-router.get("/recommend", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/recommend", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const view = req.query.view as RecommendItemsview;
@@ -216,13 +225,12 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
 
         res.status(200).json({ items });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // GET /items/:id?mode=""
-router.get("/:id", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/:id", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user?.id ?? null;
 
@@ -247,13 +255,12 @@ router.get("/:id", authenticateOptional, async (req: Request, res: Response): Pr
             me
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // GET /items/:id/metadata
-router.get('/:id/metadata', async (req: Request, res: Response): Promise<void> => {
+router.get('/:id/metadata', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     try {
@@ -261,13 +268,12 @@ router.get('/:id/metadata', async (req: Request, res: Response): Promise<void> =
 
         res.status(200).json({ item });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
 // GET /items/:id/form-data?mode=""
-router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = parseInt(req.params.id);
 
     const mode = req.query.mode as FormDataMode;
@@ -299,8 +305,7 @@ router.get("/:id/form-data", authenticateToken, async (req: Request, res: Respon
             allPlace
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

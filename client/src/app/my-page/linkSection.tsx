@@ -72,9 +72,9 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
 
             <MypageLinkHeader text='振込・お支払い' />
             <NormalLinkContainer>
-                <NormalLink url='/edit/account/transfar' text='振込申請' />
-                <NormalLink url='/transfar/history' text='振込申請履歴' />
-                <NormalLink url='/transfar/points' text='ポイント変換' />
+                <NormalLink url='/edit/account/transfer' text='振込申請' />
+                <NormalLink url='/transfer/history' text='振込申請履歴' />
+                <NormalLink url='/transfer/points' text='ポイント変換' />
                 <NormalLink url='/history/points' text='ポイント履歴' />
             </NormalLinkContainer>
 

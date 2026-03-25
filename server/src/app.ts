@@ -55,7 +55,7 @@ import ShopSignupCreateRouter from "./routes/shop-signup-create.js";
 import ShopSignupRouter from "./routes/shop-signup.js";
 import StarHistoryRouter from './routes/star_history.js';
 import SuggestWordsRouter from "./routes/suggest_words.js";
-import TransfarRouter from './routes/transfar.js';
+import TransferRouter from './routes/transfer.js';
 import UriagekinHistoryRouter from './routes/uriagekin_history.js';
 import UserEditRouter from "./routes/user-edit.js";
 import VideoRouter from './routes/video.js';
@@ -69,11 +69,12 @@ import OrdersListAdminRouter from "./routes/admin/orders_list_admin.js";
 import ReferenceCodeAdminRouter from './routes/admin/reference_code_admin.js';
 import ReportAdminRouter from "./routes/admin/report.js";
 import ShopInfoAdminRouter from "./routes/admin/shop_info_admin.js";
-import TransfarAdminRouter from "./routes/admin/transfar_admin.js";
+import TransferAdminRouter from "./routes/admin/transfer_admin.js";
 import UserAdminRouter from './routes/admin/user_admin.js';
 import TestRouter from "./routes/test.js";
 
 import db from './models/index.js';
+import { AppError } from './errors.js';
 db.sequelize.sync();
 
 // view engine setup
@@ -160,7 +161,7 @@ app.use("/api/shop-signup-create", ShopSignupCreateRouter);
 app.use("/api/shop-signup", ShopSignupRouter);
 app.use('/api/star-history', StarHistoryRouter);
 app.use("/api/suggest-words", SuggestWordsRouter);
-app.use('/api/transfar', TransfarRouter);
+app.use('/api/transfer', TransferRouter);
 app.use('/api/uriagekin-history', UriagekinHistoryRouter);
 app.use("/api/user-edit", UserEditRouter);
 app.use('/api/video', VideoRouter);
@@ -174,7 +175,7 @@ app.use("/api/orders-list-admin", OrdersListAdminRouter);
 app.use('/api/reference-code-admin', ReferenceCodeAdminRouter);
 app.use("/api/report-admin", ReportAdminRouter);
 app.use('/api/shop-info-admin', ShopInfoAdminRouter);
-app.use('/api/transfar-admin', TransfarAdminRouter);
+app.use('/api/transfer-admin', TransferAdminRouter);
 app.use('/api/user-admin', UserAdminRouter);
 app.use("/api/test", TestRouter);
 
@@ -185,12 +186,19 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    console.error(err);
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.error(err);
+  
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      error: err.code,
+      message: err.publicMessage ?? undefined
+    });
+  }
 
-    res.status(err.status || 500);
-    res.send({ error: err.message });
+  res.status(500).json({
+    error: "INTERNAL_SERVER_ERROR",
+    message: "サーバーエラーが発生しました",
+  });
 });
 
 export default app;

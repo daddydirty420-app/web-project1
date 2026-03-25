@@ -44,7 +44,7 @@ export default async function Page() {
     return (
         <AccountEditForm
         account={account}
-        page="transfar"
+        page="transfer"
         />
     );
 };

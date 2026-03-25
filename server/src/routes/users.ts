@@ -179,7 +179,7 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
   }
 });
 
-router.get('/transfar-request', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/transfer-request', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
 
   try {
@@ -208,7 +208,7 @@ router.get('/transfar-request', authenticateToken, async (req: Request, res: Res
   }
 });
 
-router.get('/transfar-points', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/transfer-points', authenticateToken, async (req: Request, res: Response): Promise<void> => {
   const userId = req.user!.id;
 
   try {

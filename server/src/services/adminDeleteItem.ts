@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, ItemDeleted, Orders, PaymentMethodOption, Cancel, OrderDeleted, ItemShippingProfile, User, BankAccount, Transfar } from "../models/index.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, ItemDeleted, Orders, PaymentMethodOption, Cancel, OrderDeleted, ItemShippingProfile, User, BankAccount, Transfer } from "../models/index.js";
 import sequelize from "../db.js";
 import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
@@ -87,16 +87,16 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                         `${buyerHasAccount ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。" : ""}`,
                 }, { transaction: t });
 
-                const transfarId = crypto.randomBytes(11).toString("hex");
+                const transferId = crypto.randomBytes(11).toString("hex");
                     
-                await Transfar.create({
+                await Transfer.create({
                     all_money: order.total_amount,
                     handling_charge: 0,
                     trans_money: order.total_amount,
                     trans_reason_id: 2,
                     trans_schedule_date: twoWeeksLater,
                     user_id: buyer.id,
-                    transfar_id: transfarId,
+                    transfer_id: transferId,
                 }, { transaction: t });
 
                 deleteOrder.push({

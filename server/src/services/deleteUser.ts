@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfar, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfer, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
 import sequelize from "../db.js";
 import crypto from "crypto";
 
@@ -81,7 +81,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
             reason_id: 9,
         }, { transaction: t });
     
-        const transfarMoney = await Transfar.sum('trans_money', {
+        const transferMoney = await Transfer.sum('trans_money', {
             where: {
                 user_id: currentUserId,
                 trans_finish: false
@@ -91,8 +91,8 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await Journal.create({
             kanjyo_kari1: 3,
             kanjyo_kashi1: 6,
-            price_kari1: transfarMoney,
-            price_kashi1: transfarMoney,
+            price_kari1: transferMoney,
+            price_kashi1: transferMoney,
             reason_id: 11,
         }, { transaction: t });
     
@@ -121,7 +121,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await Notification.destroy({ where: { read_user_id: currentUserId }, transaction: t });
         await WatchHistory.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Comment.destroy({ where: { user_id: currentUserId }, transaction: t });
-        await Transfar.destroy({ where: { user_id: currentUserId }, transaction: t });
+        await Transfer.destroy({ where: { user_id: currentUserId }, transaction: t });
     
         const items = await Item.findAll({
             attributes: ['id', 'name', 'explain', 'image_url', 'price'],
@@ -199,16 +199,16 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                                 `${buyerHasAccount ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。" : ""}`,
                         }, { transaction: t });
                         
-                        const transfarId = crypto.randomBytes(11).toString("hex");
+                        const transferId = crypto.randomBytes(11).toString("hex");
                                             
-                        await Transfar.create({
+                        await Transfer.create({
                             all_money: order.total_amount,
                             handling_charge: 0,
                             trans_money: order.total_amount,
                             trans_reason_id: 2,
                             trans_schedule_date: twoWeeksLater,
                             user_id: buyer.id,
-                            transfar_id: transfarId,
+                            transfer_id: transferId,
                         }, { transaction: t });
 
                         deleteOrder.push({

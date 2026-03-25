@@ -164,7 +164,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
             <section className={styles.videoListWrapper}>
                 {!visibleIL && videoList?.map((data) => {
                     if (!data) return null;
-                    const itemLink = adminPage ? `/item/madmax/${data.id}` :`/item/${data.id}`;
+                    const itemLink = adminPage ? `/item/admin/${data.id}` :`/item/${data.id}`;
 
                     return (
                         <section className={styles.videoListSection} key={data.id}>
