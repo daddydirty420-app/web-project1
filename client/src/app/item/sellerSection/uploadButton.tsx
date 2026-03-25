@@ -22,7 +22,7 @@ export const UploadButton = ({ id }: Props) => {
                 return;
             }
             
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/copy-upload/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/copy-upload`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

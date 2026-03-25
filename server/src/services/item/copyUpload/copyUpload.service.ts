@@ -1,17 +1,13 @@
-import { Item, Video, Sale, ItemShippingProfile } from "../models/index.js";
-import sequelize from "../db.js";
+import { Item, Video, Sale, ItemShippingProfile } from "../../../models/index.js";
+import sequelize from "../../../db.js";
 import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import type { ItemAttributes } from "../types/itemAttributes.js";
+import type { ItemAttributes } from "../../../types/itemAttributes.js";
+import { bucket, region, s3 } from "../../../infra/aws/s3.js";
 
-const s3 = new S3Client({
-    region: process.env.AWS_REGION || "ap-northeast-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
-});
-
-const BUCKET = process.env.AWS_BUCKET || "flexoutdoor";
+type Params = {
+    itemId: number;
+    userId: number;
+};
 
 const getFileName = (url: string) => {
     const parts = url.split("/");
@@ -23,24 +19,24 @@ async function copyS3Object(sourceUrl: string, destKey: string) {
     if (!sourceKey) throw new Error("Invalid S3 URL");
 
     const getCommand = new GetObjectCommand({
-        Bucket: BUCKET,
+        Bucket: bucket,
         Key: sourceKey,
     });
     const response = await s3.send(getCommand);
     const body = await response.Body?.transformToByteArray();
 
     const putCommand = new PutObjectCommand({
-        Bucket: BUCKET,
+        Bucket: bucket,
         Key: destKey,
         Body: body,
         ContentType: response.ContentType,
     });
     await s3.send(putCommand);
 
-    return `https://${BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${destKey}`;
+    return `https://${bucket}.s3.${region}.amazonaws.com/${destKey}`;
 };
 
-async function itemCopyUpload(itemId: number, userId: number) {
+export const itemCopyUpload = async ({ itemId, userId }: Params) => {
     const item = await Item.findByPk(itemId, {
         include: [
             { model: Video },
@@ -63,9 +59,7 @@ async function itemCopyUpload(itemId: number, userId: number) {
 
     const timestamp = Date.now();
 
-    const t = await sequelize.transaction();
-
-    try {
+    await sequelize.transaction(async (t) => {
         const newUrls: { [key: string]: string | string[] } = {};
 
         if (videoOriginalUrl) {
@@ -100,10 +94,10 @@ async function itemCopyUpload(itemId: number, userId: number) {
                 current: item.attributes?.inventory?.initial ?? 0,
             },
             variants: {
-                ...item.attrinutes?.variants,
+                ...item.attributes?.variants,
                 inventory: {
                     ...item.attributes?.variants?.inventory,
-                    current: item.attrinutes?.variants?.inventory?.initial ?? 0,
+                    current: item.attributes?.variants?.inventory?.initial ?? 0,
                 },
             },
         };
@@ -150,12 +144,8 @@ async function itemCopyUpload(itemId: number, userId: number) {
 
         await t.commit();
 
-        return newItem;
-
-    } catch (err) {
-        await t.rollback();
-        throw err;
-    }
+        return { newItemId: newItem.id };
+    });
 };
 
 export default itemCopyUpload;

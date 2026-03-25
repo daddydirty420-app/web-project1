@@ -17,6 +17,7 @@ import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.se
 import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
+import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 
 const router = Router();
 
@@ -53,6 +54,25 @@ router.post("/", authenticateToken, async (req: Request, res: Response): Promise
         await t.rollback();
         console.error(err);
         res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    }
+});
+
+// POST /items/:id/copy-upload
+router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+    if (!itemId) {
+        res.status(400).json({ message: "itemIdがありません。" });
+        return;
+    }
+    const userId = req.user!.id;
+
+    try {
+        const newItemId = await itemCopyUpload({ itemId, userId });
+
+        res.status(200).json({ newItemId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
     }
 });
 

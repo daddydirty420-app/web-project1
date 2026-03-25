@@ -4,7 +4,7 @@ import { Op } from "sequelize";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Item, User, ItemConditionOption, Cart, ItemLike, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
-import itemCopyUpload from "../services/itemCopyUpload.js";
+import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 
 const router = Router();
 
@@ -115,24 +115,6 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         res.status(200).json({ deliveryId: newDelivery.id });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
-router.post('/copy-upload/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    const itemId = req.params.id;
-    if (!itemId) {
-        res.status(400).json({ message: "itemIdがありません。" });
-        return;
-    }
-    const userId = req.user!.id;
-
-    try {
-        const newItem = await itemCopyUpload(Number(itemId), userId);
-
-        res.status(200).json({ newItemId: newItem.id });
-    } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });
     }
