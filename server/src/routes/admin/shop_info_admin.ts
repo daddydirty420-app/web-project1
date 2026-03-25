@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Op, fn, WhereOptions, literal } from "sequelize";
 import { ShopInfo, User, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, UriagekinHistory } from "../../models/index.js";
@@ -7,7 +7,7 @@ import { subDays, subMonths, startOfMonth, endOfMonth } from "date-fns";
 
 const router = Router();
 
-router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const keyword = req.query?.keyword ?? null;
 
     const base = { verified: true };
@@ -52,12 +52,11 @@ router.get('/list', authenticateToken, isAdmin, async (req: Request, res: Respon
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await ShopInfo.findAll({
             attributes: ['id', 'company_name', 'id_card_front', 'id_card_rear'],
@@ -101,12 +100,11 @@ router.get('/signup-list', authenticateToken, isAdmin, async (req: Request, res:
             shopCount2d
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const startOfLastMonth = startOfMonth(subMonths(new Date(), 1));
     const endOfLastMonth = endOfMonth(subMonths(new Date(), 1));
 
@@ -158,12 +156,11 @@ router.get('/trans-auto-make', authenticateToken, isAdmin, async (req: Request, 
             uriagekinAmount
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             include: [
@@ -199,8 +196,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

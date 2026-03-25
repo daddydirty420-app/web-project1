@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Comment, Item, Notification } from "../../models/index.js";
 import sequelize from "../../db.js";
 
 const router = Router();
 
-router.post("/delete/:id", authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.post("/delete/:id", authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = req.params.id;
 
     const t = await sequelize.transaction();
@@ -40,8 +40,7 @@ router.post("/delete/:id", authenticateToken, isAdmin, async (req: Request, res:
         res.status(200).json({ message: "コメントを削除しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

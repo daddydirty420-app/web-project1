@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Transfer, TransReasonOption, User, BankAccount, AccountTypeOption } from "../../models/index.js";
 
 const router = Router();
 
-router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
@@ -32,12 +32,11 @@ router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Respons
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'trans_at'],
@@ -62,12 +61,11 @@ router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Res
 
         res.json(dataList);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
@@ -100,12 +98,11 @@ router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Respon
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
@@ -138,12 +135,11 @@ router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Resp
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
@@ -176,8 +172,7 @@ router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Resp
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

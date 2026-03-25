@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Op } from "sequelize";
 import { Orders, Item, Delivery, DeliveryStatusOption, User } from "../../models/index.js";
@@ -7,7 +7,7 @@ import { subDays } from "date-fns";
 
 const router = Router();
 
-router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const thirtyDaysAgo = subDays(new Date(), 30);
 
     try {
@@ -49,8 +49,7 @@ router.get('/30', authenticateToken, isAdmin, async (req: Request, res: Response
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

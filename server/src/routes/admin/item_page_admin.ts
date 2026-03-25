@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Item, User, ItemConditionOption, ItemLike, Video, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, ItemReport, Comment, ItemShippingProfile, Categories, Brands } from "../../models/index.js";
 
 const router = Router();
 
-router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = req.params.id;
     const userId = req.user!.id;
 
@@ -101,8 +101,7 @@ router.get('/:id', authenticateToken, isAdmin, async (req: Request, res: Respons
             me
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

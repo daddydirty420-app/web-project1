@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, fn, col, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { User, Item, ShopInfo, GenderOption, Address, Name, TodouhukenOption, IdCard, UriagekinHistory, Journal, Notification } from "../../models/index.js";
@@ -8,7 +8,7 @@ import sequelize from "../../db.js";
 
 const router = Router();
 
-router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const currentUserId = req.params.id;
   const numUserId = Number(currentUserId);
   const adminId = req.user!.id;
@@ -24,13 +24,11 @@ router.delete('/delete-user/:id', authenticateToken, isAdmin, async (req: Reques
 
     res.status(200).json({ message: 'ユーザーを削除しました。' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    return;
+    next(err);
   }
 });
 
-router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { addPenalty } = req.body;
   if (!addPenalty) {
     res.status(400).json({ message: 'ペナルティポイントを入力してください。' });
@@ -60,12 +58,11 @@ router.patch('/add-penalty/:id', authenticateToken, isAdmin, async (req: Request
 
     res.status(200).json({ message: 'ペナルティポイントを追加しました。' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const currentUserId = req.params.id;
 
   const { deleteUriage } = req.body;
@@ -151,12 +148,11 @@ router.patch('/delete-uriage/:id', authenticateToken, isAdmin, async (req: Reque
     });
   } catch (err) {
     await t.rollback();
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'birthday', 'phone_number', 'verify_request', 'verified', 'email'],
@@ -195,12 +191,11 @@ router.get('/verify', authenticateToken, isAdmin, async (req: Request, res: Resp
       userCount
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/penalty-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/penalty-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'profile_image', 'email', 'penalty_points', 'verified'],
@@ -219,12 +214,11 @@ router.get('/penalty-list', authenticateToken, isAdmin, async (req: Request, res
 
     res.json({ userList });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/penalty-search-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/penalty-search-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const keyword = req.body.keyword;
 
@@ -247,12 +241,11 @@ router.get('/penalty-search-list', authenticateToken, isAdmin, async (req: Reque
 
     res.json({ userList });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/points-give-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/points-give-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'email', 'campaign_points_sum', [fn('COUNT', col('Items.id')), 'item_count']],
@@ -279,12 +272,11 @@ router.get('/points-give-list', authenticateToken, isAdmin, async (req: Request,
       campaignPointsSum
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/profile/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/profile/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const user = await User.findByPk(req.params.id, {
       attributes: ['penalty_points', 'uriagekin'],
@@ -297,12 +289,11 @@ router.get('/profile/:id', authenticateToken, isAdmin, async (req: Request, res:
 
     res.json({ user });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userList = await User.findAll({
       attributes: ['id', 'user_name', 'email', 'profile_image', 'verified', 'early_seller', 'createdAt'],
@@ -318,12 +309,11 @@ router.get('/search-user-all', authenticateToken, isAdmin, async (req: Request, 
 
     res.json({ userList });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const keyword = req.query.keyword;
 
   try {
@@ -344,8 +334,7 @@ router.get('/search-user', authenticateToken, isAdmin, async (req: Request, res:
 
     res.json({ userList });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 

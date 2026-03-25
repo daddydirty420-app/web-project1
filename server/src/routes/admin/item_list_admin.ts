@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { User, Item, Video } from "../../models/index.js";
@@ -7,7 +7,7 @@ import { subDays } from "date-fns";
 
 const router = Router();
 
-router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const itemList = await Item.findAll({
             attributes: ['id', 'name', 'uploaded_date', 'first_item_image'],
@@ -54,12 +54,11 @@ router.get('/check', authenticateToken, isAdmin, async (req: Request, res: Respo
             itemCount2d
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/recommend-item-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/recommend-item-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const itemList = await Item.findAll({
             attributes: ['id', 'name', "status", 'uploaded_at', 'first_image_url'],
@@ -82,8 +81,7 @@ router.get('/recommend-item-list', authenticateToken, isAdmin, async (req: Reque
 
         res.status(200).json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

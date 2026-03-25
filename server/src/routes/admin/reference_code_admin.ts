@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, fn, col, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { ReferenceCode, User, Item } from "../../models/index.js";
 
 const router = Router();
 
-router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const inputList = await ReferenceCode.findAll({
             attributes: ['id', 'input', 'input_user_id', 'createdAt'],
@@ -46,12 +46,11 @@ router.get('/input-list', authenticateToken, isAdmin, async (req: Request, res: 
             campaignPointsSum
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/output-data', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/output-data', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const outputData = await ReferenceCode.findOne({
             attributes: ['id', 'output', 'output_user_id', 'createdAt'],
@@ -81,8 +80,7 @@ router.get('/output-data', authenticateToken, isAdmin, async (req: Request, res:
 
         res.json({ outputData });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

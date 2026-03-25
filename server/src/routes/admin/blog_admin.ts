@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Blog, BlogCategoryOption } from "../../models/index.js";
 
 const router = Router();
 
-router.get('/confirm/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/confirm/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const blog = await Blog.findByPk(req.params.id, {
             include: [
@@ -20,12 +20,11 @@ router.get('/confirm/:id', authenticateToken, isAdmin, async (req: Request, res:
 
         res.json({ blog });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/edit/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/edit/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const blog = await Blog.findByPk(req.params.id);
 
@@ -41,12 +40,11 @@ router.get('/edit/:id', authenticateToken, isAdmin, async (req: Request, res: Re
             blogCategory
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const page = parseInt(req.query.page as string) || 1;
         const limit = 15;
@@ -62,8 +60,7 @@ router.get('/draft-list', authenticateToken, isAdmin, async (req: Request, res: 
 
         res.json({ list });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

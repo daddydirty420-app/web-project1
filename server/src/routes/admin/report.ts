@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { ItemReport, Item, ItemReportOption, CommentReport, CommentReportOption, Comment, ItemBuyerReport, User, ItemBuyerReportOption, Orders, Video } from "../../models/index.js";
 import { col, fn, literal } from "sequelize";
 
 const router = Router();
 
-router.get('/item/report-all', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/item/report-all', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const itemList = await Item.findAll({
             attributes: ['id', 'name', 'uploaded_at', [fn('COUNT', col('ItemReports.id')), 'report_count']],
@@ -33,12 +33,11 @@ router.get('/item/report-all', authenticateToken, isAdmin, async (req: Request, 
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/comment/report-all', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/comment/report-all', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const commentList = await Comment.findAll({
             attributes: ['id', 'text', [fn('COUNT', col('CommentReports.id')), 'report_count']],
@@ -59,12 +58,11 @@ router.get('/comment/report-all', authenticateToken, isAdmin, async (req: Reques
 
         res.json({ commentList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/item/report-list/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/item/report-list/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = req.params.id;
 
     try {
@@ -82,12 +80,11 @@ router.get('/item/report-list/:id', authenticateToken, isAdmin, async (req: Requ
 
         res.json({ reportList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/comment/report-list/:id', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/comment/report-list/:id', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = req.params.id;
 
     try {
@@ -105,12 +102,11 @@ router.get('/comment/report-list/:id', authenticateToken, isAdmin, async (req: R
 
         res.json({ reportList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/buyer/report-list', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/buyer/report-list', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await ItemBuyerReport.findAll({
             where: { checked: false },
@@ -141,8 +137,7 @@ router.get('/buyer/report-list', authenticateToken, isAdmin, async (req: Request
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
