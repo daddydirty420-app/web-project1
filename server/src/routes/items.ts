@@ -14,6 +14,7 @@ import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js"
 import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
+import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 
 const router = Router();
 
@@ -187,6 +188,20 @@ router.get("/:id", authenticateOptional, async (req: Request, res: Response): Pr
             commentCount,
             me
         });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+});
+
+// GET /items/:id/metadata
+router.get('/:id/metadata', async (req: Request, res: Response): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    try {
+        const item = await getMetadata({ itemId });
+
+        res.status(200).json({ item });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'サーバーエラーが発生しました。' });

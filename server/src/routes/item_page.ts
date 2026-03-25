@@ -365,28 +365,4 @@ router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: R
     }
 });
 
-router.get('/metadata/:id', async (req: Request, res: Response): Promise<void> => {
-    try {
-        const item = await Item.findByPk(req.params.id, {
-            attributes: ['name', 'price', 'first_image_url'],
-            include: [
-                {
-                    model: Video,
-                    attributes: ['title', 'summary'],
-                },
-            ],
-        });
-
-        if (!item) {
-            res.status(404).json({ message: 'アイテムが見つかりません。' });
-            return;
-        }
-
-        res.json({ item });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
-    }
-});
-
 export default router;
