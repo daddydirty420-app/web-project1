@@ -117,7 +117,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         setLevel2List([]);
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/category2/${parentId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${parentId}/level2`, {
                 cache: "no-store",
             });
 

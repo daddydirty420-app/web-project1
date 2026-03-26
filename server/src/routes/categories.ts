@@ -1,0 +1,20 @@
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { getLevel2 } from "services/categories/getLevel2.js";
+
+const router = Router();
+
+// GET /categories/:id/level2
+router.get("/:id/level2", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const parentId = Number(req.params.id);
+
+    try {
+        const category2 = await getLevel2({ parentId });
+
+        res.status(200).json({ category2 });
+    } catch (err) {
+        next(err);
+    }
+});
+
+export default router;

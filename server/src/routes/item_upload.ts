@@ -7,25 +7,6 @@ import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
-router.get("/category2/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const parentId = req.params.id;
-    const parentIdNum = Number(parentId);
-
-    try {
-        const category2 = await Categories.findAll({
-            where: {
-                parent_id: parentIdNum,
-                level: 2,
-            },
-            order: [["sort_order", "ASC"]],
-        });
-
-        res.status(200).json({ category2 });
-    } catch (err) {
-        next(err);
-    }
-});
-
 router.get("/brand-suggest", async (req: Request, res: Response): Promise<void> => {
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
