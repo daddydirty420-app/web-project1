@@ -1,22 +1,21 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption } from "../models/index.js";
 
 const router = Router();
 
-router.get("/com-or-free", async (req: Request, res: Response): Promise<void> => {
+router.get("/com-or-free", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ComOrFreeOption.findAll();
 
         res.status(200).json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/has-shop/me', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/has-shop/me', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     try {
         const hasShop = await ShopInfo.findOne({
@@ -33,12 +32,11 @@ router.get('/has-shop/me', authenticateToken, async (req: Request, res: Response
 
         res.status(200).json({ hasShop: true });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id'],
@@ -59,12 +57,11 @@ router.get('/edit-form/:id', authenticateToken, async (req: Request, res: Respon
             allOptions: allOptions
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/edit-other/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/edit-other/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id', 'homepage_url', 'open_date_time', 'company_number', 'capital', 'menber_count', 'founded_date'],
@@ -77,12 +74,11 @@ router.get('/edit-other/:id', authenticateToken, async (req: Request, res: Respo
 
         res.json(data);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/infopage/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/infopage/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id', 'company_name', 'shop_name', 'email', 'phone_number','homepage_url', 'open_date_time', 'open_info'],
@@ -111,12 +107,11 @@ router.get('/infopage/:id', async (req: Request, res: Response): Promise<void> =
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/open-info-request/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/open-info-request/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id', 'shop_name'],
@@ -129,8 +124,7 @@ router.get('/open-info-request/:id', async (req: Request, res: Response): Promis
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

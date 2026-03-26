@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { Op } from "sequelize";
 import { UriagekinHistory, User, BankAccount } from "../models/index.js";
@@ -7,7 +7,7 @@ import { subDays } from "date-fns";
 
 const router = Router();
 
-router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: Response): Promise<void> => {
+router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const halfYearAgo = subDays(new Date(), 180);
 
@@ -39,8 +39,7 @@ router.get('/admin/180', authenticateToken, isAdmin, async (req: Request, res: R
             totalUriagekin
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

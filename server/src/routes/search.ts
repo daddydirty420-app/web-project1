@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Search, SuggestWords } from "../models/index.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { Sequelize } from "sequelize";
@@ -9,7 +9,7 @@ import sequelize from "../db.js";
 
 const router = Router();
 
-router.get("/history", authenticateToken, async (req: Request, res: Response) => {
+router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
 
     try {
@@ -35,8 +35,7 @@ router.get("/history", authenticateToken, async (req: Request, res: Response) =>
 
         res.status(200).json({ sortedData });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

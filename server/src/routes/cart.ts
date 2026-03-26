@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
 import { Cart, Item, Sale } from "../models/index.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.params.id;
 
@@ -28,12 +28,11 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
 
         res.status(200).json({ success: true });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.params.id;
 
@@ -57,12 +56,11 @@ router.delete("/remove/:id", authenticateToken, async (req: Request, res: Respon
 
         res.status(200).json({ success: true });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/status/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/status/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.params.id;
 
@@ -76,8 +74,7 @@ router.get('/status/:id', authenticateToken, async (req: Request, res: Response)
 
         res.status(200).json({ cartIn: !!status });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

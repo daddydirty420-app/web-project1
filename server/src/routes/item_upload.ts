@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import multer from "multer";
 import fs from "fs";
 import { spawn } from "child_process";
@@ -29,7 +29,7 @@ const s3 = new S3Client({
     },
 });
 
-router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user?.id;
     const videoId = req.params.id;
 
@@ -185,12 +185,11 @@ router.patch('/convert-video/:id', authenticateToken, async (req: AuthenticatedR
         // 受付だけして即レス
         res.status(200).json({ message: "変換処理を開始しました" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get("/category2/:id", async (req: Request, res: Response): Promise<void> => {
+router.get("/category2/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const parentId = req.params.id;
     const parentIdNum = Number(parentId);
 
@@ -205,8 +204,7 @@ router.get("/category2/:id", async (req: Request, res: Response): Promise<void> 
 
         res.status(200).json({ category2 });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { BankAccount, AccountTypeOption, Banks, Branches } from "../models/index.js";
 import { Op, literal } from "sequelize";
@@ -7,7 +7,7 @@ import sequelize from "../db.js";
 
 const router = Router();
 
-router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
     if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
         res.status(400).json({ message: "未入力項目があります。" });
@@ -72,12 +72,11 @@ router.post("/account-edit/:id", authenticateToken, async (req: Request, res: Re
 
         res.status(200).json({ message: "口座情報を更新しました。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get("/search-bank-name", async (req: Request, res: Response): Promise<void> => {
+router.get("/search-bank-name", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const keyword = (req.query.keyword as string)?.trim() ?? "";
     if (!keyword) {
         res.status(400).json({ message: "銀行名を1文字以上入力してください。" });
@@ -114,12 +113,11 @@ router.get("/search-bank-name", async (req: Request, res: Response): Promise<voi
 
         res.json({ banks: matchedBanks });
     } catch (err) {
-        console.error("銀行名DB検索エラー：", err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get("/search-branch", async (req: Request, res: Response): Promise<void> => {
+router.get("/search-branch", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const bankCode = req.query.bankCode as string;
 
     const keywordParam = req.query.keyword;
@@ -162,12 +160,11 @@ router.get("/search-branch", async (req: Request, res: Response): Promise<void> 
 
         res.json({ branches: matchedBranches });
     } catch (err) {
-        console.error("支店名DB検索エラー：", err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/myaccount', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/myaccount', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await BankAccount.findOne({
             attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi', 'bank_code', 'branch_code'],
@@ -184,8 +181,7 @@ router.get('/myaccount', authenticateToken, async (req: Request, res: Response):
 
         res.status(200).json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

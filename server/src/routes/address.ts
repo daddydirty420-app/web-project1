@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import fetchAddressFromZip from "../services/addressService.js";
 import { Address, TodouhukenOption } from "../models/index.js";
 
 const router = Router();
 
-router.patch("/address-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/address-edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const todouhuken = req.body.todouhuken;
     const postNumber = req.body.postNumber;
     const shikutyouson = req.body.shikutyouson;
@@ -63,12 +63,11 @@ router.patch("/address-edit/:id", authenticateToken, async (req: Request, res: R
 
         res.status(200).json({ message: "住所を更新しました。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/myaddress', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/myaddress', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Address.findOne({
             attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
@@ -89,12 +88,11 @@ router.get('/myaddress', authenticateToken, async (req: Request, res: Response):
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/delivery-address/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/delivery-address/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Address.findOne({
             attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building', 'delivery_id', 'user_id'],
@@ -114,13 +112,12 @@ router.get('/delivery-address/:id', authenticateToken, async (req: Request, res:
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/get-address', async (req: Request, res: Response): Promise<void> => {
-    const { zipcode } = req.query;
+router.get('/get-address', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const zipcode = req.query.zipcode as string;
 
     if (!zipcode) {
         res.status(400).json({ message: '郵便番号が必要です。' });
@@ -128,11 +125,10 @@ router.get('/get-address', async (req: Request, res: Response): Promise<void> =>
     }
 
     try {
-        const address = await fetchAddressFromZip(zipcode as string);
+        const address = await fetchAddressFromZip(zipcode);
         res.json({ address });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: '住所の取得に失敗しました。' });
+        next(err);
     }
 });
 

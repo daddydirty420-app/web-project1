@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Comment, User, CommentLike, CommentReport, Item, Notification } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
 
-router.post("/upload/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/upload/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.params.id;
     const commentText: string = req.body.inputComment;
@@ -55,12 +55,11 @@ router.post("/upload/:id", authenticateToken, async (req: Request, res: Response
         res.status(200).json({ comment });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/expand-sort/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/expand-sort/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = req.params.id;
 
     try {
@@ -75,12 +74,11 @@ router.patch("/expand-sort/:id", async (req: Request, res: Response): Promise<vo
 
         res.status(200).json({ message: "sort_number加算処理完了。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const commentId = req.params.id;
     const page = req.query.page;
@@ -116,12 +114,11 @@ router.delete("/delete/:id", authenticateToken, async (req: Request, res: Respon
         res.status(200).json({ message: "コメントを削除しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user?.id ?? null;
     const itemId = req.params.id;
     const admin = req.query.admin === "true";
@@ -195,12 +192,11 @@ router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: R
 
         res.json({ commentListWithExtras });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user?.id ?? null;
     const parentCommentId = req.params.id;
     const admin = req.query.admin === "true";
@@ -268,8 +264,7 @@ router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res:
 
         res.json({ commentListWithExtras });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

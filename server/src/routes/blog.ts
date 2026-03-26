@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { Blog, BlogCategoryOption } from "../models/index.js";
 
 const router = Router();
 
-router.get('/list', async (req: Request, res: Response): Promise<void> => {
+router.get('/list', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const page = parseInt(req.query.page as string) || 1;
         const limit = 15;
@@ -21,12 +21,11 @@ router.get('/list', async (req: Request, res: Response): Promise<void> => {
 
         res.json({ list });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search', async (req: Request, res: Response): Promise<void> => {
+router.get('/search', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const keyword = req.query.keyword || '';
         const page = parseInt(req.query.page as string) || 1;
@@ -63,12 +62,11 @@ router.get('/search', async (req: Request, res: Response): Promise<void> => {
 
         res.json({ list });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search-category', async (req: Request, res: Response): Promise<void> => {
+router.get('/search-category', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const page = parseInt(req.query.page as string) || 1;
         const limit = 15;
@@ -99,12 +97,11 @@ router.get('/search-category', async (req: Request, res: Response): Promise<void
 
         res.json({ list });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Blog.findByPk(req.params.id, {
             include: [
@@ -137,8 +134,7 @@ router.get('/:id', async (req: Request, res: Response): Promise<void> => {
             latestBlogList
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

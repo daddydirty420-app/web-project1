@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
 import { Op } from "sequelize";
@@ -14,7 +14,7 @@ router.get('/me-admin', authenticateToken, async (req: Request, res: Response): 
   res.json({ admin: !!req.user!.admin });
 });
 
-router.get('/profile/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/profile/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.params.id;
 
   const page = parseInt(req.query.page as string) || 1;
@@ -81,12 +81,11 @@ router.get('/profile/:id', async (req: Request, res: Response): Promise<void> =>
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/star/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/star/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const user = await User.findByPk(req.params.id, {
       attributes: ['star_average'],
@@ -94,12 +93,11 @@ router.get('/star/:id', async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json({ user });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/profile/metadata/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/profile/metadata/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userData = await User.findByPk(req.params.id, {
       attributes: ['user_name', 'user_introduction'],
@@ -107,12 +105,11 @@ router.get('/profile/metadata/:id', async (req: Request, res: Response): Promise
 
     res.status(200).json({ userData });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const currentUserId = req.user!.id;
 
   try {
@@ -174,12 +171,11 @@ router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response
       referenceCount,      
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/transfer-request', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/transfer-request', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user!.id;
 
   try {
@@ -203,12 +199,11 @@ router.get('/transfer-request', authenticateToken, async (req: Request, res: Res
 
     res.json({ user });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/transfer-points', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/transfer-points', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user!.id;
 
   try {
@@ -223,8 +218,7 @@ router.get('/transfer-points', authenticateToken, async (req: Request, res: Resp
 
     res.json({ user });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+    next(err);
   }
 });
 

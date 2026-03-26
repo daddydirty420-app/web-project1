@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Op, literal } from "sequelize";
 import { Item, User, Video, Sale, Search } from "../models/index.js";
 
 const router = Router();
 
-router.get('/item-money-management/item-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/item-money-management/item-list/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const itemId = req.params.id;
         const currentUserId = req.user!.id;
@@ -29,12 +29,11 @@ router.get('/item-money-management/item-list/:id', authenticateToken, async (req
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/money-management/item-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/money-management/item-list', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user!.id;
 
@@ -55,12 +54,11 @@ router.get('/money-management/item-list', authenticateToken, async (req: Request
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/search/video-list', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;
 
@@ -140,12 +138,11 @@ router.get('/search/video-list', authenticateOptional, async (req: Request, res:
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/search/item-list', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;
 
@@ -218,12 +215,11 @@ router.get('/search/item-list', authenticateOptional, async (req: Request, res: 
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search2/video-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/search2/video-list', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;
 
@@ -294,12 +290,11 @@ router.get('/search2/video-list', authenticateOptional, async (req: Request, res
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/search2/item-list', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/search2/item-list', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user?.id ?? null;
 
@@ -363,8 +358,7 @@ router.get('/search2/item-list', authenticateOptional, async (req: Request, res:
 
         res.json({ itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { User, GenderOption, Address, Name, TodouhukenOption, IdCard, ShopInfo } from "../models/index.js";
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
@@ -18,7 +18,7 @@ const s3 = new S3Client({
     },
 });
 
-router.patch("/profile-update", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/profile-update", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user!.id;
   const fileName = req.body.fileName || null;
   const contentType = req.body.contentType;
@@ -92,12 +92,11 @@ router.patch("/profile-update", authenticateToken, async (req: Request, res: Res
       imageUrl,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.patch("/phone-number-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/phone-number-edit", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const user = await User.findByPk(req.user!.id);
     if (!user) {
@@ -109,12 +108,11 @@ router.patch("/phone-number-edit", authenticateToken, async (req: Request, res: 
 
     res.status(200).json({ message: "電話番号を更新しました。" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.patch("/honnin-submit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/honnin-submit", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user!.id;
   const now = Date.now();
   const {
@@ -268,12 +266,11 @@ router.patch("/honnin-submit", authenticateToken, async (req: Request, res: Resp
       rearUrl,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.get('/honnin', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/honnin', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const data = await User.findByPk(req.user!.id, {
       attributes: ['id', 'birthday', 'phone_number', 'gender_id'],
@@ -312,12 +309,11 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response): Pr
       genderAllOptions,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/phone-number', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/phone-number', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const data = await User.findByPk(req.user!.id, {
       attributes: ['id', 'phone_number'],
@@ -330,12 +326,11 @@ router.get('/phone-number', authenticateToken, async (req: Request, res: Respons
 
     res.json({ data });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.get('/profile-edit', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/profile-edit', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const userData = await User.findByPk(req.user!.id, {
       attributes: ['id', 'user_name', 'user_introduction', 'profile_image'],
@@ -348,8 +343,7 @@ router.get('/profile-edit', authenticateToken, async (req: Request, res: Respons
 
     res.json({ userData });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 

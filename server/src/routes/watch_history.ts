@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { WatchHistory, Item, Sale } from "../models/index.js";
+import { WatchHistory, Item } from "../models/index.js";
 
 const router = Router();
 
-router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user!.id;
 
@@ -32,8 +32,7 @@ router.delete("/remove/:id", authenticateToken, async (req: Request, res: Respon
 
         res.status(200).json({ message: "閲覧履歴を削除しました" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

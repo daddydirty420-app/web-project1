@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { Follow, User, ShopInfo } from "../models/index.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const targetUserId = Number(req.params.id);
     if (!currentUserId || currentUserId === targetUserId) {
@@ -38,12 +38,11 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
             isFollowing: true
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const targetUserId = Number(req.params.id);
     if (!currentUserId || currentUserId === targetUserId) {
@@ -70,12 +69,11 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
             isFollowing: false
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/status', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user!.id;
         const targetUserId = Number(req.query.to);
@@ -94,12 +92,11 @@ router.get('/status', authenticateToken, async (req: Request, res: Response): Pr
 
         res.json({ isFollowing: !!isFollowing });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get("/count/:id", async (req: Request, res: Response): Promise<void> => {
+router.get("/count/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.params.id;
 
     try {
@@ -115,12 +112,11 @@ router.get("/count/:id", async (req: Request, res: Response): Promise<void> => {
 
         res.status(200).json({ followCount, followerCount });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>;
     type UserInstance = InstanceType<typeof User>;
         
@@ -194,12 +190,11 @@ router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: R
             pageUser
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 
-router.get("/follower-list/:id", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/follower-list/:id", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>;
     type UserInstance = InstanceType<typeof User>;
         
@@ -271,12 +266,11 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
             pageUser,
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 
-router.get('/follow-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/follow-list/search/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>;
     type UserInstance = InstanceType<typeof User>;
 
@@ -347,12 +341,11 @@ router.get('/follow-list/search/:id', authenticateOptional, async (req: Request,
 
         res.status(200).json({ userList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 
-router.get('/follower-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/follower-list/search/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type UserInstance = InstanceType<typeof User>;
     type FollowInstance = InstanceType<typeof Follow>;
         
@@ -420,8 +413,7 @@ router.get('/follower-list/search/:id', authenticateOptional, async (req: Reques
 
         res.status(200).json({ userList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 

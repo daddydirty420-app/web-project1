@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Notification } from "../models/index.js";
 
 const router = Router();
 
-router.get('/my-notification', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/my-notification', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user!.id;
 
@@ -26,12 +26,11 @@ router.get('/my-notification', authenticateToken, async (req: Request, res: Resp
             unreadCount: unreadCount
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/unread-count', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/unread-count', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const unreadCount = await Notification.count({
             where: {
@@ -42,8 +41,7 @@ router.get('/unread-count', authenticateToken, async (req: Request, res: Respons
 
         res.json({ unreadCount });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
@@ -26,7 +26,7 @@ function generateNgrams(text: string): string[] {
     return result;
 };
 
-router.get("/dev/create", async (req: Request, res: Response): Promise<void> => {
+router.get("/dev/create", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const items = await Item.findAll({
             where: { public: true },
@@ -72,12 +72,11 @@ router.get("/dev/create", async (req: Request, res: Response): Promise<void> => 
             count: createdCount,
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get("/dev/normalize", async (req: Request, res: Response): Promise<void> => {
+router.get("/dev/normalize", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const allWords = await SuggestWords.findAll({
             attributes: ["id", "word"],
@@ -94,8 +93,7 @@ router.get("/dev/normalize", async (req: Request, res: Response): Promise<void> 
 
         res.status(200).json({ message: "全件 normalized_word 更新完了！", count: allWords.length });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

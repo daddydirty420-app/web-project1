@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Transfer, BankAccount, AccountTypeOption, User, UriagekinHistory, Notification, PointsHistory, Journal, PointConversionLogs } from "../models/index.js";
 import sequelize from "../db.js";
@@ -7,7 +7,7 @@ import crypto from "crypto";
 
 const router = Router();
 
-router.post("/request-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/request-create", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const requestValue = Number(req.body.transValue);
     const transValue = requestValue - 200;
@@ -112,12 +112,11 @@ router.post("/request-create", authenticateToken, async (req: Request, res: Resp
         });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.post("/points-create", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/points-create", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const value = Number(req.body.value);
     const limit = Number(req.body.limit);
@@ -207,12 +206,11 @@ router.post("/points-create", authenticateToken, async (req: Request, res: Respo
         res.status(200).json({ message: "売上金をポイント変換しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/detail/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/detail/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Transfer.findByPk(req.params.id, {
             attributes: ['id', 'trans_money', 'transfer_id', 'createdAt'],
@@ -234,12 +232,11 @@ router.get('/detail/:id', authenticateToken, async (req: Request, res: Response)
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/history', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/history', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
             attributes: ['id', 'trans_money', 'trans_finish'],
@@ -249,8 +246,7 @@ router.get('/history', authenticateToken, async (req: Request, res: Response): P
 
         res.json({ dataList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

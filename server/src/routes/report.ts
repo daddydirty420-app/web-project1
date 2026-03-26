@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ItemReport, Item, ItemReportOption, CommentReportOption, ItemBuyerReportOption, User, CommentReport } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
 
-router.post("/item/report-create/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/item/report-create/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user!.id;
     const selectedOptionId = Number(req.body.selected);
@@ -52,12 +52,11 @@ router.post("/item/report-create/:id", authenticateToken, async (req: Request, r
         res.status(200).json({ message: "報告を作成しました" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました" });
+        next(err);
     }
 });
 
-router.post("/comment/report-create/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/comment/report-create/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
     const userId = req.user!.id;
     const selectedOptionId = Number(req.body.selected);
@@ -103,38 +102,34 @@ router.post("/comment/report-create/:id", authenticateToken, async (req: Request
         res.status(200).json({ message: "報告を作成しました" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました" });
+        next(err);
     }
 });
 
-router.get('/item/all-options', async (req: Request, res: Response): Promise<void> => {
+router.get('/item/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await ItemReportOption.findAll();
         res.status(200).json({ options });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/comment/all-options', async (req: Request, res: Response): Promise<void> => {
+router.get('/comment/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await CommentReportOption.findAll();
         res.status(200).json({ options });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/buyer/all-options', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/buyer/all-options', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await ItemBuyerReportOption.findAll();
         res.status(200).json({ options });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

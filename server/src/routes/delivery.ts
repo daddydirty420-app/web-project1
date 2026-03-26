@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { Delivery, ShippingDayOption, ShippingServiceOption,  TodouhukenOption, Orders, Item, User, Address, Name } from "../models/index.js";
+import { Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Orders, Item, User, Address, Name } from "../models/index.js";
 
 const router = Router();
 
-router.get('/index-wait-item-list', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/index-wait-item-list', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const currentUserId = req.user!.id;
 
@@ -28,12 +28,11 @@ router.get('/index-wait-item-list', authenticateToken, async (req: Request, res:
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/buy-trans/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/buy-trans/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Delivery.findByPk(req.params.id, {
             attributes: ['id', 'buyer_phone_number'],
@@ -67,8 +66,7 @@ router.get('/buy-trans/:id', authenticateToken, async (req: Request, res: Respon
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

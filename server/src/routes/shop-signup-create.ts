@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, Banks, Branches } from "../models/index.js";
 import sequelize from "../db.js";
@@ -21,7 +21,7 @@ const s3 = new S3Client({
     },
 });
 
-router.post("/1", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const {
         selectOption,
@@ -157,12 +157,11 @@ router.post("/1", authenticateToken, async (req: Request, res: Response): Promis
         res.status(200).json({ id: data.id });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.post("/2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/2/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
     if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
@@ -223,12 +222,11 @@ router.post("/2/:id", authenticateToken, async (req: Request, res: Response): Pr
 
         res.status(200).json({ message: "口座情報を登録しました。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/3/:id", authenticateToken, async (req: Request, res: Response) : Promise<void> => {
+router.patch("/3/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction) : Promise<void> => {
     const shopId = req.params.id;
     const {
         frontFileName,
@@ -380,12 +378,11 @@ router.patch("/3/:id", authenticateToken, async (req: Request, res: Response) : 
             permitUrls,
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/4/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/4/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const autoTrans = req.body.autoTrans === "はい";
     const openInfo = req.body.openInfo === "はい";
@@ -405,12 +402,11 @@ router.patch("/4/:id", authenticateToken, async (req: Request, res: Response): P
 
         res.status(200).json({ message: "データ更新完了" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const updateData = req.body;
 
@@ -423,12 +419,11 @@ router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response)
 
         res.status(200).json({ message: "更新しました。", updated: updateData });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const {
         seiValue,
@@ -514,12 +509,11 @@ router.patch("/rep-name-edit/:id", authenticateToken, async (req: Request, res: 
 
         res.status(200).json({ message: "代表者氏名を変更しました。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/5/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const userId = req.user!.id;
 
@@ -575,8 +569,7 @@ router.patch("/5/:id", authenticateToken, async (req: Request, res: Response): P
         res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

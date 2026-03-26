@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwtHelper.js";
@@ -31,7 +31,7 @@ interface DecodedAccessToken {
   exp?: number;
 }
 
-router.post('/login', async (req: Request, res: Response): Promise<void> => {
+router.post('/login', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email, password, rememberMe } = req.body;
 
   if (!email || !password) {
@@ -94,12 +94,11 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       refreshToken: newRefreshToken,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.post("/set-cookie", async (req: Request, res: Response): Promise<void> => {
+router.post("/set-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { refreshToken, rememberMe } = req.body;
   if (!refreshToken) {
     res.status(400).json({ message: "refreshToken がありません" });
@@ -127,7 +126,7 @@ function generateRandomUserName(length: number = 12): string {
     return result;
 };
 
-router.post('/signup', async (req: Request, res: Response): Promise<void> => {
+router.post('/signup', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password } = req.body;
 
     try {
@@ -176,12 +175,11 @@ router.post('/signup', async (req: Request, res: Response): Promise<void> => {
           reissueUrl
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.post('/resend-verification-code', async (req: Request, res: Response): Promise<void> => {
+router.post('/resend-verification-code', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { token } = req.body;
 
   if (!token) {
@@ -230,12 +228,11 @@ router.post('/resend-verification-code', async (req: Request, res: Response): Pr
     });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.post('/signup-verify', async (req: Request, res: Response): Promise<void> => {
+router.post('/signup-verify', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { verificationCode, rememberMe } = req.body;
 
   const t = await sequelize.transaction();
@@ -302,12 +299,11 @@ router.post('/signup-verify', async (req: Request, res: Response): Promise<void>
     });
   } catch (err) {
     await t.rollback();
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.post('/request-password-reset', async (req: Request, res: Response): Promise<void> => {
+router.post('/request-password-reset', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email } = req.body;
 
   try {
@@ -333,12 +329,11 @@ router.post('/request-password-reset', async (req: Request, res: Response): Prom
 
     res.status(200).json({ message: 'メールを送信しました。' });
   } catch (err) {
-    console.error(err);
-    res.status(200).json({ message: 'メールを送信しました。' });
+    next(err);
   }
 });
 
-router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
+router.post('/reset-pw', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { token, password } = req.body;
 
   try {
@@ -375,12 +370,11 @@ router.post('/reset-pw', async (req: Request, res: Response): Promise<void> => {
 
     res.status(200).json({ message: 'パスワードを更新しました。' });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    next(err);
   }
 });
 
-router.post("/refresh-token", async (req: Request, res: Response): Promise<void> => {
+router.post("/refresh-token", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
   if (!refreshToken) {
     res.status(400).json({ message: "refreshTokenがありません。" });
@@ -424,16 +418,15 @@ router.post("/refresh-token", async (req: Request, res: Response): Promise<void>
       exp: newDecoded?.exp,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.get('/check-token', authenticateToken, (req: Request, res: Response): void => {
+router.get('/check-token', authenticateToken, (req: Request, res: Response, next: NextFunction): void => {
     res.json({ message: 'トークン有効', user: req.user });
 });
 
-router.post('/rehash-password', async (req: Request, res: Response): Promise<void> => {
+router.post('/rehash-password', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const email = req.body.email?.trim();
   const plainPassword = req.body.password?.trim();
 
@@ -451,7 +444,7 @@ router.post('/rehash-password', async (req: Request, res: Response): Promise<voi
   res.json({ message: 'パスワードをハッシュ化して保存しました！' });
 });
 
-router.patch("/email-edit", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/email-edit", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = req.user!.id;
   const newEmail = req.body.email;
 
@@ -482,12 +475,11 @@ router.patch("/email-edit", authenticateToken, async (req: Request, res: Respons
 
     res.status(200).json({ message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.patch("/new-email-change", async (req: Request, res: Response): Promise<void> => {
+router.patch("/new-email-change", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const token = req.query.token;
 
   try {
@@ -530,23 +522,22 @@ router.patch("/new-email-change", async (req: Request, res: Response): Promise<v
 
     res.status(200).json({ message: "メールアドレスを更新しました。" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "サーバーエラーが発生しました。" });
+    next(err);
   }
 });
 
-router.post("/check-token", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post("/check-token", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   res.status(200).json({
     valid: true,
     userId: req.user!.id,
   });
 });
 
-router.get('/check-cookies', (req: Request, res: Response): void => {
+router.get('/check-cookies', (req: Request, res: Response, next: NextFunction): void => {
   res.json(req.cookies);
 });
 
-router.get('/status', authenticateToken, (req: Request, res: Response) => {
+router.get('/status', authenticateToken, (req: Request, res: Response, next: NextFunction) => {
   res.json({ loggedIn: true, user: req.user });
 });
 

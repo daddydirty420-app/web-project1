@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { ItemLike, Item, User, Follow, ShopInfo, Video, Sale } from "../models/index.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
     const itemId = req.params.id;
 
@@ -41,12 +41,11 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response): 
 
         res.status(200).json({ isGood: true });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const currentUserId = req.user!.id;
 
@@ -86,12 +85,11 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
 
         res.status(200).json({ isGood: false });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/status/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/status/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const isGood = await ItemLike.findOne({
             where: {
@@ -102,12 +100,11 @@ router.get('/status/:id', authenticateToken, async (req: Request, res: Response)
 
         res.status(200).json({ isGood: !!isGood });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/count/:id', async (req: Request, res: Response): Promise<void> => {
+router.get('/count/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const count = await ItemLike.count({
             where: { item_id: req.params.id },
@@ -115,12 +112,11 @@ router.get('/count/:id', async (req: Request, res: Response): Promise<void> => {
 
         res.status(200).json({ count });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
     
@@ -179,12 +175,11 @@ router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: R
 
         res.status(200).json({ userList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 
-router.get('/like-user-list/search/:id', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get('/like-user-list/search/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
         
@@ -251,8 +246,7 @@ router.get('/like-user-list/search/:id', authenticateOptional, async (req: Reque
 
         res.status(200).json({ userList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。'});
+        next(err);
     }
 });
 

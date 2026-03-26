@@ -1,13 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Item, User, ItemConditionOption, Cart, ItemLike, Video, Sale, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, ShopInfo, WatchHistory, Address, Name, Comment, Notification, ItemDeleteLogs, ItemShippingProfile, Categories, Brands } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
 
-router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/buy/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const itemId = req.params.id;
     if (!itemId) {
@@ -114,12 +113,11 @@ router.post('/buy/:id', authenticateToken, async (req: Request, res: Response): 
         res.status(200).json({ deliveryId: newDelivery.id });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = req.params.id;
 
     const item = await Item.findByPk(itemId);
@@ -144,12 +142,11 @@ router.delete('/perfect-delete/:id', authenticateToken, async (req: Request, res
         res.status(200).json({ message: "商品削除が完了しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = req.params.id;
     const userId = req.user!.id;
 
@@ -178,8 +175,7 @@ router.patch("/restore-item/:id", authenticateToken, async (req: Request, res: R
         res.status(200).json({ message: "商品を復元しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

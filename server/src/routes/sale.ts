@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Sale, Item } from "../models/index.js";
 
 const router = Router();
 
-router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const saleId = req.params.id;
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });
@@ -45,12 +45,11 @@ router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Resp
 
         res.status(200).json({ message: "値引きしました！" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.patch('/sale-stop/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch('/sale-stop/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const saleId = req.params.id;
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });
@@ -87,8 +86,7 @@ router.patch('/sale-stop/:id', authenticateToken, async (req: Request, res: Resp
 
         res.status(200).json({ message: "値引きを終了しました！" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 

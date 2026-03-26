@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ReferenceCode, Item } from "../models/index.js";
 
 const router = Router();
 
-router.post('/input', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/input', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { input } = req.body;
         const currentUserId = req.user!.id;
@@ -24,8 +24,7 @@ router.post('/input', authenticateToken, async (req: Request, res: Response): Pr
 
         res.status(200).json({ newRecord });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
@@ -38,7 +37,7 @@ function generateRandomReferenceCode(length: number = 10): string {
     return result;
 };
 
-router.post('/output', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/output', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const output = generateRandomReferenceCode();
 
@@ -52,12 +51,11 @@ router.post('/output', authenticateToken, async (req: Request, res: Response): P
             output,
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/my-page/count', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/my-page/count', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     try {
@@ -77,8 +75,7 @@ router.get('/my-page/count', authenticateToken, async (req: Request, res: Respon
             referenceCount
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

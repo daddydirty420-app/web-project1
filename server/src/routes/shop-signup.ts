@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, User } from "../models/index.js";
 
 const router = Router();
 
-router.get('/signup1', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/signup1', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     try {
         const shopData = await ShopInfo.findOne({
@@ -75,14 +75,13 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response): P
 
         const comOrFree = await ComOrFreeOption.findAll();
 
-        res.json({ shopData, userData, comOrFree });
+        res.status(200).json({ shopData, userData, comOrFree });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const shopId = req.params.id;
 
@@ -112,12 +111,11 @@ router.get("/signup2/:id", authenticateToken, async (req: Request, res: Response
 
         res.status(200).json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: ['id', 'id_card_front', 'id_card_rear', 'permit_url']
@@ -128,14 +126,13 @@ router.get('/signup3/:id', authenticateToken, async (req: Request, res: Response
             return;
         }
 
-        res.json({ data });
+        res.status(200).json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
 
     try {
@@ -182,8 +179,7 @@ router.get('/signup5/:id', authenticateToken, async (req: Request, res: Response
 
         res.status(200).json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

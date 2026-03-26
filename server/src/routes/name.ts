@@ -1,11 +1,11 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Name } from "../models/index.js";
 
 const router = Router();
 
-router.patch("/name-edit/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.patch("/name-edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const nameId = req.params.id;
     const { sei, mei, seiKana, meiKana } = req.body;
     if (!sei || !mei || !seiKana || !meiKana) {
@@ -23,12 +23,11 @@ router.patch("/name-edit/:id", authenticateToken, async (req: Request, res: Resp
 
         res.status(200).json({ message: "氏名を更新しました。" });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.get('/delivery-name/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/delivery-name/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Name.findOne({
             attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'delivery_id'],
@@ -42,12 +41,11 @@ router.get('/delivery-name/:id', authenticateToken, async (req: Request, res: Re
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/myname', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/myname', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Name.findOne({
             attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
@@ -61,8 +59,7 @@ router.get('/myname', authenticateToken, async (req: Request, res: Response): Pr
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

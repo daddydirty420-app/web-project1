@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Op } from "sequelize";
 import { Orders, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
@@ -9,7 +9,7 @@ import { AppError } from "../errors.js";
 const router = Router();
 
 // /orders?type="purchased"&page=number&status=""
-router.get("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const type = req.query.type;
@@ -32,12 +32,11 @@ router.get("/", authenticateToken, async (req: Request, res: Response): Promise<
 
         res.status(200).json({ ordersList, totalPages });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/buy/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Orders.findByPk(req.params.id, {
             attributes: ['id', 'price', 'total_amount', 'item_count', "purchase_snapshot"],
@@ -92,12 +91,11 @@ router.get('/buy/:id', authenticateToken, async (req: Request, res: Response): P
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Orders.findByPk(req.params.id, {
             attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'points_used', "paid_amount", 'item_count', 'buy_at', "paid_at", "status", 'order_id', "purchase_snapshot"],
@@ -214,12 +212,11 @@ router.get('/buy-item-after/:id', authenticateToken, async (req: Request, res: R
 
         res.json({ data, itemList });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Orders.findByPk(req.params.id, {
             attributes: ['id', 'total_amount', 'item_count'],
@@ -249,12 +246,11 @@ router.get('/cancel-page/:id', authenticateToken, async (req: Request, res: Resp
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
-router.get('/item-transport/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/item-transport/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Orders.findByPk(req.params.id, {
             attributes: ['id', "unit_price", "subtotal_amount", "discount_amount", 'total_amount', 'item_count', 'buy_at', "paid_at", "status", 'order_id', 'sales_commission_amount', 'gain_amount', "purchase_snapshot"],
@@ -317,8 +313,7 @@ router.get('/item-transport/:id', authenticateToken, async (req: Request, res: R
 
         res.json({ data });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 

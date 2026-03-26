@@ -1,12 +1,12 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Item, ItemDeleteLogs } from "../models/index.js";
 import sequelize from "../db.js";
 
 const router = Router();
 
-router.post('/delete-all', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.post('/delete-all', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const items = await Item.findAll({
@@ -41,12 +41,11 @@ router.post('/delete-all', authenticateToken, async (req: Request, res: Response
         res.status(200).json({ message: "商品削除が完了しました。" });
     } catch (err) {
         await t.rollback();
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 });
 
-router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = Number(req.user!.id);
 
@@ -67,12 +66,11 @@ router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: 
 
         res.status(200).json({ message: "下書き商品を削除しました" });
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました" });
+        next(err);
     }
 });
 
-router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = req.params.id;
 
     try {
@@ -87,8 +85,7 @@ router.get('/upload-ok/:id', authenticateToken, async (req: Request, res: Respon
 
         res.status(200).json({ item });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
