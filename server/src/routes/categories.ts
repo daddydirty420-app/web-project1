@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { getLevel2 } from "services/categories/getLevel2.js";
+import { getLevel2 } from "../services/categories/getLevel2.js";
 
 const router = Router();
 
