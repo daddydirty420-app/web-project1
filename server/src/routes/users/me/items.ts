@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../../../middleware/index.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 import { getMeItems } from "../../../services/item/userItems/items.service.js";
@@ -9,7 +9,7 @@ import { AppError } from "../../../errors.js";
 const router = Router();
 
 // /items?type="typename"(&page=number&status=""&keyword="search")
-router.get("/", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const type = req.query.type as ItemListType;
@@ -39,8 +39,7 @@ router.get("/", authenticateToken, async (req: Request, res: Response): Promise<
 
         res.status(200).json({ itemList, totalPages });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+        next(err);
     }
 });
 
