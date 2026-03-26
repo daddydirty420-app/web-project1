@@ -54,7 +54,7 @@ export const useFileUpload = () => {
             }
 
             // ffmpeg変換
-            const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/convert-video/${videoId}`, {
+            const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${videoId}/convert`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

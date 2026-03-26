@@ -137,13 +137,11 @@ router.patch("/:id/sort-number", async (req: Request, res: Response, next: NextF
         throw new AppError("INVALID_NUMBER", 400);
     }
 
-    try {
-        await patchSortNumber({ itemId, number });
+    patchSortNumber({ itemId, number }).catch((err) => {
+        console.error(err);
+    });
 
-        res.status(200).json({ message: "sort_numberを更新しました" });
-    } catch (err) {
-        next(err);
-    }
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
 });
 
 // PATCH /items/:id/logs/access
@@ -152,13 +150,11 @@ router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res:
 
     const userId = req.user?.id ?? null;
 
-    try {
-        await patchItemLogsAccess({ itemId, userId });
+    patchItemLogsAccess({ itemId, userId }).catch((err) => {
+        console.error(err);
+    });
 
-        res.status(200).json({ message: '商品ページアクセス処理が完了しました。' });
-    } catch (err) {
-        next(err);
-    }
+    res.status(202).json({ message: '商品ページアクセス処理を受け付けました' });
 });
 
 // PATCH /items/:id/restore
