@@ -24,7 +24,7 @@ export const PerfectDelete = ({ id }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/perfect-delete/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/perfect`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

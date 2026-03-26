@@ -26,7 +26,7 @@ export const Restore = ({ id, item }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/restore-item/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/restore`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

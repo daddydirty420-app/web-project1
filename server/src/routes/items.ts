@@ -20,6 +20,7 @@ import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
+import { restoreItem } from "../services/item/restore/restore.service.js";
 
 const router = Router();
 
@@ -155,6 +156,21 @@ router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res:
         await patchItemLogsAccess({ itemId, userId });
 
         res.status(200).json({ message: '商品ページアクセス処理が完了しました。' });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// PATCH /items/:id/restore
+router.patch("/:id/restore", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await restoreItem({ userId, itemId });
+
+        res.status(200).json({ message: "商品を復元しました" });
     } catch (err) {
         next(err);
     }
