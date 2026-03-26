@@ -18,7 +18,8 @@ import { getMetadata } from "../services/item/itemPage/metadata.service.js";
 import { patchSortNumber } from "../services/item/sortNumber/patchItems.service.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
-import { deleteItemLogically } from "../services/item/delete/logicalDelete.js";
+import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
+import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
 
 const router = Router();
 
@@ -169,6 +170,21 @@ router.delete("/:id/logical", authenticateToken, async (req: Request, res: Respo
         await deleteItemLogically({ itemId, userId });
 
         res.status(200).json({ message: "商品を削除しました" });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// DELETE /items/:id/perfect
+router.delete("/:id/perfect", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteItemPerfect({ itemId, userId });
+
+        res.status(200).json({ message: "商品削除が完了しました。" });
     } catch (err) {
         next(err);
     }
