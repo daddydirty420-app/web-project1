@@ -121,19 +121,22 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/buy/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery/${id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
+                
+            const data = await res.json();
 
             if (res.ok) {
-                const data = await res.json();
                 const deliveryId = data.deliveryId;
                 
                 // 配送ページとカラー選択ページをできれば1つにまとめる
                 router.push(`/buy/trans/${deliveryId}`);
+            } else if (data.message) {
+                toast.error(data.message);
             }
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");

@@ -28,7 +28,7 @@ export const CartElement = ({ item, mutate }: Props) => {
                 throw new Error("AUTH_ERROR");
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-page/buy/${item.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery/${item.id}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

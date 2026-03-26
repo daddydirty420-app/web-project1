@@ -2,9 +2,24 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Orders, Item, User, Address, Name } from "../models/index.js";
+import { Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Orders, Item, Address, Name } from "../models/index.js";
+import { postDeliveryBuy } from "services/delivery/postBuy.service.js";
 
 const router = Router();
+
+router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    const itemId = Number(req.params.id);
+
+    try {
+        const deliveryId = await postDeliveryBuy({ itemId, userId });
+
+        res.status(200).json({ deliveryId });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get('/index-wait-item-list', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
