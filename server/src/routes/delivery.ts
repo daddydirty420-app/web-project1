@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
 import { Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Orders, Item, Address, Name } from "../models/index.js";
-import { postDeliveryBuy } from "services/delivery/postBuy.service.js";
+import { postDeliveryBuy } from "../services/delivery/postBuy.service.js";
 
 const router = Router();
 
