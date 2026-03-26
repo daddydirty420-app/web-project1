@@ -43,7 +43,7 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
         try {
             const accessToken = await refreshToken();
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/onplay/${item.Video?.id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${item.Video?.id}/onplay`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${accessToken ?? ""}`,

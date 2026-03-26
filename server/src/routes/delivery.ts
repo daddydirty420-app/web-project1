@@ -7,6 +7,7 @@ import { postDeliveryBuy } from "../services/delivery/postBuy.service.js";
 
 const router = Router();
 
+// POST /delivery/:id
 router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
