@@ -4,6 +4,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { Cart } from "../models/index.js";
 import { deleteCart } from "../services/cart/delete.service.js";
 import { addCart } from "../services/cart/add.service.js";
+import { cartStatus } from "../services/cart/status.service.js";
 
 const router = Router();
 
@@ -35,19 +36,15 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-router.get('/status/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const itemId = req.params.id;
+router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const status = await Cart.findOne({
-            where: {
-                user_id: currentUserId,
-                item_id: itemId,
-            },
-        });
+        const status = await cartStatus({ itemId, userId });
 
-        res.status(200).json({ cartIn: !!status });
+        res.status(200).json({ status });
     } catch (err) {
         next(err);
     }

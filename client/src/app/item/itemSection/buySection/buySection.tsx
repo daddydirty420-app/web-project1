@@ -29,7 +29,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                         return;
                     }
 
-                    const statusRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/status/${id}`, {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}/status`, {
                         method: 'GET',
                         cache: 'no-store',
                         headers: {
@@ -37,9 +37,10 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                         },
                     });
 
-                    if (statusRes.ok) {
-                        const data = await statusRes.json();
-                        setCartIn(data.cartIn);
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        setCartIn(data.status);
                     }
                 } catch (err) {
                     console.error(err);
