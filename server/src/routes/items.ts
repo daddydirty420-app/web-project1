@@ -22,6 +22,7 @@ import { deleteItemLogically } from "../services/item/delete/logicalDelete.servi
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
 import { restoreItem } from "../services/item/restore/restore.service.js";
 import { deleteDraftItem } from "../services/item/delete/draftDelete.js";
+import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
 
 const router = Router();
 
@@ -348,6 +349,19 @@ router.get("/:id/form-data", authenticateToken, async (req: Request, res: Respon
             allService,
             allPlace
         });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GET /items/:id/highlight
+router.get("/:id/highlight", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    try {
+        const item = await getItemHighlight({ itemId });
+
+        res.status(200).json({ item });
     } catch (err) {
         next(err);
     }
