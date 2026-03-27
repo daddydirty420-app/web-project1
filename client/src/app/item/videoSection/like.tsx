@@ -37,7 +37,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/add/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/${id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -61,7 +61,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/remove/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

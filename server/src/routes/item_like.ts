@@ -2,43 +2,19 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { ItemLike, Item, User, Follow, ShopInfo } from "../models/index.js";
+import { ItemLike, User, Follow, ShopInfo } from "../models/index.js";
 import { deleteItemLike } from "../services/itemLike/delete.service.js";
+import { addItemLike } from "../services/itemLike/add.service.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const itemId = req.params.id;
+router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const data = await ItemLike.findOne({
-            where: {
-                user_id: currentUserId,
-                item_id: itemId,
-            },
-        });
-        if (data) {
-            res.status(409).json({ message: 'すでにいいね済みです。' });
-            return;
-        }
-
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
-
-        await ItemLike.create({
-            item_id: itemId,
-            user_id: currentUserId,
-        });
-
-        if (!item.sold_out) {
-            item.sort_number = Number(item.sort_number) + 50;
-            item.sort_buzz_number = Number(item.sort_buzz_number) + 200;
-            await item.save();
-        }
+        await addItemLike({ itemId, userId });
 
         res.status(200).json({ isGood: true });
     } catch (err) {
