@@ -208,7 +208,7 @@ router.get("/follower-list/:id", authenticateOptional, async (req: Request, res:
                         {
                             model: ShopInfo,
                             attributes: ['id'],
-                            required: true,
+                            required: false,
                         },
                     ],
                 },
