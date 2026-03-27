@@ -2,7 +2,6 @@
 
 import styles from "./buy.module.css";
 import { useRouter } from "next/navigation";
-import { Item } from "../../itemPageTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -12,11 +11,10 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
-    item: Item;
     loggedIn: boolean;
 };
 
-export const BuySection = ({ id, item, loggedIn }: Props) => {
+export const BuySection = ({ id, loggedIn }: Props) => {
     const [cartIn, setCartIn] = useState(false);
     const router = useRouter();
 
@@ -63,7 +61,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/add/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -91,7 +89,7 @@ export const BuySection = ({ id, item, loggedIn }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/remove/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

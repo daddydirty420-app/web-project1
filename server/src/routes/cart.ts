@@ -1,60 +1,35 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { Cart, Item, Sale } from "../models/index.js";
+import { Cart } from "../models/index.js";
+import { deleteCart } from "../services/cart/delete.service.js";
+import { addCart } from "../services/cart/add.service.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const itemId = req.params.id;
+router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
+        await addCart({ itemId, userId });
 
-        await Cart.create({
-            user_id: currentUserId,
-            item_id: itemId,
-        });
-
-        item.sort_number = Number(item.sort_number) + 250;
-        item.sort_buzz_number = Number(item.sort_buzz_number) + 300;
-        await item.save();
-
-        res.status(200).json({ success: true });
+        res.status(200).json({ message: "カートに追加しました" });
     } catch (err) {
         next(err);
     }
 });
 
-router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const itemId = req.params.id;
+router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
+        await deleteCart({ itemId, userId });
 
-        await Cart.destroy({
-            where: {
-                user_id : currentUserId,
-                item_id: itemId,
-            },
-        });
-
-        item.sort_number -= Math.max(Number(item.sort_number) - 250, 0);
-        item.sort_buzz_number -= Math.max(Number(item.sort_buzz_number) - 300, 0);
-        await item.save();
-
-        res.status(200).json({ success: true });
+        res.status(200).json({ message: "カートから削除しました" });
     } catch (err) {
         next(err);
     }

@@ -24,7 +24,7 @@ export const ItemSection = ({ id, item, sellerMe, page, loggedIn }: Props) => {
         <section className={styles.itemSection}>
             <Slideshow images={item.image_url} />
             <ItemHeader item={item} page={page} />
-            {!sellerMe && page === "normal" && !(status === "soldout") && <BuySection id={id} item={item} loggedIn={loggedIn} />}
+            {!sellerMe && page === "normal" && !(status === "soldout") && <BuySection id={id} loggedIn={loggedIn} />}
             {variants && variants.length > 0 && <VariantsList item={item} />}
             <Detail id={id} item={item} sellerMe={sellerMe} page={page} />
             <CategoryText item={item} />
