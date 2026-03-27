@@ -5,6 +5,8 @@ import { authenticateOptional, authenticateToken } from "../middleware/index.js"
 import { ItemLike, User, Follow, ShopInfo } from "../models/index.js";
 import { deleteItemLike } from "../services/itemLike/delete.service.js";
 import { addItemLike } from "../services/itemLike/add.service.js";
+import { itemLikeStatus } from "../services/itemLike/status.service.js";
+import { itemLikeCount } from "../services/itemLike/count.service.js";
 
 const router = Router();
 
@@ -36,26 +38,25 @@ router.delete('/:id', authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-router.get('/status/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const isGood = await ItemLike.findOne({
-            where: {
-                user_id: req.user!.id,
-                item_id: req.params.id,
-            },
-        });
+router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
 
-        res.status(200).json({ isGood: !!isGood });
+    const userId = req.user!.id;
+
+    try {
+        const isGood = await itemLikeStatus({ itemId, userId });
+
+        res.status(200).json({ isGood });
     } catch (err) {
         next(err);
     }
 });
 
-router.get('/count/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/:id/count', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
     try {
-        const count = await ItemLike.count({
-            where: { item_id: req.params.id },
-        });
+        const count = await itemLikeCount({ itemId });
 
         res.status(200).json({ count });
     } catch (err) {
