@@ -1,13 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Item, ItemDeleteLogs } from "../models/index.js";
+import { Item } from "../models/index.js";
 
 const router = Router();
 
 router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
-    const userId = Number(req.user!.id);
+    const userId = req.user!.id;
 
     try {
         const item = await Item.findByPk(itemId);

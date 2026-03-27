@@ -9,6 +9,8 @@ const router = Router();
 router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
+    console.log("normalizeKeyword:", keyword);
+
     if (!keyword) {
         res.status(200).json({ suggest: [] });
         return;
@@ -16,6 +18,8 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
     
     try {
         const brands = await getBrandsSuggest({ keyword });
+
+        console.log("brands:", brands);
 
         res.status(200).json({ brands });
     } catch (err) {
