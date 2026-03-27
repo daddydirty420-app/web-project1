@@ -5,7 +5,7 @@ import { authenticateOptional, authenticateToken } from "../middleware/index.js"
 import { Follow, User, ShopInfo } from "../models/index.js";
 import { followStatus } from "../services/follow/status.service.js";
 import { followsCount } from "../services/follow/count.service.js";
-import { followAdd } from "services/follow/add.service.js";
+import { followAdd } from "../services/follow/add.service.js";
 import { followDelete } from "../services/follow/delete.service.js";
 
 const router = Router();
