@@ -2,7 +2,8 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { ItemLike, Item, User, Follow, ShopInfo, Video, Sale } from "../models/index.js";
+import { ItemLike, Item, User, Follow, ShopInfo } from "../models/index.js";
+import { deleteItemLike } from "../services/itemLike/delete.service.js";
 
 const router = Router();
 
@@ -45,43 +46,13 @@ router.post('/add/:id', authenticateToken, async (req: Request, res: Response, n
     }
 });
 
-router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.delete('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
-    const currentUserId = req.user!.id;
+
+    const userId = req.user!.id;
 
     try {
-        const data = await ItemLike.findOne({
-            where: {
-                item_id: itemId,
-                user_id: currentUserId,
-            },
-        });
-        if (!data) {
-            res.status(409).json({ message: 'いいねしていません。' });
-            return;
-        }
-
-        const item = await Item.findByPk(itemId);
-        if (!item) {
-            res.status(404).json({ message: '商品が見つかりません。' });
-            return;
-        }
-
-        await data.destroy();
-
-        if (item.status === "active" && item.sort_number > 0) {
-            const sortNumber = Number(item.sort_number);
-            const newSort = sortNumber - Math.min(50, sortNumber);
-            item.sort_number = newSort;
-            await item.save();
-        }
-
-        if (item.status === "active" && item.sort_buzz_number > 0) {
-            const sortBuzzNumber = Number(item.sort_buzz_number);
-            const newSortBuzz = sortBuzzNumber - Math.min(200, sortBuzzNumber);
-            item.sort_buzz_number = newSortBuzz;
-            await item.save();
-        }
+        await deleteItemLike({ itemId, userId });
 
         res.status(200).json({ isGood: false });
     } catch (err) {
