@@ -31,5 +31,7 @@ export const addCart = async ({ itemId, userId }: Params) => {
     const number = 250;
     const buzzNumber = 300;
 
-    patchSortNumberAdd({ itemId, number, buzzNumber });
+    patchSortNumberAdd({ itemId, number, buzzNumber }).catch((err) => {
+        console.error("patchSortNumberAdd error:", err);
+    });
 };

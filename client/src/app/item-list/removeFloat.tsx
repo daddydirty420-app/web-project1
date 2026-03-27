@@ -27,7 +27,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         const getRemoveBasePath = () => {
             if (page === "draft") return `items/${itemId}/draft`;
             if (page === "like") return `item-like/${itemId}`;
-            if (page === "watch-history") return `watch-history/remove/${itemId}`;
+            if (page === "watch-history") return `watch-history/${itemId}`;
 
             return null;
         };

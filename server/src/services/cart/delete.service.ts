@@ -28,5 +28,7 @@ export const deleteCart = async ({ itemId, userId }: Params) => {
     const number = 250;
     const buzzNumber = 300;
 
-    patchSortNumberDecrease({ itemId, number, buzzNumber });
+    patchSortNumberDecrease({ itemId, number, buzzNumber }).catch((err) => {
+        console.error("patchSortNumberDecrease error:", err);
+    });
 };
