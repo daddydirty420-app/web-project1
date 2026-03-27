@@ -3,6 +3,8 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { Follow, User, ShopInfo } from "../models/index.js";
+import { followStatus } from "../services/follow/status.service.js";
+import { followsCount } from "../services/follow/count.service.js";
 
 const router = Router();
 
@@ -73,42 +75,32 @@ router.delete('/remove/:id', authenticateToken, async (req: Request, res: Respon
     }
 });
 
-router.get('/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /follow/:id/status
+router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const currentUserId = req.user!.id;
+        
+    const targetUserId = Number(req.params.id);
+
+    if (!currentUserId || currentUserId === targetUserId) {
+        res.json({ isFollowing: false });
+        return;
+    }
+
     try {
-        const currentUserId = req.user!.id;
-        const targetUserId = Number(req.query.to);
+        const isFollowing = await followStatus({ currentUserId, targetUserId });
 
-        if (!currentUserId || currentUserId === targetUserId) {
-            res.json({ isFollowing: false });
-            return;
-        }
-
-        const isFollowing = await Follow.findOne({
-            where: {
-                follow_user_id: currentUserId,
-                follower_user_id: targetUserId
-            }
-        });
-
-        res.json({ isFollowing: !!isFollowing });
+        res.status(200).json({ isFollowing });
     } catch (err) {
         next(err);
     }
 });
 
-router.get("/count/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.params.id;
+// GET /follow/:id/count
+router.get("/:id/count", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = Number(req.params.id);
 
     try {
-        const [followCount, followerCount] = await Promise.all([
-            Follow.count({ where: { follow_user_id: userId } }),
-            Follow.count({ where: { follower_user_id: userId } }),
-        ]);
-
-        if (followCount === null || followerCount === null) {
-            res.status(400).json({ message: "数値を取得できません。" });
-            return;
-        }
+        const { followCount, followerCount } = await followsCount({ userId });
 
         res.status(200).json({ followCount, followerCount });
     } catch (err) {

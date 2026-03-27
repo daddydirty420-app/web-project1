@@ -10,6 +10,7 @@ import { itemLikeCount } from "../services/itemLike/count.service.js";
 
 const router = Router();
 
+// POST /item-like/:id
 router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -24,6 +25,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     }
 });
 
+// DELETE /item-like/:id
 router.delete('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -38,6 +40,7 @@ router.delete('/:id', authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
+// GET /item-like/:id/status
 router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -52,6 +55,7 @@ router.get('/:id/status', authenticateToken, async (req: Request, res: Response,
     }
 });
 
+// GET /item-like/:id/count
 router.get('/:id/count', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 

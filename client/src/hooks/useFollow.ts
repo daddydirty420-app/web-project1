@@ -12,14 +12,14 @@ type FollowCountResponse = {
 
 export function useFollowStatus(targetUserId: string) {
     return useSWR<FollowStatus>(
-        `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}/status`,
         fetcher,
     );
 }
 
 export function useFollowCount(userId: string) {
     return useSWR<FollowCountResponse>(
-        `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}/count`,
         fetcher,
     );
 }
@@ -29,9 +29,9 @@ export async function updateFollowCache(
     userId: string, 
     isFollowing: boolean, 
 ) {
-    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/status?to=${targetUserId}`;
-    const myCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${userId}`;
-    const targetCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/count/${targetUserId}`;
+    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}/status`;
+    const myCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}/count`;
+    const targetCountKey = `${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}/count`;
 
     // 即キャッシュ更新
     await mutate(statusKey, { isFollowing }, false);

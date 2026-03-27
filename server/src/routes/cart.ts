@@ -1,13 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Cart } from "../models/index.js";
 import { deleteCart } from "../services/cart/delete.service.js";
 import { addCart } from "../services/cart/add.service.js";
 import { cartStatus } from "../services/cart/status.service.js";
 
 const router = Router();
 
+// POST /cart/:id
 router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -22,6 +22,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     }
 });
 
+// DELETE /cart/:id
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -36,6 +37,7 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
+// GET /cart/:id/status
 router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
