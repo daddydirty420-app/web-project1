@@ -25,7 +25,7 @@ export const FollowButton = ({ user }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/add/${user.id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${user.id}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -51,7 +51,7 @@ export const FollowButton = ({ user }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${user.id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${user.id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

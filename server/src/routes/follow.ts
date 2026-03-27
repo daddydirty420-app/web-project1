@@ -5,71 +5,46 @@ import { authenticateOptional, authenticateToken } from "../middleware/index.js"
 import { Follow, User, ShopInfo } from "../models/index.js";
 import { followStatus } from "../services/follow/status.service.js";
 import { followsCount } from "../services/follow/count.service.js";
+import { followAdd } from "services/follow/add.service.js";
+import { followDelete } from "../services/follow/delete.service.js";
 
 const router = Router();
 
-router.post('/add/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// POST /follow/:id
+router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
+
     const targetUserId = Number(req.params.id);
+
     if (!currentUserId || currentUserId === targetUserId) {
         res.status(404).json({ message: 'ユーザーが見つかりません。' });
         return;
     }
 
     try {
-        const status = await Follow.findOne({
-            where: {
-                follow_user_id: currentUserId,
-                follower_user_id: targetUserId
-            }
-        });
-        const alreadyFollowing = !!status;
-        if (alreadyFollowing) {
-            res.status(409).json({ message: 'すでにフォローしています。' });
-            return;
-        }
+        await followAdd({ currentUserId, targetUserId });
 
-        const data = await Follow.create({
-            follow_user_id: currentUserId,
-            follower_user_id: targetUserId
-        });
-
-        res.status(200).json({
-            data,
-            success: true,
-            isFollowing: true
-        });
+        res.status(200).json({ message: "フォローしました" });
     } catch (err) {
         next(err);
     }
 });
 
+// DELETE /follow/:id
 router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
+
     const targetUserId = Number(req.params.id);
+
     if (!currentUserId || currentUserId === targetUserId) {
         res.status(404).json({ message: 'ユーザーが見つかりません。' });
         return;
     }
 
     try {
-        const status = await Follow.findOne({
-            where: {
-                follow_user_id: currentUserId,
-                follower_user_id: targetUserId
-            }
-        });
-        if (!status) {
-            res.status(409).json({ message: 'フォローしていません。' });
-            return;
-        }
+        await followDelete({ currentUserId, targetUserId });
 
-        await status.destroy();
-
-        res.status(200).json({
-            success: true,
-            isFollowing: false
-        });
+        res.status(200).json({ message: "フォロー解除しました" });
     } catch (err) {
         next(err);
     }

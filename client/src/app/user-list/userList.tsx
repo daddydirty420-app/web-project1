@@ -80,7 +80,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

@@ -26,12 +26,13 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/add/${targetUserId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
+
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
@@ -51,12 +52,13 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/remove/${targetUserId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
+
         } catch (err) {
             updateFollowCache(targetUserId, currentUserId, true);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
