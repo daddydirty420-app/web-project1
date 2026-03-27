@@ -21,6 +21,7 @@ import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
 import { restoreItem } from "../services/item/restore/restore.service.js";
+import { deleteDraftItem } from "../services/item/delete/draftDelete.js";
 
 const router = Router();
 
@@ -197,6 +198,21 @@ router.delete("/:id/perfect", authenticateToken, async (req: Request, res: Respo
         await deleteItemPerfect({ itemId, userId });
 
         res.status(200).json({ message: "商品削除が完了しました。" });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// DELETE /items/:id/draft
+router.delete("/:id/draft", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteDraftItem({ itemId, userId });
+
+        res.status(200).json({ message: "下書き商品を削除しました" });
     } catch (err) {
         next(err);
     }

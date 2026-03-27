@@ -9,8 +9,6 @@ const router = Router();
 router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
     const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
-    console.log("normalizeKeyword:", keyword);
-
     if (!keyword) {
         res.status(200).json({ suggest: [] });
         return;
