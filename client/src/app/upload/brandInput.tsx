@@ -47,7 +47,7 @@ export const BrandInput = ({ value, onChange }: Props) => {
 
         suggestTimeout.current = setTimeout(async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-upload/brand-suggest?keyword=${brandName}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands/suggest?keyword=${brandName}`, {
                     cache: "no-store",
                 });
 
