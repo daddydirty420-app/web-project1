@@ -1,4 +1,4 @@
-import { AppError } from "errors";
+import { AppError } from "../../errors.js";
 import { ItemLike } from "../../models/index.js";
 import { patchSortNumberDecrease } from "../item/sortNumber/patchItems.service.js";
 
