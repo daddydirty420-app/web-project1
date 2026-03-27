@@ -31,7 +31,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
 });
 
 // DELETE /follow/:id
-router.delete('/remove/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.delete('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const currentUserId = req.user!.id;
 
     const targetUserId = Number(req.params.id);
