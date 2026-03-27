@@ -62,7 +62,7 @@ export const getBrandsSuggest = async ({ keyword }: Params) => {
         }
     }
 
-    const result = Array.from(brandMap.values());
+    const brands = Array.from(brandMap.values());
 
-    return { brands: result };
+    return brands;
 };
