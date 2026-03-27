@@ -2,48 +2,8 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Item, ItemDeleteLogs } from "../models/index.js";
-import sequelize from "../db.js";
 
 const router = Router();
-
-router.post('/delete-all', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const items = await Item.findAll({
-        where: {
-            seller_id: userId,
-            status: "deleted",
-        },
-    });
-    if (!items || items.length === 0) {
-        res.status(404).json({ message: "削除する商品データが見つかりません。" });
-        return;
-    }
-
-    const t = await sequelize.transaction();
-
-    try {
-        const newItemDeleteLogs = [];
-        for (const item of items) {
-            newItemDeleteLogs.push({
-                item_id: item.id,
-                delete_user_id: item.seller_id,
-                delete_by_admin: false,
-                delete_reason: "自主削除",
-            });
-
-            await item.destroy({ transaction: t });
-        }
-
-        await ItemDeleteLogs.bulkCreate(newItemDeleteLogs, { transaction: t });
-
-        await t.commit();
-        res.status(200).json({ message: "商品削除が完了しました。" });
-    } catch (err) {
-        await t.rollback();
-        next(err);
-    }
-});
 
 router.delete("/draft/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
