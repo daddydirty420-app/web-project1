@@ -53,8 +53,6 @@ export const BrandInput = ({ value, onChange }: Props) => {
 
                 const data = await res.json();
 
-                console.log("data:", data);
-
                 if (!res.ok) {
                     console.error("ブランド名検索エラー：", data.message);
                     setSuggestions([]);
