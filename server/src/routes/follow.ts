@@ -7,6 +7,7 @@ import { followStatus } from "../services/follow/status.service.js";
 import { followsCount } from "../services/follow/count.service.js";
 import { followAdd } from "../services/follow/add.service.js";
 import { followDelete } from "../services/follow/delete.service.js";
+import { FollowType, getFollowUserList } from "../services/follow/userList.service.js";
 
 const router = Router();
 
@@ -83,154 +84,22 @@ router.get("/:id/count", async (req: Request, res: Response, next: NextFunction)
     }
 });
 
-router.get('/follow-list/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>;
-    type UserInstance = InstanceType<typeof User>;
-        
+// GET /follow/:id?type=""
+router.get('/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {    
     const currentUserId = req.user?.id ?? null;
     const pageUserId = Number(req.params.id);
 
-    const myFollow = !!(currentUserId === pageUserId);
+    const type = req.query.type as FollowType;
 
     try {
-        const followList = await Follow.findAll({
-            attributes: ["id"],
-            where: { follow_user_id: pageUserId },
-            order: [['createdAt', 'DESC']],
-            distinct: true,
-            include: [
-                {
-                    model: User,
-                    as: 'FollowerUser',
-                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
-                    include: [
-                        {
-                            model: ShopInfo,
-                            attributes: ['id'],
-                            required: false,
-                        },
-                    ],
-                },
-            ],
-        }) as (FollowInstance & { FollowUser?: UserInstance })[];
-
-        let finalFollowList = null;
-
-        if (currentUserId !== null && followList.length > 0 && !myFollow) {
-            const targetUserIds = followList.map(user => user.FollowerUser.id);
-
-            const followings = await Follow.findAll({
-                where: {
-                    follow_user_id: currentUserId,
-                    follower_user_id: targetUserIds
-                }
-            }) as FollowInstance[];
-
-            const followingUserIdSet = new Set(followings.map((f: FollowInstance) => f.follower_user_id));
-
-            finalFollowList = followList.map(item => {
-                const plainItem = item.toJSON();
-                const targetId = plainItem.FollowerUser?.id;
-                plainItem.FollowerUser.is_following = followingUserIdSet.has(targetId);
-                return plainItem;
-            });
-        }
-
-        const source = finalFollowList ?? followList;
-
-        const userList = source.map(item => {
-            const plain = item.toJSON ? item.toJSON() : item;
-            return plain.FollowerUser;
-        });
-
-        const pageUser = await User.findByPk(pageUserId, {
-            attributes: ['id', 'user_name'],
-        });
-
-        if (!pageUser) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
+        const {
+            userList,
+            pageUser
+        } = await getFollowUserList({ currentUserId, pageUserId, type });
 
         res.status(200).json({
             userList,
             pageUser
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
-router.get("/follower-list/:id", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>;
-    type UserInstance = InstanceType<typeof User>;
-        
-    const currentUserId = req.user?.id ?? null;
-    const pageUserId = Number(req.params.id);
-
-    try {
-        const followerList = await Follow.findAll({
-            attributes: ["id"],
-            where: { follower_user_id: pageUserId },
-            order: [['createdAt', 'DESC']],
-            distinct: true,
-            include: [
-                {
-                    model: User,
-                    as: 'FollowUser',
-                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
-                    include: [
-                        {
-                            model: ShopInfo,
-                            attributes: ['id'],
-                            required: false,
-                        },
-                    ],
-                },
-            ],
-        }) as (FollowInstance & { FollowUser?: UserInstance })[];
-
-        let finalFollowerList = null;
-
-        if (currentUserId !== null && followerList.length > 0) {
-            const targetUserIds = followerList.map(user => user.FollowUser.id);
-
-            const followings = await Follow.findAll({
-                where: {
-                    follow_user_id: currentUserId,
-                    follower_user_id: targetUserIds
-                }
-            }) as FollowInstance[];
-
-            const followingUserIdSet = new Set(followings.map((f: FollowInstance) => f.follower_user_id));
-
-            finalFollowerList = followerList.map(item => {
-                const plainItem = item.toJSON();
-                const targetId = plainItem.FollowUser?.id;
-                plainItem.FollowUser.is_following = followingUserIdSet.has(targetId);
-                return plainItem;
-            });
-        }
-
-        const source = finalFollowerList ?? followerList;
-
-        const userList = source.map(item => {
-            const plain = item.toJSON ? item.toJSON() : item;
-            return plain.FollowUser;
-        });
-
-        const pageUser = await User.findByPk(pageUserId, {
-            attributes: ['id', 'user_name'],
-        });
-
-        if (!pageUser) {
-            res.status(404).json({ message: 'データが見つかりません。' });
-            return;
-        }
-
-        res.status(200).json({
-            userList,
-            pageUser,
         });
     } catch (err) {
         next(err);

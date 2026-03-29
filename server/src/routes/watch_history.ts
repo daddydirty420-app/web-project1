@@ -5,6 +5,7 @@ import { deleteWatchHistory } from "../services/watchHistory/delete.service.js";
 
 const router = Router();
 
+// DELETE /watch-history/:id
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 

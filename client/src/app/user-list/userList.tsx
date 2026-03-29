@@ -35,10 +35,10 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         if (page === "comment-like") return "comment-like/like-user-list";
 
         if (page === "follow") {
-            if (followTab === "follow") return "follow/follow-list";
-            if (followTab === "follower") return "follow/follower-list";
+            if (followTab === "follow") return `follow/${id}?type=follow`;
+            if (followTab === "follower") return `follow/${id}?type=follower`;
 
-            return "follow/follow-list"; // デフォルト
+            return `follow/${id}?type=follow`; // デフォルト
         }
 
         return null;
@@ -49,8 +49,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const apiUrl = basePath
     ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}/${
         searchValue.trim()
-        ? `search/${id}?keyword=${encodeURIComponent(searchValue.trim())}`
-        : id
+        ? `&keyword=${encodeURIComponent(searchValue.trim())}`
+        : ""
     }`
     : null;
 
