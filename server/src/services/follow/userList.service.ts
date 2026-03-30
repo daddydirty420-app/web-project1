@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { AppError } from "../../errors.js";
 import { Follow, ShopInfo, User } from "../../models/index.js";
 
@@ -9,6 +10,7 @@ type Params = {
     currentUserId: number | null;
     pageUserId: number;
     type: FollowType;
+    keyword?: string;
 };
 
 type FollowWithUser = InstanceType<typeof Follow> & {
@@ -16,8 +18,8 @@ type FollowWithUser = InstanceType<typeof Follow> & {
     FollowUser: InstanceType<typeof User>;
 };
 
-export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Params) => {
-    
+export const getFollowUserList = async ({ currentUserId, pageUserId, type, keyword }: Params) => {
+
     const myFollow = currentUserId === pageUserId;
 
     const where = type === "follow"
@@ -27,6 +29,10 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Par
     const as = type === "follow"
     ? "FollowerUser"
     : "FollowUser";
+
+    const userWhere = keyword
+    ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
+    : undefined;
 
     // フォロー・フォロワーのリスト
     const followList = await Follow.findAll({
@@ -38,6 +44,8 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Par
             {
                 model: User,
                 as,
+                where: userWhere,
+                required: !!keyword,
                 attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
                 include: [
                     {

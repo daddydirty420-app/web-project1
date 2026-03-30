@@ -84,18 +84,20 @@ router.get("/:id/count", async (req: Request, res: Response, next: NextFunction)
     }
 });
 
-// GET /follow/:id?type=""
+// GET /follow/:id?type=""(&keyword="")
 router.get('/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {    
     const currentUserId = req.user?.id ?? null;
     const pageUserId = Number(req.params.id);
 
     const type = req.query.type as FollowType;
 
+    const keyword = req.query.keyword as string | undefined;
+
     try {
         const {
             userList,
             pageUser
-        } = await getFollowUserList({ currentUserId, pageUserId, type });
+        } = await getFollowUserList({ currentUserId, pageUserId, type, keyword });
 
         res.status(200).json({
             userList,
