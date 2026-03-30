@@ -47,7 +47,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const basePath = getBasePath();
 
     const apiUrl = basePath
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}/${
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}${
         searchValue.trim()
         ? `&keyword=${encodeURIComponent(searchValue.trim())}`
         : ""
