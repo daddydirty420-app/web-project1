@@ -17,7 +17,14 @@ type FollowWithUser = InstanceType<typeof Follow> & {
 };
 
 export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Params) => {
+
+    console.log("currentUserId:", currentUserId);
+    console.log("pageUserId:", pageUserId);
+    console.log("type:", type);
+
     const myFollow = currentUserId === pageUserId;
+
+    console.log("myFollow:", myFollow);
 
     const where = type === "follow"
     ? { follow_user_id: pageUserId }
@@ -26,6 +33,9 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Par
     const as = type === "follow"
     ? "FollowerUser"
     : "FollowUser";
+
+    console.log("where:", where);
+    console.log("as:", as);
 
     // フォロー・フォロワーのリスト
     const followList = await Follow.findAll({
@@ -48,6 +58,8 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type }: Par
             },
         ],
     }) as FollowWithUser[];
+
+    console.log("followList:", followList);
 
     // 自分がフォローしているかどうか（is_following）を追加
     let finalFollowList = null;
