@@ -58,8 +58,6 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     const userList = data?.userList;
 
-    console.log(userList);
-
     const followRemove = async (userId: string) => {
         
         mutate((prev) => {
