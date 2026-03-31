@@ -11,7 +11,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/profile/metadata/${id}`,
+        `${process.env.API_URL}/user/profile/metadata/${id}`,
         {
             method: 'GET',
             cache: 'no-store'
@@ -40,7 +40,7 @@ export default async function Profile({ params }: Props) {
     const { id: userId } = await params;
     const defaultLimit = 15;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile/${userId}?limit=${defaultLimit}`, {
+    const res = await fetch(`${process.env.API_URL}/user/profile/${userId}?limit=${defaultLimit}`, {
         method: 'GET',
         cache: 'no-store'
     });

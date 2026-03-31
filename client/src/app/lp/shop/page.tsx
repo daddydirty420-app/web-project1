@@ -28,7 +28,7 @@ export default async function Page() {
 
     const defaultLimit = 15;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-list/index-item-list/video-list?page=1&limit=${defaultLimit}`, {
+    const res = await fetch(`${process.env.API_URL}/item-list/index-item-list/video-list?page=1&limit=${defaultLimit}`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken ?? ""}`,

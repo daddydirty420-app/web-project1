@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
     
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/delivery-address/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/address/delivery-address/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {

@@ -31,7 +31,7 @@ export default async function Page({ params, searchParams }: Props) {
 
     const tab = (await searchParams)?.tab ?? "follow";
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${id}/count`, {
+    const res = await fetch(`${process.env.API_URL}/follow/${id}/count`, {
         method: "GET",
         cache: "no-store",
     });

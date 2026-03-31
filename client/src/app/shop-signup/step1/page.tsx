@@ -33,7 +33,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         }, {} as Record<string, string>)
     ).toString();
 
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/shop-signup/signup1` + (queryString ? `?${queryString}` : "");
+    const apiUrl = `${process.env.API_URL}/shop-signup/signup1` + (queryString ? `?${queryString}` : "");
 
     const res = await fetch(apiUrl, {
         method: "GET",

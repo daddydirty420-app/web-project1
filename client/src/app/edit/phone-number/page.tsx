@@ -24,7 +24,7 @@ export default async function Page() {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/phone-number`, {
+    const res = await fetch(`${process.env.API_URL}/user-edit/phone-number`, {
         method: "GET",
         cache: "no-store",
         headers: {

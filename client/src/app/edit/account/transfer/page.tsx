@@ -24,7 +24,7 @@ export default async function Page() {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/myaccount`, {
+    const res = await fetch(`${process.env.API_URL}/bank-account/myaccount`, {
         method: "GET",
         cache: "no-store",
         headers: {

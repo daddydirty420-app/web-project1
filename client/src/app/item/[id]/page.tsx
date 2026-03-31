@@ -13,7 +13,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/metadata`, {
+    const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
         method: 'GET',
         cache: 'no-store'
     });
@@ -39,7 +39,7 @@ export default async function Page({ params }: Props) {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode=normal`, {
+    const res = await fetch(`${process.env.API_URL}/items/${id}?mode=normal`, {
         method: 'GET',
         cache: 'no-store',
         headers: {
@@ -60,7 +60,7 @@ export default async function Page({ params }: Props) {
     const isLike: boolean = data.isLikeByMe;
     const me: User = data.me;
 
-    const recommendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/recommend?view=itemPage&itemId=${id}`, {
+    const recommendRes = await fetch(`${process.env.API_URL}/items/recommend?view=itemPage&itemId=${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -75,7 +75,7 @@ export default async function Page({ params }: Props) {
     const loggedIn = !!session?.user;
     const userId = session?.user.id;
 
-    const accessRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logs/access`, {
+    const accessRes = await fetch(`${process.env.API_URL}/items/${id}/logs/access`, {
         method: 'PATCH',
         headers: {
             Authorization: `Bearer ${accessToken ?? ""}`,

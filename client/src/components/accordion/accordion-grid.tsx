@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import AcGStyle from "./styles/accordion-grid.module.css";
+import styles from "./styles/accordion-grid.module.css";
 
 type AccordionGridProps = {
     children: ReactNode
 };
 
 export const AccordionGrid = ({ children }: AccordionGridProps) => {
-    return <div className={AcGStyle.flexGrid}>{children}</div>;
+    return <div className={styles.flexGrid}>{children}</div>;
 }

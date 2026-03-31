@@ -14,6 +14,5 @@ export const CommentDataDiv = ({ comment }: Props) => {
             <p className={clsx("ml-1 mr-1", styles.commentDataText)}>・</p>
             <p className={styles.commentDataText}>{formatRelativeTime(comment.createdAt)}</p>
         </div>
-
     );
 }

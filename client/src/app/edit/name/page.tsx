@@ -20,7 +20,7 @@ export default async function Page() {
 
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/myname`, {
+    const res = await fetch(`${process.env.API_URL}/name/myname`, {
         method: "GET",
         cache: "no-store",
         headers: {

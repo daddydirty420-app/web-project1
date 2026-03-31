@@ -25,7 +25,7 @@ export default async function Page() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/recommend?view=cart`, {
+    const res = await fetch(`${process.env.API_URL}/items/recommend?view=cart`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,

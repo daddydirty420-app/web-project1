@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import AcStyle from './styles/accordion.module.css';
+import { useState, useRef, useEffect } from 'react';
+import styles from './styles/accordion.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { ReactNode } from 'react';
@@ -38,18 +38,18 @@ export const Accordion = ({ heading, children }: accordionProps) => {
     }, [textIsOpen]);
 
     return (
-        <div className={textIsOpen ? AcStyle.open : AcStyle.close}>
-            <h3 className={AcStyle.heading}>
+        <div className={textIsOpen ? styles.open : styles.close}>
+            <h3 className={styles.heading}>
                 <button onClick={toggleText}>
                     {heading}
-                    <FontAwesomeIcon icon={faCircleChevronDown} className={AcStyle.icon} />
+                    <FontAwesomeIcon icon={faCircleChevronDown} className={styles.icon} />
                 </button>
             </h3>
             <div 
-            className={AcStyle.text}
+            className={styles.text}
             ref={refText}
             >
-                <div className={AcStyle.textInner}>{children}</div>
+                <div className={styles.textInner}>{children}</div>
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/metadata`, {
+    const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
         method: 'GET',
         cache: 'no-store'
     });
@@ -40,7 +40,7 @@ export default async function Page({ params }: Props) {
     
     if (!accessToken || !session) redirect("/login");
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}?mode=confirm`, {
+    const res = await fetch(`${process.env.API_URL}/items/${id}?mode=confirm`, {
         method: 'GET',
         cache: 'no-store',
         headers: {

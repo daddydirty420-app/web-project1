@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const FollowSection = async ({ userId }: Props) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}/count`, {
+    const res = await fetch(`${process.env.API_URL}/follow/${userId}/count`, {
         method: "GET",
         cache: 'no-store',
     });
