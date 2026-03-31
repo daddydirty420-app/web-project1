@@ -8,6 +8,7 @@ import { User, TokenSignupVerification, TokenPasswordReset, TokenEmailChange, Re
 import sequelize from "../db.js";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
+import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
 
 const router = Router();
 
@@ -73,16 +74,7 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction): P
       : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     });
 
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-      domain: process.env.NODE_ENV === "production" ? ".fuckintesting.com" : undefined,
-      maxAge: rememberMe
-      ? 30 * 24 * 60 * 60 * 1000
-      : 3 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("refreshToken", newRefreshToken, getRefreshTokenCookieOptions(rememberMe));
 
     res.status(200).json({
       id: userId,
@@ -105,14 +97,7 @@ router.post("/set-cookie", async (req: Request, res: Response, next: NextFunctio
     return;
   }
 
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
-    domain: ".fuckintesting.com",
-    maxAge: rememberMe ? 30 * 24 * 60 * 60 * 1000 : 3 * 24 * 60 * 60 * 1000,
-  });
+  res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
   res.status(200).json({ message: "Cookie をセットしました" });
 });
