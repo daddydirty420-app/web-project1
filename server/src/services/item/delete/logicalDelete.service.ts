@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Cart, Comment, Delivery, Item, ItemLike, ItemShippingProfile, Notification, Sale, Video } from "../../../models/index.js";
+import { Cart, Comment, Delivery, Item, ItemLike, ItemShippingProfile, Notification, Orders, Sale, Video } from "../../../models/index.js";
 import { AppError } from "../../../errors.js";
 import sequelize from "../../../db.js";
 
@@ -17,6 +17,13 @@ export const deleteItemLogically = async ({ itemId, userId }: Params) => {
             delivery_status_id: { [Op.ne]: 4 },
             orders_id: { [Op.not]: null },
         },
+        include: [
+            {
+                model: Orders,
+                required: true,
+                where: { item_id: itemId },
+            },
+        ],
     });
     if (deliveryNow && deliveryNow.length > 0) {
         throw new AppError("INVALID_DELETE", 400, "取引中の商品は削除できません");

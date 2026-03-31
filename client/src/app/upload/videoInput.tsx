@@ -117,6 +117,7 @@ export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVi
                 src={value.thumbnailPreview || "/no-image(1x1).png"}
                 alt="サムネイル"
                 width={220}
+                height={160}
                 className={styles.preview}
                 />
             </div>
