@@ -27,3 +27,6 @@ tmp/
 
 # VSCodeCounter
 .VSCodeCounter/
+
+# sql
+.sql

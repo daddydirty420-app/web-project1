@@ -26,9 +26,7 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type, keywo
     ? { follow_user_id: pageUserId }
     : { follower_user_id: pageUserId };
 
-    const as = type === "follow"
-    ? "FollowerUser"
-    : "FollowUser";
+    const as = type === "follow" ? "FollowerUser" : "FollowUser";
 
     const userWhere = keyword
     ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
@@ -51,7 +49,7 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type, keywo
                     {
                         model: ShopInfo,
                         attributes: ["id"],
-                        required: false
+                        required: false,
                     },
                 ],
             },
@@ -63,7 +61,7 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type, keywo
 
     if (currentUserId !== null && followList.length > 0 && !myFollow) {
         const targetUserIds = followList.map(
-            (user: InstanceType<typeof Follow>) => user.FollowerUser.id);
+            (user: InstanceType<typeof Follow>) => user[as].id);
 
         const followings = await Follow.findAll({
             where: {
@@ -78,8 +76,8 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type, keywo
         finalFollowList = followList.map(
             (item) => {
             const plainItem = item.toJSON();
-            const targetId = plainItem.FollowerUser?.id;
-            plainItem.FollowerUser.is_following = followingUserIdSet.has(targetId);
+            const targetId = plainItem[as]?.id;
+            plainItem[as].is_following = followingUserIdSet.has(targetId);
             return plainItem;
         });
     }
@@ -88,7 +86,7 @@ export const getFollowUserList = async ({ currentUserId, pageUserId, type, keywo
 
     const userList = source.map(item => {
         const plain = item.toJSON ? item.toJSON() : item;
-        return plain.FollowerUser;
+        return plain[as];
     });
 
     const pageUser = await User.findByPk(pageUserId, {
