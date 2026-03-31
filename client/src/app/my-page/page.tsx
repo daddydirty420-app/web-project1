@@ -44,7 +44,7 @@ export default async function Page() {
 
     if (!accessToken || !session) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/my-page/ssr`, {
+    const res = await fetch(`${process.env.API_URL}/user/my-page/ssr`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,

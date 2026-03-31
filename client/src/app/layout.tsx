@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     index: false,
     follow: false
   },
-  themeColor: "#368606",
+  themeColor: "rgba(107, 114, 128, 0.96)",
   viewport: "width=device-width, initial-scale=1",
 };
 
@@ -44,6 +45,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap"
+        rel="stylesheet"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

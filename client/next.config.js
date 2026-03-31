@@ -9,9 +9,11 @@ const nextConfig = {
       },
     ],
   },
+
   typescript: {
     ignoreBuildErrors: true,
   },
+
   turbopack: {},
 };
 

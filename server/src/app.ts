@@ -6,13 +6,10 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import session from 'express-session';
-import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 
 import { startAllCrons } from './cron/index.js';
 startAllCrons();
-
-dotenv.config();
 
 const app = express();
 

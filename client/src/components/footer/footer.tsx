@@ -18,7 +18,7 @@ export default async function Footer() {
     let unreadCount = 0;
 
     if (loggedIn) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notification/unread-count`, {
+        const res = await fetch(`${process.env.API_URL}/notification/unread-count`, {
             headers: {
                 Authorization: `Bearer ${accessToken ?? ""}`,
             },

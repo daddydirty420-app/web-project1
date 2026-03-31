@@ -76,9 +76,9 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction): P
     res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
-      domain: ".fuckintesting.com",
+      domain: process.env.NODE_ENV === "production" ? ".fuckintesting.com" : undefined,
       maxAge: rememberMe
       ? 30 * 24 * 60 * 60 * 1000
       : 3 * 24 * 60 * 60 * 1000,
