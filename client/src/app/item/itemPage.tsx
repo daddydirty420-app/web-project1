@@ -87,7 +87,7 @@ export const ItemPage = ({
             {page === "draft" && (
                 <>
                 <EditButton id={id} />
-                <DeleteItem id={id} />
+                <DeleteItem id={id} page={page} />
                 </>
             )}
             {page === "confirm" && <UploadButton id={id} />}

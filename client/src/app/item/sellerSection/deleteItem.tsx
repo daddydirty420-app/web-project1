@@ -8,13 +8,22 @@ import { refreshToken } from "@/lib/refreshToken";
 
 type Props = {
     id: string;
+    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
-export const DeleteItem = ({ id }: Props) => {
+export const DeleteItem = ({ id, page }: Props) => {
     const [popup, setPopup] = useState(false);
     const router = useRouter();
 
     const deleteItem = async () => {
+        const apiUrl = page === "draft"
+        ? `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/draft`
+        : `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logical`;
+
+        const routerPage = page === "draft"
+        ? "/my-page"
+        : `/item/deleted/${id}`;
+
         try {
             const accessToken = await refreshToken();
             
@@ -23,7 +32,7 @@ export const DeleteItem = ({ id }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logical`, {
+            const res = await fetch(apiUrl, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -35,7 +44,7 @@ export const DeleteItem = ({ id }: Props) => {
             if (res.ok) {
                 alert("商品を削除しました");
                 setPopup(false);
-                router.push(`/item/deleted/${id}`);
+                router.push(routerPage);
             } else if (data.message) {
                 alert(data.message);
                 console.error(data.message);

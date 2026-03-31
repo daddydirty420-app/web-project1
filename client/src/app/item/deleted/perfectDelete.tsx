@@ -34,7 +34,7 @@ export const PerfectDelete = ({ id }: Props) => {
             if (res.ok) {
                 const data = await res.json();
                 alert(data.message);
-                router.push("/item-list/deleted");
+                router.push("/my-page");
             } else {
                 console.error("APIフェッチエラー：", res.status);
                 toast.error("商品の削除に失敗しました。");

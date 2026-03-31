@@ -18,7 +18,7 @@ export const deleteItemPerfect = async ({ itemId, userId }: Params) => {
     await sequelize.transaction(async (t) => {
         await ItemDeleteLogs.create({
             item_id: itemId,
-            user_id: userId,
+            delete_user_id: userId,
             delete_by_admin: false,
             delete_reason: "自主削除"
         }, { transaction: t });
