@@ -1,13 +1,11 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
-import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { ItemLike, User, Follow, ShopInfo } from "../models/index.js";
+import { authenticateToken } from "../middleware/index.js";
 import { deleteItemLike } from "../services/itemLike/delete.service.js";
 import { addItemLike } from "../services/itemLike/add.service.js";
 import { itemLikeStatus } from "../services/itemLike/status.service.js";
 import { itemLikeCount } from "../services/itemLike/count.service.js";
-import { getItemLikeUserList } from "services/itemLike/userList.service.js";
+import { getItemLikeUserList } from "../services/itemLike/userList.service.js";
 
 const router = Router();
 

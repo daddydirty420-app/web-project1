@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { CommentLike, User, Follow, ShopInfo, Comment } from "../models/index.js";
+import { getCommentLikeUserList } from "../services/commentLike/userList.service.js";
 
 const router = Router();
 
@@ -107,133 +108,16 @@ router.get("/count/:id", async (req: Request, res: Response, next: NextFunction)
     }
 });
 
-router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>
-    type UserInstance = InstanceType<typeof User>;
-        
-    const currentUserId = req.user!.id;
-    const commentId = req.params.id;
+// GET /comment-like/:id/user(?keyword="")
+router.get("/:id/user", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    const keyword = req.query.keyword as string | undefined;
 
     try {
-        const commentLikeList = await CommentLike.findAll({
-            attributes: ["id"],
-            where: { comment_id: commentId },
-            order: [['createdAt', 'DESC']],
-            distinct: true,
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
-                    include: [
-                        {
-                            model: ShopInfo,
-                            attributes: ['id'],
-                            required: false,
-                        },
-                    ],
-                },
-            ],
-        }) as UserInstance[];
-
-        let finalGoodList = null;
-
-        if (currentUserId !== null) {
-            const targetUserIds = commentLikeList.map(user => user.User.id);
-
-            const followings = await Follow.findAll({
-                where: {
-                    follow_user_id: currentUserId,
-                    follower_user_id: targetUserIds
-                }
-            }) as FollowInstance[];
-
-            const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
-
-            finalGoodList = commentLikeList.map(item => {
-                const plainItem = item.toJSON();
-                const targetId = plainItem.User?.id;
-                plainItem.User.is_following = followingUserIdSet.has(targetId);
-                return plainItem;
-            });
-        }
-
-        const source = finalGoodList ?? commentLikeList;
-
-        const userList = source.map(item => {
-            const plain = item.toJSON ? item.toJSON() : item;
-            return plain.User;
-        });
-
-        res.status(200).json({ userList });
-    } catch (err) {
-        next(err);
-    }
-});
-
-router.get('/like-user-list/search/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    type FollowInstance = InstanceType<typeof Follow>
-    type UserInstance = InstanceType<typeof User>;
-        
-    const currentUserId = req.user!.id;
-    const commentId = req.params.id;
-    const keyword = req.query?.keyword ?? "";
-    if (!String(keyword).trim()) {
-        res.status(400).json({ message: "検索キーワードがありません" });
-        return;
-    }
-
-    try {
-        const commentLikeList = await CommentLike.findAll({
-            attributes: ["id"],
-            where: { comment_id: commentId },
-            order: [['createdAt', 'DESC']],
-            distinct: true,
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
-                    where: {
-                        user_name: { [Op.iLike]: `%${String(keyword).trim()}%` }
-                    },
-                    include: [
-                        {
-                            model: ShopInfo,
-                            attributes: ['id'],
-                            required: false,
-                        },
-                    ],
-                },
-            ],
-        }) as UserInstance[];
-
-        let finalGoodList = null;
-
-        if (currentUserId !== null) {
-            const targetUserIds = commentLikeList.map(user => user.User.id);
-
-            const followings = await Follow.findAll({
-                where: {
-                    follow_user_id: currentUserId,
-                    follower_user_id: targetUserIds
-                }
-            }) as FollowInstance[];
-
-            const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
-
-            finalGoodList = commentLikeList.map(item => {
-                const plainItem = item.toJSON();
-                const targetId = plainItem.User?.id;
-                plainItem.User.is_following = followingUserIdSet.has(targetId);
-                return plainItem;
-            });
-        }
-
-        const source = finalGoodList ?? commentLikeList;
-
-        const userList = source.map(item => {
-            const plain = item.toJSON ? item.toJSON() : item;
-            return plain.User;
-        });
+        const userList = await getCommentLikeUserList({ commentId, userId, keyword });
 
         res.status(200).json({ userList });
     } catch (err) {

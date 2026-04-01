@@ -32,7 +32,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     const getBasePath = () => {
         if (page === "item-like") return `item-like/${id}/user`;
-        if (page === "comment-like") return "comment-like/like-user-list";
+        if (page === "comment-like") return `comment-like/${id}/user`;
 
         if (page === "follow") {
             if (followTab === "follow") return `follow/${id}/user?type=follow`;
