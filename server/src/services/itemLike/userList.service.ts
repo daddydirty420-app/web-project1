@@ -1,13 +1,19 @@
+import { Op } from "sequelize";
 import { Follow, ItemLike, ShopInfo, User } from "../../models/index.js";
 
 type Params = {
     itemId: number;
     userId: number;
+    keyword?: string;
 };
 
-export const getItemLikeUserList = async ({ itemId, userId }: Params) => {
+export const getItemLikeUserList = async ({ itemId, userId, keyword }: Params) => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
+
+    const userWhere = keyword
+    ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
+    : undefined;
 
     const itemLikeList = await ItemLike.findAll({
         attributes: ["id"],
@@ -17,6 +23,8 @@ export const getItemLikeUserList = async ({ itemId, userId }: Params) => {
         include: [
             {
                 model: User,
+                where: userWhere,
+                required: !!keyword,
                 attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
                 include: [
                     {

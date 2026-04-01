@@ -75,8 +75,10 @@ router.get("/:id/user", authenticateToken, async (req: Request, res: Response, n
 
     const userId = req.user!.id;
 
+    const keyword = req.query.keyword as string | undefined;
+
     try {
-        const userList = await getItemLikeUserList({ itemId, userId });
+        const userList = await getItemLikeUserList({ itemId, userId, keyword });
 
         res.status(200).json({ userList });
     } catch (err) {
