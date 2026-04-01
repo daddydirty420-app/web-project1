@@ -7,6 +7,7 @@ import { deleteItemLike } from "../services/itemLike/delete.service.js";
 import { addItemLike } from "../services/itemLike/add.service.js";
 import { itemLikeStatus } from "../services/itemLike/status.service.js";
 import { itemLikeCount } from "../services/itemLike/count.service.js";
+import { getItemLikeUserList } from "services/itemLike/userList.service.js";
 
 const router = Router();
 
@@ -69,6 +70,19 @@ router.get('/:id/count', async (req: Request, res: Response, next: NextFunction)
 });
 
 // GET /item-like/:id/user(?keyword="")
+router.get("/:id/user", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        const userList = await getItemLikeUserList({ itemId, userId });
+
+        res.status(200).json({ userList });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>

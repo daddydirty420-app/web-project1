@@ -1,7 +1,6 @@
-import axios from "axios";
 import TodouhukenOption from "../models/todouhuken_option.js";
 
-interface ZipCloudResponce {
+interface ZipCloudResponse {
     message: string | null;
     results: {
         zipcode: string;
@@ -21,13 +20,24 @@ export interface AddressResult {
 }
 
 async function fetchAddressFromZip(zipcode: string): Promise<AddressResult> {
-    try {
-        const res = await axios.get('https://zipcloud.ibsnet.co.jp/api/search', {
-            params: { zipcode }
-        });
+    const url = `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${encodeURIComponent(zipcode)}`;
 
-        if (res.data.results && res.data.results.length > 0) {
-            const result = res.data.results[0];
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+    try {
+        const res = await fetch(url, { signal: controller.signal });
+
+        clearTimeout(timeout);
+
+        if (!res.ok) {
+            throw new Error(`HTTPエラー: ${res.status}`);
+        }
+
+        const data = await res.json() as ZipCloudResponse;
+
+        if (data.results && data.results.length > 0) {
+            const result = data.results[0];
 
             const todouhuken = await TodouhukenOption.findOne({
                 where: { name: result.address1 }

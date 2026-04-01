@@ -31,7 +31,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const [searchValue, setSearchValue] = useState("");
 
     const getBasePath = () => {
-        if (page === "item-like") return "item-like/like-user-list";
+        if (page === "item-like") return `item-like/${id}/user`;
         if (page === "comment-like") return "comment-like/like-user-list";
 
         if (page === "follow") {
