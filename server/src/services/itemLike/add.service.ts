@@ -18,7 +18,7 @@ export const addItemLike = async ({ itemId, userId }: Params) => {
     });
 
     if (data) {
-        throw new AppError("NOT_LIKE_ITEM", 409, "すでにいいね済みです");
+        throw new AppError("ALREADY_LIKE_ITEM", 409, "すでにいいね済みです");
     }
 
     // itemLike作成

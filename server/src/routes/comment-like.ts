@@ -1,41 +1,21 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
-import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { CommentLike, User, Follow, ShopInfo, Comment } from "../models/index.js";
+import { authenticateToken } from "../middleware/index.js";
+import { CommentLike } from "../models/index.js";
 import { getCommentLikeUserList } from "../services/commentLike/userList.service.js";
+import { addCommentLike } from "../services/commentLike/add.service.js";
+import { deleteCommentLike } from "../services/commentLike/delete.service.js";
 
 const router = Router();
 
-router.post("/add/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const commentId = req.params.id;
+// POST /comment-like/:id
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const data = await CommentLike.findOne({
-            where: {
-                user_id: currentUserId,
-                comment_id: commentId,
-            },
-        });
-        if (data) {
-            res.status(409).json({ message: "すでにいいね済みです。" });
-            return;
-        }
-
-        const comment = await Comment.findByPk(commentId);
-        if (!comment) {
-            res.status(404).json({ message: "コメントが見つかりません。" });
-            return;
-        }
-
-        await CommentLike.create({
-            user_id: currentUserId,
-            comment_id: commentId,
-        });
-
-        comment.sort_number = Number(comment.sort_number) + 100;
-        await comment.save();
+        await addCommentLike({ commentId, userId });
 
         res.status(200).json({ isGood: true });
     } catch (err) {
@@ -43,36 +23,14 @@ router.post("/add/:id", authenticateToken, async (req: Request, res: Response, n
     }
 });
 
-router.delete("/remove/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const commentId = req.params.id;
+// DELETE /comment-like/:id
+router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
+    const userId = req.user!.id;
 
     try {
-        const data = await CommentLike.findOne({
-            where: {
-                user_id: currentUserId,
-                comment_id: commentId,
-            },
-        });
-        if (!data) {
-            res.status(409).json({ message: "いいねしていません。" });
-            return;
-        }
-
-        const comment = await Comment.findByPk(commentId);
-        if (!comment) {
-            res.status(404).json({ message: "コメントが見つかりません。" });
-            return;
-        }
-
-        await data.destroy();
-
-        if (comment.sort_number > 0) {
-            const sortNumber = Number(comment.sort_number);
-            const newSort = sortNumber - Math.min(100, sortNumber);
-            comment.sort_number = newSort;
-            await comment.save();
-        }
+        await deleteCommentLike({ commentId, userId });
 
         res.status(200).json({ isGood: false });
     } catch (err) {

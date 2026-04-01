@@ -128,7 +128,13 @@ Item.init(
             }
         },
         price: DataTypes.INTEGER,
-        sort_number: DataTypes.DECIMAL,
+        sort_number: {
+            type: DataTypes.DECIMAL,
+            get() {
+                // getterで明示的にNumberに変換
+                return Number(this.getDataValue('sort_number'));
+            },
+        },
         views_count: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
@@ -145,7 +151,13 @@ Item.init(
         seller_id: DataTypes.INTEGER,
         uploaded_at: DataTypes.DATE,
         search_text: DataTypes.TEXT,
-        sort_buzz_number: DataTypes.DECIMAL,
+        sort_buzz_number: {
+            type: DataTypes.DECIMAL,
+            get() {
+                // getterで明示的にNumberに変換
+                return Number(this.getDataValue('sort_buzz_number'));
+            },
+        },
         deleted_at: DataTypes.DATE,
         first_image_url: DataTypes.TEXT,
         save_at: DataTypes.DATE,

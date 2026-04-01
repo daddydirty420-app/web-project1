@@ -60,6 +60,10 @@ Comment.init(
         sort_number: {
             type: DataTypes.DECIMAL,
             allowNull: false,
+            get() {
+                // getterで明示的にNumberに変換
+                return Number(this.getDataValue('sort_number'));
+            },
         },
         item_id: {
             type: DataTypes.INTEGER,

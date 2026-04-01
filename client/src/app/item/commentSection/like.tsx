@@ -37,7 +37,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/add/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/${id}`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -61,7 +61,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/remove/${id}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
