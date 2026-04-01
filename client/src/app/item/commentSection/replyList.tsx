@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Pin } from "./pin";
 import { CommentDataDiv } from "./commentDataDiv";
 import { CommentText } from "./commentText";
-import { Good } from "./good";
+import { Like } from "./like";
 import { ReportFloat } from "./reportFloat";
 import { DeleteComment } from "./deleteComment";
 import { refreshToken } from "@/lib/refreshToken";
@@ -16,9 +16,11 @@ type Props = {
     parentId: string;
     page: "normal" | "admin";
     loggedIn: boolean;
+    optimisticComments?: Comment[];
+    refreshTrigger?: number;
 }
 
-export const ReplyList = ({ parentId, page, loggedIn }: Props) => {
+export const ReplyList = ({ parentId, page, loggedIn, optimisticComments = [], refreshTrigger }: Props) => {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
@@ -47,13 +49,20 @@ export const ReplyList = ({ parentId, page, loggedIn }: Props) => {
         }
 
         fetchComment();
-    }, [parentId, page]);
+    }, [parentId, page, refreshTrigger]);
+
+    const allComments = [...optimisticComments, ...comments];
+
+    const isOptimistic = (id: string) => {
+        return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    };
 
     return (
         <>
         <section className={styles.replyListWrapper}>
-            {comments?.map((comment) => {
+            {allComments?.map((comment) => {
                 if (!comment) return null;
+                const optimistic = isOptimistic(String(comment.id));
 
                 return (
                     <section className={styles.commentListSection} key={comment.id}>
@@ -66,10 +75,14 @@ export const ReplyList = ({ parentId, page, loggedIn }: Props) => {
                                 <CommentText comment={comment} page={page} />
 
                                 <div className={styles.commentEditDiv}>
-                                    <Good comment={comment} loggedIn={loggedIn} />
-                                    <ReportFloat comment={comment} page={page} />
+                                    {!optimistic && (
+                                        <>
+                                        <Like comment={comment} loggedIn={loggedIn} />
+                                        <ReportFloat comment={comment} page={page} />
 
-                                    {comment.isMyComment && <DeleteComment comment={comment} page={page} />}
+                                        {comment.isMyComment && <DeleteComment comment={comment} page={page} />}
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </section>

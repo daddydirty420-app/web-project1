@@ -5,7 +5,7 @@ import { Comment, Item, User } from "../itemPageTypes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CommentText } from "./commentText";
 import { CommentDataDiv } from "./commentDataDiv";
-import { Good } from "./good";
+import { Like } from "./like";
 import { ReportFloat } from "./reportFloat";
 import { DeleteComment } from "./deleteComment";
 import { ProfileImage } from "./profileImage";
@@ -29,12 +29,42 @@ type Props = {
 
 export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, mutate }: Props) => {
     const [replyVisible, setReplyVisible] = useState<{ [key: string]: boolean }>({});
+    const [optimisticReplies, setOptimisticReplies] = useState<{ [parentId: string]: Comment[] }>({});
+    const [replyRefreshTrigger, setReplyRefreshTrigger] = useState<{ [parentId: string]: number }>({});
 
     const toggleReplyVisible = (commentId: string) => {
         setReplyVisible((prev) => ({
             ...prev,
             [commentId]: !prev[commentId],
         }));
+    };
+
+    const isOptimistic = (id: string) => {
+        return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+    };
+
+    // CommentFormに渡すmutateをラップ
+    const replyMutate = (parentId: string) => (updater?: any, revalidate?: boolean) => {
+        if (typeof updater === 'function') {
+            // 返信　楽観的更新
+            setOptimisticReplies(prev => ({
+                ...prev,
+                [parentId]: updater(prev[parentId] ?? [])
+            }));
+        
+            // replyCount + 1
+            mutate((current: Comment[] = []) =>
+                current.map(c =>
+                    String(c.id) === String(parentId)
+                        ? { ...c, replyCount: c.replyCount + 1 }
+                        : c
+                ), false
+            );
+        } else {
+        // revalidate時はoptimisticクリア＋ReplyListの再フェッチをトリガー
+            setOptimisticReplies(prev => ({ ...prev, [parentId]: [] }));
+            setReplyRefreshTrigger(prev => ({ ...prev, [parentId]: (prev[parentId] ?? 0) + 1 }));
+        }
     };
 
     return (
@@ -44,6 +74,7 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
                 if (!comment) return null;
                 const commentId = comment.id;
                 const isVisibleReply = replyVisible[commentId] ?? false;
+                const optimistic = isOptimistic(String(commentId));
 
                 return (
                     <section className={styles.commentListSection} key={commentId}>
@@ -56,22 +87,49 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
                                 <CommentText comment={comment} page={page} />
 
                                 <div className={styles.commentEditDiv}>
-                                    <div className={styles.replyDiv} onClick={() => toggleReplyVisible(commentId)}>
-                                        <FontAwesomeIcon icon={faCommentDots} className={styles.replyIcon} />
-                                        <p className={styles.replyCount}>{comment.replyCount.toLocaleString()}件の返信</p>
-                                    </div>
-                                    <Good comment={comment} loggedIn={loggedIn} />
-                                    <ReportFloat comment={comment} page={page} />
+                                    {/* 仮コメントのときは返信ボタン・Good・Report・Delete非表示 */}
+                                    {!optimistic && (
+                                        <>
+                                        <div className={styles.replyDiv} onClick={() => toggleReplyVisible(commentId)}>
+                                            <FontAwesomeIcon icon={faCommentDots} className={styles.replyIcon} />
+                                            <p className={styles.replyCount}>{comment.replyCount.toLocaleString()}件の返信</p>
+                                        </div>
 
-                                    {(comment.isMyComment || page === "admin") && <DeleteComment comment={comment} page={page} />}
+                                        <Like comment={comment} loggedIn={loggedIn} />
+                                        <ReportFloat comment={comment} page={page} />
+
+                                        {(comment.isMyComment || page === "admin") && (
+                                            <DeleteComment comment={comment} page={page} />
+                                        )}
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </section>
 
-                        <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
-                            {page === "normal" && <CommentForm id={id} sellerMe={sellerMe} parentId={commentId} loggedIn={loggedIn} item={item} me={me} mutate={mutate} />}
-                            <ReplyList parentId={commentId} page={page} loggedIn={loggedIn} />
-                        </section>
+                        {!optimistic && (
+                            <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
+                                {page === "normal" && (
+                                    <CommentForm
+                                    id={id}
+                                    sellerMe={sellerMe}
+                                    parentId={commentId}
+                                    loggedIn={loggedIn}
+                                    item={item}
+                                    me={me}
+                                    mutate={replyMutate(commentId)}
+                                    />
+                                )}
+
+                                <ReplyList
+                                parentId={commentId}
+                                page={page}
+                                loggedIn={loggedIn}
+                                optimisticComments={optimisticReplies[commentId] ?? []}
+                                refreshTrigger={replyRefreshTrigger[commentId] ?? 0}
+                                />
+                            </section>
+                        )}
                     </section>
                 );
             })}

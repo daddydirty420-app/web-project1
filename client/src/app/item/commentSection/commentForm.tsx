@@ -5,7 +5,6 @@ import styles from "./comment.module.css";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
-import { KeyedMutator } from "swr";
 import { Comment, Item, User } from "../itemPageTypes";
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
     sellerMe?: boolean;
     parentId?: string;
     loggedIn: boolean;
-    mutate: KeyedMutator<Comment[]>;
+    mutate: (updater?: ((current: Comment[]) => Comment[]) | Comment[], revalidate?: boolean) => void;
     item: Item;
     me: User | null;
 }

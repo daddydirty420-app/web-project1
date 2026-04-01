@@ -1,17 +1,17 @@
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/lib/fetcher";
 
-type GoodCountResponce = { count: number };
+type LikeCountResponse = { count: number };
 
-export function useGoodStatus(commentId: string,) {
+export function useLikeStatus(commentId: string,) {
     return useSWR<{ isGood: boolean }>(
         `${process.env.NEXT_PUBLIC_API_URL}/comment-like/status/${commentId}`,
         fetcher,
     );
 };
 
-export function useGoodCount(commentId: string) {
-    return useSWR<GoodCountResponce, Error>(
+export function useLikeCount(commentId: string) {
+    return useSWR<LikeCountResponse, Error>(
         `${process.env.NEXT_PUBLIC_API_URL}/comment-like/count/${commentId}`,
         fetcher,
     );
@@ -23,7 +23,7 @@ export async function updateCommentLikeCache(commentId: string, isGood: boolean)
 
     await mutate(statusKey, { isGood }, false);
 
-    await mutate(countKey, (current?: GoodCountResponce) => {
+    await mutate(countKey, (current?: LikeCountResponse) => {
         if (!current) return current;
         return {
             ...current,

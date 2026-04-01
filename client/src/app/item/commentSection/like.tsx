@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import { Comment } from "../itemPageTypes";
-import { updateCommentLikeCache, useGoodCount, useGoodStatus } from "@/hooks/useCommentLike";
+import { updateCommentLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useCommentLike";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { refreshToken } from "@/lib/refreshToken";
@@ -15,12 +15,12 @@ type Props = {
     loggedIn: boolean;
 }
 
-export const Good = ({ comment, loggedIn }: Props) => {
+export const Like = ({ comment, loggedIn }: Props) => {
     const id = comment.id;
     const initialCount = comment.goodCount;
     const isMyComment = comment.isMyComment;
-    const { data: goodStatus } = useGoodStatus(id);
-    const { data: goodCount } = useGoodCount(id);
+    const { data: goodStatus } = useLikeStatus(id);
+    const { data: goodCount } = useLikeCount(id);
     const router = useRouter();
 
     const good = goodStatus?.isGood ?? false;
