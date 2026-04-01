@@ -35,8 +35,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         if (page === "comment-like") return "comment-like/like-user-list";
 
         if (page === "follow") {
-            if (followTab === "follow") return `follow/${id}?type=follow`;
-            if (followTab === "follower") return `follow/${id}?type=follower`;
+            if (followTab === "follow") return `follow/${id}/user?type=follow`;
+            if (followTab === "follower") return `follow/${id}/user?type=follower`;
 
             return `follow/${id}?type=follow`; // デフォルト
         }
