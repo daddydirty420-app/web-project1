@@ -20,7 +20,7 @@ type FollowWithUser = InstanceType<typeof Follow> & {
 
 export const getFollowUserList = async ({ currentUserId, pageUserId, type, keyword }: Params) => {
 
-    const myFollow = currentUserId === pageUserId;
+    const myFollow = (currentUserId === pageUserId) && (type === "follow");
 
     const where = type === "follow"
     ? { follow_user_id: pageUserId }
