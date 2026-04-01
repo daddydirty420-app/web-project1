@@ -22,7 +22,7 @@ type Props = {
     myFollow?: boolean;
 };
 
-type Responce = {
+type Response = {
     userList: User[];
     pageUser: User;
 }
@@ -46,15 +46,16 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     const basePath = getBasePath();
 
-    const apiUrl = basePath
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${basePath}${
-        searchValue.trim()
-        ? `&keyword=${encodeURIComponent(searchValue.trim())}`
-        : ""
-    }`
-    : null;
+    const apiUrl = (() => {
+        if (!basePath) return null;
+        const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${basePath}`);
+        if (searchValue.trim()) {
+            url.searchParams.set("keyword", searchValue.trim());
+        }
+        return url.toString();
+    });
 
-    const { data, mutate } = useSWR<Responce>(apiUrl, fetcher);
+    const { data, mutate } = useSWR<Response>(apiUrl, fetcher);
 
     const userList = data?.userList;
 

@@ -68,6 +68,8 @@ router.get('/:id/count', async (req: Request, res: Response, next: NextFunction)
     }
 });
 
+// GET /item-like/:id/user(?keyword="")
+
 router.get('/like-user-list/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     type FollowInstance = InstanceType<typeof Follow>
     type UserInstance = InstanceType<typeof User>;
