@@ -1,6 +1,6 @@
 import { createCommentLike, findCommentLike } from "../../services/commentLike.js";
 import { AppError } from "../../errors.js";
-import { patchCommentSortNumberAdd } from "../../services/comment/patchSortNumber.service.js";
+import { patchCommentSortNumberAddUseCase } from "../comment/patchSortNumber.js";
 
 type Params = {
     commentId: number;
@@ -22,7 +22,7 @@ export const addCommentLikeUseCase = async ({ commentId, userId }: Params) => {
     // sort_number非同期
     const number = 100;
 
-    patchCommentSortNumberAdd({ commentId, number }).catch((err) => {
-        console.error("patchCommentSortNumberAdd error:", err);
+    patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
+        console.error("usecase patchCommentSortNumberAdd error:", err);
     });
 };
