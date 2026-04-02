@@ -7,7 +7,6 @@ type Params = {
 };
 
 export const patchCommentSortNumberAdd = async ({ commentId, number }: Params) => {
-
     const comment = await Comment.findByPk(commentId);
 
     if (!comment) {
@@ -20,7 +19,6 @@ export const patchCommentSortNumberAdd = async ({ commentId, number }: Params) =
 };
 
 export const patchCommentSortNumberDecrease = async ({ commentId, number }: Params) => {
-
     const comment = await Comment.findByPk(commentId);
 
     if (!comment) {

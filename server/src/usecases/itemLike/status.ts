@@ -1,4 +1,4 @@
-import { findItemLike } from "services/itemLike.js";
+import { findItemLike } from "../../services/itemLike.js";
 
 type Params = {
     itemId: number;

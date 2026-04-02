@@ -2,9 +2,9 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { CommentLike } from "../models/index.js";
-import { getCommentLikeUserList } from "../services/commentLike/userList.service.js";
-import { addCommentLike } from "../services/commentLike/add.service.js";
-import { deleteCommentLike } from "../services/commentLike/delete.service.js";
+import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
+import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
+import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
     const userId = req.user!.id;
 
     try {
-        await addCommentLike({ commentId, userId });
+        await addCommentLikeUseCase({ commentId, userId });
 
         res.status(200).json({ isGood: true });
     } catch (err) {
@@ -30,7 +30,7 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     const userId = req.user!.id;
 
     try {
-        await deleteCommentLike({ commentId, userId });
+        await deleteCommentLikeUseCase({ commentId, userId });
 
         res.status(200).json({ isGood: false });
     } catch (err) {
@@ -75,7 +75,7 @@ router.get("/:id/user", authenticateToken, async (req: Request, res: Response, n
     const keyword = req.query.keyword as string | undefined;
 
     try {
-        const userList = await getCommentLikeUserList({ commentId, userId, keyword });
+        const userList = await getCommentLikeUserListUseCase({ commentId, userId, keyword });
 
         res.status(200).json({ userList });
     } catch (err) {
