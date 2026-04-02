@@ -1,8 +1,5 @@
+import { Level2Params } from "../types/serviceType/categories.js";
 import { Categories } from "../models/index.js";
-
-type Level2Params = {
-    parentId: number;
-};
 
 export const getLevel2 = async ({ parentId }: Level2Params) => {
     return Categories.findAll({

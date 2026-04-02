@@ -1,9 +1,9 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { deleteCart } from "../services/cart/delete.service.js";
-import { addCart } from "../services/cart/add.service.js";
-import { cartStatus } from "../services/cart/status.service.js";
+import { deleteCartUseCase } from "../usecases/cart/delete.js";
+import { addCartUseCase } from "../usecases/cart/add.js";
+import { cartStatusUseCase } from "../usecases/cart/status.js";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     const userId = req.user!.id;
 
     try {
-        await addCart({ itemId, userId });
+        await addCartUseCase({ itemId, userId });
 
         res.status(200).json({ message: "カートに追加しました" });
     } catch (err) {
@@ -29,7 +29,7 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     const userId = req.user!.id;
 
     try {
-        await deleteCart({ itemId, userId });
+        await deleteCartUseCase({ itemId, userId });
 
         res.status(200).json({ message: "カートから削除しました" });
     } catch (err) {
@@ -44,7 +44,7 @@ router.get('/:id/status', authenticateToken, async (req: Request, res: Response,
     const userId = req.user!.id;
 
     try {
-        const status = await cartStatus({ itemId, userId });
+        const status = await cartStatusUseCase({ itemId, userId });
 
         res.status(200).json({ status });
     } catch (err) {
