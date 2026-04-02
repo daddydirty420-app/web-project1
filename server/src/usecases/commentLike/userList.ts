@@ -1,7 +1,5 @@
-import { Op } from "sequelize";
-import { CommentLike, Follow, ShopInfo, User } from "../../models/index.js";
 import { getCommentLikeList } from "../../services/commentLike.js";
-import { getFollowings } from "services/follow.js";
+import { getFollowings } from "../../services/follow.js";
 
 type Params = {
     commentId: number;

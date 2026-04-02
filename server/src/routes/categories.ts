@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { getLevel2 } from "../services/categories/getLevel2.js";
+import { getLevel2UseCase } from "../usecases/categories/getLevel2.js";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get("/:id/level2", async (req: Request, res: Response, next: NextFunction
     const parentId = Number(req.params.id);
 
     try {
-        const category2 = await getLevel2({ parentId });
+        const category2 = await getLevel2UseCase({ parentId });
 
         res.status(200).json({ category2 });
     } catch (err) {
