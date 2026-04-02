@@ -1,6 +1,6 @@
 import { destroyCart, findCart } from "../../services/cart.js";
 import { AppError } from "../../errors.js";
-import { patchSortNumberDecrease } from "../../services/item/sortNumber/patchItems.service.js";
+import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;
@@ -23,7 +23,7 @@ export const deleteCartUseCase = async ({ itemId, userId }: Params) => {
     const number = 250;
     const buzzNumber = 300;
 
-    patchSortNumberDecrease({ itemId, number, buzzNumber }).catch((err) => {
+    patchSortNumberDecreaseUseCase({ itemId, number, buzzNumber }).catch((err) => {
         console.error("patchSortNumberDecrease error:", err);
     });
 };

@@ -15,7 +15,7 @@ import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
 import { getMetadata } from "../services/item/itemPage/metadata.service.js";
-import { patchSortNumberAdd } from "../services/item/sortNumber/patchItems.service.js";
+import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
@@ -139,7 +139,7 @@ router.patch("/:id/sort-number", async (req: Request, res: Response, next: NextF
         throw new AppError("INVALID_NUMBER", 400);
     }
 
-    patchSortNumberAdd({ itemId, number }).catch((err) => {
+    patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
         console.error(err);
     });
 

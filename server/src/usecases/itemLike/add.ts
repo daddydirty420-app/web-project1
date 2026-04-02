@@ -1,6 +1,6 @@
 import { createItemLike, findItemLike } from "../../services/itemLike.js";
 import { AppError } from "../../errors.js";
-import { patchSortNumberAdd } from "../../services/item/sortNumber/patchItems.service.js";
+import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;
@@ -20,7 +20,7 @@ export const addItemLikeUseCase = async ({ itemId, userId }: Params) => {
     const number = 50;
     const buzzNumber = 200;
 
-    patchSortNumberAdd({ itemId, number, buzzNumber }).catch((err) => {
-        console.error("patchSortNumberAdd error:", err);
+    patchSortNumberAddUseCase({ itemId, number, buzzNumber }).catch((err) => {
+        console.error("usecase patchSortNumberAdd error:", err);
     });
 }

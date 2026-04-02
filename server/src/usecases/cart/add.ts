@@ -1,6 +1,6 @@
 import { createCart, findCart } from "../../services/cart.js";
 import { AppError } from "../../errors.js";
-import { patchSortNumberAdd } from "../../services/item/sortNumber/patchItems.service.js";
+import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;
@@ -23,7 +23,7 @@ export const addCartUseCase = async ({ itemId, userId }: Params) => {
     const number = 250;
     const buzzNumber = 300;
 
-    patchSortNumberAdd({ itemId, number, buzzNumber }).catch((err) => {
+    patchSortNumberAddUseCase({ itemId, number, buzzNumber }).catch((err) => {
         console.error("patchSortNumberAdd error:", err);
     });
 };
