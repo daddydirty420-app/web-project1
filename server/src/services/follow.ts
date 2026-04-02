@@ -1,8 +1,14 @@
-import { Follow } from "../models/index.js";
+import { CountParams, FollowingsParams, ListParams, UserParams } from "../types/serviceType/follow.js";
+import { Follow, ShopInfo, User } from "../models/index.js";
+import { Op } from "sequelize";
 
-type FollowingsParams = {
-    currentUserId: number;
-    targetUserIds: number[];
+type DestroyParams = {
+    follow: InstanceType<typeof Follow>;
+};
+
+type FollowWithUser = InstanceType<typeof Follow> & {
+    FollowerUser: InstanceType<typeof User>;
+    FollowUser: InstanceType<typeof User>;
 };
 
 export const getFollowings = async ({ currentUserId, targetUserIds }: FollowingsParams) => {
@@ -11,5 +17,70 @@ export const getFollowings = async ({ currentUserId, targetUserIds }: Followings
             follow_user_id: currentUserId,
             follower_user_id: targetUserIds
         },
-    }) as InstanceType<typeof Follow>[];
+    }) as unknown as InstanceType<typeof Follow>[];
+};
+
+export const findFollow = async ({ currentUserId, targetUserId }: UserParams) => {
+    return Follow.findOne({
+        where: {
+            follow_user_id: currentUserId,
+            follower_user_id: targetUserId,
+        },
+    });
+};
+
+export const createFollow = async ({ currentUserId, targetUserId }: UserParams) => {
+    return Follow.create({
+        follow_user_id: currentUserId,
+        follower_user_id: targetUserId,
+    });
+};
+
+export const destroyFollow = async ({ follow }: DestroyParams) => {
+    await follow.destroy();
+};
+
+export const countFollow = async ({ userId }: CountParams) => {
+    const [followCount, followerCount] = await Promise.all([
+        Follow.count({ where: { follow_user_id: userId } }),
+        Follow.count({ where: { follower_user_id: userId } }),
+    ]);
+
+    return { followCount, followerCount };
+};
+
+export const getFollowList = async ({ pageUserId, type, keyword }: ListParams): Promise<FollowWithUser[]> => {
+
+    const where = type === "follow"
+    ? { follow_user_id: pageUserId }
+    : { follower_user_id: pageUserId };
+
+    const as = type === "follow" ? "FollowerUser" : "FollowUser";
+
+    const userWhere = keyword
+    ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
+    : undefined;
+    
+    return Follow.findAll({
+        attributes: ["id"],
+        where,
+        order: [["createdAt", "DESC"]],
+        distinct: true,
+        include: [
+            {
+                model: User,
+                as,
+                where: userWhere,
+                required: !!keyword,
+                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
+                include: [
+                    {
+                        model: ShopInfo,
+                        attributes: ["id"],
+                        required: false,
+                    },
+                ],
+            },
+        ],
+    }) as unknown as FollowWithUser[];
 };

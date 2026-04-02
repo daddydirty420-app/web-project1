@@ -1,13 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { Follow, User, ShopInfo } from "../models/index.js";
-import { followStatus } from "../services/follow/status.service.js";
-import { followsCount } from "../services/follow/count.service.js";
-import { followAdd } from "../services/follow/add.service.js";
-import { followDelete } from "../services/follow/delete.service.js";
-import { FollowType, getFollowUserList } from "../services/follow/userList.service.js";
+import { getFollowStatusUseCase } from "../usecases/follow/status.js";
+import { countFollowUseCase } from "../usecases/follow/count.js";
+import { addFollowUseCase } from "../usecases/follow/add.js";
+import { deleteFollowUseCase } from "../usecases/follow/delete.js";
+import { getFollowUserListUseCase } from "../usecases/follow/userList.js";
+import { FollowType } from "../types/serviceType/follow.js";
 
 const router = Router();
 
@@ -23,7 +22,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     }
 
     try {
-        await followAdd({ currentUserId, targetUserId });
+        await addFollowUseCase({ currentUserId, targetUserId });
 
         res.status(200).json({ message: "フォローしました" });
     } catch (err) {
@@ -43,7 +42,7 @@ router.delete('/:id', authenticateToken, async (req: Request, res: Response, nex
     }
 
     try {
-        await followDelete({ currentUserId, targetUserId });
+        await deleteFollowUseCase({ currentUserId, targetUserId });
 
         res.status(200).json({ message: "フォロー解除しました" });
     } catch (err) {
@@ -63,7 +62,7 @@ router.get('/:id/status', authenticateToken, async (req: Request, res: Response,
     }
 
     try {
-        const isFollowing = await followStatus({ currentUserId, targetUserId });
+        const isFollowing = await getFollowStatusUseCase({ currentUserId, targetUserId });
 
         res.status(200).json({ isFollowing });
     } catch (err) {
@@ -76,7 +75,7 @@ router.get("/:id/count", async (req: Request, res: Response, next: NextFunction)
     const userId = Number(req.params.id);
 
     try {
-        const { followCount, followerCount } = await followsCount({ userId });
+        const { followCount, followerCount } = await countFollowUseCase({ userId });
 
         res.status(200).json({ followCount, followerCount });
     } catch (err) {
@@ -94,15 +93,9 @@ router.get('/:id/user', authenticateOptional, async (req: Request, res: Response
     const keyword = req.query.keyword as string | undefined;
 
     try {
-        const {
-            userList,
-            pageUser
-        } = await getFollowUserList({ currentUserId, pageUserId, type, keyword });
+        const userList = await getFollowUserListUseCase({ currentUserId, pageUserId, type, keyword });
 
-        res.status(200).json({
-            userList,
-            pageUser
-        });
+        res.status(200).json({ userList });
     } catch (err) {
         next(err);
     }

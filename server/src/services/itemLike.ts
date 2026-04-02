@@ -1,23 +1,9 @@
 import { Op } from "sequelize";
 import { ItemLike, ShopInfo, User } from "../models/index.js";
-
-type ItemUserParams = {
-    itemId: number;
-    userId: number;
-};
+import { ItemIdParams, ItemUserParams, ListParams } from "../types/serviceType/itemLike.js";
 
 type DestroyParams = {
     data: InstanceType<typeof ItemLike>;
-};
-
-type ItemIdParams = {
-    itemId: number;
-};
-
-type ListParams = {
-    itemId: number;
-    userId: number;
-    keyword?: string;
 };
 
 type ItemLikeWithUser = InstanceType<typeof ItemLike> & {
@@ -47,12 +33,12 @@ export const destroyItemLike = async ({ data }: DestroyParams) => {
 };
 
 export const countItemLike = async ({ itemId }: ItemIdParams) => {
-    return await ItemLike.count({
+    return ItemLike.count({
         where: { item_id: itemId },
     });
 };
 
-export const getItemLikeList = async ({ itemId, userId, keyword }: ListParams) => {
+export const getItemLikeList = async ({ itemId, keyword }: ListParams) => {
     const userWhere = keyword
     ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
     : undefined;

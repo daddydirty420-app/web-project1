@@ -1,4 +1,3 @@
-import { Follow, User } from "../../models/index.js";
 import { getItemLikeList } from "services/itemLike.js";
 import { getFollowings } from "services/follow.js";
 
@@ -11,7 +10,7 @@ type Params = {
 export const getItemLikeUserListUseCase = async ({ itemId, userId, keyword }: Params) => {
 
     // いいねリスト取得
-    const itemLikeList = await getItemLikeList({ itemId, userId, keyword });
+    const itemLikeList = await getItemLikeList({ itemId, keyword });
 
     // フォロー状態の付与
     let finalLikeList = null;

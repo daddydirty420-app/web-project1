@@ -24,7 +24,6 @@ type Props = {
 
 type Response = {
     userList: User[];
-    pageUser: User;
 }
 
 export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
