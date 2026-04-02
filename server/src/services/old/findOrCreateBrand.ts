@@ -1,5 +1,5 @@
-import { Brands, BrandAliases } from "../models/index.js";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import { Brands, BrandAliases } from "../../models/index.js";
+import { normalizeJapanese } from "../../utils/normalizeJapanese.js";
 
 async function findOrCreateBrand(inputName: string): Promise <{
     brand: InstanceType<typeof Brands> | null;

@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
-import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, ItemDeleted, Orders, PaymentMethodOption, Cancel, OrderDeleted, ItemShippingProfile, User, BankAccount, Transfer } from "../models/index.js";
-import sequelize from "../db.js";
+import { Item, Video, Delivery, ItemDeleteLogs, Sale, Notification, ItemDeleted, Orders, PaymentMethodOption, Cancel, OrderDeleted, ItemShippingProfile, User, BankAccount, Transfer } from "../../models/index.js";
+import sequelize from "../../db.js";
 import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
 

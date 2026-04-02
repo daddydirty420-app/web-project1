@@ -1,8 +1,8 @@
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfer, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../models/index.js"
-import sequelize from "../db.js";
+import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfer, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../../models/index.js"
+import sequelize from "../../db.js";
 import crypto from "crypto";
 
 async function deleteUser(currentUserId: number, adminId: number, deleteReason: string): Promise<{ success: boolean}> {

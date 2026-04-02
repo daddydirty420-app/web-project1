@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, Address, Name, TodouhukenOption, BankAccount, AccountTypeOption, Banks, Branches } from "../models/index.js";
 import sequelize from "../db.js";
-import fetchAddressFromZip from "../services/addressService.js";
+import fetchAddressFromZip from "../services/old/addressService.js";
 import { literal, Op } from "sequelize";
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";

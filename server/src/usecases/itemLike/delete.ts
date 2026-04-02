@@ -1,28 +1,23 @@
+import { destroyItemLike, findItemLike } from "../../services/itemLike.js";
 import { AppError } from "../../errors.js";
-import { ItemLike } from "../../models/index.js";
-import { patchSortNumberDecrease } from "../item/sortNumber/patchItems.service.js";
+import { patchSortNumberDecrease } from "../../services/item/sortNumber/patchItems.service.js";
 
 type Params = {
     itemId: number;
     userId: number;
 };
 
-export const deleteItemLike = async ({ itemId, userId }: Params) => {
+export const deleteItemLikeUseCase = async ({ itemId, userId }: Params) => {
 
     // itemLike取得
-    const data = await ItemLike.findOne({
-        where: {
-            item_id: itemId,
-            user_id: userId,
-        },
-    });
+    const data = await findItemLike({ itemId, userId });
 
     if (!data) {
         throw new AppError("NOT_LIKE_ITEM", 409, "いいねしていません");
     }
 
     // itemLike削除
-    await data.destroy();
+    await destroyItemLike({ data });
 
     // sort_number非同期
     const number = 50;

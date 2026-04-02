@@ -1,7 +1,7 @@
 import { BrandAliases, Brands } from "../../../../../models/index.js";
 import { Body } from "../../../../../types/items/uploadBody.js";
 import { toNullableNumber } from "../../utils/toNullableNumber.js";
-import findOrCreateBrand from "../../../../findOrCreateBrand.js";
+import findOrCreateBrand from "../../../../old/findOrCreateBrand.js";
 
 type Params = {
     body: Body;

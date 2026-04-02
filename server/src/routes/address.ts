@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import fetchAddressFromZip from "../services/addressService.js";
+import fetchAddressFromZip from "../services/old/addressService.js";
 import { Address, TodouhukenOption } from "../models/index.js";
 
 const router = Router();

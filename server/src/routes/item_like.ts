@@ -1,11 +1,11 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { deleteItemLike } from "../services/itemLike/delete.service.js";
-import { addItemLike } from "../services/itemLike/add.service.js";
-import { itemLikeStatus } from "../services/itemLike/status.service.js";
-import { itemLikeCount } from "../services/itemLike/count.service.js";
-import { getItemLikeUserList } from "../services/itemLike/userList.service.js";
+import { deleteItemLikeUseCase } from "../usecases/itemLike/delete.js";
+import { addItemLikeUseCase } from "../usecases/itemLike/add.js";
+import { itemLikeStatusUseCase } from "../usecases/itemLike/status.js";
+import { itemLikeCountUseCase } from "../usecases/itemLike/count.js";
+import { getItemLikeUserListUseCase } from "../usecases/itemLike/userList.js";
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     const userId = req.user!.id;
 
     try {
-        await addItemLike({ itemId, userId });
+        await addItemLikeUseCase({ itemId, userId });
 
         res.status(200).json({ isGood: true });
     } catch (err) {
@@ -31,7 +31,7 @@ router.delete('/:id', authenticateToken, async (req: Request, res: Response, nex
     const userId = req.user!.id;
 
     try {
-        await deleteItemLike({ itemId, userId });
+        await deleteItemLikeUseCase({ itemId, userId });
 
         res.status(200).json({ isGood: false });
     } catch (err) {
@@ -46,7 +46,7 @@ router.get('/:id/status', authenticateToken, async (req: Request, res: Response,
     const userId = req.user!.id;
 
     try {
-        const isGood = await itemLikeStatus({ itemId, userId });
+        const isGood = await itemLikeStatusUseCase({ itemId, userId });
 
         res.status(200).json({ isGood });
     } catch (err) {
@@ -59,7 +59,7 @@ router.get('/:id/count', async (req: Request, res: Response, next: NextFunction)
     const itemId = Number(req.params.id);
 
     try {
-        const count = await itemLikeCount({ itemId });
+        const count = await itemLikeCountUseCase({ itemId });
 
         res.status(200).json({ count });
     } catch (err) {
@@ -76,7 +76,7 @@ router.get("/:id/user", authenticateToken, async (req: Request, res: Response, n
     const keyword = req.query.keyword as string | undefined;
 
     try {
-        const userList = await getItemLikeUserList({ itemId, userId, keyword });
+        const userList = await getItemLikeUserListUseCase({ itemId, userId, keyword });
 
         res.status(200).json({ userList });
     } catch (err) {

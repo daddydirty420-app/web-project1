@@ -1,4 +1,4 @@
-import TodouhukenOption from "../models/todouhuken_option.js";
+import TodouhukenOption from "../../models/todouhuken_option.js";
 
 interface ZipCloudResponse {
     message: string | null;

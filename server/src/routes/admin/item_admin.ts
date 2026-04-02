@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Item, Video } from "../../models/index.js";
-import adminDeleteItem from "../../services/adminDeleteItem.js";
+import adminDeleteItem from "../../services/old/adminDeleteItem.js";
 
 const router = Router();
 

@@ -4,7 +4,7 @@ import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { ShopInfoEdit, ComOrFreeOption, Address, Name, TodouhukenOption, ShopInfo, User, BankAccount, Branches, Banks, AccountTypeOption, Notification } from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import fetchAddressFromZip from "../services/addressService.js";
+import fetchAddressFromZip from "../services/old/addressService.js";
 import sequelize from "../db.js";
 import { literal, Op } from "sequelize";
 

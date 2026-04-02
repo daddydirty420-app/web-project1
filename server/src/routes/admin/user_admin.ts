@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op, fn, col, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { User, Item, ShopInfo, GenderOption, Address, Name, TodouhukenOption, IdCard, UriagekinHistory, Journal, Notification } from "../../models/index.js";
-import deleteUser from "../../services/deleteUser.js";
+import deleteUser from "../../services/old/deleteUser.js";
 import sequelize from "../../db.js";
 
 const router = Router();
