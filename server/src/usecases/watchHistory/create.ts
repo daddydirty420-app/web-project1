@@ -1,27 +1,21 @@
-import { WatchHistory } from "../../models/index.js";
+import { createWatchHistory, findWatchHistory, updateUpdateAt } from "../../services/watchHistory.js";
 
 type Params = {
     itemId: number;
-    userId: number | null;
+    userId: number;
 };
 
-export const createWatchHistory = async ({ itemId, userId }: Params) => {
-    const nowDate = new Date();
+export const createWatchHistoryUseCase = async ({ itemId, userId }: Params) => {
 
-    const history = await WatchHistory.findOne({
-        where: {
-            item_id: itemId,
-            user_id: userId,
-        },
-    });
+    const history = await findWatchHistory({ itemId, userId });
 
     if (history) {
-        history.updatedAt = nowDate;
-        await history.save();
+        updateUpdateAt({ history }).catch((err) => {
+            console.error("service WatchHistory updateUpdateAt error:", err);
+        })
     } else {
-        await WatchHistory.create({
-            item_id: itemId,
-            user_id: userId || null,
+        createWatchHistory({ itemId, userId }).catch((err) => {
+            console.error("service WatchHistory createWatchHistory error:", err);
         });
     }
 };

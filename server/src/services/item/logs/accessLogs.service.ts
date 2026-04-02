@@ -1,4 +1,4 @@
-import { createWatchHistory } from "../../../usecases/watchHistory/create.js";
+import { createWatchHistoryUseCase } from "../../../usecases/watchHistory/create.js";
 import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
 import { patchItemsAccess } from "./master/accessSort.js";
@@ -15,7 +15,9 @@ export const patchItemLogsAccess = async ({ itemId, userId }: Params) => {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }
 
-    await createWatchHistory({ itemId, userId });
+    if (userId) {
+        await createWatchHistoryUseCase({ itemId, userId });
+    }
 
     if (item.seller_id !== userId) {
         await patchItemsAccess({ item });
