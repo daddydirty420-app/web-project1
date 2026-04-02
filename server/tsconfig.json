@@ -13,13 +13,12 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
-        "baseUrl": "./src",
         "types": ["node"],
         "lib": ["ESNext"],
         "paths": {
-            "@models/*": ["models/*"],
-            "@routes/*": ["routes/*"],
-            "@config/*": ["config/*"]
+            "@models/*": ["./src/models/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@config/*": ["./src/config/*"]
         }
     },
     "include": ["src/**/*.ts", "src/db.ts"],
