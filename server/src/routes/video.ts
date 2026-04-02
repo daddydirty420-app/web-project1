@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { onPlayVideo } from "../services/video/onPlay.service.js";
+import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
 import { convertVideo } from "../services/video/convert.service.js";
 
 const router = Router();
@@ -12,7 +12,7 @@ router.patch('/:id/onplay', authenticateOptional, async (req: Request, res: Resp
 
     const userId = req.user?.id ?? null;
 
-    onPlayVideo({ videoId, userId }).catch((err) => {
+    onPlayVideoUseCase({ videoId, userId }).catch((err) => {
         console.error(err);
     });
 
