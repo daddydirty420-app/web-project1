@@ -1,0 +1,37 @@
+import { BrandsInstance, findAllBrands } from "../../services/brands.js";
+import { findAllAliases } from "../../services/brandAliases.js";
+
+type Params = {
+    keyword: string;
+};
+
+export const getBrandsSuggestUseCase = async ({ keyword }: Params) => {
+
+    // Brands取得
+    const direct = await findAllBrands({ keyword });
+
+    const directLength = direct.length;
+
+    // BrandAliases取得
+    let fromAlias = null;
+
+    if (directLength < 15) {
+        fromAlias = await findAllAliases({ keyword, directLength });
+    }
+
+    const brandMap = new Map<number, BrandsInstance>();
+
+    for (const d of direct) {
+        brandMap.set(d.id, d);
+    }
+
+    for (const alias of fromAlias) {
+        if (alias.brand) {
+            brandMap.set(alias.brand.id, alias.brand);
+        }
+    }
+
+    const brands = Array.from(brandMap.values());
+
+    return brands;
+};

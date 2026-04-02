@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
-import { getBrandsSuggest } from "../services/brands/getBrandsSuggest.js";
+import { getBrandsSuggestUseCase } from "../usecases/brands/getBrandsSuggest.js";
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
     }
     
     try {
-        const brands = await getBrandsSuggest({ keyword });
+        const brands = await getBrandsSuggestUseCase({ keyword });
 
         res.status(200).json({ brands });
     } catch (err) {
