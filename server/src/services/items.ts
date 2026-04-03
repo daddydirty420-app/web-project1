@@ -1,5 +1,11 @@
+import { Transaction } from "sequelize";
 import { Address, Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Name, Sale, ShippingDayOption, ShippingServiceOption, ShopInfo, TodouhukenOption, User, Video } from "../models/index.js";
 import { ItemIdParams } from "../types/serviceType/items.js";
+
+type ItemTransactionParams = {
+    item: InstanceType<typeof Item>;
+    transaction: Transaction;
+};
 
 type SortUpdateParams = {
     item: InstanceType<typeof Item>;
@@ -186,4 +192,14 @@ export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
 
 export const addViewsCount = async ({ item, data }: CountUpdateParams) => {
     await item.update(data);
+};
+
+export const updateRestoreItem = async ({ item, transaction }: ItemTransactionParams) => {
+    const nowDate = new Date();
+
+    await item.update({
+        uploaded_at: nowDate,
+        status: "active",
+        deleted_at: null,
+    }, { transaction });
 };

@@ -10,7 +10,7 @@ import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
-import { patchPublish } from "../services/item/publish/patchItems.service.js";
+import { patchPublish } from "../usecases/item/publish/patchItems.service.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
@@ -18,7 +18,7 @@ import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js"
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
-import { restoreItem } from "../services/item/restore/restore.service.js";
+import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItem } from "../services/item/delete/draftDelete.js";
 import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
 import { FormDataMode, ItemPageMode } from "../types/serviceType/items.js";
@@ -166,7 +166,7 @@ router.patch("/:id/restore", authenticateToken, async (req: Request, res: Respon
     const userId = req.user!.id;
 
     try {
-        await restoreItem({ userId, itemId });
+        await restoreItemUseCase({ userId, itemId });
 
         res.status(200).json({ message: "商品を復元しました" });
     } catch (err) {
