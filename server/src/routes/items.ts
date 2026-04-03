@@ -13,8 +13,8 @@ import { FormDataMode } from "../services/item/formData/items.service.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
-import { getItemPage, ItemPageMode } from "../services/item/itemPage/itemPage.service.js";
-import { getMetadata } from "../services/item/itemPage/metadata.service.js";
+import { getItemPage, ItemPageMode } from "../usecases/item/itemPage/itemPage.service.js";
+import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.service.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
@@ -309,7 +309,7 @@ router.get('/:id/metadata', async (req: Request, res: Response, next: NextFuncti
     const itemId = Number(req.params.id);
 
     try {
-        const item = await getMetadata({ itemId });
+        const item = await getMetadataUseCase({ itemId });
 
         res.status(200).json({ item });
     } catch (err) {

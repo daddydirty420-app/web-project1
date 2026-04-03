@@ -1,4 +1,4 @@
-import { Address, Item, ItemShippingProfile, Name, TodouhukenOption, User } from "../models/index.js";
+import { Address, Item, ItemShippingProfile, Name, TodouhukenOption, User, Video } from "../models/index.js";
 import { ItemIdParams } from "../types/serviceType/items.js";
 
 type UpdateParams = {
@@ -35,6 +35,18 @@ export const findByPkItemBuy = async ({ itemId }: ItemIdParams) => {
                         required: false,
                     },
                 ],
+            },
+        ],
+    });
+};
+
+export const getMetadata = async ({ itemId }: ItemIdParams) => {
+    return Item.findByPk(itemId, {
+        attributes: ["name", "price", "first_image_url"],
+        include: [
+            {
+                model: Video,
+                attributes: ["title", "summary"],
             },
         ],
     });
