@@ -16,10 +16,10 @@ import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
-import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
-import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
+import { deleteItemLogically } from "../usecases/item/delete/logicalDelete.js";
+import { deleteItemPerfect } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
-import { deleteDraftItem } from "../services/item/delete/draftDelete.js";
+import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
 import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
 import { FormDataMode, ItemPageMode } from "../types/serviceType/items.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
@@ -211,7 +211,7 @@ router.delete("/:id/draft", authenticateToken, async (req: Request, res: Respons
     const userId = req.user!.id;
 
     try {
-        await deleteDraftItem({ itemId, userId });
+        await deleteDraftItemUseCase({ itemId, userId });
 
         res.status(200).json({ message: "下書き商品を削除しました" });
     } catch (err) {

@@ -1,15 +1,15 @@
-import { Item } from "../../../models/index.js";
 import { AppError } from "../../../errors.js";
+import { destroyDraftItem, findByPkItem } from "../../../services/items.js";
 
 type Params = {
     itemId: number;
     userId: number;
 };
 
-export const deleteDraftItem = async ({ itemId, userId }: Params) => {
+export const deleteDraftItemUseCase = async ({ itemId, userId }: Params) => {
 
     // item取得
-    const item = await Item.findByPk(itemId);
+    const item = await findByPkItem({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }
@@ -19,5 +19,5 @@ export const deleteDraftItem = async ({ itemId, userId }: Params) => {
     }
 
     // item削除
-    await item.destroy();
+    await destroyDraftItem({ item });
 }

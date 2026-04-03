@@ -2,6 +2,10 @@ import { Op, Transaction } from "sequelize";
 import { Address, Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Name, Sale, ShippingDayOption, ShippingServiceOption, ShopInfo, TodouhukenOption, User, Video } from "../models/index.js";
 import { ItemIdParams, UserIdParams } from "../types/serviceType/items.js";
 
+type ItemDataParams = {
+    item: InstanceType<typeof Item>;
+};
+
 type ItemTransactionParams = {
     item: InstanceType<typeof Item>;
     transaction: Transaction;
@@ -253,4 +257,8 @@ export const updatePublishItem = async ({ item, data, transaction }: PublishUpda
         early_sell: true,
         ...data,
     }, { transaction });
+};
+
+export const destroyDraftItem = async ({ item }: ItemDataParams) => {
+    await item.destroy();
 };
