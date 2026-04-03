@@ -17,7 +17,7 @@ import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumbe
 import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../usecases/item/delete/logicalDelete.js";
-import { deleteItemPerfect } from "../usecases/item/delete/perfectDelete.js";
+import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
 import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
@@ -196,7 +196,7 @@ router.delete("/:id/perfect", authenticateToken, async (req: Request, res: Respo
     const userId = req.user!.id;
 
     try {
-        await deleteItemPerfect({ itemId, userId });
+        await deleteItemPerfectUseCase({ itemId, userId });
 
         res.status(200).json({ message: "商品削除が完了しました。" });
     } catch (err) {

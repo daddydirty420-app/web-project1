@@ -1,28 +1,25 @@
-import { Item, ItemDeleteLogs } from "../../../models/index.js";
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
+import { destroyPerfectItem, findByPkItem } from "../../../services/items.js";
+import { createPerfectDelete } from "../../../services/itemDeleteLogs.js";
 
 type Params = {
     itemId: number;
     userId: number;
 };
 
-export const deleteItemPerfect = async ({ itemId, userId }: Params) => {
+export const deleteItemPerfectUseCase = async ({ itemId, userId }: Params) => {
 
     // Item取得
-    const item = await Item.findByPk(itemId);
+    const item = await findByPkItem({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }
 
+    // データ編集
     await sequelize.transaction(async (t) => {
-        await ItemDeleteLogs.create({
-            item_id: itemId,
-            delete_user_id: userId,
-            delete_by_admin: false,
-            delete_reason: "自主削除"
-        }, { transaction: t });
+        await createPerfectDelete({ itemId, userId, transaction: t });
 
-        await item.destroy({ transaction: t });
+        await destroyPerfectItem({ item, transaction: t });
     });
 };

@@ -262,3 +262,7 @@ export const updatePublishItem = async ({ item, data, transaction }: PublishUpda
 export const destroyDraftItem = async ({ item }: ItemDataParams) => {
     await item.destroy();
 };
+
+export const destroyPerfectItem = async ({ item, transaction }: ItemTransactionParams) => {
+    await item.destroy({ transaction });
+};
