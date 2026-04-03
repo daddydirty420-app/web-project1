@@ -8,22 +8,21 @@ import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
-import { getFormData } from "../services/item/formData/items.service.js";
-import { FormDataMode } from "../services/item/formData/items.service.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
-import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.service.js";
+import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
 import { restoreItem } from "../services/item/restore/restore.service.js";
 import { deleteDraftItem } from "../services/item/delete/draftDelete.js";
 import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
-import { ItemPageMode } from "../types/serviceType/items.js";
+import { FormDataMode, ItemPageMode } from "../types/serviceType/items.js";
+import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 
 const router = Router();
 
@@ -336,7 +335,7 @@ router.get("/:id/form-data", authenticateToken, async (req: Request, res: Respon
             allService,
             allPlace,
             hasShop
-        } = await getFormData({
+        } = await getFormDataUseCase({
             itemId,
             mode
         });

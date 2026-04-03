@@ -4,6 +4,11 @@ export type ItemPageMode =
 | "confirm"
 | "deleted";
 
+export type FormDataMode = 
+| "normal"
+| "draft"
+| "edit";
+
 export type ItemIdParams = {
     itemId: number;
 };
