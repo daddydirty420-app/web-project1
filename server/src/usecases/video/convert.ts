@@ -13,7 +13,6 @@ type Params = {
 
 export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
-    console.log("start convert");
 
     // video取得
     const video = await findByPkVideo({ videoId });
@@ -25,8 +24,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     if (!originalUrl) {
         throw new AppError("ORIGINAL_URL_NOT_FOUND", 400);
     }
-
-    console.log("get video:", originalUrl);
 
     const originalKey = originalUrl.replace(`${s3Domain}/`, '');
     
@@ -47,8 +44,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     updateStatus({ video, data: { status: "processing" } }).catch((err) => {
         console.error("service video updateStatus error:", err);
     });
-
-    console.log("download ok!");
     
     // 変換ディレクトリ作成
     fs.mkdirSync(convertedDir, { recursive: true });
@@ -77,12 +72,8 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         });
     }, 5 * 60 * 1000); // 5分
 
-    console.log("ffmpeg ok!");
-
     // 再生時間
     const seconds = await getDuration({ filePath: originalFilePath });
-
-    console.log("get duration");
     
     await new Promise<void>((resolve, reject) => {
         ffmpeg.on("close", async (code) => {
@@ -95,8 +86,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 });
                 return;
             }
-
-            console.log("ffmpeg start");
     
             try {
                 const files = fs.readdirSync(convertedDir);
@@ -117,8 +106,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
 
                     await uploadToS3({ filePath, key, contentType });
                 }
-
-                console.log("upload ok!");
     
                 const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;
     
@@ -133,8 +120,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 // 後処理
                 fs.rmSync(originalFilePath, { force: true });
                 fs.rmSync(convertedDir, { recursive: true, force: true });
-
-                console.log("finish convert!!!");
             } catch (e) {
                 console.error(e);
                 updateStatus({ video, data: { status: "failed" } }).catch((err) => {

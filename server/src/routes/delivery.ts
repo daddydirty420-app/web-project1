@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
 import { Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Orders, Item, Address, Name } from "../models/index.js";
-import { postDeliveryBuy } from "../services/delivery/postBuy.service.js";
+import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
     const itemId = Number(req.params.id);
 
     try {
-        const deliveryId = await postDeliveryBuy({ itemId, userId });
+        const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
 
         res.status(200).json({ deliveryId });
     } catch (err) {
