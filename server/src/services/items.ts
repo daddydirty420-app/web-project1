@@ -1,11 +1,18 @@
 import { Address, Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Name, Sale, ShippingDayOption, ShippingServiceOption, ShopInfo, TodouhukenOption, User, Video } from "../models/index.js";
 import { ItemIdParams } from "../types/serviceType/items.js";
 
-type UpdateParams = {
+type SortUpdateParams = {
     item: InstanceType<typeof Item>;
     data: {
         sort_number: number;
         sort_buzz_number: number;
+    };
+};
+
+type CountUpdateParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        views_count: number;
     };
 };
 
@@ -112,6 +119,10 @@ export const getMetadata = async ({ itemId }: ItemIdParams) => {
     });
 };
 
-export const updateSortNumber = async ({ item, data }: UpdateParams) => {
+export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
+    await item.update(data);
+};
+
+export const addViewsCount = async ({ item, data }: CountUpdateParams) => {
     await item.update(data);
 };

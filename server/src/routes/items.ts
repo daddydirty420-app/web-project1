@@ -16,7 +16,7 @@ import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
-import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
+import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogically } from "../services/item/delete/logicalDelete.service.js";
 import { deleteItemPerfect } from "../services/item/delete/perfectDelete.service.js";
@@ -153,7 +153,7 @@ router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res:
 
     const userId = req.user?.id ?? null;
 
-    patchItemLogsAccess({ itemId, userId }).catch((err) => {
+    patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
         console.error(err);
     });
 
