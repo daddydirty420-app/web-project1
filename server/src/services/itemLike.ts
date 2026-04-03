@@ -1,9 +1,14 @@
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { ItemLike, ShopInfo, User } from "../models/index.js";
 import { ItemIdParams, ItemUserParams, ListParams } from "../types/serviceType/itemLike.js";
 
 type DestroyParams = {
     data: InstanceType<typeof ItemLike>;
+};
+
+type DestroyTransactionParams = {
+    itemLikes: InstanceType<typeof ItemLike>[];
+    transaction: Transaction;
 };
 
 type ItemLikeWithUser = InstanceType<typeof ItemLike> & {
@@ -21,6 +26,12 @@ export const findItemLike = async ({ itemId, userId }: ItemUserParams) => {
     });
 };
 
+export const findAllItemLikes = async ({ itemId }: ItemIdParams) => {
+    return ItemLike.findAll({
+        where: { item_id: itemId },
+    });
+};
+
 export const createItemLike = async ({ itemId, userId }: ItemUserParams) => {
     return ItemLike.create({
         item_id: itemId,
@@ -30,6 +41,12 @@ export const createItemLike = async ({ itemId, userId }: ItemUserParams) => {
 
 export const destroyItemLike = async ({ data }: DestroyParams) => {
     await data.destroy();
+};
+
+export const destroyItemLikeTransaction = async ({ itemLikes, transaction }: DestroyTransactionParams) => {
+    await Promise.all(itemLikes.map(async (itemLike: InstanceType<typeof ItemLike>) => {
+        await itemLike.destroy({ transaction });
+    }));
 };
 
 export const countItemLike = async ({ itemId }: ItemIdParams) => {

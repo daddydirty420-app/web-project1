@@ -36,6 +36,14 @@ type PublishUpdateParams = {
     transaction: Transaction;
 };
 
+type LogicalDeleteParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        price: number;
+    };
+    transaction: Transaction;
+};
+
 export const findByPkItem = async ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId);
 };
@@ -188,6 +196,16 @@ export const findByPkItemBuy = async ({ itemId }: ItemIdParams) => {
     });
 };
 
+export const findByPkItemVideoSaleShipping = async ({ itemId }: ItemIdParams) => {
+    return Item.findByPk(itemId, {
+        include: [
+            { model: Video },
+            { model: Sale },
+            { model: ItemShippingProfile },
+        ],
+    });
+};
+
 export const findByPkItemVideoCategoriesUser = async ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         include: [
@@ -255,6 +273,19 @@ export const updatePublishItem = async ({ item, data, transaction }: PublishUpda
         uploaded_at: nowDate,
         save_at: nowDate,
         early_sell: true,
+        ...data,
+    }, { transaction });
+};
+
+export const updateLogicalDeleteItem = async ({ item, data, transaction }: LogicalDeleteParams) => {
+    const nowDate = new Date();
+
+    await item.update({
+        uploaded_at: null,
+        sort_number: 0,
+        sort_buzz_number: 0,
+        status: "deleted",
+        deleted_at: nowDate,
         ...data,
     }, { transaction });
 };

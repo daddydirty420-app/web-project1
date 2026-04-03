@@ -1,11 +1,32 @@
-import { Transaction } from "sequelize";
-import { Delivery, Item, User } from "../models/index.js";
+import { Op, Transaction } from "sequelize";
+import { Delivery, Item, Orders, User } from "../models/index.js";
+
+type ItemIdParams = {
+    itemId: number;
+};
 
 type CreateParams = {
     itemId: number;
     user: InstanceType<typeof User>;
     item: InstanceType<typeof Item>;
     transaction: Transaction;
+};
+
+export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
+    return Delivery.findAll({
+        where: {
+            cancel: false,
+            delivery_status_id: { [Op.ne]: 4 },
+            orders_id: { [Op.not]: null },
+        },
+        include: [
+            {
+                model: Orders,
+                required: true,
+                where: { item_id: itemId },
+            },
+        ]
+    });
 };
 
 export const createDelivery = async ({ itemId, user, item, transaction }: CreateParams) => {

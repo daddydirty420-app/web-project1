@@ -16,7 +16,7 @@ import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
-import { deleteItemLogically } from "../usecases/item/delete/logicalDelete.js";
+import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
@@ -181,7 +181,7 @@ router.delete("/:id/logical", authenticateToken, async (req: Request, res: Respo
     const userId = req.user!.id;
 
     try {
-        await deleteItemLogically({ itemId, userId });
+        await deleteItemLogicallyUseCase({ itemId, userId });
 
         res.status(200).json({ message: "商品を削除しました" });
     } catch (err) {
