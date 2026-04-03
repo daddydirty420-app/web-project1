@@ -1,5 +1,5 @@
 import { Comment } from "../models/index.js";
-import { CommentIdParams } from "../types/serviceType/comment.js";
+import { CommentIdParams, ItemIdParams } from "../types/serviceType/comment.js";
 
 type UpdateParams = {
     comment: InstanceType<typeof Comment>;
@@ -14,4 +14,10 @@ export const findByPkComment = async ({ commentId }: CommentIdParams) => {
 
 export const updateSortNumber = async ({ comment, data }: UpdateParams) => {
     await comment.update(data);
+};
+
+export const countItemPageComment = async ({ itemId }: ItemIdParams) => {
+    return Comment.count({
+        where: { item_id: itemId },
+    });
 };
