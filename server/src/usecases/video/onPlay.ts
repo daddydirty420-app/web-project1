@@ -17,6 +17,7 @@ export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
     
     // 再生回数 +1
     const newPlayCount = video.play_count += 1;
+    
     addPlayCount({ video, data: { play_count: newPlayCount }}).catch((err) => {
         console.error("service video addPlayCount error:", err);
     });

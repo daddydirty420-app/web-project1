@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
-import { convertVideo } from "../services/video/convert.service.js";
+import { convertVideoUseCase } from "../usecases/video/convert.js";
 
 const router = Router();
 
@@ -25,7 +25,7 @@ router.patch("/:id/convert", authenticateToken, async (req: Request, res: Respon
 
     const userId = req.user!.id;
 
-    convertVideo({ videoId, userId }).catch((err) => {
+    convertVideoUseCase({ videoId, userId }).catch((err) => {
         console.error(err);
     });
 

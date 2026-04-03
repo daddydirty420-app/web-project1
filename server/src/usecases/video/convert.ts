@@ -1,20 +1,22 @@
-import { bucket, s3, s3Domain } from "../../infra/aws/s3.js";
+import { s3Domain } from "../../infra/aws/s3.js";
 import { AppError } from "../../errors.js";
-import { Video } from "../../models/index.js";
 import fs from "fs";
-import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { spawn } from "child_process";
+import { findByPkVideo, updateStatus } from "../../services/video.js";
+import { downloadFromS3, uploadToS3 } from "../../services/s3.js";
+import { getDuration } from "../../services/ffprobe.js";
 
 type Params = {
     videoId: number;
     userId: number;
 };
 
-export const convertVideo = async ({ videoId, userId }: Params) => {
+export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
+    console.log("start convert");
 
     // video取得
-    const video = await Video.findByPk(videoId);
+    const video = await findByPkVideo({ videoId });
     if (!video) {
         throw new AppError("VIDEO_NOT_FOUND", 404);
     }
@@ -23,6 +25,8 @@ export const convertVideo = async ({ videoId, userId }: Params) => {
     if (!originalUrl) {
         throw new AppError("ORIGINAL_URL_NOT_FOUND", 400);
     }
+
+    console.log("get video:", originalUrl);
 
     const originalKey = originalUrl.replace(`${s3Domain}/`, '');
     
@@ -38,22 +42,13 @@ export const convertVideo = async ({ videoId, userId }: Params) => {
     
     fs.mkdirSync("tmp", { recursive: true });
     
-    const getObjectCommand = new GetObjectCommand({
-        Bucket: bucket,
-        Key: originalKey,
-    });
-    
-    const s3Object = await s3.send(getObjectCommand);
-    const whiteStream = fs.createWriteStream(originalFilePath);
+    await downloadFromS3({ key: originalKey, filePath: originalFilePath });
 
-    await new Promise<void>((resolve, reject) => {
-        (s3Object.Body as any)
-        .pipe(whiteStream)
-        .on("finish", resolve)
-        .on("error", reject);
+    updateStatus({ video, data: { status: "processing" } }).catch((err) => {
+        console.error("service video updateStatus error:", err);
     });
 
-    await video.update({ status: "processing" });
+    console.log("download ok!");
     
     // 変換ディレクトリ作成
     fs.mkdirSync(convertedDir, { recursive: true });
@@ -77,34 +72,17 @@ export const convertVideo = async ({ videoId, userId }: Params) => {
     const timeout = setTimeout(async () => {
         console.error("ffmpeg timeout");
         ffmpeg.kill("SIGKILL");
-        await video.update({ status: "failed" });
+        updateStatus({ video, data: { status: "failed" } }).catch((err) => {
+            console.error("service video updateStatus error:", err);
+        });
     }, 5 * 60 * 1000); // 5分
 
+    console.log("ffmpeg ok!");
+
     // 再生時間
-    const ffprobe = spawn("ffprobe", [
-        "-v", "error",
-        "-show_entries", "format=duration",
-        "-of", "default=noprint_wrappers=1:nokey=1",
-        originalFilePath
-    ]);
+    const seconds = await getDuration({ filePath: originalFilePath });
 
-    let durationOutput = "";
-
-    ffprobe.stdout.on("data", (data) => {
-        durationOutput += data.toString();
-    });
-
-    await new Promise<void>((resolve, reject) => {
-        ffprobe.on("close", (code) => {
-            if (code !== 0) {
-                reject(new Error("ffprobe failed"));
-            } else {
-                resolve();
-            }
-        });
-    });
-
-    const seconds = Math.floor(parseFloat(durationOutput));
+    console.log("get duration");
     
     await new Promise<void>((resolve, reject) => {
         ffmpeg.on("close", async (code) => {
@@ -112,9 +90,13 @@ export const convertVideo = async ({ videoId, userId }: Params) => {
     
             if (code !== 0) {
                 console.error(`ffmpeg exited with code ${code}`);
-                await video.update({ status: 'failed' });
+                updateStatus({ video, data: { status: "failed" } }).catch((err) => {
+                    console.error("service video updateStatus error:", err);
+                });
                 return;
             }
+
+            console.log("ffmpeg start");
     
             try {
                 const files = fs.readdirSync(convertedDir);
@@ -125,37 +107,39 @@ export const convertVideo = async ({ videoId, userId }: Params) => {
                 
                 for (const f of files) {
                     const filePath = `${convertedDir}/${f}`;
+                    const key = `video/converted/${userId}/${videoId}/${f}`;
                         
                     const contentType = f.endsWith(".ts")
                     ? "video/mp2t"
                     : f.endsWith(".m3u8")
                     ? "application/vnd.apple.mpegurl"
                     : "application/octet-stream";
-                        
-                    const uploadParams = {
-                        Bucket: bucket,
-                        Key: `video/converted/${userId}/${videoId}/${f}`,
-                        Body: fs.createReadStream(filePath),
-                        ContentType: contentType,
-                    };
-    
-                    await s3.send(new PutObjectCommand(uploadParams));
+
+                    await uploadToS3({ filePath, key, contentType });
                 }
+
+                console.log("upload ok!");
     
                 const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;
     
-                await video.update({
-                    status: 'done',
+                updateStatus({ video, data: {
+                    status: "done",
                     converted_url: convertedUrl,
                     duration: seconds,
+                } }).catch((err) => {
+                    console.error("service video updateStatus error:", err);
                 });
     
                 // 後処理
                 fs.rmSync(originalFilePath, { force: true });
                 fs.rmSync(convertedDir, { recursive: true, force: true });
+
+                console.log("finish convert!!!");
             } catch (e) {
                 console.error(e);
-                await video.update({ status: "failed" });
+                updateStatus({ video, data: { status: "failed" } }).catch((err) => {
+                    console.error("service video updateStatus error:", err);
+                });
             }
         });
     });
