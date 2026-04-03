@@ -1,4 +1,4 @@
-import { countFollow } from "../../services/follow.js";
+import { countFollowBoth } from "../../services/follow.js";
 import { AppError } from "../../errors.js";
 
 type Params = {
@@ -7,7 +7,7 @@ type Params = {
 
 export const countFollowUseCase = async ({ userId }: Params) => {
     
-    const { followCount, followerCount } = await countFollow({ userId });
+    const { followCount, followerCount } = await countFollowBoth({ userId });
 
     if (followCount === null || followerCount === null) {
         throw new AppError("NUMBER_NOT_FOUND", 404);

@@ -12,3 +12,7 @@ export type FormDataMode =
 export type ItemIdParams = {
     itemId: number;
 };
+
+export type UserIdParams = {
+    userId: number;
+};

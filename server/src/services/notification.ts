@@ -12,5 +12,5 @@ type CreateNormalTransactionParams = {
 };
 
 export const createNormalNotification = async ({ data, transaction }: CreateNormalTransactionParams) => {
-    await Notification.update(data, { transaction });
+    await Notification.create(data, { transaction });
 };

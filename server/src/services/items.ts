@@ -1,6 +1,6 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { Address, Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Name, Sale, ShippingDayOption, ShippingServiceOption, ShopInfo, TodouhukenOption, User, Video } from "../models/index.js";
-import { ItemIdParams } from "../types/serviceType/items.js";
+import { ItemIdParams, UserIdParams } from "../types/serviceType/items.js";
 
 type ItemTransactionParams = {
     item: InstanceType<typeof Item>;
@@ -20,6 +20,16 @@ type CountUpdateParams = {
     data: {
         views_count: number;
     };
+};
+
+type PublishUpdateParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        sort_number: number;
+        sort_buzz_number: number;
+        search_text: string;
+    };
+    transaction: Transaction;
 };
 
 export const findByPkItem = async ({ itemId }: ItemIdParams) => {
@@ -174,6 +184,26 @@ export const findByPkItemBuy = async ({ itemId }: ItemIdParams) => {
     });
 };
 
+export const findByPkItemVideoCategoriesUser = async ({ itemId }: ItemIdParams) => {
+    return Item.findByPk(itemId, {
+        include: [
+            { model: Video },
+            {
+                model: Categories,
+                as: "Category",
+                include: [
+                    {
+                        model: Categories,
+                        as: "parent",
+                        required: false,
+                    },
+                ],
+            },
+            { model: User },
+        ],
+    });
+};
+
 export const getMetadata = async ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: ["name", "price", "first_image_url"],
@@ -183,6 +213,15 @@ export const getMetadata = async ({ itemId }: ItemIdParams) => {
                 attributes: ["title", "summary"],
             },
         ],
+    });
+};
+
+export const countSellItem = async ({ userId }: UserIdParams) => {
+    return Item.count({
+        where: {
+            seller_id: userId,
+            status: { [Op.in]: ["active", "soldout"] },
+        },
     });
 };
 
@@ -201,5 +240,17 @@ export const updateRestoreItem = async ({ item, transaction }: ItemTransactionPa
         uploaded_at: nowDate,
         status: "active",
         deleted_at: null,
+    }, { transaction });
+};
+
+export const updatePublishItem = async ({ item, data, transaction }: PublishUpdateParams) => {
+    const nowDate = new Date();
+
+    await item.update({
+        status: "active",
+        uploaded_at: nowDate,
+        save_at: nowDate,
+        early_sell: true,
+        ...data,
     }, { transaction });
 };

@@ -10,7 +10,7 @@ import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
 import { Body } from "../types/items/uploadBody.js";
-import { patchPublish } from "../usecases/item/publish/patchItems.service.js";
+import { patchPublishUseCase } from "../usecases/item/publish/publish.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
@@ -121,7 +121,7 @@ router.patch("/:id/publish", authenticateToken, async (req: Request, res: Respon
     const userId = req.user!.id;
 
     try {
-        await patchPublish({ itemId, userId });
+        await patchPublishUseCase({ itemId, userId });
 
         res.status(200).json({ message: "出品成功！" });
     } catch (err) {

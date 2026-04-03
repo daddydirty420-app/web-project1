@@ -40,13 +40,19 @@ export const destroyFollow = async ({ follow }: DestroyParams) => {
     await follow.destroy();
 };
 
-export const countFollow = async ({ userId }: CountParams) => {
+export const countFollowBoth = async ({ userId }: CountParams) => {
     const [followCount, followerCount] = await Promise.all([
         Follow.count({ where: { follow_user_id: userId } }),
         Follow.count({ where: { follower_user_id: userId } }),
     ]);
 
     return { followCount, followerCount };
+};
+
+export const countFollower = async ({ userId }: CountParams) => {
+    return Follow.count({
+        where: { follower_user_id: userId },
+    });
 };
 
 export const getFollowList = async ({ pageUserId, type, keyword }: ListParams): Promise<FollowWithUser[]> => {
