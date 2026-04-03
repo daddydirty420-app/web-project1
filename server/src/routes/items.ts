@@ -14,7 +14,7 @@ import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js"
 import { Body } from "../types/items/uploadBody.js";
 import { patchPublish } from "../services/item/publish/patchItems.service.js";
 import { getItemPage, ItemPageMode } from "../usecases/item/itemPage/itemPage.service.js";
-import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.service.js";
+import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccess } from "../services/item/logs/accessLogs.service.js";
 import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
