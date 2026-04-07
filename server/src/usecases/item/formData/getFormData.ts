@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors.js";
 import { findAllLevel1 } from "../../../services/categories.js";
 import { findAllCondition } from "../../../services/itemCondition.js";
-import { getItemFormDataNormal, getItemFormDataOther } from "../../../services/items.js";
+import { getItemFormDataNormal, getItemFormDataOther } from "../../../services/items/index.js";
 import { findAllShippingDay } from "../../../services/shippingDay.js";
 import { findAllShippingService } from "../../../services/shippingService.js";
 import { findAllTodouhuken } from "../../../services/todouhuken.js";

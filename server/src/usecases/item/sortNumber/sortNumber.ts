@@ -1,6 +1,5 @@
-import { findByPkItem, updateSortNumber } from "../../../services/items.js";
+import { getItem, updateSortNumber } from "../../../services/items/index.js";
 import { AppError } from "../../../errors.js";
-import { Item } from "../../../models/index.js";
 
 type Params = {
     itemId: number;
@@ -10,7 +9,7 @@ type Params = {
 
 export const patchSortNumberAddUseCase = async ({ itemId, number, buzzNumber }: Params) => {
 
-    const item = await findByPkItem({ itemId });
+    const item = await getItem({ itemId });
     
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
@@ -33,7 +32,7 @@ export const patchSortNumberAddUseCase = async ({ itemId, number, buzzNumber }: 
 
 export const patchSortNumberDecreaseUseCase = async ({ itemId, number, buzzNumber }: Params) => {
 
-    const item = await findByPkItem({ itemId });
+    const item = await getItem({ itemId });
     
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);

@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors.js";
 import sequelize from "../../../db.js";
 import { createNormalNotification } from "../../../services/notification.js";
-import { findByPkItemVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items.js";
+import { getItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
 import { destroyItemLikeTransaction, findAllItemLikes } from "../../../services/itemLike.js";
 import { destroyAllComments, findAllComments } from "../../../services/comment.js";
 import { destroyAllCarts, findAllCarts } from "../../../services/cart.js";
@@ -21,7 +21,7 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
     }
         
     // Item取得
-    const item = await findByPkItemVideoSaleShipping({ itemId });
+    const item = await getItemWithVideoSaleShipping({ itemId });
 
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);

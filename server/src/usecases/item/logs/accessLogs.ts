@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { addViewsCount, findByPkItem, updateSortNumber } from "../../../services/items.js";
+import { addViewsCount, getItem, updateSortNumber } from "../../../services/items/index.js";
 import { createWatchHistory, findWatchHistory, updateUpdateAt } from "../../../services/watchHistory.js";
 
 type Params = {
@@ -9,7 +9,7 @@ type Params = {
 
 export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
-    const item = await findByPkItem({ itemId });
+    const item = await getItem({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getMetadata } from "../../../services/items.js";
+import { getMetadata } from "../../../services/items/index.js";
 
 type Params = {
     itemId: number;

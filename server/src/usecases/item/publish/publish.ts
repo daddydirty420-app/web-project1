@@ -2,7 +2,7 @@ import { AppError } from "../../../errors.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 import sequelize from "../../../db.js";
 import { createNormalNotification } from "../../../services/notification.js";
-import { countSellItem, findByPkItemVideoCategoriesUser, updatePublishItem } from "../../../services/items.js";
+import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
 import { countFollower } from "../../../services/follow.js";
 
 type Params = {
@@ -12,7 +12,7 @@ type Params = {
 
 export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
     // getData
-    const item = await findByPkItemVideoCategoriesUser({ itemId });
+    const item = await getItemWithVideoCategoriesUser({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

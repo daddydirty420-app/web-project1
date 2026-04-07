@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { findByPkItem, updateRestoreItem } from "../../../services/items.js";
+import { getItem, updateRestoreItem } from "../../../services/items/index.js";
 import { createNormalNotification } from "../../../services/notification.js";
 
 type Params = {
@@ -10,7 +10,7 @@ type Params = {
 
 export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
-    const item = await findByPkItem({ itemId });
+    const item = await getItem({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

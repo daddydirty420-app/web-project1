@@ -2,7 +2,7 @@ import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createDeliveryAddress, findAddress } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
-import { findByPkItemBuy } from "../../services/items.js";
+import { getItemForBuy } from "../../services/items/index.js";
 import { createDeliveryName, findName } from "../../services/name.js";
 import { findByPkUser } from "../../services/users.js";
 
@@ -20,7 +20,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     }
 
     // Item取得
-    const item = await findByPkItemBuy({ itemId });
+    const item = await getItemForBuy({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOTFOUND", 404);
     }

@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { destroyDraftItem, findByPkItem } from "../../../services/items.js";
+import { destroyDraftItem, getItem } from "../../../services/items/index.js";
 
 type Params = {
     itemId: number;
@@ -9,7 +9,7 @@ type Params = {
 export const deleteDraftItemUseCase = async ({ itemId, userId }: Params) => {
 
     // item取得
-    const item = await findByPkItem({ itemId });
+    const item = await getItem({ itemId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }
