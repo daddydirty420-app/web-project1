@@ -1,5 +1,13 @@
 import { TodouhukenOption } from "../models/index.js";
 
-export const findAllTodouhuken = async () => {
+type TodouhukenIdParams = {
+    todouhukenId: number;
+};
+
+export const getTodouhuken = ({ todouhukenId }: TodouhukenIdParams) => {
+    return TodouhukenOption.findByPk(todouhukenId);
+};
+
+export const getAllTodouhuken = () => {
     return TodouhukenOption.findAll();
 };

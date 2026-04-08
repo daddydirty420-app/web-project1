@@ -1,6 +1,6 @@
 import { Item, Video, Sale, ItemShippingProfile } from "../../../models/index.js";
 import sequelize from "../../../db.js";
-import { S3Client, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import type { ItemAttributes } from "../../../types/itemAttributes.js";
 import { bucket, region, s3 } from "../../../infra/aws/s3.js";
 

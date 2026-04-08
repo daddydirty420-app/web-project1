@@ -1,7 +1,7 @@
 import { Item, Video } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
-export const getMetadata = async ({ itemId }: ItemIdParams) => {
+export const getMetadata = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: ["name", "price", "first_image_url"],
         include: [

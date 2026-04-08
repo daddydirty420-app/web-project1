@@ -1,4 +1,4 @@
-import { AppError } from "../../../../errors.js";
+import { AppError } from "../errors.js";
 
 export function toNullableNumber(value: any): number | null {
     if (value === null || value === "") return null;

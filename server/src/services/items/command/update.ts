@@ -1,35 +1,4 @@
-import { Transaction } from "sequelize";
-import { Item } from "../../../models/index.js";
-
-type ItemTransactionParams = {
-    item: InstanceType<typeof Item>;
-    transaction: Transaction;
-};
-
-type SortUpdateParams = {
-    item: InstanceType<typeof Item>;
-    data: {
-        sort_number: number;
-        sort_buzz_number: number;
-    };
-};
-
-type CountUpdateParams = {
-    item: InstanceType<typeof Item>;
-    data: {
-        views_count: number;
-    };
-};
-
-type PublishUpdateParams = {
-    item: InstanceType<typeof Item>;
-    data: {
-        sort_number: number;
-        sort_buzz_number: number;
-        search_text: string;
-    };
-    transaction: Transaction;
-};
+import { CountUpdateParams, ItemTransactionParams, PublishUpdateParams, SortUpdateParams, UpdateItemImageParams, UpdateItemParams } from "../../../types/serviceType/items/items.js";
 
 export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
     await item.update(data);
@@ -59,4 +28,19 @@ export const updatePublishItem = async ({ item, data, transaction }: PublishUpda
         early_sell: true,
         ...data,
     }, { transaction });
+};
+
+export const updateItem = async ({ item, data, transaction }: UpdateItemParams) => {
+    const nowDate = new Date();
+
+    await item.update({
+        save_at: nowDate,
+        ...data,
+    }, { transaction });
+};
+
+export const updateImage = async ({ item, urls, transaction }: UpdateItemImageParams) => {
+    item.setDataValue("image_url", urls);
+    item.changed("image_url", true);
+    await item.save({ transaction });
 };

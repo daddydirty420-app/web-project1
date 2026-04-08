@@ -1,8 +1,8 @@
 // 商品ページ表示用
 import { Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Sale, ShippingDayOption, ShippingServiceOption, ShopInfo, TodouhukenOption, User, Video } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
-export const getItemPageData = async ({ itemId }: ItemIdParams) => {
+export const getItemPageData = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: {
             exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text'],

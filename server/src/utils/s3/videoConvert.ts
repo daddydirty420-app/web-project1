@@ -1,5 +1,5 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { bucket, s3 } from "../infra/aws/s3.js";
+import { bucket, s3 } from "../../infra/aws/s3.js";
 import fs from "fs";
 
 type DownloadParams = {
@@ -13,7 +13,7 @@ type UploadParams = {
     contentType: string;
 };
 
-export const downloadFromS3 = async ({ key, filePath }: DownloadParams) => {
+export const downloadVideoFromS3 = async ({ key, filePath }: DownloadParams) => {
     const getObjectCommand = new GetObjectCommand({
         Bucket: bucket,
         Key: key,
@@ -30,7 +30,7 @@ export const downloadFromS3 = async ({ key, filePath }: DownloadParams) => {
     });
 };
 
-export const uploadToS3 = async ({ filePath, key, contentType }: UploadParams) => {
+export const uploadVideoToS3 = async ({ filePath, key, contentType }: UploadParams) => {
     await s3.send(new PutObjectCommand({
         Bucket: bucket,
         Key: key,

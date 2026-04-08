@@ -3,7 +3,7 @@ import { countItemPageComment } from "../../../services/comment.js";
 import { countItemLike, findItemLike } from "../../../services/itemLike.js";
 import { getItemPageData } from "../../../services/items/index.js";
 import { getMeHighlight } from "../../../services/users.js";
-import { ItemPageMode } from "../../../types/serviceType/items.js";
+import { ItemPageMode } from "../../../types/serviceType/items/items.js";
 
 type Params = {
     itemId: number;

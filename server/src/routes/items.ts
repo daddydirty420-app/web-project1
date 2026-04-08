@@ -8,8 +8,7 @@ import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
-import { PutItem, UploadMode } from "../services/item/upload/putItem.service.js";
-import { Body } from "../types/items/uploadBody.js";
+import { Body } from "../types/serviceType/items/uploadBody.js";
 import { patchPublishUseCase } from "../usecases/item/publish/publish.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
@@ -21,8 +20,10 @@ import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
 import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
-import { FormDataMode, ItemPageMode } from "../types/serviceType/items.js";
+import { FormDataMode, ItemPageMode, UploadMode } from "../types/serviceType/items/items.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
+import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
+import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
 
 const router = Router();
 
@@ -64,10 +65,7 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
 // POST /items/:id/copy-upload
 router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
-    if (!itemId) {
-        res.status(400).json({ message: "itemIdがありません。" });
-        return;
-    }
+    
     const userId = req.user!.id;
 
     try {
@@ -91,16 +89,19 @@ router.put("/:id", authenticateToken, async (req: Request, res: Response, next: 
 
     const body = req.body as Body;
 
+    const usecase = mode === "main"
+    ? uploadMainUseCase
+    : uploadDraftUseCase;
+
     try {
         const {
             videoSignedUrl,
             thumbnailSignedUrl,
             itemImageSignedUrls,
             attributesImageSignedUrls
-        } = await PutItem({
+        } = await usecase({
             itemId,
             userId,
-            mode,
             body
         });
 

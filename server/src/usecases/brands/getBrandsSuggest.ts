@@ -1,5 +1,5 @@
-import { BrandsInstance, findAllBrands } from "../../services/brands.js";
-import { findAllAliases } from "../../services/brandAliases.js";
+import { BrandsInstance, getAllBrands } from "../../services/brands.js";
+import { getAllAliases } from "../../services/brandAliases.js";
 
 type Params = {
     keyword: string;
@@ -8,7 +8,7 @@ type Params = {
 export const getBrandsSuggestUseCase = async ({ keyword }: Params) => {
 
     // Brands取得
-    const direct = await findAllBrands({ keyword });
+    const direct = await getAllBrands({ keyword });
 
     const directLength = direct.length;
 
@@ -16,7 +16,7 @@ export const getBrandsSuggestUseCase = async ({ keyword }: Params) => {
     let fromAlias = null;
 
     if (directLength < 15) {
-        fromAlias = await findAllAliases({ keyword, directLength });
+        fromAlias = await getAllAliases({ keyword, directLength });
     }
 
     const brandMap = new Map<number, BrandsInstance>();

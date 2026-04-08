@@ -1,12 +1,12 @@
 import { AppError } from "../../../errors.js";
-import { findAllLevel1 } from "../../../services/categories.js";
+import { getAllLevel1 } from "../../../services/categories.js";
 import { findAllCondition } from "../../../services/itemCondition.js";
 import { getItemFormDataNormal, getItemFormDataOther } from "../../../services/items/index.js";
 import { findAllShippingDay } from "../../../services/shippingDay.js";
 import { findAllShippingService } from "../../../services/shippingService.js";
-import { findAllTodouhuken } from "../../../services/todouhuken.js";
+import { getAllTodouhuken } from "../../../services/todouhuken.js";
 import { findByPkHasShop } from "../../../services/users.js";
-import { FormDataMode } from "../../../types/serviceType/items.js";
+import { FormDataMode } from "../../../types/serviceType/items/items.js";
 
 type Params = {
     itemId: number;
@@ -31,11 +31,11 @@ export const getFormDataUseCase = async ({ itemId, mode }: Params) => {
         allPlace,
         userHasShop
     ] = await Promise.all([
-        findAllLevel1(),
+        getAllLevel1(),
         findAllCondition(),
         findAllShippingDay(),
         findAllShippingService(),
-        findAllTodouhuken(),
+        getAllTodouhuken(),
         findByPkHasShop({ userId: item.seller_id })
     ]);
 

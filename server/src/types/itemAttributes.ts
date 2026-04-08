@@ -40,20 +40,33 @@ export type ItemAttributes = {
         current: number,
         low_stock_ratio: number,
     }; // 在庫
-    variants?: Array<{
+
+    colorVariants?: Array<{
+        uiId?: string;
         color?: string;
-        size?: string;
-        size_label?: string;
         image_url?: string;
         inventory?: {
-            initial: number,
-            current: number,
-            low_stock_ratio: number,
-        },
+            initial: number;
+            current: number;
+            low_stock_ratio: number;
+        };
+        
+        sizes?: Array<{
+            size: string;
+            inventory: {
+                initial: number;
+                current: number;
+                low_stock_ratio: number;
+            };
+        }>;
     }>;
+
     body_category?: BodyCategory;
     lifestyle_category?: LifeStyleCategory;
     layer?: Layer;
     fit?: Fit;
-    material?: string[]; // 素材表記
+    materials?: Array<{
+        name?: string;
+        ratio?: number;
+    }>; // 素材表記
 };

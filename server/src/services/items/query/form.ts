@@ -1,8 +1,8 @@
 // 出品フォーム用
 import { Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Video } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
-export const getItemFormDataNormal = async ({ itemId }: ItemIdParams) => {
+export const getItemFormDataNormal = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: ["id", "seller_id", "status"],
         include: [
@@ -22,7 +22,7 @@ export const getItemFormDataNormal = async ({ itemId }: ItemIdParams) => {
     });
 };
 
-export const getItemFormDataOther = async ({ itemId }: ItemIdParams) => {
+export const getItemFormDataOther = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: ["id", "name", "detail", "image_url", "price", "seller_id", "gender_type", "age_type", "status", "attributes"],
         include: [

@@ -3,8 +3,8 @@ import { AppError } from "../../errors.js";
 import fs from "fs";
 import { spawn } from "child_process";
 import { findByPkVideo, updateStatus } from "../../services/video.js";
-import { downloadFromS3, uploadToS3 } from "../../services/s3.js";
-import { getDuration } from "../../services/ffprobe.js";
+import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
+import { getDuration } from "../../utils/ffmpeg.js";
 
 type Params = {
     videoId: number;
@@ -39,7 +39,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     
     fs.mkdirSync("tmp", { recursive: true });
     
-    await downloadFromS3({ key: originalKey, filePath: originalFilePath });
+    await downloadVideoFromS3({ key: originalKey, filePath: originalFilePath });
 
     updateStatus({ video, data: { status: "processing" } }).catch((err) => {
         console.error("service video updateStatus error:", err);
@@ -104,7 +104,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     ? "application/vnd.apple.mpegurl"
                     : "application/octet-stream";
 
-                    await uploadToS3({ filePath, key, contentType });
+                    await uploadVideoToS3({ filePath, key, contentType });
                 }
     
                 const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;

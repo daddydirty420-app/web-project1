@@ -15,15 +15,15 @@ export type Body = {
         allInventory: number;
         colorVariants: Array<{
             uiId: string;
-            color: string | null;
+            color?: string;
             inventory: number;
-            image: {
+            image?: {
                 name: string;
-                type: string | null;
+                type?: string;
                 uploaded: boolean;
-            } | null;
+            };
             sizes: Array<{
-                size: string | null;
+                size: string;
                 inventory: number;
             }>;
         }>;

@@ -1,22 +1,4 @@
-import { Transaction } from "sequelize";
-import { Item } from "../../../models/index.js";
-
-type ItemDataParams = {
-    item: InstanceType<typeof Item>;
-};
-
-type ItemTransactionParams = {
-    item: InstanceType<typeof Item>;
-    transaction: Transaction;
-};
-
-type LogicalDeleteParams = {
-    item: InstanceType<typeof Item>;
-    data: {
-        price: number;
-    };
-    transaction: Transaction;
-};
+import { ItemDataParams, ItemTransactionParams, LogicalDeleteParams } from "../../../types/serviceType/items/items.js";
 
 export const updateLogicalDeleteItem = async ({ item, data, transaction }: LogicalDeleteParams) => {
     const nowDate = new Date();
