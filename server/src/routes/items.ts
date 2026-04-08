@@ -19,11 +19,11 @@ import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelet
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
-import { getItemHighlight } from "../services/item/getItemHighlight.service.js";
 import { FormDataMode, ItemPageMode, UploadMode } from "../types/serviceType/items/items.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
+import { getItemHighlightUseCase } from "../usecases/item/highlight/getItemHighlight.js";
 
 const router = Router();
 
@@ -360,7 +360,7 @@ router.get("/:id/highlight", async (req: Request, res: Response, next: NextFunct
     const itemId = Number(req.params.id);
 
     try {
-        const item = await getItemHighlight({ itemId });
+        const item = await getItemHighlightUseCase({ itemId });
 
         res.status(200).json({ item });
     } catch (err) {

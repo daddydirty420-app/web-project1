@@ -6,6 +6,12 @@ export const getItem = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId);
 };
 
+export const getItemHighlight = ({ itemId }: ItemIdParams) => {
+    return Item.findByPk(itemId, {
+        attributes: ['id', 'name', 'price', "attributes", 'first_image_url', "gender_type", "age_type", "seller_id", "status"],
+    });
+};
+
 export const getItemWithVideoSaleShipping = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         include: [
