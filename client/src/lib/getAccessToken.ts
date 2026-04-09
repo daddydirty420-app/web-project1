@@ -44,4 +44,4 @@ async function refreshAccessToken() {
         console.error("refreshAccessToken error:", err);
         return null;
     }
-}
+};
