@@ -17,6 +17,14 @@ export type UploadMode =
 | "main"
 | "draft";
 
+export type ItemListType =
+| "video"
+| "item";
+
+export type ItemListView =
+| "index"
+| "profile";
+
 export type ItemIdParams = {
     itemId: number;
 };

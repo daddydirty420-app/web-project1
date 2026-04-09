@@ -1,8 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { ItemListView } from "../services/item/openItems/items.config.js";
-import { getOpenItems } from "../services/item/openItems/items.service.js";
 import { RecommendItemsview } from "../services/item/recommend/items.config.js";
 import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
@@ -18,12 +16,16 @@ import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelet
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
-import { FormDataMode, ItemPageMode, UploadMode } from "../types/serviceType/items/items.js";
+import { FormDataMode, ItemListType, ItemListView, ItemPageMode, UploadMode } from "../types/serviceType/items/items.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
 import { getItemHighlightUseCase } from "../usecases/item/highlight/getItemHighlight.js";
 import { itemCopyUploadUseCase } from "../usecases/item/copyUpload/copyUpload.js";
+import { getIndexVideosUseCase } from "../usecases/item/itemList/indexVideoList.js";
+import { getIndexItemsUseCase } from "../usecases/item/itemList/indexItemList.js";
+import { getProfileVideosUseCase } from "../usecases/item/itemList/profileVideoList.js";
+import { getProfileItemsUseCase } from "../usecases/item/itemList/profileItemList.js";
 
 const router = Router();
 
@@ -224,7 +226,7 @@ router.delete("/:id/draft", authenticateToken, async (req: Request, res: Respons
 router.get("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
 
-    const type = req.query.type;
+    const type = req.query.type as ItemListType;
 
     if (type !== "video" && type !== "item") {
         throw new AppError("INVALID_TYPE", 400);
@@ -238,15 +240,33 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
 
     const pageUserId = parseInt(req.query.pageUserId as string) || undefined;
 
+    if (view === "profile" && !pageUserId) {
+        throw new AppError("PAGE_USER_NOT_FOUND", 404);
+    }
+    
+    const usecaseMap: Record<ItemListView, Record<ItemListType, any>> = {
+        index: {
+            video: getIndexVideosUseCase,
+            item: getIndexItemsUseCase,
+        },
+        profile: {
+            video: getProfileVideosUseCase,
+            item: getProfileItemsUseCase,
+        },
+    };
+
+    const usecase = usecaseMap[view]?.[type];
+
+    if (!usecase) {
+        throw new AppError("INVALID_VIEW_OR_TYPE", 400);
+    }
+
     try {
-        const { items, totalPages } = await getOpenItems({
-            userId,
-            type,
-            page,
-            view,
-            limit,
-            pageUserId,
-        });
+        const params = view === "profile" 
+        ? { page, limit, pageUserId }
+        : { userId, page, limit };
+
+        const { items, totalPages } = await usecase(params);
 
         res.status(200).json({ items, totalPages });
     } catch (err) {
