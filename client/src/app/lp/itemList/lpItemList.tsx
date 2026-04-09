@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { Items } from "@/types/itemListTypes";
-import { refreshToken } from "@/lib/refreshToken";
 import { formatDuration } from "@/lib/formatDuration";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Res = {
     items: Items[];
@@ -44,7 +44,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
 
     const setVL = async (page: number, limit: number) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=index&limit=${limit}`, {
                 method: 'GET',
@@ -68,7 +68,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
 
     const setIL = async (page: number, limit: number) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=index&limit=${limit}`, {
                 method: 'GET',

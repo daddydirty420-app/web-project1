@@ -6,8 +6,8 @@ import { useState } from "react";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -29,7 +29,7 @@ export const ProfileEditForm = ({ user }: Props) => {
         const query = (file || defaultImage) ? "?imageEdit=true" : "";
         
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

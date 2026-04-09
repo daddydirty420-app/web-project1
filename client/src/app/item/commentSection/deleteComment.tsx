@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
 import Portial from "../portial";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     comment: Comment;
@@ -22,7 +22,7 @@ export const DeleteComment = ({ comment, page }: Props) => {
 
     const deleteComment = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

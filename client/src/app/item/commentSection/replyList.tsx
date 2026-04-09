@@ -10,7 +10,7 @@ import { CommentText } from "./commentText";
 import { Like } from "./like";
 import { ReportFloat } from "./reportFloat";
 import { DeleteComment } from "./deleteComment";
-import { refreshToken } from "@/lib/refreshToken";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     parentId: string;
@@ -26,7 +26,7 @@ export const ReplyList = ({ parentId, page, loggedIn, optimisticComments = [], r
     useEffect(() => {
         const fetchComment = async () => {
             try {
-                const accessToken = await refreshToken();
+                const accessToken = await getAccessToken();
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/reply-comment/${parentId}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",

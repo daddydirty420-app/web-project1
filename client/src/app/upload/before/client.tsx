@@ -3,16 +3,16 @@
 import Link from "next/link";
 import styles from "../upload.module.css";
 import UploadUI from "../uploadUI";
-import { refreshToken } from "@/lib/refreshToken";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 export const Client = () => {
     const router = useRouter();
 
     const newItem = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

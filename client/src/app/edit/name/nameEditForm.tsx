@@ -6,10 +6,10 @@ import EditUI from "../editUI";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Name } from "../type";
-import { refreshToken } from "@/lib/refreshToken";
 import Image from "next/image";
 import clsx from "clsx";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     name: Name;
@@ -63,7 +63,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -151,7 +151,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
         };
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

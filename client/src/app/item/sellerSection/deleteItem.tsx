@@ -4,7 +4,7 @@ import styles from "./seller.module.css";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -25,7 +25,7 @@ export const DeleteItem = ({ id, page }: Props) => {
         : `/item/deleted/${id}`;
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

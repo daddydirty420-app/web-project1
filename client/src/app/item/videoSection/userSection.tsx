@@ -55,7 +55,7 @@ export const UserSection = ({ item, sellerMe, page, userId }: Props) => {
                         </div>
                     </div>
                 </Link>
-                {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} withCount={false} currentUserId={userId} />}
+                {!sellerMe && page === "normal" && <FollowButton targetUserId={sellerId ?? ""} currentUserId={userId} />}
             </div>
         </section>
     );

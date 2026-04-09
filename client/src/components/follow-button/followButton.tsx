@@ -3,7 +3,7 @@
 import { useFollowStatus, updateFollowCache } from '@/hooks/useFollow';
 import styles from './followButton.module.css';
 import clsx from 'clsx';
-import { refreshToken } from '@/lib/refreshToken';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     targetUserId: string;
@@ -19,7 +19,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, true);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -45,7 +45,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

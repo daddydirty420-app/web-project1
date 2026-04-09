@@ -7,8 +7,8 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import { CommentForm } from "./commentForm";
 import { CommentList } from "./commentList";
 import { Item, User } from "../itemPageTypes";
-import { refreshToken } from "@/lib/refreshToken";
 import useSWR from "swr";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -22,7 +22,7 @@ type Props = {
 
 const fetcher = async (url: string) => {
     try {
-        const accessToken = await refreshToken();
+        const accessToken = await getAccessToken();
 
         const res = await fetch(url, {
             headers: {

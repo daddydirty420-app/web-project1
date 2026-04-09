@@ -7,7 +7,7 @@ import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -30,7 +30,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
         updateItemLikeCache(id, true);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -54,7 +54,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
         updateItemLikeCache(id, false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

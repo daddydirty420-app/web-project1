@@ -7,7 +7,7 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { refreshToken } from "@/lib/refreshToken";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -22,7 +22,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         if (loggedIn) {
             const fetchData = async () => {
                 try {
-                    const accessToken = await refreshToken();
+                    const accessToken = await getAccessToken();
                 
                     if (!accessToken) {
                         alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -55,7 +55,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         setCartIn(true);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -83,7 +83,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         setCartIn(false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -113,7 +113,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

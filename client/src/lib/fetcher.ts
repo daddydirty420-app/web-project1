@@ -1,7 +1,7 @@
-import { refreshToken } from "./refreshToken";
+import { getAccessToken } from "./getAccessToken";
 
 export const fetcher = async <T>(url: string): Promise<T> => {
-    const accessToken = await refreshToken();
+    const accessToken = await getAccessToken();
     
     const res = await fetch(url, {
         headers: {

@@ -9,8 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { StepBar } from "../stepBar";
 import { InputStr, InputTitle } from "@/components/inputForm";
 import { ButtonDiv } from "../buttonDiv";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -161,7 +161,7 @@ export const Form = ({ shopId, account }: Props) => {
         };
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

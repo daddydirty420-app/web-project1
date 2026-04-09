@@ -3,9 +3,9 @@
 import { useState } from "react";
 import styles from "./comment.module.css";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
 import { Comment, Item, User } from "../itemPageTypes";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -65,7 +65,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
         setInputComment("");
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 throw new Error("AUTH_ERROR");

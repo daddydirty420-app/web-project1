@@ -8,8 +8,8 @@ import { Button, InputTitle } from "@/components/inputForm";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopEditId: string;
@@ -139,7 +139,7 @@ export default function Client({ shopEditId }: Props) {
         };
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

@@ -7,9 +7,9 @@ import EditUI from "../editUI";
 import { BankAccount } from "../type";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
 import clsx from "clsx";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     account: BankAccount;
@@ -162,7 +162,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
         };
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

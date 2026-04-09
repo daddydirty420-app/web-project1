@@ -16,7 +16,7 @@ import { Items } from "@/types/itemListTypes";
 import { ItemListRow } from "@/components";
 
 type Props = {
-    page: "cart" | "deleted" | "draft" | "like" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
+    page: "cart" | "deleted" | "draft" | "like" | "stock" | "uploaded" | "watch-history";
     uploadedTab?: "all" | "selling" | "sold";
     relatedItemList?: Items[];
 };

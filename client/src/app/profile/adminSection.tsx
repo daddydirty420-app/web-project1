@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import { refreshToken } from '@/lib/refreshToken';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     userId: string;
@@ -29,7 +29,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
         const fetchData = async () => {
             try {
-                const accessToken = await refreshToken();
+                const accessToken = await getAccessToken();
                 
                 if (!accessToken) {
                     alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -61,11 +61,9 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         fetchData();
     }, [userId, adminPage, router]);
 
-    const submitPenalty = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const submitPenalty = async (addPenalty: number) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -97,11 +95,9 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         }
     };
 
-    const submitUriage = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const uriageDecrease = async (deleteUriage: number) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -132,11 +128,9 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         }
     };
 
-    const submitDeleteUser = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const deleteUser = async (deleteReason: string) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -185,58 +179,76 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                     
                 <div className={styles.inputDiv}>
                     <p className={styles.inputTitle}>ペナルティポイント</p>
-                    <form onSubmit={submitPenalty}>
-                        <input
-                        type='number'
-                        name='addPenalty'
-                        value={addPenalty}
-                        onChange={(e) => setAddPenalty(Number(e.target.value))}
-                        placeholder='ペナルティポイント'
-                        className={styles.input}
-                        required
-                        />
-                        <button type='submit' className={styles.popupButton}>ペナルティ付与</button>
-                    </form>
+                        
+                    <input
+                    type='number'
+                    name='addPenalty'
+                    value={addPenalty}
+                    onChange={(e) => setAddPenalty(Number(e.target.value))}
+                    placeholder='ペナルティポイント'
+                    className={styles.input}
+                    required
+                    />
+                        
+                    <button
+                    type='button'
+                    className={styles.popupButton}
+                    onClick={() => setAddPenalty(addPenalty)}
+                    >
+                        ペナルティ付与
+                    </button>
                 </div>
 
                 <div className={styles.inputDiv}>
                     <p className={styles.inputTitle}>売上金没収</p>
-                    <form onSubmit={submitUriage}>
-                        <input
-                        type='number'
-                        name='deleteUriage'
-                        value={deleteUriage}
-                        onChange={(e) => {
-                            const value = Number(e.target.value);
-                            if (data?.uriagekin !== undefined && value > data.uriagekin) {
-                                setDeleteUriage(data.uriagekin);
-                            } else {
-                                setDeleteUriage(value);
-                            }
-                        }}
-                        placeholder='没収金額'
-                        className={styles.input}
-                        required
-                        max={data?.uriagekin}
-                        />
-                        <button type='submit' className={styles.popupButton}>売上金没収</button>
-                    </form>
+                        
+                    <input
+                    type='number'
+                    name='deleteUriage'
+                    value={deleteUriage}
+                    onChange={(e) => {
+                        const value = Number(e.target.value);
+                        if (data?.uriagekin !== undefined && value > data.uriagekin) {
+                            setDeleteUriage(data.uriagekin);
+                        } else {
+                            setDeleteUriage(value);
+                        }
+                    }}
+                    placeholder='没収金額'
+                    className={styles.input}
+                    required
+                    max={data?.uriagekin}
+                    />
+                        
+                    <button
+                    type='button'
+                    className={styles.popupButton}
+                    onClick={() => uriageDecrease(deleteUriage)}
+                    >
+                        売上金没収
+                    </button>
                 </div>
 
                 <div className={styles.inputDiv}>
                     <p className={styles.inputTitle}>削除</p>
-                    <form onSubmit={submitDeleteUser}>
-                        <input
-                        type='text'
-                        name='deleteReason'
-                        value={deleteReason}
-                        onChange={(e) => setDeleteReason(e.target.value)}
-                        placeholder='削除理由'
-                        className={styles.input}
-                        required
-                        />
-                        <button type='submit' className={styles.popupButton}>削除する</button>
-                    </form>
+
+                    <input
+                    type='text'
+                    name='deleteReason'
+                    value={deleteReason}
+                    onChange={(e) => setDeleteReason(e.target.value)}
+                    placeholder='削除理由'
+                    className={styles.input}
+                    required
+                    />
+
+                    <button
+                    type='button'
+                    className={styles.popupButton}
+                    onClick={() => deleteUser(deleteReason)}
+                    >
+                        削除する
+                    </button>
                 </div>
             </div>
             </>

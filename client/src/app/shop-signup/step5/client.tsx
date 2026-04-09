@@ -7,8 +7,8 @@ import SSUI from "../ssUI";
 import { ButtonDiv } from "../buttonDiv";
 import { ConfirmSection } from "@/components";
 import { useState } from "react";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -36,7 +36,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
 
     const updateField = async (field: string, value: string | number | Date) => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -59,7 +59,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
 
     const submit = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

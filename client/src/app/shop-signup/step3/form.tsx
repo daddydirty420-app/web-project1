@@ -11,8 +11,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -143,7 +143,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
         };
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

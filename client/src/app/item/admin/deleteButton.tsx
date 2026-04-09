@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
 import { X } from "lucide-react";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -23,7 +23,7 @@ export const DeleteButton = ({ id, item }: Props) => {
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

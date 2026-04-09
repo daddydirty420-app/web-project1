@@ -12,9 +12,9 @@ import DatePicker from "react-datepicker";
 import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import { StepBar } from "../stepBar";
-import { refreshToken } from "@/lib/refreshToken";
 import clsx from "clsx";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -175,7 +175,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

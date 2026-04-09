@@ -5,10 +5,10 @@ import styles from "./header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
 import clsx from "clsx";
-import { refreshToken } from "@/lib/refreshToken";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { normalizeJapanese } from "@/lib/normalizeJapanese";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     loggedIn: boolean;
@@ -41,7 +41,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
     const searchHistory = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) return;
 

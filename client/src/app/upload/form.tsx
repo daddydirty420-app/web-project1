@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
@@ -16,10 +16,10 @@ import { ConditionInput, ConditionValue } from "./condition";
 import { ShippingInput, ShippingValue } from "./shipping";
 import { PriceInput, PriceValue } from "./price";
 import toast from "react-hot-toast";
-import { refreshToken } from "@/lib/refreshToken";
 import { TopLoader } from "@/components";
 import { useUpload } from "./hooks/useUpload";
 import { useFileUpload } from "./hooks/useFileUpload";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     itemId: string;
@@ -250,7 +250,7 @@ export const Form = ({
         const body = createBody(params);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -384,7 +384,7 @@ export const Form = ({
         const body = createBody(params);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                         
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

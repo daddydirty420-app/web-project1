@@ -5,9 +5,9 @@ import { Item } from "../itemPageTypes";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
 import { InputTitle } from "@/components/inputForm";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     item: Item;
@@ -58,7 +58,7 @@ export const SaleButton = ({ item }: Props) => {
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -93,7 +93,7 @@ export const SaleButton = ({ item }: Props) => {
 
     const end = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

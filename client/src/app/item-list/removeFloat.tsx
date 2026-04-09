@@ -6,8 +6,8 @@ import { Item } from "./type";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Responce = {
     itemList: Item[];
@@ -16,7 +16,7 @@ type Responce = {
 
 type Props = {
     item: Item;
-    page: "cart" | "deleted" | "draft" | "like" | "purchased" | "sold" | "stock" | "uploaded" | "watch-history";
+    page: "cart" | "deleted" | "draft" | "like" | "stock" | "uploaded" | "watch-history";
     mutate: KeyedMutator<Responce>;
 };
 
@@ -66,7 +66,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         }
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                 
             if (!accessToken) {
                 throw new Error("AUTH_ERROR");

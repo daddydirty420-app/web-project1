@@ -3,9 +3,9 @@
 import { KeyedMutator } from "swr";
 import styles from "./cart.module.css";
 import { Item } from "./type";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Responce = {
     itemList: Item[];
@@ -22,7 +22,7 @@ export const CartElement = ({ item, mutate }: Props) => {
 
     const buy = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                         
             if (!accessToken) {
                 throw new Error("AUTH_ERROR");
@@ -73,7 +73,7 @@ export const CartElement = ({ item, mutate }: Props) => {
         }, false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
                         
             if (!accessToken) {
                 throw new Error("AUTH_ERROR");

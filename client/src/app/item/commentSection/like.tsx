@@ -8,7 +8,7 @@ import { Comment } from "../itemPageTypes";
 import { updateCommentLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useCommentLike";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { refreshToken } from "@/lib/refreshToken";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     comment: Comment;
@@ -30,7 +30,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
         updateCommentLikeCache(id, true);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
@@ -54,7 +54,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
         updateCommentLikeCache(id, false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
 
             if (!accessToken) {
                 alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");

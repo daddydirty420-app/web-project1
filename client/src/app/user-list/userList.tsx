@@ -8,10 +8,10 @@ import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid
 import Link from "next/link";
 import { FollowButton } from "./followButton";
 import React, { useState } from "react";
-import { refreshToken } from "@/lib/refreshToken";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     loggedIn: boolean;
@@ -72,7 +72,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         }, false);
 
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
         
             if (!accessToken) {
                 mutate();

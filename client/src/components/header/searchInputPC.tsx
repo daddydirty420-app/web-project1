@@ -5,9 +5,9 @@ import styles from "./header.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
-import { refreshToken } from "@/lib/refreshToken";
 import { useRouter } from "next/navigation";
 import { normalizeJapanese } from "@/lib/normalizeJapanese";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     loggedIn: boolean;
@@ -46,7 +46,7 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
 
     const searchHistory = async () => {
         try {
-            const accessToken = await refreshToken();
+            const accessToken = await getAccessToken();
             
             if (!accessToken) return;
             
