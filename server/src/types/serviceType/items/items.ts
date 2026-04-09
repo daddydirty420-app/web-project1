@@ -1,6 +1,6 @@
 import { Transaction } from "sequelize";
 import { Item } from "../../../models/index.js";
-import { BodyCategory, Layer, LifeStyleCategory } from "../../itemAttributes.js";
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../../itemAttributes.js";
 
 export type ItemPageMode = 
 | "normal"
@@ -126,6 +126,25 @@ export type LogicalDeleteParams = {
     item: InstanceType<typeof Item>;
     data: {
         price: number;
+    };
+    transaction: Transaction;
+};
+
+export type CreateItemCopyUploadParams = {
+    data: {
+        name: string;
+        detail: string;
+        price: number,
+        item_condition_id: number,
+        seller_id: number,
+        search_text: string,
+        image_url: string | string[],
+        first_image_url: string,
+        gender_type: string,
+        age_type: string,
+        category_id: number,
+        brand_id: number | null,
+        attributes: ItemAttributes,
     };
     transaction: Transaction;
 };

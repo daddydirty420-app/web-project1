@@ -14,7 +14,6 @@ import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
-import itemCopyUpload from "../services/item/copyUpload/copyUpload.service.js";
 import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
@@ -24,6 +23,7 @@ import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
 import { getItemHighlightUseCase } from "../usecases/item/highlight/getItemHighlight.js";
+import { itemCopyUploadUseCase } from "../usecases/item/copyUpload/copyUpload.js";
 
 const router = Router();
 
@@ -69,7 +69,7 @@ router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Res
     const userId = req.user!.id;
 
     try {
-        const newItemId = await itemCopyUpload({ itemId, userId });
+        const newItemId = await itemCopyUploadUseCase({ itemId, userId });
 
         res.status(200).json({ newItemId });
     } catch (err) {
@@ -318,14 +318,9 @@ router.get('/:id/metadata', async (req: Request, res: Response, next: NextFuncti
     }
 });
 
-// GET /items/:id/form-data?mode=""
+// GET /items/:id/form-data
 router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = parseInt(req.params.id);
-
-    const mode = req.query.mode as FormDataMode;
-    if (!["normal", "edit", "draft"].includes(String(mode))) {
-        throw new AppError("INVALID_PAGE", 400);
-    }
 
     try {
         const {
@@ -336,10 +331,7 @@ router.get("/:id/form-data", authenticateToken, async (req: Request, res: Respon
             allService,
             allPlace,
             hasShop
-        } = await getFormDataUseCase({
-            itemId,
-            mode
-        });
+        } = await getFormDataUseCase({ itemId });
 
         res.status(200).json({
             item,

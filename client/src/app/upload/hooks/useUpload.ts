@@ -164,7 +164,7 @@ export const useUpload = () => {
             (sum, v) => sum + (v.inventory ?? 0),
             0,
         );
-        if (colorTotalInventory >= 2 && !(colorTotalInventory > params.attributesValue.all_inventory)) {
+        if (colorTotalInventory >= 2 && (colorTotalInventory < params.attributesValue.all_inventory)) {
             return { ok: false, message: "カラーの出品点数が合計点数を超過しています" };
         }
 

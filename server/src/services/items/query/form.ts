@@ -2,27 +2,7 @@
 import { Brands, Categories, Item, ItemConditionOption, ItemShippingProfile, Sale, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Video } from "../../../models/index.js";
 import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
-export const getItemFormDataNormal = ({ itemId }: ItemIdParams) => {
-    return Item.findByPk(itemId, {
-        attributes: ["id", "seller_id", "status"],
-        include: [
-            {
-                model: Video,
-                attributes: ["id"],
-            },
-            {
-                model: Sale,
-                attributes: ["id"],
-            },
-            {
-                model: ItemShippingProfile,
-                attributes: ["id"],
-            },
-        ],
-    });
-};
-
-export const getItemFormDataOther = ({ itemId }: ItemIdParams) => {
+export const getItemFormData = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: ["id", "name", "detail", "image_url", "price", "seller_id", "gender_type", "age_type", "status", "attributes"],
         include: [

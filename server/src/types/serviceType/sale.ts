@@ -13,3 +13,11 @@ export type UpdateSaleParams = {
     };
     transaction: Transaction;
 };
+
+export type CreateSaleCopyUploadParams = {
+    data: {
+        before_price: number;
+        item_id: number;
+    };
+    transaction: Transaction;
+};

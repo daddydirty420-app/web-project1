@@ -1,5 +1,5 @@
 import { Video } from "../models/index.js";
-import { PlayCountParams, UpdateStatusParams, UpdateVideoParams, VideoIdParams } from "../types/serviceType/video.js";
+import { CreateVideoCopyUploadParams, PlayCountParams, UpdateStatusParams, UpdateVideoParams, VideoIdParams } from "../types/serviceType/video.js";
 
 export const findByPkVideo = ({ videoId }: VideoIdParams) => {
     return Video.findByPk(videoId);
@@ -15,4 +15,8 @@ export const updateStatus = async ({ video, data }: UpdateStatusParams) => {
 
 export const updateVideo = async ({ video, data, transaction }: UpdateVideoParams) => {
     await video.update(data, { transaction });
+};
+
+export const createVideoCopyUpload = async ({ data, transaction }: CreateVideoCopyUploadParams) => {
+    await Video.create(data, { transaction });
 };
