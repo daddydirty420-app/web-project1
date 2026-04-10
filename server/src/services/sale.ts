@@ -1,5 +1,9 @@
 import { Sale } from "../models/index.js";
-import { CreateSaleCopyUploadParams, CreateSaleParams, LogicalDeleteUpdateParams, UpdateSaleParams } from "../types/serviceType/sale.js";
+import { CreateSaleCopyUploadParams, CreateSaleParams, LogicalDeleteUpdateParams, SaleIdParams, UpdateSaleEditParams, UpdateSaleParams } from "../types/serviceType/sale.js";
+
+export const getSale = ({ saleId }: SaleIdParams) => {
+    return Sale.findByPk(saleId);
+};
 
 export const createSale = async ({ itemId, transaction }: CreateSaleParams) => {
     await Sale.create({
@@ -26,4 +30,8 @@ export const updateSale = async ({ sale, data, transaction }: UpdateSaleParams) 
         discount_amount: 0,
         ...data,
     }, { transaction });
+};
+
+export const updateSaleEdit = async ({ sale, data, transaction }: UpdateSaleEditParams) => {
+    await sale.update(data, { transaction });
 };

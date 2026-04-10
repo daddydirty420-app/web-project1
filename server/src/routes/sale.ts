@@ -2,11 +2,12 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Sale, Item } from "../models/index.js";
+import { saleEditUseCase } from "../usecases/sale/saleEdit.js";
 
 const router = Router();
 
-router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const saleId = req.params.id;
+router.patch('/:id/edit', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const saleId = Number(req.params.id);
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });
         return;
@@ -22,26 +23,7 @@ router.patch('/sale-edit/:id', authenticateToken, async (req: Request, res: Resp
     }
 
     try {
-        const sale = await Sale.findByPk(saleId);
-        if (!sale) {
-            res.status(404).json({ message: "Saleが見つかりません。" });
-            return;
-        }
-        const item = await Item.findByPk(sale.item_id);
-        if (!item) {
-            res.status(404).json({ message: "商品が見つかりません。" });
-            return;
-        }
-
-        await sale.update({
-            discount_rate: discountRate,
-            discount_amount: discountAmount,
-            sale_flag: true,
-        });
-
-        await item.update({
-            price: finalPrice,
-        });
+        await saleEditUseCase({ saleId, discountRate, discountAmount, finalPrice });
 
         res.status(200).json({ message: "値引きしました！" });
     } catch (err) {

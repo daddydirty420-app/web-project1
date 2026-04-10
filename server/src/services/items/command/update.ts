@@ -1,4 +1,4 @@
-import { CountUpdateParams, ItemTransactionParams, PublishUpdateParams, SortUpdateParams, UpdateItemImageParams, UpdateItemParams } from "../../../types/serviceType/items/items.js";
+import { CountUpdateParams, ItemTransactionParams, PublishUpdateParams, SortUpdateParams, UpdateItemImageParams, UpdateItemParams, UpdatePriceParams } from "../../../types/serviceType/items/items.js";
 
 export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
     await item.update(data);
@@ -43,4 +43,8 @@ export const updateImage = async ({ item, urls, transaction }: UpdateItemImagePa
     item.setDataValue("image_url", urls);
     item.changed("image_url", true);
     await item.save({ transaction });
+};
+
+export const updatePrice = async ({ item, data, transaction }: UpdatePriceParams) => {
+    await item.update(data, { transaction });
 };

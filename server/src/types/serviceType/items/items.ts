@@ -124,6 +124,14 @@ export type UpdateItemImageParams = {
     transaction: Transaction;
 };
 
+export type UpdatePriceParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        price: number;
+    };
+    transaction: Transaction,
+};
+
 export type ItemDataParams = {
     item: InstanceType<typeof Item>;
 };

@@ -65,7 +65,7 @@ export const SaleButton = ({ item }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/sale-edit/${sale?.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/${sale?.id}/edit`, {
                 method: 'PATCH',
                 headers: {
                     "Content-type": "application/json",
