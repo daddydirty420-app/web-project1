@@ -3,8 +3,9 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken } from "../middleware/index.js";
 import { Op } from "sequelize";
 import { Orders, PaymentMethodOption, Item, User, Delivery, ShippingDayOption, ShippingServiceOption, TodouhukenOption, Address, Name, Chat, ShopInfo, DeliveryStatusOption, Cancel, Sale, Categories } from "../models/index.js";
-import { getOrderList } from "../services/order/orderList/orderList.service.js";
 import { AppError } from "../errors.js";
+import { getPurchasedListUseCase } from "../usecases/order/getPurchasedList.js";
+import { getSoldListUseCase } from "../usecases/order/getSoldList.js";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/", authenticateToken, async (req: Request, res: Response, next: Nex
 
     const type = req.query.type;
 
-    if (!(type === "purchased" || type === "sold")) {
+    if (type !== "purchased" && type !== "sold") {
         throw new AppError("INVALID_TYPE", 400);
     }
 
@@ -22,13 +23,14 @@ router.get("/", authenticateToken, async (req: Request, res: Response, next: Nex
 
     const status = req.query.status as string | undefined;
 
+    const params = { page, userId, status };
+
+    const usecase = type === "purchased"
+    ? () => getPurchasedListUseCase(params)
+    : () => getSoldListUseCase(params);
+
     try {
-        const { ordersList, totalPages } = await getOrderList({
-            type,
-            page,
-            userId,
-            status,
-        });
+        const { ordersList, totalPages } = await usecase();
 
         res.status(200).json({ ordersList, totalPages });
     } catch (err) {
