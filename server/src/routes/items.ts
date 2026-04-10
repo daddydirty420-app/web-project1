@@ -1,8 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import sequelize from "../db.js";
-import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { Body } from "../types/serviceType/items/uploadBody.js";
 import { patchPublishUseCase } from "../usecases/item/publish/publish.js";
@@ -19,7 +17,7 @@ import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
 import { getItemHighlightUseCase } from "../usecases/item/highlight/getItemHighlight.js";
-import { itemCopyUploadUseCase } from "../usecases/item/copyUpload/copyUpload.js";
+import { itemCopyUploadUseCase } from "../usecases/item/upload/copyUpload/copyUpload.js";
 import { getIndexVideosUseCase } from "../usecases/item/itemList/indexVideoList.js";
 import { getIndexItemsUseCase } from "../usecases/item/itemList/indexItemList.js";
 import { getProfileVideosUseCase } from "../usecases/item/itemList/profileVideoList.js";
@@ -27,6 +25,7 @@ import { getProfileItemsUseCase } from "../usecases/item/itemList/profileItemLis
 import { getIndexRecommendUseCase } from "../usecases/item/itemList/recommend/indexRecommend.js";
 import { getCartRecommendUseCase } from "../usecases/item/itemList/recommend/cartRecommend.js";
 import { getItemPageRecommendUseCase } from "../usecases/item/itemList/recommend/itemPageRecommend.js";
+import { createItemsUseCase } from "../usecases/item/upload/createItem.js";
 
 const router = Router();
 
@@ -34,33 +33,11 @@ const router = Router();
 router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
-    const t = await sequelize.transaction();
-
     try {
-        const item = await Item.create({
-            seller_id: userId,
-        }, { transaction: t });
-
-        const itemId = item.id;
-
-        await Video.create({
-            user_id: userId,
-            item_id: itemId,
-        }, { transaction: t });
-
-        await Sale.create({
-            item_id: itemId,
-        }, { transaction: t });
-        
-        await ItemShippingProfile.create({
-            item_id: itemId,
-        }, { transaction: t });
-
-        await t.commit();
+        const itemId = await createItemsUseCase({ userId });
 
         res.status(200).json({ itemId });
     } catch (err) {
-        await t.rollback();
         next(err);
     }
 });

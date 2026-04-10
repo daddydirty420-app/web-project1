@@ -2,7 +2,7 @@ import { s3Domain } from "../../infra/aws/s3.js";
 import { AppError } from "../../errors.js";
 import fs from "fs";
 import { spawn } from "child_process";
-import { findByPkVideo, updateStatus } from "../../services/video.js";
+import { getVideo, updateStatus } from "../../services/video.js";
 import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 import { getDuration } from "../../utils/ffmpeg.js";
 
@@ -15,7 +15,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
 
     // video取得
-    const video = await findByPkVideo({ videoId });
+    const video = await getVideo({ videoId });
     if (!video) {
         throw new AppError("VIDEO_NOT_FOUND", 404);
     }

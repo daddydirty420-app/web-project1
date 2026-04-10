@@ -1,4 +1,4 @@
-import { addPlayCount, findByPkVideo } from "../../services/video.js";
+import { addPlayCount, getVideo } from "../../services/video.js";
 import { AppError } from "../../errors.js";
 import { getItem, updateSortNumber } from "../../services/items/index.js";
 
@@ -10,7 +10,7 @@ type Params = {
 export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
 
     // video取得
-    const video = await findByPkVideo({ videoId });
+    const video = await getVideo({ videoId });
     if (!video) {
         throw new AppError("VIDEO_NOT_FOUND", 404);
     }

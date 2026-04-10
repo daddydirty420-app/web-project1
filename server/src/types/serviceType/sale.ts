@@ -1,6 +1,11 @@
 import { Transaction } from "sequelize";
 import { Sale } from "../../models/index.js";
 
+export type CreateSaleParams = {
+    itemId: number;
+    transaction: Transaction;
+};
+
 export type LogicalDeleteUpdateParams = {
     sale: InstanceType<typeof Sale>;
     transaction: Transaction;

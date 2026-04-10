@@ -1,6 +1,11 @@
 import { Transaction } from "sequelize";
 import { ItemShippingProfile } from "../../models/index.js";
 
+export type CreateShippingParams = {
+    itemId: number;
+    transaction: Transaction;
+};
+
 export type UpdateShippingParams = {
     shipping: InstanceType<typeof ItemShippingProfile>;
     data: {

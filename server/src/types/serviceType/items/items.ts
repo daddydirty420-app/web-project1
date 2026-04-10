@@ -26,6 +26,11 @@ export type ItemPageRecommendParams = {
     categoryRequired: boolean;
 };
 
+export type UserIdTransactionParams = {
+    userId: number;
+    transaction: Transaction;
+};
+
 export type ItemTransactionParams = {
     item: InstanceType<typeof Item>;
     transaction: Transaction;

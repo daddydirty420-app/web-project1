@@ -1,12 +1,12 @@
-import sequelize from "../../../db.js";
-import type { ItemAttributes } from "../../../types/itemAttributes.js";
-import { copyS3Object, getFileName } from "../../../utils/s3/index.js";
-import { getItemWithVideoSaleShipping } from "../../../services/items/index.js";
-import { AppError } from "../../../errors.js";
-import { createItemCopyUpload } from "../../../services/items/command/create.js";
-import { createVideoCopyUpload } from "../../../services/video.js";
-import { createSaleCopyUpload } from "../../../services/sale.js";
-import { createShippingCopyUpload } from "../../../services/itemShippingProfile.js";
+import sequelize from "../../../../db.js";
+import type { ItemAttributes } from "../../../../types/itemAttributes.js";
+import { copyS3Object, getFileName } from "../../../../utils/s3/index.js";
+import { getItemWithVideoSaleShipping } from "../../../../services/items/index.js";
+import { AppError } from "../../../../errors.js";
+import { createItemCopyUpload } from "../../../../services/items/index.js";
+import { createVideoCopyUpload } from "../../../../services/video.js";
+import { createSaleCopyUpload } from "../../../../services/sale.js";
+import { createShippingCopyUpload } from "../../../../services/itemShippingProfile.js";
 
 type Params = {
     itemId: number;

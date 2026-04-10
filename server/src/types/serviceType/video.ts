@@ -12,6 +12,12 @@ export type PlayCountParams = {
     };
 };
 
+export type CreateVideoParams = {
+    itemId: number;
+    userId: number;
+    transaction: Transaction;
+};
+
 export type UpdateStatusParams = {
     video: InstanceType<typeof Video>;
     data: {

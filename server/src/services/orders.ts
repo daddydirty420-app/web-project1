@@ -1,10 +1,5 @@
 import { Delivery, DeliveryStatusOption, Orders } from "../models/index.js";
-
-type OrderListParams = {
-    where: any;
-    limit: number;
-    offset: number;
-};
+import { OrderListParams } from "../types/serviceType/orders.js";
 
 export const getPurchasedOrders = async ({ where, limit, offset }: OrderListParams) => {
 
@@ -43,7 +38,7 @@ export const getPurchasedOrders = async ({ where, limit, offset }: OrderListPara
 };
 
 export const getSoldOrders = async ({ where, limit, offset }: OrderListParams) => {
-    
+
     const ordersList = await Orders.findAll({
         attributes: ['id', 'total_amount', 'buy_at', 'item_count', "status", "purchase_snapshot"],
         where,
