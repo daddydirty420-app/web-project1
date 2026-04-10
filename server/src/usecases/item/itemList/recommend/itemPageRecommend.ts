@@ -1,7 +1,6 @@
 import { Op } from "sequelize";
 import { AppError } from "../../../../errors.js";
-import { getItemPageRecommendItems } from "../../../../services/items/query/list/recommendList.js";
-import { getItemWithCategory } from "../../../../services/items/query/relation.js";
+import { getItemPageRecommendItems, getItemWithCategory } from "../../../../services/items/index.js";
 
 type Params = {
     itemId?: number;

@@ -1,4 +1,4 @@
-import { createCart, findCart } from "../../services/cart.js";
+import { createCart, getCartOne } from "../../services/cart.js";
 import { AppError } from "../../errors.js";
 import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
 
@@ -10,7 +10,7 @@ type Params = {
 export const addCartUseCase = async ({ itemId, userId }: Params) => {
 
     // cart取得
-    const cart = await findCart({ itemId, userId });
+    const cart = await getCartOne({ itemId, userId });
 
     if (cart) {
         throw new AppError("INVALID_ADD_CART", 409);

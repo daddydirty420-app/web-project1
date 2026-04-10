@@ -2,34 +2,6 @@ import { Transaction } from "sequelize";
 import { Item } from "../../../models/index.js";
 import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../../itemAttributes.js";
 
-export type ItemPageMode = 
-| "normal"
-| "draft"
-| "confirm"
-| "deleted";
-
-export type FormDataMode = 
-| "normal"
-| "draft"
-| "edit";
-
-export type UploadMode = 
-| "main"
-| "draft";
-
-export type ItemListType =
-| "video"
-| "item";
-
-export type ItemListView =
-| "index"
-| "profile";
-
-export type RecommendItemsview = 
-| "recommend"
-| "cart"
-| "itemPage";
-
 export type ItemIdParams = {
     itemId: number;
 };

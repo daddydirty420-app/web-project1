@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.service.js";
+import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.js";
 
 const router = Router();
 

@@ -14,7 +14,7 @@ import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelet
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
-import { FormDataMode, ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from "../types/serviceType/items/items.js";
+import { ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";

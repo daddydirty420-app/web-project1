@@ -1,6 +1,6 @@
 import { literal, Op } from "sequelize";
 import { AppError } from "../../../../errors.js";
-import { getCartRecommendItems } from "../../../../services/items/query/list/recommendList.js";
+import { getCartRecommendItems } from "../../../../services/items/index.js";
 
 type Params = {
     userId: number | null;

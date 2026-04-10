@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { getIndexRecommendItems } from "../../../../services/items/query/list/recommendList.js";
+import { getIndexRecommendItems } from "../../../../services/items/index.js";
 
 type Params = {
     userId: number | null;

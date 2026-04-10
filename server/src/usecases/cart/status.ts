@@ -1,4 +1,4 @@
-import { findCart } from "../../services/cart.js";
+import { getCartOne } from "../../services/cart.js";
 
 type Params = {
     itemId: number;
@@ -7,7 +7,7 @@ type Params = {
 
 export const cartStatusUseCase = async ({ itemId, userId }: Params) => {
 
-    const status = await findCart({ itemId, userId });
+    const status = await getCartOne({ itemId, userId });
 
     return !!status;
 };

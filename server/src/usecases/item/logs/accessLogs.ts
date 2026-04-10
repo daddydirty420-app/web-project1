@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { addViewsCount, getItem, updateSortNumber } from "../../../services/items/index.js";
-import { createWatchHistory, findWatchHistory, updateUpdateAt } from "../../../services/watchHistory.js";
+import { createWatchHistory, getWatchHistoryOne, updateUpdateAt } from "../../../services/watchHistory.js";
 
 type Params = {
     itemId: number;
@@ -16,7 +16,7 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
 
     // WatchHistory作成・更新
     if (userId) {
-        const history = await findWatchHistory({ itemId, userId });
+        const history = await getWatchHistoryOne({ itemId, userId });
         
         if (history) {
             updateUpdateAt({ history }).catch((err) => {

@@ -1,4 +1,4 @@
-import { destroyCart, findCart } from "../../services/cart.js";
+import { destroyCart, getCartOne } from "../../services/cart.js";
 import { AppError } from "../../errors.js";
 import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
 
@@ -10,7 +10,7 @@ type Params = {
 export const deleteCartUseCase = async ({ itemId, userId }: Params) => {
 
     // cart取得
-    const cart = await findCart({ itemId, userId });
+    const cart = await getCartOne({ itemId, userId });
 
     if (!cart) {
         throw new AppError("CART_NOT_FOUND", 404);

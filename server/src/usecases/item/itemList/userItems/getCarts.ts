@@ -1,0 +1,30 @@
+import { Op } from "sequelize";
+import { getUserItemsCartList } from "../../../../services/cart.js";
+
+type Params = {
+    page: number;
+    userId: number;
+    keyword?: string;
+};
+
+export const getUserItemsCartsUseCase = async ({ page, userId, keyword }: Params) => {
+    const limit = 20;
+    const offset = (page - 1) * limit;
+
+    const itemWhere: any = {
+        status: "active"
+    };
+
+    if (keyword) {
+        itemWhere.search_text = {
+            [Op.iLike]: `%${keyword}%`,
+        };
+    }
+    
+    const { itemList, totalCount } = await getUserItemsCartList({ userId, itemWhere, limit, offset });
+
+    return {
+        itemList,
+        totalPages: Math.ceil(totalCount / limit),
+    };
+};
