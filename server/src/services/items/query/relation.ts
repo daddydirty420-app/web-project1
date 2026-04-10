@@ -12,6 +12,17 @@ export const getItemHighlight = ({ itemId }: ItemIdParams) => {
     });
 };
 
+export const getItemWithCategory = ({ itemId }: ItemIdParams) => {
+    return Item.findByPk(itemId, {
+        include: [
+            {
+                model: Categories,
+                as: "Category",
+            },
+        ],
+    });
+};
+
 export const getItemWithVideoSaleShipping = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         include: [

@@ -1,8 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { RecommendItemsview } from "../services/item/recommend/items.config.js";
-import { getRecommendItems } from "../services/item/recommend/items.service.js";
 import sequelize from "../db.js";
 import { Item, ItemShippingProfile, Sale, Video } from "../models/index.js";
 import { AppError } from "../errors.js";
@@ -16,7 +14,7 @@ import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelet
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
 import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
 import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
-import { FormDataMode, ItemListType, ItemListView, ItemPageMode, UploadMode } from "../types/serviceType/items/items.js";
+import { FormDataMode, ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from "../types/serviceType/items/items.js";
 import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
 import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
 import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
@@ -26,6 +24,9 @@ import { getIndexVideosUseCase } from "../usecases/item/itemList/indexVideoList.
 import { getIndexItemsUseCase } from "../usecases/item/itemList/indexItemList.js";
 import { getProfileVideosUseCase } from "../usecases/item/itemList/profileVideoList.js";
 import { getProfileItemsUseCase } from "../usecases/item/itemList/profileItemList.js";
+import { getIndexRecommendUseCase } from "../usecases/item/itemList/recommend/indexRecommend.js";
+import { getCartRecommendUseCase } from "../usecases/item/itemList/recommend/cartRecommend.js";
+import { getItemPageRecommendUseCase } from "../usecases/item/itemList/recommend/itemPageRecommend.js";
 
 const router = Router();
 
@@ -243,15 +244,18 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
     if (view === "profile" && !pageUserId) {
         throw new AppError("PAGE_USER_NOT_FOUND", 404);
     }
+
+    const baseParams = { page, limit };
     
-    const usecaseMap: Record<ItemListView, Record<ItemListType, any>> = {
+    // usecaseマップ（アロー関数で包む）
+    const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
         index: {
-            video: getIndexVideosUseCase,
-            item: getIndexItemsUseCase,
+            video: () => getIndexVideosUseCase({ ...baseParams, userId }),
+            item: () => getIndexItemsUseCase({ ...baseParams, userId }),
         },
         profile: {
-            video: getProfileVideosUseCase,
-            item: getProfileItemsUseCase,
+            video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
+            item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
         },
     };
 
@@ -262,11 +266,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
     }
 
     try {
-        const params = view === "profile" 
-        ? { page, limit, pageUserId }
-        : { userId, page, limit };
-
-        const { items, totalPages } = await usecase(params);
+        const { items, totalPages } = await usecase();
 
         res.status(200).json({ items, totalPages });
     } catch (err) {
@@ -282,12 +282,21 @@ router.get("/recommend", authenticateOptional, async (req: Request, res: Respons
 
     const itemId = parseInt(req.query.itemId as string) || undefined;
 
+    // 関数そのものを保存（実行しない）
+    const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
+        recommend: () => getIndexRecommendUseCase({ userId }),
+        cart: () => getCartRecommendUseCase({ userId }),
+        itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
+    };
+
+    const usecase = usecaseMap[view];
+
+    if (!usecase) {
+        throw new AppError("INVALID_VIEW", 400);
+    }
+
     try {
-        const items = await getRecommendItems({
-            userId,
-            view,
-            itemId,
-        });
+        const items = await usecase();
 
         res.status(200).json({ items });
     } catch (err) {

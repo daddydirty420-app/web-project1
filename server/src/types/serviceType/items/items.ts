@@ -25,12 +25,33 @@ export type ItemListView =
 | "index"
 | "profile";
 
+export type RecommendItemsview = 
+| "recommend"
+| "cart"
+| "itemPage";
+
 export type ItemIdParams = {
     itemId: number;
 };
 
 export type UserIdParams = {
     userId: number;
+};
+
+export type ItemListParams = {
+    where: any;
+    limit: number;
+    offset: number;
+};
+
+export type RecommendParams = {
+    where: any;
+};
+
+export type ItemPageRecommendParams = {
+    where: any;
+    targetParentId: number;
+    categoryRequired: boolean;
 };
 
 export type ItemTransactionParams = {
