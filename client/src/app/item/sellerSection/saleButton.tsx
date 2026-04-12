@@ -100,7 +100,7 @@ export const SaleButton = ({ item }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/sale-stop/${sale?.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/${sale?.id}/stop`, {
                 method: 'PATCH',
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

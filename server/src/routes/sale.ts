@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Sale, Item } from "../models/index.js";
 import { saleEditUseCase } from "../usecases/sale/saleEdit.js";
+import { saleStopUseCase } from "../usecases/sale/saleStop.js";
 
 const router = Router();
 
@@ -31,40 +31,15 @@ router.patch('/:id/edit', authenticateToken, async (req: Request, res: Response,
     }
 });
 
-router.patch('/sale-stop/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const saleId = req.params.id;
+router.patch('/:id/stop', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const saleId = Number(req.params.id);
     if (!saleId) {
         res.status(400).json({ message: "saleIdがありません。" });
         return;
     }
 
     try {
-        const sale = await Sale.findByPk(saleId);
-        if (!sale) {
-            res.status(404).json({ message: "Saleが見つかりません。" });
-            return;
-        }
-        const beforePrice = sale.before_price;
-        if (!beforePrice || isNaN(beforePrice)) {
-            res.status(400).json({ message: "Sale.before_priceの値が不適切です。" });
-            return;
-        }
-
-        const item = await Item.findByPk(sale.item_id);
-        if (!item) {
-            res.status(404).json({ message: "商品が見つかりません。" });
-            return;
-        }
-
-        await sale.update({
-            discount_rate: 0,
-            discount_amount: 0,
-            sale_flag: false,
-        });
-
-        await item.update({
-            price: beforePrice,
-        });
+        await saleStopUseCase({ saleId });
 
         res.status(200).json({ message: "値引きを終了しました！" });
     } catch (err) {
