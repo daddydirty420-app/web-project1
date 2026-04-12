@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { CommentLike, ShopInfo, User } from "../models/index.js";
-import { CommentLikeWithUser, CommentUserParams, DestroyParams, ListParams } from "../types/serviceType/commentLike.js";
+import { CommentIdParams, CommentLikeWithUser, CommentUserParams, DestroyParams, ListParams } from "../types/serviceType/commentLike.js";
 
 export const getCommentLikeOne = async ({ commentId, userId }: CommentUserParams) => {
     return CommentLike.findOne({
@@ -9,17 +9,6 @@ export const getCommentLikeOne = async ({ commentId, userId }: CommentUserParams
             user_id: userId,
         },
     });
-};
-
-export const createCommentLike = async ({ commentId, userId }: CommentUserParams) => {
-    return CommentLike.create({
-        comment_id: commentId,
-        user_id: userId,
-    });
-};
-
-export const destroyCommentLike = async ({ data }: DestroyParams) => {
-    await data.destroy();
 };
 
 export const getCommentLikeList = async ({ commentId, keyword }: ListParams) => {    
@@ -48,4 +37,21 @@ export const getCommentLikeList = async ({ commentId, keyword }: ListParams) => 
             },
         ],
     }) as unknown as CommentLikeWithUser[];
+};
+
+export const createCommentLike = async ({ commentId, userId }: CommentUserParams) => {
+    return CommentLike.create({
+        comment_id: commentId,
+        user_id: userId,
+    });
+};
+
+export const destroyCommentLike = async ({ data }: DestroyParams) => {
+    await data.destroy();
+};
+
+export const countCommentLike = async ({ commentId }: CommentIdParams) => {
+    return CommentLike.count({
+        where: { comment_id: commentId },
+    });
 };

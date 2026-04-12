@@ -6,6 +6,7 @@ import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
+import { countCommentLike } from "../services/commentLike.js";
 
 const router = Router();
 
@@ -54,11 +55,12 @@ router.get("/:id/status", authenticateToken, async (req: Request, res: Response,
     }
 });
 
-router.get("/count/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /comment-like/:id/count
+router.get("/:id/count", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
     try {
-        const count = await CommentLike.count({
-            where: { comment_id: req.params.id },
-        });
+        const count = await countCommentLike({ commentId });
 
         res.status(200).json({ count });
     } catch (err) {

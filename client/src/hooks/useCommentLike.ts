@@ -12,14 +12,14 @@ export function useLikeStatus(commentId: string,) {
 
 export function useLikeCount(commentId: string) {
     return useSWR<LikeCountResponse, Error>(
-        `${process.env.NEXT_PUBLIC_API_URL}/comment-like/count/${commentId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/comment-like/${commentId}/count`,
         fetcher,
     );
 };
 
 export async function updateCommentLikeCache(commentId: string, isGood: boolean) {
     const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/${commentId}/status`;
-    const countKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/count/${commentId}`;
+    const countKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/${commentId}/count`;
 
     await mutate(statusKey, { isGood }, false);
 
