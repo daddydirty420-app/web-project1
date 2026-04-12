@@ -1,4 +1,4 @@
-import { findItemLike } from "../../services/itemLike.js";
+import { getItemLikeOne } from "../../services/itemLike.js";
 
 type Params = {
     itemId: number;
@@ -6,7 +6,7 @@ type Params = {
 };
 
 export const itemLikeStatusUseCase = async ({ itemId, userId }: Params) => {
-    const isGood = await findItemLike({ itemId, userId });
+    const isGood = await getItemLikeOne({ itemId, userId });
 
     return !!isGood;
 };

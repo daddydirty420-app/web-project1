@@ -1,4 +1,4 @@
-import { destroyItemLike, findItemLike } from "../../services/itemLike.js";
+import { destroyItemLike, getItemLikeOne } from "../../services/itemLike.js";
 import { AppError } from "../../errors.js";
 import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
 
@@ -10,7 +10,7 @@ type Params = {
 export const deleteItemLikeUseCase = async ({ itemId, userId }: Params) => {
 
     // itemLike取得
-    const data = await findItemLike({ itemId, userId });
+    const data = await getItemLikeOne({ itemId, userId });
 
     if (!data) {
         throw new AppError("NOT_LIKE_ITEM", 409, "いいねしていません");

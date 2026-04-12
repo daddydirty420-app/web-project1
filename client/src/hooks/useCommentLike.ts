@@ -5,7 +5,7 @@ type LikeCountResponse = { count: number };
 
 export function useLikeStatus(commentId: string,) {
     return useSWR<{ isGood: boolean }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/comment-like/status/${commentId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/comment-like/${commentId}/status`,
         fetcher,
     );
 };
@@ -18,7 +18,7 @@ export function useLikeCount(commentId: string) {
 };
 
 export async function updateCommentLikeCache(commentId: string, isGood: boolean) {
-    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/status/${commentId}`;
+    const statusKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/${commentId}/status`;
     const countKey = `${process.env.NEXT_PUBLIC_API_URL}/comment-like/count/${commentId}`;
 
     await mutate(statusKey, { isGood }, false);

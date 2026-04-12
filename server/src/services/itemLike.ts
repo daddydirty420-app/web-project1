@@ -1,8 +1,8 @@
-import { Op, Transaction } from "sequelize";
+import { Op } from "sequelize";
 import { Item, ItemLike, Sale, ShopInfo, User, Video } from "../models/index.js";
 import { DestroyParams, DestroyTransactionParams, ItemIdParams, ItemLikeWithUser, ItemUserParams, ListParams, UserItemsLikesParams } from "../types/serviceType/itemLike.js";
 
-export const findItemLike = async ({ itemId, userId }: ItemUserParams) => {
+export const getItemLikeOne = async ({ itemId, userId }: ItemUserParams) => {
     return ItemLike.findOne({
         where: {
             item_id: itemId,
@@ -11,10 +11,38 @@ export const findItemLike = async ({ itemId, userId }: ItemUserParams) => {
     });
 };
 
-export const findAllItemLikes = async ({ itemId }: ItemIdParams) => {
+export const getAllItemLikes = async ({ itemId }: ItemIdParams) => {
     return ItemLike.findAll({
         where: { item_id: itemId },
     });
+};
+
+export const getItemLikeList = async ({ itemId, keyword }: ListParams) => {
+    const userWhere = keyword
+    ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
+    : undefined;
+
+    return ItemLike.findAll({
+        attributes: ["id"],
+        where: { item_id: itemId },
+        order: [['createdAt', 'DESC']],
+        distinct: true,
+        include: [
+            {
+                model: User,
+                where: userWhere,
+                required: !!keyword,
+                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
+                include: [
+                    {
+                        model: ShopInfo,
+                        attributes: ['id'],
+                        required: false,
+                    },
+                ],
+            },
+        ],
+    }) as unknown as ItemLikeWithUser[];
 };
 
 export const getUserItemsLikesList = async ({ itemWhere, limit, offset, userId }: UserItemsLikesParams) => {
@@ -83,32 +111,4 @@ export const countItemLike = async ({ itemId }: ItemIdParams) => {
     return ItemLike.count({
         where: { item_id: itemId },
     });
-};
-
-export const getItemLikeList = async ({ itemId, keyword }: ListParams) => {
-    const userWhere = keyword
-    ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } }
-    : undefined;
-
-    return ItemLike.findAll({
-        attributes: ["id"],
-        where: { item_id: itemId },
-        order: [['createdAt', 'DESC']],
-        distinct: true,
-        include: [
-            {
-                model: User,
-                where: userWhere,
-                required: !!keyword,
-                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', "early_seller"],
-                include: [
-                    {
-                        model: ShopInfo,
-                        attributes: ['id'],
-                        required: false,
-                    },
-                ],
-            },
-        ],
-    }) as unknown as ItemLikeWithUser[];
 };

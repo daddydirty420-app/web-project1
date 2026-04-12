@@ -5,6 +5,7 @@ import { CommentLike } from "../models/index.js";
 import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
+import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
 
 const router = Router();
 
@@ -38,17 +39,16 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-router.get("/status/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /comment-like/:id/status
+router.get("/:id/status", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
     try {
-        const isGood = await CommentLike.findOne({
-            where: {
-                user_id: req.user!.id,
-                comment_id: req.params.id,
-            },
-        });
+        const isGood = await commentLikeStatusUseCase({ commentId, userId });
 
-
-        res.status(200).json({ isGood: !!isGood });
+        res.status(200).json({ isGood });
     } catch (err) {
         next(err);
     }

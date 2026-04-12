@@ -6,6 +6,7 @@ import { saleStopUseCase } from "../usecases/sale/saleStop.js";
 
 const router = Router();
 
+// PATCH /sale/:id/edit
 router.patch('/:id/edit', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const saleId = Number(req.params.id);
     if (!saleId) {
@@ -31,6 +32,7 @@ router.patch('/:id/edit', authenticateToken, async (req: Request, res: Response,
     }
 });
 
+// PATCH /sale/:id/stop
 router.patch('/:id/stop', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const saleId = Number(req.params.id);
     if (!saleId) {

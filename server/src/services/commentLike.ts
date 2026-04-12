@@ -1,18 +1,8 @@
 import { Op } from "sequelize";
 import { CommentLike, ShopInfo, User } from "../models/index.js";
-import { CommentUserParams, ListParams } from "../types/serviceType/commentLike.js";
+import { CommentLikeWithUser, CommentUserParams, DestroyParams, ListParams } from "../types/serviceType/commentLike.js";
 
-type DestroyParams = {
-    data: InstanceType<typeof CommentLike>;
-};
-
-type CommentLikeWithUser = InstanceType<typeof CommentLike> & {
-    User: InstanceType<typeof User> & {
-        ShopInfo: InstanceType<typeof ShopInfo> | null;
-    };
-};
-
-export const findCommentLike = async ({ commentId, userId }: CommentUserParams) => {
+export const getCommentLikeOne = async ({ commentId, userId }: CommentUserParams) => {
     return CommentLike.findOne({
         where: {
             comment_id: commentId,

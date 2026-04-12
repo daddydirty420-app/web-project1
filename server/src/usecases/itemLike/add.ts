@@ -1,4 +1,4 @@
-import { createItemLike, findItemLike } from "../../services/itemLike.js";
+import { createItemLike, getItemLikeOne } from "../../services/itemLike.js";
 import { AppError } from "../../errors.js";
 import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
 
@@ -9,7 +9,7 @@ type Params = {
 
 export const addItemLikeUseCase = async ({ itemId, userId }: Params) => {
 
-    const data = await findItemLike({ itemId, userId });
+    const data = await getItemLikeOne({ itemId, userId });
 
     if (data) {
         throw new AppError("ALREADY_LIKE_ITEM", 409, "すでにいいね済みです");

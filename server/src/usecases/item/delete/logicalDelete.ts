@@ -2,7 +2,7 @@ import { AppError } from "../../../errors.js";
 import sequelize from "../../../db.js";
 import { createNormalNotification } from "../../../services/notification.js";
 import { getItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
-import { destroyItemLikeTransaction, findAllItemLikes } from "../../../services/itemLike.js";
+import { destroyItemLikeTransaction, getAllItemLikes } from "../../../services/itemLike.js";
 import { destroyAllComments, findAllComments } from "../../../services/comment.js";
 import { destroyAllCarts, getAllCarts } from "../../../services/cart.js";
 import { findDeliveryNow } from "../../../services/delivery.js";
@@ -29,7 +29,7 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
 
     // 関連データ取得
     const comments = await findAllComments({ itemId });
-    const itemLikes = await findAllItemLikes({ itemId });
+    const itemLikes = await getAllItemLikes({ itemId });
     const carts = await getAllCarts({ itemId });
 
     await sequelize.transaction(async (t) => {

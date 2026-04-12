@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { countItemPageComment } from "../../../services/comment.js";
-import { countItemLike, findItemLike } from "../../../services/itemLike.js";
+import { countItemLike, getItemLikeOne } from "../../../services/itemLike.js";
 import { getItemPageData } from "../../../services/items/index.js";
 import { getMeHighlight } from "../../../services/users.js";
 import { ItemPageMode } from "../../../types/usecaseType.js";
@@ -33,7 +33,7 @@ export const getItemPageUseCase = async ({ itemId, userId, mode }: Params) => {
         let isLikeByMe = false;
 
         if (!sellerMe && userId) {
-            const isLike = await findItemLike({ itemId, userId });
+            const isLike = await getItemLikeOne({ itemId, userId });
             
             isLikeByMe = !!isLike;
         }
