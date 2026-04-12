@@ -29,7 +29,7 @@ export const Detail = ({ id, item, sellerMe, page }: Props) => {
         if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number?number=5`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
             });

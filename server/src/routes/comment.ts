@@ -3,6 +3,8 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { Comment, User, CommentLike, CommentReport, Item, Notification } from "../models/index.js";
 import sequelize from "../db.js";
+import { AppError } from "../errors.js";
+import { patchCommentSortNumberAddUseCase } from "../usecases/comment/patchSortNumber.js";
 
 const router = Router();
 
@@ -59,23 +61,21 @@ router.post("/upload/:id", authenticateToken, async (req: Request, res: Response
     }
 });
 
-router.patch("/expand-sort/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const commentId = req.params.id;
+// PATCH /comment/:id/sort-number/add?number=number
+router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
 
-    try {
-        const comment = await Comment.findByPk(commentId);
-        if (!comment) {
-            res.status(404).json({ message: "コメントデータが見つかりません。" });
-            return;
-        }
-
-        comment.sort_number = Number(comment.sort_number) + 2;
-        await comment.save();
-
-        res.status(200).json({ message: "sort_number加算処理完了。" });
-    } catch (err) {
-        next(err);
+    const number = Number(req.query.number);
+    
+    if (!number || isNaN(number)) {
+        throw new AppError("INVALID_NUMBER", 400);
     }
+
+    patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "sort_number加算処理完了。" });
 });
 
 router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {

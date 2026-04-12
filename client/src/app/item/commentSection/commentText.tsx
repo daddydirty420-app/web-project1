@@ -27,7 +27,7 @@ export const CommentText = ({ comment, page }: Props) => {
         if (comment.pin || expanded || page === "admin") return;
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/expand-sort/${comment.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/${comment.id}/sort-number/add?number=2`, {
                 method: "PATCH",
             });
 

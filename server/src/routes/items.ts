@@ -110,8 +110,8 @@ router.patch("/:id/publish", authenticateToken, async (req: Request, res: Respon
     }
 });
 
-// PATCH /items/:id/sort-number?number=number
-router.patch("/:id/sort-number", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// PATCH /items/:id/sort-number/add?number=number
+router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const number = Number(req.query.number);
