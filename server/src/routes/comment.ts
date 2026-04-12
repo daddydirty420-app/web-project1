@@ -4,7 +4,7 @@ import { authenticateToken, authenticateOptional } from "../middleware/index.js"
 import { Comment, User, CommentLike, CommentReport, Item, Notification } from "../models/index.js";
 import sequelize from "../db.js";
 import { AppError } from "../errors.js";
-import { patchCommentSortNumberAddUseCase } from "../usecases/comment/patchSortNumber.js";
+import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
 
 const router = Router();
 
@@ -75,7 +75,24 @@ router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: N
         console.error(err);
     });
 
-    res.status(202).json({ message: "sort_number加算処理完了。" });
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+});
+
+// PATCH /comment/:id/sort-number/decrease?number=number
+router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
+
+    const number = Number(req.query.number);
+    
+    if (!number || isNaN(number)) {
+        throw new AppError("INVALID_NUMBER", 400);
+    }
+
+    patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
 });
 
 router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {

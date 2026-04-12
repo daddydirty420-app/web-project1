@@ -6,7 +6,7 @@ import { Body } from "../types/serviceType/items/uploadBody.js";
 import { patchPublishUseCase } from "../usecases/item/publish/publish.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
-import { patchSortNumberAddUseCase } from "../usecases/item/sortNumber/sortNumber.js";
+import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/item/sortNumber/sortNumber.js";
 import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
 import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
@@ -121,6 +121,23 @@ router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: N
     }
 
     patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+});
+
+// PATCH /items/:id/sort-number/decrease?number=number
+router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const number = Number(req.query.number);
+
+    if (!number || isNaN(number)) {
+        throw new AppError("INVALID_NUMBER", 400);
+    }
+
+    patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
         console.error(err);
     });
 
