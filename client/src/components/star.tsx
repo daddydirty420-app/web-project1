@@ -20,7 +20,7 @@ export const Star = ({ userId }: Props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/star/${userId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/star`, {
                     method: 'GET',
                     cache: 'no-store'
                 });

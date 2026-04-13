@@ -14,6 +14,18 @@ export const getMeHighlight = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getProfileMetadata = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ['user_name', 'user_introduction'],
+    });
+};
+
+export const getStar = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ['star_average'],
+    });
+};
+
 export const findByPkHasShop = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [

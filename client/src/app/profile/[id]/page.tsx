@@ -11,7 +11,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const res = await fetch(
-        `${process.env.API_URL}/user/profile/metadata/${id}`,
+        `${process.env.API_URL}/user/${id}/profile/metadata`,
         {
             method: 'GET',
             cache: 'no-store'

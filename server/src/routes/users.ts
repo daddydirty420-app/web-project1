@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
 import { Op } from "sequelize";
+import { getProfileMetadata, getStar } from "../services/users.js";
 
 const router = Router();
 
@@ -85,11 +86,12 @@ router.get('/profile/:id', async (req: Request, res: Response, next: NextFunctio
   }
 });
 
-router.get('/star/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /user/:id/star
+router.get('/:id/star', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const userId = Number(req.params.id);
+
   try {
-    const user = await User.findByPk(req.params.id, {
-      attributes: ['star_average'],
-    });
+    const user = await getStar({ userId });
 
     res.status(200).json({ user });
   } catch (err) {
@@ -97,11 +99,12 @@ router.get('/star/:id', async (req: Request, res: Response, next: NextFunction):
   }
 });
 
-router.get('/profile/metadata/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /user/:id/profile/metadata
+router.get('/:id/profile/metadata', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const userId = Number(req.params.id);
+
   try {
-    const userData = await User.findByPk(req.params.id, {
-      attributes: ['user_name', 'user_introduction'],
-    });
+    const userData = await getProfileMetadata({ userId });
 
     res.status(200).json({ userData });
   } catch (err) {

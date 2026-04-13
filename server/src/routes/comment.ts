@@ -1,7 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Comment, User, CommentLike, CommentReport, Item } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
