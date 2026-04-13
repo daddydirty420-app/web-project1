@@ -57,6 +57,7 @@ router.post("/comment/report-create/:id", authenticateToken, async (req: Request
     }
 });
 
+// GET /comment-report/all-options
 router.get('/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await getCommentReportOptions();

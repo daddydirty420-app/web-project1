@@ -36,7 +36,7 @@ export const Form = ({ id, options, page }: Props) => {
             let res: Response;
 
             if (page === "item") {
-                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/report/item/report-create/${id}`, {
+                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-report/${id}`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

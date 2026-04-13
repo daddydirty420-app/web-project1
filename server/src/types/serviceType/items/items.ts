@@ -131,6 +131,14 @@ export type UpdatePriceParams = {
     transaction: Transaction,
 };
 
+export type UpdateReportScoreParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        report_score: number;
+    };
+    transaction?: Transaction,
+};
+
 export type ItemDataParams = {
     item: InstanceType<typeof Item>;
 };
