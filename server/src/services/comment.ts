@@ -31,6 +31,22 @@ export const getAllCommentsItemPage = ({ itemId }: ItemIdParams) => {
     });
 };
 
+export const getAllReply = ({ commentId }: CommentIdParams) => {
+    return Comment.findAll({
+        where: { parent_comment_id: commentId },
+        order: [
+            ["sort_number", "DESC"],
+            ["createdAt", "DESC"],
+        ],
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'user_name', 'profile_image'],
+            },
+        ],
+    });
+};
+
 export const updateSortNumber = async ({ comment, data }: UpdateParams) => {
     await comment.update(data);
 };

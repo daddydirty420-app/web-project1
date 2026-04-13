@@ -7,6 +7,7 @@ import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
 import { uploadCommentUseCase } from "../usecases/comment/upload.js";
 import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
+import { getAllReplysUseCase } from "../usecases/comment/getReply.js";
 
 const router = Router();
 
@@ -116,73 +117,24 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response, nex
     }
 });
 
-router.get('/reply-comment/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user?.id ?? null;
-    const parentCommentId = req.params.id;
+// GET /comment/:id/reply?sellerMe=boolean(&admin=boolean)
+router.get('/:id/reply', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? null;
+
+    const parentCommentId = Number(req.params.id);
+
+    const sellerMe = req.query.sellerMe === "true";
     const admin = req.query.admin === "true";
 
     try {
-        const parentComment = await Comment.findByPk(parentCommentId);
-        if (!parentComment) {
-            res.status(404).json({ message: "parent_commentが見つかりません。" });
-            return;
-        }
-
-        const commentList = await Comment.findAll({
-            where: { 
-                parent_comment_id: parentCommentId
-            },
-            order: [['sort_number', 'DESC']],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'profile_image']
-                }
-            ]
+        const commentList = await getAllReplysUseCase({
+            parentCommentId,
+            userId,
+            sellerMe,
+            admin
         });
 
-        if (!admin) {
-            parentComment.sort_number = Number(parentComment.sort_number) + 10;
-            await parentComment.save();
-        }
-
-        const commentListWithExtras = await Promise.all(
-            commentList.map(async (comment: InstanceType<typeof Comment>) => {
-                const commentId = comment.id;
-
-                const goodCount = await CommentLike.count({
-                    where: { comment_id: commentId },
-                });
-
-                const commentData = comment.toJSON();
-                commentData.goodCount = goodCount;
-                commentData.isMyComment = currentUserId !== null && comment.user_id === currentUserId;
-
-                let isGood = false;
-                if (currentUserId) {
-                    isGood = await CommentLike.findOne({
-                        where: {
-                            user_id: currentUserId,
-                            comment_id: commentId,
-                        }
-                    });
-                }
-
-                commentData.isGoodByMe = !!isGood;
-
-                if (admin) {
-                    const reportCount = await CommentReport.count({
-                        where: { comment_id: commentId },
-                    });
-
-                    commentData.reportCount = reportCount;
-                }
-
-                return commentData;
-            })
-        );
-
-        res.json({ commentListWithExtras });
+        res.status(200).json({ commentList });
     } catch (err) {
         next(err);
     }

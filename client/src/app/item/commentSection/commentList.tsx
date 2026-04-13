@@ -125,6 +125,7 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
                                 parentId={commentId}
                                 page={page}
                                 loggedIn={loggedIn}
+                                sellerMe={sellerMe}
                                 optimisticComments={optimisticReplies[commentId] ?? []}
                                 refreshTrigger={replyRefreshTrigger[commentId] ?? 0}
                                 />

@@ -16,11 +16,12 @@ type Props = {
     parentId: string;
     page: "normal" | "admin";
     loggedIn: boolean;
+    sellerMe?: boolean;
     optimisticComments?: Comment[];
     refreshTrigger?: number;
 }
 
-export const ReplyList = ({ parentId, page, loggedIn, optimisticComments = [], refreshTrigger }: Props) => {
+export const ReplyList = ({ parentId, page, loggedIn, sellerMe, optimisticComments = [], refreshTrigger }: Props) => {
     const [comments, setComments] = useState<Comment[]>([]);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ export const ReplyList = ({ parentId, page, loggedIn, optimisticComments = [], r
             try {
                 const accessToken = await getAccessToken();
 
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/reply-comment/${parentId}${page === "admin" ? "?admin=true" : ""}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/${parentId}/reply?sellerMe=${sellerMe}${page === "admin" ? "?admin=true" : ""}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${accessToken ?? ""}`,
@@ -42,7 +43,7 @@ export const ReplyList = ({ parentId, page, loggedIn, optimisticComments = [], r
                 }
 
                 const data = await res.json();
-                setComments(data.commentListWithExtras);
+                setComments(data.commentList);
             } catch (err) {
                 console.error(err);
             }
