@@ -16,17 +16,16 @@ export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
     }
 
     // データ作成
-    await sequelize.transaction(async (t) => {
-        await updateRestoreItem({ item, transaction: t });
+    await updateRestoreItem({ item });
 
-        await createNormalNotification({
-            data: {
-                read_user_id: userId,
-                url: `/item/${itemId}`,
-                message_image: item.first_image_url,
-                message: `「${item.name}」を復元しました。こちらから復元した商品を確認できます。`
-            },
-            transaction: t
-        });
+    createNormalNotification({
+        data: {
+            read_user_id: userId,
+            url: `/item/${itemId}`,
+            message_image: item.first_image_url,
+            message: `「${item.name}」を復元しました。こちらから復元した商品を確認できます。`
+        },
+    }).catch((err) => {
+        console.error("service createNormalNotification error", err);
     });
 };

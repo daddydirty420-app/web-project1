@@ -29,7 +29,7 @@ export const DeleteComment = ({ comment, page }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/delete/${comment.id}?page=${page}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/${comment.id}?page=${page}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

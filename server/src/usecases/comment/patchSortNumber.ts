@@ -1,4 +1,4 @@
-import { findByPkComment, updateSortNumber } from "../../services/comment.js";
+import { getComment, updateSortNumber } from "../../services/comment.js";
 import { AppError } from "../../errors.js";
 
 type Params = {
@@ -7,7 +7,7 @@ type Params = {
 };
 
 export const patchCommentSortNumberAddUseCase = async ({ commentId, number }: Params) => {
-    const comment = await findByPkComment({ commentId });
+    const comment = await getComment({ commentId });
 
     if (!comment) {
         throw new AppError("COMMENT_NOT_FOUND", 404);
@@ -21,7 +21,7 @@ export const patchCommentSortNumberAddUseCase = async ({ commentId, number }: Pa
 };
 
 export const patchCommentSortNumberDecreaseUseCase = async ({ commentId, number }: Params) => {
-    const comment = await findByPkComment({ commentId });
+    const comment = await getComment({ commentId });
 
     if (!comment) {
         throw new AppError("COMMENT_NOT_FOUND", 404);

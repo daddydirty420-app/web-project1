@@ -1,4 +1,4 @@
-import { CountUpdateParams, ItemTransactionParams, PublishUpdateParams, SortUpdateParams, UpdateItemImageParams, UpdateItemParams, UpdatePriceParams } from "../../../types/serviceType/items/items.js";
+import { CountUpdateParams, ItemDataParams, ItemTransactionParams, PublishUpdateParams, SortUpdateParams, UpdateItemImageParams, UpdateItemParams, UpdatePriceParams } from "../../../types/serviceType/items/items.js";
 
 export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
     await item.update(data);
@@ -8,17 +8,17 @@ export const addViewsCount = async ({ item, data }: CountUpdateParams) => {
     await item.update(data);
 };
 
-export const updateRestoreItem = async ({ item, transaction }: ItemTransactionParams) => {
+export const updateRestoreItem = async ({ item }: ItemDataParams) => {
     const nowDate = new Date();
 
     await item.update({
         uploaded_at: nowDate,
         status: "active",
         deleted_at: null,
-    }, { transaction });
+    });
 };
 
-export const updatePublishItem = async ({ item, data, transaction }: PublishUpdateParams) => {
+export const updatePublishItem = async ({ item, data }: PublishUpdateParams) => {
     const nowDate = new Date();
 
     await item.update({
@@ -27,7 +27,7 @@ export const updatePublishItem = async ({ item, data, transaction }: PublishUpda
         save_at: nowDate,
         early_sell: true,
         ...data,
-    }, { transaction });
+    });
 };
 
 export const updateItem = async ({ item, data, transaction }: UpdateItemParams) => {

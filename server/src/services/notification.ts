@@ -8,7 +8,7 @@ type CreateNormalTransactionParams = {
         message_image: string;
         message: string;
     };
-    transaction: Transaction;
+    transaction?: Transaction;
 };
 
 export const createNormalNotification = async ({ data, transaction }: CreateNormalTransactionParams) => {

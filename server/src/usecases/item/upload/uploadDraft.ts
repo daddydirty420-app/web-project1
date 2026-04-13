@@ -160,17 +160,19 @@ export const uploadDraftUseCase = async ({ itemId, userId, body }: Params) => {
             transaction: t,
         });
 
-        await createNormalNotification({
-            data: {
-                read_user_id: userId,
-                url: `/item/draft/${itemId}`,
-                message_image: item.first_image_url,
-                message: `${item.name}の下書きを作成しました。下書きの閲覧・編集・出品はこちらから！`,
-            },
-            transaction: t,
-        });
-
         await updateImage({ item, urls: finalImageUrls, transaction: t });
+    });
+
+    // お知らせ作成
+    createNormalNotification({
+        data: {
+            read_user_id: userId,
+            url: `/item/draft/${itemId}`,
+            message_image: item.first_image_url,
+            message: `${item.name}の下書きを作成しました。下書きの閲覧・編集・出品はこちらから！`,
+        },
+    }).catch((err) => {
+        console.error("service createNormalNotification error", err);
     });
 
     return {

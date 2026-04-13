@@ -58,7 +58,6 @@ export type PublishUpdateParams = {
         sort_buzz_number: number;
         search_text: string;
     };
-    transaction: Transaction;
 };
 
 export type UpdateItemParams = {

@@ -45,25 +45,23 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
     const normalizeSearchText = normalizeJapanese(searchText ?? "");
 
     // データ更新
-    await sequelize.transaction(async (t) => {
-        await updatePublishItem({
-            item,
-            data: {
-                sort_number: sort,
-                sort_buzz_number: sort,
-                search_text: normalizeSearchText,
-            },
-            transaction: t,
-        });
+    await updatePublishItem({
+        item,
+        data: {
+            sort_number: sort,
+            sort_buzz_number: sort,
+            search_text: normalizeSearchText,
+        },
+    });
 
-        await createNormalNotification({
-            data: {
-                read_user_id: userId,
-                url: `/item/${itemId}`,
-                message_image: item.first_image_url,
-                message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
-            },
-            transaction: t
-        });
+    createNormalNotification({
+        data: {
+            read_user_id: userId,
+            url: `/item/${itemId}`,
+            message_image: item.first_image_url,
+            message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
+        },
+    }).catch((err) => {
+        console.error("service createNormalNotification error", err);
     });
 };

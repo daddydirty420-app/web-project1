@@ -5,6 +5,7 @@ import { Comment, User, CommentLike, CommentReport, Item, Notification } from ".
 import sequelize from "../db.js";
 import { AppError } from "../errors.js";
 import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
+import { deleteCommentUseCase } from "../usecases/comment/delete.js";
 
 const router = Router();
 
@@ -95,42 +96,23 @@ router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, ne
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
 });
 
-router.delete("/delete/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const commentId = req.params.id;
-    const page = req.query.page;
+// DELETE /comment/:id?page=""
+router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const commentId = Number(req.params.id);
 
-    const t = await sequelize.transaction();
+    const userId = req.user!.id;
+
+    const page = req.query.page as "normal" | "admin";
+
+    if (!page || (page !== "normal" && page !== "admin")) {
+        throw new AppError("QUERY_PAGE_INVALID", 400);
+    }
 
     try {
-        const comment = await Comment.findByPk(commentId);
-        if (!comment) {
-            res.status(404).json({ message: "コメントが見つかりません。" });
-            return;
-        }
-
-        const item = await Item.findByPk(comment.item_id);
-        if (!item) {
-            res.status(404).json({ message: "商品が見つかりません。" });
-            return;
-        }
-
-        await Notification.create({
-            read_user_id: currentUserId,
-            url: `/item/${item.id}`,
-            message_image: item.first_image_url,
-            message: `${page
-                ? `利用規約違反が確認されたため、当該コメントが削除されました。「${comment.text}」`
-                : `コメントを削除しました。「${comment.text}」`
-            }`,
-        }, { transaction: t });
-
-        await comment.destroy({ transaction: t });
-
-        await t.commit();
+        await deleteCommentUseCase({ userId, commentId, page });
+        
         res.status(200).json({ message: "コメントを削除しました。" });
     } catch (err) {
-        await t.rollback();
         next(err);
     }
 });
