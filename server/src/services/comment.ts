@@ -1,13 +1,33 @@
-import { Comment } from "../models/index.js";
+import { Comment, User } from "../models/index.js";
 import { CommentIdParams, CreateCommentParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams } from "../types/serviceType/comment.js";
 
-export const getComment = async ({ commentId }: CommentIdParams) => {
+export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
 };
 
-export const getAllComments = async ({ itemId }: ItemIdParams) => {
+export const getAllComments = ({ itemId }: ItemIdParams) => {
     return Comment.findAll({
         where: { item_id: itemId },
+    });
+};
+
+export const getAllCommentsItemPage = ({ itemId }: ItemIdParams) => {
+    return Comment.findAll({
+        where: {
+            item_id: itemId,
+            parent_comment_id: null,
+        },
+        order: [
+            ["pin", "DESC"],
+            ["sort_number", "DESC"],
+            ["createdAt", "DESC"],
+        ],
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'user_name', 'profile_image'],
+            },
+        ],
     });
 };
 
@@ -29,8 +49,14 @@ export const destroyAllComments = async ({ comments, transaction }: DestroyAllPa
     }));
 };
 
-export const countItemPageComment = async ({ itemId }: ItemIdParams) => {
+export const countItemPageComment = ({ itemId }: ItemIdParams) => {
     return Comment.count({
         where: { item_id: itemId },
+    });
+};
+
+export const countReply = async ({ commentId }: CommentIdParams) => {
+    return Comment.count({
+        where: { parent_comment_id: commentId },
     });
 };

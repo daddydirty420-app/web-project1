@@ -6,6 +6,7 @@ import { AppError } from "../errors.js";
 import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
 import { uploadCommentUseCase } from "../usecases/comment/upload.js";
+import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
 
 const router = Router();
 
@@ -92,79 +93,24 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-router.get('/all-comment/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user?.id ?? null;
-    const itemId = req.params.id;
+// GET /comment/:id?sellerMe=boolean(&admin=boolean)
+router.get('/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? null;
+
+    const itemId = Number(req.params.id);
+
+    const sellerMe = req.query.sellerMe === "true";
     const admin = req.query.admin === "true";
 
     try {
-        const commentList = await Comment.findAll({
-            where: { 
-                item_id: itemId,
-                parent_comment_id: null,
-            },
-            order: [
-                ["pin", "DESC"],
-                ["sort_number", "DESC"],
-                ["createdAt", "DESC"],
-            ],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'profile_image']
-                }
-            ]
+        const commentList = await getAllCommentsUseCase({
+            itemId,
+            userId,
+            sellerMe,
+            admin
         });
 
-        const commentListWithExtras = await Promise.all(
-            commentList.map(async (comment: InstanceType<typeof Comment>) => {
-                const commentId = comment.id;
-
-                const replyCount = await Comment.count({
-                    where: { parent_comment_id: commentId },
-                });
-
-                const goodCount = await CommentLike.count({
-                    where: { comment_id: commentId },
-                });
-
-                const commentData = comment.toJSON();
-                commentData.replyCount = replyCount;
-                commentData.goodCount = goodCount;
-                commentData.isMyComment = currentUserId !== null && comment.user_id === currentUserId;
-
-                let isGood = false;
-                if (currentUserId) {
-                    isGood = await CommentLike.findOne({
-                        where: {
-                            user_id: currentUserId,
-                            comment_id: commentId,
-                        },
-                    });
-                }
-
-                commentData.isGoodByMe = !!isGood;
-
-                if (admin) {
-                    const reportCount = await CommentReport.count({
-                        where: { comment_id: commentId },
-                    });
-
-                    commentData.reportCount = reportCount;
-                }
-
-                return commentData;
-            })
-        );
-
-        const item = await Item.findByPk(itemId);
-        if (!item.sold_out && currentUserId !== item.seller_id) {
-            item.sort_number = Number(item.sort_number) + 8;
-            item.sort_buzz_number = Number(item.sort_buzz_number) + 50;
-            await item.save();
-        }
-
-        res.json({ commentListWithExtras });
+        res.status(200).json({ commentList });
     } catch (err) {
         next(err);
     }

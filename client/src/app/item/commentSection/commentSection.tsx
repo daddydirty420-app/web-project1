@@ -25,6 +25,7 @@ const fetcher = async (url: string) => {
         const accessToken = await getAccessToken();
 
         const res = await fetch(url, {
+            method: "GET",
             headers: {
                 Authorization: `Bearer ${accessToken ?? ""}`,
             },
@@ -36,7 +37,7 @@ const fetcher = async (url: string) => {
         }
 
         const data = await res.json();
-        return data.commentListWithExtras;
+        return data.commentList;
     } catch (err) {
         console.error(err);
     }
@@ -47,7 +48,7 @@ export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn, ite
     
     const { data: comments, mutate } = useSWR(
         visible
-        ? `${process.env.NEXT_PUBLIC_API_URL}/comment/all-comment/${id}${page === "admin" ? "?admin=true" : ""}`
+        ? `${process.env.NEXT_PUBLIC_API_URL}/comment/${id}?sellerMe=${sellerMe}${page === "admin" ? "&admin=true" : ""}`
         : null,
         fetcher
     );
