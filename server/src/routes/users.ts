@@ -4,6 +4,7 @@ import { authenticateToken, authenticateOptional } from "../middleware/index.js"
 import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
 import { Op } from "sequelize";
 import { getProfileMetadata, getStar } from "../services/users.js";
+import { getProfileUseCase } from "../usecases/user/getProfile.js";
 
 const router = Router();
 
@@ -15,62 +16,20 @@ router.get('/me-admin', authenticateToken, async (req: Request, res: Response): 
   res.json({ admin: !!req.user!.admin });
 });
 
-router.get('/profile/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const userId = req.params.id;
+router.get('/:id/profile', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const userId = Number(req.params.id);
 
   const page = parseInt(req.query.page as string) || 1;
   const limit = Number(req.query.limit) || 6;
-  const offset = (page - 1) * limit;
 
   try {
-    const user = await User.findByPk(userId, {
-      attributes: ["id", 'user_name', 'user_introduction', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
-      include: [
-        {
-          model: ShopInfo,
-          where: { verified: true },
-          attributes: ['id'],
-          required: false,
-        }
-      ]
-    });
-
-    if (!user) {
-      res.status(404).json({ message: 'ユーザーが見つかりません。' });
-      return;
-    }
-
-    const hasShop = !!user.ShopInfo;
-    
-    const items = await Item.findAll({
-      attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
-      where: {
-        status: { [Op.in]: ["active", "soldout"] },
-        seller_id: userId,
-      },
-      limit,
-      offset,
-      order: [['uploaded_at', 'DESC']],
-      include: [
-        {
-          model: Video,
-          attributes: ['thumbnail_url', 'title', 'duration'],
-        },
-        {
-          model: Sale,
-          attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
-        }
-      ]
-    });
-    
-    const hasItemCount = await Item.count({
-      where: {
-        status: { [Op.in]: ["active", "soldout"] },
-        seller_id: userId,
-      }
-    }) ?? 0;
-            
-    const totalPages = Math.ceil(hasItemCount / limit);
+    const {
+      user,
+      hasShop,
+      items,
+      hasItemCount,
+      totalPages
+    } = await getProfileUseCase({ userId, page, limit });
 
     res.status(200).json({
       user,
@@ -104,9 +63,9 @@ router.get('/:id/profile/metadata', async (req: Request, res: Response, next: Ne
   const userId = Number(req.params.id);
 
   try {
-    const userData = await getProfileMetadata({ userId });
+    const user = await getProfileMetadata({ userId });
 
-    res.status(200).json({ userData });
+    res.status(200).json({ user });
   } catch (err) {
     next(err);
   }

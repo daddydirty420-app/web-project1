@@ -4,7 +4,7 @@ type UserIdParams = {
     userId: number;
 };
 
-export const findByPkUser = async ({ userId }: UserIdParams) => {
+export const getUser = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
 };
 
@@ -26,7 +26,21 @@ export const getStar = ({ userId }: UserIdParams) => {
     });
 };
 
-export const findByPkHasShop = async ({ userId }: UserIdParams) => {
+export const getProfileUser = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", 'user_name', 'user_introduction', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
+        include: [
+            {
+                model: ShopInfo,
+                where: { verified: true },
+                attributes: ['id'],
+                required: false,
+            },
+        ],
+    });
+};
+
+export const getHasShop = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [
             {

@@ -4,7 +4,7 @@ import { createDeliveryAddress, findAddress } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
 import { createDeliveryName, findName } from "../../services/name.js";
-import { findByPkUser } from "../../services/users.js";
+import { getUser } from "../../services/users.js";
 
 type Params = {
     itemId: number;
@@ -14,7 +14,7 @@ type Params = {
 export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
 
     // 自ユーザー情報取得
-    const user = await findByPkUser({ userId });
+    const user = await getUser({ userId });
     if (!user) {
         throw new AppError("USER_NOTFOUND", 404);
     }

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     );
 
     const data = await res.json();
-    const user = data.userData;
+    const user = data.user;
 
     return {
         title: `${user.user_name} | 管理画面`,
@@ -44,7 +44,7 @@ export default async function Profile({ params }: Props) {
 
     const defaultLimit = 15;
 
-    const res = await fetch(`${process.env.API_URL}/user/profile/${userId}?limit=${defaultLimit}`, {
+    const res = await fetch(`${process.env.API_URL}/user/${userId}/profile?limit=${defaultLimit}`, {
         method: 'GET',
         cache: 'no-store'
     });
