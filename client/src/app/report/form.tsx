@@ -45,7 +45,7 @@ export const Form = ({ id, options, page }: Props) => {
                     body: JSON.stringify({ selected }),
                 });
             } else if (page === "comment") {
-                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/report/comment/report-create/${id}`, {
+                res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-report/${id}`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

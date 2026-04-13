@@ -1,58 +1,27 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { Item, CommentReportOption, User, CommentReport } from "../models/index.js";
-import sequelize from "../db.js";
-import { getCommentReportOptions } from "../services/commentReport.js";
+import { getAllCommentReportOptions } from "../services/commentReport.js";
+import { createCommentReportUseCase } from "../usecases/commentReport/create.js";
 
 const router = Router();
 
-router.post("/comment/report-create/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// POST /comment-report/:id
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
     const userId = req.user!.id;
-    const selectedOptionId = Number(req.body.selected);
+    const optionId = Number(req.body.selected);
 
-    if (Number.isNaN(commentId) || Number.isNaN(selectedOptionId)) {
+    if (Number.isNaN(commentId) || Number.isNaN(optionId)) {
         res.status(400).json({ message: "不正なidです" });
         return;
     }
 
-    const t = await sequelize.transaction();
-
     try {
-        const reportOption = await CommentReportOption.findByPk(selectedOptionId);
-        if (!reportOption) {
-            res.status(404).json({ message: "選択した内容が見つかりません" });
-            return;
-        }
-
-        const comment = await Item.findByPk(commentId);
-        if (!comment) {
-            res.status(404).json({ message: "コメントが見つかりません" });
-            return;
-        }
-
-        const user = await User.findByPk(userId);
-        if (!user) {
-            res.status(404).json({ message: "ユーザーデータが見つかりません" });
-            return;
-        }
-
-        await CommentReport.create({
-            comment_id: commentId,
-            report_user_id: userId,
-            option_id: selectedOptionId,
-        }, { transaction: t });
-
-        await comment.update({
-            report_score: Number(comment.report_score) + Number(user.report_trust_score),
-        }, { transaction: t });
-
-        await t.commit();
+        await createCommentReportUseCase({ commentId, userId, optionId });
 
         res.status(200).json({ message: "報告を作成しました" });
     } catch (err) {
-        await t.rollback();
         next(err);
     }
 });
@@ -60,7 +29,7 @@ router.post("/comment/report-create/:id", authenticateToken, async (req: Request
 // GET /comment-report/all-options
 router.get('/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const options = await getCommentReportOptions();
+        const options = await getAllCommentReportOptions();
 
         res.status(200).json({ options });
     } catch (err) {

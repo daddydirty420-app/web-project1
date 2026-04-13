@@ -16,6 +16,14 @@ export type UpdateParams = {
     };
 };
 
+export type UpdateReportScoreParams = {
+    comment: InstanceType<typeof Comment>;
+    data: {
+        report_score: number;
+    };
+    transaction?: Transaction,
+};
+
 export type CreateCommentParams = {
     data: {
         text: string;

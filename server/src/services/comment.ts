@@ -1,5 +1,5 @@
 import { Comment, User } from "../models/index.js";
-import { CommentIdParams, CreateCommentParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams } from "../types/serviceType/comment.js";
+import { CommentIdParams, CreateCommentParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams, UpdateReportScoreParams } from "../types/serviceType/comment.js";
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
@@ -49,6 +49,10 @@ export const getAllReply = ({ commentId }: CommentIdParams) => {
 
 export const updateSortNumber = async ({ comment, data }: UpdateParams) => {
     await comment.update(data);
+};
+
+export const updateReportScore = async ({ comment, data, transaction }: UpdateReportScoreParams) => {
+    await comment.update(data, { transaction });
 };
 
 export const createComment = ({ data }: CreateCommentParams) => {
