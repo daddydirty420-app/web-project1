@@ -71,7 +71,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
                 throw new Error("AUTH_ERROR");
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/upload/${id}?sellerMe=${sellerMe}&parentId=${parentId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/${id}?sellerMe=${sellerMe}&parentId=${parentId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

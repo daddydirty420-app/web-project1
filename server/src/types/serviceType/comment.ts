@@ -16,6 +16,17 @@ export type UpdateParams = {
     };
 };
 
+export type CreateCommentParams = {
+    data: {
+        text: string;
+        sort_number: number;
+        item_id: number;
+        user_id: number;
+        parent_comment_id?: number;
+        pin?: boolean;
+    },
+};
+
 export type DestroyParams = {
     comment: InstanceType<typeof Comment>;
 };

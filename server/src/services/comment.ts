@@ -1,5 +1,5 @@
 import { Comment } from "../models/index.js";
-import { CommentIdParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams } from "../types/serviceType/comment.js";
+import { CommentIdParams, CreateCommentParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams } from "../types/serviceType/comment.js";
 
 export const getComment = async ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
@@ -13,6 +13,10 @@ export const getAllComments = async ({ itemId }: ItemIdParams) => {
 
 export const updateSortNumber = async ({ comment, data }: UpdateParams) => {
     await comment.update(data);
+};
+
+export const createComment = ({ data }: CreateCommentParams) => {
+    return Comment.create(data);
 };
 
 export const destroyComment = async ({ comment }: DestroyParams) => {

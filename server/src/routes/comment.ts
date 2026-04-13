@@ -1,63 +1,38 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { Comment, User, CommentLike, CommentReport, Item, Notification } from "../models/index.js";
-import sequelize from "../db.js";
+import { Comment, User, CommentLike, CommentReport, Item } from "../models/index.js";
 import { AppError } from "../errors.js";
 import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
+import { uploadCommentUseCase } from "../usecases/comment/upload.js";
 
 const router = Router();
 
-router.post("/upload/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const currentUserId = req.user!.id;
-    const itemId = req.params.id;
+// POST /comment/:id?sellerMe=boolean(&parentId=number)
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+    const itemId = Number(req.params.id);
+
     const commentText: string = req.body.inputComment;
     const commentLength: number = commentText.length;
-    const sellerMe = req.query.sellerMe === "true";
-    const parentId = req.query?.parentId ?? null;
-    const parentIdNum = Number(parentId);
 
-    const t = await sequelize.transaction();
+    const sellerMe = req.query.sellerMe === "true";
+
+    const parentId = Number(req.query?.parentId) ?? null;
 
     try {
-        if (parentIdNum > 0) {
-            const parentComment = await Comment.findByPk(parentIdNum);
-            if (!parentComment) {
-                res.status(404).json({ message: "parentCommentが見つかりません。" });
-                return;
-            }
-
-            parentComment.sort_number = parentComment.sort_number + 150;
-            await parentComment.save({ transaction: t });
-        }
-
-        const commentData = {
-            text: commentText,
-            sort_number: 500 + commentLength,
-            item_id: itemId,
-            user_id: currentUserId,
-            ...(parentIdNum > 0 ? { parent_comment_id: parentIdNum } : {}),
-            ...(sellerMe ? { pin: true } : {}),
-        };
+        const comment = await uploadCommentUseCase({
+            userId,
+            itemId,
+            commentText,
+            commentLength,
+            sellerMe,
+            parentId
+        });
         
-        const comment = await Comment.create(commentData, { transaction: t });
-        if (!comment) {
-            res.status(400).json({ message: "コメントデータを作成できません。" });
-            return;
-        }
-
-        const item = await Item.findByPk(itemId);
-        if (!item.sold_out && !currentUserId !== item.seller_id) {
-            item.sort_number = Number(item.sort_number) + 25;
-            item.sort_buzz_number = Number(item.sort_buzz_number) + 120;
-            await item.save({ transaction: t });
-        }
-
-        await t.commit();
         res.status(200).json({ comment });
     } catch (err) {
-        await t.rollback();
         next(err);
     }
 });
