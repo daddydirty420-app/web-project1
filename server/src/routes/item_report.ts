@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken } from "../middleware/index.js";
 import { ItemReport, Item, ItemReportOption, User } from "../models/index.js";
 import sequelize from "../db.js";
+import { getItemReportOptions } from "../services/itemReport.js";
 
 const router = Router();
 
@@ -56,9 +57,10 @@ router.post("/item/report-create/:id", authenticateToken, async (req: Request, r
     }
 });
 
-router.get('/item/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/all-options', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const options = await ItemReportOption.findAll();
+        const options = await getItemReportOptions();
+
         res.status(200).json({ options });
     } catch (err) {
         next(err);

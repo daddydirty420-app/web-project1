@@ -31,7 +31,7 @@ export default async function Page({ params }: Props) {
     
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/report/item/all-options`);
+    const res = await fetch(`${process.env.API_URL}/item-report/all-options`);
 
     if (!res.ok) {
         notFound();
