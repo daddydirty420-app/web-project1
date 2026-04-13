@@ -1,4 +1,3 @@
-import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { destroyComment, getComment } from "../../services/comment.js";
 import { getItem } from "../../services/items/index.js";
