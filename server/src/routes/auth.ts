@@ -90,16 +90,17 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction): P
   }
 });
 
+// POST /auth/set-cookie
 router.post("/set-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { refreshToken, rememberMe } = req.body;
   if (!refreshToken) {
-    res.status(400).json({ message: "refreshToken がありません" });
+    res.status(400).json({ message: "refreshTokenがありません" });
     return;
   }
 
   res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
-  res.status(200).json({ message: "Cookie をセットしました" });
+  res.status(200).json({ message: "Cookieをセットしました" });
 });
 
 function generateRandomUserName(length: number = 12): string {
