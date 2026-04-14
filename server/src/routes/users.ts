@@ -5,6 +5,7 @@ import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, 
 import { Op } from "sequelize";
 import { getProfileMetadata, getStar } from "../services/users.js";
 import { getProfileUseCase } from "../usecases/user/getProfile.js";
+import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
 
 const router = Router();
 
@@ -71,56 +72,19 @@ router.get('/:id/profile/metadata', async (req: Request, res: Response, next: Ne
   }
 });
 
-router.get('/my-page/ssr', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const currentUserId = req.user!.id;
+// GET /user/my-page
+router.get('/my-page', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const userId = req.user!.id;
 
   try {
-    const user = await User.findByPk(currentUserId, {
-      attributes: ['id', 'user_name', 'profile_image', 'early_seller', 'honnin_verified', 'points', 'uriagekin'],
-      include: [
-        {
-          model: ShopInfo,
-          where: { verified: true },
-          attributes: ['id'],
-          required: false,
-        }
-      ]
-    });
-
-    if (!user) {
-      res.status(404).json({ message: "ユーザーが見つかりません" });
-      return;
-    }
-
-    const hasShop = !!user.ShopInfo;
-
-    const itemCount = await Item.count({
-      where: { 
-        seller_id: currentUserId,
-        status: { [Op.in]: ["active", "soldout"] },
-      }
-    });
-
-    const soldItemCount = await Item.count({
-      where: {
-        seller_id: currentUserId,
-        status: "soldout",
-      },
-    });
-
-    const unreadCount = await Notification.count({
-      where: {
-        read_user_id: req.user!.id,
-        read_flag: false,
-      },
-    });
-    
-    const referenceCount = await ReferenceCode.count({
-      where: {
-        output_user_id: currentUserId,
-        checked: true,
-      },
-    });
+    const {
+      user,
+      hasShop,
+      itemCount,
+      soldItemCount,
+      unreadCount,
+      referenceCount
+    } = await getMyPageUseCase({ userId });
 
     res.status(200).json({
       userData: {

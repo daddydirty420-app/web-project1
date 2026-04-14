@@ -1,3 +1,3 @@
 export { getItem, getItemPageData, getItemFormData, getItemForBuy, getItemWithVideoCategoriesUser, getItemWithVideoSaleShipping, getMetadata, getItemHighlight, getIndexItemsWithCount, getIndexVideosWithCount, getProfileItemsWithCount, getProfileVideosWithCount, getCartRecommendItems, getIndexRecommendItems, getItemPageRecommendItems, getItemWithCategory, getUserItemsStatusList, getUserItemsStockList, getUserItemsUploadedList } from "./query/index.js";
-export { countSellItem } from "./items.count.js";
+export { countSellItem, countSoldItem } from "./items.count.js";
 export { updateSortNumber, updatePublishItem, updateRestoreItem, addViewsCount, updateLogicalDeleteItem, destroyDraftItem, destroyPerfectItem, createItem, createItemCopyUpload, updateImage, updateItem, updatePrice, updateReportScore } from "./command/index.js";
