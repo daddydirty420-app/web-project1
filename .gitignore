@@ -4,6 +4,9 @@
 *.avi
 *.mkv
 *.wmv
+*.m3u8
+videos/*.ts
+public/videos/*.ts
 
 # Next.js build
 client/.next/
@@ -17,11 +20,22 @@ node_modules/
 # dist
 dist/
 
-# env
-.env
-.env.local
+# env系（バリエーション全部潰す）
+.env*
+!.env.example
+
+# ログ系
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
 
 # tmp
+temp/
 tmp/
 .vercel
 
@@ -29,4 +43,37 @@ tmp/
 .VSCodeCounter/
 
 # sql
-.sql
+*.dump
+*.sql.gz
+seed.sql
+backup.sql
+
+# キャッシュ系
+.cache/
+.next/cache/
+
+# テスト・カバレッジ
+coverage/
+
+# Docker
+docker-compose.yml
+
+# 秘密鍵系（超重要）
+*.pem
+*.key
+*.crt
+*.p12
+
+# Firebase / AWS（必要なものだけ）
+firebase-adminsdk*.json
+serviceAccountKey.json
+
+# Google系
+*.credentials.json
+
+# AWS
+*.aws.json
+
+# uploads（ユーザーがアップした画像など）
+uploads/
+public/uploads/
