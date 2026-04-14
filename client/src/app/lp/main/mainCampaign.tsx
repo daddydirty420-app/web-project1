@@ -14,7 +14,7 @@ export const MainCampaign = () => {
 
         <section className={styles.mainSec}>
             <CampaignH3 number={1} text="出品点数につきポイント配布" />
-            <MainP>早期出品期間中に出品すると、<strong className="text-[var(--theme)]">FLEX OUTDOOR</strong>内でご利用できる<strong>ポイントをお配りします！出品点数が増えるごとに、もらえるポイントの量が多くなります！</strong></MainP>
+            <MainP>早期出品期間中に出品すると、<strong className="text-[var(--theme)]">○○</strong>内でご利用できる<strong>ポイントをお配りします！出品点数が増えるごとに、もらえるポイントの量が多くなります！</strong></MainP>
             <MainP>お配りしているポイントは以下の通りです。</MainP>
             <div className="ml-4 mb-4">
                 <p className="text-sm">1点：<strong>100pt</strong>

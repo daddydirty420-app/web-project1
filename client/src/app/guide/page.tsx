@@ -6,7 +6,7 @@ import Footer from '@/components/footer/footer';
 
 export const metadata: Metadata = {
     title: "ご利用ガイド",
-    description: "ご不明な点などあればこちら！FLEX OUTDOORについてわかりやすく解説しています。",
+    description: "ご不明な点などあればこちら！○○についてわかりやすく解説しています。",
     robots: {
         index: false,
         follow: false

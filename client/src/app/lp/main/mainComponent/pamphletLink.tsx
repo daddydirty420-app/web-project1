@@ -16,7 +16,7 @@ export const PamphletLink = () => {
             height={60}
             className={styles.linkIcon}
             />
-            <p className={styles.pamphletP}><span className="text-[var(--theme)]">FLEX OUTDOOR出品ガイド</span><br />資料のダウンロードはこちら</p>
+            <p className={styles.pamphletP}><span className="text-[var(--theme)]">○○出品ガイド</span><br />資料のダウンロードはこちら</p>
         </a>
     );
 };

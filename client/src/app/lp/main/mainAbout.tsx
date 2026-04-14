@@ -17,11 +17,11 @@ export const MainAbout = ({ shopPage }: Props) => {
         <PamphletLink />
 
         <section className={styles.mainSec}>
-            <MainH3><span className="text-[var(--theme)]">FLEX OUTDOOR</span>とは？</MainH3>
+            <MainH3><span className="text-[var(--theme)]">○○</span>とは？</MainH3>
             <MainP><strong>FLEXシリーズ第一弾！</strong></MainP>
             {!shopPage && (
                 <MainP>「
-                    <strong className="text-[var(--theme)]">FLEX OUTDOOR</strong>
+                    <strong className="text-[var(--theme)]">○○</strong>
                     」は、キャンプ・登山用品を動画で「
                     <strong>FLEX（自慢）</strong>
                     」して紹介する全く新しいフリマです。動画で紹介するから
@@ -33,13 +33,13 @@ export const MainAbout = ({ shopPage }: Props) => {
             {shopPage && (
                 <>
                 <MainP><strong>キャンプ・登山用品</strong>を中心に、<strong>動画</strong>で商品紹介してアウトドア用品を出品できる全く新しいフリマ/ネットショップのプラットフォームです。</MainP>
-                <Link href='/lp' className="underline"><span className="text-[var(--theme)]">FLEX OUTDOOR</span>とは何か、詳しく知りたい方はこちら→</Link>
+                <Link href='/lp' className="underline"><span className="text-[var(--theme)]">○○</span>とは何か、詳しく知りたい方はこちら→</Link>
                 </>
             )}
         </section>
 
         <section className={styles.mainSec}>
-            <MainH3><span className="text-[var(--theme)]">FLEX OUTDOOR</span>で売れる商品</MainH3>
+            <MainH3><span className="text-[var(--theme)]">○○</span>で売れる商品</MainH3>
             <MainP><strong>キャンプ・登山</strong>を中心に、<strong>アウトドア用品</strong>をご出品いただけます。</MainP>
             <dl className={styles.dl}>
                 <dt className={styles.dt}>例：キャンプ</dt>

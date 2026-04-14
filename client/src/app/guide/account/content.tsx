@@ -58,7 +58,7 @@ export const Content = () => {
                             <ListDiscSecond>商品リスト</ListDiscSecond>
                             <ListDiscSecond>振込申請</ListDiscSecond>
                             <ListDiscSecond>購入・売上履歴</ListDiscSecond>
-                            <ListDiscSecond>FLEX OUTDOORについて</ListDiscSecond>
+                            <ListDiscSecond>○○について</ListDiscSecond>
                         </ListUlSecond>
                     </ListUl>
                     <Nado />

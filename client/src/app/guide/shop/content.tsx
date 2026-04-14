@@ -48,7 +48,7 @@ export const Content = () => {
                 <ListUl>
                     <ListCheck>法人または個人事業主の方</ListCheck>
                     <ListCheck>認許可が必要な場合、所定の認許可を取得している方</ListCheck>
-                    <ListCheck>FLEX OUTDOORと関連のある商品を販売される方</ListCheck>
+                    <ListCheck>○○と関連のある商品を販売される方</ListCheck>
                     <ListCheck>利用規約等に反しない方</ListCheck>
                 </ListUl>
             </Accordion>

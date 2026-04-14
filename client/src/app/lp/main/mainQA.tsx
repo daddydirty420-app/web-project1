@@ -8,7 +8,7 @@ export const MainQA = () => {
         <MainH2>Q&A</MainH2>
 
         <Question>販売手数料はいくらですか？</Question>
-        <Answer>FLEX OUTDOORの販売手数料は、全ての商品で<strong className="text-[var(--theme)] text-2xl">10%</strong>。取引完了時に、商品代金の<strong className="text-[var(--theme)] text-2xl">9割</strong>が入金されます。</Answer>
+        <Answer>○○の販売手数料は、全ての商品で<strong className="text-[var(--theme)] text-2xl">10%</strong>。取引完了時に、商品代金の<strong className="text-[var(--theme)] text-2xl">9割</strong>が入金されます。</Answer>
 
         <Question>販売手数料以外に手数料は発生しますか？</Question>
         <Answer>お客様の口座への振込時に<strong>200円</strong>振込手数料が発生します。</Answer>

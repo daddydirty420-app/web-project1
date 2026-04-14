@@ -6,7 +6,7 @@ export const Content = () => {
     return (
         <>
         <TokuteiSection header='事業者名'>
-            <p>sex</p>
+            <p>○○</p>
         </TokuteiSection>
 
         <TokuteiSection header='代表者'>
@@ -37,7 +37,7 @@ export const Content = () => {
 
         <TokuteiSection header='メールアドレス'>
             <p>contact@○○.com
-                <br />support@flex-outdoor-mail.com
+                <br />support@○○.com
             </p>
             <small className={styles.small}>※現在、お電話による対応は原則行っておりません。お問い合わせの際は、<Link href='/inquiry' className='underline cursor-pointer'>お問い合わせフォーム</Link>および上記のメールからお問い合わせください。</small>
         </TokuteiSection>
@@ -47,7 +47,7 @@ export const Content = () => {
         </TokuteiSection>
 
         <TokuteiSection header='URL'>
-            <p><Link href='/' className={styles.link}>https://fuckintesting.com</Link>（仮）</p>
+            <p><Link href='/' className={styles.link}>https://○○.com</Link>（仮）</p>
         </TokuteiSection>
 
         <TokuteiSection header='取引銀行'>

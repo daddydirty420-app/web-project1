@@ -28,7 +28,7 @@ export const Content = () => {
                 </TokuteiSection>
 
                 <TokuteiSection header='メールアドレス'>
-                    <p>support@flex-outdoor-mail.com</p>
+                    <p>support@○○.com</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='営業時間'>
@@ -44,7 +44,7 @@ export const Content = () => {
                 </TokuteiSection>
 
                 <TokuteiSection header='役務の内容'>
-                    <p>FLEX OUTDOORは、お客様間での売買取引の機会を提供します。</p>
+                    <p>○○は、お客様間での売買取引の機会を提供します。</p>
                 </TokuteiSection>
 
                 <TokuteiSection header='支払い価格'>

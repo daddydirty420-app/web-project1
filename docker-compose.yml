@@ -28,6 +28,7 @@ services:
       NODE_ENV: development
       PORT: 5000
       DB_SSL: "false"
+      COOKIE_DOMAIN: ".fuckintesting.com"
     volumes:
       - ./server:/app
       - /app/node_modules

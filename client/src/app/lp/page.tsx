@@ -11,8 +11,8 @@ type Res = {
 };
 
 export const metadata: Metadata = {
-    title: "FLEX OUTDOOR",
-    description: "自慢のギアを動画で自慢！全く新しいアウトドア専門フリマ「FLEX OUTDOOR」。新品からヴィンテージ品まで、動画だから商品の魅力から使い方、状態まで一目瞭然！アウトドア好き同士がつながる、新しい売買体験を！",
+    title: "○○",
+    description: "自慢のギアを動画で自慢！全く新しいアウトドア専門フリマ「○○」。新品からヴィンテージ品まで、動画だから商品の魅力から使い方、状態まで一目瞭然！アウトドア好き同士がつながる、新しい売買体験を！",
     robots: {
         index: false,
         follow: false,

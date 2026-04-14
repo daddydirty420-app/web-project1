@@ -12,7 +12,7 @@ export const FooterSitemap = () => {
                     <Link href='/inquiry' className={styles.sitemapText}>お問い合わせ</Link>
                     <Link href='/guide' className={styles.sitemapText}>ご利用ガイド</Link>
                     <Link href='/company' className={styles.sitemapText}>会社概要</Link>
-                    <Link href='/blog/list' className={styles.sitemapText}>FLEX OUTDOORブログ</Link>
+                    <Link href='/blog/list' className={styles.sitemapText}>○○ブログ</Link>
                 </nav>
             </div>
         </footer>

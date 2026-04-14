@@ -47,6 +47,7 @@ tmp/
 *.sql.gz
 seed.sql
 backup.sql
+backup_*.sql
 
 # キャッシュ系
 .cache/

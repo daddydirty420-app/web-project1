@@ -34,7 +34,7 @@ export const Content = () => {
 
                 <Accordion heading='動画の内容'>
                     <p className='mt-4 mb-2'>
-                        <span className='text-[var(--theme)] font-bold'>FLEX OUTDOOR</span>では、商品の内容や特徴が伝わればどんな動画でも構いません！
+                        <span className='text-[var(--theme)] font-bold'>○○</span>では、商品の内容や特徴が伝わればどんな動画でも構いません！
                         <br />動画にすることで、より商品の内容がはっきり伝わり、商品の良さや特徴を理解していただけるようなります。
                     </p>
 
@@ -73,7 +73,7 @@ export const Content = () => {
                 </Accordion>
 
                 <Accordion heading='販売手数料について'>
-                    <p className='mt-4 mb-2'><span className='text-[var(--theme)] font-bold'>FLEX OUTDOOR</span>は、決済時に販売手数料を徴収しております。</p>
+                    <p className='mt-4 mb-2'><span className='text-[var(--theme)] font-bold'>○○</span>は、決済時に販売手数料を徴収しております。</p>
 
                     <p>手数料率は以下の通りです。</p>
                     <p className={clsx('mt-2 ml-[2rem]', styles.PHeading)}>商品代金の<span className='text-[var(--theme)]'>10%</span></p>
@@ -151,7 +151,7 @@ export const Content = () => {
                 </Accordion>
 
                 <Accordion heading='ポイント変換'>
-                    <GuideSection heading='売上金はポイントに変換することができます。'>ポイントは<strong className='text-[var(--theme)]'>FLEX OUTDOOR</strong>でのお支払いにご利用いただけます。</GuideSection>
+                    <GuideSection heading='売上金はポイントに変換することができます。'>ポイントは<strong className='text-[var(--theme)]'>○○</strong>でのお支払いにご利用いただけます。</GuideSection>
                     <GuideSection heading='ポイントの有効期限：保有日から180日後'>ポイントは売上金と同様に保有日から<strong className='text-[var(--theme)]'>180日後</strong>まで使用されなかった場合、無効になり、弊社が回収いたします。</GuideSection>
                 </Accordion>
             </AccordionGrid>
@@ -159,7 +159,7 @@ export const Content = () => {
             <GuideSubTitle text='禁止事項・制限事項' />
             <AccordionGrid>
                 <Accordion heading='動画・画像における禁止事項'>
-                    <p className='mt-4 mb-2'><strong className='text-[var(--theme)]'>FLEX OUTDOOR</strong>の商品動画・画像では以下のものを禁止しております。</p>
+                    <p className='mt-4 mb-2'><strong className='text-[var(--theme)]'>○○</strong>の商品動画・画像では以下のものを禁止しております。</p>
 
                     <TermsListDiv>
                         <TermsList number={1} text='第三者の権利（著作権、肖像権、名誉権、商標権、特許権、実用新案権、意匠権、プライバシー権、パブリシティ権等を含みますがこれに限られません）を侵害する内容を含むコンテンツ' />
@@ -262,7 +262,7 @@ export const Content = () => {
                         <ListCheck>マイページから「売上履歴」ページを開き、各取引をクリック</ListCheck>
                     </ListUl>
 
-                    <GuideSmall>※FLEX OUTDOORでは、領収書や適格請求書の発行は行っておりません。当サイトの取引明細、購入明細を代わりにご利用ください。購入者から領収書等の発行を求められた場合、お手数お掛けしますが、ご自身でご対応をお願いいたしております。</GuideSmall>
+                    <GuideSmall>※○○では、領収書や適格請求書の発行は行っておりません。当サイトの取引明細、購入明細を代わりにご利用ください。購入者から領収書等の発行を求められた場合、お手数お掛けしますが、ご自身でご対応をお願いいたしております。</GuideSmall>
                 </Accordion>
 
                 <Accordion heading='配送状況について'>
