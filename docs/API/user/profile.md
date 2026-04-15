@@ -46,6 +46,8 @@ JWT 必須
 - 404 USER_NOT_FOUND
 - 500 INTERNAL_SERVER_ERROR
 
+---
+
 # GET /user/:id/profile — プロフィール情報取得
 
 ## 概要
