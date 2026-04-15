@@ -12,6 +12,20 @@
 
 現在、本プロジェクトは開発中です。
 
+## 開発の進捗
+
+2026年4月15日現在の開発進捗
+
+### フロントエンド
+
+商品ページ・ユーザー登録および個人情報登録・認証系・その他インプット系・規約・ガイドが完成。決済系・取引系・チャット系・検索機能（一部を除く）・トップページ・LP・売上管理・管理者機能は未実装。
+
+一部、以前のサービス（アウトドア系EC）から未改修の部分あり。
+
+### バックエンド
+
+Sequelizeモデル・APIルート・ユースケース層・サービス層を、フロントエンドと連動して開発中。その他、cron、認証ミドルウェア、インフラ、マイグレーション等も並行して開発中。ルートハンドラのREST API設計への改修と、/usecase、/serviceへの内部処理の依存関係の分離と一部抽象化も並行してリファクタ中。
+
 ---
 
 # 主な目的
@@ -59,15 +73,40 @@
 * Next.js（App Router）
 * TypeScript
 
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+
 ### バックエンド
 
 * Node.js
 * Express
 * Sequelize ORM
 
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+
 ### データベース
 
 * PostgreSQL
+
+## システム構成
+
+​```mermaid
+graph TD
+  A[Next.js Client] -->|REST API| B[Express Server]
+  B --> C[Sequelize ORM]
+  C --> D[(PostgreSQL)]
+  A -->|動画アップロード| E[ストレージ / CDN]
+​```
+
+### 技術選定理由
+
+| 技術 | 選定理由 |
+|------|---------|
+| Next.js (App Router) | SSR・SSGを柔軟に使い分けられ、SEOと表示速度を両立できるため |
+| TypeScript | フロント・バック共通で型安全に開発でき、スケール時のバグを減らせるため |
+| Express | シンプルで学習コストが低く、柔軟なルーティング設計ができるため |
+| Sequelize | TypeScriptとの親和性が高く、マイグレーション管理が容易なため |
+| PostgreSQL | リレーション設計が複雑なECデータ（商品・注文・ユーザー）に適しているため |
 
 ---
 
