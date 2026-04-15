@@ -20,7 +20,7 @@ node_modules/
 # dist
 dist/
 
-# env系（バリエーション全部潰す）
+# env系
 .env*
 !.env.example
 
@@ -59,13 +59,13 @@ coverage/
 # Docker
 docker-compose.yml
 
-# 秘密鍵系（超重要）
+# 秘密鍵系
 *.pem
 *.key
 *.crt
 *.p12
 
-# Firebase / AWS（必要なものだけ）
+# Firebase / AWS
 firebase-adminsdk*.json
 serviceAccountKey.json
 
