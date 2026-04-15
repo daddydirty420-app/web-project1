@@ -1,18 +1,18 @@
-🇯🇵 Japanese version: DATABASE.ja.md
+🇺🇸 English version: DATABASE.en.md
 
-# Database
+# データベース
 
-## Overview
+## 概要
 
-This system is a single-item purchase e-commerce platform where each item is associated with a video.
+このシステムは商品データに動画データが紐づいている単品購入型のECプラットフォームです。
 
-- Each item can have videos and comments
-- 1 order = 1 item
-- Item data is stored as a snapshot at the time of purchase to preserve historical accuracy
+* 商品データに動画やコメントなどをリレーション
+* 1注文 = 1商品
+* 商品情報は購入後も変わらないようスナップショットを保持
 
 ---
 
-## ER Diagram (Simplified)
+## 簡易DB相関図
 
 - User
    |- ShopInfo
@@ -33,131 +33,131 @@ This system is a single-item purchase e-commerce platform where each item is ass
             |- Cancel
             |- Chat
             |- PaymentMethodOption
-            |- User (Seller)
-            |- User (Buyer)
-            |- PurchaseSnapshot
-            |- status (enum)
+            |- User(Seller)
+            |- User(Buyer)
+            |- purchase_snapshot
+            |- status(enum)
 
 ---
 
-## Core Entities
+## コアエンティティ
 
 ### User
 
-Manages user information.
+ユーザー情報を管理
 
 ---
 
 ### Item
 
-Represents a product listed for sale.
+商品情報
 
-- Associated with a seller (seller_id)
-- Requires at least one video
+* 出品者(seller_id)と紐づく
+* 動画(Video)必須
 
 ---
 
 ### Order
 
-Represents a purchase transaction.
+注文トランザクション
 
-- 1 record = 1 purchase
-- Stores payment data, status, and snapshot data
-- Associated with Delivery, Cancel, and Chat
+* 1レコード = 1決済
+* 決済データ、進行ステータス、スナップショットを格納
+* 配送(Delivery)、キャンセル(Cancel)、取引チャット(Chat)と紐づく
 
 ---
 
-## Important Relationships
+## 重要リレーション
 
 ### Order - Item
 
-- 1 : 1
-- Since item data can change after purchase,  
-  the state at the time of purchase is stored in `PurchaseSnapshot`
+* 1 : 1
+* 商品は購入後に変更される可能性があるため、
+購入時点の情報は purchase_snapshot に保存する
 
 ---
 
 ### Order - Delivery
 
-- 1 : 1
-- Delivery information is stored per order
+* 1 : 1
+* 配送情報は購入単位で保持
 
 ---
 
 ### Order - Cancel
 
-- 1 : 0..1
-- Created only when a cancellation occurs
+* 1 : 0..1
+* キャンセルが発生した場合のみ作成
 
 ---
 
 ### Order - PaymentMethodOption
 
-- N : 1
-- Payment methods are selected from master data
+* N : 1
+* 決済方法はマスターデータから選択する
 
 ---
 
-### Order - User (Seller / Buyer)
+### Order - User（Seller / Buyer）
 
-- N : 1 (each)
-- Seller represents the item owner, Buyer represents the purchaser
-- Both are stored to clearly define transaction participants
+* N : 1
+* Sellerは商品出品者、Buyerは購入者を表す
+* 取引の当事者を明確に分離するために両方を保持する
 
 ---
 
 ### Item - Video
 
-- 1 : 1
-- Each item must have one video
+* 1 : 1
+* 商品には1つの動画が紐づく（動画必須）
 
 ---
 
 ### Item - Comment
 
-- 1 : N
-- Manages user comments on items
+* 1 : N
+* 商品に対するユーザーのコメントを管理
 
 ---
 
-## Design Decisions
+## 設計意図（Design Decisions）
 
-### Why use a snapshot?
+### なぜスナップショットを持つのか
 
-Item data (price, name, description, etc.) may change over time.  
-To maintain consistency of past transactions,  
-the data at the time of purchase is stored in `PurchaseSnapshot`.
-
----
-
-### Why 1 order per item?
-
-- Designed for a marketplace-style platform (C2C / B2C)
-- Simplifies handling of payment, delivery, and cancellation
-- Keeps transaction responsibility clear and isolated
+商品情報（価格・名前・説明など）は出品者によって変更される可能性があるため、
+購入時点の情報を purchase_snapshot に保存することで、
+過去の取引データの整合性を保つ
 
 ---
 
-### Why separate Delivery?
+### なぜ1商品1注文にしているのか
 
-Designed with future extensions in mind:
-
-- Delivery status tracking
-- Tracking number management
-- Integration with external shipping APIs
+* BtoC、CtoC両対応フリマ型プラットフォームであり、出品者と購入者の取引や配送等のトラブルを未然に軽減するため
+* 決済・配送・キャンセルの処理をシンプルにするため
+* トランザクションの責務を明確にするため
 
 ---
 
-### Why store both Seller and Buyer?
+### なぜDeliveryを分離しているのか
 
-- Improves performance when retrieving transaction history
-- Enables easier future analysis (sales, purchase behavior, etc.)
+将来的に以下の拡張を想定している：
+
+* 配送ステータス管理
+* 追跡番号の保持
+* 外部配送APIとの連携
 
 ---
 
-## Constraints / Rules
+### なぜSellerとBuyerを両方持つのか
 
-- Changes to Item do not affect existing Orders
-- Only one Cancel record per Order
-- Delivery is required
-- Each Item must have one Video
+* 取引履歴の取得を高速化するため
+* 将来的な分析（売上・購入履歴）を容易にするため
+
+---
+
+## 制約・ルール
+
+* Order作成後、Itemの変更は注文データに影響しない
+* Cancelは1注文につき最大1回のみ
+* Deliveryは必須データ
+* ItemにはVideoが1つ必要

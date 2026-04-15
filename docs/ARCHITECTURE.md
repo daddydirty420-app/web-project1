@@ -1,38 +1,38 @@
-🇯🇵 Japanese version: ARCHITECTURE.ja.md
+🇺🇸 English version: ARCHITECTURE.en.md
 
-# Architecture
+# アーキテクチャ
 
-## Overview
+## 概要
 
-This project is an EC platform where product listing requires video upload.
+本プロジェクトは、商品出品時に動画アップロードを必須とするECプラットフォームです。
 
-Main goals:
+主な目的：
 
-* Multi-category EC platform
-* Video-based product listings
-* Designed for future mobile app expansion
-* Designed for AI / ML integration
+* マルチカテゴリ対応のECプラットフォーム
+* 動画ベースの商品出品
+* 将来的なモバイルアプリ展開を前提とした設計
+* AI / 機械学習との統合を見据えた設計
 
 ---
 
-# System Architecture
+# システム構成
 
-## Frontend
+## フロントエンド
 
-Framework
+フレームワーク
 
-* Next.js (App Router)
+* Next.js（App Router）
 * TypeScript
 
-Responsibilities
+役割
 
-* UI rendering
-* API communication
-* Video upload
-* Product browsing
-* Purchase flow
+* UIの描画
+* API通信
+* 動画アップロード
+* 商品閲覧
+* 購入フローの実装
 
-Directory structure
+ディレクトリ構成
 
 /client/src
 /app
@@ -46,23 +46,23 @@ Directory structure
 
 ---
 
-## Backend
+## バックエンド
 
-Framework
+フレームワーク
 
 * Node.js
 * Express
 * Sequelize ORM
 
-Responsibilities
+役割
 
-* API server
-* Business logic
-* Payment processing
-* Order management
-* Delivery management
+* APIサーバー
+* ビジネスロジックの実装
+* 決済処理
+* 注文管理
+* 配送管理
 
-Directory structure
+ディレクトリ構成
 
 /server/src
 /controllers
@@ -77,9 +77,9 @@ Directory structure
 
 ---
 
-# Database
+# データベース
 
-Database
+データベース
 
 * PostgreSQL
 
@@ -87,58 +87,62 @@ ORM
 
 * Sequelize
 
-Main tables
+主要テーブル
 
 User
 Item
 Order
 Delivery
 
-Relationships
+リレーション
 
 User
-- item
-- cart
-- commentLike
-- follow
-- itemLike
-- notification
-- shopInfo
-- address
-- bankAccount
-- name
-- watchHistory
+
+* item
+* cart
+* commentLike
+* follow
+* itemLike
+* notification
+* shopInfo
+* address
+* bankAccount
+* name
+* watchHistory
 
 Item
-- user
-- category
-- brand
-- cart
-- itemLike
-- video
-- sale
-- itemReport
-- itemShippingProfile
-- comment
+
+* user
+* category
+* brand
+* cart
+* itemLike
+* video
+* sale
+* itemReport
+* itemShippingProfile
+* comment
 
 Order
-- item
-- seller
-- buyer
-- delivery
-- chat
-- cancel
+
+* item
+* seller
+* buyer
+* delivery
+* chat
+* cancel
 
 Delivery
-- order
-- address
-- name
+
+* order
+* address
+* name
 
 ---
 
-# Order Flow
+# 注文フロー
 
-Purchase process
+購入プロセス
 
 pending
 ↓
@@ -148,20 +152,20 @@ shipped
 ↓
 completed
 
-Possible exits
+分岐
 
 cancelled
 returned
 
 ---
 
-# Future Architecture Plans
+# 今後のアーキテクチャ拡張
 
-Planned improvements
+予定している改善
 
-* multi-catogory UI
-* mobile app
-* ML recommendation system
-* automatic moderation
-* payment gateway integration
-* shipping API integration
+* マルチカテゴリ対応
+* モバイルアプリ対応
+* レコメンド機能（機械学習）
+* 自動モデレーション
+* 決済ゲートウェイ統合
+* 配送API統合

@@ -1,152 +1,163 @@
-🇯🇵 Japanese version: README.ja.md
+🇺🇸 English version: README.en.md
 
 # Web Project 1
 
-## Overview
+## 概要
 
-This project is a **video-first EC platform** where product listings require video uploads as part of the product information.
-It supports both **BtoC and CtoC transactions**, allowing sellers to present products through video along with structured product data.
+本プロジェクトは、**商品情報として動画投稿を必須とする動画中心型のECプラットフォーム**です。
+出品者は動画と構造化された商品情報を組み合わせて商品を掲載でき、**BtoCおよびCtoCの両方の取引に対応**しています。
 
-Traditional EC platforms rely mainly on images and text, which can lead to insufficient product understanding.
-By requiring video as part of the product information, this platform aims to provide richer product context and improve matching between sellers and buyers.
+従来のECサイトでは、商品情報が画像やテキストに依存しているため、商品の理解が十分に伝わらない場合があります。
+本プラットフォームでは商品情報に動画を必須とすることで、より豊富な情報を提供し、**出品者と購入者のマッチング精度の向上**を目指しています。
 
-This project is currently under development.
-
----
-
-# Main Goals
-
-1. **Video-based product listings**
-   Product listing requires a video upload to provide richer product information.
-
-2. **Mobile-first single-screen product page**
-
-   On mobile devices, the key elements of the product page —  
-   **video, product information, and purchase actions — are designed to fit within a single screen view.**
-
-   This allows users to understand the product and access purchase actions without scrolling.
-
-3. **Dual UI product listing**
-   Product lists can switch between:
-
-   * **Video thumbnail view**
-   * **Product card view**
-
-4. **Scalable multi-category architecture**
-   Currently focused on apparel, but designed with an architecture that can expand to multiple product categories.
+現在、本プロジェクトは開発中です。
 
 ---
 
-# UI Overview
+# 主な目的
 
-### Item Page
+1. **動画を活用した商品出品機能**
+
+   商品出品時に動画の投稿を必須とすることで、よりリッチな商品情報を提供できる仕組みを構築します。
+
+2. **モバイル最適化されたシングルスクリーン商品ページ**
+
+   スマートフォンでは、動画・商品情報・購入操作などの主要要素が
+   **1画面内で把握できるUI**として設計されています。
+
+   これにより、スクロールを必要とせずに商品理解と購入操作が可能になります。
+
+3. **2種類のUIを切り替え可能な商品リスト**
+
+   商品一覧は以下の2つの表示形式を切り替えることができます。
+
+   * 動画サムネイル表示
+   * 商品カード表示
+
+4. **多ジャンル展開を前提としたスケーラブルな設計**
+
+   現在はアパレル分野を中心に開発していますが、将来的に**複数の商品ジャンルへ拡張可能なアーキテクチャ**を採用しています。
+
+---
+
+# UIサンプル
+
+### 商品ページ
 
 <img src="images/readme_UI_mobile.png" width="300">
 
-On mobile devices, the product page is designed so that
-the video, product information, and purchase actions
-fit within a single screen.
+モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。
 
 <img src="images/readme_UI_pc.png" width="600">
 
 ---
 
-# Tech Stack
+# 技術スタック
 
-Frontend
+### フロントエンド
 
-* Next.js (App Router)
+* Next.js（App Router）
 * TypeScript
 
-Backend
+### バックエンド
 
 * Node.js
 * Express
 * Sequelize ORM
 
-Database
+### データベース
 
 * PostgreSQL
 
 ---
 
-# Project Structure
+# プロジェクト構成
 
 web-project1
 
 /client
-Frontend application (Next.js)
+フロントエンドアプリケーション（Next.js）
 
 /server
-Backend API (Node.js + Express)
+バックエンドAPI（Node.js + Express）
 
 /docs
-Architecture and technical documentation
+アーキテクチャおよび技術ドキュメント
 
 ---
 
-# Setup
+# セットアップ
 
-Clone repository
+リポジトリをクローン
 
+```
 git clone https://github.com/daddydirty420-app/web-project1
+```
 
-Install dependencies
+依存関係をインストール
 
+```
 cd client
 npm install
 
 cd ../server
 npm install
+```
 
-Run development servers
+開発サーバーを起動
 
 client
+
+```
 npm run dev
+```
 
 server
+
+```
 npm run dev
+```
 
 ---
 
-# Current Features
+# 現在実装されている機能
 
-* Product page
-* Product upload
-* User authentication
-* User profile
-* Product list
-* Follow system
-* Comment system
-* Shop registration
-* Bank transfer related features
-* Contact system
-* User guide
-* Terms and policy pages
-
----
-
-# Upcoming Implementation
-
-* Order / payment / transaction system
-* Notifications and email system
-* Top page and landing page
-* Admin tools
+* 商品ページ
+* 商品出品機能
+* ユーザー認証
+* ユーザープロフィール
+* 商品リスト
+* フォロー機能
+* コメント機能
+* ショップ登録
+* 振込関連機能
+* お問い合わせ機能
+* ユーザーガイド
+* 利用規約・ポリシー関連ページ
 
 ---
 
-# Future Plans
+# 直近の実装予定
 
-* Mobile application
-* Recommendation system
-* Machine learning integration
-* Multi-category expansion
-* Shipping API integration
-* Payment gateway integration
+* 注文 / 決済 / 取引機能
+* お知らせ・メール通知機能
+* トップページ / LP（ランディングページ）
+* 管理者ツール
 
 ---
 
-# Author
+# 今後の計画
+
+* モバイルアプリ開発
+* レコメンド機能
+* 機械学習の導入
+* 多ジャンル展開
+* 配送API連携
+* 決済ゲートウェイ連携
+
+---
+
+# 作者
 
 GitHub
 https://github.com/daddydirty420-app
