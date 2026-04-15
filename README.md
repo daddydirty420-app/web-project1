@@ -90,6 +90,13 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 
 * PostgreSQL
 
+### ストレージ
+
+* Amazon S3（画像・動画ファイルのアップロード先）
+* PostgreSQL に S3 の URL を保存して参照
+
+![AWS S3](https://img.shields.io/badge/Amazon_S3-FF9900?style=flat&logo=amazons3&logoColor=white)
+
 ### インフラ / デプロイ
 
 * Vercel（フロントエンド）
@@ -107,6 +114,7 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 | Express | シンプルで学習コストが低く、柔軟なルーティング設計ができるため |
 | Sequelize | TypeScriptとの親和性が高く、マイグレーション管理が容易なため |
 | PostgreSQL | リレーション設計が複雑なECデータ（商品・注文・ユーザー）に適しているため |
+| Amazon S3 | 大容量の画像・動画ファイルを低コストかつ高可用性で保存できるため。DBにはURLのみ保存し、ファイル管理を分離する設計 |
 | Vercel | Next.jsとの親和性が非常に高く、App RouterのSSR/ISRに最適化されており、無料で利用できるため |
 | Render | Node.js + Expressのデプロイが簡単で、無料枠から始められコスト効率が良いため |
 
@@ -123,13 +131,26 @@ graph TD
     D[(PostgreSQL)]
   end
 
-  E[ストレージ / CDN]
+  subgraph AWS
+    E[Amazon S3\n画像・動画ストレージ]
+  end
 
   A -->|REST API リクエスト| B
   B --> C[Sequelize ORM]
   C --> D
-  A -->|動画アップロード| E
+  B -->|ファイルアップロード| E
+  D -->|S3 URL を保存・参照| D
+  A -->|S3 URL で直接表示| E
 ```
+
+## 開発環境
+
+| 環境 | 内容 |
+|------|------|
+| OS | Ubuntu |
+| コンテナ | Docker |
+
+ローカル開発・テストは Docker コンテナ上で動作確認しています。
 
 ---
 
