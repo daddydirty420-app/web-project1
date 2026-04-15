@@ -240,7 +240,19 @@ npm run dev
 
 ---
 
-# 作者
+# 開発者
 
-GitHub
-https://github.com/daddydirty420-app
+GitHub: https://github.com/daddydirty420-app
+
+エンジニア1年目として、最初のWebアプリフルスタック開発に挑戦中。2026年内リリースを目指す。
+
+以前はノーコードツール Bubble を使って同様のWebアプリを2つ開発。
+1つ目はPVが伸びず撤退、2つ目はパフォーマンスが目標水準に達せず断念。
+
+パフォーマンス課題の解決と機能拡張を目的に、 Typescript を用いたフルスタック開発に挑戦している。
+
+### AI 利用方針
+
+ChatGPT・Claude・GitHub Copilot などの生成AIと設計や実装について壁打ちしながら開発を進める。
+ただし Claude Code・Codex・Cursor などのコーディングエージェントは使用しない方針。
+基本的な設計・実装の技術的理解を、手を動かすことで深めることを重視しているため。
