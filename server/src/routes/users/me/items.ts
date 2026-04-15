@@ -14,7 +14,7 @@ import { getUserItemsWatchUseCase } from "../../../usecases/item/itemList/userIt
 
 const router = Router();
 
-// /items?type="typename"(&page=number&status=""&keyword="search")
+// /users/me/items?type="typename"(&page=number&status=""&keyword="search")
 router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 

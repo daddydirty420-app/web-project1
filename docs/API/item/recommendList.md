@@ -33,7 +33,7 @@
 ### リクエスト
 - query:
   - view=itemPage
-  - itemId=0
+  - itemId
 
 ### ビジネスロジック
 - 商品一覧を取得
