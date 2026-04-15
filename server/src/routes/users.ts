@@ -1,8 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { User, Item, ShopInfo, BankAccount, Notification, ReferenceCode, Video, Sale, AccountTypeOption, UriagekinHistory } from "../models/index.js";
-import { Op } from "sequelize";
+import { User, BankAccount, AccountTypeOption } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users.js";
 import { getProfileUseCase } from "../usecases/user/getProfile.js";
 import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
@@ -17,6 +16,7 @@ router.get('/me-admin', authenticateToken, async (req: Request, res: Response): 
   res.json({ admin: !!req.user!.admin });
 });
 
+// GET /:id/profile
 router.get('/:id/profile', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const userId = Number(req.params.id);
 
