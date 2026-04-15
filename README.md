@@ -81,24 +81,24 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 * Node.js
 * Express
 * Sequelize ORM
+* Typescript
 
 ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 
 ### データベース
 
 * PostgreSQL
 
-## システム構成
+### インフラ / デプロイ
 
-​```mermaid
-graph TD
-  A[Next.js Client] -->|REST API| B[Express Server]
-  B --> C[Sequelize ORM]
-  C --> D[(PostgreSQL)]
-  A -->|動画アップロード| E[ストレージ / CDN]
-​```
+* Vercel（フロントエンド）
+* Render（バックエンド・DB）
 
-### 技術選定理由
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white)
+
+## 技術選定理由
 
 | 技術 | 選定理由 |
 |------|---------|
@@ -107,6 +107,29 @@ graph TD
 | Express | シンプルで学習コストが低く、柔軟なルーティング設計ができるため |
 | Sequelize | TypeScriptとの親和性が高く、マイグレーション管理が容易なため |
 | PostgreSQL | リレーション設計が複雑なECデータ（商品・注文・ユーザー）に適しているため |
+| Vercel | Next.jsとの親和性が非常に高く、App RouterのSSR/ISRに最適化されており、無料で利用できるため |
+| Render | Node.js + Expressのデプロイが簡単で、無料枠から始められコスト効率が良いため |
+
+## システム構成
+
+```mermaid
+graph TD
+  subgraph Vercel
+    A[Next.js Client]
+  end
+
+  subgraph Render
+    B[Express Server]
+    D[(PostgreSQL)]
+  end
+
+  E[ストレージ / CDN]
+
+  A -->|REST API リクエスト| B
+  B --> C[Sequelize ORM]
+  C --> D
+  A -->|動画アップロード| E
+```
 
 ---
 
