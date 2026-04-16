@@ -3,6 +3,8 @@
 ## GET /items/:id (normal) — 商品ページ情報取得
 
 ### リクエスト
+- params:
+  - itemId
 - query:
   - mode=normal
 
@@ -27,6 +29,8 @@
 ## GET /items/:id (draft) — 下書き商品ページ情報取得
 
 ### リクエスト
+- params:
+  - itemId
 - query:
   - mode=draft
 
@@ -46,6 +50,8 @@
 ## GET /items/:id (confirm) — 出品確認ページ情報取得
 
 ### リクエスト
+- params:
+  - itemId
 - query:
   - mode=confirm
 
@@ -65,6 +71,8 @@
 ## GET /items/:id (deleted) — 削除した商品ページ情報取得
 
 ### リクエスト
+- params:
+  - itemId
 - query:
   - mode=deleted
 
