@@ -61,10 +61,7 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction): P
 // POST /auth/set-cookie
 router.post("/set-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { refreshToken, rememberMe } = req.body;
-  if (!refreshToken) {
-    res.status(400).json({ message: "refreshTokenがありません" });
-    return;
-  }
+  if (!refreshToken) throw new AppError("REFRESH_TOKEN_INVALID", 400);
 
   res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
@@ -73,24 +70,25 @@ router.post("/set-cookie", async (req: Request, res: Response, next: NextFunctio
 
 // POST /auth/signup
 router.post('/signup', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-        const {
-          expiresAt,
-          reissueUrl
-        } = await signupUseCase({ email, password });
+  try {
+    const {
+      expiresAt,
+      reissueUrl
+    } = await signupUseCase({ email, password });
 
-        res.status(201).json({
-          message: 'サインアップ成功！認証コードを送信しました！',
-          expiresAt,
-          reissueUrl
-        });
-    } catch (err) {
-        next(err);
-    }
+    res.status(201).json({
+      message: 'サインアップ成功！認証コードを送信しました！',
+      expiresAt,
+      reissueUrl
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
+// POST /auth/resend-verification-code
 router.post('/resend-verification-code', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { token } = req.body;
 
