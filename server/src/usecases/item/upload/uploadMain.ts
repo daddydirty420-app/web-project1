@@ -22,7 +22,6 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
     const {
         attributes,
         shipping,
-        brand,
         videoMeta,
         itemMeta,
         genderAge

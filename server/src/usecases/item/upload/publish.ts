@@ -1,6 +1,5 @@
 import { AppError } from "../../../errors.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
-import sequelize from "../../../db.js";
 import { createNormalNotification } from "../../../services/notification.js";
 import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
 import { countFollower } from "../../../services/follow.js";

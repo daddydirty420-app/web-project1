@@ -3,7 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AppError } from "../errors.js";
 import { Body } from "../types/serviceType/items/uploadBody.js";
-import { patchPublishUseCase } from "../usecases/item/publish/publish.js";
+import { patchPublishUseCase } from "../usecases/item/upload/publish.js";
 import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
 import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/item/sortNumber/sortNumber.js";
