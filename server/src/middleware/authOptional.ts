@@ -1,21 +1,9 @@
 import { Request, Response, NextFunction } from "express-serve-static-core";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { AuthUser } from "./authMiddleware";
 
 dotenv.config();
-
-export interface AuthUser {
-  id: number;
-  email: string;
-  admin: boolean;
-  // JWT の標準クレームも追加したい場合
-  iat?: number;
-  exp?: number;
-  iss?: string;
-  sub?: string;
-  aud?: string | string[];
-  jti?: string;
-}
 
 declare module "express-serve-static-core" {
   interface Request {

@@ -12,18 +12,6 @@ import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
 
 const router = Router();
 
-export interface AuthUser {
-  id: number;
-  email: string;
-  admin: boolean;
-  iat?: number;
-  exp?: number;
-  iss?: string;
-  sub?: string;
-  aud?: string | string[];
-  jti?: string;
-}
-
 interface DecodedAccessToken {
   id: number | string;
   email: string;

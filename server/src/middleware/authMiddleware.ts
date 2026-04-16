@@ -8,13 +8,14 @@ export interface AuthUser {
   id: number;
   email: string;
   admin: boolean;
+  // JWT の標準クレームも追加したい場合
   iat?: number;
   exp?: number;
   iss?: string;
   sub?: string;
   aud?: string | string[];
   jti?: string;
-}
+};
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -34,11 +35,13 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
   try {
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET as string) as AuthUser
     req.user = decoded;
+
     console.log("[AUTH]", {
       userId: req.user.id,
       path: req.originalUrl,
       ip: req.ip,
     });
+    
     next();
   } catch (err) {
     console.error("JWT検証エラー:", err);
