@@ -9,69 +9,48 @@ import sequelize from "../db.js";
 import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
+import { AppError } from "../errors.js";
+import { loginUseCase } from "../usecases/auth/login.js";
 
 const router = Router();
 
-interface DecodedAccessToken {
+type DecodedAccessToken = {
   id: number | string;
   email: string;
   type: "access";
   iat?: number;
   exp?: number;
-}
+};
 
+// POST /auth/login
 router.post('/login', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { email, password, rememberMe } = req.body;
 
-  if (!email || !password) {
-    res.status(400).json({ message: "メールアドレスまたはパスワードがありません。" });
-    return;
+  if (!email) {
+    throw new AppError("INVALID_EMAIL", 400, "メールアドレスがありません。");
+  } else if (!password) {
+    throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
   }
 
   try {
-    const user = await User.findOne({ where: { email } });
+    const {
+      id,
+      userName,
+      admin,
+      accessToken,
+      refreshToken
+    } = await loginUseCase({ email, password, rememberMe });
 
-    if (!user) {
-      res.status(401).json({ message: 'ユーザーが見つかりません。' });
-      return;
-    }
-
-    const userId = user.id;
-
-    if (!user.email_verified) {
-      res.status(403).json({ message: 'このアカウントは有効ではありません。' });
-      return;
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      res.status(401).json({ message: 'パスワードが間違っています。' });
-      return;
-    }
-
-    const newAccessToken = generateAccessToken(user);
-    const newRefreshToken = generateRefreshToken(user, rememberMe);
-
-    await RefreshTokens.destroy({ where: { user_id: userId } });
-
-    await RefreshTokens.create({
-      token: newRefreshToken,
-      user_id: userId,
-      expires_at: rememberMe
-      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-      : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    });
-
-    res.cookie("refreshToken", newRefreshToken, getRefreshTokenCookieOptions(rememberMe));
+    res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
     res.status(200).json({
-      id: userId,
-      email: user.email,
-      user_name: user.user_name,
-      admin: user.admin,
+      id,
+      email,
+      user_name: userName,
+      admin,
       rememberMe,
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
+      accessToken,
+      refreshToken,
     });
   } catch (err) {
     next(err);

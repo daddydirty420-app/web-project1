@@ -4,6 +4,10 @@ type UserIdParams = {
     userId: number;
 };
 
+type EmailParams = {
+    email: string;
+};
+
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
 };
@@ -62,5 +66,11 @@ export const getHasShop = async ({ userId }: UserIdParams) => {
                 required: false,
             },
         ],
+    });
+};
+
+export const getUserEmailOne = ({ email }: EmailParams) => {
+    return User.findOne({
+        where: { email: email },
     });
 };
