@@ -1,9 +1,9 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createDeliveryAddress, findAddress } from "../../services/address.js";
+import { createDeliveryAddress, getAddressOne } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
-import { createDeliveryName, findName } from "../../services/name.js";
+import { createDeliveryName, getNameOne } from "../../services/name.js";
 import { getUser } from "../../services/users.js";
 
 type Params = {
@@ -30,9 +30,9 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     }
 
     // 住所・氏名取得
-    const userAddress = await findAddress({ userId });
+    const userAddress = await getAddressOne({ userId });
 
-    const userName = await findName({ userId });
+    const userName = await getNameOne({ userId });
 
     // データ作成
     const deliveryId = await sequelize.transaction(async (t) => {

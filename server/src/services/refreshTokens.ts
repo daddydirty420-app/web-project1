@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { RefreshTokens } from "../models/index.js";
 
 type UserIdParams = {
@@ -10,10 +11,11 @@ type CreateRefreshTokenParams = {
         user_id: number;
         expires_at: Date;
     };
+    transaction?: Transaction;
 };
 
-export const createRefreshToken = async ({ data }: CreateRefreshTokenParams) => {
-    await RefreshTokens.create(data);
+export const createRefreshToken = async ({ data, transaction }: CreateRefreshTokenParams) => {
+    await RefreshTokens.create(data, { transaction });
 };
 
 export const destroyRefreshToken = async ({ userId }: UserIdParams) => {

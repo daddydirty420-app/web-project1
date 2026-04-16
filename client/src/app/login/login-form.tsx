@@ -7,6 +7,7 @@ import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import toast from 'react-hot-toast';
+import { sleep } from '@/lib/sleep';
 
 export const LoginForm = () => {
     const [visible, setVisible] = useState(false);
@@ -32,6 +33,9 @@ export const LoginForm = () => {
         if (res?.error) {
             toast.error("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
+            toast.success("ログインしました");
+
+            await sleep(1200);
             router.push('/my-page');
         }
     };

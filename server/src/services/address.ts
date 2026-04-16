@@ -1,20 +1,14 @@
-import { Transaction } from "sequelize";
 import { Address } from "../models/index.js";
+import { CreateAddressParams, CreateDeliveryAddressParams, UserIdParams } from "../types/serviceType/address.js";
 
-type UserIdParams = {
-    userId: number;
-};
-
-type CreateDeliveryAddressParams = {
-    deliveryId: number;
-    userAddress?: InstanceType<typeof Address>;
-    transaction: Transaction;
-};
-
-export const findAddress = async ({ userId }: UserIdParams) => {
+export const getAddressOne = ({ userId }: UserIdParams) => {
     return Address.findOne({
         where: { user_id: userId },
     });
+};
+
+export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
+    await Address.create(data, { transaction });
 };
 
 export const createDeliveryAddress = async ({ deliveryId, userAddress, transaction }: CreateDeliveryAddressParams) => {

@@ -1,3 +1,4 @@
+import { User } from "../../models/index.js";
 import { Transaction } from "sequelize";
 
 export type UserIdParams = {
@@ -13,6 +14,14 @@ export type CreateUserParams = {
         email: string;
         password: string;
         user_name: string;
+    };
+    transaction?: Transaction;
+};
+
+export type EmailVerifyParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        email_verified: boolean;
     };
     transaction?: Transaction;
 };

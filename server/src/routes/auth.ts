@@ -13,6 +13,7 @@ import { AppError } from "../errors.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificationCode.js";
+import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 
 const router = Router();
 
@@ -115,70 +116,26 @@ router.post('/resend-verification-code', async (req: Request, res: Response, nex
 router.post('/signup-verify', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { verificationCode, rememberMe } = req.body;
 
-  const t = await sequelize.transaction();
-
   try {
-    const tokenRecord = await TokenSignupVerification.findOne({
-      where: { verification_code: verificationCode },
-      transaction: t
-    });
-
-    if (!tokenRecord) {
-      await t.rollback();
-      res.status(400).json({ message: '認証コードが正しくありません。' });
-      return;
-    }
-
-    if (Date.now() > tokenRecord.verification_code_expires.getTime()) {
-      await tokenRecord.destroy({ transaction: t });
-      await t.commit();
-      res.status(400).json({ message: '認証コードの有効期限が過ぎております。' });
-      return;
-    }
-
-    const user = await User.findByPk(tokenRecord.user_id, { transaction: t });
-    if (!user) {
-      await tokenRecord.destroy({ transaction: t });
-      await t.commit();
-      res.status(404).json({ message: 'ユーザーが見つかりません。' });
-      return;
-    }
-
-    const userId = user.id;
-
-    await user.update({ email_verified: true }, { transaction: t });
-
-    const newAccessToken = generateAccessToken(user);
-    const newRefreshToken = generateRefreshToken(user, rememberMe);
-
-    await RefreshTokens.create({
-      token: newRefreshToken,
-      user_id: userId,
-      expires_at: rememberMe
-      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-      : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-    }, { transaction: t });
-
-    await Address.create({ user_id: userId }, { transaction: t });
-    await Name.create({ user_id: userId }, { transaction: t });
-    await BankAccount.create({ user_id: userId }, { transaction: t });
-    await IdCard.create({ user_id: userId }, { transaction: t });
-
-    await tokenRecord.destroy({ transaction: t });
-
-    await t.commit();
+    const {
+      id,
+      email,
+      userName,
+      admin,
+      accessToken,
+      refreshToken
+    } = await signupVerifyUseCase({ verificationCode, rememberMe });
 
     res.status(200).json({
-      id: userId,
-      email: user.email,
-      user_name: user.user_name,
-      admin: user.admin,
+      id,
+      email,
+      user_name: userName,
+      admin,
       rememberMe,
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
+      accessToken,
+      refreshToken,
     });
   } catch (err) {
-    await t.rollback();
     next(err);
   }
 });

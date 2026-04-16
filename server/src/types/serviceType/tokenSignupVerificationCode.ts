@@ -1,6 +1,10 @@
 import { Transaction } from "sequelize";
 import { TokenSignupVerification } from "../../models/index.js";
 
+export type VerificationCodeParams = {
+    verificationCode: string;
+};
+
 export type TokenParams = {
     token: string;
 };
@@ -24,4 +28,8 @@ export type ReissueUpdateParams = {
         reissue_token: string;
         reissue_token_expires: Date;
     };
+};
+
+export type DestroyTokenParams = {
+    tokenRecord: InstanceType<typeof TokenSignupVerification>;
 };

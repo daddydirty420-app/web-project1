@@ -1,5 +1,5 @@
 import { ShopInfo, User } from "../models/index.js";
-import { CreateUserParams, EmailParams, UserIdParams } from "../types/serviceType/users.js";
+import { CreateUserParams, EmailParams, EmailVerifyParams, UserIdParams } from "../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
@@ -70,4 +70,8 @@ export const getUserEmailOne = ({ email }: EmailParams) => {
 
 export const createUser = ({ data, transaction }: CreateUserParams) => {
     return User.create(data, { transaction });
+};
+
+export const emailVerifyUser = async ({ user, data, transaction }: EmailVerifyParams) => {
+    await user.update(data, { transaction });
 };

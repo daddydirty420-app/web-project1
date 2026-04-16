@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import styles from '@/styles/login.module.css';
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
+import { sleep } from "@/lib/sleep";
 
 export const VerifyForm = () => {
     const [code, setCode] = useState('');
@@ -51,9 +52,14 @@ export const VerifyForm = () => {
 
             if (res?.error) {
                 toast.error("認証に失敗しました。");
-            } else if (res?.ok) {
-                router.push('/my-page');
+
+                return;
             }
+                
+            toast.success("認証成功しました");
+
+            await sleep(1500);
+            router.push('/my-page');
         } catch (err) {
             console.error("Verify error:", err);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");

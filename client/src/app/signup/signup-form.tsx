@@ -6,6 +6,7 @@ import styles from '@/styles/login.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import toast from 'react-hot-toast';
+import { sleep } from '@/lib/sleep';
 
 export const SignupForm = () => {
     const [visible, setVisible] = useState(false);
@@ -41,7 +42,10 @@ export const SignupForm = () => {
             const data = await res.json();
 
             if (res.ok) {
+                toast.success("認証コードを発行しました");
                 console.log(data.message);
+
+                await sleep(1500);
                 router.push(data.reissueUrl);
             } else {
                 toast.error("サインアップに失敗しました。");
