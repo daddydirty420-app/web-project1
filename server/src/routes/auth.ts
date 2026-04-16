@@ -11,6 +11,8 @@ import { Op } from "sequelize";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
 import { AppError } from "../errors.js";
 import { loginUseCase } from "../usecases/auth/login.js";
+import { generateRandomUserName } from "../utils/generateRandomUserName.js";
+import { signupUseCase } from "../usecases/auth/signup.js";
 
 const router = Router();
 
@@ -70,57 +72,15 @@ router.post("/set-cookie", async (req: Request, res: Response, next: NextFunctio
   res.status(200).json({ message: "Cookieをセットしました" });
 });
 
-function generateRandomUserName(length: number = 12): string {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-};
-
+// POST /auth/signup
 router.post('/signup', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password } = req.body;
 
     try {
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            res.status(409).json({ message: 'すでにこのメールアドレスは登録されています。' });
-            return;
-        }
-
-        const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        if (!regex.test(password)) {
-            res.status(400).json({ message: 'パスワードは8文字以上の半角英数字で、小文字と数字を含めてください。' });
-            return;
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user_name: string = generateRandomUserName();
-
-        const newUser = await User.create({
-            email,
-            password: hashedPassword,
-            user_name
-        });
-
-        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-        const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
-
-        const reissueToken = crypto.randomBytes(20).toString('hex');
-        const reissueTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
-
-        await TokenSignupVerification.create({
-          user_id: newUser.id,
-          verification_code: verificationCode,
-          verification_code_expires: expiresAt,
-          reissue_token: reissueToken,
-          reissue_token_expires: reissueTokenExpires
-        });
-
-        const reissueUrl = `${process.env.CLIENT_URL}/signup/verify?token=${reissueToken}`
-
-        // メール送信処理
+        const {
+          expiresAt,
+          reissueUrl
+        } = await signupUseCase({ email, password });
 
         res.status(201).json({
           message: 'サインアップ成功！認証コードを送信しました！',

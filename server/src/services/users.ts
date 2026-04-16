@@ -1,12 +1,5 @@
 import { ShopInfo, User } from "../models/index.js";
-
-type UserIdParams = {
-    userId: number;
-};
-
-type EmailParams = {
-    email: string;
-};
+import { CreateUserParams, EmailParams, UserIdParams } from "../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
@@ -73,4 +66,8 @@ export const getUserEmailOne = ({ email }: EmailParams) => {
     return User.findOne({
         where: { email: email },
     });
+};
+
+export const createUser = ({ data, transaction }: CreateUserParams) => {
+    return User.create(data, { transaction });
 };
