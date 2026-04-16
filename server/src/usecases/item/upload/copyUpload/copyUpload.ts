@@ -44,80 +44,80 @@ export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
 
     // データ作成
     let newItemId = null;
+        
+    // コピーしたファイルのurl取得
+    const newUrls: {
+        videoOriginalUrl?: string;
+        videoConvertedUrl?: string;
+        thumbnailUrl?: string;
+        itemImageUrl?: string[];
+    } = {};
+
+    if (videoOriginalUrl) {
+        const destKey = `video/original/${userId}/${now}/${videoOriginalFileName}`;
+        newUrls.videoOriginalUrl = await copyS3Object({ sourceUrl: videoOriginalUrl, destKey });
+    }
+
+    if (videoConvertedUrl) {
+        const destKey = `video/converted/${userId}/${now}/${videoConvertedFileName}`;
+        newUrls.videoConvertedUrl = await copyS3Object({ sourceUrl: videoConvertedUrl, destKey });
+    }
+
+    if (thumbnailUrl) {
+        const destKey = `thumbnail/${userId}/${now}/${thumbnailFileName}`;
+        newUrls.thumbnailUrl = await copyS3Object({ sourceUrl: thumbnailUrl, destKey });
+    }
+
+    if (itemImageUrl.length > 0) {
+        newUrls.itemImageUrl = await Promise.all(
+            itemImageUrl.map(async (url, idx) => {
+                const fileName = itemImageFileName[idx];
+                const destKey = `item-image/${userId}/${now}/${fileName}`;
+                return await copyS3Object({ sourceUrl: url, destKey });
+            })
+        );
+    }
+
+    const attributes: ItemAttributes = {
+        ...item.attributes,
+        inventory: {
+            ...item.attributes?.inventory,
+            current: item.attributes?.inventory?.initial ?? 0,
+        },
+        colorVariants: item.attributes?.colorVariants?.map((v: ColorVariant) => ({
+            ...v,
+            inventory: {
+                ...v.inventory,
+                current: v.inventory?.initial ?? 0,
+            },
+            // sizesのinventoryもリセットする場合
+            sizes: v.sizes?.map((s: ColorVariantSize) => ({
+                ...s,
+                inventory: {
+                    ...s.inventory,
+                    current: s.inventory?.initial ?? 0,
+                },
+            })),
+        })),
+    };
+
+    const newItemImageUrls = newUrls.itemImageUrl;
+    const newItemImageFirst = Array.isArray(newUrls.itemImageUrl) ? newUrls.itemImageUrl[0] : null;
+    if (!newItemImageFirst || !newItemImageUrls || newItemImageUrls.length === 0) {
+        throw new AppError("NEW_ITEM_IMAGE_NOT_FOUND", 404);
+    }
+
+    const newThumbnailUrl = newUrls.thumbnailUrl;
+    const newOriginalUrl = newUrls.videoOriginalUrl || null;
+    const newConvertUrl = newUrls.videoConvertedUrl || null;
+    if (!newThumbnailUrl) {
+        throw new AppError("NEW_THUMBNAIL_URL_NOT_FOUND", 404);
+    }
+    if (!newOriginalUrl && !newConvertUrl) {
+        throw new AppError("NEW_VIDEO_URL_NOT_FOUND", 404);
+    }
 
     await sequelize.transaction(async (t) => {
-        // コピーしたファイルのurl取得
-        const newUrls: {
-            videoOriginalUrl?: string;
-            videoConvertedUrl?: string;
-            thumbnailUrl?: string;
-            itemImageUrl?: string[];
-        } = {};
-
-        if (videoOriginalUrl) {
-            const destKey = `video/original/${userId}/${now}/${videoOriginalFileName}`;
-            newUrls.videoOriginalUrl = await copyS3Object({ sourceUrl: videoOriginalUrl, destKey });
-        }
-
-        if (videoConvertedUrl) {
-            const destKey = `video/converted/${userId}/${now}/${videoConvertedFileName}`;
-            newUrls.videoConvertedUrl = await copyS3Object({ sourceUrl: videoConvertedUrl, destKey });
-        }
-
-        if (thumbnailUrl) {
-            const destKey = `thumbnail/${userId}/${now}/${thumbnailFileName}`;
-            newUrls.thumbnailUrl = await copyS3Object({ sourceUrl: thumbnailUrl, destKey });
-        }
-
-        if (itemImageUrl.length > 0) {
-            newUrls.itemImageUrl = await Promise.all(
-                itemImageUrl.map(async (url, idx) => {
-                    const fileName = itemImageFileName[idx];
-                    const destKey = `item-image/${userId}/${now}/${fileName}`;
-                    return await copyS3Object({ sourceUrl: url, destKey });
-                })
-            );
-        }
-
-        const attributes: ItemAttributes = {
-            ...item.attributes,
-            inventory: {
-                ...item.attributes?.inventory,
-                current: item.attributes?.inventory?.initial ?? 0,
-            },
-            colorVariants: item.attributes?.colorVariants?.map((v: ColorVariant) => ({
-                ...v,
-                inventory: {
-                    ...v.inventory,
-                    current: v.inventory?.initial ?? 0,
-                },
-                // sizesのinventoryもリセットする場合
-                sizes: v.sizes?.map((s: ColorVariantSize) => ({
-                    ...s,
-                    inventory: {
-                        ...s.inventory,
-                        current: s.inventory?.initial ?? 0,
-                    },
-                })),
-            })),
-        };
-
-        const newItemImageUrls = newUrls.itemImageUrl;
-        const newItemImageFirst = Array.isArray(newUrls.itemImageUrl) ? newUrls.itemImageUrl[0] : null;
-        if (!newItemImageFirst || !newItemImageUrls || newItemImageUrls.length === 0) {
-            throw new AppError("NEW_ITEM_IMAGE_NOT_FOUND", 404);
-        }
-
-        const newThumbnailUrl = newUrls.thumbnailUrl;
-        const newOriginalUrl = newUrls.videoOriginalUrl || null;
-        const newConvertUrl = newUrls.videoConvertedUrl || null;
-        if (!newThumbnailUrl) {
-            throw new AppError("NEW_THUMBNAIL_URL_NOT_FOUND", 404);
-        }
-        if (!newOriginalUrl && !newConvertUrl) {
-            throw new AppError("NEW_VIDEO_URL_NOT_FOUND", 404);
-        }
-
         const newItem = await createItemCopyUpload({
             data: {
                 name: item.name,
