@@ -52,3 +52,22 @@
 - reissueUrl
 
 ---
+
+## POST /auth/resend-verification-code — 認証コード再発行
+
+### リクエスト
+- body:
+  - token
+
+### ビジネスロジック
+- トークン照合
+- 新しいトークン発行
+- DB更新
+- メール送信
+
+### レスポンス
+
+- expiresAt
+- reissueUrl
+
+---

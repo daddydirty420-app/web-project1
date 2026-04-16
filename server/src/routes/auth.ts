@@ -111,6 +111,7 @@ router.post('/resend-verification-code', async (req: Request, res: Response, nex
   }
 });
 
+// POST /auth/signup-verify
 router.post('/signup-verify', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { verificationCode, rememberMe } = req.body;
 
