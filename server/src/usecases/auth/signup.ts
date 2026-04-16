@@ -2,7 +2,7 @@ import { AppError } from "../../errors.js";
 import { createUser, getUserEmailOne } from "../../services/users.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
-import { generateRandomUserName } from "../../utils/generateRandomUserName";
+import { generateRandomUserName } from "../../utils/generateRandomUserName.js";
 import sequelize from "../../db.js";
 import { createSignupToken } from "../../services/tokenSignupVerificationCode.js";
 

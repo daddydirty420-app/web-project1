@@ -11,7 +11,6 @@ import { Op } from "sequelize";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
 import { AppError } from "../errors.js";
 import { loginUseCase } from "../usecases/auth/login.js";
-import { generateRandomUserName } from "../utils/generateRandomUserName.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 
 const router = Router();
