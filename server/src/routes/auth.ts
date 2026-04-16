@@ -12,6 +12,7 @@ import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
 import { AppError } from "../errors.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
+import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificationCode.js";
 
 const router = Router();
 
@@ -92,51 +93,19 @@ router.post('/signup', async (req: Request, res: Response, next: NextFunction): 
 router.post('/resend-verification-code', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const { token } = req.body;
 
-  if (!token) {
-    res.status(400).json({ message: '再発行用のトークンがありません。' });
-    return;
-  }
+  if (!token) throw new AppError("TOKEN_INVALID", 400);
 
   try {
-    const tokenRecord = await TokenSignupVerification.findOne({
-      where: {
-        reissue_token: token
-      },
-      include: [{ model: User }]
-    });
-
-    if (!tokenRecord || !tokenRecord.User) {
-      res.status(404).json({ message: 'ユーザーが見つかりません。' });
-      return;
-    }
-
-    if (new Date() > new Date(tokenRecord.reissue_token_expires)) {
-      res.status(410).json({ message: 'トークンの有効期限が切れています。' });
-      return;
-    }
-
-    const newVereficationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const newExpiresAt = new Date(Date.now() + 30 * 60 * 1000);
-
-    const newReissueToken = crypto.randomBytes(20).toString('hex');
-    const newReissueTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
-
-    tokenRecord.verification_code = newVereficationCode;
-    tokenRecord.verification_code_expires = newExpiresAt;
-    tokenRecord.reissue_token = newReissueToken;
-    tokenRecord.reissue_token_expires = newReissueTokenExpires;
-    await tokenRecord.save();
-
-    const reissueUrl = `${process.env.CLIENT_URL}/signup/verify?token=${newReissueToken}`;
-
-    // メール送信処理
+    const {
+      expiresAt,
+      reissueUrl
+    } = await resendVerificationCodeUseCase({ token });
 
     res.status(200).json({
       message: '新しい認証コードを発行しました。',
-      expiresAt: newExpiresAt,
+      expiresAt,
       reissueUrl
     });
-
   } catch (err) {
     next(err);
   }
