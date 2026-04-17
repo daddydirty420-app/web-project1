@@ -107,3 +107,24 @@
 - refreshToken
 
 ---
+
+## POST /auth/request-password-reset — パスワードリセットリクエスト
+
+### リクエスト
+
+- body:
+    - email
+
+### ビジネスロジック
+
+- email照合
+- pwリセットトークン発行
+- トークンDB登録
+- リセットurl作成
+- メール送信
+
+### レスポンス
+
+強制200
+
+---
