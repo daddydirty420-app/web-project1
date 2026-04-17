@@ -1,6 +1,6 @@
-import { createCommentLike, getCommentLikeOne } from "../../services/commentLike.js";
-import { AppError } from "../../errors.js";
-import { patchCommentSortNumberAddUseCase } from "../comment/patchSortNumber.js";
+import { createCommentLike, getCommentLikeOne } from '../../services/commentLike.js';
+import { AppError } from '../../errors.js';
+import { patchCommentSortNumberAddUseCase } from '../comment/patchSortNumber.js';
 
 type Params = {
     commentId: number;
@@ -8,12 +8,11 @@ type Params = {
 };
 
 export const addCommentLikeUseCase = async ({ commentId, userId }: Params) => {
-
     // CommentLike取得
     const data = await getCommentLikeOne({ commentId, userId });
 
     if (data) {
-        throw new AppError("ALREADY_LIKE_COMMENT", 409, "すでにいいね済みです");
+        throw new AppError('ALREADY_LIKE_COMMENT', 409, 'すでにいいね済みです');
     }
 
     // CommentLike作成
@@ -23,6 +22,6 @@ export const addCommentLikeUseCase = async ({ commentId, userId }: Params) => {
     const number = 100;
 
     patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
-        console.error("usecase patchCommentSortNumberAdd error:", err);
+        console.error('usecase patchCommentSortNumberAdd error:', err);
     });
 };

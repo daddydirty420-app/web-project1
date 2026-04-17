@@ -1,13 +1,13 @@
-import { Item, Sale, Video } from "../../../../models/index.js";
-import { ItemListParams } from "../../../../types/serviceType/items/items.js";
+import { Item, Sale, Video } from '../../../../models/index.js';
+import { ItemListParams } from '../../../../types/serviceType/items/items.js';
 
 export const getUserItemsStatusList = async ({ where, limit, offset }: ItemListParams) => {
     const itemList = await Item.findAll({
-        attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url'],
+        attributes: ['id', 'name', 'price', 'status', 'seller_id', 'save_at', 'first_image_url'],
         where,
         limit,
         offset,
-        order: [["save_at", "DESC"]],
+        order: [['save_at', 'DESC']],
         include: [
             {
                 model: Video,
@@ -23,11 +23,11 @@ export const getUserItemsStatusList = async ({ where, limit, offset }: ItemListP
 
 export const getUserItemsStockList = async ({ where, limit, offset }: ItemListParams) => {
     const itemList = await Item.findAll({
-        attributes: ['id', 'name', 'price', "status", 'seller_id', 'save_at', 'first_image_url', "attributes"],
+        attributes: ['id', 'name', 'price', 'status', 'seller_id', 'save_at', 'first_image_url', 'attributes'],
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Video,
@@ -35,7 +35,7 @@ export const getUserItemsStockList = async ({ where, limit, offset }: ItemListPa
             },
             {
                 model: Sale,
-                attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                attributes: ['discount_rate', 'discount_amount', 'sale_flag', 'before_price'],
             },
         ],
     });
@@ -47,11 +47,11 @@ export const getUserItemsStockList = async ({ where, limit, offset }: ItemListPa
 
 export const getUserItemsUploadedList = async ({ where, limit, offset }: ItemListParams) => {
     const itemList = await Item.findAll({
-        attributes: ['id', 'name', 'price', "status", "seller_id", 'first_image_url', "gender_type", "age_type"],
+        attributes: ['id', 'name', 'price', 'status', 'seller_id', 'first_image_url', 'gender_type', 'age_type'],
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Video,
@@ -59,7 +59,7 @@ export const getUserItemsUploadedList = async ({ where, limit, offset }: ItemLis
             },
             {
                 model: Sale,
-                attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                attributes: ['discount_rate', 'discount_amount', 'sale_flag', 'before_price'],
             },
         ],
     });

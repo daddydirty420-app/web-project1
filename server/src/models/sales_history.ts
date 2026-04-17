@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
-import Item from "./item.js";
+import User from './user.js';
+import Item from './item.js';
 
 export class SalesHistory extends Model {
     declare id: number;
@@ -15,10 +15,10 @@ export class SalesHistory extends Model {
 
     static associate() {
         SalesHistory.belongsTo(Item, {
-            foreignKey: "item_id",
+            foreignKey: 'item_id',
         });
         SalesHistory.belongsTo(User, {
-            foreignKey: "seller_user_id",
+            foreignKey: 'seller_user_id',
         });
     }
 
@@ -52,11 +52,11 @@ SalesHistory.init(
     },
     {
         sequelize,
-        modelName: "SalesHistory",
-        tableName: "sales_history",
+        modelName: 'SalesHistory',
+        tableName: 'sales_history',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default SalesHistory;

@@ -1,11 +1,11 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import ShopInfo from "./shop_info.js";
-import AccountTypeOption from "./account_type_option.js";
-import Transfer from "./transfer.js";
-import User from "./user.js";
-import ShopInfoEdit from "./shop_info_edit.js";
+import ShopInfo from './shop_info.js';
+import AccountTypeOption from './account_type_option.js';
+import Transfer from './transfer.js';
+import User from './user.js';
+import ShopInfoEdit from './shop_info_edit.js';
 
 export class BankAccount extends Model {
     declare id: number;
@@ -25,19 +25,19 @@ export class BankAccount extends Model {
 
     static associate() {
         BankAccount.belongsTo(ShopInfo, {
-            foreignKey: "shop_info_id",
+            foreignKey: 'shop_info_id',
         });
         BankAccount.belongsTo(AccountTypeOption, {
-            foreignKey: "account_type_id",
+            foreignKey: 'account_type_id',
         });
         BankAccount.belongsTo(Transfer, {
-            foreignKey: "transfer_id",
+            foreignKey: 'transfer_id',
         });
         BankAccount.belongsTo(User, {
-            foreignKey: "user_id",
+            foreignKey: 'user_id',
         });
         BankAccount.belongsTo(ShopInfoEdit, {
-            foreignKey: "shop_info_edit_id",
+            foreignKey: 'shop_info_edit_id',
         });
     }
 
@@ -84,11 +84,11 @@ BankAccount.init(
     },
     {
         sequelize,
-        modelName: "BankAccount",
-        tableName: "bank_account",
+        modelName: 'BankAccount',
+        tableName: 'bank_account',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default BankAccount;

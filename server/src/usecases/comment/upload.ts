@@ -1,8 +1,8 @@
-import { AppError } from "../../errors.js";
-import { createComment } from "../../services/comment.js";
-import { getItem } from "../../services/items/index.js";
-import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
-import { patchCommentSortNumberAddUseCase } from "./patchSortNumber.js";
+import { AppError } from '../../errors.js';
+import { createComment } from '../../services/comment.js';
+import { getItem } from '../../services/items/index.js';
+import { patchSortNumberAddUseCase } from '../item/sortNumber/sortNumber.js';
+import { patchCommentSortNumberAddUseCase } from './patchSortNumber.js';
 
 type Params = {
     userId: number;
@@ -19,19 +19,19 @@ export const uploadCommentUseCase = async ({
     commentText,
     commentLength,
     sellerMe,
-    parentId
+    parentId,
 }: Params) => {
     // 親コメント取得、sort_number add
     if (parentId && parentId > 0) {
         patchCommentSortNumberAddUseCase({ commentId: parentId, number: 150 }).catch((err) => {
-            console.error("usecase patchCommentSortNumberAdd error:", err);
+            console.error('usecase patchCommentSortNumberAdd error:', err);
         });
     }
 
     // item取得
     const item = await getItem({ itemId });
 
-    if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
+    if (!item) throw new AppError('ITEM_NOT_FOUND', 404);
 
     const commentData = {
         text: commentText,
@@ -45,9 +45,9 @@ export const uploadCommentUseCase = async ({
     // データ操作
     const comment = await createComment({ data: commentData });
 
-    if (item.status === "active" && !sellerMe) {
+    if (item.status === 'active' && !sellerMe) {
         patchSortNumberAddUseCase({ itemId, number: 25, buzzNumber: 120 }).catch((err) => {
-            console.error("patchSortNumberAdd error:", err);
+            console.error('patchSortNumberAdd error:', err);
         });
     }
 

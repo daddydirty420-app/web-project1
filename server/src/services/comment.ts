@@ -1,5 +1,13 @@
-import { Comment, User } from "../models/index.js";
-import { CommentIdParams, CreateCommentParams, DestroyAllParams, DestroyParams, ItemIdParams, UpdateParams, UpdateReportScoreParams } from "../types/serviceType/comment.js";
+import { Comment, User } from '../models/index.js';
+import {
+    CommentIdParams,
+    CreateCommentParams,
+    DestroyAllParams,
+    DestroyParams,
+    ItemIdParams,
+    UpdateParams,
+    UpdateReportScoreParams,
+} from '../types/serviceType/comment.js';
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
@@ -18,9 +26,9 @@ export const getAllCommentsItemPage = ({ itemId }: ItemIdParams) => {
             parent_comment_id: null,
         },
         order: [
-            ["pin", "DESC"],
-            ["sort_number", "DESC"],
-            ["createdAt", "DESC"],
+            ['pin', 'DESC'],
+            ['sort_number', 'DESC'],
+            ['createdAt', 'DESC'],
         ],
         include: [
             {
@@ -35,8 +43,8 @@ export const getAllReply = ({ commentId }: CommentIdParams) => {
     return Comment.findAll({
         where: { parent_comment_id: commentId },
         order: [
-            ["sort_number", "DESC"],
-            ["createdAt", "DESC"],
+            ['sort_number', 'DESC'],
+            ['createdAt', 'DESC'],
         ],
         include: [
             {
@@ -64,9 +72,11 @@ export const destroyComment = async ({ comment }: DestroyParams) => {
 };
 
 export const destroyAllComments = async ({ comments, transaction }: DestroyAllParams) => {
-    await Promise.all(comments.map(async (comment: InstanceType<typeof Comment>) => {
-        await comment.destroy({ transaction });
-    }));
+    await Promise.all(
+        comments.map(async (comment: InstanceType<typeof Comment>) => {
+            await comment.destroy({ transaction });
+        }),
+    );
 };
 
 export const countItemPageComment = ({ itemId }: ItemIdParams) => {

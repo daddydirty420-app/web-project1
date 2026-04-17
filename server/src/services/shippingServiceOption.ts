@@ -1,4 +1,4 @@
-import { ShippingServiceOption } from "../models/index.js";
+import { ShippingServiceOption } from '../models/index.js';
 
 type ShippingServiceIdParams = {
     serviceId: number;

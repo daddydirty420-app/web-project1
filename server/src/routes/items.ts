@@ -1,36 +1,36 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { AppError } from "../errors.js";
-import { Body } from "../types/serviceType/items/uploadBody.js";
-import { patchPublishUseCase } from "../usecases/item/upload/publish.js";
-import { getItemPageUseCase } from "../usecases/item/itemPage/itemPage.js";
-import { getMetadataUseCase } from "../usecases/item/itemPage/metadata.js";
-import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/item/sortNumber/sortNumber.js";
-import { patchItemLogsAccessUseCase } from "../usecases/item/logs/accessLogs.js";
-import { deleteItemLogicallyUseCase } from "../usecases/item/delete/logicalDelete.js";
-import { deleteItemPerfectUseCase } from "../usecases/item/delete/perfectDelete.js";
-import { restoreItemUseCase } from "../usecases/item/restore/restore.js";
-import { deleteDraftItemUseCase } from "../usecases/item/delete/draftDelete.js";
-import { ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
-import { getFormDataUseCase } from "../usecases/item/formData/getFormData.js";
-import { uploadMainUseCase } from "../usecases/item/upload/uploadMain.js";
-import { uploadDraftUseCase } from "../usecases/item/upload/uploadDraft.js";
-import { getItemHighlightUseCase } from "../usecases/item/highlight/getItemHighlight.js";
-import { itemCopyUploadUseCase } from "../usecases/item/upload/copyUpload/copyUpload.js";
-import { getIndexVideosUseCase } from "../usecases/item/itemList/indexVideoList.js";
-import { getIndexItemsUseCase } from "../usecases/item/itemList/indexItemList.js";
-import { getProfileVideosUseCase } from "../usecases/item/itemList/profileVideoList.js";
-import { getProfileItemsUseCase } from "../usecases/item/itemList/profileItemList.js";
-import { getIndexRecommendUseCase } from "../usecases/item/itemList/recommend/indexRecommend.js";
-import { getCartRecommendUseCase } from "../usecases/item/itemList/recommend/cartRecommend.js";
-import { getItemPageRecommendUseCase } from "../usecases/item/itemList/recommend/itemPageRecommend.js";
-import { createItemsUseCase } from "../usecases/item/upload/createItem.js";
+import { Router } from 'express';
+import type { NextFunction, Request, Response } from 'express-serve-static-core';
+import { authenticateOptional, authenticateToken } from '../middleware/index.js';
+import { AppError } from '../errors.js';
+import { Body } from '../types/serviceType/items/uploadBody.js';
+import { patchPublishUseCase } from '../usecases/item/upload/publish.js';
+import { getItemPageUseCase } from '../usecases/item/itemPage/itemPage.js';
+import { getMetadataUseCase } from '../usecases/item/itemPage/metadata.js';
+import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from '../usecases/item/sortNumber/sortNumber.js';
+import { patchItemLogsAccessUseCase } from '../usecases/item/logs/accessLogs.js';
+import { deleteItemLogicallyUseCase } from '../usecases/item/delete/logicalDelete.js';
+import { deleteItemPerfectUseCase } from '../usecases/item/delete/perfectDelete.js';
+import { restoreItemUseCase } from '../usecases/item/restore/restore.js';
+import { deleteDraftItemUseCase } from '../usecases/item/delete/draftDelete.js';
+import { ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from '../types/usecaseType.js';
+import { getFormDataUseCase } from '../usecases/item/formData/getFormData.js';
+import { uploadMainUseCase } from '../usecases/item/upload/uploadMain.js';
+import { uploadDraftUseCase } from '../usecases/item/upload/uploadDraft.js';
+import { getItemHighlightUseCase } from '../usecases/item/highlight/getItemHighlight.js';
+import { itemCopyUploadUseCase } from '../usecases/item/upload/copyUpload/copyUpload.js';
+import { getIndexVideosUseCase } from '../usecases/item/itemList/indexVideoList.js';
+import { getIndexItemsUseCase } from '../usecases/item/itemList/indexItemList.js';
+import { getProfileVideosUseCase } from '../usecases/item/itemList/profileVideoList.js';
+import { getProfileItemsUseCase } from '../usecases/item/itemList/profileItemList.js';
+import { getIndexRecommendUseCase } from '../usecases/item/itemList/recommend/indexRecommend.js';
+import { getCartRecommendUseCase } from '../usecases/item/itemList/recommend/cartRecommend.js';
+import { getItemPageRecommendUseCase } from '../usecases/item/itemList/recommend/itemPageRecommend.js';
+import { createItemsUseCase } from '../usecases/item/upload/createItem.js';
 
 const router = Router();
 
 // POST /items
-router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post('/', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     try {
@@ -42,54 +42,56 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
     }
 });
 
+const foo = {
+    name: 'test',
+    age: 20,
+};
+
 // POST /items/:id/copy-upload
-router.post('/:id/copy-upload', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    
-    const userId = req.user!.id;
+router.post(
+    '/:id/copy-upload',
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    try {
-        const newItemId = await itemCopyUploadUseCase({ itemId, userId });
+        const userId = req.user!.id;
 
-        res.status(200).json({ newItemId });
-    } catch (err) {
-        next(err);
-    }
-});
+        try {
+            const newItemId = await itemCopyUploadUseCase({ itemId, userId });
+
+            res.status(200).json({ newItemId });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PUT /items/:id?mode=""
-router.put("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.put('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = parseInt(req.params.id);
     const userId = req.user!.id;
 
     const mode = req.query.mode as UploadMode;
-    if (mode !== "main" && mode !== "draft") {
-        throw new AppError("INVALID_TYPE", 400);
+    if (mode !== 'main' && mode !== 'draft') {
+        throw new AppError('INVALID_TYPE', 400);
     }
 
     const body = req.body as Body;
 
-    const usecase = mode === "main"
-    ? uploadMainUseCase
-    : uploadDraftUseCase;
+    const usecase = mode === 'main' ? uploadMainUseCase : uploadDraftUseCase;
 
     try {
-        const {
-            videoSignedUrl,
-            thumbnailSignedUrl,
-            itemImageSignedUrls,
-            attributesImageSignedUrls
-        } = await usecase({
+        const { videoSignedUrl, thumbnailSignedUrl, itemImageSignedUrls, attributesImageSignedUrls } = await usecase({
             itemId,
             userId,
-            body
+            body,
         });
 
         res.status(200).json({
             videoSignedUrl,
             thumbnailSignedUrl,
             itemImageSignedUrls,
-            attributesImageSignedUrls
+            attributesImageSignedUrls,
         });
     } catch (err) {
         next(err);
@@ -97,68 +99,76 @@ router.put("/:id", authenticateToken, async (req: Request, res: Response, next: 
 });
 
 // PATCH /items/:id/publish
-router.patch("/:id/publish", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
+router.patch(
+    '/:id/publish',
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
 
-    try {
-        await patchPublishUseCase({ itemId, userId });
+        try {
+            await patchPublishUseCase({ itemId, userId });
 
-        res.status(200).json({ message: "出品成功！" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: '出品成功！' });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PATCH /items/:id/sort-number/add?number=number
-router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch('/:id/sort-number/add', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const number = Number(req.query.number);
 
     if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
+        throw new AppError('INVALID_NUMBER', 400);
     }
 
     patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
         console.error(err);
     });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    res.status(202).json({ message: 'sort_numberの更新を受け付けました' });
 });
 
 // PATCH /items/:id/sort-number/decrease?number=number
-router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch('/:id/sort-number/decrease', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const number = Number(req.query.number);
 
     if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
+        throw new AppError('INVALID_NUMBER', 400);
     }
 
     patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
         console.error(err);
     });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    res.status(202).json({ message: 'sort_numberの更新を受け付けました' });
 });
 
 // PATCH /items/:id/logs/access
-router.patch("/:id/logs/access", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.patch(
+    '/:id/logs/access',
+    authenticateOptional,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    const userId = req.user?.id ?? null;
+        const userId = req.user?.id ?? null;
 
-    patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
-        console.error(err);
-    });
+        patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
+            console.error(err);
+        });
 
-    res.status(202).json({ message: '商品ページアクセス処理を受け付けました' });
-});
+        res.status(202).json({ message: '商品ページアクセス処理を受け付けました' });
+    },
+);
 
 // PATCH /items/:id/restore
-router.patch("/:id/restore", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
+router.patch('/:id/restore', authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;
@@ -166,14 +176,14 @@ router.patch("/:id/restore", authenticateToken, async (req: Request, res: Respon
     try {
         await restoreItemUseCase({ userId, itemId });
 
-        res.status(200).json({ message: "商品を復元しました" });
+        res.status(200).json({ message: '商品を復元しました' });
     } catch (err) {
         next(err);
     }
 });
 
 // DELETE /items/:id/logical
-router.delete("/:id/logical", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id/logical', authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;
@@ -181,50 +191,58 @@ router.delete("/:id/logical", authenticateToken, async (req: Request, res: Respo
     try {
         await deleteItemLogicallyUseCase({ itemId, userId });
 
-        res.status(200).json({ message: "商品を削除しました" });
+        res.status(200).json({ message: '商品を削除しました' });
     } catch (err) {
         next(err);
     }
 });
 
 // DELETE /items/:id/perfect
-router.delete("/:id/perfect", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.delete(
+    '/:id/perfect',
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    const userId = req.user!.id;
+        const userId = req.user!.id;
 
-    try {
-        await deleteItemPerfectUseCase({ itemId, userId });
+        try {
+            await deleteItemPerfectUseCase({ itemId, userId });
 
-        res.status(200).json({ message: "商品削除が完了しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: '商品削除が完了しました。' });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // DELETE /items/:id/draft
-router.delete("/:id/draft", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.delete(
+    '/:id/draft',
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    const userId = req.user!.id;
+        const userId = req.user!.id;
 
-    try {
-        await deleteDraftItemUseCase({ itemId, userId });
+        try {
+            await deleteDraftItemUseCase({ itemId, userId });
 
-        res.status(200).json({ message: "下書き商品を削除しました" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: '下書き商品を削除しました' });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
-router.get("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
 
     const type = req.query.type as ItemListType;
 
-    if (type !== "video" && type !== "item") {
-        throw new AppError("INVALID_TYPE", 400);
+    if (type !== 'video' && type !== 'item') {
+        throw new AppError('INVALID_TYPE', 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;
@@ -235,12 +253,12 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
 
     const pageUserId = parseInt(req.query.pageUserId as string) || undefined;
 
-    if (view === "profile" && !pageUserId) {
-        throw new AppError("PAGE_USER_NOT_FOUND", 404);
+    if (view === 'profile' && !pageUserId) {
+        throw new AppError('PAGE_USER_NOT_FOUND', 404);
     }
 
     const baseParams = { page, limit };
-    
+
     // usecaseマップ（アロー関数で包む）
     const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
         index: {
@@ -256,7 +274,7 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
     const usecase = usecaseMap[view]?.[type];
 
     if (!usecase) {
-        throw new AppError("INVALID_VIEW_OR_TYPE", 400);
+        throw new AppError('INVALID_VIEW_OR_TYPE', 400);
     }
 
     try {
@@ -269,51 +287,52 @@ router.get("/", authenticateOptional, async (req: Request, res: Response, next: 
 });
 
 // GET /items/recommend?view=""(&itemId=number)
-router.get("/recommend", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
+router.get(
+    '/recommend',
+    authenticateOptional,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user?.id ?? null;
 
-    const view = req.query.view as RecommendItemsview;
+        const view = req.query.view as RecommendItemsview;
 
-    const itemId = parseInt(req.query.itemId as string) || undefined;
+        const itemId = parseInt(req.query.itemId as string) || undefined;
 
-    // 関数そのものを保存（実行しない）
-    const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
-        recommend: () => getIndexRecommendUseCase({ userId }),
-        cart: () => getCartRecommendUseCase({ userId }),
-        itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
-    };
+        // 関数そのものを保存（実行しない）
+        const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
+            recommend: () => getIndexRecommendUseCase({ userId }),
+            cart: () => getCartRecommendUseCase({ userId }),
+            itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
+        };
 
-    const usecase = usecaseMap[view];
+        const usecase = usecaseMap[view];
 
-    if (!usecase) {
-        throw new AppError("INVALID_VIEW", 400);
-    }
+        if (!usecase) {
+            throw new AppError('INVALID_VIEW', 400);
+        }
 
-    try {
-        const items = await usecase();
+        try {
+            const items = await usecase();
 
-        res.status(200).json({ items });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ items });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /items/:id?mode=""
-router.get("/:id", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/:id', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user?.id ?? null;
 
     const mode = req.query.mode as ItemPageMode;
 
     try {
-        const {
-            item,
-            sellerMe,
-            likeCount,
-            isLikeByMe,
-            commentCount,
-            me
-        } = await getItemPageUseCase({ itemId, userId, mode });
+        const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
+            itemId,
+            userId,
+            mode,
+        });
 
         res.status(200).json({
             item,
@@ -321,7 +340,7 @@ router.get("/:id", authenticateOptional, async (req: Request, res: Response, nex
             likeCount,
             isLikeByMe,
             commentCount,
-            me
+            me,
         });
     } catch (err) {
         next(err);
@@ -342,36 +361,34 @@ router.get('/:id/metadata', async (req: Request, res: Response, next: NextFuncti
 });
 
 // GET /items/:id/form-data
-router.get("/:id/form-data", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = parseInt(req.params.id);
+router.get(
+    '/:id/form-data',
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = parseInt(req.params.id);
 
-    try {
-        const {
-            item,
-            category,
-            allCondition,
-            allDay,
-            allService,
-            allPlace,
-            hasShop
-        } = await getFormDataUseCase({ itemId });
+        try {
+            const { item, category, allCondition, allDay, allService, allPlace, hasShop } = await getFormDataUseCase({
+                itemId,
+            });
 
-        res.status(200).json({
-            item,
-            category,
-            allCondition,
-            hasShop,
-            allDay,
-            allService,
-            allPlace
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                item,
+                category,
+                allCondition,
+                hasShop,
+                allDay,
+                allService,
+                allPlace,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /items/:id/highlight
-router.get("/:id/highlight", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get('/:id/highlight', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     try {

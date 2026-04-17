@@ -4,8 +4,8 @@ export type OptionIdParams = {
 
 export type CreateItemReportParams = {
     data: {
-        item_id: number,
-        report_user_id: number,
-        option_id: number,
+        item_id: number;
+        report_user_id: number;
+        option_id: number;
     };
 };

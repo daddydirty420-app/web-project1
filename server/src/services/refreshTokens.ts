@@ -1,5 +1,5 @@
-import { Transaction } from "sequelize";
-import { RefreshTokens } from "../models/index.js";
+import { Transaction } from 'sequelize';
+import { RefreshTokens } from '../models/index.js';
 
 type UserIdParams = {
     userId: number;

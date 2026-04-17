@@ -1,5 +1,5 @@
-import { Op } from "sequelize";
-import { getUserItemsStockList } from "../../../../services/items/index.js";
+import { Op } from 'sequelize';
+import { getUserItemsStockList } from '../../../../services/items/index.js';
 
 type Params = {
     page: number;
@@ -13,7 +13,7 @@ export const getStockItemsUseCase = async ({ page, userId, keyword }: Params) =>
 
     const where: any = {
         seller_id: userId,
-        status: { [Op.in]: ["active", "hidden", "soldout"] },
+        status: { [Op.in]: ['active', 'hidden', 'soldout'] },
     };
 
     if (keyword) {

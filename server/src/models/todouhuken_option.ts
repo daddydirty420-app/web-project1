@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class TodouhukenOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 TodouhukenOption.init(
     {
@@ -21,11 +21,11 @@ TodouhukenOption.init(
     },
     {
         sequelize,
-        modelName: "TodouhukenOption",
-        tableName: "todouhuken_option",
+        modelName: 'TodouhukenOption',
+        tableName: 'todouhuken_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default TodouhukenOption;

@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class KanjyoOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 KanjyoOption.init(
     {
@@ -21,11 +21,11 @@ KanjyoOption.init(
     },
     {
         sequelize,
-        modelName: "KanjyoOption",
-        tableName: "kanjyo_option",
+        modelName: 'KanjyoOption',
+        tableName: 'kanjyo_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default KanjyoOption;

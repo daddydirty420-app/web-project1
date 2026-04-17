@@ -1,5 +1,5 @@
-import { Op } from "sequelize";
-import { getProfileVideosWithCount } from "../../../services/items/index.js";
+import { Op } from 'sequelize';
+import { getProfileVideosWithCount } from '../../../services/items/index.js';
 
 type Params = {
     page: number;
@@ -7,12 +7,12 @@ type Params = {
     pageUserId?: number;
 };
 
-export const getProfileVideosUseCase = async ({  page, limit, pageUserId }: Params) => {
+export const getProfileVideosUseCase = async ({ page, limit, pageUserId }: Params) => {
     const where: any = {
-        status: { [Op.in]: ["active", "soldout"] },
-        seller_id: pageUserId
+        status: { [Op.in]: ['active', 'soldout'] },
+        seller_id: pageUserId,
     };
-    
+
     const offset = (page - 1) * limit;
 
     const { items, totalCount } = await getProfileVideosWithCount({ where, limit, offset });

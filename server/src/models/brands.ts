@@ -1,11 +1,11 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class Brands extends Model {
     declare id: number;
     declare name: string;
     declare name_normalized: string;
-};
+}
 
 Brands.init(
     {
@@ -26,8 +26,8 @@ Brands.init(
     },
     {
         sequelize,
-        modelName: "Brands",
-        tableName: "brands",
+        modelName: 'Brands',
+        tableName: 'brands',
         freezeTableName: true,
         timestamps: false,
     },

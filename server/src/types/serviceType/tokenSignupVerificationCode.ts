@@ -1,5 +1,5 @@
-import { Transaction } from "sequelize";
-import { TokenSignupVerification } from "../../models/index.js";
+import { Transaction } from 'sequelize';
+import { TokenSignupVerification } from '../../models/index.js';
 
 export type VerificationCodeParams = {
     verificationCode: string;

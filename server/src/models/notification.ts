@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class Notification extends Model {
     declare id: number;
@@ -40,7 +40,7 @@ Notification.init(
         read_flag: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            defaultValue: false
+            defaultValue: false,
         },
         read_user_id: {
             type: DataTypes.INTEGER,
@@ -50,11 +50,11 @@ Notification.init(
     },
     {
         sequelize,
-        modelName: "Notification",
-        tableName: "notification",
+        modelName: 'Notification',
+        tableName: 'notification',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default Notification;

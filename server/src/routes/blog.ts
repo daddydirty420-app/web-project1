@@ -1,7 +1,7 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
-import { Blog, BlogCategoryOption } from "../models/index.js";
+import { Router } from 'express';
+import type { NextFunction, Request, Response } from 'express-serve-static-core';
+import { Op } from 'sequelize';
+import { Blog, BlogCategoryOption } from '../models/index.js';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/list', async (req: Request, res: Response, next: NextFunction): Pro
             where: { public: true },
             order: [['uploaded_at', 'DESC']],
             limit,
-            offset
+            offset,
         });
 
         res.json({ list });
@@ -36,10 +36,7 @@ router.get('/search', async (req: Request, res: Response, next: NextFunction): P
             attributes: ['id', 'title', 'summary', 'image_url', 'views_count', 'uploaded_at'],
             where: {
                 public: true,
-                [Op.or]: [
-                    { title: { [Op.iLike]: `%${keyword}%`} },
-                    { summary: { [Op.iLike]: `%${keyword}%` } }
-                ]
+                [Op.or]: [{ title: { [Op.iLike]: `%${keyword}%` } }, { summary: { [Op.iLike]: `%${keyword}%` } }],
             },
             order: [['uploaded_at', 'DESC']],
             limit,
@@ -50,12 +47,12 @@ router.get('/search', async (req: Request, res: Response, next: NextFunction): P
                     attributes: ['id', 'name'],
                     required: false,
                     where: keyword
-                    ? {
-                        name: {
-                            [Op.iLike]: `%${keyword}%`
-                        }
-                    }
-                    :undefined
+                        ? {
+                              name: {
+                                  [Op.iLike]: `%${keyword}%`,
+                              },
+                          }
+                        : undefined,
                 },
             ],
         });
@@ -92,7 +89,7 @@ router.get('/search-category', async (req: Request, res: Response, next: NextFun
             order: [['uploaded_at', 'DESC']],
             limit,
             offset,
-            include: includeConditions
+            include: includeConditions,
         });
 
         res.json({ list });
@@ -104,9 +101,7 @@ router.get('/search-category', async (req: Request, res: Response, next: NextFun
 router.get('/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Blog.findByPk(req.params.id, {
-            include: [
-                { model: BlogCategoryOption },
-            ],
+            include: [{ model: BlogCategoryOption }],
         });
 
         if (!data) {
@@ -131,7 +126,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction): Prom
         res.json({
             data,
             blogViewsRanking,
-            latestBlogList
+            latestBlogList,
         });
     } catch (err) {
         next(err);

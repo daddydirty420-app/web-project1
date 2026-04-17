@@ -1,22 +1,22 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import Follow from "./follow.js";
-import Cart from "./cart.js";
-import CommentLike from "./comment_like.js";
-import ItemLike from "./item_like.js";
-import Item from "./item.js";
-import ReferenceCode from "./reference_code.js";
-import Notification from "./notification.js";
-import IdCard from "./id_card.js";
-import ShopInfo from "./shop_info.js";
-import Address from "./address.js";
-import BankAccount from "./bank_account.js";
-import WatchHistory from "./watch_history.js";
-import Name from "./name.js";
-import GenderOption from "./gender_option.js";
-import PointsHistory from "./points_history.js";
-import UriagekinHistory from "./uriagekin_history.js";
+import Follow from './follow.js';
+import Cart from './cart.js';
+import CommentLike from './comment_like.js';
+import ItemLike from './item_like.js';
+import Item from './item.js';
+import ReferenceCode from './reference_code.js';
+import Notification from './notification.js';
+import IdCard from './id_card.js';
+import ShopInfo from './shop_info.js';
+import Address from './address.js';
+import BankAccount from './bank_account.js';
+import WatchHistory from './watch_history.js';
+import Name from './name.js';
+import GenderOption from './gender_option.js';
+import PointsHistory from './points_history.js';
+import UriagekinHistory from './uriagekin_history.js';
 
 export class User extends Model {
     declare id: number;
@@ -46,62 +46,62 @@ export class User extends Model {
 
     static associate() {
         User.hasMany(Cart, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasMany(Follow, {
             foreignKey: 'follow_user_id',
-            as: 'FollowUser'
+            as: 'FollowUser',
         });
         User.hasMany(Follow, {
             foreignKey: 'follower_user_id',
-            as: 'FollowerUser'
+            as: 'FollowerUser',
         });
         User.hasMany(CommentLike, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasMany(ItemLike, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasMany(Item, {
-            foreignKey: 'seller_id'
+            foreignKey: 'seller_id',
         });
         User.hasMany(ReferenceCode, {
             foreignKey: 'output_user_id',
-            as: 'Output'
+            as: 'Output',
         });
         User.hasMany(Notification, {
-            foreignKey: 'read_user_id'
+            foreignKey: 'read_user_id',
         });
         User.hasOne(IdCard, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasOne(ShopInfo, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasOne(Address, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasOne(BankAccount, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasMany(WatchHistory, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasOne(Name, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasOne(ReferenceCode, {
             foreignKey: 'input_user_id',
-            as: 'Input'
+            as: 'Input',
         });
         User.belongsTo(GenderOption, {
-            foreignKey: 'gender_id'
+            foreignKey: 'gender_id',
         });
         User.hasMany(PointsHistory, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         User.hasMany(UriagekinHistory, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
     }
 
@@ -206,11 +206,11 @@ User.init(
     },
     {
         sequelize,
-        modelName: "User",
-        tableName: "user",
+        modelName: 'User',
+        tableName: 'user',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default User;

@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import Item from "./item.js";
-import User from "./user.js";
+import Item from './item.js';
+import User from './user.js';
 
 export class ItemDeleteLogs extends Model {
     declare id: number;
@@ -52,11 +52,11 @@ ItemDeleteLogs.init(
     },
     {
         sequelize,
-        modelName: "ItemDeleteLogs",
-        tableName: "item_delete_logs",
+        modelName: 'ItemDeleteLogs',
+        tableName: 'item_delete_logs',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default ItemDeleteLogs;

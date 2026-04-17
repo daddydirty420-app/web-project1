@@ -1,5 +1,5 @@
-import { destroyWatchHistory, getWatchHistoryOne } from "../../services/watchHistory.js";
-import { AppError } from "../../errors.js";
+import { destroyWatchHistory, getWatchHistoryOne } from '../../services/watchHistory.js';
+import { AppError } from '../../errors.js';
 
 type Params = {
     itemId: number;
@@ -7,12 +7,11 @@ type Params = {
 };
 
 export const deleteWatchHistoryUseCase = async ({ itemId, userId }: Params) => {
-
     // watchHistory取得
     const history = await getWatchHistoryOne({ itemId, userId });
 
     if (!history) {
-        throw new AppError("WATCH_HISTORY_NOT_FOUND", 404);
+        throw new AppError('WATCH_HISTORY_NOT_FOUND', 404);
     }
 
     // 削除

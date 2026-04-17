@@ -1,4 +1,4 @@
-import { BrandAliases, Brands } from "../../models/index.js";
+import { BrandAliases, Brands } from '../../models/index.js';
 
 export type BrandIdParams = {
     brandId: number;

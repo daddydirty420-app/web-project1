@@ -1,4 +1,4 @@
-import { findFollow } from "../../services/follow.js";
+import { findFollow } from '../../services/follow.js';
 
 type Params = {
     currentUserId: number;
@@ -6,7 +6,6 @@ type Params = {
 };
 
 export const getFollowStatusUseCase = async ({ currentUserId, targetUserId }: Params) => {
-
     const isFollowing = await findFollow({ currentUserId, targetUserId });
 
     return !!isFollowing;

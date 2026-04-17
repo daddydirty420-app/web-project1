@@ -1,13 +1,13 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class SuggestWords extends Model {
     declare id: number;
     declare word: string;
     declare normalized_word: string | null;
     declare createdAt: Date;
-    declare updatedAt: Date;     
-};
+    declare updatedAt: Date;
+}
 
 SuggestWords.init(
     {
@@ -25,8 +25,8 @@ SuggestWords.init(
     },
     {
         sequelize,
-        modelName: "SuggestWords",
-        tableName: "suggest_words",
+        modelName: 'SuggestWords',
+        tableName: 'suggest_words',
         freezeTableName: true,
         timestamps: true,
     },

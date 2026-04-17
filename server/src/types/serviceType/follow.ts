@@ -1,6 +1,4 @@
-export type FollowType = 
-| "follow"
-| "follower";
+export type FollowType = 'follow' | 'follower';
 
 export type FollowingsParams = {
     currentUserId: number;

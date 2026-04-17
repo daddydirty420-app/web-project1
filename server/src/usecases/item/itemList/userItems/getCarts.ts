@@ -1,5 +1,5 @@
-import { Op } from "sequelize";
-import { getUserItemsCartList } from "../../../../services/cart.js";
+import { Op } from 'sequelize';
+import { getUserItemsCartList } from '../../../../services/cart.js';
 
 type Params = {
     page: number;
@@ -12,7 +12,7 @@ export const getUserItemsCartsUseCase = async ({ page, userId, keyword }: Params
     const offset = (page - 1) * limit;
 
     const itemWhere: any = {
-        status: "active"
+        status: 'active',
     };
 
     if (keyword) {
@@ -20,7 +20,7 @@ export const getUserItemsCartsUseCase = async ({ page, userId, keyword }: Params
             [Op.iLike]: `%${keyword}%`,
         };
     }
-    
+
     const { itemList, totalCount } = await getUserItemsCartList({ userId, itemWhere, limit, offset });
 
     return {

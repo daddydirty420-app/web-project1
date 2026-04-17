@@ -1,5 +1,5 @@
-import { ShopInfo, User } from "../models/index.js";
-import { CreateUserParams, EmailParams, EmailVerifyParams, UserIdParams } from "../types/serviceType/users.js";
+import { ShopInfo, User } from '../models/index.js';
+import { CreateUserParams, EmailParams, EmailVerifyParams, UserIdParams } from '../types/serviceType/users.js';
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
@@ -7,7 +7,7 @@ export const getUser = ({ userId }: UserIdParams) => {
 
 export const getMeHighlight = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        attributes: ["id", "user_name", "profile_image"],
+        attributes: ['id', 'user_name', 'profile_image'],
     });
 };
 
@@ -39,7 +39,16 @@ export const getMeMypage = ({ userId }: UserIdParams) => {
 
 export const getProfileUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        attributes: ["id", 'user_name', 'user_introduction', 'profile_image', 'early_seller', 'honnin_verified', 'star_amount', 'star_average'],
+        attributes: [
+            'id',
+            'user_name',
+            'user_introduction',
+            'profile_image',
+            'early_seller',
+            'honnin_verified',
+            'star_amount',
+            'star_average',
+        ],
         include: [
             {
                 model: ShopInfo,

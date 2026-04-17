@@ -1,11 +1,11 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
-import ComOrFreeOption from "./com_or_free_option.js";
-import Address from "./address.js";
-import Name from "./name.js";
-import BankAccount from "./bank_account.js";
+import User from './user.js';
+import ComOrFreeOption from './com_or_free_option.js';
+import Address from './address.js';
+import Name from './name.js';
+import BankAccount from './bank_account.js';
 
 export class ShopInfo extends Model {
     declare id: number;
@@ -33,24 +33,24 @@ export class ShopInfo extends Model {
 
     static associate() {
         ShopInfo.belongsTo(User, {
-            foreignKey: 'user_id'
+            foreignKey: 'user_id',
         });
         ShopInfo.belongsTo(ComOrFreeOption, {
-            foreignKey: 'com_or_free_id'
+            foreignKey: 'com_or_free_id',
         });
         ShopInfo.belongsTo(Name, {
-            foreignKey: "name_representative_id",
-            as: "RepresentativeName"
+            foreignKey: 'name_representative_id',
+            as: 'RepresentativeName',
         });
         ShopInfo.belongsTo(Name, {
-            foreignKey: "name_contact_id",
-            as: "ContactName"
+            foreignKey: 'name_contact_id',
+            as: 'ContactName',
         });
         ShopInfo.hasOne(Address, {
-            foreignKey: 'shop_info_id'
+            foreignKey: 'shop_info_id',
         });
         ShopInfo.hasOne(BankAccount, {
-            foreignKey: 'shop_info_id'
+            foreignKey: 'shop_info_id',
         });
     }
 
@@ -84,43 +84,43 @@ ShopInfo.init(
         id_card_rear: DataTypes.TEXT,
         request_all: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         verified: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         auto_trans: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         user_id: DataTypes.INTEGER,
         com_or_free_id: DataTypes.INTEGER,
         founded_date: DataTypes.DATE,
         open_info: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         permit_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
             validate: {
                 maxArrayLength(value: any[]) {
                     if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
+                        throw new Error('画像は最大10枚までです。');
                     }
-                }
-            }
+                },
+            },
         },
         name_representative_id: DataTypes.INTEGER,
         name_contact_id: DataTypes.INTEGER,
     },
     {
         sequelize,
-        modelName: "ShopInfo",
-        tableName: "shop_info",
+        modelName: 'ShopInfo',
+        tableName: 'shop_info',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default ShopInfo;

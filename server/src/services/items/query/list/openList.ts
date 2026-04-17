@@ -1,5 +1,5 @@
-import { Item, Sale, User, Video } from "../../../../models/index.js";
-import { ItemListParams } from "../../../../types/serviceType/items/items.js";
+import { Item, Sale, User, Video } from '../../../../models/index.js';
+import { ItemListParams } from '../../../../types/serviceType/items/items.js';
 
 export const getIndexItemsWithCount = async ({ where, limit, offset }: ItemListParams) => {
     const items = await Item.findAll({
@@ -7,7 +7,7 @@ export const getIndexItemsWithCount = async ({ where, limit, offset }: ItemListP
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Video,
@@ -35,7 +35,7 @@ export const getIndexVideosWithCount = async ({ where, limit, offset }: ItemList
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Video,
@@ -55,11 +55,11 @@ export const getIndexVideosWithCount = async ({ where, limit, offset }: ItemList
 
 export const getProfileItemsWithCount = async ({ where, limit, offset }: ItemListParams) => {
     const items = await Item.findAll({
-        attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id', 'first_image_url'],
+        attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'seller_id', 'first_image_url'],
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],        
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Sale,
@@ -75,11 +75,11 @@ export const getProfileItemsWithCount = async ({ where, limit, offset }: ItemLis
 
 export const getProfileVideosWithCount = async ({ where, limit, offset }: ItemListParams) => {
     const items = await Item.findAll({
-        attributes: ['id', 'name', 'price', "status", 'uploaded_at', 'seller_id'],
+        attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'seller_id'],
         where,
         limit,
         offset,
-        order: [["uploaded_at", "DESC"]],
+        order: [['uploaded_at', 'DESC']],
         include: [
             {
                 model: Video,

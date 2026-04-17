@@ -1,5 +1,5 @@
-import { getItemLikeList } from "../../services/itemLike.js";
-import { getFollowings } from "../../services/follow.js";
+import { getItemLikeList } from '../../services/itemLike.js';
+import { getFollowings } from '../../services/follow.js';
 
 type Params = {
     itemId: number;
@@ -8,7 +8,6 @@ type Params = {
 };
 
 export const getItemLikeUserListUseCase = async ({ itemId, userId, keyword }: Params) => {
-
     // いいねリスト取得
     const itemLikeList = await getItemLikeList({ itemId, keyword });
 
@@ -16,15 +15,15 @@ export const getItemLikeUserListUseCase = async ({ itemId, userId, keyword }: Pa
     let finalLikeList = null;
 
     if (userId !== null) {
-        const targetUserIds = itemLikeList.map(item => item.User.id);
+        const targetUserIds = itemLikeList.map((item) => item.User.id);
 
         const currentUserId = userId;
-    
+
         const followings = await getFollowings({ currentUserId, targetUserIds });
-    
-        const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
-    
-        finalLikeList = itemLikeList.map(item => {
+
+        const followingUserIdSet = new Set(followings.map((f) => f.follower_user_id));
+
+        finalLikeList = itemLikeList.map((item) => {
             const plainItem = item.toJSON();
             const targetId = plainItem.User?.id;
             plainItem.User.is_following = followingUserIdSet.has(targetId);
@@ -35,7 +34,7 @@ export const getItemLikeUserListUseCase = async ({ itemId, userId, keyword }: Pa
     // ユーザー情報だけ返す
     const source = finalLikeList ?? itemLikeList;
 
-    const userList = source.map(item => {
+    const userList = source.map((item) => {
         const plain = item.toJSON ? item.toJSON() : item;
         return plain.User;
     });

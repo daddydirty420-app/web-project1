@@ -1,5 +1,5 @@
-import { Item, Sale, Video, WatchHistory } from "../models/index.js";
-import { ItemUserParams, UserWatchListParams, WatchHistoryParams } from "../types/serviceType/watchHistory";
+import { Item, Sale, Video, WatchHistory } from '../models/index.js';
+import { ItemUserParams, UserWatchListParams, WatchHistoryParams } from '../types/serviceType/watchHistory';
 
 export const getWatchHistoryOne = async ({ itemId, userId }: ItemUserParams) => {
     return WatchHistory.findOne({
@@ -12,34 +12,42 @@ export const getWatchHistoryOne = async ({ itemId, userId }: ItemUserParams) => 
 
 export const getUserItemsWatchList = async ({ itemWhere, limit, offset, userId }: UserWatchListParams) => {
     const watchList = await WatchHistory.findAll({
-        attributes: ["id"],
+        attributes: ['id'],
         where: { user_id: userId },
-        order: [["createdAt", "DESC"]],
+        order: [['createdAt', 'DESC']],
         limit,
         offset,
         include: [
             {
                 model: Item,
                 where: itemWhere,
-                attributes: ['id', 'name', 'price', "status", 'seller_id', 'first_image_url', "gender_type", "age_type"],
+                attributes: [
+                    'id',
+                    'name',
+                    'price',
+                    'status',
+                    'seller_id',
+                    'first_image_url',
+                    'gender_type',
+                    'age_type',
+                ],
                 required: true,
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag', "before_price"],
+                        attributes: ['discount_rate', 'discount_amount', 'sale_flag', 'before_price'],
                         required: false,
                     },
                     {
                         model: Video,
-                        attributes: ["title"],
+                        attributes: ['title'],
                     },
                 ],
             },
         ],
     });
 
-    const itemList = watchList
-    .map((data: InstanceType<typeof WatchHistory>) => data.Item);
+    const itemList = watchList.map((data: InstanceType<typeof WatchHistory>) => data.Item);
 
     const totalCount = await WatchHistory.count({
         where: { user_id: userId },
@@ -64,7 +72,7 @@ export const createWatchHistory = async ({ itemId, userId }: ItemUserParams) => 
 
 export const updateUpdateAt = async ({ history }: WatchHistoryParams) => {
     const nowDate = new Date();
-        
+
     history.updatedAt = nowDate;
     await history.save();
 };

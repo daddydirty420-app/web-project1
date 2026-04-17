@@ -1,6 +1,6 @@
-import { Transaction } from "sequelize";
-import { Item } from "../../../models/index.js";
-import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../../itemAttributes.js";
+import { Transaction } from 'sequelize';
+import { Item } from '../../../models/index.js';
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from '../../itemAttributes.js';
 
 export type ItemIdParams = {
     itemId: number;
@@ -75,9 +75,9 @@ export type UpdateItemParams = {
 
         attributes: {
             inventory?: {
-                initial: number,
-                current: number,
-                low_stock_ratio: number,
+                initial: number;
+                current: number;
+                low_stock_ratio: number;
             };
 
             colorVariants?: Array<{
@@ -89,7 +89,7 @@ export type UpdateItemParams = {
                     current: number;
                     low_stock_ratio: number;
                 };
-        
+
                 sizes?: Array<{
                     size: string;
                     inventory: {
@@ -112,7 +112,7 @@ export type UpdateItemParams = {
 
         price: number;
         first_image_url: string;
-        status: "editing" | "draft";
+        status: 'editing' | 'draft';
     };
     transaction: Transaction;
 };
@@ -128,7 +128,7 @@ export type UpdatePriceParams = {
     data: {
         price: number;
     };
-    transaction: Transaction,
+    transaction: Transaction;
 };
 
 export type UpdateReportScoreParams = {
@@ -136,7 +136,7 @@ export type UpdateReportScoreParams = {
     data: {
         report_score: number;
     };
-    transaction?: Transaction,
+    transaction?: Transaction;
 };
 
 export type ItemDataParams = {
@@ -155,17 +155,17 @@ export type CreateItemCopyUploadParams = {
     data: {
         name: string;
         detail: string;
-        price: number,
-        item_condition_id: number,
-        seller_id: number,
-        search_text: string,
-        image_url: string | string[],
-        first_image_url: string,
-        gender_type: string,
-        age_type: string,
-        category_id: number,
-        brand_id: number | null,
-        attributes: ItemAttributes,
+        price: number;
+        item_condition_id: number;
+        seller_id: number;
+        search_text: string;
+        image_url: string | string[];
+        first_image_url: string;
+        gender_type: string;
+        age_type: string;
+        category_id: number;
+        brand_id: number | null;
+        attributes: ItemAttributes;
     };
     transaction: Transaction;
 };

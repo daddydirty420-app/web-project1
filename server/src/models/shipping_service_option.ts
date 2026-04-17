@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class ShippingServiceOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 ShippingServiceOption.init(
     {
@@ -21,11 +21,11 @@ ShippingServiceOption.init(
     },
     {
         sequelize,
-        modelName: "ShippingServiceOption",
-        tableName: "shipping_service_option",
+        modelName: 'ShippingServiceOption',
+        tableName: 'shipping_service_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default ShippingServiceOption;

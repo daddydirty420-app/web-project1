@@ -1,6 +1,6 @@
-import { createItemLike, getItemLikeOne } from "../../services/itemLike.js";
-import { AppError } from "../../errors.js";
-import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
+import { createItemLike, getItemLikeOne } from '../../services/itemLike.js';
+import { AppError } from '../../errors.js';
+import { patchSortNumberAddUseCase } from '../item/sortNumber/sortNumber.js';
 
 type Params = {
     itemId: number;
@@ -8,11 +8,10 @@ type Params = {
 };
 
 export const addItemLikeUseCase = async ({ itemId, userId }: Params) => {
-
     const data = await getItemLikeOne({ itemId, userId });
 
     if (data) {
-        throw new AppError("ALREADY_LIKE_ITEM", 409, "すでにいいね済みです");
+        throw new AppError('ALREADY_LIKE_ITEM', 409, 'すでにいいね済みです');
     }
 
     await createItemLike({ itemId, userId });
@@ -21,6 +20,6 @@ export const addItemLikeUseCase = async ({ itemId, userId }: Params) => {
     const buzzNumber = 200;
 
     patchSortNumberAddUseCase({ itemId, number, buzzNumber }).catch((err) => {
-        console.error("usecase patchSortNumberAdd error:", err);
+        console.error('usecase patchSortNumberAdd error:', err);
     });
-}
+};

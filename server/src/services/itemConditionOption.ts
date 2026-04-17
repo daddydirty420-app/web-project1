@@ -1,4 +1,4 @@
-import { ItemConditionOption } from "../models/index.js";
+import { ItemConditionOption } from '../models/index.js';
 
 type ConditionIdParams = {
     conditionId: number;

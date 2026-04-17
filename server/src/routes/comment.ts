@@ -1,24 +1,27 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, authenticateOptional } from "../middleware/index.js";
-import { AppError } from "../errors.js";
-import { patchCommentSortNumberAddUseCase, patchCommentSortNumberDecreaseUseCase } from "../usecases/comment/patchSortNumber.js";
-import { deleteCommentUseCase } from "../usecases/comment/delete.js";
-import { uploadCommentUseCase } from "../usecases/comment/upload.js";
-import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
-import { getAllReplysUseCase } from "../usecases/comment/getReply.js";
+import { Router } from 'express';
+import type { NextFunction, Request, Response } from 'express-serve-static-core';
+import { authenticateToken, authenticateOptional } from '../middleware/index.js';
+import { AppError } from '../errors.js';
+import {
+    patchCommentSortNumberAddUseCase,
+    patchCommentSortNumberDecreaseUseCase,
+} from '../usecases/comment/patchSortNumber.js';
+import { deleteCommentUseCase } from '../usecases/comment/delete.js';
+import { uploadCommentUseCase } from '../usecases/comment/upload.js';
+import { getAllCommentsUseCase } from '../usecases/comment/getAll.js';
+import { getAllReplysUseCase } from '../usecases/comment/getReply.js';
 
 const router = Router();
 
 // POST /comment/:id?sellerMe=boolean(&parentId=number)
-router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const itemId = Number(req.params.id);
 
     const commentText: string = req.body.inputComment;
     const commentLength: number = commentText.length;
 
-    const sellerMe = req.query.sellerMe === "true";
+    const sellerMe = req.query.sellerMe === 'true';
 
     const parentId = Number(req.query?.parentId) ?? null;
 
@@ -29,9 +32,9 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
             commentText,
             commentLength,
             sellerMe,
-            parentId
+            parentId,
         });
-        
+
         res.status(200).json({ comment });
     } catch (err) {
         next(err);
@@ -39,55 +42,55 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // PATCH /comment/:id/sort-number/add?number=number
-router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch('/:id/sort-number/add', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
     const number = Number(req.query.number);
-    
+
     if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
+        throw new AppError('INVALID_NUMBER', 400);
     }
 
     patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
         console.error(err);
     });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    res.status(202).json({ message: 'sort_numberの更新を受け付けました' });
 });
 
 // PATCH /comment/:id/sort-number/decrease?number=number
-router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch('/:id/sort-number/decrease', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
     const number = Number(req.query.number);
-    
+
     if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
+        throw new AppError('INVALID_NUMBER', 400);
     }
 
     patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
         console.error(err);
     });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    res.status(202).json({ message: 'sort_numberの更新を受け付けました' });
 });
 
 // DELETE /comment/:id?page=""
-router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.delete('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
     const userId = req.user!.id;
 
-    const page = req.query.page as "normal" | "admin";
+    const page = req.query.page as 'normal' | 'admin';
 
-    if (!page || (page !== "normal" && page !== "admin")) {
-        throw new AppError("QUERY_PAGE_INVALID", 400);
+    if (!page || (page !== 'normal' && page !== 'admin')) {
+        throw new AppError('QUERY_PAGE_INVALID', 400);
     }
 
     try {
         await deleteCommentUseCase({ userId, commentId, page });
-        
-        res.status(200).json({ message: "コメントを削除しました。" });
+
+        res.status(200).json({ message: 'コメントを削除しました。' });
     } catch (err) {
         next(err);
     }
@@ -99,15 +102,15 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response, nex
 
     const itemId = Number(req.params.id);
 
-    const sellerMe = req.query.sellerMe === "true";
-    const admin = req.query.admin === "true";
+    const sellerMe = req.query.sellerMe === 'true';
+    const admin = req.query.admin === 'true';
 
     try {
         const commentList = await getAllCommentsUseCase({
             itemId,
             userId,
             sellerMe,
-            admin
+            admin,
         });
 
         res.status(200).json({ commentList });
@@ -117,26 +120,30 @@ router.get('/:id', authenticateOptional, async (req: Request, res: Response, nex
 });
 
 // GET /comment/:id/reply?sellerMe=boolean(&admin=boolean)
-router.get('/:id/reply', authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
+router.get(
+    '/:id/reply',
+    authenticateOptional,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user?.id ?? null;
 
-    const parentCommentId = Number(req.params.id);
+        const parentCommentId = Number(req.params.id);
 
-    const sellerMe = req.query.sellerMe === "true";
-    const admin = req.query.admin === "true";
+        const sellerMe = req.query.sellerMe === 'true';
+        const admin = req.query.admin === 'true';
 
-    try {
-        const commentList = await getAllReplysUseCase({
-            parentCommentId,
-            userId,
-            sellerMe,
-            admin
-        });
+        try {
+            const commentList = await getAllReplysUseCase({
+                parentCommentId,
+                userId,
+                sellerMe,
+                admin,
+            });
 
-        res.status(200).json({ commentList });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ commentList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

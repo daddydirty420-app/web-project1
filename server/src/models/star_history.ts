@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class StarHistory extends Model {
     declare id: number;
@@ -14,11 +14,11 @@ export class StarHistory extends Model {
     static associate() {
         StarHistory.belongsTo(User, {
             foreignKey: 'seller_user_id',
-            as: 'Seller'
+            as: 'Seller',
         });
         StarHistory.belongsTo(User, {
             foreignKey: 'buyer_user_id',
-            as: 'Buyer'
+            as: 'Buyer',
         });
     }
 
@@ -41,11 +41,11 @@ StarHistory.init(
     },
     {
         sequelize,
-        modelName: "StarHistory",
-        tableName: "star_history",
+        modelName: 'StarHistory',
+        tableName: 'star_history',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default StarHistory;

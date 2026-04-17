@@ -1,5 +1,5 @@
-import { Transaction } from "sequelize";
-import { Video } from "../../models/index.js";
+import { Transaction } from 'sequelize';
+import { Video } from '../../models/index.js';
 
 export type VideoIdParams = {
     videoId: number;

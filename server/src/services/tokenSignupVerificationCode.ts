@@ -1,5 +1,11 @@
-import { TokenSignupVerification, User } from "../models/index.js";
-import { CreateTokenParams, DestroyTokenParams, ReissueUpdateParams, TokenParams, VerificationCodeParams } from "../types/serviceType/tokenSignupVerificationCode.js";
+import { TokenSignupVerification, User } from '../models/index.js';
+import {
+    CreateTokenParams,
+    DestroyTokenParams,
+    ReissueUpdateParams,
+    TokenParams,
+    VerificationCodeParams,
+} from '../types/serviceType/tokenSignupVerificationCode.js';
 
 export const getTokenVerificationOne = ({ verificationCode }: VerificationCodeParams) => {
     return TokenSignupVerification.findOne({
@@ -10,9 +16,7 @@ export const getTokenVerificationOne = ({ verificationCode }: VerificationCodePa
 export const getTokenReissueOne = ({ token }: TokenParams) => {
     return TokenSignupVerification.findOne({
         where: { reissue_token: token },
-        include: [
-            { model: User },
-        ],
+        include: [{ model: User }],
     });
 };
 

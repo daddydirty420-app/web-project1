@@ -1,6 +1,6 @@
-import { Op } from "sequelize";
-import { Categories, Item, Sale } from "../../../../models/index.js";
-import { ItemPageRecommendParams, RecommendParams } from "../../../../types/serviceType/items/items.js";
+import { Op } from 'sequelize';
+import { Categories, Item, Sale } from '../../../../models/index.js';
+import { ItemPageRecommendParams, RecommendParams } from '../../../../types/serviceType/items/items.js';
 
 export const getIndexRecommendItems = ({ where }: RecommendParams) => {
     return Item.findAll({
@@ -19,7 +19,7 @@ export const getIndexRecommendItems = ({ where }: RecommendParams) => {
 
 export const getCartRecommendItems = ({ where }: RecommendParams) => {
     return Item.findAll({
-        attributes: ['id', 'name', 'price', 'first_image_url', "status"],
+        attributes: ['id', 'name', 'price', 'first_image_url', 'status'],
         where,
         limit: 20,
         order: [['sort_number', 'DESC']],
@@ -45,14 +45,11 @@ export const getItemPageRecommendItems = ({ where, targetParentId, categoryRequi
             },
             {
                 model: Categories,
-                as: "Category",
+                as: 'Category',
                 where: {
-                    [Op.or]: [
-                        { parent_id: targetParentId },
-                        { id: targetParentId },
-                    ],
+                    [Op.or]: [{ parent_id: targetParentId }, { id: targetParentId }],
                 },
-                attributes: ["id"],
+                attributes: ['id'],
                 required: categoryRequired,
             },
         ],

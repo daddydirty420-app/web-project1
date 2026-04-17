@@ -1,35 +1,64 @@
-import { Op } from "sequelize";
-import bcrypt from "bcrypt";
-import moveToGlacier from "./moveToGlacier.js";
-import { User, UriagekinHistory, PointsHistory, PointsUriageOver, Journal, Transfer, UserDeleteLogs, ShopInfo, Address, Name, IdCard, BankAccount, Cart, Follow, ItemLike, CommentLike, ReferenceCode, Notification, WatchHistory, Comment, Item, Delivery, Video, ItemDeleted, ItemDeleteLogs, OrderDeleted, Cancel, Orders } from "../../models/index.js"
-import sequelize from "../../db.js";
-import crypto from "crypto";
+import { Op } from 'sequelize';
+import bcrypt from 'bcrypt';
+import moveToGlacier from './moveToGlacier.js';
+import {
+    User,
+    UriagekinHistory,
+    PointsHistory,
+    PointsUriageOver,
+    Journal,
+    Transfer,
+    UserDeleteLogs,
+    ShopInfo,
+    Address,
+    Name,
+    IdCard,
+    BankAccount,
+    Cart,
+    Follow,
+    ItemLike,
+    CommentLike,
+    ReferenceCode,
+    Notification,
+    WatchHistory,
+    Comment,
+    Item,
+    Delivery,
+    Video,
+    ItemDeleted,
+    ItemDeleteLogs,
+    OrderDeleted,
+    Cancel,
+    Orders,
+} from '../../models/index.js';
+import sequelize from '../../db.js';
+import crypto from 'crypto';
 
-async function deleteUser(currentUserId: number, adminId: number, deleteReason: string): Promise<{ success: boolean}> {
+async function deleteUser(currentUserId: number, adminId: number, deleteReason: string): Promise<{ success: boolean }> {
     const t = await sequelize.transaction();
-    
+
     try {
         const user = await User.findByPk(currentUserId);
         if (!user) throw new Error('ユーザーが見つかりません。');
-    
+
         const uriagekinAll = user.uriagekin;
         const pointsAll = user.points;
-    
+
         const cutoffDate = new Date();
         cutoffDate.setDate(cutoffDate.getDate() - 180);
-        
+
         let uriageRemaining = uriagekinAll;
         const uriageHistories = await UriagekinHistory.findAll({
             where: {
                 user_id: currentUserId,
-                createdAt: { [Op.gte]: cutoffDate }
+                createdAt: { [Op.gte]: cutoffDate },
             },
             order: [['createdAt', 'ASC']],
         });
-    
+
         for (const history of uriageHistories) {
             if (uriageRemaining <= 0) break;
-    
+
             const available = history.uriagekin - (history.used_uriagekin || 0);
             if (available > 0) {
                 const deduction = Math.min(available, uriageRemaining);
@@ -38,19 +67,19 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 await history.save({ transaction: t });
             }
         }
-    
+
         let pointsRemaining = pointsAll;
         const pointsHistories = await PointsHistory.findAll({
             where: {
                 user_id: currentUserId,
-                createdAt: { [Op.gte]: cutoffDate }
+                createdAt: { [Op.gte]: cutoffDate },
             },
             order: [['createdAt', 'ASC']],
         });
-    
+
         for (const history of pointsHistories) {
             if (pointsRemaining <= 0) break;
-    
+
             const available = history.points - (history.used_points || 0);
             if (available > 0) {
                 const deduction = Math.min(available, pointsRemaining);
@@ -59,56 +88,71 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 await history.save({ transaction: t });
             }
         }
-    
-        await PointsUriageOver.create({
-            points_confiscated: pointsAll,
-            uriagekin_confiscated: uriagekinAll,
-        }, { transaction: t });
-    
-        await Journal.create({
-            kanjyo_kari1: 3,
-            kanjyo_kashi1: 6,
-            price_kari1: uriagekinAll,
-            price_kashi1: uriagekinAll,
-            reason_id: 8,
-        }, { transaction: t });
-    
-        await Journal.create({
-            kanjyo_kari1: 8,
-            kanjyo_kashi1: 6,
-            price_kari1: pointsAll,
-            price_kashi1: pointsAll,
-            reason_id: 9,
-        }, { transaction: t });
-    
+
+        await PointsUriageOver.create(
+            {
+                points_confiscated: pointsAll,
+                uriagekin_confiscated: uriagekinAll,
+            },
+            { transaction: t },
+        );
+
+        await Journal.create(
+            {
+                kanjyo_kari1: 3,
+                kanjyo_kashi1: 6,
+                price_kari1: uriagekinAll,
+                price_kashi1: uriagekinAll,
+                reason_id: 8,
+            },
+            { transaction: t },
+        );
+
+        await Journal.create(
+            {
+                kanjyo_kari1: 8,
+                kanjyo_kashi1: 6,
+                price_kari1: pointsAll,
+                price_kashi1: pointsAll,
+                reason_id: 9,
+            },
+            { transaction: t },
+        );
+
         const transferMoney = await Transfer.sum('trans_money', {
             where: {
                 user_id: currentUserId,
-                trans_finish: false
-            }
+                trans_finish: false,
+            },
         });
-    
-        await Journal.create({
-            kanjyo_kari1: 3,
-            kanjyo_kashi1: 6,
-            price_kari1: transferMoney,
-            price_kashi1: transferMoney,
-            reason_id: 11,
-        }, { transaction: t });
-    
-        await UserDeleteLogs.create({
-            user_id: currentUserId,
-            delete_reason: deleteReason,
-            deleted_by_admin: true,
-            admin_id: adminId,
-        }, { transaction: t });
-    
+
+        await Journal.create(
+            {
+                kanjyo_kari1: 3,
+                kanjyo_kashi1: 6,
+                price_kari1: transferMoney,
+                price_kashi1: transferMoney,
+                reason_id: 11,
+            },
+            { transaction: t },
+        );
+
+        await UserDeleteLogs.create(
+            {
+                user_id: currentUserId,
+                delete_reason: deleteReason,
+                deleted_by_admin: true,
+                admin_id: adminId,
+            },
+            { transaction: t },
+        );
+
         // メール送信処理
-    
+
         await ShopInfo.update({ user_id: null }, { where: { user_id: currentUserId }, transaction: t });
         await Address.update({ user_id: null }, { where: { user_id: currentUserId }, transaction: t });
         await Name.update({ user_id: null }, { where: { user_id: currentUserId }, transaction: t });
-        
+
         await IdCard.destroy({ where: { user_id: currentUserId }, transaction: t });
         await BankAccount.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Cart.destroy({ where: { user_id: currentUserId }, transaction: t });
@@ -122,16 +166,14 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await WatchHistory.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Comment.destroy({ where: { user_id: currentUserId }, transaction: t });
         await Transfer.destroy({ where: { user_id: currentUserId }, transaction: t });
-    
+
         const items = await Item.findAll({
             attributes: ['id', 'name', 'explain', 'image_url', 'price'],
             where: { seller_id: currentUserId },
-            include: [
-                { model: Video },
-            ],
+            include: [{ model: Video }],
             transaction: t,
         });
-    
+
         if (items.length > 0) {
             const ItemDeletedDatas = [];
             const newItemDeleteLogs = [];
@@ -139,7 +181,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 const orders = await Orders.findAll({
                     where: {
                         item_id: item.id,
-                        status: { [Op.notIn]: ["cancelled", "returned"] },
+                        status: { [Op.notIn]: ['cancelled', 'returned'] },
                     },
                     include: [
                         {
@@ -166,57 +208,75 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     const deleteOrder = [];
 
                     for (const order of orders) {
-                        await order.update({
-                            status: "cancelled",
-                        }, { transaction: t });
+                        await order.update(
+                            {
+                                status: 'cancelled',
+                            },
+                            { transaction: t },
+                        );
 
-                        await order.Delivery.update({
-                            cancel: true,
-                        }, { transaction: t });
+                        await order.Delivery.update(
+                            {
+                                cancel: true,
+                            },
+                            { transaction: t },
+                        );
 
-                        await Cancel.upsert({
-                            orders_id: order.id,
-                            cancel_reason: "商品削除",
-                            return_amount: order.total_amount,
-                            item_count: order.item_count,
-                            cancel_flag: true,
-                            cancel_fee_return_id: 2,
-                        }, { transaction: t });
+                        await Cancel.upsert(
+                            {
+                                orders_id: order.id,
+                                cancel_reason: '商品削除',
+                                return_amount: order.total_amount,
+                                item_count: order.item_count,
+                                cancel_flag: true,
+                                cancel_fee_return_id: 2,
+                            },
+                            { transaction: t },
+                        );
 
                         const buyer = await User.findByPk(order.buyer_user_id, {
-                            include: [
-                                { model: BankAccount },
-                            ],
+                            include: [{ model: BankAccount }],
                         });
 
                         const buyerHasAccount = !!buyer.BankAccount;
 
-                        await Notification.create({
-                            read_user_id: buyer.id,
-                            message_image: item.first_image_url,
-                            message: `[重要] 取引中の商品「${item.name}」は利用規約違反により削除され、取引はキャンセル・返金となりました。` +
-                                `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
-                                `${buyerHasAccount ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。" : ""}`,
-                        }, { transaction: t });
-                        
-                        const transferId = crypto.randomBytes(11).toString("hex");
-                                            
-                        await Transfer.create({
-                            all_money: order.total_amount,
-                            handling_charge: 0,
-                            trans_money: order.total_amount,
-                            trans_reason_id: 2,
-                            trans_schedule_date: twoWeeksLater,
-                            user_id: buyer.id,
-                            transfer_id: transferId,
-                        }, { transaction: t });
+                        await Notification.create(
+                            {
+                                read_user_id: buyer.id,
+                                message_image: item.first_image_url,
+                                message:
+                                    `[重要] 取引中の商品「${item.name}」は利用規約違反により削除され、取引はキャンセル・返金となりました。` +
+                                    `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
+                                    `${
+                                        buyerHasAccount
+                                            ? '口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。'
+                                            : ''
+                                    }`,
+                            },
+                            { transaction: t },
+                        );
+
+                        const transferId = crypto.randomBytes(11).toString('hex');
+
+                        await Transfer.create(
+                            {
+                                all_money: order.total_amount,
+                                handling_charge: 0,
+                                trans_money: order.total_amount,
+                                trans_reason_id: 2,
+                                trans_schedule_date: twoWeeksLater,
+                                user_id: buyer.id,
+                                transfer_id: transferId,
+                            },
+                            { transaction: t },
+                        );
 
                         deleteOrder.push({
                             orders_id: order.id,
                             delivery_id: order.Delivery.id,
-                            cancel_reason: "出品者削除",
-                            refund_status: "未返金",
-                            refund_method: "口座振込",
+                            cancel_reason: '出品者削除',
+                            refund_status: '未返金',
+                            refund_method: '口座振込',
                             refund_amount: order.total_amount,
                             deleted_by: adminId,
                         });
@@ -230,8 +290,8 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 let newImages = [];
                 if (item.image_url && item.image_url.length > 0) {
                     newImages = await Promise.all(
-                        item.image_url.map((url: string) => moveToGlacier(url, currentUserId))
-                    )
+                        item.image_url.map((url: string) => moveToGlacier(url, currentUserId)),
+                    );
                 }
 
                 let newVideoUrl = null;
@@ -258,7 +318,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     thumbnail_url: newThumbnailUrl,
                     video_title: item.Video ? item.Video.title : null,
                     video_summary: item.Video ? item.Video.summary : null,
-                    delete_reason: "強制削除、ユーザー削除",
+                    delete_reason: '強制削除、ユーザー削除',
                     deleted_by: adminId,
                 });
 
@@ -266,7 +326,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     item_id: item.id,
                     delete_user_id: adminId,
                     delete_by_admin: true,
-                    delete_reason: "強制削除、ユーザー削除",
+                    delete_reason: '強制削除、ユーザー削除',
                 });
             }
 
@@ -275,35 +335,37 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
 
             await items.destroy({ transaction: t });
         }
-    
+
         const dummyPassword = `deleted${currentUserId}`;
         const hashedDummy = await bcrypt.hash(dummyPassword, 10);
-    
-        await user.update({
-            user_name: '削除済みユーザー',
-            user_introduction: null,
-            profile_image: null,
-            penalty_points: 0,
-            early_seller: false,
-            honnin_verified: false,
-            email: `deleted-${currentUserId}@deleted.local`,
-            campaign_points: 0,
-            campaign_points_sum: 0,
-            password: hashedDummy,
-            points: 0,
-            uriagekin: 0,
-            star_amount: 0,
-            star_average: 0,
-            gender_id: null,
-            birthday: null,
-            phone_number: null,
-            honnin_verify_request: false,
-            email_verified: false,
-        }, { transaction: t });
+
+        await user.update(
+            {
+                user_name: '削除済みユーザー',
+                user_introduction: null,
+                profile_image: null,
+                penalty_points: 0,
+                early_seller: false,
+                honnin_verified: false,
+                email: `deleted-${currentUserId}@deleted.local`,
+                campaign_points: 0,
+                campaign_points_sum: 0,
+                password: hashedDummy,
+                points: 0,
+                uriagekin: 0,
+                star_amount: 0,
+                star_average: 0,
+                gender_id: null,
+                birthday: null,
+                phone_number: null,
+                honnin_verify_request: false,
+                email_verified: false,
+            },
+            { transaction: t },
+        );
 
         await t.commit();
         return { success: true };
-
     } catch (err) {
         await t.rollback();
         throw err;

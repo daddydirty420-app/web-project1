@@ -1,5 +1,5 @@
-import { Transaction } from "sequelize";
-import { Name } from "../../models/index.js";
+import { Transaction } from 'sequelize';
+import { Name } from '../../models/index.js';
 
 export type UserIdParams = {
     userId: number;

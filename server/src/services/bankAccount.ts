@@ -1,5 +1,5 @@
-import { BankAccount } from "../models/index.js";
-import { Transaction } from "sequelize";
+import { BankAccount } from '../models/index.js';
+import { Transaction } from 'sequelize';
 
 type CreateBankParams = {
     data: {

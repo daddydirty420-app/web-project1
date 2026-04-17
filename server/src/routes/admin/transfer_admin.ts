@@ -1,179 +1,200 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Transfer, TransReasonOption, User, BankAccount, AccountTypeOption } from "../../models/index.js";
+import { Router } from 'express';
+import type { NextFunction, Request, Response } from 'express-serve-static-core';
+import { authenticateToken, isAdmin } from '../../middleware/index.js';
+import { Transfer, TransReasonOption, User, BankAccount, AccountTypeOption } from '../../models/index.js';
 
 const router = Router();
 
-router.get('/180', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish'],
-            where: {
-                trans_finish: false,
-                trans_reason_id: 3,
-            },
-            order: [['createdAt', 'ASC']],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'email'],
+router.get(
+    '/180',
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ['id', 'trans_money', 'trans_finish'],
+                where: {
+                    trans_finish: false,
+                    trans_reason_id: 3,
                 },
-                { model: TransReasonOption },
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        { model: AccountTypeOption },
-                    ],
-                },
-            ],
-        });
+                order: [['createdAt', 'ASC']],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'user_name', 'email'],
+                    },
+                    { model: TransReasonOption },
+                    {
+                        model: BankAccount,
+                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        include: [{ model: AccountTypeOption }],
+                    },
+                ],
+            });
 
-        res.json({ dataList });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.json({ dataList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
-router.get('/archive', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish', 'trans_at'],
-            where: { trans_finish: true },
-            order: [['trans_date', 'DESC']],
-            limit: 100,
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'email'],
-                },
-                { model: TransReasonOption },
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        { model: AccountTypeOption },
-                    ],
-                },
-            ],
-        });
+router.get(
+    '/archive',
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ['id', 'trans_money', 'trans_finish', 'trans_at'],
+                where: { trans_finish: true },
+                order: [['trans_date', 'DESC']],
+                limit: 100,
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'user_name', 'email'],
+                    },
+                    { model: TransReasonOption },
+                    {
+                        model: BankAccount,
+                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        include: [{ model: AccountTypeOption }],
+                    },
+                ],
+            });
 
-        res.json(dataList);
-    } catch (err) {
-        next(err);
-    }
-});
+            res.json(dataList);
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
-router.get('/auto', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish'],
-            where: {
-                trans_finish: false,
-                trans_reason_id: 4
-            },
-            order: [['createdAt', 'ASC']],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'email']
+router.get(
+    '/auto',
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ['id', 'trans_money', 'trans_finish'],
+                where: {
+                    trans_finish: false,
+                    trans_reason_id: 4,
                 },
-                {
-                    model: TransReasonOption,
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
-        });
+                order: [['createdAt', 'ASC']],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'user_name', 'email'],
+                    },
+                    {
+                        model: TransReasonOption,
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: BankAccount,
+                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        include: [
+                            {
+                                model: AccountTypeOption,
+                                attributes: ['id', 'name'],
+                            },
+                        ],
+                    },
+                ],
+            });
 
-        res.json({ dataList });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.json({ dataList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
-router.get('/cancel', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
-            where: {
-                trans_finish: false,
-                trans_reason_id: 2
-            },
-            order: [['createdAt', 'ASC']],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'email']
+router.get(
+    '/cancel',
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
+                where: {
+                    trans_finish: false,
+                    trans_reason_id: 2,
                 },
-                {
-                    model: TransReasonOption,
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
-        });
+                order: [['createdAt', 'ASC']],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'user_name', 'email'],
+                    },
+                    {
+                        model: TransReasonOption,
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: BankAccount,
+                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        include: [
+                            {
+                                model: AccountTypeOption,
+                                attributes: ['id', 'name'],
+                            },
+                        ],
+                    },
+                ],
+            });
 
-        res.json({ dataList });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.json({ dataList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
-router.get('/normal', authenticateToken, isAdmin, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
-            where: {
-                trans_finish: false,
-                trans_reason_id: 1
-            },
-            order: [['createdAt', 'ASC']],
-            include: [
-                {
-                    model: User,
-                    attributes: ['id', 'user_name', 'email']
+router.get(
+    '/normal',
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ['id', 'trans_money', 'trans_finish', 'createdAt'],
+                where: {
+                    trans_finish: false,
+                    trans_reason_id: 1,
                 },
-                {
-                    model: TransReasonOption,
-                    attributes: ['id', 'name']
-                },
-                {
-                    model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
-                    include: [
-                        {
-                            model: AccountTypeOption,
-                            attributes: ['id', 'name']
-                        }
-                    ]
-                }
-            ]
-        });
+                order: [['createdAt', 'ASC']],
+                include: [
+                    {
+                        model: User,
+                        attributes: ['id', 'user_name', 'email'],
+                    },
+                    {
+                        model: TransReasonOption,
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: BankAccount,
+                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        include: [
+                            {
+                                model: AccountTypeOption,
+                                attributes: ['id', 'name'],
+                            },
+                        ],
+                    },
+                ],
+            });
 
-        res.json({ dataList });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.json({ dataList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

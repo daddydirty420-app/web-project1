@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class TransReasonOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 TransReasonOption.init(
     {
@@ -21,11 +21,11 @@ TransReasonOption.init(
     },
     {
         sequelize,
-        modelName: "TransReasonOption",
-        tableName: "trans_reason_option",
+        modelName: 'TransReasonOption',
+        tableName: 'trans_reason_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default TransReasonOption;

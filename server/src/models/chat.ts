@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import Orders from "./orders.js";
+import Orders from './orders.js';
 
 export class Chat extends Model {
     declare id: number;
@@ -15,7 +15,7 @@ export class Chat extends Model {
 
     static associate() {
         Chat.belongsTo(Orders, {
-            foreignKey: "orders_id",
+            foreignKey: 'orders_id',
         });
     }
 
@@ -40,11 +40,11 @@ Chat.init(
     },
     {
         sequelize,
-        modelName: "Chat",
-        tableName: "chat",
+        modelName: 'Chat',
+        tableName: 'chat',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default Chat;

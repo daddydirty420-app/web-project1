@@ -11,5 +11,5 @@ export class AppError extends Error {
 
         // prototype修正（TSで継承使うときの定番）
         Object.setPrototypeOf(this, AppError.prototype);
-    };
-};
+    }
+}

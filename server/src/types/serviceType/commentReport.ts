@@ -8,8 +8,8 @@ export type OptionIdParams = {
 
 export type CreateCommentReportParams = {
     data: {
-        comment_id: number,
-        report_user_id: number,
-        option_id: number,
+        comment_id: number;
+        report_user_id: number;
+        option_id: number;
     };
 };

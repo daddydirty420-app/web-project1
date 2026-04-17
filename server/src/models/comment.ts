@@ -1,10 +1,10 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import Item from "./item.js";
-import User from "./user.js";
-import CommentLike from "./comment_like.js";
-import CommentReport from "./comment_report.js";
+import Item from './item.js';
+import User from './user.js';
+import CommentLike from './comment_like.js';
+import CommentReport from './comment_report.js';
 
 export class Comment extends Model {
     declare id: number;
@@ -20,19 +20,19 @@ export class Comment extends Model {
 
     static associate() {
         Comment.belongsTo(Item, {
-            foreignKey: "item_id",
+            foreignKey: 'item_id',
         });
         Comment.belongsTo(Comment, {
-            foreignKey: "parent_comment_id",
+            foreignKey: 'parent_comment_id',
         });
         Comment.belongsTo(User, {
-            foreignKey: "user_id",
+            foreignKey: 'user_id',
         });
         Comment.hasMany(CommentLike, {
-            foreignKey: "comment_id",
+            foreignKey: 'comment_id',
         });
         Comment.hasMany(CommentReport, {
-            foreignKey: "comment_id",
+            foreignKey: 'comment_id',
         });
     }
 
@@ -86,11 +86,11 @@ Comment.init(
     },
     {
         sequelize,
-        modelName: "Comment",
-        tableName: "comment",
+        modelName: 'Comment',
+        tableName: 'comment',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default Comment;

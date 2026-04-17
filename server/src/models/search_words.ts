@@ -1,5 +1,5 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
 export class SearchWords extends Model {
     declare id: number;
@@ -7,7 +7,7 @@ export class SearchWords extends Model {
     declare count: number;
     declare createdAt: Date;
     declare updatedAt: Date;
-};
+}
 
 SearchWords.init(
     {
@@ -29,11 +29,11 @@ SearchWords.init(
     },
     {
         sequelize,
-        modelName: "SearchWords",
-        tableName: "search_words",
+        modelName: 'SearchWords',
+        tableName: 'search_words',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default SearchWords;

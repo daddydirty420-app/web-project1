@@ -1,8 +1,8 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import { ReferenceCode } from "../models/index.js";
-import { outputReferenceCodeUseCase } from "../usecases/referenceCode/output.js";
+import { Router } from 'express';
+import type { NextFunction, Request, Response } from 'express-serve-static-core';
+import { authenticateToken } from '../middleware/index.js';
+import { ReferenceCode } from '../models/index.js';
+import { outputReferenceCodeUseCase } from '../usecases/referenceCode/output.js';
 
 const router = Router();
 

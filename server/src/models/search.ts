@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class Search extends Model {
     declare id: number;
@@ -13,7 +13,7 @@ export class Search extends Model {
 
     static associate() {
         Search.belongsTo(User, {
-            foreignKey: "user_id",
+            foreignKey: 'user_id',
         });
     }
 
@@ -36,11 +36,11 @@ Search.init(
     },
     {
         sequelize,
-        modelName: "Search",
-        tableName: "search",
+        modelName: 'Search',
+        tableName: 'search',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default Search;

@@ -1,5 +1,5 @@
-import { FollowType } from "../../types/serviceType/follow.js";
-import { getFollowings, getFollowList } from "../../services/follow.js";
+import { FollowType } from '../../types/serviceType/follow.js';
+import { getFollowings, getFollowList } from '../../services/follow.js';
 
 type Params = {
     currentUserId: number | null;
@@ -9,26 +9,24 @@ type Params = {
 };
 
 export const getFollowUserListUseCase = async ({ currentUserId, pageUserId, type, keyword }: Params) => {
-
-    const myFollow = (currentUserId === pageUserId) && (type === "follow");
+    const myFollow = currentUserId === pageUserId && type === 'follow';
 
     // フォロー・フォロワーのリスト
     const followList = await getFollowList({ pageUserId, type, keyword });
 
-    const as = type === "follow" ? "FollowerUser" : "FollowUser";
+    const as = type === 'follow' ? 'FollowerUser' : 'FollowUser';
 
     // 自分がフォローしているかどうか（is_following）を追加
     let finalFollowList = null;
 
     if (currentUserId !== null && followList.length > 0 && !myFollow) {
-        const targetUserIds = followList.map(user => user[as].id);
+        const targetUserIds = followList.map((user) => user[as].id);
 
         const followings = await getFollowings({ currentUserId, targetUserIds });
 
-        const followingUserIdSet = new Set(followings.map(f => f.follower_user_id));
+        const followingUserIdSet = new Set(followings.map((f) => f.follower_user_id));
 
-        finalFollowList = followList.map(
-            (item) => {
+        finalFollowList = followList.map((item) => {
             const plainItem = item.toJSON();
             const targetId = plainItem[as]?.id;
             plainItem[as].is_following = followingUserIdSet.has(targetId);
@@ -38,7 +36,7 @@ export const getFollowUserListUseCase = async ({ currentUserId, pageUserId, type
 
     const source = finalFollowList ?? followList;
 
-    const userList = source.map(item => {
+    const userList = source.map((item) => {
         const plain = item.toJSON ? item.toJSON() : item;
         return plain[as];
     });

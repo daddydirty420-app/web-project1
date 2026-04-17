@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class ItemReportOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 ItemReportOption.init(
     {
@@ -21,11 +21,11 @@ ItemReportOption.init(
     },
     {
         sequelize,
-        modelName: "ItemReportOption",
-        tableName: "item_report_option",
+        modelName: 'ItemReportOption',
+        tableName: 'item_report_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default ItemReportOption;

@@ -1,9 +1,9 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import Item from "./item.js";
-import User from "./user.js";
-import ItemReportOption from "./item_report_option.js";
+import Item from './item.js';
+import User from './user.js';
+import ItemReportOption from './item_report_option.js';
 
 export class ItemReport extends Model {
     declare id: number;
@@ -15,13 +15,13 @@ export class ItemReport extends Model {
 
     static associate() {
         ItemReport.belongsTo(Item, {
-            foreignKey: "item_id",
+            foreignKey: 'item_id',
         });
         ItemReport.belongsTo(User, {
-            foreignKey: "report_user_id",
+            foreignKey: 'report_user_id',
         });
         ItemReport.belongsTo(ItemReportOption, {
-            foreignKey: "option_id",
+            foreignKey: 'option_id',
         });
     }
 
@@ -55,11 +55,11 @@ ItemReport.init(
     },
     {
         sequelize,
-        modelName: "ItemReport",
-        tableName: "item_report",
+        modelName: 'ItemReport',
+        tableName: 'item_report',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default ItemReport;

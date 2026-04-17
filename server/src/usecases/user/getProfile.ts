@@ -1,7 +1,7 @@
-import { Op } from "sequelize";
-import { AppError } from "../../errors.js";
-import { getProfileUser } from "../../services/users.js";
-import { getProfileVideosWithCount } from "../../services/items/index.js";
+import { Op } from 'sequelize';
+import { AppError } from '../../errors.js';
+import { getProfileUser } from '../../services/users.js';
+import { getProfileVideosWithCount } from '../../services/items/index.js';
 
 type Params = {
     userId: number;
@@ -10,17 +10,16 @@ type Params = {
 };
 
 export const getProfileUseCase = async ({ userId, page, limit }: Params) => {
-
     // user取得
     const user = await getProfileUser({ userId });
 
-    if (!user) throw new AppError("USER_NOT_FOUND", 404);
+    if (!user) throw new AppError('USER_NOT_FOUND', 404);
 
     const hasShop = !!user.ShopInfo;
 
     // 商品リスト取得
     const where: any = {
-        status: { [Op.in]: ["active", "soldout"] },
+        status: { [Op.in]: ['active', 'soldout'] },
         seller_id: userId,
     };
 

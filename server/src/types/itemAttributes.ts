@@ -1,44 +1,36 @@
 export type BodyCategory =
-    | "top"
-    | "bottom"
-    | "outer"
-    | "onepiece"
-    | "footwear"
-    | "headwear"
-    | "accessory"
-    | "bag"
-    | "underwear"
-    | "setup"
-    | "other";
+    | 'top'
+    | 'bottom'
+    | 'outer'
+    | 'onepiece'
+    | 'footwear'
+    | 'headwear'
+    | 'accessory'
+    | 'bag'
+    | 'underwear'
+    | 'setup'
+    | 'other';
 
 export type LifeStyleCategory =
-    | "casual"
-    | "formal"
-    | "business"
-    | "active"
-    | "roomwear"
-    | "event"
-    | "traditional"
-    | "school"
-    | "other";
+    | 'casual'
+    | 'formal'
+    | 'business'
+    | 'active'
+    | 'roomwear'
+    | 'event'
+    | 'traditional'
+    | 'school'
+    | 'other';
 
-export type Layer =
-    | "inner"
-    | "middle"
-    | "outer"
-    | "shell";
+export type Layer = 'inner' | 'middle' | 'outer' | 'shell';
 
-export type Fit =
-    | "slim"
-    | "regular"
-    | "wide"
-    | "oversized";
+export type Fit = 'slim' | 'regular' | 'wide' | 'oversized';
 
 export type ItemAttributes = {
     inventory?: {
-        initial: number,
-        current: number,
-        low_stock_ratio: number,
+        initial: number;
+        current: number;
+        low_stock_ratio: number;
     }; // 在庫
 
     colorVariants?: Array<{
@@ -50,7 +42,7 @@ export type ItemAttributes = {
             current: number;
             low_stock_ratio: number;
         };
-        
+
         sizes?: Array<{
             size: string;
             inventory: {

@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
-import Delivery from "./delivery.js";
+import User from './user.js';
+import Delivery from './delivery.js';
 
 export class ItemDeleted extends Model {
     declare id: number;
@@ -23,14 +23,14 @@ export class ItemDeleted extends Model {
 
     static associate() {
         ItemDeleted.belongsTo(User, {
-            foreignKey: "seller_id",
-            as: "Seller",
+            foreignKey: 'seller_id',
+            as: 'Seller',
         });
         ItemDeleted.belongsTo(User, {
-            foreignKey: "deleted_by",
-            as: "DeletedBy",
+            foreignKey: 'deleted_by',
+            as: 'DeletedBy',
         });
-    };
+    }
 
     static associations: {
         User: Association<ItemDeleted, User>;
@@ -71,8 +71,8 @@ ItemDeleted.init(
                     if (value && value.length > 10) {
                         throw new Error('画像は最大10枚までです。');
                     }
-                }
-            }
+                },
+            },
         },
         video_url: DataTypes.TEXT,
         thumbnail_url: DataTypes.TEXT,
@@ -89,11 +89,11 @@ ItemDeleted.init(
     },
     {
         sequelize,
-        modelName: "ItemDeleted",
-        tableName: "item_deleted",
+        modelName: 'ItemDeleted',
+        tableName: 'item_deleted',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default ItemDeleted;

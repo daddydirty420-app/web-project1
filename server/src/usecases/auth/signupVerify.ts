@@ -1,13 +1,13 @@
-import sequelize from "../../db.js";
-import { AppError } from "../../errors.js";
-import { createAddress } from "../../services/address.js";
-import { createBank } from "../../services/bankAccount.js";
-import { createIdCard } from "../../services/idCard.js";
-import { createName } from "../../services/name.js";
-import { createRefreshToken } from "../../services/refreshTokens.js";
-import { destroyToken, getTokenVerificationOne } from "../../services/tokenSignupVerificationCode.js";
-import { emailVerifyUser, getUser } from "../../services/users.js";
-import { generateAccessToken, generateRefreshToken } from "../../utils/jwtHelper.js";
+import sequelize from '../../db.js';
+import { AppError } from '../../errors.js';
+import { createAddress } from '../../services/address.js';
+import { createBank } from '../../services/bankAccount.js';
+import { createIdCard } from '../../services/idCard.js';
+import { createName } from '../../services/name.js';
+import { createRefreshToken } from '../../services/refreshTokens.js';
+import { destroyToken, getTokenVerificationOne } from '../../services/tokenSignupVerificationCode.js';
+import { emailVerifyUser, getUser } from '../../services/users.js';
+import { generateAccessToken, generateRefreshToken } from '../../utils/jwtHelper.js';
 
 type Params = {
     verificationCode: string;
@@ -18,9 +18,9 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Para
     // 認証コード照合
     const tokenRecord = await getTokenVerificationOne({ verificationCode });
 
-    if (!tokenRecord) throw new AppError("TOKEN_NOT_FOUND", 404);
+    if (!tokenRecord) throw new AppError('TOKEN_NOT_FOUND', 404);
     if (new Date() > new Date(tokenRecord.reissue_token_expires)) {
-        throw new AppError("EXPIRED_TOKEN", 410);
+        throw new AppError('EXPIRED_TOKEN', 410);
     }
 
     // user取得
@@ -28,19 +28,19 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Para
 
     if (!user) {
         destroyToken({ tokenRecord }).catch((err) => {
-            console.error("service tokenSignuVerificationCode destroyToken error:", err);
+            console.error('service tokenSignuVerificationCode destroyToken error:', err);
         });
 
-        throw new AppError("USER_NOT_FOUND", 404);
+        throw new AppError('USER_NOT_FOUND', 404);
     }
-    
+
     // アクセストークン発行
     const newAccessToken = generateAccessToken(user);
     const newRefreshToken = generateRefreshToken(user, rememberMe);
 
     const expiresAt = rememberMe
-    ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-    : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+        ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
 
     const userId = user.id;
 
@@ -93,7 +93,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Para
     });
 
     destroyToken({ tokenRecord }).catch((err) => {
-        console.error("service tokenSignuVerificationCode destroyToken error:", err);
+        console.error('service tokenSignuVerificationCode destroyToken error:', err);
     });
 
     return {
@@ -102,6 +102,6 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Para
         userName: user.user_name,
         admin: user.admin,
         accessToken: newAccessToken,
-        refreshToken: newRefreshToken
+        refreshToken: newRefreshToken,
     };
 };

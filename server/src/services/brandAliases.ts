@@ -1,7 +1,7 @@
-import { Op } from "sequelize";
-import { BrandAliases, Brands } from "../models/index.js";
-import { GetAllAliasesParams, NameNormalizedParams, NormalizedParams } from "../types/serviceType/brandAliases.js";
-import sequelize from "../db.js";
+import { Op } from 'sequelize';
+import { BrandAliases, Brands } from '../models/index.js';
+import { GetAllAliasesParams, NameNormalizedParams, NormalizedParams } from '../types/serviceType/brandAliases.js';
+import sequelize from '../db.js';
 
 export const getAliasOne = ({ normalized }: NormalizedParams) => {
     return BrandAliases.findOne({
@@ -9,7 +9,7 @@ export const getAliasOne = ({ normalized }: NormalizedParams) => {
         include: [
             {
                 model: Brands,
-                as: "brand",
+                as: 'brand',
             },
         ],
     });
@@ -34,13 +34,13 @@ export const getAllAliases = ({ keyword, directLength }: GetAllAliasesParams) =>
         include: [
             {
                 model: Brands,
-                as: "brand",
+                as: 'brand',
                 required: true,
             },
         ],
-        order: [[sequelize.fn("length", sequelize.col("BrandAliases.name")), "ASC"]],
+        order: [[sequelize.fn('length', sequelize.col('BrandAliases.name')), 'ASC']],
         limit: 15 - directLength,
-    })
+    });
 };
 
 export const createAliases = async ({ inputName, normalized }: NameNormalizedParams) => {

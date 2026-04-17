@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class RefreshTokens extends Model {
     declare id: number;
@@ -13,14 +13,14 @@ export class RefreshTokens extends Model {
 
     static associate() {
         RefreshTokens.belongsTo(User, {
-            foreignKey: "user_id",
+            foreignKey: 'user_id',
         });
-    };
+    }
 
-    static associations: { 
+    static associations: {
         User: Association<RefreshTokens, User>;
-     };
-};
+    };
+}
 
 RefreshTokens.init(
     {
@@ -37,17 +37,17 @@ RefreshTokens.init(
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         expires_at: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
         },
     },
     {
         sequelize,
-        modelName: "RefreshTokens",
-        tableName: "refresh_tokens",
+        modelName: 'RefreshTokens',
+        tableName: 'refresh_tokens',
         freezeTableName: true,
         timestamps: true,
     },

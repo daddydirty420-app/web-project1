@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db.js';
 
 export class ItemBuyerReportOption extends Model {
     declare id: number;
     declare name: string;
-};
+}
 
 ItemBuyerReportOption.init(
     {
@@ -21,11 +21,11 @@ ItemBuyerReportOption.init(
     },
     {
         sequelize,
-        modelName: "ItemBuyerReportOption",
-        tableName: "item_buyer_report_option",
+        modelName: 'ItemBuyerReportOption',
+        tableName: 'item_buyer_report_option',
         freezeTableName: true,
         timestamps: false,
-    }
+    },
 );
 
 export default ItemBuyerReportOption;

@@ -1,5 +1,5 @@
-import { Transaction } from "sequelize";
-import { Comment } from "../../models/index.js";
+import { Transaction } from 'sequelize';
+import { Comment } from '../../models/index.js';
 
 export type CommentIdParams = {
     commentId: number;
@@ -21,7 +21,7 @@ export type UpdateReportScoreParams = {
     data: {
         report_score: number;
     };
-    transaction?: Transaction,
+    transaction?: Transaction;
 };
 
 export type CreateCommentParams = {
@@ -32,7 +32,7 @@ export type CreateCommentParams = {
         user_id: number;
         parent_comment_id?: number;
         pin?: boolean;
-    },
+    };
 };
 
 export type DestroyParams = {

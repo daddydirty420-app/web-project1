@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class UriagekinHistory extends Model {
     declare id: number;
@@ -13,7 +13,7 @@ export class UriagekinHistory extends Model {
 
     static associate() {
         UriagekinHistory.belongsTo(User, {
-            foreignKey: "user_id",
+            foreignKey: 'user_id',
         });
     }
 
@@ -33,7 +33,7 @@ UriagekinHistory.init(
         uriagekin: DataTypes.INTEGER,
         used_uriagekin: {
             type: DataTypes.INTEGER,
-            defaultValue: 0
+            defaultValue: 0,
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -42,11 +42,11 @@ UriagekinHistory.init(
     },
     {
         sequelize,
-        modelName: "UriagekinHistory",
-        tableName: "uriagekin_history",
+        modelName: 'UriagekinHistory',
+        tableName: 'uriagekin_history',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default UriagekinHistory;

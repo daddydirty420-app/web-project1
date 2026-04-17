@@ -1,5 +1,5 @@
-import { Op } from "sequelize";
-import { getUserItemsStatusList } from "../../../../services/items/index.js";
+import { Op } from 'sequelize';
+import { getUserItemsStatusList } from '../../../../services/items/index.js';
 
 type Params = {
     page: number;
@@ -13,7 +13,7 @@ export const getDeletedItemsUseCase = async ({ page, userId, keyword }: Params) 
 
     const where: any = {
         seller_id: userId,
-        status: "deleted",
+        status: 'deleted',
     };
 
     if (keyword) {

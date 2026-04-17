@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from "sequelize";
-import sequelize from "../db.js";
+import { Model, DataTypes, Association } from 'sequelize';
+import sequelize from '../db.js';
 
-import User from "./user.js";
+import User from './user.js';
 
 export class TokenSignupVerification extends Model {
     declare id: number;
@@ -57,11 +57,11 @@ TokenSignupVerification.init(
     },
     {
         sequelize,
-        modelName: "TokenSignupVerification",
-        tableName: "token_signup_verification",
+        modelName: 'TokenSignupVerification',
+        tableName: 'token_signup_verification',
         freezeTableName: true,
         timestamps: true,
-    }
+    },
 );
 
 export default TokenSignupVerification;

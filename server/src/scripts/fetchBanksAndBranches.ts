@@ -1,11 +1,11 @@
-import { Banks, Branches } from "../models/index.js";
-import sequelize from "../db.js";
+import { Banks, Branches } from '../models/index.js';
+import sequelize from '../db.js';
 
 (async () => {
     let t;
     try {
         await sequelize.authenticate();
-        console.log("DB接続成功！");
+        console.log('DB接続成功！');
 
         t = await sequelize.transaction();
 
@@ -23,7 +23,7 @@ import sequelize from "../db.js";
         console.log(`銀行データ${allBanks.length}件取得完了！`);
 
         await Banks.bulkCreate(
-            allBanks.map(bank => ({
+            allBanks.map((bank) => ({
                 code: bank.code,
                 name: bank.name,
                 kana: bank.kana,
@@ -31,12 +31,12 @@ import sequelize from "../db.js";
                 normalize: bank.normalize,
             })),
             {
-                updateOnDuplicate: ["name", "kana", "hira", "normalize"],
+                updateOnDuplicate: ['name', 'kana', 'hira', 'normalize'],
                 transaction: t,
-            }
+            },
         );
 
-        console.log("銀行データ登録完了！");
+        console.log('銀行データ登録完了！');
 
         for (const bank of allBanks) {
             let allBranches: any[] = [];
@@ -52,7 +52,7 @@ import sequelize from "../db.js";
 
             if (allBranches.length > 0) {
                 await Branches.bulkCreate(
-                    allBranches.map(branch => ({
+                    allBranches.map((branch) => ({
                         bank_code: bank.code,
                         code: branch.code,
                         name: branch.name,
@@ -61,9 +61,9 @@ import sequelize from "../db.js";
                         normalize: branch.normalize,
                     })),
                     {
-                        updateOnDuplicate: ["name", "kana", "hira", "normalize"],
+                        updateOnDuplicate: ['name', 'kana', 'hira', 'normalize'],
                         transaction: t,
-                    }
+                    },
                 );
             }
 
@@ -71,11 +71,11 @@ import sequelize from "../db.js";
         }
         await t.commit();
 
-        console.log("全銀行、支店データ登録完了");
+        console.log('全銀行、支店データ登録完了');
         process.exit(0);
     } catch (err) {
         if (t) await t.rollback();
-        console.error("銀行データ登録エラー：", err);
+        console.error('銀行データ登録エラー：', err);
         process.exit(1);
     }
 })();

@@ -1,6 +1,6 @@
-import { destroyCart, getCartOne } from "../../services/cart.js";
-import { AppError } from "../../errors.js";
-import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
+import { destroyCart, getCartOne } from '../../services/cart.js';
+import { AppError } from '../../errors.js';
+import { patchSortNumberDecreaseUseCase } from '../item/sortNumber/sortNumber.js';
 
 type Params = {
     itemId: number;
@@ -8,12 +8,11 @@ type Params = {
 };
 
 export const deleteCartUseCase = async ({ itemId, userId }: Params) => {
-
     // cart取得
     const cart = await getCartOne({ itemId, userId });
 
     if (!cart) {
-        throw new AppError("CART_NOT_FOUND", 404);
+        throw new AppError('CART_NOT_FOUND', 404);
     }
 
     // cart削除
@@ -24,6 +23,6 @@ export const deleteCartUseCase = async ({ itemId, userId }: Params) => {
     const buzzNumber = 300;
 
     patchSortNumberDecreaseUseCase({ itemId, number, buzzNumber }).catch((err) => {
-        console.error("patchSortNumberDecrease error:", err);
+        console.error('patchSortNumberDecrease error:', err);
     });
 };
