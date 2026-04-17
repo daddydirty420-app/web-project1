@@ -3,7 +3,7 @@ import {
     CreateShippingCopyUploadParams,
     CreateShippingParams,
     UpdateShippingParams,
-} from '../types/serviceType/itemShippingProfile';
+} from '../types/serviceType/itemShippingProfile.js';
 
 export const createShipping = async ({ itemId, transaction }: CreateShippingParams) => {
     await ItemShippingProfile.create(

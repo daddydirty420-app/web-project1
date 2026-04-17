@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { AuthUser } from './authMiddleware';
+import { AuthUser } from './authMiddleware.js';
 
 dotenv.config();
 

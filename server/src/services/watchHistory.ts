@@ -1,5 +1,5 @@
 import { Item, Sale, Video, WatchHistory } from '../models/index.js';
-import { ItemUserParams, UserWatchListParams, WatchHistoryParams } from '../types/serviceType/watchHistory';
+import { ItemUserParams, UserWatchListParams, WatchHistoryParams } from '../types/serviceType/watchHistory.js';
 
 export const getWatchHistoryOne = async ({ itemId, userId }: ItemUserParams) => {
     return WatchHistory.findOne({
