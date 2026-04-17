@@ -2,6 +2,7 @@ import { Container } from '@/components';
 import { VerifyForm } from './verify-form';
 import { Resend } from './resend';
 import styles from '@/styles/login.module.css';
+import { Suspense } from 'react';
 
 export default function Page() {
     return (
@@ -10,7 +11,9 @@ export default function Page() {
 
             <section className={styles.card}>
                 <VerifyForm />
-                <Resend />
+                <Suspense fallback={<p>読み込み中...</p>}>
+                    <Resend />
+                </Suspense>
             </section>
         </Container>
     );
