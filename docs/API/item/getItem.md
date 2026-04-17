@@ -3,13 +3,16 @@
 ## GET /items/:id/highlight — 商品情報ハイライト取得
 
 ### リクエスト
+
 - params:
-  - itemId
+    - itemId
 
 ### ビジネスロジック
+
 - 商品情報を取得
 
 ### レスポンス
+
 - item
 
 ---
@@ -17,10 +20,12 @@
 ## GET /items/:id/form-data — 出品ページ商品情報取得
 
 ### リクエスト
+
 - params:
-  - itemId
+    - itemId
 
 ### ビジネスロジック
+
 - 商品情報を取得
 - カテゴリー一覧取得
 - 商品の状態マスタ取得
@@ -31,6 +36,7 @@
 - ショップユーザーか判定
 
 ### レスポンス
+
 - item
 - category
 - allCondetion

@@ -8,10 +8,10 @@ This project is an EC platform where product listing requires video upload.
 
 Main goals:
 
-* Multi-category EC platform
-* Video-based product listings
-* Designed for future mobile app expansion
-* Designed for AI / ML integration
+- Multi-category EC platform
+- Video-based product listings
+- Designed for future mobile app expansion
+- Designed for AI / ML integration
 
 ---
 
@@ -21,16 +21,16 @@ Main goals:
 
 Framework
 
-* Next.js (App Router)
-* TypeScript
+- Next.js (App Router)
+- TypeScript
 
 Responsibilities
 
-* UI rendering
-* API communication
-* Video upload
-* Product browsing
-* Purchase flow
+- UI rendering
+- API communication
+- Video upload
+- Product browsing
+- Purchase flow
 
 Directory structure
 
@@ -50,17 +50,17 @@ Directory structure
 
 Framework
 
-* Node.js
-* Express
-* Sequelize ORM
+- Node.js
+- Express
+- Sequelize ORM
 
 Responsibilities
 
-* API server
-* Business logic
-* Payment processing
-* Order management
-* Delivery management
+- API server
+- Business logic
+- Payment processing
+- Order management
+- Delivery management
 
 Directory structure
 
@@ -81,11 +81,11 @@ Directory structure
 
 Database
 
-* PostgreSQL
+- PostgreSQL
 
 ORM
 
-* Sequelize
+- Sequelize
 
 Main tables
 
@@ -97,6 +97,7 @@ Delivery
 Relationships
 
 User
+
 - item
 - cart
 - commentLike
@@ -110,6 +111,7 @@ User
 - watchHistory
 
 Item
+
 - user
 - category
 - brand
@@ -122,6 +124,7 @@ Item
 - comment
 
 Order
+
 - item
 - seller
 - buyer
@@ -130,6 +133,7 @@ Order
 - cancel
 
 Delivery
+
 - order
 - address
 - name
@@ -159,9 +163,9 @@ returned
 
 Planned improvements
 
-* multi-catogory UI
-* mobile app
-* ML recommendation system
-* automatic moderation
-* payment gateway integration
-* shipping API integration
+- multi-catogory UI
+- mobile app
+- ML recommendation system
+- automatic moderation
+- payment gateway integration
+- shipping API integration

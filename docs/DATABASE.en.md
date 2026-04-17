@@ -15,28 +15,28 @@ This system is a single-item purchase e-commerce platform where each item is ass
 ## ER Diagram (Simplified)
 
 - User
-   |- ShopInfo
-   |- Address
-   |- Name
-   |- BankAccount
-   |- PointsHistory
-   |- UriagekinHistory
-   |- Item
-   |   |- Video
-   |   |- Comment
-   |   |- Sale
-   |   |- ItemReport
-   |----- Order
-            |- Delivery
-            |     |- Address
-            |     |- Name
-            |- Cancel
-            |- Chat
-            |- PaymentMethodOption
-            |- User (Seller)
-            |- User (Buyer)
-            |- PurchaseSnapshot
-            |- status (enum)
+  |- ShopInfo
+  |- Address
+  |- Name
+  |- BankAccount
+  |- PointsHistory
+  |- UriagekinHistory
+  |- Item
+  | |- Video
+  | |- Comment
+  | |- Sale
+  | |- ItemReport
+  |----- Order
+  |- Delivery
+  | |- Address
+  | |- Name
+  |- Cancel
+  |- Chat
+  |- PaymentMethodOption
+  |- User (Seller)
+  |- User (Buyer)
+  |- PurchaseSnapshot
+  |- status (enum)
 
 ---
 

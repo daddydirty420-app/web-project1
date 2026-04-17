@@ -18,25 +18,25 @@
 - トークンはAuthorizationヘッダーで送信
 
 - 例:
-  - Authorization: Bearer <token>
+    - Authorization: Bearer <token>
 
 ---
 
 ## 主要エンドポイント
 
-* 商品ページ取得
+- 商品ページ取得
 
 GET /items/:id
 
-* ログイン
+- ログイン
 
 POST /auth/login
 
-* 会員登録
+- 会員登録
 
 POST /auth/signup → POST /auth/signup-verify
 
-* 出品
+- 出品
 
 POST /items → PUT /items/:id?mode=main →　PATCH /items/:id/publish
 

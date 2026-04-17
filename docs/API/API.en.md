@@ -24,19 +24,19 @@ Authorization: Bearer <token>
 
 ## Core Endpoints
 
-* GET item-page
+- GET item-page
 
 GET /item-page/:id
 
-* login
+- login
 
 POST /auth/login
 
-* signup
+- signup
 
 POST /auth/signup → POST /auth/signup-verify
 
-* item upload
+- item upload
 
 POST /item-upload/new-item-create → PATCH /item-upload-main/:id
 

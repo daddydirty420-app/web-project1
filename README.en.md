@@ -21,16 +21,15 @@ This project is currently under development.
 
 2. **Mobile-first single-screen product page**
 
-   On mobile devices, the key elements of the product page —  
-   **video, product information, and purchase actions — are designed to fit within a single screen view.**
+    On mobile devices, the key elements of the product page —  
+    **video, product information, and purchase actions — are designed to fit within a single screen view.**
 
-   This allows users to understand the product and access purchase actions without scrolling.
+    This allows users to understand the product and access purchase actions without scrolling.
 
 3. **Dual UI product listing**
    Product lists can switch between:
-
-   * **Video thumbnail view**
-   * **Product card view**
+    - **Video thumbnail view**
+    - **Product card view**
 
 4. **Scalable multi-category architecture**
    Currently focused on apparel, but designed with an architecture that can expand to multiple product categories.
@@ -55,18 +54,18 @@ fit within a single screen.
 
 Frontend
 
-* Next.js (App Router)
-* TypeScript
+- Next.js (App Router)
+- TypeScript
 
 Backend
 
-* Node.js
-* Express
-* Sequelize ORM
+- Node.js
+- Express
+- Sequelize ORM
 
 Database
 
-* PostgreSQL
+- PostgreSQL
 
 ---
 
@@ -111,38 +110,38 @@ npm run dev
 
 # Current Features
 
-* Product page
-* Product upload
-* User authentication
-* User profile
-* Product list
-* Follow system
-* Comment system
-* Shop registration
-* Bank transfer related features
-* Contact system
-* User guide
-* Terms and policy pages
+- Product page
+- Product upload
+- User authentication
+- User profile
+- Product list
+- Follow system
+- Comment system
+- Shop registration
+- Bank transfer related features
+- Contact system
+- User guide
+- Terms and policy pages
 
 ---
 
 # Upcoming Implementation
 
-* Order / payment / transaction system
-* Notifications and email system
-* Top page and landing page
-* Admin tools
+- Order / payment / transaction system
+- Notifications and email system
+- Top page and landing page
+- Admin tools
 
 ---
 
 # Future Plans
 
-* Mobile application
-* Recommendation system
-* Machine learning integration
-* Multi-category expansion
-* Shipping API integration
-* Payment gateway integration
+- Mobile application
+- Recommendation system
+- Machine learning integration
+- Multi-category expansion
+- Shipping API integration
+- Payment gateway integration
 
 ---
 

@@ -8,10 +8,10 @@
 
 主な目的：
 
-* マルチカテゴリ対応のECプラットフォーム
-* 動画ベースの商品出品
-* 将来的なモバイルアプリ展開を前提とした設計
-* AI / 機械学習との統合を見据えた設計
+- マルチカテゴリ対応のECプラットフォーム
+- 動画ベースの商品出品
+- 将来的なモバイルアプリ展開を前提とした設計
+- AI / 機械学習との統合を見据えた設計
 
 ---
 
@@ -21,16 +21,16 @@
 
 フレームワーク
 
-* Next.js（App Router）
-* TypeScript
+- Next.js（App Router）
+- TypeScript
 
 役割
 
-* UIの描画
-* API通信
-* 動画アップロード
-* 商品閲覧
-* 購入フローの実装
+- UIの描画
+- API通信
+- 動画アップロード
+- 商品閲覧
+- 購入フローの実装
 
 ディレクトリ構成
 
@@ -50,17 +50,17 @@
 
 フレームワーク
 
-* Node.js
-* Express
-* Sequelize ORM
+- Node.js
+- Express
+- Sequelize ORM
 
 役割
 
-* APIサーバー
-* ビジネスロジックの実装
-* 決済処理
-* 注文管理
-* 配送管理
+- APIサーバー
+- ビジネスロジックの実装
+- 決済処理
+- 注文管理
+- 配送管理
 
 ディレクトリ構成
 
@@ -81,11 +81,11 @@
 
 データベース
 
-* PostgreSQL
+- PostgreSQL
 
 ORM
 
-* Sequelize
+- Sequelize
 
 主要テーブル
 
@@ -98,45 +98,45 @@ Delivery
 
 User
 
-* item
-* cart
-* commentLike
-* follow
-* itemLike
-* notification
-* shopInfo
-* address
-* bankAccount
-* name
-* watchHistory
+- item
+- cart
+- commentLike
+- follow
+- itemLike
+- notification
+- shopInfo
+- address
+- bankAccount
+- name
+- watchHistory
 
 Item
 
-* user
-* category
-* brand
-* cart
-* itemLike
-* video
-* sale
-* itemReport
-* itemShippingProfile
-* comment
+- user
+- category
+- brand
+- cart
+- itemLike
+- video
+- sale
+- itemReport
+- itemShippingProfile
+- comment
 
 Order
 
-* item
-* seller
-* buyer
-* delivery
-* chat
-* cancel
+- item
+- seller
+- buyer
+- delivery
+- chat
+- cancel
 
 Delivery
 
-* order
-* address
-* name
+- order
+- address
+- name
 
 ---
 
@@ -163,9 +163,9 @@ returned
 
 予定している改善
 
-* マルチカテゴリ対応
-* モバイルアプリ対応
-* レコメンド機能（機械学習）
-* 自動モデレーション
-* 決済ゲートウェイ統合
-* 配送API統合
+- マルチカテゴリ対応
+- モバイルアプリ対応
+- レコメンド機能（機械学習）
+- 自動モデレーション
+- 決済ゲートウェイ統合
+- 配送API統合

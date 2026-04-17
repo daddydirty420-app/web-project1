@@ -5,9 +5,9 @@
 ### リクエスト
 
 - body:
-  - email
-  - password
-  - rememberMe
+    - email
+    - password
+    - rememberMe
 
 ### ビジネスロジック
 
@@ -35,8 +35,8 @@
 ### リクエスト
 
 - body:
-  - email
-  - password
+    - email
+    - password
 
 ### ビジネスロジック
 
@@ -62,7 +62,7 @@
 ### リクエスト
 
 - body:
-  - token
+    - token
 
 ### ビジネスロジック
 
@@ -83,8 +83,8 @@
 ### リクエスト
 
 - body:
-  - verificationCode
-  - rememberMe
+    - verificationCode
+    - rememberMe
 
 ### ビジネスロジック
 
