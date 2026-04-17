@@ -78,7 +78,7 @@
 
 ---
 
-## POST /auth/signup-verify —サインアップコード認証
+## POST /auth/signup-verify — サインアップコード認証
 
 ### リクエスト
 
@@ -145,5 +145,27 @@
 - パスワードハッシュ化
 - パスワード更新
 - トークン削除（非同期）
+
+---
+
+## POST /auth/refresh-token — リフレッシュトークン
+
+### リクエスト
+
+- body:
+    - refreshToken
+
+### ビジネスロジック
+
+- トークン照合
+- デコード
+- ユーザー情報取得
+- アクセストークン生成
+
+### レスポンス
+
+- accessToken
+- refreshToken
+- exp
 
 ---

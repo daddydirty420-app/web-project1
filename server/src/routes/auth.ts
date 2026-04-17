@@ -166,10 +166,7 @@ router.post("/refresh-token", async (req: Request, res: Response, next: NextFunc
     }
 });
 
-router.get("/check-token", authenticateToken, (req: Request, res: Response, next: NextFunction): void => {
-    res.status(200).json({ message: "トークン有効", user: req.user });
-});
-
+// POST /auth/rehash-password
 router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const email = req.body.email?.trim();
     const plainPassword = req.body.password?.trim();
@@ -187,6 +184,17 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 
     res.json({ message: "パスワードをハッシュ化して保存しました！" });
 });
+
+router.post(
+    "/check-token",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        res.status(200).json({
+            valid: true,
+            userId: req.user!.id,
+        });
+    },
+);
 
 router.patch(
     "/email-edit",
@@ -276,23 +284,16 @@ router.patch("/new-email-change", async (req: Request, res: Response, next: Next
     }
 });
 
-router.post(
-    "/check-token",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        res.status(200).json({
-            valid: true,
-            userId: req.user!.id,
-        });
-    },
-);
+router.get("/check-token", authenticateToken, (req: Request, res: Response, next: NextFunction): void => {
+    res.status(200).json({ message: "トークン有効", user: req.user });
+});
 
 router.get("/check-cookies", (req: Request, res: Response, next: NextFunction): void => {
-    res.json(req.cookies);
+    res.status(200).json(req.cookies);
 });
 
 router.get("/status", authenticateToken, (req: Request, res: Response, next: NextFunction) => {
-    res.json({ loggedIn: true, user: req.user });
+    res.status(200).json({ loggedIn: true, user: req.user });
 });
 
 export default router;
