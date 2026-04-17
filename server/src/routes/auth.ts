@@ -2,29 +2,20 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import jwt from "jsonwebtoken";
 import { Op } from "sequelize";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { RefreshTokens, ShopInfo, TokenEmailChange, User } from "../models/index.js";
+import { ShopInfo, TokenEmailChange, User } from "../models/index.js";
 import { loginUseCase } from "../usecases/auth/login.js";
+import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
 import { requestPasswordResetUseCase } from "../usecases/auth/requestPasswordReset.js";
 import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificationCode.js";
 import { resetPWUseCase } from "../usecases/auth/resetPW.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
-import { generateAccessToken } from "../utils/jwtHelper.js";
 
 const router = Router();
-
-type DecodedAccessToken = {
-    id: number | string;
-    email: string;
-    type: "access";
-    iat?: number;
-    exp?: number;
-};
 
 // POST /auth/login
 router.post("/login", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -156,50 +147,19 @@ router.post("/reset-pw", async (req: Request, res: Response, next: NextFunction)
     }
 });
 
+// POST /auth/refresh-token
 router.post("/refresh-token", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
-    if (!refreshToken) {
-        res.status(400).json({ message: "refreshTokenがありません。" });
-        return;
-    }
+    const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
+
+    if (!refreshTokenQuery) throw new AppError("INVALID_REFRESH_TOKEN", 401);
 
     try {
-        const storedToken = await RefreshTokens.findOne({
-            where: { token: refreshToken },
-        });
-        if (!storedToken) {
-            res.status(401).json({ message: "無効なトークンです。" });
-            return;
-        }
-
-        if (new Date() > storedToken.expires_at) {
-            res.status(401).json({ message: "トークンの有効期限が切れています。" });
-            return;
-        }
-
-        let decoded: any;
-        try {
-            decoded = jwt.verify(refreshToken, process.env.NEXTAUTH_SECRET!);
-        } catch (err) {
-            await storedToken.destroy();
-            res.status(401).json({ message: "無効なトークンです。" });
-            return;
-        }
-
-        const user = await User.findByPk(decoded.id);
-        if (!user) {
-            res.status(404).json({ message: "ユーザーが見つかりません。" });
-            return;
-        }
-
-        const newAccessToken = generateAccessToken(user);
-
-        const newDecoded = jwt.decode(newAccessToken) as DecodedAccessToken | null;
+        const { accessToken, refreshToken, exp } = await refreshTokenUseCase({ refreshToken: refreshTokenQuery });
 
         res.status(200).json({
-            accessToken: newAccessToken,
-            refreshToken: storedToken.token,
-            exp: newDecoded?.exp,
+            accessToken,
+            refreshToken,
+            exp,
         });
     } catch (err) {
         next(err);
@@ -207,7 +167,7 @@ router.post("/refresh-token", async (req: Request, res: Response, next: NextFunc
 });
 
 router.get("/check-token", authenticateToken, (req: Request, res: Response, next: NextFunction): void => {
-    res.json({ message: "トークン有効", user: req.user });
+    res.status(200).json({ message: "トークン有効", user: req.user });
 });
 
 router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {

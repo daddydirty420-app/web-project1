@@ -1,17 +1,15 @@
-import { Transaction } from "sequelize";
 import { RefreshTokens } from "../models/index.js";
+import {
+    CreateRefreshTokenParams,
+    RefreshTokenParams,
+    StoredTokenParams,
+    UserIdParams,
+} from "../types/serviceType/refreshToken.js";
 
-type UserIdParams = {
-    userId: number;
-};
-
-type CreateRefreshTokenParams = {
-    data: {
-        token: string;
-        user_id: number;
-        expires_at: Date;
-    };
-    transaction?: Transaction;
+export const getRefreshTokenOne = ({ refreshToken }: RefreshTokenParams) => {
+    return RefreshTokens.findOne({
+        where: { token: refreshToken },
+    });
 };
 
 export const createRefreshToken = async ({ data, transaction }: CreateRefreshTokenParams) => {
@@ -22,4 +20,8 @@ export const destroyRefreshToken = async ({ userId }: UserIdParams) => {
     await RefreshTokens.destroy({
         where: { user_id: userId },
     });
+};
+
+export const destroyStoredRefreshToken = async ({ storedToken }: StoredTokenParams) => {
+    await storedToken.destroy();
 };
