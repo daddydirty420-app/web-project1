@@ -1,4 +1,4 @@
-import styles from "./ss.module.css";
+import styles from './ss.module.css';
 
 type Props = {
     nextClick: () => void;
@@ -8,19 +8,11 @@ type Props = {
 export const ButtonDiv = ({ nextClick, backClick }: Props) => {
     return (
         <nav className={styles.buttonNav}>
-            <button
-            type="button"
-            onClick={backClick}
-            className={styles.backButton}
-            >
+            <button type="button" onClick={backClick} className={styles.backButton}>
                 戻る
             </button>
 
-            <button
-            type="button"
-            onClick={nextClick}
-            className={styles.nextButton}
-            >
+            <button type="button" onClick={nextClick} className={styles.nextButton}>
                 次へ
             </button>
         </nav>

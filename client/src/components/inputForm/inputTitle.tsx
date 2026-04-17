@@ -1,4 +1,4 @@
-import styles from "./imputForm.module.css";
+import styles from './imputForm.module.css';
 
 type Props = {
     title: string;

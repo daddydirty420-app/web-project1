@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import { useState } from "react";
-import styles from "./button.module.css";
-import { User } from "./type";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useState } from 'react';
+import styles from './button.module.css';
+import { User } from './type';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     user: User;
@@ -19,9 +19,9 @@ export const FollowButton = ({ user }: Props) => {
 
         try {
             const accessToken = await getAccessToken();
-            
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -33,7 +33,7 @@ export const FollowButton = ({ user }: Props) => {
             });
         } catch (err) {
             setIsFollowing(!next);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -45,9 +45,9 @@ export const FollowButton = ({ user }: Props) => {
 
         try {
             const accessToken = await getAccessToken();
-            
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -59,34 +59,34 @@ export const FollowButton = ({ user }: Props) => {
             });
         } catch (err) {
             setIsFollowing(!next);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     return (
         <>
-        {!isFollowing && (
-            <button
-            type="button"
-            name="follow-button"
-            className={`${styles.followButton} ${styles.false}`}
-            onClick={add}
-            >
-                フォロー
-            </button>
-        )}
+            {!isFollowing && (
+                <button
+                    type="button"
+                    name="follow-button"
+                    className={`${styles.followButton} ${styles.false}`}
+                    onClick={add}
+                >
+                    フォロー
+                </button>
+            )}
 
-        {isFollowing && (
-            <button
-            type="button"
-            name="follow-button"
-            className={`${styles.followButton} ${styles.true}`}
-            onClick={remove}
-            >
-                フォロー中
-            </button>
-        )}
+            {isFollowing && (
+                <button
+                    type="button"
+                    name="follow-button"
+                    className={`${styles.followButton} ${styles.true}`}
+                    onClick={remove}
+                >
+                    フォロー中
+                </button>
+            )}
         </>
     );
 };

@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 import styles from '@/styles/tokutei.module.css';
 
 type TokuteiSectionProps = {
-    header: string,
-    children: ReactNode,
+    header: string;
+    children: ReactNode;
 };
 
 export const TokuteiSection = ({ header, children }: TokuteiSectionProps) => {
@@ -13,4 +13,4 @@ export const TokuteiSection = ({ header, children }: TokuteiSectionProps) => {
             <div className={styles.content}>{children}</div>
         </section>
     );
-}
+};

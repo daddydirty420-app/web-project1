@@ -1,12 +1,12 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import styles from './header.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import { SearchInputPC } from "./searchInputPC";
-import { SearchInputMobile } from "./searchInputMobile";
+import { SearchInputPC } from './searchInputPC';
+import { SearchInputMobile } from './searchInputMobile';
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
@@ -16,25 +16,31 @@ export default async function Header() {
     return (
         <header className={styles.header}>
             <section className={styles.headerConteiner}>
-                <Link href='/' className={styles.logo}>
+                <Link href="/" className={styles.logo}>
                     <div className={styles.logoArea}>
                         <p className={styles.logoText}>LOGO</p>
                     </div>
                 </Link>
-                
+
                 <SearchInputPC loggedIn={loggedIn} />
                 <SearchInputMobile loggedIn={loggedIn} />
 
                 <nav className={styles.menuNav}>
                     {!loggedIn && (
-                        <div className='flex mr-[1rem]'>
-                            <p className={styles.menuP}><Link href='/login'>ログイン</Link></p>
-                            <p className={styles.menuP}><Link href='/signup'>会員登録</Link></p>
+                        <div className="flex mr-[1rem]">
+                            <p className={styles.menuP}>
+                                <Link href="/login">ログイン</Link>
+                            </p>
+                            <p className={styles.menuP}>
+                                <Link href="/signup">会員登録</Link>
+                            </p>
                         </div>
                     )}
 
                     {loggedIn && (
-                        <p className={clsx('block mr-[1rem]', styles.menuP)}><Link href='/my-page'>マイページ</Link></p>
+                        <p className={clsx('block mr-[1rem]', styles.menuP)}>
+                            <Link href="/my-page">マイページ</Link>
+                        </p>
                     )}
 
                     <Link href={loggedIn ? '/upload/before' : '/login'} className={styles.uploadDiv}>

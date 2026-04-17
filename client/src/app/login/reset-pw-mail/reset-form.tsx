@@ -21,7 +21,7 @@ export const ResetForm = () => {
             alert(data.message);
         } catch (error) {
             console.error(error);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
         }
     };
 
@@ -31,20 +31,19 @@ export const ResetForm = () => {
         <form onSubmit={handleSubmit}>
             <p className={styles.formText}>メールアドレス</p>
             <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete='email'
-            placeholder='****@****.***'
-            className={styles.input}
-            required
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
+                placeholder="****@****.***"
+                className={styles.input}
+                required
             />
 
-            <button
-            type="submit"
-            className={styles.mainB}
-            disabled={isDisabled}>メールを送信する</button>
+            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+                メールを送信する
+            </button>
         </form>
     );
-}
+};

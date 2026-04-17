@@ -1,5 +1,5 @@
-import { Back, Container } from "@/components";
-import { ReactNode } from "react";
+import { Back, Container } from '@/components';
+import { ReactNode } from 'react';
 
 type Props = {
     children: ReactNode;

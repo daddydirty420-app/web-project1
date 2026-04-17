@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import styles from './list.module.css';
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 type ListCheckProps = {
-    children: ReactNode
+    children: ReactNode;
 };
 
 export const ListCheck = ({ children }: ListCheckProps) => {
@@ -14,4 +14,4 @@ export const ListCheck = ({ children }: ListCheckProps) => {
             <div className={styles.listText}>{children}</div>
         </li>
     );
-}
+};

@@ -29,7 +29,7 @@
     color: var(--gray-50);
     cursor: pointer;
     border-radius: 50%;
-    transition: 
+    transition:
         background-color 0.15s ease,
         color 0.15s ease,
         transform 0.1s ease;

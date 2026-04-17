@@ -40,7 +40,9 @@
     color: rgba(255, 255, 255, 0.85);
     z-index: 10000;
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .sliderModal {

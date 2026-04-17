@@ -17,7 +17,9 @@
 
     pointer-events: none;
     opacity: 0;
-    transition: transform 0.5s ease, opacity 0.4s ease;
+    transition:
+        transform 0.5s ease,
+        opacity 0.4s ease;
 }
 .wrapper.show {
     transform: translateX(-50%) translateY(0);

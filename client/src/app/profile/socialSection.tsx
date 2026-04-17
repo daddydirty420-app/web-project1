@@ -1,8 +1,8 @@
-import styles from "./profile.module.css";
-import { FollowSection } from "./followSection";
-import { StarSection } from "./starSection";
-import { ShopButton } from "./shopButton";
-import { Res } from "./profileTypes";
+import styles from './profile.module.css';
+import { FollowSection } from './followSection';
+import { StarSection } from './starSection';
+import { ShopButton } from './shopButton';
+import { Res } from './profileTypes';
 
 type Props = {
     data: Res;
@@ -17,9 +17,7 @@ export const SocialSection = ({ data, userId }: Props) => {
                 <StarSection user={data.user} userId={userId} />
             </div>
 
-            {data.hasShop && (
-                <ShopButton shopId={String(data.user.ShopInfo?.id)} />
-            )}
+            {data.hasShop && <ShopButton shopId={String(data.user.ShopInfo?.id)} />}
         </section>
     );
-}
+};

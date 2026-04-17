@@ -5,24 +5,24 @@ import { Metadata } from 'next';
 import { Content } from './content';
 
 export const metadata: Metadata = {
-    title: "プライバシーポリシー",
-    description: "プライバシーポリシーはこちら！",
+    title: 'プライバシーポリシー',
+    description: 'プライバシーポリシーはこちら！',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default function Page() {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Content />
-        </Container>
+            <Container header>
+                <Content />
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
-    )
+    );
 }

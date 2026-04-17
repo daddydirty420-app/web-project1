@@ -30,14 +30,14 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         const fetchData = async () => {
             try {
                 const accessToken = await getAccessToken();
-                
+
                 if (!accessToken) {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                     return;
                 }
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
-                    method: "GET",
+                    method: 'GET',
                     cache: 'no-store',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -56,7 +56,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             } catch (err) {
                 console.error(err);
             }
-        }
+        };
 
         fetchData();
     }, [userId, adminPage, router]);
@@ -64,9 +64,9 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
     const submitPenalty = async (addPenalty: number) => {
         try {
             const accessToken = await getAccessToken();
-                
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -84,13 +84,13 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             if (res.ok) {
                 setAddPenalty(0);
                 setPopup(false);
-                setData(prev => prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty }: prev);
+                setData((prev) => (prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty } : prev));
                 router.refresh();
             } else {
                 console.error(data.message);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -100,7 +100,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -119,11 +119,11 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             if (res.ok) {
                 setDeleteUriage(0);
                 setPopup(false);
-                setData(prev => prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage}: prev);
+                setData((prev) => (prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage } : prev));
                 router.refresh();
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -133,7 +133,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -155,104 +155,105 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 router.refresh();
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     return (
         <>
-        <div className='text-center'>
-            <p>ペナルティポイント：<span className='font-bold'>{data?.penalty_points}ポイント</span></p>
-            <button type='button' className={clsx('mt-4 mb-4', styles.adButton)} onClick={() => setPopup(true)}>売上金没収/削除</button>
-        </div>
-
-        {popup && (
-            <>
-            <div className={styles.overlay} onClick={() => setPopup(false)} />
-
-            <div className={styles.popup}>
-                <X
-                strokeWidth={1.5}
-                className={styles.x}
-                onClick={() => setPopup(false)} />
-                    
-                <div className={styles.inputDiv}>
-                    <p className={styles.inputTitle}>ペナルティポイント</p>
-                        
-                    <input
-                    type='number'
-                    name='addPenalty'
-                    value={addPenalty}
-                    onChange={(e) => setAddPenalty(Number(e.target.value))}
-                    placeholder='ペナルティポイント'
-                    className={styles.input}
-                    required
-                    />
-                        
-                    <button
-                    type='button'
-                    className={styles.popupButton}
-                    onClick={() => setAddPenalty(addPenalty)}
-                    >
-                        ペナルティ付与
-                    </button>
-                </div>
-
-                <div className={styles.inputDiv}>
-                    <p className={styles.inputTitle}>売上金没収</p>
-                        
-                    <input
-                    type='number'
-                    name='deleteUriage'
-                    value={deleteUriage}
-                    onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (data?.uriagekin !== undefined && value > data.uriagekin) {
-                            setDeleteUriage(data.uriagekin);
-                        } else {
-                            setDeleteUriage(value);
-                        }
-                    }}
-                    placeholder='没収金額'
-                    className={styles.input}
-                    required
-                    max={data?.uriagekin}
-                    />
-                        
-                    <button
-                    type='button'
-                    className={styles.popupButton}
-                    onClick={() => uriageDecrease(deleteUriage)}
-                    >
-                        売上金没収
-                    </button>
-                </div>
-
-                <div className={styles.inputDiv}>
-                    <p className={styles.inputTitle}>削除</p>
-
-                    <input
-                    type='text'
-                    name='deleteReason'
-                    value={deleteReason}
-                    onChange={(e) => setDeleteReason(e.target.value)}
-                    placeholder='削除理由'
-                    className={styles.input}
-                    required
-                    />
-
-                    <button
-                    type='button'
-                    className={styles.popupButton}
-                    onClick={() => deleteUser(deleteReason)}
-                    >
-                        削除する
-                    </button>
-                </div>
+            <div className="text-center">
+                <p>
+                    ペナルティポイント：<span className="font-bold">{data?.penalty_points}ポイント</span>
+                </p>
+                <button type="button" className={clsx('mt-4 mb-4', styles.adButton)} onClick={() => setPopup(true)}>
+                    売上金没収/削除
+                </button>
             </div>
-            </>
-        )}
+
+            {popup && (
+                <>
+                    <div className={styles.overlay} onClick={() => setPopup(false)} />
+
+                    <div className={styles.popup}>
+                        <X strokeWidth={1.5} className={styles.x} onClick={() => setPopup(false)} />
+
+                        <div className={styles.inputDiv}>
+                            <p className={styles.inputTitle}>ペナルティポイント</p>
+
+                            <input
+                                type="number"
+                                name="addPenalty"
+                                value={addPenalty}
+                                onChange={(e) => setAddPenalty(Number(e.target.value))}
+                                placeholder="ペナルティポイント"
+                                className={styles.input}
+                                required
+                            />
+
+                            <button
+                                type="button"
+                                className={styles.popupButton}
+                                onClick={() => setAddPenalty(addPenalty)}
+                            >
+                                ペナルティ付与
+                            </button>
+                        </div>
+
+                        <div className={styles.inputDiv}>
+                            <p className={styles.inputTitle}>売上金没収</p>
+
+                            <input
+                                type="number"
+                                name="deleteUriage"
+                                value={deleteUriage}
+                                onChange={(e) => {
+                                    const value = Number(e.target.value);
+                                    if (data?.uriagekin !== undefined && value > data.uriagekin) {
+                                        setDeleteUriage(data.uriagekin);
+                                    } else {
+                                        setDeleteUriage(value);
+                                    }
+                                }}
+                                placeholder="没収金額"
+                                className={styles.input}
+                                required
+                                max={data?.uriagekin}
+                            />
+
+                            <button
+                                type="button"
+                                className={styles.popupButton}
+                                onClick={() => uriageDecrease(deleteUriage)}
+                            >
+                                売上金没収
+                            </button>
+                        </div>
+
+                        <div className={styles.inputDiv}>
+                            <p className={styles.inputTitle}>削除</p>
+
+                            <input
+                                type="text"
+                                name="deleteReason"
+                                value={deleteReason}
+                                onChange={(e) => setDeleteReason(e.target.value)}
+                                placeholder="削除理由"
+                                className={styles.input}
+                                required
+                            />
+
+                            <button
+                                type="button"
+                                className={styles.popupButton}
+                                onClick={() => deleteUser(deleteReason)}
+                            >
+                                削除する
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </>
     );
-}
+};

@@ -3,8 +3,8 @@ import styles from './normal-link.module.css';
 import { ReactNode } from 'react';
 
 type NormalLinkProps = {
-    url: string,
-    children: ReactNode,
+    url: string;
+    children: ReactNode;
 };
 
 export const ChildrenLink = ({ children, url }: NormalLinkProps) => {
@@ -13,4 +13,4 @@ export const ChildrenLink = ({ children, url }: NormalLinkProps) => {
             <p>{children}</p>
         </Link>
     );
-}
+};

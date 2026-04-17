@@ -4,8 +4,8 @@ import styles from './styles/guide-link.module.css';
 import Link from 'next/link';
 
 type GuideLinkProps = {
-    heading: string,
-    url: string,
+    heading: string;
+    url: string;
 };
 
 export const GuideLink = ({ heading, url }: GuideLinkProps) => {
@@ -19,4 +19,4 @@ export const GuideLink = ({ heading, url }: GuideLinkProps) => {
             </h3>
         </div>
     );
-}
+};

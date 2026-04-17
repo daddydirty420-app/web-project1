@@ -5,24 +5,24 @@ import { Metadata } from 'next';
 import { Content } from './content';
 
 export const metadata: Metadata = {
-    title: "利用規約",
-    description: "利用規約はこちら！",
+    title: '利用規約',
+    description: '利用規約はこちら！',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default function TermsAndConditions() {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Content />
-        </Container>
+            <Container header>
+                <Content />
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
 }

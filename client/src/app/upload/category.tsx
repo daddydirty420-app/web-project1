@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { Categories } from "./types/type";
-import styles from "./upload.module.css";
-import toast from "react-hot-toast";
-import { InputTitle } from "@/components/inputForm";
+import { useEffect, useRef, useState } from 'react';
+import { Categories } from './types/type';
+import styles from './upload.module.css';
+import toast from 'react-hot-toast';
+import { InputTitle } from '@/components/inputForm';
 
 export type CategoryValue = {
     id: string | null;
@@ -17,17 +17,19 @@ type Props = {
     level1List: Categories[];
     value: CategoryValue;
     onChange: (v: CategoryValue) => void;
-    onConstraintChange: (c: {
-        allowed_gender: "men" | "women" | "unisex" | null;
-        allowed_age: "adult" | "kids" | "both" | null;
-    } | null) => void;
+    onConstraintChange: (
+        c: {
+            allowed_gender: 'men' | 'women' | 'unisex' | null;
+            allowed_age: 'adult' | 'kids' | 'both' | null;
+        } | null,
+    ) => void;
 };
 
 export const Category = ({ level1List, value, onChange, onConstraintChange }: Props) => {
     const [level2List, setLevel2List] = useState<Categories[]>([]);
     const [selectedLevel1, setSelectedLevel1] = useState<CategoryValue | null>(null);
-    const [displayLevel1, setDisplayLevel1] = useState("");
-    const [displayLevel2, setDisplayLevel2] = useState("");
+    const [displayLevel1, setDisplayLevel1] = useState('');
+    const [displayLevel2, setDisplayLevel2] = useState('');
     const [loading, setLoading] = useState(false);
     const [openLevel1, setOpenLevel1] = useState(false);
     const [openLevel2, setOpenLevel2] = useState(false);
@@ -40,7 +42,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         if (value.level === 1) {
             setSelectedLevel1(value);
             setDisplayLevel1(value.name);
-            setDisplayLevel2("");
+            setDisplayLevel2('');
 
             const cat = level1List.find((c) => c.id === value.id);
             if (cat) {
@@ -52,9 +54,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         }
 
         if (value.level === 2 && value.parent_id) {
-            const parent = level1List.find(
-                (cat) => Number(cat.id) === Number(value.parent_id)
-            );
+            const parent = level1List.find((cat) => Number(cat.id) === Number(value.parent_id));
 
             if (parent) {
                 const parentCategoryValue: CategoryValue = {
@@ -64,7 +64,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                     level: 1,
                 };
 
-                setDisplayLevel1(parent?.name ?? "");
+                setDisplayLevel1(parent?.name ?? '');
                 setSelectedLevel1(parentCategoryValue);
                 setDisplayLevel2(value.name);
 
@@ -82,7 +82,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
     const NONE_CATEGORY: CategoryValue = {
         id: null,
-        name: "選択しない",
+        name: '選択しない',
         parent_id: null,
         level: 2,
     };
@@ -95,7 +95,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
             id: cat.id,
             name: cat.name,
             parent_id: null,
-            level: 1
+            level: 1,
         });
 
         onConstraintChange({
@@ -104,7 +104,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         });
 
         setDisplayLevel1(cat.name);
-        setDisplayLevel2("");
+        setDisplayLevel2('');
         setOpenLevel1(false);
 
         const idNum = Number(cat.id);
@@ -118,28 +118,25 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${parentId}/level2`, {
-                cache: "no-store",
+                cache: 'no-store',
             });
 
             const data = await res.json();
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error("詳細カテゴリーの取得に失敗しました。");
+                toast.error('詳細カテゴリーの取得に失敗しました。');
                 setLoading(false);
                 return;
             }
 
             const category2 = data.category2;
 
-            setLevel2List([
-                ...category2,
-                NONE_CATEGORY
-            ]);
+            setLevel2List([...category2, NONE_CATEGORY]);
 
             setLoading(false);
         } catch (err) {
-            toast.error("詳細カテゴリーの取得に失敗しました。");
+            toast.error('詳細カテゴリーの取得に失敗しました。');
             console.error(err);
             setLoading(false);
         }
@@ -158,7 +155,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                 level: 1,
             });
 
-            setDisplayLevel2("選択しない");
+            setDisplayLevel2('選択しない');
             setOpenLevel2(false);
             return;
         }
@@ -182,30 +179,29 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
     return (
         <div className={styles.twoColumnWrapper}>
-
             {/* category1 */}
             <div className={styles.selectColumn}>
                 <InputTitle title="カテゴリー" hissu />
 
                 <input
-                type="text"
-                value={displayLevel1}
-                placeholder="カテゴリーを選択してください"
-                className={styles.input}
-                readOnly
-                required
-                onFocus={() => setOpenLevel1(true)}
-                onBlur={() => setOpenLevel1(false)}
+                    type="text"
+                    value={displayLevel1}
+                    placeholder="カテゴリーを選択してください"
+                    className={styles.input}
+                    readOnly
+                    required
+                    onFocus={() => setOpenLevel1(true)}
+                    onBlur={() => setOpenLevel1(false)}
                 />
 
                 {openLevel1 && (
                     <ul className={styles.selectUl}>
                         {level1List.map((cat) => (
                             <li
-                            key={cat.id}
-                            onMouseDown={() => handleLevel1Set(cat)}
-                            data-selected={displayLevel1 === cat.name}
-                            className={styles.selectLi}
+                                key={cat.id}
+                                onMouseDown={() => handleLevel1Set(cat)}
+                                data-selected={displayLevel1 === cat.name}
+                                className={styles.selectLi}
                             >
                                 {cat.name}
                                 <span className={styles.chevron}>›</span>
@@ -216,28 +212,28 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
             </div>
 
             {/* category2 */}
-            {displayLevel1 !== "" && (
+            {displayLevel1 !== '' && (
                 <div className={styles.selectColumn}>
                     <InputTitle title="詳細カテゴリー" />
 
                     <input
-                    type="text"
-                    value={displayLevel2}
-                    placeholder="カテゴリーを選択してください"
-                    className={styles.input}
-                    readOnly
-                    onFocus={() => setOpenLevel2(true)}
-                    onBlur={() => setOpenLevel2(false)}
+                        type="text"
+                        value={displayLevel2}
+                        placeholder="カテゴリーを選択してください"
+                        className={styles.input}
+                        readOnly
+                        onFocus={() => setOpenLevel2(true)}
+                        onBlur={() => setOpenLevel2(false)}
                     />
 
                     {!loading && openLevel2 && (
                         <ul className={styles.selectUl}>
                             {level2List.map((cat) => (
                                 <li
-                                key={cat.id}
-                                onMouseDown={() => handleLevel2Set(cat)}
-                                data-selected={displayLevel2 === cat.name}
-                                className={styles.selectLi}
+                                    key={cat.id}
+                                    onMouseDown={() => handleLevel2Set(cat)}
+                                    data-selected={displayLevel2 === cat.name}
+                                    className={styles.selectLi}
                                 >
                                     {cat.name}
                                 </li>
@@ -248,4 +244,4 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
             )}
         </div>
     );
-}
+};

@@ -6,13 +6,11 @@ type TermsListProps = {
     fontSize?: 'default' | 'small';
 };
 
-export const TermsList = ({ number, text, fontSize = "default" }: TermsListProps) => {
+export const TermsList = ({ number, text, fontSize = 'default' }: TermsListProps) => {
     return (
-        <div className={`${styles.listParent} ${
-            fontSize === "small" ? styles.small : ""
-        }`}>
+        <div className={`${styles.listParent} ${fontSize === 'small' ? styles.small : ''}`}>
             <span className={styles.listIndex}>{number}.</span>
-            <p className='ml-[0.5em]'>{text}</p>
+            <p className="ml-[0.5em]">{text}</p>
         </div>
     );
-}
+};

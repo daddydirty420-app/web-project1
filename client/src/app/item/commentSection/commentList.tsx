@@ -1,31 +1,31 @@
-"use client";
+'use client';
 
-import styles from "./comment.module.css";
-import { Comment, Item, User } from "../itemPageTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CommentText } from "./commentText";
-import { CommentDataDiv } from "./commentDataDiv";
-import { Like } from "./like";
-import { ReportFloat } from "./reportFloat";
-import { DeleteComment } from "./deleteComment";
-import { ProfileImage } from "./profileImage";
-import { useState } from "react";
-import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
-import { Pin } from "./pin";
-import { CommentForm } from "./commentForm";
-import { ReplyList } from "./replyList";
-import { KeyedMutator } from "swr";
+import styles from './comment.module.css';
+import { Comment, Item, User } from '../itemPageTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CommentText } from './commentText';
+import { CommentDataDiv } from './commentDataDiv';
+import { Like } from './like';
+import { ReportFloat } from './reportFloat';
+import { DeleteComment } from './deleteComment';
+import { ProfileImage } from './profileImage';
+import { useState } from 'react';
+import { faCommentDots } from '@fortawesome/free-regular-svg-icons';
+import { Pin } from './pin';
+import { CommentForm } from './commentForm';
+import { ReplyList } from './replyList';
+import { KeyedMutator } from 'swr';
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     comments: Comment[];
-    page: "normal" | "admin";
+    page: 'normal' | 'admin';
     loggedIn: boolean;
     item: Item;
     me: User | null;
     mutate: KeyedMutator<Comment[]>;
-}
+};
 
 export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, mutate }: Props) => {
     const [replyVisible, setReplyVisible] = useState<{ [key: string]: boolean }>({});
@@ -47,94 +47,102 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
     const replyMutate = (parentId: string) => (updater?: any, revalidate?: boolean) => {
         if (typeof updater === 'function') {
             // 返信　楽観的更新
-            setOptimisticReplies(prev => ({
+            setOptimisticReplies((prev) => ({
                 ...prev,
-                [parentId]: updater(prev[parentId] ?? [])
+                [parentId]: updater(prev[parentId] ?? []),
             }));
-        
+
             // replyCount + 1
-            mutate((current: Comment[] = []) =>
-                current.map(c =>
-                    String(c.id) === String(parentId)
-                        ? { ...c, replyCount: c.replyCount + 1 }
-                        : c
-                ), false
+            mutate(
+                (current: Comment[] = []) =>
+                    current.map((c) =>
+                        String(c.id) === String(parentId) ? { ...c, replyCount: c.replyCount + 1 } : c,
+                    ),
+                false,
             );
         } else {
-        // revalidate時はoptimisticクリア＋ReplyListの再フェッチをトリガー
-            setOptimisticReplies(prev => ({ ...prev, [parentId]: [] }));
-            setReplyRefreshTrigger(prev => ({ ...prev, [parentId]: (prev[parentId] ?? 0) + 1 }));
+            // revalidate時はoptimisticクリア＋ReplyListの再フェッチをトリガー
+            setOptimisticReplies((prev) => ({ ...prev, [parentId]: [] }));
+            setReplyRefreshTrigger((prev) => ({ ...prev, [parentId]: (prev[parentId] ?? 0) + 1 }));
         }
     };
 
     return (
         <>
-        <section className={styles.commentListWrapper}>
-            {comments?.map((comment) => {
-                if (!comment) return null;
-                const commentId = comment.id;
-                const isVisibleReply = replyVisible[commentId] ?? false;
-                const optimistic = isOptimistic(String(commentId));
+            <section className={styles.commentListWrapper}>
+                {comments?.map((comment) => {
+                    if (!comment) return null;
+                    const commentId = comment.id;
+                    const isVisibleReply = replyVisible[commentId] ?? false;
+                    const optimistic = isOptimistic(String(commentId));
 
-                return (
-                    <section className={styles.commentListSection} key={commentId}>
-                        <section className={styles.commentFlex}>
-                            <ProfileImage user={comment.User} />
-                            <div className={styles.commentMain}>
-                                {comment.pin && <Pin />}
+                    return (
+                        <section className={styles.commentListSection} key={commentId}>
+                            <section className={styles.commentFlex}>
+                                <ProfileImage user={comment.User} />
+                                <div className={styles.commentMain}>
+                                    {comment.pin && <Pin />}
 
-                                <CommentDataDiv comment={comment} />
-                                <CommentText comment={comment} page={page} />
+                                    <CommentDataDiv comment={comment} />
+                                    <CommentText comment={comment} page={page} />
 
-                                <div className={styles.commentEditDiv}>
-                                    {/* 仮コメントのときは返信ボタン・Good・Report・Delete非表示 */}
-                                    {!optimistic && (
-                                        <>
-                                        <div className={styles.replyDiv} onClick={() => toggleReplyVisible(commentId)}>
-                                            <FontAwesomeIcon icon={faCommentDots} className={styles.replyIcon} />
-                                            <p className={styles.replyCount}>{comment.replyCount.toLocaleString()}件の返信</p>
-                                        </div>
+                                    <div className={styles.commentEditDiv}>
+                                        {/* 仮コメントのときは返信ボタン・Good・Report・Delete非表示 */}
+                                        {!optimistic && (
+                                            <>
+                                                <div
+                                                    className={styles.replyDiv}
+                                                    onClick={() => toggleReplyVisible(commentId)}
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon={faCommentDots}
+                                                        className={styles.replyIcon}
+                                                    />
+                                                    <p className={styles.replyCount}>
+                                                        {comment.replyCount.toLocaleString()}件の返信
+                                                    </p>
+                                                </div>
 
-                                        <Like comment={comment} loggedIn={loggedIn} />
-                                        <ReportFloat comment={comment} page={page} />
+                                                <Like comment={comment} loggedIn={loggedIn} />
+                                                <ReportFloat comment={comment} page={page} />
 
-                                        {(comment.isMyComment || page === "admin") && (
-                                            <DeleteComment comment={comment} page={page} />
+                                                {(comment.isMyComment || page === 'admin') && (
+                                                    <DeleteComment comment={comment} page={page} />
+                                                )}
+                                            </>
                                         )}
-                                        </>
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
-
-                        {!optimistic && (
-                            <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
-                                {page === "normal" && (
-                                    <CommentForm
-                                    id={id}
-                                    sellerMe={sellerMe}
-                                    parentId={commentId}
-                                    loggedIn={loggedIn}
-                                    item={item}
-                                    me={me}
-                                    mutate={replyMutate(commentId)}
-                                    />
-                                )}
-
-                                <ReplyList
-                                parentId={commentId}
-                                page={page}
-                                loggedIn={loggedIn}
-                                sellerMe={sellerMe}
-                                optimisticComments={optimisticReplies[commentId] ?? []}
-                                refreshTrigger={replyRefreshTrigger[commentId] ?? 0}
-                                />
                             </section>
-                        )}
-                    </section>
-                );
-            })}
-        </section>
+
+                            {!optimistic && (
+                                <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ''}`}>
+                                    {page === 'normal' && (
+                                        <CommentForm
+                                            id={id}
+                                            sellerMe={sellerMe}
+                                            parentId={commentId}
+                                            loggedIn={loggedIn}
+                                            item={item}
+                                            me={me}
+                                            mutate={replyMutate(commentId)}
+                                        />
+                                    )}
+
+                                    <ReplyList
+                                        parentId={commentId}
+                                        page={page}
+                                        loggedIn={loggedIn}
+                                        sellerMe={sellerMe}
+                                        optimisticComments={optimisticReplies[commentId] ?? []}
+                                        refreshTrigger={replyRefreshTrigger[commentId] ?? 0}
+                                    />
+                                </section>
+                            )}
+                        </section>
+                    );
+                })}
+            </section>
         </>
     );
-}
+};

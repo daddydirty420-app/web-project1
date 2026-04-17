@@ -17,7 +17,9 @@
     border-radius: 12px;
     cursor: pointer;
     box-shadow: var(--shadow-mini);
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 .buyButton:hover {
     background-color: var(--action-hover);
@@ -82,7 +84,9 @@
     border-radius: 999px;
     box-shadow: var(--shadow-mini);
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 
 .floatCartDiv {

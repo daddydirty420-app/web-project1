@@ -9,7 +9,9 @@
     background: var(--action);
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 .restoreButton:hover {
     background-color: var(--action-hover);
@@ -53,7 +55,7 @@
     color: var(--gray-50);
     cursor: pointer;
     border-radius: 50%;
-    transition: 
+    transition:
         background-color 0.15s ease,
         color 0.15s ease,
         transform 0.1s ease;
@@ -99,7 +101,9 @@
     background-color: var(--action);
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 .popupButton:hover {
     background-color: var(--action-hover);

@@ -6,9 +6,5 @@ type TermsListDivProps = {
 };
 
 export const TermsListDiv = ({ children }: TermsListDivProps) => {
-    return (
-        <div className={styles.listDiv}>
-            {children}
-        </div>
-    );
-}
+    return <div className={styles.listDiv}>{children}</div>;
+};

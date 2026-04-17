@@ -1,6 +1,6 @@
-import { Container } from "@/components";
+import { Container } from '@/components';
 import { VerifyForm } from './verify-form';
-import { Resend } from "./resend";
+import { Resend } from './resend';
 import styles from '@/styles/login.module.css';
 
 export default function Page() {
@@ -14,4 +14,4 @@ export default function Page() {
             </section>
         </Container>
     );
-};
+}

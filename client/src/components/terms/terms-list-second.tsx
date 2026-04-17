@@ -9,7 +9,7 @@ export const TermsListSecond = ({ alfabet, text }: TermsListSecondProps) => {
     return (
         <div className={styles.listParent}>
             <span className={styles.listIndex}>{alfabet}.</span>
-            <p className='ml-[0.5em]'>{text}</p>
+            <p className="ml-[0.5em]">{text}</p>
         </div>
     );
-}
+};

@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import styles from "./header.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
-import clsx from "clsx";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { normalizeJapanese } from "@/lib/normalizeJapanese";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useEffect, useRef, useState } from 'react';
+import styles from './header.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { normalizeJapanese } from '@/lib/normalizeJapanese';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     loggedIn: boolean;
@@ -20,7 +20,7 @@ type SearchHistoryItem = {
 };
 
 export const SearchInputMobile = ({ loggedIn }: Props) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState('');
     const [isMobile, setIsMobile] = useState(true);
     const [searchMode, setSearchMode] = useState(false);
     const [searchHis, setSearchHis] = useState<string[]>([]);
@@ -33,8 +33,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
     useEffect(() => {
         const checkWidth = () => setIsMobile(window.innerWidth < 768);
         checkWidth();
-        window.addEventListener("resize", checkWidth);
-        return () => window.removeEventListener("resize", checkWidth);
+        window.addEventListener('resize', checkWidth);
+        return () => window.removeEventListener('resize', checkWidth);
     }, []);
 
     if (!isMobile) return null;
@@ -46,8 +46,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
             if (!accessToken) return;
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/history`, {
-                method: "GET",
-                cache: "no-store",
+                method: 'GET',
+                cache: 'no-store',
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
@@ -60,7 +60,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
             const dataList: string[] = (data.sortedData as SearchHistoryItem[]).map(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (item: any) => item.search_text
+                (item: any) => item.search_text,
             );
 
             setSearchHis(dataList);
@@ -74,11 +74,11 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
             setSuggestList([]);
             return;
         }
-        
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/suggest?keyword=${word}`, {
-                method: "GET",
-                cache: "no-store",
+                method: 'GET',
+                cache: 'no-store',
             });
 
             const data: { suggest: string[] } = await res.json();
@@ -134,8 +134,9 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
         const normIndex = nWord.indexOf(nQuery);
         if (normIndex === -1) return word;
 
-        const startMap = 
-        map.find((m) => m.normStart === normIndex || (m.normStart < normIndex && m.normEnd >= normIndex));
+        const startMap = map.find(
+            (m) => m.normStart === normIndex || (m.normStart < normIndex && m.normEnd >= normIndex),
+        );
         if (!startMap) return word;
 
         const startOrig = startMap.origIndex;
@@ -161,80 +162,84 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
     return (
         <>
-        {!searchMode && (
-            <FontAwesomeIcon
-            icon={faSearch}
-            className={clsx(styles.searchIcon, styles.activeIcon)}
-            onClick={() => {
-                setSearchMode(true);
-                if (loggedIn) {
-                    searchHistory();
-                }
-            }}
-            />
-        )}
-
-        {searchMode && (
-            <>
-            <div className={styles.searchOverlayMobile}>
-                <div className={styles.searchArea}>
-                    <input
-                    type="text"
-                    name="検索"
-                    placeholder="検索"
-                    className={styles.searchInputMobile}
-                    value={value}
-                    onChange={onChange}
-                    autoComplete="off"
-                    />
-                    <FontAwesomeIcon
-                    icon={faAngleLeft}
-                    className={styles.closeSearchAreaIcon}
-                    onClick={() => setSearchMode(false)}
-                    />
-                    <FontAwesomeIcon
-                    icon={faSearch} 
-                    className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ""}`}
+            {!searchMode && (
+                <FontAwesomeIcon
+                    icon={faSearch}
+                    className={clsx(styles.searchIcon, styles.activeIcon)}
                     onClick={() => {
-                        if (!value.trim()) return;
-                        router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                        setSearchMode(true);
+                        if (loggedIn) {
+                            searchHistory();
+                        }
                     }}
-                    />
-                </div>
+                />
+            )}
 
-                <div className={styles.suggestArea}>
-                    <div className={styles.suggestInner}>
-                        <p className={styles.categoryText}><Link href="/search/category">カテゴリー検索</Link></p>
-                        {suggestList.length === 0 && searchHis?.map((v, i) => (
-                            <div
-                            key={i}
-                            className={styles.suggestItem}
-                            onClick={() => {
-                                router.push(`/search?keyword=${encodeURIComponent(v)}`);
-                            }}
-                            >
-                                <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
-                                <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
-                            </div>
-                        ))}
+            {searchMode && (
+                <>
+                    <div className={styles.searchOverlayMobile}>
+                        <div className={styles.searchArea}>
+                            <input
+                                type="text"
+                                name="検索"
+                                placeholder="検索"
+                                className={styles.searchInputMobile}
+                                value={value}
+                                onChange={onChange}
+                                autoComplete="off"
+                            />
+                            <FontAwesomeIcon
+                                icon={faAngleLeft}
+                                className={styles.closeSearchAreaIcon}
+                                onClick={() => setSearchMode(false)}
+                            />
+                            <FontAwesomeIcon
+                                icon={faSearch}
+                                className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ''}`}
+                                onClick={() => {
+                                    if (!value.trim()) return;
+                                    router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                                }}
+                            />
+                        </div>
 
-                        {suggestList.length > 0 && suggestList?.map((v, i) => (
-                            <div
-                            key={i}
-                            className={styles.suggestItem}
-                            onClick={() => {
-                                router.push(`/search?keyword=${encodeURIComponent(v)}`);
-                            }}
-                            >
-                                <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
-                                <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
+                        <div className={styles.suggestArea}>
+                            <div className={styles.suggestInner}>
+                                <p className={styles.categoryText}>
+                                    <Link href="/search/category">カテゴリー検索</Link>
+                                </p>
+                                {suggestList.length === 0 &&
+                                    searchHis?.map((v, i) => (
+                                        <div
+                                            key={i}
+                                            className={styles.suggestItem}
+                                            onClick={() => {
+                                                router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
+                                            <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
+                                        </div>
+                                    ))}
+
+                                {suggestList.length > 0 &&
+                                    suggestList?.map((v, i) => (
+                                        <div
+                                            key={i}
+                                            className={styles.suggestItem}
+                                            onClick={() => {
+                                                router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                                            }}
+                                        >
+                                            <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
+                                            <p className={styles.suggestText}>{highlightMatch(v, value)}</p>
+                                        </div>
+                                    ))}
                             </div>
-                        ))}
+                        </div>
                     </div>
-                </div>
-            </div>
-            </>
-        )}
+                </>
+            )}
         </>
     );
 };

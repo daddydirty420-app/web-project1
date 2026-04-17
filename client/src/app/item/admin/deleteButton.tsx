@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Item } from "../itemPageTypes";
-import styles from "./admin.module.css";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useState } from 'react';
+import { Item } from '../itemPageTypes';
+import styles from './admin.module.css';
+import { X } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     id: string;
     item: Item;
-}
+};
 
 export const DeleteButton = ({ id, item }: Props) => {
     const [popup, setPopup] = useState(false);
-    const [deleteReason, setDeleteReason] = useState("");
+    const [deleteReason, setDeleteReason] = useState('');
 
     const deleteItem = async () => {
-        if (!deleteReason || deleteReason === "") {
-            toast.error("削除理由を入力してください。");
+        if (!deleteReason || deleteReason === '') {
+            toast.error('削除理由を入力してください。');
             return;
         }
 
@@ -26,14 +26,14 @@ export const DeleteButton = ({ id, item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-admin/delete-item/${id}`, {
-                method: "DELETE",
+                method: 'DELETE',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ deleteReason }),
@@ -45,43 +45,49 @@ export const DeleteButton = ({ id, item }: Props) => {
                 setPopup(false);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     return (
         <>
-        <p className={styles.title}>{item.name}</p>
-        <button type="button" className={styles.deleteButton} onClick={() => setPopup(true)}>item削除</button>
+            <p className={styles.title}>{item.name}</p>
+            <button type="button" className={styles.deleteButton} onClick={() => setPopup(true)}>
+                item削除
+            </button>
 
-        {popup && (
-            <>
-            <div className={styles.overlay} onClick={() => setPopup(false)} />
-            
-            <div className={styles.popup}>
-                <X className={styles.x} onClick={() => setPopup(false)} />
-                
-                <p className={styles.popupTitle}>本当に削除しますか？</p>
+            {popup && (
+                <>
+                    <div className={styles.overlay} onClick={() => setPopup(false)} />
 
-                <p className={styles.text13}>※本当にこの商品を削除しますか？削除した場合、商品のデータがすべて無くなってしまいます。</p>
+                    <div className={styles.popup}>
+                        <X className={styles.x} onClick={() => setPopup(false)} />
 
-                <label>
-                    <input
-                    type="text"
-                    name="deleteReason"
-                    value={deleteReason}
-                    onChange={(e) => setDeleteReason(e.target.value)}
-                    placeholder="削除理由"
-                    className={styles.input}
-                    required
-                    />
-                </label>
+                        <p className={styles.popupTitle}>本当に削除しますか？</p>
 
-                <button type="button" className={styles.popupButton} onClick={deleteItem}>削除する</button>
-            </div>
-            </>
-        )}
+                        <p className={styles.text13}>
+                            ※本当にこの商品を削除しますか？削除した場合、商品のデータがすべて無くなってしまいます。
+                        </p>
+
+                        <label>
+                            <input
+                                type="text"
+                                name="deleteReason"
+                                value={deleteReason}
+                                onChange={(e) => setDeleteReason(e.target.value)}
+                                placeholder="削除理由"
+                                className={styles.input}
+                                required
+                            />
+                        </label>
+
+                        <button type="button" className={styles.popupButton} onClick={deleteItem}>
+                            削除する
+                        </button>
+                    </div>
+                </>
+            )}
         </>
     );
-}
+};

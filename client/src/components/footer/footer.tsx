@@ -1,26 +1,26 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import styles from './footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faShoppingBag, faBell } from '@fortawesome/free-solid-svg-icons';
 import { faSquarePlus, faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import Link from 'next/link';
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
 
 export default async function Footer() {
     const session = await getServerSession(authOptions);
-    
+
     const loggedIn = !!session?.user;
-        
+
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const accessToken = cookieStore.get('access-token')?.value;
 
     let unreadCount = 0;
 
     if (loggedIn) {
         const res = await fetch(`${process.env.API_URL}/notification/unread-count`, {
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                Authorization: `Bearer ${accessToken ?? ''}`,
             },
             cache: 'no-store',
         });
@@ -31,7 +31,7 @@ export default async function Footer() {
 
     return (
         <footer className={styles.footer}>
-            <Link href='/' className={styles.linkDiv}>
+            <Link href="/" className={styles.linkDiv}>
                 <FontAwesomeIcon icon={faHome} className={styles.linkIcon} />
                 <p className={styles.linkP}>ホーム</p>
             </Link>
@@ -50,7 +50,7 @@ export default async function Footer() {
                     <FontAwesomeIcon icon={faBell} className={styles.linkIcon} />
                     {loggedIn && unreadCount >= 1 && (
                         <svg width={8} height={8} className={styles.unreadIcon}>
-                            <circle cx={4} cy={4} r={4} fill='#007BFF' />
+                            <circle cx={4} cy={4} r={4} fill="#007BFF" />
                         </svg>
                     )}
                 </div>
@@ -63,4 +63,4 @@ export default async function Footer() {
             </Link>
         </footer>
     );
-};
+}

@@ -1,8 +1,8 @@
-import { UrlText } from "./urlText";
-import { Item } from "../itemPageTypes";
-import { SaleButton } from "./saleButton";
-import { UploadButton } from "./uploadButton";
-import styles from "./seller.module.css";
+import { UrlText } from './urlText';
+import { Item } from '../itemPageTypes';
+import { SaleButton } from './saleButton';
+import { UploadButton } from './uploadButton';
+import styles from './seller.module.css';
 
 type Props = {
     id: string;

@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./video.module.css";
-import { useLikeStatus, useLikeCount, updateItemLikeCache } from "@/hooks/useItemLike";
-import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styles from './video.module.css';
+import { useLikeStatus, useLikeCount, updateItemLikeCache } from '@/hooks/useItemLike';
+import { faThumbsUp as faThumbsUpSolid } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp as faThumbUpRegular } from '@fortawesome/free-regular-svg-icons';
+import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     initialLike?: boolean;
     initialCount?: number;
-    page: "normal" | "admin";
+    page: 'normal' | 'admin';
     loggedIn: boolean;
 };
 
@@ -33,7 +33,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -45,7 +45,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             });
         } catch (err) {
             updateItemLikeCache(id, false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -57,7 +57,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -69,41 +69,41 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             });
         } catch (err) {
             updateItemLikeCache(id, true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
-    const userList = () => (sellerMe || page === "admin") && router.push(`/user-list/item-like/${id}`);
+    const userList = () => (sellerMe || page === 'admin') && router.push(`/user-list/item-like/${id}`);
 
     return (
         <>
-        {loggedIn && !sellerMe && page === "normal" && (
-            <>
-            {like ? (
-                <FontAwesomeIcon
-                icon={faThumbsUpSolid}
-                className={clsx(styles.goodIcon, styles.isGood)}
-                onClick={remove}
-                />
-            ) : (
-                <FontAwesomeIcon
-                icon={faThumbUpRegular}
-                className={clsx(styles.goodIcon, styles.isNotGood)}
-                onClick={add}
-                />
+            {loggedIn && !sellerMe && page === 'normal' && (
+                <>
+                    {like ? (
+                        <FontAwesomeIcon
+                            icon={faThumbsUpSolid}
+                            className={clsx(styles.goodIcon, styles.isGood)}
+                            onClick={remove}
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            icon={faThumbUpRegular}
+                            className={clsx(styles.goodIcon, styles.isNotGood)}
+                            onClick={add}
+                        />
+                    )}
+                </>
             )}
-            </>
-        )}
 
-        {(!loggedIn || sellerMe || page !== "normal") && (
-            <FontAwesomeIcon icon={faThumbUpRegular} className={styles.goodIcon} onClick={userList} />
-        )}
+            {(!loggedIn || sellerMe || page !== 'normal') && (
+                <FontAwesomeIcon icon={faThumbUpRegular} className={styles.goodIcon} onClick={userList} />
+            )}
 
-        <div className="block text-center" onClick={userList}>
-            <p className={styles.countNumber}>{count.toLocaleString()}</p>
-            <p className={styles.countText}>good</p>
-        </div>
+            <div className="block text-center" onClick={userList}>
+                <p className={styles.countNumber}>{count.toLocaleString()}</p>
+                <p className={styles.countText}>good</p>
+            </div>
         </>
     );
 };

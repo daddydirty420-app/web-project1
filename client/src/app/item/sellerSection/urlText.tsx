@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import styles from "./seller.module.css";
-import toast from "react-hot-toast";
+import { usePathname } from 'next/navigation';
+import styles from './seller.module.css';
+import toast from 'react-hot-toast';
 
 export const UrlText = () => {
     const pathname = usePathname();
@@ -12,17 +12,23 @@ export const UrlText = () => {
     const copy = async () => {
         try {
             await navigator.clipboard.writeText(fullUrl);
-            toast.success("リンクをコピーしました！");
+            toast.success('リンクをコピーしました！');
         } catch (err) {
             console.error(err);
-            toast.error("コピー失敗！");
+            toast.error('コピー失敗！');
         }
     };
 
     return (
         <>
-        <p className={styles.linkP}>購入者向けリンク<br />（SNSやブログ等にリンクを貼る場合、下記URLをお貼りください）</p>
-        <p className={styles.urlText} onClick={copy}>{fullUrl}</p>
+            <p className={styles.linkP}>
+                購入者向けリンク
+                <br />
+                （SNSやブログ等にリンクを貼る場合、下記URLをお貼りください）
+            </p>
+            <p className={styles.urlText} onClick={copy}>
+                {fullUrl}
+            </p>
         </>
     );
 };

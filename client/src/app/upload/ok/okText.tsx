@@ -1,4 +1,4 @@
-import styles from "./ok.module.css";
+import styles from './ok.module.css';
 
 type Props = {
     name: string;
@@ -16,4 +16,3 @@ export const OkText = ({ name }: Props) => {
         </div>
     );
 };
-

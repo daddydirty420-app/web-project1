@@ -208,7 +208,7 @@
     position: relative;
 }
 .selectDiv::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     right: 14px;
@@ -235,7 +235,10 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background-color 0.2s;
 }
 .select:focus {
     outline: none;
@@ -243,7 +246,7 @@
     border-color: var(--gray-line-mid);
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03);
 }
-.select option[value=""] {
+.select option[value=''] {
     color: var(--text-muted);
 }
 
@@ -324,7 +327,9 @@
     font-size: 13px;
     color: var(--text-muted);
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition:
+        border-color 0.2s,
+        background-color 0.2s;
 }
 .imageInputPermit:hover {
     background-color: var(--gray-background);
@@ -371,7 +376,9 @@
     background-color: #fff;
     box-shadow: var(--shadow-mini);
     cursor: pointer;
-    transition: color 0.15s, background-color 0.15s;
+    transition:
+        color 0.15s,
+        background-color 0.15s;
 }
 .permitRemoveIcon:hover {
     color: var(--alert);

@@ -61,7 +61,9 @@
     font-size: 13px;
     color: var(--text-muted);
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition:
+        border-color 0.2s,
+        background-color 0.2s;
 }
 .imageInput:hover {
     border-color: var(--gray-line-mid-str);
@@ -125,7 +127,9 @@
     font-size: 13px;
     color: var(--text-muted);
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition:
+        border-color 0.2s,
+        background-color 0.2s;
 }
 .itemImageInput:hover {
     background-color: rgba(246, 247, 249, 0.9);
@@ -172,7 +176,10 @@
     background-color: #fff;
     box-shadow: var(--shadow-mini);
     cursor: pointer;
-    transition: color 0.15s, background-color 0.15s, transform 0.1s;
+    transition:
+        color 0.15s,
+        background-color 0.15s,
+        transform 0.1s;
 }
 .itemImageRemoveIcon:hover {
     color: var(--alert);
@@ -266,7 +273,7 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-.selectLi[data-selected="true"] {
+.selectLi[data-selected='true'] {
     background-color: rgba(0, 0, 0, 0.05);
     font-weight: 500;
 }

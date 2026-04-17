@@ -1,13 +1,13 @@
-import styles from "./seller.module.css";
-import { SaleButton } from "./saleButton";
-import { UploadButton } from "./uploadButton";
-import { DeleteItem } from "./deleteItem";
-import { Item } from "../itemPageTypes";
+import styles from './seller.module.css';
+import { SaleButton } from './saleButton';
+import { UploadButton } from './uploadButton';
+import { DeleteItem } from './deleteItem';
+import { Item } from '../itemPageTypes';
 
 type Props = {
     id: string;
     item: Item;
-    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
+    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
 };
 
 export const SellerSectionBottom = ({ id, item, page }: Props) => {

@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styles from "../../lp.module.css";
+import { ReactNode } from 'react';
+import styles from '../../lp.module.css';
 
 type Props = {
     number: number;
@@ -7,5 +7,9 @@ type Props = {
 };
 
 export const ShopStep = ({ number, children }: Props) => {
-    return <p className={styles.shopStep}>STEP{number}：<strong>{children}</strong></p>;
+    return (
+        <p className={styles.shopStep}>
+            STEP{number}：<strong>{children}</strong>
+        </p>
+    );
 };

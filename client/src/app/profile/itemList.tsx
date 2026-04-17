@@ -1,6 +1,6 @@
 'use client';
 
-import pageStyle from "./profile.module.css";
+import pageStyle from './profile.module.css';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '@/styles/components-style/itemList.module.css';
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Items } from '@/types/itemListTypes';
-import { formatDuration } from "@/lib/formatDuration";
+import { formatDuration } from '@/lib/formatDuration';
 
 type Res = {
     items: Items[] | null;
@@ -47,10 +47,13 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
 
     const setVL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`, {
-                method: 'GET',
-                cache: 'no-store'
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
+                {
+                    method: 'GET',
+                    cache: 'no-store',
+                },
+            );
 
             if (res.ok) {
                 const data: Res = await res.json();
@@ -62,14 +65,17 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
     const setIL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`, {
-                method: 'GET',
-                cache: 'no-store'
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
+                {
+                    method: 'GET',
+                    cache: 'no-store',
+                },
+            );
 
             if (res.ok) {
                 const data: Res = await res.json();
@@ -81,17 +87,13 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
         } catch (err) {
             console.error(err);
         }
-    }
+    };
 
-    const renderPagenation = (
-        currentPage: number,
-        totalPages: number,
-        onPageChange: (page: number) => void
-    ) => {
+    const renderPagenation = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
-        const delta = typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
+        const delta = typeof window !== 'undefined' && window.innerWidth >= 768 ? 2 : 1;
 
         pages.push(1);
 
@@ -108,33 +110,38 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
         return (
             <div className={styles.pagenation}>
                 <button
-                type='button'
-                disabled={currentPage === 1}
-                className={styles.pageButtonIcon}
-                onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
-                title="前へ"
+                    type="button"
+                    disabled={currentPage === 1}
+                    className={styles.pageButtonIcon}
+                    onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
+                    title="前へ"
                 >
                     <FontAwesomeIcon icon={faAnglesLeft} className={styles.pageIcon} />
                 </button>
 
                 {pages.map((p, idx) =>
-                p === '...' ? (
-                    <span key={idx} className={styles.ellipsis}>...</span>
-                ) : (
-                    <button
-                    type='button'
-                    key={idx}
-                    className={clsx(styles.pageButton, currentPage === p && styles.active)}
-                    onClick={() => onPageChange(p as number)}
-                    >{p}</button>
-                ))}
+                    p === '...' ? (
+                        <span key={idx} className={styles.ellipsis}>
+                            ...
+                        </span>
+                    ) : (
+                        <button
+                            type="button"
+                            key={idx}
+                            className={clsx(styles.pageButton, currentPage === p && styles.active)}
+                            onClick={() => onPageChange(p as number)}
+                        >
+                            {p}
+                        </button>
+                    ),
+                )}
 
                 <button
-                type='button'
-                disabled={currentPage === totalPages}
-                className={styles.pageButtonIcon}
-                onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
-                title='次へ'
+                    type="button"
+                    disabled={currentPage === totalPages}
+                    className={styles.pageButtonIcon}
+                    onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
+                    title="次へ"
                 >
                     <FontAwesomeIcon icon={faAnglesRight} className={styles.pageIcon} />
                 </button>
@@ -143,18 +150,18 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
     };
 
     return (
-        <div className='mt-4'>
+        <div className="mt-4">
             <div className={pageStyle.itemHeader}>
                 <p className={pageStyle.itemTitle}>出品した商品</p>
 
                 {!visibleIL && (
-                    <button type='button' className={styles.stateButton} onClick={() => setIL(1, limitIL)}>
+                    <button type="button" className={styles.stateButton} onClick={() => setIL(1, limitIL)}>
                         <FontAwesomeIcon icon={faList} className={styles.stateIcon} />
                         商品一覧
                     </button>
                 )}
                 {visibleIL && (
-                    <button type='button' className={styles.stateButton} onClick={() => setVL(1, limitVL)}>
+                    <button type="button" className={styles.stateButton} onClick={() => setVL(1, limitVL)}>
                         <FontAwesomeIcon icon={faPlay} className={styles.stateIcon} />
                         動画一覧
                     </button>
@@ -162,107 +169,113 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
             </div>
 
             <section className={styles.videoListWrapper}>
-                {!visibleIL && videoList?.map((data) => {
-                    if (!data) return null;
-                    const itemLink = adminPage ? `/item/admin/${data.id}` :`/item/${data.id}`;
+                {!visibleIL &&
+                    videoList?.map((data) => {
+                        if (!data) return null;
+                        const itemLink = adminPage ? `/item/admin/${data.id}` : `/item/${data.id}`;
 
-                    return (
-                        <section className={styles.videoListSection} key={data.id}>
-                            <Link href={itemLink} className={styles.thumbnail}>
-                                <Image
-                                    src={data.Video?.thumbnail_url
-                                        ? encodeURI(data.Video.thumbnail_url.trim())
-                                        : '/no-image(16x9).png'
-                                    }
-                                    alt={data.Video?.title ?? '動画サムネイル'}
-                                    fill
-                                    priority={false}
-                                />
-                                <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
-                            </Link>
-
-                            <div className={styles.itemData}>
-                                <Link href={itemLink} className={styles.videoUser}>
-                                    <h4 className={styles.title}>{data.Video?.title}</h4>
+                        return (
+                            <section className={styles.videoListSection} key={data.id}>
+                                <Link href={itemLink} className={styles.thumbnail}>
+                                    <Image
+                                        src={
+                                            data.Video?.thumbnail_url
+                                                ? encodeURI(data.Video.thumbnail_url.trim())
+                                                : '/no-image(16x9).png'
+                                        }
+                                        alt={data.Video?.title ?? '動画サムネイル'}
+                                        fill
+                                        priority={false}
+                                    />
+                                    <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
                                 </Link>
-                                <Link href={itemLink} className={styles.itemNamePrice}>
-                                    <p className={styles.syohin}>商品</p>
-                                    <div className={styles.itemNameDiv}>
-                                        <h2 className={styles.itemName}>{data.name}</h2>
-                                    </div>
-                                    <div className={styles.itemPriceSale}>
-                                        {data.Sale?.sale_flag && (
-                                            <p className={styles.beforePrice}>￥{data.Sale.before_price.toLocaleString()}</p>
-                                        )}
-                                        {data.status === "soldout" && (
-                                            <p className={styles.saleSold}>SOLD OUT</p>
-                                        )}
-                                        <h3 className={clsx(
-                                            styles.price,
-                                            data.Sale?.sale_flag ? styles.sale : "")}>
+
+                                <div className={styles.itemData}>
+                                    <Link href={itemLink} className={styles.videoUser}>
+                                        <h4 className={styles.title}>{data.Video?.title}</h4>
+                                    </Link>
+                                    <Link href={itemLink} className={styles.itemNamePrice}>
+                                        <p className={styles.syohin}>商品</p>
+                                        <div className={styles.itemNameDiv}>
+                                            <h2 className={styles.itemName}>{data.name}</h2>
+                                        </div>
+                                        <div className={styles.itemPriceSale}>
+                                            {data.Sale?.sale_flag && (
+                                                <p className={styles.beforePrice}>
+                                                    ￥{data.Sale.before_price.toLocaleString()}
+                                                </p>
+                                            )}
+                                            {data.status === 'soldout' && <p className={styles.saleSold}>SOLD OUT</p>}
+                                            <h3 className={clsx(styles.price, data.Sale?.sale_flag ? styles.sale : '')}>
                                                 ￥{data.price.toLocaleString()}
                                             </h3>
-                                    </div>
-                                </Link>
-                            </div>
-                        </section>
-                    )
-                })}
+                                        </div>
+                                    </Link>
+                                </div>
+                            </section>
+                        );
+                    })}
             </section>
 
-            {!visibleIL && renderPagenation(pageVL, totalPagesVL, (p) => {
-                setPageVL(p);
-                setVL(p, limitVL);
-            })}
+            {!visibleIL &&
+                renderPagenation(pageVL, totalPagesVL, (p) => {
+                    setPageVL(p);
+                    setVL(p, limitVL);
+                })}
 
             <section className={styles.itemListWrapper}>
-                {visibleIL && itemList?.map((data) => {
-                    if (!data) return null;
-                    const itemLink = `/item/${data.id}`;
+                {visibleIL &&
+                    itemList?.map((data) => {
+                        if (!data) return null;
+                        const itemLink = `/item/${data.id}`;
 
-                    return (
-                        <section className={styles.itemListSection} key={data.id}>
-                            <Link href={itemLink}>
-                                <div className={styles.ILImageDiv}>
-                                    <Image
-                                        src={data.first_image_url
-                                            ? encodeURI(data.first_image_url.trim())
-                                            : '/no-image(1x1).png'
-                                        }
-                                        alt={data.name}
-                                        fill
-                                        sizes='(max-width: 768px) 33vw, 16.66vw'
-                                        priority={false}
-                                        className={styles.itemImage}
-                                    />
-                                    {data.status === "soldout" && (
-                                        <div className={styles.ILSold}>
-                                            <p className={styles.ILSoldP}>SOLD</p>
-                                        </div>
-                                    )}
-                                    {data.Sale?.sale_flag && (
-                                        <div className={styles.ILSaleDiv}>
-                                            {data.Sale?.discount_rate > 0 && (
-                                                <p className={styles.ILSaleText}>{data.Sale.discount_rate}% OFF</p>
-                                            )}
-                                            {data.Sale?.discount_amount > 0 && (
-                                                <p className={styles.ILSaleText}>{data.Sale.discount_amount.toLocaleString()}円引き</p>
-                                            )}
-                                        </div>
-                                    )}
-                                    <div className={styles.ILPrice}>￥{data.price.toLocaleString()}</div>
-                                </div>
-                                <p className={clsx(styles.ILItemName, styles.line2)}>{data.name}</p>
-                            </Link>
-                        </section>
-                    )
-                })}
+                        return (
+                            <section className={styles.itemListSection} key={data.id}>
+                                <Link href={itemLink}>
+                                    <div className={styles.ILImageDiv}>
+                                        <Image
+                                            src={
+                                                data.first_image_url
+                                                    ? encodeURI(data.first_image_url.trim())
+                                                    : '/no-image(1x1).png'
+                                            }
+                                            alt={data.name}
+                                            fill
+                                            sizes="(max-width: 768px) 33vw, 16.66vw"
+                                            priority={false}
+                                            className={styles.itemImage}
+                                        />
+                                        {data.status === 'soldout' && (
+                                            <div className={styles.ILSold}>
+                                                <p className={styles.ILSoldP}>SOLD</p>
+                                            </div>
+                                        )}
+                                        {data.Sale?.sale_flag && (
+                                            <div className={styles.ILSaleDiv}>
+                                                {data.Sale?.discount_rate > 0 && (
+                                                    <p className={styles.ILSaleText}>{data.Sale.discount_rate}% OFF</p>
+                                                )}
+                                                {data.Sale?.discount_amount > 0 && (
+                                                    <p className={styles.ILSaleText}>
+                                                        {data.Sale.discount_amount.toLocaleString()}円引き
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className={styles.ILPrice}>￥{data.price.toLocaleString()}</div>
+                                    </div>
+                                    <p className={clsx(styles.ILItemName, styles.line2)}>{data.name}</p>
+                                </Link>
+                            </section>
+                        );
+                    })}
             </section>
 
-            {visibleIL && renderPagenation(pageIL, totalPagesIL, (p) => {
-                setPageIL(p);
-                setIL(p, limitIL);
-            })}
+            {visibleIL &&
+                renderPagenation(pageIL, totalPagesIL, (p) => {
+                    setPageIL(p);
+                    setIL(p, limitIL);
+                })}
         </div>
     );
-}
+};

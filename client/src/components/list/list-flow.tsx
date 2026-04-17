@@ -1,10 +1,10 @@
-import clsx from "clsx";
-import { ReactNode } from "react";
+import clsx from 'clsx';
+import { ReactNode } from 'react';
 import styles from './list.module.css';
 
 type ListFrowProps = {
-    children: ReactNode,
-    number: number,
+    children: ReactNode;
+    number: number;
 };
 
 export const ListFlow = ({ children, number }: ListFrowProps) => {
@@ -14,4 +14,4 @@ export const ListFlow = ({ children, number }: ListFrowProps) => {
             <div className={clsx('break-words w-full', styles.listText)}>{children}</div>
         </li>
     );
-}
+};

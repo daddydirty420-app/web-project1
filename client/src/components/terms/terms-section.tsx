@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 import styles from '@/styles/terms.module.css';
 
 type Props = {
@@ -10,8 +10,10 @@ type Props = {
 export const TermsSection = ({ number, heading, children }: Props) => {
     return (
         <section className={styles.sectionBox}>
-            <h2 className={styles.sectionTitle}>第 {number} 章　{heading}</h2>
+            <h2 className={styles.sectionTitle}>
+                第 {number} 章　{heading}
+            </h2>
             {children}
         </section>
     );
-}
+};

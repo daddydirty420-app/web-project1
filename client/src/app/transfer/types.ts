@@ -11,7 +11,7 @@ export type BankAccount = {
     account_number: string;
     meigi: string;
     AccountTypeOption?: AccountTypeOption;
-}
+};
 
 export type User = {
     id: string;

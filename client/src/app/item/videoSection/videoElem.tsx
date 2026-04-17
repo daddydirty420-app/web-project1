@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import styles from "./video.module.css";
-import { Item } from "../itemPageTypes";
-import { useEffect, useRef } from "react";
-import Hls from "hls.js";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from './video.module.css';
+import { Item } from '../itemPageTypes';
+import { useEffect, useRef } from 'react';
+import Hls from 'hls.js';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     item: Item;
     sellerMe?: boolean;
-    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
+    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
 };
 
 export const VideoElem = ({ item, sellerMe, page }: Props) => {
@@ -34,19 +34,18 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
 
         return () => {
             if (hls) hls.destroy();
-        }
+        };
     }, [item.Video]);
 
-        
     const playCount = async () => {
-        if (sellerMe || page !== "normal") return;
+        if (sellerMe || page !== 'normal') return;
         try {
             const accessToken = await getAccessToken();
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${item.Video?.id}/onplay`, {
                 method: 'PATCH',
                 headers: {
-                    Authorization: `Bearer ${accessToken ?? ""}`,
+                    Authorization: `Bearer ${accessToken ?? ''}`,
                 },
             });
         } catch (err) {
@@ -56,18 +55,20 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
 
     return (
         <>
-        {item.Video?.converted_url || item.Video?.original_url ? (
-            <video
-            ref={videoRef}
-            controls
-            poster={item.Video.thumbnail_url ?? '/no-image(16x9).png'}
-            playsInline
-            onPlay={playCount}
-            className={styles.videoPlayer}
-            >お使いのブラウザは動画再生に対応していません。</video>
-        ) : (
-            <p className="text-base">動画がありません。</p>
-        )}
+            {item.Video?.converted_url || item.Video?.original_url ? (
+                <video
+                    ref={videoRef}
+                    controls
+                    poster={item.Video.thumbnail_url ?? '/no-image(16x9).png'}
+                    playsInline
+                    onPlay={playCount}
+                    className={styles.videoPlayer}
+                >
+                    お使いのブラウザは動画再生に対応していません。
+                </video>
+            ) : (
+                <p className="text-base">動画がありません。</p>
+            )}
         </>
     );
 };

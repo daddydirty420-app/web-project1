@@ -1,7 +1,7 @@
-import { Container, TitleAndBack } from "@/components";
-import Footer from "@/components/footer/footer";
-import Header from "@/components/header/header";
-import { ReactNode } from "react";
+import { Container, TitleAndBack } from '@/components';
+import Footer from '@/components/footer/footer';
+import Header from '@/components/header/header';
+import { ReactNode } from 'react';
 
 type Props = {
     title: string;
@@ -11,14 +11,14 @@ type Props = {
 export default function ReportUI({ title, children }: Props) {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <TitleAndBack title={title} />
-            {children}
-        </Container>
+            <Container header>
+                <TitleAndBack title={title} />
+                {children}
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
-};
+}

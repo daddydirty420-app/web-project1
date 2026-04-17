@@ -1,25 +1,32 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import { Categories, Item, ItemConditionOption, ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
-import styles from "./upload.module.css";
-import UploadUI from "./uploadUI";
-import { VideoInput, VideoInputValue } from "./videoInput";
-import { ItemImage } from "./itemImage";
-import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
-import { Category, CategoryValue } from "./category";
-import { GenderAge, GenderAgeValue } from "./genderAge";
-import { BrandInput, BrandValue } from "./brandInput";
-import { AttributesInput, AttributesValue } from "./attributes";
-import { MaterialInput, MaterialValue } from "./material";
-import { ConditionInput, ConditionValue } from "./condition";
-import { ShippingInput, ShippingValue } from "./shipping";
-import { PriceInput, PriceValue } from "./price";
-import toast from "react-hot-toast";
-import { TopLoader } from "@/components";
-import { useUpload } from "./hooks/useUpload";
-import { useFileUpload } from "./hooks/useFileUpload";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useRef, useState } from 'react';
+import {
+    Categories,
+    Item,
+    ItemConditionOption,
+    ShippingDayOption,
+    ShippingServiceOption,
+    TodouhukenOption,
+} from './types/type';
+import styles from './upload.module.css';
+import UploadUI from './uploadUI';
+import { VideoInput, VideoInputValue } from './videoInput';
+import { ItemImage } from './itemImage';
+import { ItemNameDetail, ItemNameDetailValue } from './itemNameDetail';
+import { Category, CategoryValue } from './category';
+import { GenderAge, GenderAgeValue } from './genderAge';
+import { BrandInput, BrandValue } from './brandInput';
+import { AttributesInput, AttributesValue } from './attributes';
+import { MaterialInput, MaterialValue } from './material';
+import { ConditionInput, ConditionValue } from './condition';
+import { ShippingInput, ShippingValue } from './shipping';
+import { PriceInput, PriceValue } from './price';
+import toast from 'react-hot-toast';
+import { TopLoader } from '@/components';
+import { useUpload } from './hooks/useUpload';
+import { useFileUpload } from './hooks/useFileUpload';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     itemId: string;
@@ -30,7 +37,7 @@ type Props = {
     allService: ShippingServiceOption[];
     allPlace: TodouhukenOption[];
     hasShop: boolean;
-    page: "normal" | "draft" | "edit";
+    page: 'normal' | 'draft' | 'edit';
 };
 
 type ItemImage = {
@@ -40,17 +47,7 @@ type ItemImage = {
     preview: string;
 };
 
-export const Form = ({
-    itemId,
-    item,
-    category,
-    allCondition,
-    allDay,
-    allService,
-    allPlace,
-    hasShop,
-    page
-}: Props) => {
+export const Form = ({ itemId, item, category, allCondition, allDay, allService, allPlace, hasShop, page }: Props) => {
     const initialThumbnailPreview = item.Video?.thumbnail_url ?? null;
     const existingVideoUrl = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
@@ -58,67 +55,67 @@ export const Form = ({
         videoFile: null,
         thumbnailFile: null,
         thumbnailPreview: initialThumbnailPreview,
-        title: item.Video?.title ?? "",
-        summary: item.Video?.summary ?? "",
+        title: item.Video?.title ?? '',
+        summary: item.Video?.summary ?? '',
         videoUploaded: !!existingVideoUrl,
         thumbnailUploaded: !!initialThumbnailPreview,
     });
 
     const [itemNameDetail, setItemNameDetail] = useState<ItemNameDetailValue>({
-        name: item.name ?? "",
-        detail: item.detail ?? "",
+        name: item.name ?? '',
+        detail: item.detail ?? '',
     });
 
     const [categoryValue, setCategoryValue] = useState<CategoryValue>({
-        id: item.Category?.id ?? "",
-        name: item.Category?.name ?? "",
+        id: item.Category?.id ?? '',
+        name: item.Category?.name ?? '',
         parent_id: item.Category?.parent_id ?? null,
         level: item.Category?.level ?? 0,
     });
 
     const [categoryConstraint, setCategoryConstraint] = useState<{
-        allowed_gender: "men" | "women" | "unisex" | null;
-        allowed_age: "adult" | "kids" | "both" | null;
+        allowed_gender: 'men' | 'women' | 'unisex' | null;
+        allowed_age: 'adult' | 'kids' | 'both' | null;
     } | null>(
-        item.Category ? {
-            allowed_gender: item.Category?.allowed_gender ?? null,
-            allowed_age: item.Category?.allowed_age ?? null,
-        } : null
+        item.Category
+            ? {
+                  allowed_gender: item.Category?.allowed_gender ?? null,
+                  allowed_age: item.Category?.allowed_age ?? null,
+              }
+            : null,
     );
 
     const [genderAgeValue, setGenderAgeValue] = useState<GenderAgeValue>({
-        gender_type: item.gender_type ?? "unisex",
-        age_type: item.age_type ?? "both",
+        gender_type: item.gender_type ?? 'unisex',
+        age_type: item.age_type ?? 'both',
     });
 
     const [brandValue, setBrandValue] = useState<BrandValue>({
         id: item.Brand?.id ?? null,
-        name: item.Brand?.name ?? "",
+        name: item.Brand?.name ?? '',
     });
 
     const initialAttributesValue: AttributesValue = {
         all_inventory: item.attributes?.inventory?.current ?? 1,
-        colorVariants: item.attributes?.colorVariants?.map((v) => ({
-            _uiId: v.uiId ?? crypto.randomUUID(),
-            color: v.color ?? null,
-            inventory: v.inventory?.current ?? 1,
-            image: null,
-            image_uploaded: true,
-            sizes: (v.sizes ?? []).map((s) => ({
-                size: s.size ?? null,
-                inventory: s.inventory.current ?? 1,
-            })),
-        })) ?? [],
+        colorVariants:
+            item.attributes?.colorVariants?.map((v) => ({
+                _uiId: v.uiId ?? crypto.randomUUID(),
+                color: v.color ?? null,
+                inventory: v.inventory?.current ?? 1,
+                image: null,
+                image_uploaded: true,
+                sizes: (v.sizes ?? []).map((s) => ({
+                    size: s.size ?? null,
+                    inventory: s.inventory.current ?? 1,
+                })),
+            })) ?? [],
     };
 
     const initialAttributesImageUrlMap = new Map<string, string>();
 
     item.attributes?.colorVariants?.forEach((v, i) => {
         if (v.image_url && initialAttributesValue.colorVariants[i]) {
-            initialAttributesImageUrlMap.set(
-                initialAttributesValue.colorVariants[i]._uiId,
-                v.image_url,
-            );
+            initialAttributesImageUrlMap.set(initialAttributesValue.colorVariants[i]._uiId, v.image_url);
         }
     });
 
@@ -127,15 +124,15 @@ export const Form = ({
     const [attributesImageMap, setAttributesImageMap] = useState<Map<string, string>>(initialAttributesImageUrlMap);
 
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
-        materials: (item.attributes?.materials ?? []).map(m => ({
-            name: m.name ?? "",
-            ratio: m.ratio ?? 1, 
+        materials: (item.attributes?.materials ?? []).map((m) => ({
+            name: m.name ?? '',
+            ratio: m.ratio ?? 1,
         })),
     });
 
     const [conditionValue, setConditionValue] = useState<ConditionValue>({
-        id: item.ItemConditionOption?.id ?? "",
-        name: item.ItemConditionOption?.name ?? "",
+        id: item.ItemConditionOption?.id ?? '',
+        name: item.ItemConditionOption?.name ?? '',
     });
 
     const shipping = item.ItemShippingProfile;
@@ -151,9 +148,7 @@ export const Form = ({
     });
 
     const [priceValue, setPriceValue] = useState<PriceValue>({
-        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price)
-        ? String(item.Sale?.before_price)
-        : "",
+        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price) ? String(item.Sale?.before_price) : '',
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
@@ -171,40 +166,31 @@ export const Form = ({
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
 
-    const {
-        validateUpload,
-        validateForDraft,
-        createBody,
-        submitDraft,
-        submitMain
-    } = useUpload();
+    const { validateUpload, validateForDraft, createBody, submitDraft, submitMain } = useUpload();
 
-    const {
-        videoUploadAndConvert,
-        thumbnailUpload,
-        itemImageUpload,
-        attributesImageUpload
-    } = useFileUpload();
+    const { videoUploadAndConvert, thumbnailUpload, itemImageUpload, attributesImageUpload } = useFileUpload();
 
     const addItemImage = (files: FileList) => {
-        const newImages = Array.from(files).slice(0, 10 - itemImages.length).map((file) => ({
-            id: crypto.randomUUID(),
-            file,
-            preview: URL.createObjectURL(file),
-            uploaded: false,
-        }));
+        const newImages = Array.from(files)
+            .slice(0, 10 - itemImages.length)
+            .map((file) => ({
+                id: crypto.randomUUID(),
+                file,
+                preview: URL.createObjectURL(file),
+                uploaded: false,
+            }));
 
         setItemImages((prev) => [...prev, ...newImages]);
     };
 
     const removeItemImage = (index: number) => {
-        setItemImages(prev => prev.filter((_, i) => i !== index));
+        setItemImages((prev) => prev.filter((_, i) => i !== index));
     };
 
     const upload = async () => {
         setLoading(true);
 
-        const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
+        const resolveAttributesImage = (v: (typeof attributesValue.colorVariants)[number]) => {
             if (v.image) {
                 return {
                     name: v.image.name,
@@ -216,7 +202,7 @@ export const Form = ({
             const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
             if (existingUrl) {
                 return {
-                    name: existingUrl.split("/").pop(),
+                    name: existingUrl.split('/').pop(),
                     type: null,
                     uploaded: true,
                 };
@@ -242,7 +228,7 @@ export const Form = ({
 
         const validate = validateUpload(params);
         if (!validate.ok) {
-            toast.error(validate.message ?? "");
+            toast.error(validate.message ?? '');
             setLoading(false);
             return;
         }
@@ -251,9 +237,9 @@ export const Form = ({
 
         try {
             const accessToken = await getAccessToken();
-                        
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 setLoading(false);
                 return;
             }
@@ -261,7 +247,7 @@ export const Form = ({
             const result = await submitMain({ itemId, body, accessToken });
 
             if (!result.ok) {
-                toast.error("データ作成に失敗しました");
+                toast.error('データ作成に失敗しました');
                 setLoading(false);
                 return;
             }
@@ -314,11 +300,11 @@ export const Form = ({
                 return;
             }
 
-            toast.success("商品データを登録しました");
+            toast.success('商品データを登録しました');
             setLoading(false);
 
-            if (page === "edit") {
-                if (item.status === "active") {
+            if (page === 'edit') {
+                if (item.status === 'active') {
                     window.location.assign(`/item/${itemId}`);
                 } else {
                     window.location.assign(`/item/confirm/${itemId}`);
@@ -327,7 +313,7 @@ export const Form = ({
                 window.location.assign(`/item/confirm/${itemId}`);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
             setLoading(false);
         }
@@ -336,7 +322,7 @@ export const Form = ({
     const draft = async () => {
         setDraftLoading(true);
 
-        const resolveAttributesImage = (v: typeof attributesValue.colorVariants[number]) => {
+        const resolveAttributesImage = (v: (typeof attributesValue.colorVariants)[number]) => {
             // 新規アップロード
             if (v.image && !v.image_uploaded) {
                 return {
@@ -350,7 +336,7 @@ export const Form = ({
             const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
             if (existingUrl) {
                 return {
-                    name: existingUrl.split("/").pop(),
+                    name: existingUrl.split('/').pop(),
                     type: null,
                     uploaded: true,
                 };
@@ -376,7 +362,7 @@ export const Form = ({
 
         const validate = validateForDraft(params);
         if (!validate.ok) {
-            toast.error(validate.message ?? "");
+            toast.error(validate.message ?? '');
             setDraftLoading(false);
             return;
         }
@@ -385,9 +371,9 @@ export const Form = ({
 
         try {
             const accessToken = await getAccessToken();
-                        
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 setDraftLoading(false);
                 return;
             }
@@ -395,7 +381,7 @@ export const Form = ({
             const result = await submitDraft({ itemId, body, accessToken });
 
             if (!result.ok) {
-                toast.error("下書き保存に失敗しました");
+                toast.error('下書き保存に失敗しました');
                 setDraftLoading(false);
                 return;
             }
@@ -448,11 +434,11 @@ export const Form = ({
                 return;
             }
 
-            toast.success("下書き保存しました");
+            toast.success('下書き保存しました');
             setDraftLoading(false);
-            window.location.assign("/item-list/draft");
+            window.location.assign('/item-list/draft');
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
             setDraftLoading(false);
         }
@@ -466,98 +452,64 @@ export const Form = ({
             <h2 className={styles.subtitle}>動画をアップロード</h2>
 
             <VideoInput
-            value={videoInput}
-            onChange={setVideoInput}
-            videoRef={videoRef}
-            thumbnailRef={thumbnailRef}
-            existingVideoUrl={existingVideoUrl}
+                value={videoInput}
+                onChange={setVideoInput}
+                videoRef={videoRef}
+                thumbnailRef={thumbnailRef}
+                existingVideoUrl={existingVideoUrl}
             />
 
             <h2 className={styles.subtitle}>商品をアップロード</h2>
 
-            <ItemImage
-            images={itemImages}
-            onAdd={addItemImage}
-            onRemove={removeItemImage}
-            />
+            <ItemImage images={itemImages} onAdd={addItemImage} onRemove={removeItemImage} />
 
-            <ItemNameDetail
-            value={itemNameDetail}
-            onChange={setItemNameDetail}
-            />
+            <ItemNameDetail value={itemNameDetail} onChange={setItemNameDetail} />
 
             <Category
-            level1List={category}
-            value={categoryValue}
-            onChange={setCategoryValue}
-            onConstraintChange={setCategoryConstraint}
+                level1List={category}
+                value={categoryValue}
+                onChange={setCategoryValue}
+                onConstraintChange={setCategoryConstraint}
             />
 
-            <GenderAge
-            value={genderAgeValue}
-            onChange={setGenderAgeValue}
-            categoryConstraint={categoryConstraint}
-            />
+            <GenderAge value={genderAgeValue} onChange={setGenderAgeValue} categoryConstraint={categoryConstraint} />
 
-            <BrandInput
-            value={brandValue}
-            onChange={setBrandValue}
-            />
+            <BrandInput value={brandValue} onChange={setBrandValue} />
 
             {hasShop && (
                 <AttributesInput
-                value={attributesValue}
-                onChange={setAttributesValue}
-                imageUrlMap={attributesImageMap}
+                    value={attributesValue}
+                    onChange={setAttributesValue}
+                    imageUrlMap={attributesImageMap}
                 />
             )}
 
-            <MaterialInput
-            value={materialValue}
-            onChange={setMaterialValue}
-            />
+            <MaterialInput value={materialValue} onChange={setMaterialValue} />
 
-            <ConditionInput
-            allCondition={allCondition}
-            value={conditionValue}
-            onChange={setConditionValue}
-            />
+            <ConditionInput allCondition={allCondition} value={conditionValue} onChange={setConditionValue} />
 
             <h2 className={styles.subtitle}>配送について</h2>
 
             <ShippingInput
-            allDay={allDay}
-            allService={allService}
-            allPlace={allPlace}
-            value={shippingValue}
-            onChange={setShippingValue}
+                allDay={allDay}
+                allService={allService}
+                allPlace={allPlace}
+                value={shippingValue}
+                onChange={setShippingValue}
             />
 
             <h2 className={styles.subtitle}>価格</h2>
 
-            <PriceInput
-            value={priceValue}
-            onChange={setPriceValue}
-            />
-                
+            <PriceInput value={priceValue} onChange={setPriceValue} />
+
             <div className={styles.formButtonDiv}>
-                <button
-                type="button"
-                className={styles.uploadButton}
-                onClick={upload}
-                disabled={loading}
-                >
-                    {loading ? "登録中..." : "出品する"}
+                <button type="button" className={styles.uploadButton} onClick={upload} disabled={loading}>
+                    {loading ? '登録中...' : '出品する'}
                 </button>
 
-                {page !== "edit" && (
-                    <button
-                    type="button"
-                    className={styles.draftButton}
-                    onClick={draft}
-                    disabled={draftLoading}
-                    >
-                        {draftLoading ? "保存中..." : "下書き保存する"}
+                {page !== 'edit' && (
+                    <button type="button" className={styles.draftButton} onClick={draft} disabled={draftLoading}>
+                        {draftLoading ? '保存中...' : '下書き保存する'}
                     </button>
                 )}
             </div>

@@ -17,7 +17,9 @@
     background-color: var(--action);
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.2s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.2s ease;
 }
 .deleteButton:hover {
     background-color: var(--action-hover);
@@ -61,7 +63,7 @@
     color: var(--gray-50);
     cursor: pointer;
     border-radius: 50%;
-    transition: 
+    transition:
         background-color 0.15s ease,
         color 0.15s ease,
         transform 0.1s ease;
@@ -108,7 +110,9 @@
     border-radius: 10px;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 .popupButton:hover {
     background-color: var(--action-hover);

@@ -18,4 +18,4 @@ export const StarSection = ({ user, userId }: Props) => {
             <small className={clsx('ml-1', styles.small)}>{user.star_amount.toLocaleString()}</small>
         </div>
     );
-}
+};

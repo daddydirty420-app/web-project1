@@ -1,7 +1,7 @@
-import { Container, Title } from "@/components";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
-import { ReactNode } from "react";
+import { Container, Title } from '@/components';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
+import { ReactNode } from 'react';
 
 type Props = {
     title: string;
@@ -11,14 +11,14 @@ type Props = {
 export default function OkUI({ title, children }: Props) {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Title title={title} />
-            {children}
-        </Container>
+            <Container header>
+                <Title title={title} />
+                {children}
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
 }

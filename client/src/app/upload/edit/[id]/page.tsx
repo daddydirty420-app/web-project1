@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
-import { Form } from "../../form";
+import { Metadata } from 'next';
+import { notFound, redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { cookies } from 'next/headers';
+import { Form } from '../../form';
 
 type Props = {
     params: { id: string };
@@ -11,14 +11,14 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "商品を編集する",
-        description: "動画・商品画像・商品名・説明文・価格など、商品情報の変更はこちら！",
+        title: '商品を編集する',
+        description: '動画・商品画像・商品名・説明文・価格など、商品情報の変更はこちら！',
         robots: {
             index: false,
-            follow: false
-        }
+            follow: false,
+        },
     };
-};
+}
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
@@ -26,13 +26,13 @@ export default async function Page({ params }: Props) {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const accessToken = cookieStore.get('access-token')?.value;
 
-    if (!session || !accessToken) redirect("/login")
+    if (!session || !accessToken) redirect('/login');
 
     const res = await fetch(`${process.env.API_URL}/items/${id}/form-data`, {
-        method: "GET",
-        cache: "no-store",
+        method: 'GET',
+        cache: 'no-store',
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -55,22 +55,24 @@ export default async function Page({ params }: Props) {
     const sellerId = String(item.seller_id).trim();
 
     if (userId !== sellerId) {
-        redirect("/upload/before");
+        redirect('/upload/before');
     }
 
-    if (item.status === "soldout") {
+    if (item.status === 'soldout') {
         redirect(`/item/${id}`);
     }
 
-    return <Form
-    itemId={id}
-    item={item}
-    category={category}
-    allCondition={allCondition}
-    allDay={allDay}
-    allService={allService}
-    allPlace={allPlace}
-    hasShop={hasShop}
-    page="edit"
-    />;
+    return (
+        <Form
+            itemId={id}
+            item={item}
+            category={category}
+            allCondition={allCondition}
+            allDay={allDay}
+            allService={allService}
+            allPlace={allPlace}
+            hasShop={hasShop}
+            page="edit"
+        />
+    );
 }

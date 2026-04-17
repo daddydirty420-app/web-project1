@@ -1,5 +1,5 @@
-import { Container, Title } from "@/components";
-import { ReactNode } from "react";
+import { Container, Title } from '@/components';
+import { ReactNode } from 'react';
 
 type Props = {
     title: string;
@@ -13,4 +13,4 @@ export default function SSUI({ title, children }: Props) {
             {children}
         </Container>
     );
-};
+}

@@ -17,4 +17,4 @@ export const TermsKakko = ({ number, heading, children }: Props) => {
             {children}
         </div>
     );
-}
+};

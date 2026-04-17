@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import styles from "../transfer.module.css";
-import TransferUI from "../transferUI";
-import { User } from "../types";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from '../transfer.module.css';
+import TransferUI from '../transferUI';
+import { User } from '../types';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { X } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     user: User;
@@ -23,7 +23,7 @@ export const Form = ({ user }: Props) => {
 
     const submit = async () => {
         if (value === 0) {
-            toast.error("変換金額を入力してください。");
+            toast.error('変換金額を入力してください。');
             return;
         }
 
@@ -34,16 +34,16 @@ export const Form = ({ user }: Props) => {
 
         try {
             const accessToken = await getAccessToken();
-            
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
-            
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/points-create`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-type": "application/json",
+                    'Content-type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ value, limit }),
@@ -52,15 +52,17 @@ export const Form = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("ポイント変換に失敗しました。");
+                toast.error('ポイント変換に失敗しました。');
                 console.error(data.message);
                 return;
             }
 
-            alert(`売上金${value.toLocaleString()}円をポイントに変換しました。ポイントの有効期限は本日から180日後になります。`);
-            router.push("/my-page");
+            alert(
+                `売上金${value.toLocaleString()}円をポイントに変換しました。ポイントの有効期限は本日から180日後になります。`,
+            );
+            router.push('/my-page');
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -77,22 +79,22 @@ export const Form = ({ user }: Props) => {
                 <div className={styles.inputFlex}>
                     <p className={styles.text14}>￥</p>
                     <input
-                    type="text"
-                    pattern="[0-9]*"
-                    value={value}
-                    onChange={(e) => {
-                        const num = Number(e.target.value);
-                        setValue(num);
+                        type="text"
+                        pattern="[0-9]*"
+                        value={value}
+                        onChange={(e) => {
+                            const num = Number(e.target.value);
+                            setValue(num);
 
-                        if ((num > limit) || (num === 0)) {
-                            setIsInvalid(true);
-                        } else {
-                            setIsInvalid(false);
-                        }
-                    }}
-                    placeholder="例）30,000"
-                    className={`${styles.transValueInput} ${isInvalid ? styles.invalidInput : ""}`}
-                    required
+                            if (num > limit || num === 0) {
+                                setIsInvalid(true);
+                            } else {
+                                setIsInvalid(false);
+                            }
+                        }}
+                        placeholder="例）30,000"
+                        className={`${styles.transValueInput} ${isInvalid ? styles.invalidInput : ''}`}
+                        required
                     />
                 </div>
             </div>
@@ -107,41 +109,33 @@ export const Form = ({ user }: Props) => {
                 <p className={styles.transTextValue}>￥{(user.uriagekin - value).toLocaleString()}</p>
             </div>
 
-            <button
-            type="button"
-            className={styles.pageButton}
-            onClick={() => setPopup(true)}>
+            <button type="button" className={styles.pageButton} onClick={() => setPopup(true)}>
                 確認する
             </button>
 
             {popup && (
                 <>
-                <div className={styles.overlay} onClick={() => setPopup(false)} />
+                    <div className={styles.overlay} onClick={() => setPopup(false)} />
 
-                <div className={styles.popup}>
-                    <X
-                    strokeWidth={1.5}
-                    className={styles.x}
-                    onClick={() => setPopup(false)} />
-                    
-                    <p className={styles.popupTitle}>確認</p>
+                    <div className={styles.popup}>
+                        <X strokeWidth={1.5} className={styles.x} onClick={() => setPopup(false)} />
 
-                    <div className={styles.popupTransValueDiv}>
-                        <p className={styles.popupSubTitle}>変換金額</p>
-                        <p className={styles.popupTransValue}>￥{value.toLocaleString()}</p>
+                        <p className={styles.popupTitle}>確認</p>
+
+                        <div className={styles.popupTransValueDiv}>
+                            <p className={styles.popupSubTitle}>変換金額</p>
+                            <p className={styles.popupTransValue}>￥{value.toLocaleString()}</p>
+                        </div>
+
+                        <p className={styles.popupSmall}>
+                            ※ポイントの有効期限は獲得日から6か月後です。有効期限を経過した場合、ポイントは自動消滅となります。
+                        </p>
+                        <p className={styles.popupSmall}>※変換金額の返金・払い戻し等はできません。</p>
+
+                        <button type="button" onClick={submit} className={styles.popupButton}>
+                            変換する
+                        </button>
                     </div>
-
-                    <p className={styles.popupSmall}>※ポイントの有効期限は獲得日から6か月後です。有効期限を経過した場合、ポイントは自動消滅となります。</p>
-                    <p className={styles.popupSmall}>※変換金額の返金・払い戻し等はできません。</p>
-
-                    <button
-                    type="button"
-                    onClick={submit}
-                    className={styles.popupButton}
-                    >
-                        変換する
-                    </button>
-                </div>
                 </>
             )}
         </TransferUI>

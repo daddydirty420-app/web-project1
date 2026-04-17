@@ -1,5 +1,5 @@
-import styles from "./item.module.css";
-import { Item } from "../itemPageTypes";
+import styles from './item.module.css';
+import { Item } from '../itemPageTypes';
 
 type Props = {
     item: Item;
@@ -8,10 +8,7 @@ type Props = {
 export const DeliverySection = ({ item }: Props) => {
     const inventory = item.attributes.inventory;
     const materials = item.attributes.materials;
-    const materialTotalRatio = materials?.reduce(
-        (sum, m) => sum + (m.ratio ?? 0),
-        0
-    );
+    const materialTotalRatio = materials?.reduce((sum, m) => sum + (m.ratio ?? 0), 0);
 
     return (
         <section className={styles.deliverySection}>
@@ -41,14 +38,15 @@ export const DeliverySection = ({ item }: Props) => {
                 <div className={styles.infoRow}>
                     <span className={styles.label}>在庫</span>
                     {inventory.initial <= 4
-                    ? inventory.current >= 2
-                    : inventory.current > (inventory.initial * inventory.low_stock_ratio)
-                    && <span className={`${styles.value} ${styles.full}`}>在庫あり</span>}
+                        ? inventory.current >= 2
+                        : inventory.current > inventory.initial * inventory.low_stock_ratio && (
+                              <span className={`${styles.value} ${styles.full}`}>在庫あり</span>
+                          )}
 
                     {inventory.initial <= 4
-                    ? inventory.current === 1
-                    : inventory.current <= (inventory.initial * inventory.low_stock_ratio) && inventory.current >= 1
-                    && <span className={`${styles.value} ${styles.low}`}>残りわずか</span>}
+                        ? inventory.current === 1
+                        : inventory.current <= inventory.initial * inventory.low_stock_ratio &&
+                          inventory.current >= 1 && <span className={`${styles.value} ${styles.low}`}>残りわずか</span>}
 
                     {inventory.current === 0 && <span className={`${styles.value} ${styles.sold}`}>SOLD OUT</span>}
                 </div>
@@ -60,13 +58,12 @@ export const DeliverySection = ({ item }: Props) => {
 
                     <div className={styles.materialColumn}>
                         {materials.map((m, i) => (
-                                <div key={i} className={styles.materialRow}>
-                                    <span className={styles.value}>{m.name}</span>
-                                    <span className={styles.materialBar}>-</span>
-                                    <span className={styles.value}>{m.ratio}%</span>
-                                </div>
-                            )
-                        )}
+                            <div key={i} className={styles.materialRow}>
+                                <span className={styles.value}>{m.name}</span>
+                                <span className={styles.materialBar}>-</span>
+                                <span className={styles.value}>{m.ratio}%</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             )}

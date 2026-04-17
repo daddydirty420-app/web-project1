@@ -20,9 +20,9 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
 
         try {
             const accessToken = await getAccessToken();
-        
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -32,11 +32,10 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -46,9 +45,9 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
 
         try {
             const accessToken = await getAccessToken();
-        
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
@@ -58,32 +57,45 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-
         } catch (err) {
             updateFollowCache(targetUserId, currentUserId, true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     if (!currentUserId) {
-        return <button type='button'>Loading...</button>
+        return <button type="button">Loading...</button>;
     }
-    
+
     const currentIdStr = currentUserId.toString();
 
     return (
         <>
-        {currentUserId && currentIdStr !== targetUserId && (
-            <>
-            {!status?.isFollowing && (
-                <button type='button' name='follow-button' className={clsx(styles.followButton, styles.false)} onClick={add}>フォローする</button>
+            {currentUserId && currentIdStr !== targetUserId && (
+                <>
+                    {!status?.isFollowing && (
+                        <button
+                            type="button"
+                            name="follow-button"
+                            className={clsx(styles.followButton, styles.false)}
+                            onClick={add}
+                        >
+                            フォローする
+                        </button>
+                    )}
+                    {status?.isFollowing && (
+                        <button
+                            type="button"
+                            name="follow-button"
+                            className={clsx(styles.followButton, styles.true)}
+                            onClick={remove}
+                        >
+                            フォロー中
+                        </button>
+                    )}
+                </>
             )}
-            {status?.isFollowing && (
-                <button type='button' name='follow-button' className={clsx(styles.followButton, styles.true)} onClick={remove}>フォロー中</button>
-            )}
-            </>
-        )}
         </>
     );
-}
+};

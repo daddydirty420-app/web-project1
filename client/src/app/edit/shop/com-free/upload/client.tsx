@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import styles from "../../../edit.module.css";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import EditUI from "@/app/edit/editUI";
-import { Button, InputTitle } from "@/components/inputForm";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from '../../../edit.module.css';
+import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import EditUI from '@/app/edit/editUI';
+import { Button, InputTitle } from '@/components/inputForm';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import toast from 'react-hot-toast';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 type Props = {
     shopEditId: string;
@@ -22,29 +22,29 @@ type PermitImage = {
 };
 
 export default function Client({ shopEditId }: Props) {
-    const [idCardFront, setIdCardFront] = useState<File | string | undefined>("");
-    const [idFrontPreview, setIdFrontPreview] = useState("");
+    const [idCardFront, setIdCardFront] = useState<File | string | undefined>('');
+    const [idFrontPreview, setIdFrontPreview] = useState('');
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);
 
-    const [idCardRear, setIdCardRear] = useState<File | string | undefined>("");
-    const [idRearPreview, setIdRearPreview] = useState("");
+    const [idCardRear, setIdCardRear] = useState<File | string | undefined>('');
+    const [idRearPreview, setIdRearPreview] = useState('');
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const [checked, setChecked] = useState(false);
 
-    const initialPermit = ([]).map((url) => ({
+    const initialPermit = [].map((url) => ({
         file: null,
         preview: url,
         uploaded: false,
     }));
 
     const [permitImages, setPermitImages] = useState<PermitImage[]>(initialPermit);
-    
+
     const idFrontRef = useRef<HTMLInputElement | null>(null);
     const idRearRef = useRef<HTMLInputElement | null>(null);
-    
+
     const router = useRouter();
-        
+
     const handleChangeFront = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
@@ -53,7 +53,7 @@ export default function Client({ shopEditId }: Props) {
             setIdFrontUpload(true);
         }
     };
-        
+
     const handleChangeRear = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
@@ -62,33 +62,33 @@ export default function Client({ shopEditId }: Props) {
             setIdRearUpload(true);
         }
     };
-        
+
     const handlePermitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
-        
+
         const files = Array.from(e.target.files);
-        
-        const newImages = files.slice(0, 10 - permitImages.length).map(f => ({
+
+        const newImages = files.slice(0, 10 - permitImages.length).map((f) => ({
             file: f,
             preview: URL.createObjectURL(f),
             uploaded: true,
         }));
-        
-        setPermitImages(prev => [...prev, ...newImages]);
+
+        setPermitImages((prev) => [...prev, ...newImages]);
     };
-        
+
     const removePermitImage = (index: number) => {
-        setPermitImages(prev => prev.filter((_, i) => i !== index));
+        setPermitImages((prev) => prev.filter((_, i) => i !== index));
     };
 
     const submit = async () => {
         if (!idCardFront || !idCardRear) {
-            toast.error("身分証がアップロードされていません。");
+            toast.error('身分証がアップロードされていません。');
             return;
         }
 
         if (checked && permitImages.length === 0) {
-            toast.error("許認可証がアップロードされていません。");
+            toast.error('許認可証がアップロードされていません。');
             return;
         }
 
@@ -109,7 +109,7 @@ export default function Client({ shopEditId }: Props) {
 
         let permitFiles: ({ fileName: string; fileType: string | null; uploaded: boolean } | undefined)[] = [];
         if (checked) {
-            permitFiles = permitImages.map(img => {
+            permitFiles = permitImages.map((img) => {
                 if (img.uploaded && img.file instanceof File) {
                     return {
                         fileName: img.file!.name,
@@ -118,13 +118,13 @@ export default function Client({ shopEditId }: Props) {
                     };
                 }
 
-                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
+                const fileName = (img.preview ?? '').split('/').pop() || 'unknown';
 
                 return {
                     fileName,
                     fileType: null,
                     uploaded: false,
-                }
+                };
             });
         }
 
@@ -140,16 +140,16 @@ export default function Client({ shopEditId }: Props) {
 
         try {
             const accessToken = await getAccessToken();
-                
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/id-image-upload/${shopEditId}`, {
-                method: "PATCH",
+                method: 'PATCH',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
@@ -159,66 +159,66 @@ export default function Client({ shopEditId }: Props) {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error("画像データの送信に失敗しました。");
+                toast.error('画像データの送信に失敗しました。');
                 return;
             }
 
             if (data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
-                    method: "PUT",
+                    method: 'PUT',
                     headers: {
-                        "Content-Type": idCardFront.type,
+                        'Content-Type': idCardFront.type,
                     },
                     body: idCardFront,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（表面）のアップロードに失敗しました。");
+                    toast.error('身分証（表面）のアップロードに失敗しました。');
                     return;
                 }
             }
 
             if (data.rearSignedUrl && idCardRear instanceof File) {
                 const uploadFrontRes = await fetch(data.rearSignedUrl, {
-                    method: "PUT",
+                    method: 'PUT',
                     headers: {
-                        "Content-Type": idCardRear.type,
+                        'Content-Type': idCardRear.type,
                     },
                     body: idCardRear,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error('身分証（裏面）のアップロードに失敗しました。');
                     return;
                 }
             }
 
             if (checked) {
-                const uploadImages = permitImages.filter(img => img.uploaded && img.file instanceof File);
+                const uploadImages = permitImages.filter((img) => img.uploaded && img.file instanceof File);
 
                 for (let i = 0; i < data.permitSignedUrls.length; i++) {
                     const file = uploadImages[i].file!;
                     const signedUrl = data.permitSignedUrls[i];
 
                     const upload = await fetch(signedUrl, {
-                        method: "PUT",
+                        method: 'PUT',
                         headers: {
-                            "Content-Type": file.type,
+                            'Content-Type': file.type,
                         },
                         body: file,
                     });
 
                     if (!upload.ok) {
-                        toast.error("許認可証のアップロードに失敗しました。");
+                        toast.error('許認可証のアップロードに失敗しました。');
                         return;
                     }
                 }
             }
 
-            toast.success("画像のアップロードが完了しました！");
-            router.replace("/edit/shop/com-free/complete");
+            toast.success('画像のアップロードが完了しました！');
+            router.replace('/edit/shop/com-free/complete');
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
@@ -230,52 +230,55 @@ export default function Client({ shopEditId }: Props) {
             <div className={styles.imageInputDiv}>
                 <InputTitle title="身分証（表面）" hissu />
                 <input
-                type="file"
-                accept="image/*"
-                onChange={handleChangeFront}
-                className={styles.imageInput}
-                placeholder="画像ファイルをアップロード"
-                ref={idFrontRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChangeFront}
+                    className={styles.imageInput}
+                    placeholder="画像ファイルをアップロード"
+                    ref={idFrontRef}
                 />
                 <Image
-                src={idFrontPreview || "/no-image(1x1).png"}
-                alt="身分証（表面）"
-                width={120}
-                height={120}
-                className={styles.preview}
+                    src={idFrontPreview || '/no-image(1x1).png'}
+                    alt="身分証（表面）"
+                    width={120}
+                    height={120}
+                    className={styles.preview}
                 />
 
                 <InputTitle title="身分証（裏面）" hissu />
                 <input
-                type="file"
-                accept="image/*"
-                onChange={handleChangeRear}
-                className={styles.imageInput}
-                placeholder="画像ファイルをアップロード"
-                ref={idRearRef}
-                required
+                    type="file"
+                    accept="image/*"
+                    onChange={handleChangeRear}
+                    className={styles.imageInput}
+                    placeholder="画像ファイルをアップロード"
+                    ref={idRearRef}
+                    required
                 />
                 <Image
-                src={idRearPreview || "/no-image(1x1).png"}
-                alt="身分証（裏面）"
-                width={120}
-                height={120}
-                className={styles.preview}
+                    src={idRearPreview || '/no-image(1x1).png'}
+                    alt="身分証（裏面）"
+                    width={120}
+                    height={120}
+                    className={styles.preview}
                 />
 
-                <p className={styles.centerSmall}>※顔写真付きのもの
-                    <br />※顔写真と生年月日がわかる面を表にして撮影
-                    <br />※表裏合わせて計2枚撮影
+                <p className={styles.centerSmall}>
+                    ※顔写真付きのもの
+                    <br />
+                    ※顔写真と生年月日がわかる面を表にして撮影
+                    <br />
+                    ※表裏合わせて計2枚撮影
                 </p>
             </div>
 
             <label className={styles.checkLabel}>
                 <input
-                type="checkbox"
-                name="checkbox"
-                checked={checked}
-                onChange={() => setChecked(!checked)}
-                className={styles.check}
+                    type="checkbox"
+                    name="checkbox"
+                    checked={checked}
+                    onChange={() => setChecked(!checked)}
+                    className={styles.check}
                 />
                 <p className={styles.checkText}>許認可が必要な事業内容ですか？</p>
             </label>
@@ -287,14 +290,14 @@ export default function Client({ shopEditId }: Props) {
                     <div className={styles.imageInputDivPermit}>
                         <InputTitle title="許認可証（最大10枚まで）" />
                         <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={handlePermitChange}
-                        disabled={permitImages.length >= 10}
-                        className={styles.imageInputPermit}
-                        placeholder="画像ファイルをアップロード"
-                        required
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handlePermitChange}
+                            disabled={permitImages.length >= 10}
+                            className={styles.imageInputPermit}
+                            placeholder="画像ファイルをアップロード"
+                            required
                         />
                     </div>
 
@@ -302,27 +305,29 @@ export default function Client({ shopEditId }: Props) {
                         {permitImages.map((img, index) => (
                             <div key={index} className={styles.permitPreviewItem}>
                                 <Image
-                                src={img.preview}
-                                alt={`permit-${index}`}
-                                width={100}
-                                height={100}
-                                className={styles.permitPreview}
+                                    src={img.preview}
+                                    alt={`permit-${index}`}
+                                    width={100}
+                                    height={100}
+                                    className={styles.permitPreview}
                                 />
 
                                 <FontAwesomeIcon
-                                icon={faTrashCan}
-                                onClick={() => removePermitImage(index)}
-                                className={styles.permitRemoveIcon}
+                                    icon={faTrashCan}
+                                    onClick={() => removePermitImage(index)}
+                                    className={styles.permitRemoveIcon}
                                 />
                             </div>
                         ))}
                     </div>
 
-                    <small className={styles.centerSmall}>※ 写真は文字がはっきり写っているものをアップロードしてください（最大10枚）</small>
+                    <small className={styles.centerSmall}>
+                        ※ 写真は文字がはっきり写っているものをアップロードしてください（最大10枚）
+                    </small>
                 </section>
             )}
 
             <Button onClick={submit}>登録する</Button>
         </EditUI>
     );
-};
+}

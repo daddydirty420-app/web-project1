@@ -40,7 +40,7 @@ export type Name = {
     mei: string;
     sei_kana: string;
     mei_kana: string;
-}
+};
 
 export type ShopInfo = {
     id: string;

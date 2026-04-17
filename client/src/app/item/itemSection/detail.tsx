@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import styles from "../itemCommon.module.css";
-import { Item } from "../itemPageTypes";
-import { useEffect, useRef, useState } from "react";
+import styles from '../itemCommon.module.css';
+import { Item } from '../itemPageTypes';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
     id: string;
     item: Item;
     sellerMe?: boolean;
-    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
+    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
 };
 
 export const Detail = ({ id, item, sellerMe, page }: Props) => {
@@ -26,7 +26,7 @@ export const Detail = ({ id, item, sellerMe, page }: Props) => {
 
     const expand = async () => {
         setExpanded(!expanded);
-        if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
+        if (item.status === 'soldout' || expanded || sellerMe || page !== 'normal') return;
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
@@ -35,7 +35,7 @@ export const Detail = ({ id, item, sellerMe, page }: Props) => {
             });
 
             if (!res.ok) {
-                console.error("APIエラー：", res.status);
+                console.error('APIエラー：', res.status);
             }
         } catch (err) {
             console.error(err);
@@ -44,30 +44,24 @@ export const Detail = ({ id, item, sellerMe, page }: Props) => {
 
     return (
         <>
-        <p className={styles.semiTitle}>DETAIL</p>
-        <div className={styles.summaryDiv}>
-            <p
-            ref={detailRef}
-            className={`${styles.summary} ${!expanded ? styles.clamp : ""}`}
-            style={{
-                maxHeight: expanded
-                ? detailRef.current?.scrollHeight
-                : "calc(1.75em * 2)",
-                transition: "max-height 0.3s ease"
-            }}
-            >
-                {detailText}
-            </p>
-            {overflowing && (
-                <button
-                type="button"
-                onClick={expand}
-                className={styles.moreButton}
+            <p className={styles.semiTitle}>DETAIL</p>
+            <div className={styles.summaryDiv}>
+                <p
+                    ref={detailRef}
+                    className={`${styles.summary} ${!expanded ? styles.clamp : ''}`}
+                    style={{
+                        maxHeight: expanded ? detailRef.current?.scrollHeight : 'calc(1.75em * 2)',
+                        transition: 'max-height 0.3s ease',
+                    }}
                 >
-                    {expanded ? "閉じる" : "...もっと見る"}
-                </button>
-            )}
-        </div>
+                    {detailText}
+                </p>
+                {overflowing && (
+                    <button type="button" onClick={expand} className={styles.moreButton}>
+                        {expanded ? '閉じる' : '...もっと見る'}
+                    </button>
+                )}
+            </div>
         </>
     );
 };

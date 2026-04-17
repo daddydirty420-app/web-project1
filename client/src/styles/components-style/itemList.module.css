@@ -6,8 +6,6 @@
     overflow: hidden;
 }
 
-
-
 .stateButton {
     display: flex;
     align-items: center;
@@ -22,8 +20,9 @@
     color: var(--theme-str);
     background-color: var(--button-gray);
     cursor: pointer;
-    transition: color 0.15s ease,
-            background-color 0.15s ease;
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease;
 }
 .stateButton:hover {
     background-color: var(--button-gray-hover);

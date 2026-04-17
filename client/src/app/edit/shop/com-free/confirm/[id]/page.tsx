@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import { Client } from "../client";
-import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { Metadata } from 'next';
+import { notFound, redirect } from 'next/navigation';
+import { Client } from '../client';
+import { cookies } from 'next/headers';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 type Props = {
     params: { id: string };
@@ -11,28 +11,28 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: "事業者情報の確認・変更",
-        description: "事業形態を変更に伴う事業者情報の変更ができます。（事業形態の変更には審査が必要になります。）",
+        title: '事業者情報の確認・変更',
+        description: '事業形態を変更に伴う事業者情報の変更ができます。（事業形態の変更には審査が必要になります。）',
         robots: {
             index: false,
             follow: false,
         },
     };
-};
+}
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
-            
+
     const session = await getServerSession(authOptions);
-    
+
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-    
-    if (!session || !accessToken) redirect("/login");
+    const accessToken = cookieStore.get('access-token')?.value;
+
+    if (!session || !accessToken) redirect('/login');
 
     const res = await fetch(`${process.env.API_URL}/shop-com-free/confirm/${id}`, {
-        method: "GET",
-        cache: "no-store",
+        method: 'GET',
+        cache: 'no-store',
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -46,11 +46,6 @@ export default async function Page({ params }: Props) {
     }
 
     return (
-        <Client
-        shopId={data.data.ShopInfo.id}
-        shopInfo={data.data.ShopInfo}
-        shopEditId={id}
-        shopInfoEdit={data.data}
-        />
+        <Client shopId={data.data.ShopInfo.id} shopInfo={data.data.ShopInfo} shopEditId={id} shopInfoEdit={data.data} />
     );
-};
+}

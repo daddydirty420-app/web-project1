@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styles from "../../lp.module.css";
+import { ReactNode } from 'react';
+import styles from '../../lp.module.css';
 
 type Props = {
     children: ReactNode;

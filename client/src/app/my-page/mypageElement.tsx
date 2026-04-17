@@ -18,7 +18,9 @@ export const MypageElement = ({ user, data, profileLink }: Props) => {
         <MypageUI>
             <ProfileSection user={user} data={data} profileLink={profileLink} />
 
-            <Link href='/upload/before' className={styles.uploadButton}>出品する</Link>
+            <Link href="/upload/before" className={styles.uploadButton}>
+                出品する
+            </Link>
 
             <MoneySection user={user} />
 

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import styles from "../upload.module.css";
-import UploadUI from "../uploadUI";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import Link from 'next/link';
+import styles from '../upload.module.css';
+import UploadUI from '../uploadUI';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { getAccessToken } from '@/lib/getAccessToken';
 
 export const Client = () => {
     const router = useRouter();
@@ -13,16 +13,16 @@ export const Client = () => {
     const newItem = async () => {
         try {
             const accessToken = await getAccessToken();
-                        
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
@@ -30,7 +30,7 @@ export const Client = () => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("通信エラーが発生しました。");
+                toast.error('通信エラーが発生しました。');
                 return;
             }
 
@@ -38,25 +38,18 @@ export const Client = () => {
 
             router.push(`/upload/${itemId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     return (
         <UploadUI title="出品する">
-            <button
-            type="button"
-            onClick={newItem}
-            className={styles.newItemButton}
-            >
+            <button type="button" onClick={newItem} className={styles.newItemButton}>
                 新しく出品する
             </button>
 
-            <Link
-            href="/item-list/draft"
-            className={styles.draftListButton}
-            >
+            <Link href="/item-list/draft" className={styles.draftListButton}>
                 下書き一覧
             </Link>
         </UploadUI>

@@ -1,4 +1,4 @@
-import { FollowStat } from "./followStat";
+import { FollowStat } from './followStat';
 import styles from './profile.module.css';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 
 export const FollowSection = async ({ userId }: Props) => {
     const res = await fetch(`${process.env.API_URL}/follow/${userId}/count`, {
-        method: "GET",
+        method: 'GET',
         cache: 'no-store',
     });
 
@@ -25,4 +25,4 @@ export const FollowSection = async ({ userId }: Props) => {
             <FollowStat userId={userId} type="follower" initialCount={followerCount} />
         </section>
     );
-}
+};

@@ -10,13 +10,10 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(
-        `${process.env.API_URL}/user/${id}/profile/metadata`,
-        {
-            method: 'GET',
-            cache: 'no-store'
-        }
-    );
+    const res = await fetch(`${process.env.API_URL}/user/${id}/profile/metadata`, {
+        method: 'GET',
+        cache: 'no-store',
+    });
 
     const data = await res.json();
     const user = data.user;
@@ -26,14 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: user.user_introduction ?? `${user.user_name}のプロフィールと出品した商品をご覧いただけます。`,
         robots: {
             index: false,
-            follow: false
-        }
+            follow: false,
+        },
     };
-};
+}
 
 export default async function Profile({ params }: Props) {
     const session = await getServerSession(authOptions);
-    
+
     const loggedIn = !!session?.user;
     const currentUserId = session?.user.id;
 
@@ -42,10 +39,10 @@ export default async function Profile({ params }: Props) {
 
     const res = await fetch(`${process.env.API_URL}/user/${userId}/profile?limit=${defaultLimit}`, {
         method: 'GET',
-        cache: 'no-store'
+        cache: 'no-store',
     });
 
     const data: Res = await res.json();
 
-    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId || ""} loggedIn={loggedIn} />;
-};
+    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId || ''} loggedIn={loggedIn} />;
+}

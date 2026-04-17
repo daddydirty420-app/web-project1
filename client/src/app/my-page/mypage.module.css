@@ -52,8 +52,8 @@
 .honninIcon,
 .earlyIcon,
 .shopIcon {
-  color: var(--theme);
-  opacity: 0.85;
+    color: var(--theme);
+    opacity: 0.85;
 }
 
 .profileLinkText {
@@ -68,7 +68,7 @@
     color: var(--link-hover);
 }
 .profileLinkText::after {
-    content: " →";
+    content: ' →';
 }
 
 .uploadButton {
@@ -114,7 +114,7 @@
 .money {
     font-size: 18px;
     font-weight: 700;
-    font-feature-settings: "tnum";
+    font-feature-settings: 'tnum';
 }
 
 .linkElem {
@@ -188,8 +188,7 @@
     border-radius: 14px;
     z-index: 5000;
     padding: 1.5rem 1.25rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08)
-                0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .x {
@@ -202,9 +201,10 @@
     color: var(--gray-50);
     cursor: pointer;
     border-radius: 50%;
-    transition: background-color 0.15s ease,
-                color 0.15s ease,
-                transform 0.1s ease;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
 }
 .x:hover {
     background-color: rgba(0, 0, 0, 0.05);

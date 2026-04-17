@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import styles from "../itemCommon.module.css";
-import { Item } from "../itemPageTypes";
-import { useEffect, useRef, useState } from "react";
+import styles from '../itemCommon.module.css';
+import { Item } from '../itemPageTypes';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
     id: string;
     item: Item;
     sellerMe?: boolean;
-    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
+    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
 };
 
 export const Summary = ({ id, item, sellerMe, page }: Props) => {
     const [expanded, setExpanded] = useState(false);
     const [overflowing, setOverflowing] = useState(false);
     const summaryRef = useRef<HTMLParagraphElement>(null);
-    const summaryText = item.Video?.summary || "";
+    const summaryText = item.Video?.summary || '';
 
     useEffect(() => {
         const el = summaryRef.current;
@@ -26,7 +26,7 @@ export const Summary = ({ id, item, sellerMe, page }: Props) => {
 
     const expand = async () => {
         setExpanded(!expanded);
-        if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
+        if (item.status === 'soldout' || expanded || sellerMe || page !== 'normal') return;
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
@@ -35,7 +35,7 @@ export const Summary = ({ id, item, sellerMe, page }: Props) => {
             });
 
             if (!res.ok) {
-                console.error("APIエラー：", res.status);
+                console.error('APIエラー：', res.status);
             }
         } catch (err) {
             console.error(err);
@@ -44,30 +44,24 @@ export const Summary = ({ id, item, sellerMe, page }: Props) => {
 
     return (
         <>
-        <p className={styles.semiTitle}>ABOUT THE VIDEO</p>
-        <div className={styles.summaryDiv}>
-            <p
-            ref={summaryRef}
-            className={`${styles.summary} ${!expanded ? styles.clamp : ""}`}
-            style={{
-                maxHeight: expanded
-                ? summaryRef.current?.scrollHeight
-                : "calc(1.75em * 2)",
-                transition: "max-height 0.3s ease",
-            }}
-            >
-                {summaryText}
-            </p>
-            {overflowing && (
-                <button
-                type="button"
-                onClick={expand}
-                className={styles.moreButton}
+            <p className={styles.semiTitle}>ABOUT THE VIDEO</p>
+            <div className={styles.summaryDiv}>
+                <p
+                    ref={summaryRef}
+                    className={`${styles.summary} ${!expanded ? styles.clamp : ''}`}
+                    style={{
+                        maxHeight: expanded ? summaryRef.current?.scrollHeight : 'calc(1.75em * 2)',
+                        transition: 'max-height 0.3s ease',
+                    }}
                 >
-                    {expanded ? "閉じる" : "...もっと見る"}
-                </button>
-            )}
-        </div>
+                    {summaryText}
+                </p>
+                {overflowing && (
+                    <button type="button" onClick={expand} className={styles.moreButton}>
+                        {expanded ? '閉じる' : '...もっと見る'}
+                    </button>
+                )}
+            </div>
         </>
     );
 };

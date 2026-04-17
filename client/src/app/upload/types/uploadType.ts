@@ -1,4 +1,4 @@
-import { UploadMeta } from "../hooks/useUpload";
+import { UploadMeta } from '../hooks/useUpload';
 
 export type Body = {
     video?: UploadMeta;

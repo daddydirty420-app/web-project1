@@ -5,24 +5,24 @@ import { Metadata } from 'next';
 import { Content } from './content';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 禁止行為・ペナルティ",
-    description: "〇〇のユーザーの禁止行為とペナルティ等の処分についてわかりやすく解説しています。",
+    title: 'ご利用ガイド - 禁止行為・ペナルティ',
+    description: '〇〇のユーザーの禁止行為とペナルティ等の処分についてわかりやすく解説しています。',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default function Page() {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Content />
-        </Container>
+            <Container header>
+                <Content />
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
 }

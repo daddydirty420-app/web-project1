@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { ItemConditionOption } from "./types/type";
-import styles from "./upload.module.css";
-import { InputTitle } from "@/components/inputForm";
+import { useEffect, useState } from 'react';
+import { ItemConditionOption } from './types/type';
+import styles from './upload.module.css';
+import { InputTitle } from '@/components/inputForm';
 
 export type ConditionValue = {
     id: string;
@@ -18,7 +18,7 @@ type Props = {
 
 export const ConditionInput = ({ allCondition, value, onChange }: Props) => {
     const [openSelect, setOpenSelect] = useState(false);
-    const [conditionName, setConditionName] = useState("");
+    const [conditionName, setConditionName] = useState('');
 
     useEffect(() => {
         if (value.id) {
@@ -44,24 +44,24 @@ export const ConditionInput = ({ allCondition, value, onChange }: Props) => {
         <div className={styles.selectDiv}>
             <InputTitle title="商品の状態" hissu />
             <input
-            type="text"
-            value={conditionName}
-            placeholder="商品の状態を選択"
-            onFocus={() => setOpenSelect(true)}
-            onBlur={() => setTimeout(() => setOpenSelect(false), 150)}
-            className={styles.input}
-            readOnly
-            required
+                type="text"
+                value={conditionName}
+                placeholder="商品の状態を選択"
+                onFocus={() => setOpenSelect(true)}
+                onBlur={() => setTimeout(() => setOpenSelect(false), 150)}
+                className={styles.input}
+                readOnly
+                required
             />
 
             {openSelect && (
                 <ul className={styles.selectUl}>
                     {allCondition.map((con) => (
                         <li
-                        key={con.id}
-                        onMouseDown={() => handleChangeCondition(con)}
-                        data-selected={conditionName === con.name}
-                        className={styles.selectLi}
+                            key={con.id}
+                            onMouseDown={() => handleChangeCondition(con)}
+                            data-selected={conditionName === con.name}
+                            className={styles.selectLi}
                         >
                             {con.name}
                         </li>

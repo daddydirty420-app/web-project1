@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { ItemPage } from "../../itemPage";
-import { Item } from "../../itemPageTypes";
-import { notFound, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
+import { Metadata } from 'next';
+import { ItemPage } from '../../itemPage';
+import { Item } from '../../itemPageTypes';
+import { notFound, redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { cookies } from 'next/headers';
 
 type Props = {
     params: { id: string };
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
         method: 'GET',
-        cache: 'no-store'
+        cache: 'no-store',
     });
 
     const data = await res.json();
@@ -25,20 +25,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: `${item.name}`,
         robots: {
             index: false,
-            follow: false
-        }
+            follow: false,
+        },
     };
-};
+}
 
 export default async function Page({ params }: Props) {
     const { id } = await params;
-    
+
     const session = await getServerSession(authOptions);
-        
+
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-    
-    if (!accessToken || !session) redirect("/login");
+    const accessToken = cookieStore.get('access-token')?.value;
+
+    if (!accessToken || !session) redirect('/login');
 
     const res = await fetch(`${process.env.API_URL}/items/${id}?mode=deleted`, {
         method: 'GET',
@@ -64,12 +64,5 @@ export default async function Page({ params }: Props) {
         redirect(`/item/${id}`);
     }
 
-    return <ItemPage
-    id={id}
-    item={item}
-    page="deleted"
-    sellerMe
-    loggedIn
-    userId={userId || ""}
-    />
-};
+    return <ItemPage id={id} item={item} page="deleted" sellerMe loggedIn userId={userId || ''} />;
+}

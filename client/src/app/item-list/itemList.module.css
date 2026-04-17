@@ -6,8 +6,6 @@
     line-clamp: 1;
 }
 
-
-
 .itemListSection {
     width: 100%;
     max-width: 900px;
@@ -25,7 +23,9 @@
     width: 100%;
     border-radius: 12px;
     padding: 14px 10px;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
 .itemFlex:hover {
     background: var(--bg-subtle);
@@ -33,7 +33,7 @@
 }
 
 .itemFlex::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     top: 15%;

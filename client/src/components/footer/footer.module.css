@@ -31,7 +31,9 @@
     height: 25px;
     padding: 7px 5px 3px;
     color: var(--theme);
-    transition: color 0.15s ease, transform 0.15s ease;
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 .linkIcon:hover {
     color: var(--theme-str);
@@ -48,7 +50,9 @@
     height: 40px;
     padding: 5px;
     color: var(--theme);
-    transition: color 0.15s ease, transform 0.15s ease;
+    transition:
+        color 0.15s ease,
+        transform 0.15s ease;
 }
 .uploadIcon:hover {
     color: var(--theme-str);

@@ -1,123 +1,128 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  /* カラー */
-  --background: rgba(255, 255, 255, 0.98);
-  --bg-subtle: rgba(246, 247, 249, 0.7);
-  --gray-background: rgba(246, 247, 249, 1);
-  --text: rgba(34, 34, 34, 0.92);
-  --h-color: rgba(17, 17, 17, 0.98);
-  --text-muted: rgba(107, 114, 128, 0.88);
-  --theme: rgba(107, 114, 128, 0.96);
-  --theme-soft: rgba(156, 163, 175, 0.9);
-  --theme-str: rgba(75, 85, 99, 1);
-  --button-gray: rgba(156, 163, 175, 0.12);
-  --button-gray-hover: rgba(156, 163, 175, 0.18);
-  --action: rgba(75, 85, 99, 0.95);
-  --action-hover: rgba(55, 65, 81, 1);
-  --gray-10: #eeeeee;
-  --gray-25: #aaaaaa;
-  --gray-50: #6b7280; /*旧#707070*/
-  --gray-75: #444444;
-  --gray-line: rgba(0, 0, 0, 0.08);
-  --gray-line-mid: rgba(0, 0, 0, 0.10);
-  --gray-line-mid-str: rgba(0, 0, 0, 0.12);
-  --gray-line-str: rgba(0, 0, 0, 0.14);
-  --black: #222222;
-  --link: rgba(13, 135, 224, 0.85);
-  --link-hover: rgba(13, 135, 224, 1);
-  --alert: rgba(200, 30, 45, 0.9);
-  --success: rgba(34, 197, 94, 0.9);
-  --warning: rgba(234, 179, 8, 0.9);
-  --overlay: rgba(0, 0, 0, 0.35);
+    /* カラー */
+    --background: rgba(255, 255, 255, 0.98);
+    --bg-subtle: rgba(246, 247, 249, 0.7);
+    --gray-background: rgba(246, 247, 249, 1);
+    --text: rgba(34, 34, 34, 0.92);
+    --h-color: rgba(17, 17, 17, 0.98);
+    --text-muted: rgba(107, 114, 128, 0.88);
+    --theme: rgba(107, 114, 128, 0.96);
+    --theme-soft: rgba(156, 163, 175, 0.9);
+    --theme-str: rgba(75, 85, 99, 1);
+    --button-gray: rgba(156, 163, 175, 0.12);
+    --button-gray-hover: rgba(156, 163, 175, 0.18);
+    --action: rgba(75, 85, 99, 0.95);
+    --action-hover: rgba(55, 65, 81, 1);
+    --gray-10: #eeeeee;
+    --gray-25: #aaaaaa;
+    --gray-50: #6b7280; /*旧#707070*/
+    --gray-75: #444444;
+    --gray-line: rgba(0, 0, 0, 0.08);
+    --gray-line-mid: rgba(0, 0, 0, 0.1);
+    --gray-line-mid-str: rgba(0, 0, 0, 0.12);
+    --gray-line-str: rgba(0, 0, 0, 0.14);
+    --black: #222222;
+    --link: rgba(13, 135, 224, 0.85);
+    --link-hover: rgba(13, 135, 224, 1);
+    --alert: rgba(200, 30, 45, 0.9);
+    --success: rgba(34, 197, 94, 0.9);
+    --warning: rgba(234, 179, 8, 0.9);
+    --overlay: rgba(0, 0, 0, 0.35);
 
-  /* フォントサイズ */
-  --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
-  --display: clamp(3rem, 1.5rem + 10vw, 6.25rem); /* 48-100px */
-  --page-title: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem); /* 20–24px */
-  --heading1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); /* 24-32px */
-  --heading2: clamp(1.25rem, 1.1rem + 1vw, 1.5rem); /* 20-24px */
-  --heading3: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); /* 18-21px */
-  --small-heading: clamp(1rem, 0.9rem + 0.6vw, 1.1875rem); /* 16-19px */
-  --small-heading2: clamp(0.9375rem, 0.85rem + 0.6vw, 1.0625rem); /* 15-17px */
-  --caption: clamp(0.75rem, 0.65rem + 0.5vw, 0.875rem); /* 12-14px */
-  --mid-text: clamp(0.8125rem, 0.7125rem + 0.6vw, 0.9375rem); /* 13-15px */
+    /* フォントサイズ */
+    --body: clamp(0.875rem, 0.775rem + 0.6vw, 1rem); /* 14-16px */
+    --display: clamp(3rem, 1.5rem + 10vw, 6.25rem); /* 48-100px */
+    --page-title: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem); /* 20–24px */
+    --heading1: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); /* 24-32px */
+    --heading2: clamp(1.25rem, 1.1rem + 1vw, 1.5rem); /* 20-24px */
+    --heading3: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); /* 18-21px */
+    --small-heading: clamp(1rem, 0.9rem + 0.6vw, 1.1875rem); /* 16-19px */
+    --small-heading2: clamp(0.9375rem, 0.85rem + 0.6vw, 1.0625rem); /* 15-17px */
+    --caption: clamp(0.75rem, 0.65rem + 0.5vw, 0.875rem); /* 12-14px */
+    --mid-text: clamp(0.8125rem, 0.7125rem + 0.6vw, 0.9375rem); /* 13-15px */
 
-  /* スペース（余白・間隔） */
-  --space-xs: clamp(1.25rem, 1rem + 0.98rem, 1.875rem); /* 20-30px */
-  --space-sm: calc(var(--space-xs) * 1.5); /*30-45px */
-  --space-md: calc(var(--space-xs) * 2); /* 40-60px */
-  --space-lg: calc(var(--space-xs) * 3); /* 60-90px */
-  --space-xl: calc(var(--space-xs) * 4); /* 80-120px */
-  --space-jump: clamp(1.25rem, 0.35rem + 3.8vw, 3.75rem); /* 20-60px */
+    /* スペース（余白・間隔） */
+    --space-xs: clamp(1.25rem, 1rem + 0.98rem, 1.875rem); /* 20-30px */
+    --space-sm: calc(var(--space-xs) * 1.5); /*30-45px */
+    --space-md: calc(var(--space-xs) * 2); /* 40-60px */
+    --space-lg: calc(var(--space-xs) * 3); /* 60-90px */
+    --space-xl: calc(var(--space-xs) * 4); /* 80-120px */
+    --space-jump: clamp(1.25rem, 0.35rem + 3.8vw, 3.75rem); /* 20-60px */
 
-  /* 影 */
-  --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --shadow-str: 0 6px 18px rgba(0, 0, 0, 0.12);
-  --shadow-mini: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-mini-top: 0 -1px 4px rgba(0, 0, 0, 0.06);
+    /* 影 */
+    --shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --shadow-str: 0 6px 18px rgba(0, 0, 0, 0.12);
+    --shadow-mini: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-mini-top: 0 -1px 4px rgba(0, 0, 0, 0.06);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--text);
-  font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
-  font-size: var(--body);
-  letter-spacing: 0.01em;
+    background: var(--background);
+    color: var(--text);
+    font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
+    font-size: var(--body);
+    letter-spacing: 0.01em;
 }
 
-h1, h2, h3 {
-  color: var(--h-color);
-  font-weight: 700;
-  line-height: 1.35;
+h1,
+h2,
+h3 {
+    color: var(--h-color);
+    font-weight: 700;
+    line-height: 1.35;
 }
 
 h1 {
-  font-size: var(--heading1);
+    font-size: var(--heading1);
 }
 
 h2 {
-  font-size: var(--heading2);
+    font-size: var(--heading2);
 }
 
 h3 {
-  font-size: var(--heading3);
+    font-size: var(--heading3);
 }
 
 p {
-  font-size: var(--body);
-  line-height: 1.7;
+    font-size: var(--body);
+    line-height: 1.7;
 }
 
 small {
-  line-height: 1.5;
-  color: var(--text-muted);
+    line-height: 1.5;
+    color: var(--text-muted);
 }
 
 /* next/image */
 span > img {
-  transition: 0.2s;
+    transition: 0.2s;
 }
 
 /* input */
 input,
 textarea {
-  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background-color 0.2s;
 }
 
 input:focus,
 textarea:focus {
-  outline: 0;
-  background-color: rgba(229, 231, 235, 0.35);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03);
-  border-color: var(--gray-line-mid);
+    outline: 0;
+    background-color: rgba(229, 231, 235, 0.35);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.03);
+    border-color: var(--gray-line-mid);
 }
 
 input::placeholder,

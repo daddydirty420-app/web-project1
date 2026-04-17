@@ -29,13 +29,19 @@
     max-height: 0;
     opacity: 0;
     transform: translateY(-4px);
-    transition: max-height 0.35s ease-in, opacity 0.2s ease-in, transform 0.25s ease-in;
+    transition:
+        max-height 0.35s ease-in,
+        opacity 0.2s ease-in,
+        transform 0.25s ease-in;
 }
 .commentBody.open {
     max-height: 5000px;
     opacity: 1;
     transform: translateY(0);
-    transition: max-height 0.45s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition:
+        max-height 0.45s ease-out,
+        opacity 0.3s ease-out,
+        transform 0.3s ease-out;
 }
 
 .commentLabel {
@@ -65,7 +71,9 @@
     border-radius: 6px;
     margin-top: 0.25rem;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 .commentUploadButton:hover {
     background-color: var(--action-hover);
@@ -279,7 +287,7 @@
     color: var(--gray-50);
     cursor: pointer;
     border-radius: 50%;
-    transition: 
+    transition:
         background-color 0.15s ease,
         color 0.15s ease,
         transform 0.1s ease;
@@ -320,7 +328,9 @@
     background-color: var(--action);
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
 }
 .popupButton:hover {
     background-color: var(--action-hover);
@@ -333,14 +343,20 @@
     max-height: 0;
     opacity: 0;
     transform: translateY(-4px);
-    transition: max-height 0.35s ease-in, opacity 0.2s ease-in, transform 0.25s ease-in;
+    transition:
+        max-height 0.35s ease-in,
+        opacity 0.2s ease-in,
+        transform 0.25s ease-in;
 }
 .replySection.replyOpen {
     margin-top: 0.75rem;
     max-height: 5000px;
     opacity: 1;
     transform: translateY(0);
-    transition: max-height 0.45s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+    transition:
+        max-height 0.45s ease-out,
+        opacity 0.3s ease-out,
+        transform 0.3s ease-out;
 }
 
 @media (min-width: 768px) {

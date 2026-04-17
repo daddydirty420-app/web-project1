@@ -204,5 +204,5 @@
 
 .profileBlock :global(.followButton),
 .profileBlock :global(.editButton) {
-  margin-left: 12px;
+    margin-left: 12px;
 }

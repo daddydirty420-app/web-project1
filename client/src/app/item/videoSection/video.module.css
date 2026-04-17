@@ -8,7 +8,9 @@
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .title {
@@ -86,7 +88,7 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 .nameBlock {
     display: flex;

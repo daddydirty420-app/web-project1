@@ -1,4 +1,4 @@
-import { FetchClient } from "./fetch";
+import { FetchClient } from './fetch';
 
 type Props = {
     params: { token: string };
@@ -7,9 +7,5 @@ type Props = {
 export default async function Page({ params }: Props) {
     const { token } = await params;
 
-    return (
-        <FetchClient
-        token={token}
-        />
-    );
-};
+    return <FetchClient token={token} />;
+}

@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '@/styles/login.module.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import toast from 'react-hot-toast';
 
 export const PwForm = () => {
@@ -42,7 +42,7 @@ export const PwForm = () => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-pw`, {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify({ token, password })
+                body: JSON.stringify({ token, password }),
             });
 
             const data = await res.json();
@@ -51,12 +51,12 @@ export const PwForm = () => {
                 console.log(data.message);
                 router.push('/login');
             } else {
-                toast.error("新しいパスワードの設定に失敗しました。");
+                toast.error('新しいパスワードの設定に失敗しました。');
                 console.error(data.message);
             }
         } catch (err) {
             console.error(err);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
         }
     };
 
@@ -68,19 +68,19 @@ export const PwForm = () => {
                 <p className={styles.formText}>パスワード</p>
                 <div className="relative">
                     <input
-                    type={visible ? 'text' : 'password'}
-                    name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="new-password"
-                    placeholder="********"
-                    className={styles.input}
-                    required
+                        type={visible ? 'text' : 'password'}
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="new-password"
+                        placeholder="********"
+                        className={styles.input}
+                        required
                     />
-                    <FontAwesomeIcon 
-                    icon={visible ? faEyeSlash : faEye}
-                    onClick={() => setVisible((v) => !v)}
-                    className={styles.icon}
+                    <FontAwesomeIcon
+                        icon={visible ? faEyeSlash : faEye}
+                        onClick={() => setVisible((v) => !v)}
+                        className={styles.icon}
                     />
                 </div>
                 <p className={styles.small}>※小文字英字・半角数字必須、8文字以上</p>
@@ -90,36 +90,31 @@ export const PwForm = () => {
                 <p className={styles.formText}>パスワード（確認用）</p>
                 <div className="relative">
                     <input
-                    type={visible ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="********"
-                    className={styles.input}
-                    required
+                        type={visible ? 'text' : 'password'}
+                        name="confirmPassword"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="********"
+                        className={styles.input}
+                        required
                     />
                     {visible && (
-                        <FontAwesomeIcon 
-                        icon={faEyeSlash}
-                        onClick={() => setVisible((v) => !v)}
-                        className={styles.icon}
+                        <FontAwesomeIcon
+                            icon={faEyeSlash}
+                            onClick={() => setVisible((v) => !v)}
+                            className={styles.icon}
                         />
                     )}
                     {!visible && (
-                        <FontAwesomeIcon
-                        icon={faEye}
-                        onClick={() => setVisible((v) => !v)}
-                        className={styles.icon}
-                        />
+                        <FontAwesomeIcon icon={faEye} onClick={() => setVisible((v) => !v)} className={styles.icon} />
                     )}
                 </div>
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button
-            type="submit"
-            className={styles.mainB}
-            disabled={isDisabled}>リセットする</button>
+            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+                リセットする
+            </button>
         </form>
     );
-}
+};

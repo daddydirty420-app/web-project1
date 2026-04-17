@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { InputTitle } from "@/components/inputForm";
-import styles from "./upload.module.css";
-import { useEffect, useState } from "react";
+import { InputTitle } from '@/components/inputForm';
+import styles from './upload.module.css';
+import { useEffect, useState } from 'react';
 
 export type PriceValue = {
     price: string;
@@ -18,7 +18,7 @@ export const PriceInput = ({ value, onChange }: Props) => {
     const [commission, setCommission] = useState(0);
 
     useEffect(() => {
-        const num = Number(value.price.replace(/,/g, ""));
+        const num = Number(value.price.replace(/,/g, ''));
 
         if (!Number.isNaN(num) && num > 0) {
             setGain(num * 0.9);
@@ -34,7 +34,7 @@ export const PriceInput = ({ value, onChange }: Props) => {
             price: raw,
         });
 
-        const num = Number(raw.replace(/,/g, ""));
+        const num = Number(raw.replace(/,/g, ''));
 
         if (!Number.isNaN(num)) {
             setGain(num * 0.9);
@@ -44,39 +44,39 @@ export const PriceInput = ({ value, onChange }: Props) => {
 
     return (
         <>
-        <div className={styles.inputDiv}>
-            <InputTitle title="価格" hissu />
-            
-            <div className={styles.inputTextFlex}>
-                <p className={styles.text15}>￥</p>
-                <input
-                type="text"
-                value={value.price}
-                onChange={(e) => handleChangePrice(e.target.value)}
-                placeholder="例：30,000"
-                className={styles.input}
-                inputMode="numeric"
-                pattern="[0-9]*"
-                min={300}
-                max={1000000}
-                required
-                />
-            </div>
+            <div className={styles.inputDiv}>
+                <InputTitle title="価格" hissu />
 
-            <p className={styles.centerSmall}>※ 300~1,000,000円の間で設定してください。</p>
-
-            <div className={styles.text2Column}>
-                <div className={styles.textFlex}>
-                    <p className={styles.textFlexTitle}>利益：</p>
-                    <p className={styles.textFlexMain}>￥{gain.toLocaleString()}</p>
+                <div className={styles.inputTextFlex}>
+                    <p className={styles.text15}>￥</p>
+                    <input
+                        type="text"
+                        value={value.price}
+                        onChange={(e) => handleChangePrice(e.target.value)}
+                        placeholder="例：30,000"
+                        className={styles.input}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        min={300}
+                        max={1000000}
+                        required
+                    />
                 </div>
 
-                <div className={styles.textFlex}>
-                    <p className={styles.textFlexTitle}>販売手数料：</p>
-                    <p className={styles.textFlexMain}>￥{commission.toLocaleString()}</p>
+                <p className={styles.centerSmall}>※ 300~1,000,000円の間で設定してください。</p>
+
+                <div className={styles.text2Column}>
+                    <div className={styles.textFlex}>
+                        <p className={styles.textFlexTitle}>利益：</p>
+                        <p className={styles.textFlexMain}>￥{gain.toLocaleString()}</p>
+                    </div>
+
+                    <div className={styles.textFlex}>
+                        <p className={styles.textFlexTitle}>販売手数料：</p>
+                        <p className={styles.textFlexMain}>￥{commission.toLocaleString()}</p>
+                    </div>
                 </div>
             </div>
-        </div>
         </>
     );
 };

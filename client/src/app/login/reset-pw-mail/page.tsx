@@ -1,15 +1,15 @@
-import { Container } from "@/components";
+import { Container } from '@/components';
 import { ResetForm } from './reset-form';
-import { Metadata } from "next";
+import { Metadata } from 'next';
 import styles from '@/styles/login.module.css';
 
 export const metadata: Metadata = {
-    title: "パスワードリセット",
-    description: "パスワードリセット",
+    title: 'パスワードリセット',
+    description: 'パスワードリセット',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default function Page() {

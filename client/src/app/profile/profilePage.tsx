@@ -18,18 +18,26 @@ type Props = {
 export const ProfilePage = ({ data, userId, currentUserId, adminPage, loggedIn }: Props) => {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Back />
+            <Container header>
+                <Back />
 
-            {adminPage && <AdminSection userId={userId} adminPage />}
-            <ProfileMain data={data} userId={userId} currentUserId={currentUserId} adminPage={adminPage} loggedIn={loggedIn} />
-            <SocialSection data={data} userId={userId} />
-            {data.itemList.hasItemCount > 0 && <ItemList userId={userId} defaultVideoList={data.itemList} adminPage={adminPage} />}
-        </Container>
+                {adminPage && <AdminSection userId={userId} adminPage />}
+                <ProfileMain
+                    data={data}
+                    userId={userId}
+                    currentUserId={currentUserId}
+                    adminPage={adminPage}
+                    loggedIn={loggedIn}
+                />
+                <SocialSection data={data} userId={userId} />
+                {data.itemList.hasItemCount > 0 && (
+                    <ItemList userId={userId} defaultVideoList={data.itemList} adminPage={adminPage} />
+                )}
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
-    )
-}
+    );
+};

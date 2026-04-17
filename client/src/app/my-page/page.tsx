@@ -28,49 +28,49 @@ type Res = {
 };
 
 export const metadata: Metadata = {
-    title: "マイページ",
-    description: "〇〇のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
+    title: 'マイページ',
+    description: '〇〇のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const accessToken = cookieStore.get('access-token')?.value;
 
-    if (!accessToken || !session) redirect("/login");
+    if (!accessToken || !session) redirect('/login');
 
     const res = await fetch(`${process.env.API_URL}/user/my-page`, {
-        method: "GET",
+        method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        cache: "no-store",
+        cache: 'no-store',
     });
 
     if (!res.ok) {
-        console.error("認証に失敗しました。", await res.text());
-        redirect("/login");
+        console.error('認証に失敗しました。', await res.text());
+        redirect('/login');
     }
 
     const data: Res = await res.json();
 
     if (!data.userData || !data.userData.user) {
         console.error('ユーザーが見つかりません。');
-        redirect("/login");
+        redirect('/login');
     }
 
-    const profileLink = `/profile/${session?.user?.id ?? ""}`;
+    const profileLink = `/profile/${session?.user?.id ?? ''}`;
 
     return (
         <>
-        <CookieSet refreshToken={session?.refreshToken} rememberMe={session?.rememberMe} />
+            <CookieSet refreshToken={session?.refreshToken} rememberMe={session?.rememberMe} />
 
-        <MypageElement data={data} user={data.userData.user} profileLink={profileLink} />
+            <MypageElement data={data} user={data.userData.user} profileLink={profileLink} />
         </>
     );
 }

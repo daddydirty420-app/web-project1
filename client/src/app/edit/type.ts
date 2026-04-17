@@ -91,7 +91,7 @@ export type ShopInfo = {
     RepresentativeName?: Name | null;
     ContactName?: Name | null;
     BankAccount?: BankAccount | null;
-}
+};
 
 export type GenderOption = {
     id: string;

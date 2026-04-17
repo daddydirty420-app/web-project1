@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import styles from "./material.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import styles from './material.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export type MaterialValue = {
     materials: {
@@ -17,9 +17,8 @@ type Props = {
 };
 
 export const MaterialInput = ({ value, onChange }: Props) => {
-
     const createEmptyMaterial = () => ({
-        name: "",
+        name: '',
         ratio: 1,
     });
 
@@ -44,10 +43,11 @@ export const MaterialInput = ({ value, onChange }: Props) => {
             ...value,
             materials: value.materials.map((m, i) =>
                 i === index
-                ? {
-                    ...m,
-                    name: name,
-                } : m
+                    ? {
+                          ...m,
+                          name: name,
+                      }
+                    : m,
             ),
         });
     };
@@ -57,10 +57,11 @@ export const MaterialInput = ({ value, onChange }: Props) => {
             ...value,
             materials: value.materials.map((m, i) =>
                 i === index
-                ? {
-                    ...m,
-                    ratio: ratio,
-                } : m
+                    ? {
+                          ...m,
+                          ratio: ratio,
+                      }
+                    : m,
             ),
         });
     };
@@ -72,11 +73,11 @@ export const MaterialInput = ({ value, onChange }: Props) => {
                     <div className={styles.inputDiv}>
                         <p className={styles.inputTitle}>素材名</p>
                         <input
-                        type="text"
-                        value={m.name ?? ""}
-                        onChange={(e) => handleChangeName(e.target.value, index)}
-                        placeholder="例：綿"
-                        className={styles.nameInput}
+                            type="text"
+                            value={m.name ?? ''}
+                            onChange={(e) => handleChangeName(e.target.value, index)}
+                            placeholder="例：綿"
+                            className={styles.nameInput}
                         />
                     </div>
 
@@ -84,31 +85,23 @@ export const MaterialInput = ({ value, onChange }: Props) => {
                         <p className={styles.inputTitle}>割合</p>
                         <div className={styles.ratioRow}>
                             <input
-                            type="number"
-                            min={1}
-                            max={100}
-                            value={m.ratio}
-                            onChange={(e) => handleChangeRatio(Number(e.target.value), index)}
-                            placeholder="100"
-                            className={styles.ratioInput}
+                                type="number"
+                                min={1}
+                                max={100}
+                                value={m.ratio}
+                                onChange={(e) => handleChangeRatio(Number(e.target.value), index)}
+                                placeholder="100"
+                                className={styles.ratioInput}
                             />
                             <p className={styles.ratio}>%</p>
                         </div>
                     </div>
 
-                    <FontAwesomeIcon
-                    icon={faTrash}
-                    className={styles.delete}
-                    onClick={() => removeMaterial(index)}
-                    />
+                    <FontAwesomeIcon icon={faTrash} className={styles.delete} onClick={() => removeMaterial(index)} />
                 </div>
             ))}
 
-            <button
-            type="button"
-            className={styles.addButton}
-            onClick={addMaterial}
-            >
+            <button type="button" className={styles.addButton} onClick={addMaterial}>
                 + 素材追加（自由入力）
             </button>
         </div>

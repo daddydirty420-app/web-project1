@@ -1,5 +1,5 @@
-import { Container, TitleAndBack } from "@/components";
-import { ReactNode } from "react";
+import { Container, TitleAndBack } from '@/components';
+import { ReactNode } from 'react';
 
 type Props = {
     title: string;
@@ -9,10 +9,10 @@ type Props = {
 export default function EditUI({ title, children }: Props) {
     return (
         <>
-        <Container>
-            <TitleAndBack title={title} />
-            {children}
-        </Container>
+            <Container>
+                <TitleAndBack title={title} />
+                {children}
+            </Container>
         </>
     );
-};
+}

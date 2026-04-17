@@ -86,7 +86,10 @@
     border-radius: 12px;
     background-color: var(--action);
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.05s, box-shadow 0.05s;
+    transition:
+        background-color 0.2s,
+        transform 0.05s,
+        box-shadow 0.05s;
 }
 .mainB:disabled {
     opacity: 0.6;

@@ -17,4 +17,4 @@ export const TermsMiniSection = ({ number, heading, children }: Props) => {
             {children}
         </div>
     );
-}
+};

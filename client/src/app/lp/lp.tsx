@@ -1,9 +1,9 @@
-import { Container } from "@/components";
-import { TwoColumn } from "./two-column";
-import { HeaderSection } from "./header/headerSection";
-import { FooterImage } from "./footer/footerImage";
-import { FooterSitemap } from "./footer/footerSitemap";
-import { Items } from "@/types/itemListTypes";
+import { Container } from '@/components';
+import { TwoColumn } from './two-column';
+import { HeaderSection } from './header/headerSection';
+import { FooterImage } from './footer/footerImage';
+import { FooterSitemap } from './footer/footerSitemap';
+import { Items } from '@/types/itemListTypes';
 
 type Res = {
     items: Items[];
@@ -20,14 +20,14 @@ type Props = {
 export const Lp = ({ shopPage, hasShop, itemList, loggedIn }: Props) => {
     return (
         <>
-        <HeaderSection shopPage={shopPage} loggedIn={loggedIn} />
-        
-        <Container>
-            <TwoColumn shopPage={shopPage} itemList={itemList} loggedIn={loggedIn} />
-        </Container>
+            <HeaderSection shopPage={shopPage} loggedIn={loggedIn} />
 
-        <FooterImage shopPage={shopPage} hasShop={hasShop} loggedIn={loggedIn} />
-        <FooterSitemap />
+            <Container>
+                <TwoColumn shopPage={shopPage} itemList={itemList} loggedIn={loggedIn} />
+            </Container>
+
+            <FooterImage shopPage={shopPage} hasShop={hasShop} loggedIn={loggedIn} />
+            <FooterSitemap />
         </>
-    )
-}
+    );
+};

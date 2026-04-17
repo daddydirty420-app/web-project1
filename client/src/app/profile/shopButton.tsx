@@ -8,7 +8,9 @@ type Props = {
 export const ShopButton = ({ shopId }: Props) => {
     return (
         <>
-        <Link href={`/shop-info/${shopId}`} className={styles.shopButton}>ショップ情報</Link>
+            <Link href={`/shop-info/${shopId}`} className={styles.shopButton}>
+                ショップ情報
+            </Link>
         </>
-    )
-}
+    );
+};

@@ -5,24 +5,24 @@ import Footer from '@/components/footer/footer';
 import { Content } from './content';
 
 export const metadata: Metadata = {
-    title: "ご利用ガイド - 出品者の方",
-    description: "〇〇の出品から販売、取引、配送まで、わかりやすく解説しています。",
+    title: 'ご利用ガイド - 出品者の方',
+    description: '〇〇の出品から販売、取引、配送まで、わかりやすく解説しています。',
     robots: {
         index: false,
-        follow: false
-    }
+        follow: false,
+    },
 };
 
 export default function Page() {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Content />
-        </Container>
+            <Container header>
+                <Content />
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
 }

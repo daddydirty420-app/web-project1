@@ -1,7 +1,7 @@
-import { Back, Container } from "@/components";
-import Header from "@/components/header/header";
-import Footer from "@/components/footer/footer";
-import { ReactNode } from "react";
+import { Back, Container } from '@/components';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
+import { ReactNode } from 'react';
 
 type Props = {
     children: ReactNode;
@@ -10,14 +10,14 @@ type Props = {
 export default function MypageUI({ children }: Props) {
     return (
         <>
-        <Header />
+            <Header />
 
-        <Container header>
-            <Back />
-            {children}
-        </Container>
+            <Container header>
+                <Back />
+                {children}
+            </Container>
 
-        <Footer />
+            <Footer />
         </>
     );
-};
+}

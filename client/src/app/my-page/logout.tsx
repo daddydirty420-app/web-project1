@@ -1,23 +1,23 @@
 'use client';
 
-import { NormalLinkContainer } from "@/components/link";
+import { NormalLinkContainer } from '@/components/link';
 import styles from './mypage.module.css';
 import { useRouter } from 'next/navigation';
-import { signOut } from "next-auth/react";
+import { signOut } from 'next-auth/react';
 
 export const Logout = () => {
     const router = useRouter();
-    
+
     const logout = async () => {
         try {
             await signOut({
                 redirect: false,
             });
 
-            router.push("/");
+            router.push('/');
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error("ログアウト失敗！", err);
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            console.error('ログアウト失敗！', err);
         }
     };
 

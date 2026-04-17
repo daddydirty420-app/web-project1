@@ -1,4 +1,4 @@
-import { Items } from "@/types/itemListTypes";
+import { Items } from '@/types/itemListTypes';
 
 export type ShopInfo = {
     id: number;

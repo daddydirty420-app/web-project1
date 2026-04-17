@@ -22,7 +22,7 @@
     background-color: rgba(0, 0, 0, 0.03);
 }
 .normal::after {
-    content: "→";
+    content: '→';
     margin-left: auto;
     font-size: 14px;
     opacity: 0.4;

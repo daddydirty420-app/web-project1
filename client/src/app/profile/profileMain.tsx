@@ -21,43 +21,38 @@ export const ProfileMain = ({ data, userId, currentUserId, adminPage, loggedIn }
 
     return (
         <>
-        <section className={styles.profileBlock}>
-            <div className={styles.userDiv}>
-                <Image
-                src={data.user.profile_image
-                    ? encodeURI(data.user.profile_image)
-                    : '/default-profile.png'
-                }
-                alt='プロフィール画像'
-                width={60}
-                height={60}
-                priority
-                quality={75}
-                className={styles.profileImage}
-                />
+            <section className={styles.profileBlock}>
+                <div className={styles.userDiv}>
+                    <Image
+                        src={data.user.profile_image ? encodeURI(data.user.profile_image) : '/default-profile.png'}
+                        alt="プロフィール画像"
+                        width={60}
+                        height={60}
+                        priority
+                        quality={75}
+                        className={styles.profileImage}
+                    />
 
-                <div className={styles.nameBlock}>
-                    <h1 className={styles.userName}>{data.user.user_name}</h1>
+                    <div className={styles.nameBlock}>
+                        <h1 className={styles.userName}>{data.user.user_name}</h1>
 
-                    <div className={styles.iconRow}>
-                        {data.user.honnin_verified && (
-                            <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
-                        )}
-                        {data.user.early_seller && (
-                            <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />
-                        )}
-                        {data.hasShop && (
-                            <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />
-                        )}
+                        <div className={styles.iconRow}>
+                            {data.user.honnin_verified && (
+                                <FontAwesomeIcon icon={faCircleCheck} className={styles.honninIcon} />
+                            )}
+                            {data.user.early_seller && <FontAwesomeIcon icon={faTag} className={styles.earlyIcon} />}
+                            {data.hasShop && <FontAwesomeIcon icon={faStore} className={styles.shopIcon} />}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {loggedIn && !sameId && !adminPage && <FollowButton targetUserId={userId} currentUserId={currentUserId} />}
-            {loggedIn && sameId && !adminPage && <EditButton />}
-        </section>
+                {loggedIn && !sameId && !adminPage && (
+                    <FollowButton targetUserId={userId} currentUserId={currentUserId} />
+                )}
+                {loggedIn && sameId && !adminPage && <EditButton />}
+            </section>
 
-        <Introduction data={data} />
+            <Introduction data={data} />
         </>
     );
-}
+};

@@ -9,9 +9,9 @@ type Props = {
 };
 
 type StarResponse = {
-  user: {
-    star_average: string;
-  };
+    user: {
+        star_average: string;
+    };
 };
 
 export const Star = ({ userId }: Props) => {
@@ -22,7 +22,7 @@ export const Star = ({ userId }: Props) => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/star`, {
                     method: 'GET',
-                    cache: 'no-store'
+                    cache: 'no-store',
                 });
 
                 if (res.ok) {
@@ -32,7 +32,7 @@ export const Star = ({ userId }: Props) => {
             } catch (err) {
                 console.error(err);
             }
-        }
+        };
 
         fetchData();
     }, [userId]);
@@ -44,9 +44,9 @@ export const Star = ({ userId }: Props) => {
             readOnly
             itemStyles={{
                 itemShapes: RatingStar,
-                activeFillColor: "#facc15",
-                inactiveFillColor: "#d5d7dc",
+                activeFillColor: '#facc15',
+                inactiveFillColor: '#d5d7dc',
             }}
         />
     );
-}
+};

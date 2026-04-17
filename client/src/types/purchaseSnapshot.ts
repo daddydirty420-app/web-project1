@@ -18,7 +18,7 @@ export type PurchaseSnapshot = {
         size?: string;
         image_url?: string;
     };
-    
+
     materials?: Array<{
         name?: string;
         ratio?: number;

@@ -1,9 +1,9 @@
-"use client"
+'use client';
 
-import styles from "./variants.module.css";
-import Image from "next/image";
-import { Item } from "../itemPageTypes";
-import { useState } from "react";
+import styles from './variants.module.css';
+import Image from 'next/image';
+import { Item } from '../itemPageTypes';
+import { useState } from 'react';
 
 type Props = {
     item: Item;
@@ -20,28 +20,25 @@ export const VariantsList = ({ item }: Props) => {
                 const currentInventory = variant.inventory?.current ?? 0;
 
                 const isSoldout = currentInventory === 0;
-                const isLowStock = currentInventory &&
-                currentInventory > 0 &&
-                currentInventory / initialInventory <= 0.2;
+                const isLowStock =
+                    currentInventory && currentInventory > 0 && currentInventory / initialInventory <= 0.2;
 
                 return (
                     <div
-                    key={i}
-                    className={`
+                        key={i}
+                        className={`
                         ${styles.variantCard}
-                        ${openIndex === i ? styles.active : ""}
+                        ${openIndex === i ? styles.active : ''}
                     `}
-                    onClick={() =>
-                        setOpenIndex(openIndex === i ? null : i)
-                    }
+                        onClick={() => setOpenIndex(openIndex === i ? null : i)}
                     >
                         <div className={styles.imageWrapper}>
                             <Image
-                            src={variant.image_url ?? ""}
-                            alt="バリエーション画像"
-                            width={100}
-                            height={100}
-                            className={styles.variantImage}
+                                src={variant.image_url ?? ''}
+                                alt="バリエーション画像"
+                                width={100}
+                                height={100}
+                                className={styles.variantImage}
                             />
                             {isSoldout && (
                                 <div className={styles.sold}>
@@ -75,16 +72,16 @@ export const VariantsList = ({ item }: Props) => {
                                             const initial = size.inventory.initial;
                                             const current = size.inventory.current;
                                             const soldout = current === 0;
-                                            const lowStock = current > 0 &&
-                                            current / initial >= size.inventory?.low_stock_ratio;
+                                            const lowStock =
+                                                current > 0 && current / initial >= size.inventory?.low_stock_ratio;
 
                                             return (
                                                 <span
-                                                key={i}
-                                                className={`
+                                                    key={i}
+                                                    className={`
                                                     ${styles.sizeChip}
-                                                    ${soldout ? styles.soldChip : ""}
-                                                    ${lowStock ? styles.lowChip : ""}
+                                                    ${soldout ? styles.soldChip : ''}
+                                                    ${lowStock ? styles.lowChip : ''}
                                                 `}
                                                 >
                                                     {size.size}
@@ -96,7 +93,7 @@ export const VariantsList = ({ item }: Props) => {
                             )}
                         </div>
                     </div>
-                )
+                );
             })}
         </section>
     );

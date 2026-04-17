@@ -9,11 +9,5 @@ import clsx from 'clsx';
 export const Back = () => {
     const router = useRouter();
 
-    return (
-        <FontAwesomeIcon
-        onClick={() => router.back()}
-        icon={faAngleLeft}
-        className={clsx('mb-2', styles.back)}
-        />
-    );
-}
+    return <FontAwesomeIcon onClick={() => router.back()} icon={faAngleLeft} className={clsx('mb-2', styles.back)} />;
+};

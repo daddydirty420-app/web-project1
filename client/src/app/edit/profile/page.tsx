@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { ProfileEditForm } from "./profileEditForm";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { notFound, redirect } from "next/navigation";
-import { User } from "../type";
-import { cookies } from "next/headers";
+import { Metadata } from 'next';
+import { ProfileEditForm } from './profileEditForm';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { notFound, redirect } from 'next/navigation';
+import { User } from '../type';
+import { cookies } from 'next/headers';
 
 export async function generateMetadata(): Promise<Metadata> {
     const session = await getServerSession(authOptions);
@@ -18,19 +18,19 @@ export async function generateMetadata(): Promise<Metadata> {
             follow: false,
         },
     };
-};
+}
 
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const accessToken = cookieStore.get('access-token')?.value;
 
-    if (!session || !accessToken) redirect("/login");
+    if (!session || !accessToken) redirect('/login');
 
     const res = await fetch(`${process.env.API_URL}/user-edit/profile-edit`, {
-        method: "GET",
-        cache: "no-store",
+        method: 'GET',
+        cache: 'no-store',
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -45,7 +45,5 @@ export default async function Page() {
 
     const userData: User = data.userData;
 
-    return (
-        <ProfileEditForm user={userData} />
-    );
-};
+    return <ProfileEditForm user={userData} />;
+}

@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import styles from "./imputForm.module.css";
+import { ReactNode } from 'react';
+import styles from './imputForm.module.css';
 
 type Props = {
     onClick: () => void;
@@ -8,11 +8,7 @@ type Props = {
 
 export const Button = ({ onClick, children }: Props) => {
     return (
-        <button
-        type="button"
-        onClick={onClick}
-        className={styles.button}
-        >
+        <button type="button" onClick={onClick} className={styles.button}>
             {children}
         </button>
     );

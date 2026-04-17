@@ -13,14 +13,14 @@ export const Resend = () => {
         try {
             if (!token) {
                 toast.error('再発行用トークンが見つかりません。');
-                return
+                return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/resend-verification-code`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token }),
-            })
+            });
 
             if (!res.ok) {
                 const errorData = await res.json();
@@ -31,16 +31,18 @@ export const Resend = () => {
 
             const data = await res.json();
 
-            toast.success("認証コードを再発行しました");
+            toast.success('認証コードを再発行しました');
 
             router.push(data.reissueUrl);
         } catch (err) {
-            console.error(err)
-            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            console.error(err);
+            alert('システムエラーが発生しました。時間をおいて再試行してください');
         }
     };
 
     return (
-        <p className={styles.reference} onClick={handleResend}>認証コードを再発行する</p>
+        <p className={styles.reference} onClick={handleResend}>
+            認証コードを再発行する
+        </p>
     );
-}
+};

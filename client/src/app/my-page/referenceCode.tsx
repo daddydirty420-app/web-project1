@@ -8,12 +8,12 @@ import { getAccessToken } from '@/lib/getAccessToken';
 
 type ReferenceCode = {
     output: string;
-}
+};
 
 type Props = {
     itemCount: number;
     referenceCount: number;
-}
+};
 
 export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
@@ -22,12 +22,12 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
     const outputReferenceCode = async () => {
         try {
             const accessToken = await getAccessToken();
-            
+
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
                 return;
             }
-            
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference-code/output`, {
                 method: 'POST',
                 headers: {
@@ -41,49 +41,48 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                 setVisiblePopup(true);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert('システムエラーが発生しました。時間をおいて再試行してください。');
             console.error(err);
         }
     };
 
     return (
         <>
-        {itemCount > 0 && referenceCount < 3 && (
-            <div className={styles.linkElem} onClick={outputReferenceCode}>
-                <p>紹介コード発行</p>
-            </div>
-        )}
+            {itemCount > 0 && referenceCount < 3 && (
+                <div className={styles.linkElem} onClick={outputReferenceCode}>
+                    <p>紹介コード発行</p>
+                </div>
+            )}
 
-        {visiblePopup && referenceCodeOutput && (
-            <>
-            <div className={styles.overlay} onClick={() => setVisiblePopup(false)} />
+            {visiblePopup && referenceCodeOutput && (
+                <>
+                    <div className={styles.overlay} onClick={() => setVisiblePopup(false)} />
 
-            <div className={styles.popup}>
-                <X
-                strokeWidth={1.5}
-                onClick={() => setVisiblePopup(false)}
-                className={styles.x} />
-                <p className={styles.popupTitle}>紹介コード発行</p>
-                <p
-                    className={styles.output}
-                    onClick={async () => {
-                        try {
-                            await navigator.clipboard.writeText(referenceCodeOutput.output);
-                            console.log("コピーしました：", referenceCodeOutput.output);
-                            toast.success('コピーしました');
-                        } catch (err) {
-                            toast.error("コピー失敗しました。")
-                            console.error("コピー失敗:", err);
-                        }
-                    }}
-                >
-                    {referenceCodeOutput.output}
-                </p>
-                <p className={styles.popupText}>コードをクリックするとコピーできます。</p>
-                <small className={styles.popupSmall}>※ 紹介コードを入力したユーザーが商品を出品しない限り、ポイントは付与されません。</small>
-            </div>
-            </>
-        )}
+                    <div className={styles.popup}>
+                        <X strokeWidth={1.5} onClick={() => setVisiblePopup(false)} className={styles.x} />
+                        <p className={styles.popupTitle}>紹介コード発行</p>
+                        <p
+                            className={styles.output}
+                            onClick={async () => {
+                                try {
+                                    await navigator.clipboard.writeText(referenceCodeOutput.output);
+                                    console.log('コピーしました：', referenceCodeOutput.output);
+                                    toast.success('コピーしました');
+                                } catch (err) {
+                                    toast.error('コピー失敗しました。');
+                                    console.error('コピー失敗:', err);
+                                }
+                            }}
+                        >
+                            {referenceCodeOutput.output}
+                        </p>
+                        <p className={styles.popupText}>コードをクリックするとコピーできます。</p>
+                        <small className={styles.popupSmall}>
+                            ※ 紹介コードを入力したユーザーが商品を出品しない限り、ポイントは付与されません。
+                        </small>
+                    </div>
+                </>
+            )}
         </>
     );
-}
+};

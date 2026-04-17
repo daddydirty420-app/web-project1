@@ -21,4 +21,4 @@ export type User = {
 export type ItemLike = {
     id: string;
     User?: User | null;
-}
+};
