@@ -15,16 +15,16 @@ export const ResetForm = () => {
                 body: JSON.stringify({ email }),
             });
 
-            toast.success("メールを送信しました");
+            toast.success('メールを送信しました');
         } catch (err) {
-            toast.success("メールを送信しました");
+            toast.success('メールを送信しました');
         }
     };
 
     const isDisabled = !email;
 
     return (
-        <form>
+        <div>
             <p className={styles.formText}>メールアドレス</p>
             <input
                 type="email"
@@ -37,14 +37,9 @@ export const ResetForm = () => {
                 required
             />
 
-            <button
-            type="submit"
-            className={styles.mainB}
-            disabled={isDisabled}
-            onClick={handleSubmit}
-            >
+            <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
                 メールを送信する
             </button>
-        </form>
+        </div>
     );
 };

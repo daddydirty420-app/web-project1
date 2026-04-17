@@ -16,9 +16,7 @@ export const SignupForm = () => {
     const [errorMsg, setErrorMsg] = useState('');
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const handleSubmit = async () => {
         if (password !== confirmPassword) {
             setErrorMsg('パスワードが一致しません。');
             return;
@@ -59,7 +57,7 @@ export const SignupForm = () => {
     const isDisabled = !email || !password || !confirmPassword;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <p className={styles.formText}>メールアドレス</p>
             <input
                 type="email"
@@ -115,9 +113,9 @@ export const SignupForm = () => {
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+            <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
                 認証メールを送る
             </button>
-        </form>
+        </div>
     );
 };

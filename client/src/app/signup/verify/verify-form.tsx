@@ -9,13 +9,13 @@ import { sleep } from '@/lib/sleep';
 
 export const VerifyForm = () => {
     const [code, setCode] = useState('');
+    const [referenceCode, setReferenceCode] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [referenceVisible, setReferenceVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         if (!code || code === '') {
             toast.error('認証コードを入力してください。');
             return;
@@ -23,10 +23,6 @@ export const VerifyForm = () => {
         setLoading(true);
 
         try {
-            const formData = new FormData(e.currentTarget);
-            const code = formData.get('verify-code') as string;
-            const referenceCode = formData.get('reference-code');
-
             const res = await signIn('verify', {
                 verificationCode: code,
                 rememberMe,
@@ -69,7 +65,7 @@ export const VerifyForm = () => {
     const isDisabled = loading || !code;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <p className={styles.formText}>認証コード</p>
             <input
                 type="text"
@@ -93,7 +89,7 @@ export const VerifyForm = () => {
                 <p className={styles.checkText}>ログイン状態を保持する</p>
             </label>
 
-            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+            <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
                 {loading ? '認証中...' : '認証する'}
             </button>
 
@@ -103,7 +99,13 @@ export const VerifyForm = () => {
 
             {referenceVisible && (
                 <div className="mt-2">
-                    <input type="text" name="reference-code" placeholder="a1b2c3d4e5" className={styles.input} />
+                    <input
+                        type="text"
+                        name="reference-code"
+                        onChange={(e) => setReferenceCode(e.target.value)}
+                        placeholder="a1b2c3d4e5"
+                        className={styles.input}
+                    />
                     <small className={styles.superSmall}>
                         ※商品を出品後、弊社が確認でき次第、ポイントが付与されます。（目安：3営業日以内）
                         <br />
@@ -111,6 +113,6 @@ export const VerifyForm = () => {
                     </small>
                 </div>
             )}
-        </form>
+        </div>
     );
 };

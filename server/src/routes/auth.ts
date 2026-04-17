@@ -142,6 +142,7 @@ router.post('/request-password-reset', async (req: Request, res: Response, next:
     }
 });
 
+// POST /auth/reset-pw
 router.post('/reset-pw', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { token, password } = req.body;
 

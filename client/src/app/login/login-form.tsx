@@ -42,7 +42,7 @@ export const LoginForm = () => {
     const isDisabled = loading || !email || !password;
 
     return (
-        <form>
+        <div>
             <p className={styles.formText}>メールアドレス</p>
             <input
                 type="email"
@@ -86,14 +86,9 @@ export const LoginForm = () => {
                 <span className={styles.checkText}>ログイン状態を保持する</span>
             </label>
 
-            <button
-            type="submit"
-            className={styles.mainB}
-            disabled={isDisabled}
-            onClick={handleSubmit}
-            >
+            <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
                 {loading ? 'ログイン中...' : 'ログインする'}
             </button>
-        </form>
+        </div>
     );
 };

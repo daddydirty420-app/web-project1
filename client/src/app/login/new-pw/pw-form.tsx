@@ -16,9 +16,7 @@ export const PwForm = () => {
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const handleSubmit = async () => {
         if (!token) {
             toast.error('無効なリンクです。');
             router.push('/login');
@@ -63,7 +61,7 @@ export const PwForm = () => {
     const isDisabled = !password || !confirmPassword;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
             <div>
                 <p className={styles.formText}>パスワード</p>
                 <div className="relative">
@@ -112,9 +110,9 @@ export const PwForm = () => {
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
 
-            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+            <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
                 リセットする
             </button>
-        </form>
+        </div>
     );
 };
