@@ -2,7 +2,7 @@
 
 import { User } from './profileTypes';
 import styles from './profile-admin.module.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
@@ -194,7 +194,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                             <button
                                 type="button"
                                 className={styles.popupButton}
-                                onClick={() => setAddPenalty(addPenalty)}
+                                onClick={() => submitPenalty(addPenalty)}
                             >
                                 ペナルティ付与
                             </button>

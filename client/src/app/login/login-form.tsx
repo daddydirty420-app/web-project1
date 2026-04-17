@@ -17,8 +17,7 @@ export const LoginForm = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         setLoading(true);
 
         const res = await signIn('credentials', {
@@ -43,7 +42,7 @@ export const LoginForm = () => {
     const isDisabled = loading || !email || !password;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <p className={styles.formText}>メールアドレス</p>
             <input
                 type="email"
@@ -87,7 +86,12 @@ export const LoginForm = () => {
                 <span className={styles.checkText}>ログイン状態を保持する</span>
             </label>
 
-            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+            <button
+            type="submit"
+            className={styles.mainB}
+            disabled={isDisabled}
+            onClick={handleSubmit}
+            >
                 {loading ? 'ログイン中...' : 'ログインする'}
             </button>
         </form>

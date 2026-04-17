@@ -13,6 +13,7 @@ import { loginUseCase } from '../usecases/auth/login.js';
 import { signupUseCase } from '../usecases/auth/signup.js';
 import { resendVerificationCodeUseCase } from '../usecases/auth/resendVerificationCode.js';
 import { signupVerifyUseCase } from '../usecases/auth/signupVerify.js';
+import { requestPasswordResetUseCase } from '../usecases/auth/requestPasswordReset.js';
 
 const router = Router();
 
@@ -128,29 +129,12 @@ router.post('/signup-verify', async (req: Request, res: Response, next: NextFunc
     }
 });
 
+// POST /auth/request-password-reset
 router.post('/request-password-reset', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email } = req.body;
 
     try {
-        const user = await User.findOne({ where: { email } });
-
-        if (!user) {
-            res.status(200).json({ message: 'メールを送信しました。' });
-            return;
-        }
-
-        const newResetToken = crypto.randomBytes(20).toString('hex');
-        const newResetTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
-
-        await TokenPasswordReset.create({
-            token_hash: newResetToken,
-            expires_at: newResetTokenExpires,
-            user_id: user.id,
-        });
-
-        const resetUrl = `${process.env.CLIENT_URL}/login/new-pw/${newResetToken}`;
-
-        // メール送信処理
+        await requestPasswordResetUseCase({ email });
 
         res.status(200).json({ message: 'メールを送信しました。' });
     } catch (err) {

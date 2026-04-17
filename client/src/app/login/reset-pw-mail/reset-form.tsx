@@ -2,33 +2,29 @@
 
 import { useState } from 'react';
 import styles from '@/styles/login.module.css';
+import toast from 'react-hot-toast';
 
 export const ResetForm = () => {
     const [email, setEmail] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const handleSubmit = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
             });
 
-            const data = await res.json();
-
-            alert(data.message);
-        } catch (error) {
-            console.error(error);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            toast.success("メールを送信しました");
+        } catch (err) {
+            toast.success("メールを送信しました");
         }
     };
 
     const isDisabled = !email;
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <p className={styles.formText}>メールアドレス</p>
             <input
                 type="email"
@@ -41,7 +37,12 @@ export const ResetForm = () => {
                 required
             />
 
-            <button type="submit" className={styles.mainB} disabled={isDisabled}>
+            <button
+            type="submit"
+            className={styles.mainB}
+            disabled={isDisabled}
+            onClick={handleSubmit}
+            >
                 メールを送信する
             </button>
         </form>
