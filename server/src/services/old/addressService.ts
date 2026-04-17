@@ -1,4 +1,4 @@
-import TodouhukenOption from '../../models/todouhuken_option.js';
+import TodouhukenOption from "../../models/todouhuken_option.js";
 
 interface ZipCloudResponse {
     message: string | null;
@@ -46,7 +46,7 @@ async function fetchAddressFromZip(zipcode: string): Promise<AddressResult> {
             });
 
             if (!todouhuken) {
-                throw new Error('都道府県が存在しません。');
+                throw new Error("都道府県が存在しません。");
             }
 
             return {
@@ -55,10 +55,10 @@ async function fetchAddressFromZip(zipcode: string): Promise<AddressResult> {
                 shikutyouson: result.address2,
             };
         } else {
-            throw new Error('住所が見つかりません。');
+            throw new Error("住所が見つかりません。");
         }
     } catch (err) {
-        console.error('住所取得エラー：', (err as Error).message);
+        console.error("住所取得エラー：", (err as Error).message);
         throw err;
     }
 }

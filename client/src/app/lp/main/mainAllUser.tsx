@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import styles from '../lp.module.css';
-import { MainH2 } from './mainComponent/mainh2';
-import { MainH3 } from './mainComponent/mainh3';
-import { MainP } from './mainComponent/mainP';
+import Link from "next/link";
+import styles from "../lp.module.css";
+import { MainH2 } from "./mainComponent/mainh2";
+import { MainH3 } from "./mainComponent/mainh3";
+import { MainP } from "./mainComponent/mainP";
 
 export const MainAllUser = () => {
     return (

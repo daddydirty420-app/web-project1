@@ -1,6 +1,6 @@
-import { Container } from '@/components';
-import styles from '@/styles/emailComplete.module.css';
-import Link from 'next/link';
+import { Container } from "@/components";
+import styles from "@/styles/emailComplete.module.css";
+import Link from "next/link";
 
 export default function Element() {
     return (

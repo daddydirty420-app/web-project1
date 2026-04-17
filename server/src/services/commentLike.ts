@@ -1,12 +1,12 @@
-import { Op } from 'sequelize';
-import { CommentLike, ShopInfo, User } from '../models/index.js';
+import { Op } from "sequelize";
+import { CommentLike, ShopInfo, User } from "../models/index.js";
 import {
     CommentIdParams,
     CommentLikeWithUser,
     CommentUserParams,
     DestroyParams,
     ListParams,
-} from '../types/serviceType/commentLike.js';
+} from "../types/serviceType/commentLike.js";
 
 export const getCommentLikeOne = async ({ commentId, userId }: CommentUserParams) => {
     return CommentLike.findOne({
@@ -21,20 +21,20 @@ export const getCommentLikeList = async ({ commentId, keyword }: ListParams) => 
     const userWhere = keyword ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } } : undefined;
 
     return CommentLike.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where: { comment_id: commentId },
-        order: [['createdAt', 'DESC']],
+        order: [["createdAt", "DESC"]],
         distinct: true,
         include: [
             {
                 model: User,
                 where: userWhere,
                 required: !!keyword,
-                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', 'early_seller'],
+                attributes: ["id", "user_name", "profile_image", "honnin_verified", "early_seller"],
                 include: [
                     {
                         model: ShopInfo,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: false,
                     },
                 ],

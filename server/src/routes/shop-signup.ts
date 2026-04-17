@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
 import {
     ShopInfo,
     ComOrFreeOption,
@@ -10,11 +10,11 @@ import {
     BankAccount,
     AccountTypeOption,
     User,
-} from '../models/index.js';
+} from "../models/index.js";
 
 const router = Router();
 
-router.get('/signup1', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/signup1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     try {
         const shopData = await ShopInfo.findOne({
@@ -22,19 +22,19 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response, ne
                 user_id: userId,
                 request_all: false,
             },
-            order: [['createdAt', 'DESC']],
+            order: [["createdAt", "DESC"]],
             attributes: [
-                'id',
-                'company_name',
-                'shop_name',
-                'email',
-                'phone_number',
-                'homepage_url',
-                'open_date_time',
-                'company_number',
-                'capital',
-                'member_count',
-                'founded_date',
+                "id",
+                "company_name",
+                "shop_name",
+                "email",
+                "phone_number",
+                "homepage_url",
+                "open_date_time",
+                "company_number",
+                "capital",
+                "member_count",
+                "founded_date",
             ],
             include: [
                 {
@@ -43,11 +43,11 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response, ne
                 },
                 {
                     model: Address,
-                    attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                    attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                     include: [
                         {
                             model: TodouhukenOption,
-                            as: 'AddressTodouhuken',
+                            as: "AddressTodouhuken",
                             required: false,
                         },
                     ],
@@ -55,14 +55,14 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response, ne
                 },
                 {
                     model: Name,
-                    as: 'RepresentativeName',
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                    as: "RepresentativeName",
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     required: false,
                 },
                 {
                     model: Name,
-                    as: 'ContactName',
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                    as: "ContactName",
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     required: false,
                 },
             ],
@@ -70,27 +70,27 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response, ne
         });
 
         const userData = await User.findByPk(userId, {
-            attributes: ['id', 'user_name', 'email', 'phone_number'],
+            attributes: ["id", "user_name", "email", "phone_number"],
             include: [
                 {
                     model: Address,
-                    attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                    attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                     include: [
                         {
                             model: TodouhukenOption,
-                            as: 'AddressTodouhuken',
+                            as: "AddressTodouhuken",
                         },
                     ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                 },
             ],
         });
 
         if (!userData) {
-            res.status(404).json({ message: 'ユーザーが見つかりません。' });
+            res.status(404).json({ message: "ユーザーが見つかりません。" });
             return;
         }
 
@@ -103,7 +103,7 @@ router.get('/signup1', authenticateToken, async (req: Request, res: Response, ne
 });
 
 router.get(
-    '/signup2/:id',
+    "/signup2/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -112,14 +112,14 @@ router.get(
         try {
             let data = await BankAccount.findOne({
                 attributes: [
-                    'id',
-                    'bank_name',
-                    'branch',
-                    'account_type_id',
-                    'account_number',
-                    'meigi',
-                    'bank_code',
-                    'branch_code',
+                    "id",
+                    "bank_name",
+                    "branch",
+                    "account_type_id",
+                    "account_number",
+                    "meigi",
+                    "bank_code",
+                    "branch_code",
                 ],
                 where: { shop_info_id: shopId },
                 include: [{ model: AccountTypeOption }],
@@ -128,14 +128,14 @@ router.get(
             if (!data) {
                 data = await BankAccount.findOne({
                     attributes: [
-                        'id',
-                        'bank_name',
-                        'branch',
-                        'account_type_id',
-                        'account_number',
-                        'meigi',
-                        'bank_code',
-                        'branch_code',
+                        "id",
+                        "bank_name",
+                        "branch",
+                        "account_type_id",
+                        "account_number",
+                        "meigi",
+                        "bank_code",
+                        "branch_code",
                     ],
                     where: { user_id: userId },
                     include: [{ model: AccountTypeOption }],
@@ -143,7 +143,7 @@ router.get(
             }
 
             if (!data) {
-                res.status(404).json({ message: '口座情報が見つかりません。' });
+                res.status(404).json({ message: "口座情報が見つかりません。" });
                 return;
             }
 
@@ -155,16 +155,16 @@ router.get(
 );
 
 router.get(
-    '/signup3/:id',
+    "/signup3/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await ShopInfo.findByPk(req.params.id, {
-                attributes: ['id', 'id_card_front', 'id_card_rear', 'permit_url'],
+                attributes: ["id", "id_card_front", "id_card_rear", "permit_url"],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -176,7 +176,7 @@ router.get(
 );
 
 router.get(
-    '/signup5/:id',
+    "/signup5/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = req.params.id;
@@ -184,19 +184,19 @@ router.get(
         try {
             const data = await ShopInfo.findByPk(shopId, {
                 attributes: [
-                    'id',
-                    'company_name',
-                    'shop_name',
-                    'phone_number',
-                    'email',
-                    'open_date_time',
-                    'founded_date',
-                    'member_count',
-                    'homepage_url',
-                    'company_number',
-                    'capital',
-                    'auto_trans',
-                    'open_info',
+                    "id",
+                    "company_name",
+                    "shop_name",
+                    "phone_number",
+                    "email",
+                    "open_date_time",
+                    "founded_date",
+                    "member_count",
+                    "homepage_url",
+                    "company_number",
+                    "capital",
+                    "auto_trans",
+                    "open_info",
                 ],
                 include: [
                     {
@@ -204,34 +204,34 @@ router.get(
                     },
                     {
                         model: Name,
-                        as: 'RepresentativeName',
-                        attributes: ['sei', 'mei', 'sei_kana', 'mei_kana'],
+                        as: "RepresentativeName",
+                        attributes: ["sei", "mei", "sei_kana", "mei_kana"],
                     },
                     {
                         model: Name,
-                        as: 'ContactName',
-                        attributes: ['sei', 'mei', 'sei_kana', 'mei_kana'],
+                        as: "ContactName",
+                        attributes: ["sei", "mei", "sei_kana", "mei_kana"],
                     },
                     {
                         model: Address,
-                        attributes: ['post_number', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["post_number", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
                     {
                         model: BankAccount,
-                        attributes: ['bank_name', 'branch_code', 'account_number', 'meigi'],
+                        attributes: ["bank_name", "branch_code", "account_number", "meigi"],
                         include: [{ model: AccountTypeOption }],
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 

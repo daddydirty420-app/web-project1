@@ -1,12 +1,12 @@
-import { Container } from '@/components';
-import { LoginForm } from './login-form';
-import Link from 'next/link';
-import styles from '@/styles/login.module.css';
-import { Metadata } from 'next';
+import { Container } from "@/components";
+import { LoginForm } from "./login-form";
+import Link from "next/link";
+import styles from "@/styles/login.module.css";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'ログイン',
-    description: 'ログインはこちら！',
+    title: "ログイン",
+    description: "ログインはこちら！",
     robots: {
         index: false,
         follow: false,

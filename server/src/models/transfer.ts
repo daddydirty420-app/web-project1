@@ -1,9 +1,9 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import TransReasonOption from './trans_reason_option.js';
-import User from './user.js';
-import BankAccount from './bank_account.js';
+import TransReasonOption from "./trans_reason_option.js";
+import User from "./user.js";
+import BankAccount from "./bank_account.js";
 
 export class Transfer extends Model {
     declare id: number;
@@ -21,13 +21,13 @@ export class Transfer extends Model {
 
     static associate() {
         Transfer.belongsTo(TransReasonOption, {
-            foreignKey: 'trans_reason_id',
+            foreignKey: "trans_reason_id",
         });
         Transfer.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
         Transfer.hasOne(BankAccount, {
-            foreignKey: 'transfer_id',
+            foreignKey: "transfer_id",
         });
     }
 
@@ -65,8 +65,8 @@ Transfer.init(
     },
     {
         sequelize,
-        modelName: 'Transfer',
-        tableName: 'transfer',
+        modelName: "Transfer",
+        tableName: "transfer",
         freezeTableName: true,
         timestamps: true,
     },

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './comment.module.css';
-import { useState } from 'react';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { Report } from '../others/report';
-import { Comment } from '../itemPageTypes';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./comment.module.css";
+import { useState } from "react";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { Report } from "../others/report";
+import { Comment } from "../itemPageTypes";
 
 type Props = {
     comment: Comment;
-    page: 'normal' | 'admin';
+    page: "normal" | "admin";
 };
 
 export const ReportFloat = ({ comment, page }: Props) => {

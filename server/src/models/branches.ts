@@ -1,6 +1,6 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../db.js';
-import Banks from './banks.js';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../db.js";
+import Banks from "./banks.js";
 
 export class Branches extends Model {
     declare id: number;
@@ -13,8 +13,8 @@ export class Branches extends Model {
 
     static associate() {
         Branches.belongsTo(Banks, {
-            foreignKey: 'bank_code',
-            targetKey: 'code',
+            foreignKey: "bank_code",
+            targetKey: "code",
         });
     }
 }
@@ -45,8 +45,8 @@ Branches.init(
     },
     {
         sequelize,
-        modelName: 'Branches',
-        tableName: 'branches',
+        modelName: "Branches",
+        tableName: "branches",
         freezeTableName: true,
         timestamps: false,
     },

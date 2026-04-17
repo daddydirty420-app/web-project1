@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { ItemConditionOption } from './types/type';
-import styles from './upload.module.css';
-import { InputTitle } from '@/components/inputForm';
+import { useEffect, useState } from "react";
+import { ItemConditionOption } from "./types/type";
+import styles from "./upload.module.css";
+import { InputTitle } from "@/components/inputForm";
 
 export type ConditionValue = {
     id: string;
@@ -18,7 +18,7 @@ type Props = {
 
 export const ConditionInput = ({ allCondition, value, onChange }: Props) => {
     const [openSelect, setOpenSelect] = useState(false);
-    const [conditionName, setConditionName] = useState('');
+    const [conditionName, setConditionName] = useState("");
 
     useEffect(() => {
         if (value.id) {

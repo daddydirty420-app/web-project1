@@ -1,9 +1,9 @@
-import { AppError } from '../../../errors.js';
-import { countItemPageComment } from '../../../services/comment.js';
-import { countItemLike, getItemLikeOne } from '../../../services/itemLike.js';
-import { getItemPageData } from '../../../services/items/index.js';
-import { getMeHighlight } from '../../../services/users.js';
-import { ItemPageMode } from '../../../types/usecaseType.js';
+import { AppError } from "../../../errors.js";
+import { countItemPageComment } from "../../../services/comment.js";
+import { countItemLike, getItemLikeOne } from "../../../services/itemLike.js";
+import { getItemPageData } from "../../../services/items/index.js";
+import { getMeHighlight } from "../../../services/users/query.js";
+import { ItemPageMode } from "../../../types/usecaseType.js";
 
 type Params = {
     itemId: number;
@@ -17,15 +17,15 @@ export const getItemPageUseCase = async ({ itemId, userId, mode }: Params) => {
 
     if (
         !item ||
-        (mode === 'normal' && !['active', 'soldout'].includes(item.status)) ||
-        (mode === 'draft' && !(item.status === 'draft')) ||
-        (mode === 'confirm' && item.status === 'deleted') ||
-        (mode === 'deleted' && !(item.status === 'deleted'))
+        (mode === "normal" && !["active", "soldout"].includes(item.status)) ||
+        (mode === "draft" && !(item.status === "draft")) ||
+        (mode === "confirm" && item.status === "deleted") ||
+        (mode === "deleted" && !(item.status === "deleted"))
     ) {
-        throw new AppError('ITEM_NOTFOUND', 404);
+        throw new AppError("ITEM_NOTFOUND", 404);
     }
 
-    if (mode === 'normal') {
+    if (mode === "normal") {
         const sellerMe = userId === item.seller_id;
 
         // like関連取得

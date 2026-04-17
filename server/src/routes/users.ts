@@ -1,23 +1,23 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, authenticateOptional } from '../middleware/index.js';
-import { User, BankAccount, AccountTypeOption } from '../models/index.js';
-import { getProfileMetadata, getStar } from '../services/users.js';
-import { getProfileUseCase } from '../usecases/user/getProfile.js';
-import { getMyPageUseCase } from '../usecases/user/getMyPage.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { AccountTypeOption, BankAccount, User } from "../models/index.js";
+import { getProfileMetadata, getStar } from "../services/users/query.js";
+import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
+import { getProfileUseCase } from "../usecases/user/getProfile.js";
 
 const router = Router();
 
-router.get('/me', authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
     res.json({ currentUserId: req.user?.id ?? null });
 });
 
-router.get('/me-admin', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get("/me-admin", authenticateToken, async (req: Request, res: Response): Promise<void> => {
     res.json({ admin: !!req.user!.admin });
 });
 
 // GET /:id/profile
-router.get('/:id/profile', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/profile", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = Number(req.params.id);
 
     const page = parseInt(req.query.page as string) || 1;
@@ -41,7 +41,7 @@ router.get('/:id/profile', async (req: Request, res: Response, next: NextFunctio
 });
 
 // GET /user/:id/star
-router.get('/:id/star', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/star", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = Number(req.params.id);
 
     try {
@@ -54,7 +54,7 @@ router.get('/:id/star', async (req: Request, res: Response, next: NextFunction):
 });
 
 // GET /user/:id/profile/metadata
-router.get('/:id/profile/metadata', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/profile/metadata", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = Number(req.params.id);
 
     try {
@@ -67,7 +67,7 @@ router.get('/:id/profile/metadata', async (req: Request, res: Response, next: Ne
 });
 
 // GET /user/my-page
-router.get('/my-page', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/my-page", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     try {
@@ -91,25 +91,25 @@ router.get('/my-page', authenticateToken, async (req: Request, res: Response, ne
 });
 
 router.get(
-    '/transfer-request',
+    "/transfer-request",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
         try {
             const user = await User.findByPk(userId, {
-                attributes: ['id', 'uriagekin'],
+                attributes: ["id", "uriagekin"],
                 include: [
                     {
                         model: BankAccount,
-                        attributes: ['id', 'bank_name', 'branch', 'account_type_id', 'account_number', 'meigi'],
+                        attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
                         include: [{ model: AccountTypeOption }],
                     },
                 ],
             });
 
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
@@ -121,18 +121,18 @@ router.get(
 );
 
 router.get(
-    '/transfer-points',
+    "/transfer-points",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
         try {
             const user = await User.findByPk(userId, {
-                attributes: ['id', 'points', 'uriagekin'],
+                attributes: ["id", "points", "uriagekin"],
             });
 
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 

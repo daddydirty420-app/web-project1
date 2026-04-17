@@ -1,6 +1,6 @@
-import { Op } from 'sequelize';
-import bcrypt from 'bcrypt';
-import moveToGlacier from './moveToGlacier.js';
+import { Op } from "sequelize";
+import bcrypt from "bcrypt";
+import moveToGlacier from "./moveToGlacier.js";
 import {
     User,
     UriagekinHistory,
@@ -30,16 +30,16 @@ import {
     OrderDeleted,
     Cancel,
     Orders,
-} from '../../models/index.js';
-import sequelize from '../../db.js';
-import crypto from 'crypto';
+} from "../../models/index.js";
+import sequelize from "../../db.js";
+import crypto from "crypto";
 
 async function deleteUser(currentUserId: number, adminId: number, deleteReason: string): Promise<{ success: boolean }> {
     const t = await sequelize.transaction();
 
     try {
         const user = await User.findByPk(currentUserId);
-        if (!user) throw new Error('ユーザーが見つかりません。');
+        if (!user) throw new Error("ユーザーが見つかりません。");
 
         const uriagekinAll = user.uriagekin;
         const pointsAll = user.points;
@@ -53,7 +53,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 user_id: currentUserId,
                 createdAt: { [Op.gte]: cutoffDate },
             },
-            order: [['createdAt', 'ASC']],
+            order: [["createdAt", "ASC"]],
         });
 
         for (const history of uriageHistories) {
@@ -74,7 +74,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 user_id: currentUserId,
                 createdAt: { [Op.gte]: cutoffDate },
             },
-            order: [['createdAt', 'ASC']],
+            order: [["createdAt", "ASC"]],
         });
 
         for (const history of pointsHistories) {
@@ -119,7 +119,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
             { transaction: t },
         );
 
-        const transferMoney = await Transfer.sum('trans_money', {
+        const transferMoney = await Transfer.sum("trans_money", {
             where: {
                 user_id: currentUserId,
                 trans_finish: false,
@@ -168,7 +168,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
         await Transfer.destroy({ where: { user_id: currentUserId }, transaction: t });
 
         const items = await Item.findAll({
-            attributes: ['id', 'name', 'explain', 'image_url', 'price'],
+            attributes: ["id", "name", "explain", "image_url", "price"],
             where: { seller_id: currentUserId },
             include: [{ model: Video }],
             transaction: t,
@@ -181,7 +181,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                 const orders = await Orders.findAll({
                     where: {
                         item_id: item.id,
-                        status: { [Op.notIn]: ['cancelled', 'returned'] },
+                        status: { [Op.notIn]: ["cancelled", "returned"] },
                     },
                     include: [
                         {
@@ -210,7 +210,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     for (const order of orders) {
                         await order.update(
                             {
-                                status: 'cancelled',
+                                status: "cancelled",
                             },
                             { transaction: t },
                         );
@@ -225,7 +225,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         await Cancel.upsert(
                             {
                                 orders_id: order.id,
-                                cancel_reason: '商品削除',
+                                cancel_reason: "商品削除",
                                 return_amount: order.total_amount,
                                 item_count: order.item_count,
                                 cancel_flag: true,
@@ -249,14 +249,14 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                                     `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
                                     `${
                                         buyerHasAccount
-                                            ? '口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。'
-                                            : ''
+                                            ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。"
+                                            : ""
                                     }`,
                             },
                             { transaction: t },
                         );
 
-                        const transferId = crypto.randomBytes(11).toString('hex');
+                        const transferId = crypto.randomBytes(11).toString("hex");
 
                         await Transfer.create(
                             {
@@ -274,9 +274,9 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                         deleteOrder.push({
                             orders_id: order.id,
                             delivery_id: order.Delivery.id,
-                            cancel_reason: '出品者削除',
-                            refund_status: '未返金',
-                            refund_method: '口座振込',
+                            cancel_reason: "出品者削除",
+                            refund_status: "未返金",
+                            refund_method: "口座振込",
                             refund_amount: order.total_amount,
                             deleted_by: adminId,
                         });
@@ -318,7 +318,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     thumbnail_url: newThumbnailUrl,
                     video_title: item.Video ? item.Video.title : null,
                     video_summary: item.Video ? item.Video.summary : null,
-                    delete_reason: '強制削除、ユーザー削除',
+                    delete_reason: "強制削除、ユーザー削除",
                     deleted_by: adminId,
                 });
 
@@ -326,7 +326,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
                     item_id: item.id,
                     delete_user_id: adminId,
                     delete_by_admin: true,
-                    delete_reason: '強制削除、ユーザー削除',
+                    delete_reason: "強制削除、ユーザー削除",
                 });
             }
 
@@ -341,7 +341,7 @@ async function deleteUser(currentUserId: number, adminId: number, deleteReason: 
 
         await user.update(
             {
-                user_name: '削除済みユーザー',
+                user_name: "削除済みユーザー",
                 user_introduction: null,
                 profile_image: null,
                 penalty_points: 0,

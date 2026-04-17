@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Item } from '../itemPageTypes';
-import styles from './deleted.module.css';
-import { useState } from 'react';
-import { X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { Item } from "../itemPageTypes";
+import styles from "./deleted.module.css";
+import { useState } from "react";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -22,14 +22,14 @@ export const Restore = ({ id, item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/restore`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
@@ -37,16 +37,16 @@ export const Restore = ({ id, item }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error('APIフェッチエラー：', res.status);
-                toast.error('商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください。');
+                console.error("APIフェッチエラー：", res.status);
+                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
                 return;
             }
 
-            toast.success('この商品を復元しました！');
+            toast.success("この商品を復元しました！");
             console.log(data.message);
             router.push(`/item/${id}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

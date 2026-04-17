@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import Item from './item.js';
-import User from './user.js';
+import Item from "./item.js";
+import User from "./user.js";
 
 export class ItemDeleteLogs extends Model {
     declare id: number;
@@ -15,10 +15,10 @@ export class ItemDeleteLogs extends Model {
 
     static associate() {
         ItemDeleteLogs.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         ItemDeleteLogs.belongsTo(User, {
-            foreignKey: 'delete_user_id',
+            foreignKey: "delete_user_id",
         });
     }
 
@@ -52,8 +52,8 @@ ItemDeleteLogs.init(
     },
     {
         sequelize,
-        modelName: 'ItemDeleteLogs',
-        tableName: 'item_delete_logs',
+        modelName: "ItemDeleteLogs",
+        tableName: "item_delete_logs",
         freezeTableName: true,
         timestamps: true,
     },

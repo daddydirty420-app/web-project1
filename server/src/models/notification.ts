@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class Notification extends Model {
     declare id: number;
@@ -15,7 +15,7 @@ export class Notification extends Model {
 
     static associate() {
         Notification.belongsTo(User, {
-            foreignKey: 'read_user_id',
+            foreignKey: "read_user_id",
         });
     }
 
@@ -50,8 +50,8 @@ Notification.init(
     },
     {
         sequelize,
-        modelName: 'Notification',
-        tableName: 'notification',
+        modelName: "Notification",
+        tableName: "notification",
         freezeTableName: true,
         timestamps: true,
     },

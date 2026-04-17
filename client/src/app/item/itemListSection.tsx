@@ -1,6 +1,6 @@
-import styles from './itemCommon.module.css';
-import { Items } from '@/types/itemListTypes';
-import { ItemListRow } from '@/components';
+import styles from "./itemCommon.module.css";
+import { Items } from "@/types/itemListTypes";
+import { ItemListRow } from "@/components";
 
 type Props = {
     itemList?: Items[];
@@ -9,7 +9,7 @@ type Props = {
 
 export const ItemListSection = ({ itemList, sellerMe }: Props) => {
     if (!itemList) {
-        console.error('itemListがありません。', itemList);
+        console.error("itemListがありません。", itemList);
         return;
     }
 

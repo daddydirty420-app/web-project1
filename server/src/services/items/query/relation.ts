@@ -1,6 +1,6 @@
 // 複数関連モデル取得
-import { Categories, Item, ItemShippingProfile, Sale, User, Video } from '../../../models/index.js';
-import { ItemIdParams } from '../../../types/serviceType/items/items.js';
+import { Categories, Item, ItemShippingProfile, Sale, User, Video } from "../../../models/index.js";
+import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
 export const getItem = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId);
@@ -9,15 +9,15 @@ export const getItem = ({ itemId }: ItemIdParams) => {
 export const getItemHighlight = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
         attributes: [
-            'id',
-            'name',
-            'price',
-            'attributes',
-            'first_image_url',
-            'gender_type',
-            'age_type',
-            'seller_id',
-            'status',
+            "id",
+            "name",
+            "price",
+            "attributes",
+            "first_image_url",
+            "gender_type",
+            "age_type",
+            "seller_id",
+            "status",
         ],
     });
 };
@@ -27,7 +27,7 @@ export const getItemWithCategory = ({ itemId }: ItemIdParams) => {
         include: [
             {
                 model: Categories,
-                as: 'Category',
+                as: "Category",
             },
         ],
     });
@@ -45,11 +45,11 @@ export const getItemWithVideoCategoriesUser = ({ itemId }: ItemIdParams) => {
             { model: Video },
             {
                 model: Categories,
-                as: 'Category',
+                as: "Category",
                 include: [
                     {
                         model: Categories,
-                        as: 'parent',
+                        as: "parent",
                         required: false,
                     },
                 ],

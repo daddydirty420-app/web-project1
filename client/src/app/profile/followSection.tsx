@@ -1,5 +1,5 @@
-import { FollowStat } from './followStat';
-import styles from './profile.module.css';
+import { FollowStat } from "./followStat";
+import styles from "./profile.module.css";
 
 type Props = {
     userId: string;
@@ -7,8 +7,8 @@ type Props = {
 
 export const FollowSection = async ({ userId }: Props) => {
     const res = await fetch(`${process.env.API_URL}/follow/${userId}/count`, {
-        method: 'GET',
-        cache: 'no-store',
+        method: "GET",
+        cache: "no-store",
     });
 
     if (!res.ok) {

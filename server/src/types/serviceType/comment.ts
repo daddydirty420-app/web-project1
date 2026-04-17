@@ -1,5 +1,5 @@
-import { Transaction } from 'sequelize';
-import { Comment } from '../../models/index.js';
+import { Transaction } from "sequelize";
+import { Comment } from "../../models/index.js";
 
 export type CommentIdParams = {
     commentId: number;

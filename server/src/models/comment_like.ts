@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
-import Comment from './comment.js';
+import User from "./user.js";
+import Comment from "./comment.js";
 
 export class CommentLike extends Model {
     declare id: number;
@@ -13,10 +13,10 @@ export class CommentLike extends Model {
 
     static associate() {
         CommentLike.belongsTo(Comment, {
-            foreignKey: 'comment_id',
+            foreignKey: "comment_id",
         });
         CommentLike.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -45,8 +45,8 @@ CommentLike.init(
     },
     {
         sequelize,
-        modelName: 'CommentLike',
-        tableName: 'comment_like',
+        modelName: "CommentLike",
+        tableName: "comment_like",
         freezeTableName: true,
         timestamps: true,
     },

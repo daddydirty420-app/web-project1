@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class PointsHistory extends Model {
     declare id: number;
@@ -13,7 +13,7 @@ export class PointsHistory extends Model {
 
     static associate() {
         PointsHistory.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -42,8 +42,8 @@ PointsHistory.init(
     },
     {
         sequelize,
-        modelName: 'PointsHistory',
-        tableName: 'points_history',
+        modelName: "PointsHistory",
+        tableName: "points_history",
         freezeTableName: true,
         timestamps: true,
     },

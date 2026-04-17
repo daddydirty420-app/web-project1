@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { Notification } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { Notification } from "../models/index.js";
 
 const router = Router();
 
 router.get(
-    '/my-notification',
+    "/my-notification",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -14,7 +14,7 @@ router.get(
 
             const notificationList = await Notification.findAll({
                 where: { read_user_id: currentUserId },
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
             });
 
             const unreadCount = await Notification.count({
@@ -35,7 +35,7 @@ router.get(
 );
 
 router.get(
-    '/unread-count',
+    "/unread-count",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {

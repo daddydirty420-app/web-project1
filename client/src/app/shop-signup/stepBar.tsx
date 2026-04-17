@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import styles from './stepBar.module.css';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { usePathname } from "next/navigation";
+import styles from "./stepBar.module.css";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export const StepBar = () => {
     const [width, setWidth] = useState(0);
@@ -16,9 +16,9 @@ export const StepBar = () => {
         setWidth(window.innerWidth);
 
         const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
-        return () => window.removeEventListener('resize', handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     useEffect(() => {
@@ -62,23 +62,23 @@ export const StepBar = () => {
             isDragging = false;
         }
 
-        el.addEventListener('touchstart', onTouchStart, { passive: true });
-        el.addEventListener('touchmove', onTouchMove, { passive: false });
-        el.addEventListener('touchend', onTouchEnd, { passive: true });
+        el.addEventListener("touchstart", onTouchStart, { passive: true });
+        el.addEventListener("touchmove", onTouchMove, { passive: false });
+        el.addEventListener("touchend", onTouchEnd, { passive: true });
 
         return () => {
-            el.removeEventListener('touchstart', onTouchStart as any);
-            el.removeEventListener('touchmove', onTouchMove as any);
-            el.removeEventListener('touchend', onTouchEnd as any);
+            el.removeEventListener("touchstart", onTouchStart as any);
+            el.removeEventListener("touchmove", onTouchMove as any);
+            el.removeEventListener("touchend", onTouchEnd as any);
         };
     }, []);
 
     const steps = useMemo(
         () => [
-            { label: '事業者情報', path: '/shop-signup/step1', shortLabel: '事業者情報' },
-            { label: '口座登録', path: '/shop-signup/step2', shortLabel: '口座登録' },
-            { label: '身分証・証明書', path: '/shop-signup/step3', shortLabel: '身分証' },
-            { label: 'オプション', path: '/shop-signup/step4', shortLabel: 'オプション' },
+            { label: "事業者情報", path: "/shop-signup/step1", shortLabel: "事業者情報" },
+            { label: "口座登録", path: "/shop-signup/step2", shortLabel: "口座登録" },
+            { label: "身分証・証明書", path: "/shop-signup/step3", shortLabel: "身分証" },
+            { label: "オプション", path: "/shop-signup/step4", shortLabel: "オプション" },
         ],
         [],
     );
@@ -103,7 +103,7 @@ export const StepBar = () => {
 
         wrapper.scrollTo({
             left: targetScroll,
-            behavior: 'smooth',
+            behavior: "smooth",
         });
     }, [activeIndex, width, pathname, steps]);
 
@@ -125,13 +125,13 @@ export const StepBar = () => {
                             <div className={styles.stepInner}>
                                 <div
                                     className={`${styles.circle} ${
-                                        isActive ? styles.active : ''
-                                    } ${isCompleted ? styles.completed : ''}`}
+                                        isActive ? styles.active : ""
+                                    } ${isCompleted ? styles.completed : ""}`}
                                 >
-                                    {isCompleted ? '✓' : index + 1}
+                                    {isCompleted ? "✓" : index + 1}
                                 </div>
 
-                                <span className={`${styles.label} ${isActive ? styles.labelActive : ''}`}>
+                                <span className={`${styles.label} ${isActive ? styles.labelActive : ""}`}>
                                     {width <= 480 ? step.shortLabel : step.label}
                                 </span>
                             </div>

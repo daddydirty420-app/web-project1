@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import styles from './seller.module.css';
-import Link from 'next/link';
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "./seller.module.css";
+import Link from "next/link";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -18,12 +18,12 @@ export const UploadButton = ({ id }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/copy-upload`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -39,7 +39,7 @@ export const UploadButton = ({ id }: Props) => {
                 console.error(errorData.message);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

@@ -1,4 +1,4 @@
-import { Video } from '../models/index.js';
+import { Video } from "../models/index.js";
 import {
     CreateVideoCopyUploadParams,
     CreateVideoParams,
@@ -6,7 +6,7 @@ import {
     UpdateStatusParams,
     UpdateVideoParams,
     VideoIdParams,
-} from '../types/serviceType/video.js';
+} from "../types/serviceType/video.js";
 
 export const getVideo = ({ videoId }: VideoIdParams) => {
     return Video.findByPk(videoId);

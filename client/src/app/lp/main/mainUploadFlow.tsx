@@ -1,10 +1,10 @@
-import styles from '../lp.module.css';
-import { MainP } from './mainComponent/mainP';
-import { MainH3 } from './mainComponent/mainh3';
-import { MainH2 } from './mainComponent/mainh2';
-import { UploadButton } from '../button/uploadButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faCamera, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import styles from "../lp.module.css";
+import { MainP } from "./mainComponent/mainP";
+import { MainH3 } from "./mainComponent/mainh3";
+import { MainH2 } from "./mainComponent/mainh2";
+import { UploadButton } from "../button/uploadButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBoxOpen, faCamera, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
     loggedIn: boolean;

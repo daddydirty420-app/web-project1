@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import fetchAddressFromZip from '../services/old/addressService.js';
-import { Address, TodouhukenOption } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import fetchAddressFromZip from "../services/old/addressService.js";
+import { Address, TodouhukenOption } from "../models/index.js";
 
 const router = Router();
 
 router.patch(
-    '/address-edit/:id',
+    "/address-edit/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const todouhuken = req.body.todouhuken;
@@ -19,12 +19,12 @@ router.patch(
                 include: [
                     {
                         model: TodouhukenOption,
-                        as: 'AddressTodouhuken',
+                        as: "AddressTodouhuken",
                     },
                 ],
             });
             if (!address) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -34,7 +34,7 @@ router.patch(
                 },
             });
             if (!todouhukenData || todouhukenData.id < 1 || todouhukenData.id > 47) {
-                res.status(404).json({ message: '都道府県が不正な値です。' });
+                res.status(404).json({ message: "都道府県が不正な値です。" });
                 return;
             }
 
@@ -42,17 +42,17 @@ router.patch(
                 const fromZip = await fetchAddressFromZip(postNumber);
 
                 if (fromZip.todouhuken_name !== todouhuken) {
-                    res.status(400).json({ message: '郵便番号と都道府県が一致しません。' });
+                    res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
                     return;
                 }
 
                 if (fromZip.shikutyouson !== shikutyouson) {
-                    res.status(400).json({ message: '郵便番号と市区町村が一致しません。' });
+                    res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
                     return;
                 }
             } catch (err) {
-                console.error('住所チェックエラー：', err);
-                res.status(400).json({ message: '郵便番号が不正です。' });
+                console.error("住所チェックエラー：", err);
+                res.status(400).json({ message: "郵便番号が不正です。" });
                 return;
             }
 
@@ -64,29 +64,29 @@ router.patch(
                 building: req.body.building,
             });
 
-            res.status(200).json({ message: '住所を更新しました。' });
+            res.status(200).json({ message: "住所を更新しました。" });
         } catch (err) {
             next(err);
         }
     },
 );
 
-router.get('/myaddress', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/myaddress", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Address.findOne({
-            attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
+            attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
             where: { user_id: req.user!.id },
             include: [
                 {
                     model: TodouhukenOption,
-                    as: 'AddressTodouhuken',
+                    as: "AddressTodouhuken",
                     required: false,
                 },
             ],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 
@@ -97,23 +97,23 @@ router.get('/myaddress', authenticateToken, async (req: Request, res: Response, 
 });
 
 router.get(
-    '/delivery-address/:id',
+    "/delivery-address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Address.findOne({
-                attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building', 'delivery_id', 'user_id'],
+                attributes: ["id", "post_number", "shikutyouson", "banchi", "building", "delivery_id", "user_id"],
                 where: { delivery_id: req.params.id },
                 include: [
                     {
                         model: TodouhukenOption,
-                        as: 'AddressTodouhuken',
+                        as: "AddressTodouhuken",
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -124,11 +124,11 @@ router.get(
     },
 );
 
-router.get('/get-address', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/get-address", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const zipcode = req.query.zipcode as string;
 
     if (!zipcode) {
-        res.status(400).json({ message: '郵便番号が必要です。' });
+        res.status(400).json({ message: "郵便番号が必要です。" });
         return;
     }
 

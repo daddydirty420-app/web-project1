@@ -1,7 +1,7 @@
-import { TitleAndBack } from '@/components';
-import { TokuteiContainer, TokuteiSection, SecondHeader } from '@/components/tokutei';
-import styles from '@/styles/tokutei.module.css';
-import Link from 'next/link';
+import { TitleAndBack } from "@/components";
+import { TokuteiContainer, TokuteiSection, SecondHeader } from "@/components/tokutei";
+import styles from "@/styles/tokutei.module.css";
+import Link from "next/link";
 
 export const Content = () => {
     return (

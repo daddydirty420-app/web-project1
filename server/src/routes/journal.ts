@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../middleware/index.js';
-import { Op } from 'sequelize';
-import { Journal, JournalReasonOption } from '../models/index.js';
-import { subDays } from 'date-fns';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { Op } from "sequelize";
+import { Journal, JournalReasonOption } from "../models/index.js";
+import { subDays } from "date-fns";
 
 const router = Router();
 
 router.get(
-    '/admin/list',
+    "/admin/list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -24,7 +24,7 @@ router.get(
                         [Op.between]: [start, end],
                     },
                 },
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
                 include: [{ model: JournalReasonOption }],
             });
 

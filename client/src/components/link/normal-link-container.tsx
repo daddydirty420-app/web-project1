@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import styles from './normal-link.module.css';
+import { ReactNode } from "react";
+import styles from "./normal-link.module.css";
 
 type NormalLinkContainerProps = {
     children: ReactNode;

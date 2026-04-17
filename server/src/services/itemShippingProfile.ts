@@ -1,9 +1,9 @@
-import { ItemShippingProfile } from '../models/index.js';
+import { ItemShippingProfile } from "../models/index.js";
 import {
     CreateShippingCopyUploadParams,
     CreateShippingParams,
     UpdateShippingParams,
-} from '../types/serviceType/itemShippingProfile.js';
+} from "../types/serviceType/itemShippingProfile.js";
 
 export const createShipping = async ({ itemId, transaction }: CreateShippingParams) => {
     await ItemShippingProfile.create(

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import styles from './upload.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { InputTitle } from '@/components/inputForm';
+import Image from "next/image";
+import styles from "./upload.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { InputTitle } from "@/components/inputForm";
 
 export type ItemImageValue = {
     id: string;
@@ -32,7 +32,7 @@ export const ItemImage = ({ images, onAdd, onRemove }: Props) => {
                     onChange={(e) => {
                         if (e.target.files) {
                             onAdd(e.target.files);
-                            e.target.value = '';
+                            e.target.value = "";
                         }
                     }}
                     disabled={images.length >= 10}

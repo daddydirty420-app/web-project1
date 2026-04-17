@@ -1,6 +1,6 @@
-import { TitleAndBack } from '@/components';
-import { TermsMiniSection, TermsList, TermsListDiv } from '@/components/terms';
-import styles from '@/styles/terms.module.css';
+import { TitleAndBack } from "@/components";
+import { TermsMiniSection, TermsList, TermsListDiv } from "@/components/terms";
+import styles from "@/styles/terms.module.css";
 
 export const Content = () => {
     return (

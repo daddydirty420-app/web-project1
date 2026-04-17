@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 export const ToastBoundary = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -10,10 +10,10 @@ export const ToastBoundary = ({ children }: { children: React.ReactNode }) => {
                 toastOptions={{
                     duration: 2500,
                     style: {
-                        background: '#111',
-                        color: '#fff',
-                        fontSize: '13px',
-                        borderRadius: '8px',
+                        background: "#111",
+                        color: "#fff",
+                        fontSize: "13px",
+                        borderRadius: "8px",
                     },
                 }}
             />

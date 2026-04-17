@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getProfileItemsWithCount } from '../../../services/items/index.js';
+import { Op } from "sequelize";
+import { getProfileItemsWithCount } from "../../../services/items/index.js";
 
 type Params = {
     page: number;
@@ -9,7 +9,7 @@ type Params = {
 
 export const getProfileItemsUseCase = async ({ page, limit, pageUserId }: Params) => {
     const where: any = {
-        status: { [Op.in]: ['active', 'soldout'] },
+        status: { [Op.in]: ["active", "soldout"] },
         seller_id: pageUserId,
     };
 

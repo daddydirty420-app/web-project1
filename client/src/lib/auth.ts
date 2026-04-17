@@ -1,5 +1,5 @@
-import { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 interface AuthUser {
     id: string;
@@ -14,22 +14,22 @@ interface AuthUser {
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
-            id: 'credentials',
-            name: 'Credentials',
+            id: "credentials",
+            name: "Credentials",
             credentials: {
-                email: { label: 'email', type: 'text' },
-                password: { label: 'Password', type: 'password' },
-                rememberMe: { label: 'RememberMe', type: 'checkbox' },
+                email: { label: "email", type: "text" },
+                password: { label: "Password", type: "password" },
+                rememberMe: { label: "RememberMe", type: "checkbox" },
             },
             async authorize(credentials): Promise<AuthUser | null> {
                 if (!credentials?.email || !credentials?.password) return null;
 
-                const rememberMe = credentials.rememberMe === 'true';
+                const rememberMe = credentials.rememberMe === "true";
 
                 const res = await fetch(`${process.env.API_URL}/auth/login`, {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         email: credentials.email,
@@ -54,20 +54,20 @@ export const authOptions: NextAuthOptions = {
         }),
 
         CredentialsProvider({
-            id: 'verify',
-            name: 'SingupVerify',
+            id: "verify",
+            name: "SingupVerify",
             credentials: {
-                verificationCode: { label: 'verificationCode', type: 'text' },
-                rememberMe: { label: 'RememberMe', type: 'checkbox' },
+                verificationCode: { label: "verificationCode", type: "text" },
+                rememberMe: { label: "RememberMe", type: "checkbox" },
             },
             async authorize(credentials): Promise<AuthUser | null> {
                 if (!credentials?.verificationCode) return null;
 
-                const rememberMe = credentials.rememberMe === 'true';
+                const rememberMe = credentials.rememberMe === "true";
 
                 const res = await fetch(`${process.env.API_URL}/auth/signup-verify`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         verificationCode: credentials.verificationCode,
                         rememberMe,
@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
     ],
 
     session: {
-        strategy: 'jwt',
+        strategy: "jwt",
     },
     jwt: {
         maxAge: 30 * 24 * 60 * 60,
@@ -113,7 +113,7 @@ export const authOptions: NextAuthOptions = {
                 return token;
             }
 
-            if (trigger === 'update' && session?.accessToken) {
+            if (trigger === "update" && session?.accessToken) {
                 token.accessToken = session.accessToken;
 
                 const now = Math.floor(Date.now() / 1000);
@@ -121,7 +121,7 @@ export const authOptions: NextAuthOptions = {
             }
 
             if (!token.accessToken || !token.refreshToken) {
-                token.error = 'MissingTokens';
+                token.error = "MissingTokens";
                 return token;
             }
 
@@ -144,6 +144,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     pages: {
-        signIn: '/login',
+        signIn: "/login",
     },
 };

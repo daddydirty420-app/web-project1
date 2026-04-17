@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import styles from './confirm.module.css';
-import { useState } from 'react';
-import { X } from 'lucide-react';
-import { TermsList } from '@/components/terms';
-import { useRouter } from 'next/navigation';
-import { getAccessToken } from '@/lib/getAccessToken';
+import Link from "next/link";
+import styles from "./confirm.module.css";
+import { useState } from "react";
+import { X } from "lucide-react";
+import { TermsList } from "@/components/terms";
+import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -19,7 +19,7 @@ export const UploadButton = ({ id }: Props) => {
 
     const upload = async () => {
         if (!check) {
-            alert('利用規約に同意し、チェックしてください。');
+            alert("利用規約に同意し、チェックしてください。");
             return;
         }
 
@@ -27,19 +27,19 @@ export const UploadButton = ({ id }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/publish`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
 
             if (!res.ok) {
-                alert('サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください。');
+                alert("サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください。");
                 return;
             }
 

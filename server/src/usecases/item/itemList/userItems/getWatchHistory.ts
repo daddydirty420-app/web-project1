@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getUserItemsWatchList } from '../../../../services/watchHistory.js';
+import { Op } from "sequelize";
+import { getUserItemsWatchList } from "../../../../services/watchHistory.js";
 
 type Params = {
     page: number;
@@ -12,7 +12,7 @@ export const getUserItemsWatchUseCase = async ({ page, userId, keyword }: Params
     const offset = (page - 1) * limit;
 
     const itemWhere: any = {
-        status: ['active', 'soldout'],
+        status: ["active", "soldout"],
     };
 
     if (keyword) {

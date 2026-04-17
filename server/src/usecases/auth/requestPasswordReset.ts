@@ -1,7 +1,7 @@
-import { AppError } from '../../errors.js';
-import { createTokenResetPW } from '../../services/tokenPasswordReset.js';
-import { getUserEmailOne } from '../../services/users.js';
-import crypto from 'crypto';
+import crypto from "crypto";
+import { AppError } from "../../errors.js";
+import { createTokenResetPW } from "../../services/tokenPasswordReset.js";
+import { getUserEmailOne } from "../../services/users/query.js";
 
 type Params = {
     email: string;
@@ -11,10 +11,10 @@ export const requestPasswordResetUseCase = async ({ email }: Params) => {
     // ユーザー取得
     const user = await getUserEmailOne({ email });
 
-    if (!user) throw new AppError('USER_NOT_FOUND', 404);
+    if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
     // pwリセットトークン発行
-    const newResetToken = crypto.randomBytes(20).toString('hex');
+    const newResetToken = crypto.randomBytes(20).toString("hex");
     const newResetTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
 
     // DB登録
@@ -26,7 +26,7 @@ export const requestPasswordResetUseCase = async ({ email }: Params) => {
         },
     });
 
-    const resetUrl = `${process.env.CLIENT_URL}/login/new-pw/${newResetToken}`;
+    const resetUrl = `${process.env.CLIENT_URL}/login/new-pw?token=${newResetToken}`;
 
     // メール送信処理
 };

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useFollowStatus, updateFollowCache } from '@/hooks/useFollow';
-import styles from './followButton.module.css';
-import clsx from 'clsx';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { useFollowStatus, updateFollowCache } from "@/hooks/useFollow";
+import styles from "./followButton.module.css";
+import clsx from "clsx";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     targetUserId: string;
@@ -22,12 +22,12 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -35,7 +35,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -47,19 +47,19 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
         } catch (err) {
             updateFollowCache(targetUserId, currentUserId, true);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

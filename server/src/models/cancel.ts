@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import CancelFeeReturnOption from './cancel_fee_return_option.js';
-import Orders from './orders.js';
+import CancelFeeReturnOption from "./cancel_fee_return_option.js";
+import Orders from "./orders.js";
 
 export class Cancel extends Model {
     declare id: number;
@@ -17,10 +17,10 @@ export class Cancel extends Model {
 
     static associate() {
         Cancel.belongsTo(CancelFeeReturnOption, {
-            foreignKey: 'cancel_fee_return_id',
+            foreignKey: "cancel_fee_return_id",
         });
         Cancel.belongsTo(Orders, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
     }
 
@@ -54,8 +54,8 @@ Cancel.init(
     },
     {
         sequelize,
-        modelName: 'Cancel',
-        tableName: 'cancel',
+        modelName: "Cancel",
+        tableName: "cancel",
         freezeTableName: true,
         timestamps: true,
     },

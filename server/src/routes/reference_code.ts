@@ -1,18 +1,18 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { ReferenceCode } from '../models/index.js';
-import { outputReferenceCodeUseCase } from '../usecases/referenceCode/output.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { ReferenceCode } from "../models/index.js";
+import { outputReferenceCodeUseCase } from "../usecases/referenceCode/output.js";
 
 const router = Router();
 
-router.post('/input', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post("/input", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { input } = req.body;
         const currentUserId = req.user!.id;
 
         if (!input) {
-            res.status(400).json({ message: '紹介コードがありません。' });
+            res.status(400).json({ message: "紹介コードがありません。" });
             return;
         }
 
@@ -30,14 +30,14 @@ router.post('/input', authenticateToken, async (req: Request, res: Response, nex
 });
 
 // POST /reference-code/output
-router.post('/output', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post("/output", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     try {
         const output = await outputReferenceCodeUseCase({ userId });
 
         res.status(200).json({
-            message: '紹介コードを生成しました。',
+            message: "紹介コードを生成しました。",
             output,
         });
     } catch (err) {

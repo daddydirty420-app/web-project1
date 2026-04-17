@@ -1,5 +1,5 @@
-import styles from './item.module.css';
-import { Item } from '../itemPageTypes';
+import styles from "./item.module.css";
+import { Item } from "../itemPageTypes";
 
 type Props = {
     item: Item;

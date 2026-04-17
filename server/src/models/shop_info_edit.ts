@@ -1,12 +1,12 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
-import ShopInfo from './shop_info.js';
-import ComOrFreeOption from './com_or_free_option.js';
-import Address from './address.js';
-import Name from './name.js';
-import BankAccount from './bank_account.js';
+import User from "./user.js";
+import ShopInfo from "./shop_info.js";
+import ComOrFreeOption from "./com_or_free_option.js";
+import Address from "./address.js";
+import Name from "./name.js";
+import BankAccount from "./bank_account.js";
 
 export class ShopInfoEdit extends Model {
     declare id: number;
@@ -30,22 +30,22 @@ export class ShopInfoEdit extends Model {
 
     static associate() {
         ShopInfoEdit.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
         ShopInfoEdit.belongsTo(ShopInfo, {
-            foreignKey: 'shop_info_id',
+            foreignKey: "shop_info_id",
         });
         ShopInfoEdit.belongsTo(ComOrFreeOption, {
-            foreignKey: 'com_or_free_id',
+            foreignKey: "com_or_free_id",
         });
         ShopInfoEdit.hasOne(Address, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
         ShopInfoEdit.hasOne(Name, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
         ShopInfoEdit.hasOne(BankAccount, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
     }
 
@@ -86,7 +86,7 @@ ShopInfoEdit.init(
             validate: {
                 maxArrayLength(value: any[]) {
                     if (value && value.length > 10) {
-                        throw new Error('画像は最大10枚までです。');
+                        throw new Error("画像は最大10枚までです。");
                     }
                 },
             },
@@ -94,8 +94,8 @@ ShopInfoEdit.init(
     },
     {
         sequelize,
-        modelName: 'ShopInfoEdit',
-        tableName: 'shop_info_edit',
+        modelName: "ShopInfoEdit",
+        tableName: "shop_info_edit",
         freezeTableName: true,
         timestamps: true,
     },

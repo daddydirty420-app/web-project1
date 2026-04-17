@@ -1,34 +1,34 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { Op } from 'sequelize';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
-import { User, Item, Video } from '../../models/index.js';
-import { subDays } from 'date-fns';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { Op } from "sequelize";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { User, Item, Video } from "../../models/index.js";
+import { subDays } from "date-fns";
 
 const router = Router();
 
 router.get(
-    '/check',
+    "/check",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'uploaded_date', 'first_item_image'],
+                attributes: ["id", "name", "uploaded_date", "first_item_image"],
                 where: {
                     public: true,
                     checked: false,
                 },
-                order: [['uploaded_date', 'ASC']],
+                order: [["uploaded_date", "ASC"]],
                 limit: 30,
                 include: [
                     {
                         model: Video,
-                        attributes: ['id', 'video_url', 'thumbnail_url', 'title'],
+                        attributes: ["id", "video_url", "thumbnail_url", "title"],
                     },
                     {
                         model: User,
-                        attributes: ['id', 'user_name', 'email'],
+                        attributes: ["id", "user_name", "email"],
                     },
                 ],
             });
@@ -64,26 +64,26 @@ router.get(
 );
 
 router.get(
-    '/recommend-item-list',
+    "/recommend-item-list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'status', 'uploaded_at', 'first_image_url'],
+                attributes: ["id", "name", "status", "uploaded_at", "first_image_url"],
                 where: {
-                    status: 'active',
+                    status: "active",
                     recommend: true,
                 },
-                order: [['Item.uploaded_at', 'DESC']],
+                order: [["Item.uploaded_at", "DESC"]],
                 include: [
                     {
                         model: Video,
-                        attributes: ['id', 'video_url', 'thumbnail_url', 'title'],
+                        attributes: ["id", "video_url", "thumbnail_url", "title"],
                     },
                     {
                         model: User,
-                        attributes: ['id', 'user_name', 'email'],
+                        attributes: ["id", "user_name", "email"],
                     },
                 ],
             });

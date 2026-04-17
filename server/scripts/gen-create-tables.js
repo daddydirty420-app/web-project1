@@ -1,18 +1,18 @@
 // scripts/gen-create-tables.js
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const dbModule = require('../models');
+const fs = require("fs");
+const path = require("path");
+const dbModule = require("../models");
 const { sequelize, Sequelize, ...models } = dbModule;
 
 (async () => {
     const timestamp = new Date()
         .toISOString()
-        .replace(/[-T:.Z]/g, '')
+        .replace(/[-T:.Z]/g, "")
         .slice(0, 14);
     const filename = `${timestamp}-create-all-tables.js`;
-    const outPath = path.join(__dirname, '../migrations', filename);
+    const outPath = path.join(__dirname, "../migrations", filename);
 
     let upLines = [];
     let downLines = [];
@@ -27,21 +27,21 @@ const { sequelize, Sequelize, ...models } = dbModule;
         function mapType(typeObj) {
             const key = typeObj.key || typeObj.toString().toUpperCase();
             switch (key) {
-                case 'BOOLEAN':
-                    return 'Sequelize.BOOLEAN';
-                case 'INTEGER':
-                    return 'Sequelize.INTEGER';
-                case 'BIGINT':
-                    return 'Sequelize.BIGINT';
-                case 'DECIMAL':
-                    return 'Sequelize.DECIMAL';
-                case 'DATE':
-                    return 'Sequelize.DATE';
+                case "BOOLEAN":
+                    return "Sequelize.BOOLEAN";
+                case "INTEGER":
+                    return "Sequelize.INTEGER";
+                case "BIGINT":
+                    return "Sequelize.BIGINT";
+                case "DECIMAL":
+                    return "Sequelize.DECIMAL";
+                case "DATE":
+                    return "Sequelize.DATE";
                 // TEXT/STRING系はまとめて
-                case 'TEXT':
-                case 'STRING':
+                case "TEXT":
+                case "STRING":
                 default:
-                    return 'Sequelize.TEXT';
+                    return "Sequelize.TEXT";
             }
         }
 
@@ -52,19 +52,19 @@ const { sequelize, Sequelize, ...models } = dbModule;
             const typeExpr = mapType(def.type);
 
             const opts = [`type: ${typeExpr}`];
-            if (def.allowNull === false) opts.push('allowNull: false');
-            if (['string', 'number', 'boolean'].includes(typeof def.defaultValue)) {
+            if (def.allowNull === false) opts.push("allowNull: false");
+            if (["string", "number", "boolean"].includes(typeof def.defaultValue)) {
                 opts.push(`defaultValue: ${JSON.stringify(def.defaultValue)}`);
             } else if (def.defaultValue != null) {
                 opts.push(`// TODO: defaultValue is non-primitive, set manually`);
             }
-            if (def.primaryKey) opts.push('primaryKey: true');
+            if (def.primaryKey) opts.push("primaryKey: true");
 
-            upLines.push(`      ${col}: { ${opts.join(', ')} },`);
+            upLines.push(`      ${col}: { ${opts.join(", ")} },`);
         }
 
         upLines.push(`    });`);
-        upLines.push('');
+        upLines.push("");
         downLines.push(`    await queryInterface.dropTable('${tableName}');`);
     }
 
@@ -72,16 +72,16 @@ const { sequelize, Sequelize, ...models } = dbModule;
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-${upLines.join('\n')}
+${upLines.join("\n")}
   },
 
   down: async (queryInterface, Sequelize) => {
-${downLines.join('\n')}
+${downLines.join("\n")}
   }
 };
 `;
 
-    fs.writeFileSync(outPath, content, 'utf8');
-    console.log('✨ Migration generated:', filename);
+    fs.writeFileSync(outPath, content, "utf8");
+    console.log("✨ Migration generated:", filename);
     process.exit(0);
 })();

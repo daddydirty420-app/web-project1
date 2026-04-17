@@ -1,7 +1,7 @@
-import { AppError } from '../../errors.js';
-import { createItemReport, getItemReportOption } from '../../services/itemReport.js';
-import { getItem, updateReportScore } from '../../services/items/index.js';
-import { getUser } from '../../services/users.js';
+import { AppError } from "../../errors.js";
+import { createItemReport, getItemReportOption } from "../../services/itemReport.js";
+import { getItem, updateReportScore } from "../../services/items/index.js";
+import { getUser } from "../../services/users/query.js";
 
 type Params = {
     itemId: number;
@@ -13,17 +13,17 @@ export const createItemReportUseCase = async ({ itemId, userId, optionId }: Para
     // option取得
     const reportOption = await getItemReportOption({ optionId });
 
-    if (!reportOption) throw new AppError('OPTION_NOT_FOUND', 404);
+    if (!reportOption) throw new AppError("OPTION_NOT_FOUND", 404);
 
     // item取得
     const item = await getItem({ itemId });
 
-    if (!item) throw new AppError('ITEM_NOT_FOUND', 404);
+    if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
     // user取得
     const user = await getUser({ userId });
 
-    if (!user) throw new AppError('USER_NOT_FOUND', 404);
+    if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
     // ItemReport作成
     await createItemReport({
@@ -43,6 +43,6 @@ export const createItemReportUseCase = async ({ itemId, userId, optionId }: Para
             report_score: newReportScore,
         },
     }).catch((err) => {
-        console.error('service updateReportScore error:', err);
+        console.error("service updateReportScore error:", err);
     });
 };

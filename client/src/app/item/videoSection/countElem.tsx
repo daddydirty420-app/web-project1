@@ -1,7 +1,7 @@
-import styles from './video.module.css';
-import { Item } from '../itemPageTypes';
-import { Like } from './like';
-import { formatRelativeTime } from '@/lib/formatRelativeTime';
+import styles from "./video.module.css";
+import { Item } from "../itemPageTypes";
+import { Like } from "./like";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
 
 type Props = {
     id: string;
@@ -9,14 +9,14 @@ type Props = {
     sellerMe?: boolean;
     likeCount?: number;
     isLike?: boolean;
-    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
+    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     loggedIn: boolean;
 };
 
 export const CountElem = ({ id, item, sellerMe, likeCount, isLike, page, loggedIn }: Props) => {
     return (
         <section className={styles.countElem}>
-            {['normal', 'admin'].includes(page) && (
+            {["normal", "admin"].includes(page) && (
                 <>
                     <div className={styles.goodDiv}>
                         <Like
@@ -24,7 +24,7 @@ export const CountElem = ({ id, item, sellerMe, likeCount, isLike, page, loggedI
                             sellerMe={sellerMe}
                             initialCount={likeCount}
                             initialLike={isLike}
-                            page={page as 'normal' | 'admin'}
+                            page={page as "normal" | "admin"}
                             loggedIn={loggedIn}
                         />
                     </div>
@@ -41,14 +41,14 @@ export const CountElem = ({ id, item, sellerMe, likeCount, isLike, page, loggedI
                 </>
             )}
 
-            {['draft', 'confirm'].includes(page) && (
+            {["draft", "confirm"].includes(page) && (
                 <div className={styles.dateFlex}>
                     <p className={styles.countText}>保存日時：</p>
                     <p className={styles.countNumber}>{formatRelativeTime(item.save_at)}</p>
                 </div>
             )}
 
-            {page === 'deleted' && (
+            {page === "deleted" && (
                 <div className={styles.dateFlex}>
                     <p className={styles.countText}>削除日時：</p>
                     <p className={styles.countNumber}>{formatRelativeTime(item.deleted_at)}</p>

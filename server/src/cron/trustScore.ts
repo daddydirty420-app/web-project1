@@ -1,12 +1,12 @@
-import cron from 'node-cron';
-import { Op } from 'sequelize';
-import { Comment, Item, User } from '../models/index.js';
-import sequelize from '../db.js';
+import cron from "node-cron";
+import { Op } from "sequelize";
+import { Comment, Item, User } from "../models/index.js";
+import sequelize from "../db.js";
 
 export const startTrustScoreCron = () => {
     // report_trust_score 0.3 → 1.0 ユーザー信頼度
     cron.schedule(
-        '0 12 * * *',
+        "0 12 * * *",
         async () => {
             const thirtyDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30);
 
@@ -18,7 +18,7 @@ export const startTrustScoreCron = () => {
             });
 
             if (!users || users.length === 0) {
-                console.log(' [cron] 30日経過ユーザーはいません');
+                console.log(" [cron] 30日経過ユーザーはいません");
                 return;
             }
 
@@ -41,17 +41,17 @@ export const startTrustScoreCron = () => {
                 console.log(`[cron] 30日経過ユーザー${users.length}件の報告信頼度を1.0にしました`);
             } catch (err) {
                 await t.rollback();
-                console.log('[cron] 30日経過user.report_trust_scoreエラー：', err);
+                console.log("[cron] 30日経過user.report_trust_scoreエラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 
     // 商品信頼度 1日0.9倍
     cron.schedule(
-        '0 12 * * *',
+        "0 12 * * *",
         async () => {
             const items = await Item.findAll({
                 where: {
@@ -60,7 +60,7 @@ export const startTrustScoreCron = () => {
             });
 
             if (!items || items.length === 0) {
-                console.log(' [cron] report_score減点商品はありません');
+                console.log(" [cron] report_score減点商品はありません");
                 return;
             }
 
@@ -83,17 +83,17 @@ export const startTrustScoreCron = () => {
                 console.log(`[cron] ${items.length}件の商品のreport_scoreを減点しました`);
             } catch (err) {
                 await t.rollback();
-                console.log('[cron] 商品report_score減点エラー：', err);
+                console.log("[cron] 商品report_score減点エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 
     // コメント信頼度 1日0.9倍
     cron.schedule(
-        '0 12 * * *',
+        "0 12 * * *",
         async () => {
             const comments = await Comment.findAll({
                 where: {
@@ -102,7 +102,7 @@ export const startTrustScoreCron = () => {
             });
 
             if (!comments || comments.length === 0) {
-                console.log(' [cron] report_score減点コメントはありません');
+                console.log(" [cron] report_score減点コメントはありません");
                 return;
             }
 
@@ -125,11 +125,11 @@ export const startTrustScoreCron = () => {
                 console.log(`[cron] ${comments.length}件の商品のreport_scoreを減点しました`);
             } catch (err) {
                 await t.rollback();
-                console.log('[cron] コメントreport_score減点エラー：', err);
+                console.log("[cron] コメントreport_score減点エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 };

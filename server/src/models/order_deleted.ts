@@ -1,9 +1,9 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import Orders from './orders.js';
-import User from './user.js';
-import Delivery from './delivery.js';
+import Orders from "./orders.js";
+import User from "./user.js";
+import Delivery from "./delivery.js";
 
 export class OrderDeleted extends Model {
     declare id: number;
@@ -19,13 +19,13 @@ export class OrderDeleted extends Model {
 
     static associate() {
         OrderDeleted.belongsTo(Orders, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
         OrderDeleted.belongsTo(User, {
-            foreignKey: 'deleted_by',
+            foreignKey: "deleted_by",
         });
         OrderDeleted.belongsTo(Delivery, {
-            foreignKey: 'delevery_id',
+            foreignKey: "delevery_id",
         });
     }
 
@@ -74,8 +74,8 @@ OrderDeleted.init(
     },
     {
         sequelize,
-        modelName: 'OrderDeleted',
-        tableName: 'order_deleted',
+        modelName: "OrderDeleted",
+        tableName: "order_deleted",
         freezeTableName: true,
         timestamps: true,
     },

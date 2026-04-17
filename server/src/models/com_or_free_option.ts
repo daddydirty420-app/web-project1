@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class ComOrFreeOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ ComOrFreeOption.init(
     },
     {
         sequelize,
-        modelName: 'ComOrFreeOption',
-        tableName: 'com_or_free_option',
+        modelName: "ComOrFreeOption",
+        tableName: "com_or_free_option",
         freezeTableName: true,
         timestamps: false,
     },

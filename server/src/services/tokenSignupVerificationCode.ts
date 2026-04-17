@@ -1,11 +1,11 @@
-import { TokenSignupVerification, User } from '../models/index.js';
+import { TokenSignupVerification, User } from "../models/index.js";
 import {
     CreateTokenParams,
     DestroyTokenParams,
     ReissueUpdateParams,
     TokenParams,
     VerificationCodeParams,
-} from '../types/serviceType/tokenSignupVerificationCode.js';
+} from "../types/serviceType/tokenSignupVerificationCode.js";
 
 export const getTokenVerificationOne = ({ verificationCode }: VerificationCodeParams) => {
     return TokenSignupVerification.findOne({

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import pageStyle from './profile.module.css';
-import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from '@/styles/components-style/itemList.module.css';
-import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { Items } from '@/types/itemListTypes';
-import { formatDuration } from '@/lib/formatDuration';
+import pageStyle from "./profile.module.css";
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "@/styles/components-style/itemList.module.css";
+import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { Items } from "@/types/itemListTypes";
+import { formatDuration } from "@/lib/formatDuration";
 
 type Res = {
     items: Items[] | null;
@@ -50,8 +50,8 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
                 {
-                    method: 'GET',
-                    cache: 'no-store',
+                    method: "GET",
+                    cache: "no-store",
                 },
             );
 
@@ -72,8 +72,8 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
                 {
-                    method: 'GET',
-                    cache: 'no-store',
+                    method: "GET",
+                    cache: "no-store",
                 },
             );
 
@@ -93,17 +93,17 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
-        const delta = typeof window !== 'undefined' && window.innerWidth >= 768 ? 2 : 1;
+        const delta = typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
 
         pages.push(1);
 
-        if (currentPage - delta > 2) pages.push('...');
+        if (currentPage - delta > 2) pages.push("...");
 
         for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
             pages.push(i);
         }
 
-        if (currentPage + delta < totalPages - 1) pages.push('...');
+        if (currentPage + delta < totalPages - 1) pages.push("...");
 
         if (totalPages > 1) pages.push(totalPages);
 
@@ -120,7 +120,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                 </button>
 
                 {pages.map((p, idx) =>
-                    p === '...' ? (
+                    p === "..." ? (
                         <span key={idx} className={styles.ellipsis}>
                             ...
                         </span>
@@ -181,9 +181,9 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                         src={
                                             data.Video?.thumbnail_url
                                                 ? encodeURI(data.Video.thumbnail_url.trim())
-                                                : '/no-image(16x9).png'
+                                                : "/no-image(16x9).png"
                                         }
-                                        alt={data.Video?.title ?? '動画サムネイル'}
+                                        alt={data.Video?.title ?? "動画サムネイル"}
                                         fill
                                         priority={false}
                                     />
@@ -205,8 +205,8 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                                     ￥{data.Sale.before_price.toLocaleString()}
                                                 </p>
                                             )}
-                                            {data.status === 'soldout' && <p className={styles.saleSold}>SOLD OUT</p>}
-                                            <h3 className={clsx(styles.price, data.Sale?.sale_flag ? styles.sale : '')}>
+                                            {data.status === "soldout" && <p className={styles.saleSold}>SOLD OUT</p>}
+                                            <h3 className={clsx(styles.price, data.Sale?.sale_flag ? styles.sale : "")}>
                                                 ￥{data.price.toLocaleString()}
                                             </h3>
                                         </div>
@@ -237,7 +237,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                             src={
                                                 data.first_image_url
                                                     ? encodeURI(data.first_image_url.trim())
-                                                    : '/no-image(1x1).png'
+                                                    : "/no-image(1x1).png"
                                             }
                                             alt={data.name}
                                             fill
@@ -245,7 +245,7 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                             priority={false}
                                             className={styles.itemImage}
                                         />
-                                        {data.status === 'soldout' && (
+                                        {data.status === "soldout" && (
                                             <div className={styles.ILSold}>
                                                 <p className={styles.ILSoldP}>SOLD</p>
                                             </div>

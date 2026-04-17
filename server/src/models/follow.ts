@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class Follow extends Model {
     declare id: number;
@@ -12,12 +12,12 @@ export class Follow extends Model {
 
     static associate() {
         Follow.belongsTo(User, {
-            foreignKey: 'follow_user_id',
-            as: 'FollowUser', // フォローしている
+            foreignKey: "follow_user_id",
+            as: "FollowUser", // フォローしている
         });
         Follow.belongsTo(User, {
-            foreignKey: 'follower_user_id',
-            as: 'FollowerUser', // フォローされている
+            foreignKey: "follower_user_id",
+            as: "FollowerUser", // フォローされている
         });
     }
 
@@ -45,8 +45,8 @@ Follow.init(
     },
     {
         sequelize,
-        modelName: 'Follow',
-        tableName: 'follow',
+        modelName: "Follow",
+        tableName: "follow",
         freezeTableName: true,
         timestamps: true,
     },

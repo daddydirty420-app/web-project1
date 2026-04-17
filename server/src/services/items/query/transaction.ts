@@ -1,6 +1,6 @@
 // 購入データ作成用データ取得
-import { Address, Item, ItemShippingProfile, Name, TodouhukenOption, User } from '../../../models/index.js';
-import { ItemIdParams } from '../../../types/serviceType/items/items.js';
+import { Address, Item, ItemShippingProfile, Name, TodouhukenOption, User } from "../../../models/index.js";
+import { ItemIdParams } from "../../../types/serviceType/items/items.js";
 
 export const getItemForBuy = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {
@@ -15,7 +15,7 @@ export const getItemForBuy = ({ itemId }: ItemIdParams) => {
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },

@@ -1,44 +1,44 @@
-'use client';
+"use client";
 
-import styles from '../edit.module.css';
-import { InputStr, Button, InputTitle } from '@/components/inputForm';
-import EditUI from '../editUI';
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Name } from '../type';
-import Image from 'next/image';
-import clsx from 'clsx';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../edit.module.css";
+import { InputStr, Button, InputTitle } from "@/components/inputForm";
+import EditUI from "../editUI";
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Name } from "../type";
+import Image from "next/image";
+import clsx from "clsx";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     name: Name;
     page:
-        | 'normal'
-        | 'delivery'
-        | 'rep-shop'
-        | 'rep-shop-signup'
-        | 'rep-com-free'
-        | 'con-shop'
-        | 'con-shop-signup'
-        | 'con-com-free';
+        | "normal"
+        | "delivery"
+        | "rep-shop"
+        | "rep-shop-signup"
+        | "rep-com-free"
+        | "con-shop"
+        | "con-shop-signup"
+        | "con-com-free";
     deliveryId?: string;
     shopId?: string;
     shopEditId?: string;
 };
 
 export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Props) => {
-    const [seiValue, setSeiValue] = useState(name?.sei ?? '');
-    const [meiValue, setMeiValue] = useState(name?.mei ?? '');
-    const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? '');
-    const [meiKanaValue, setMeiKanaValue] = useState(name?.mei_kana ?? '');
+    const [seiValue, setSeiValue] = useState(name?.sei ?? "");
+    const [meiValue, setMeiValue] = useState(name?.mei ?? "");
+    const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? "");
+    const [meiKanaValue, setMeiKanaValue] = useState(name?.mei_kana ?? "");
 
-    const [idCardFront, setIdCardFront] = useState<File | string | undefined>('');
-    const [idFrontPreview, setIdFrontPreview] = useState('');
+    const [idCardFront, setIdCardFront] = useState<File | string | undefined>("");
+    const [idFrontPreview, setIdFrontPreview] = useState("");
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);
 
-    const [idCardRear, setIdCardRear] = useState<File | string | undefined>('');
-    const [idRearPreview, setIdRearPreview] = useState('');
+    const [idCardRear, setIdCardRear] = useState<File | string | undefined>("");
+    const [idRearPreview, setIdRearPreview] = useState("");
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const idFrontRef = useRef<HTMLInputElement | null>(null);
@@ -66,7 +66,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
     const submit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            toast.error('空の項目があります。');
+            toast.error("空の項目があります。");
             return;
         }
 
@@ -74,14 +74,14 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/name-edit/${name.id}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
@@ -96,37 +96,37 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('氏名の変更に失敗しました。');
+                toast.error("氏名の変更に失敗しました。");
                 return;
             }
 
-            if (page === 'delivery') {
+            if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
-            } else if (page === 'con-shop') {
-                toast.success('氏名を変更しました。');
+            } else if (page === "con-shop") {
+                toast.success("氏名を変更しました。");
                 router.push(`/shop-info/${shopId}`);
-            } else if (page === 'con-shop-signup') {
+            } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
-            } else if (page === 'rep-com-free' || page === 'con-com-free') {
+            } else if (page === "rep-com-free" || page === "con-com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                toast.success('氏名を変更しました。');
-                router.push('/my-page');
+                toast.success("氏名を変更しました。");
+                router.push("/my-page");
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const repSubmit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            toast.error('空の項目があります。');
+            toast.error("空の項目があります。");
             return;
         }
 
         if (!idCardFront || !idCardRear) {
-            toast.error('身分証がアップロードされていません。');
+            toast.error("身分証がアップロードされていません。");
             return;
         }
 
@@ -162,15 +162,15 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
-            if (page === 'rep-shop') {
+            if (page === "rep-shop") {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/rep-name-edit/${shopId}`, {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                         Authorization: `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify(body),
@@ -180,18 +180,18 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
                 if (!res.ok) {
                     console.error(data.message);
-                    toast.error('氏名の変更に失敗しました。');
+                    toast.error("氏名の変更に失敗しました。");
                     return;
                 }
-                toast.success('代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。');
+                toast.success("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。");
                 router.push(`/shop-info/${shopId}`);
-            } else if (page === 'rep-shop-signup') {
+            } else if (page === "rep-shop-signup") {
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/rep-name-edit/${shopId}`,
                     {
-                        method: 'PATCH',
+                        method: "PATCH",
                         headers: {
-                            'Content-Type': 'application/json',
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${accessToken}`,
                         },
                         body: JSON.stringify(body),
@@ -202,26 +202,26 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
                 if (!res.ok) {
                     console.error(data.message);
-                    alert('氏名の変更に失敗しました。');
+                    alert("氏名の変更に失敗しました。");
                     return;
                 }
 
                 router.push(`/shop-signup/step5/${shopId}`);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
-    let title = '氏名の設定・変更';
-    if (page === 'rep-shop' || page === 'rep-shop-signup' || page === 'rep-com-free') {
-        title = '代表者氏名の設定・変更';
-    } else if (page === 'con-shop' || page === 'con-shop-signup' || page === 'con-com-free') {
-        title = 'ショップ担当者氏名の設定・変更';
+    let title = "氏名の設定・変更";
+    if (page === "rep-shop" || page === "rep-shop-signup" || page === "rep-com-free") {
+        title = "代表者氏名の設定・変更";
+    } else if (page === "con-shop" || page === "con-shop-signup" || page === "con-com-free") {
+        title = "ショップ担当者氏名の設定・変更";
     }
 
-    const submitOption = page === 'rep-shop' || page === 'rep-shop-signup' ? repSubmit : submit;
+    const submitOption = page === "rep-shop" || page === "rep-shop-signup" ? repSubmit : submit;
 
     return (
         <EditUI title={title}>
@@ -249,7 +249,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 />
             </div>
 
-            {(page === 'rep-shop' || page === 'rep-shop-signup') && (
+            {(page === "rep-shop" || page === "rep-shop-signup") && (
                 <>
                     <h2 className={styles.subtitle}>代表者身分証</h2>
 
@@ -264,7 +264,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                             ref={idFrontRef}
                         />
                         <Image
-                            src={idFrontPreview || '/no-image(1x1).png'}
+                            src={idFrontPreview || "/no-image(1x1).png"}
                             alt="身分証（表面）"
                             width={120}
                             height={120}
@@ -282,7 +282,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                             required
                         />
                         <Image
-                            src={idRearPreview || '/no-image(1x1).png'}
+                            src={idRearPreview || "/no-image(1x1).png"}
                             alt="身分証（裏面）"
                             width={120}
                             height={120}
@@ -298,7 +298,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                         </p>
                     </div>
 
-                    <p className={clsx(styles.centerSmall, 'mt-4')}>
+                    <p className={clsx(styles.centerSmall, "mt-4")}>
                         ※代表者氏名の変更は審査が必要になります。登録される代表者氏名の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。
                     </p>
                 </>

@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class CancelFeeReturnOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ CancelFeeReturnOption.init(
     },
     {
         sequelize,
-        modelName: 'CancelFeeReturnOption',
-        tableName: 'cancel_fee_return_option',
+        modelName: "CancelFeeReturnOption",
+        tableName: "cancel_fee_return_option",
         freezeTableName: true,
         timestamps: false,
     },

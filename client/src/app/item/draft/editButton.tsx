@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './draft.module.css';
+import Link from "next/link";
+import styles from "./draft.module.css";
 
 type Props = {
     id: string;

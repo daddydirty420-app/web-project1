@@ -1,6 +1,6 @@
-import { CountParams, FollowingsParams, ListParams, UserParams } from '../types/serviceType/follow.js';
-import { Follow, ShopInfo, User } from '../models/index.js';
-import { Op } from 'sequelize';
+import { CountParams, FollowingsParams, ListParams, UserParams } from "../types/serviceType/follow.js";
+import { Follow, ShopInfo, User } from "../models/index.js";
+import { Op } from "sequelize";
 
 type DestroyParams = {
     follow: InstanceType<typeof Follow>;
@@ -56,16 +56,16 @@ export const countFollower = async ({ userId }: CountParams) => {
 };
 
 export const getFollowList = async ({ pageUserId, type, keyword }: ListParams): Promise<FollowWithUser[]> => {
-    const where = type === 'follow' ? { follow_user_id: pageUserId } : { follower_user_id: pageUserId };
+    const where = type === "follow" ? { follow_user_id: pageUserId } : { follower_user_id: pageUserId };
 
-    const as = type === 'follow' ? 'FollowerUser' : 'FollowUser';
+    const as = type === "follow" ? "FollowerUser" : "FollowUser";
 
     const userWhere = keyword ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } } : undefined;
 
     return Follow.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where,
-        order: [['createdAt', 'DESC']],
+        order: [["createdAt", "DESC"]],
         distinct: true,
         include: [
             {
@@ -73,11 +73,11 @@ export const getFollowList = async ({ pageUserId, type, keyword }: ListParams): 
                 as,
                 where: userWhere,
                 required: !!keyword,
-                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', 'early_seller'],
+                attributes: ["id", "user_name", "profile_image", "honnin_verified", "early_seller"],
                 include: [
                     {
                         model: ShopInfo,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: false,
                     },
                 ],

@@ -1,7 +1,7 @@
-import { Back, Container } from '@/components';
-import Header from '@/components/header/header';
-import Footer from '@/components/footer/footer';
-import { ReactNode } from 'react';
+import { Back, Container } from "@/components";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { ReactNode } from "react";
 
 type Props = {
     children: ReactNode;

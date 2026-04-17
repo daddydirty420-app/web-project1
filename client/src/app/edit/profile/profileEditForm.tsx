@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { InputStr, Button, Textarea } from '@/components/inputForm';
-import EditUI from '../editUI';
-import { useState } from 'react';
-import { User } from '../type';
-import { ProfileImage } from './profileImage';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { InputStr, Button, Textarea } from "@/components/inputForm";
+import EditUI from "../editUI";
+import { useState } from "react";
+import { User } from "../type";
+import { ProfileImage } from "./profileImage";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -22,24 +22,24 @@ export const ProfileEditForm = ({ user }: Props) => {
 
     const submit = async () => {
         if (!userNameValue) {
-            toast.error('必須項目が空になっています。');
+            toast.error("必須項目が空になっています。");
             return;
         }
 
-        const query = file || defaultImage ? '?imageEdit=true' : '';
+        const query = file || defaultImage ? "?imageEdit=true" : "";
 
         try {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/profile-update${query}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
@@ -54,28 +54,28 @@ export const ProfileEditForm = ({ user }: Props) => {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('プロフィールの変更に失敗しました。');
+                toast.error("プロフィールの変更に失敗しました。");
                 return;
             }
 
             if (file && data.signedUrl) {
                 const uploadRes = await fetch(data.signedUrl, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': file.type,
+                        "Content-Type": file.type,
                     },
                     body: file,
                 });
 
                 if (!uploadRes.ok) {
-                    toast.error('プロフィール画像のS3アップロードに失敗しました。');
+                    toast.error("プロフィール画像のS3アップロードに失敗しました。");
                     return;
                 }
             }
 
             router.push(`/profile/${user.id}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

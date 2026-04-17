@@ -1,44 +1,44 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from '@/styles/login.module.css';
-import { signIn } from 'next-auth/react';
-import toast from 'react-hot-toast';
-import { sleep } from '@/lib/sleep';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "@/styles/login.module.css";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+import { sleep } from "@/lib/sleep";
 
 export const VerifyForm = () => {
-    const [code, setCode] = useState('');
-    const [referenceCode, setReferenceCode] = useState('');
+    const [code, setCode] = useState("");
+    const [referenceCode, setReferenceCode] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [referenceVisible, setReferenceVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async () => {
-        if (!code || code === '') {
-            toast.error('認証コードを入力してください。');
+        if (!code || code === "") {
+            toast.error("認証コードを入力してください。");
             return;
         }
         setLoading(true);
 
         try {
-            const res = await signIn('verify', {
+            const res = await signIn("verify", {
                 verificationCode: code,
                 rememberMe,
                 redirect: false,
             });
 
-            if (typeof referenceCode === 'string' && referenceCode.trim() !== '') {
+            if (typeof referenceCode === "string" && referenceCode.trim() !== "") {
                 const refRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference_code/input`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ input: referenceCode }),
                 });
 
                 if (!refRes.ok) {
                     const errorData = await refRes.json();
-                    toast.error('紹介コードが正しくありません。');
+                    toast.error("紹介コードが正しくありません。");
                     console.error(errorData.message);
                     return;
                 }
@@ -47,18 +47,18 @@ export const VerifyForm = () => {
             setLoading(false);
 
             if (res?.error) {
-                toast.error('認証に失敗しました。');
+                toast.error("認証に失敗しました。");
 
                 return;
             }
 
-            toast.success('認証成功しました');
+            toast.success("認証成功しました");
 
             await sleep(1500);
-            router.push('/my-page');
+            router.push("/my-page");
         } catch (err) {
-            console.error('Verify error:', err);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            console.error("Verify error:", err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 
@@ -90,7 +90,7 @@ export const VerifyForm = () => {
             </label>
 
             <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
-                {loading ? '認証中...' : '認証する'}
+                {loading ? "認証中..." : "認証する"}
             </button>
 
             <p className={styles.reference} onClick={() => setReferenceVisible((v) => !v)}>

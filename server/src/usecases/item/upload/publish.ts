@@ -1,8 +1,8 @@
-import { AppError } from '../../../errors.js';
-import { normalizeJapanese } from '../../../utils/normalizeJapanese.js';
-import { createNormalNotification } from '../../../services/notification.js';
-import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from '../../../services/items/index.js';
-import { countFollower } from '../../../services/follow.js';
+import { AppError } from "../../../errors.js";
+import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
+import { createNormalNotification } from "../../../services/notification.js";
+import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
+import { countFollower } from "../../../services/follow.js";
 
 type Params = {
     itemId: number;
@@ -13,7 +13,7 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
     // getData
     const item = await getItemWithVideoCategoriesUser({ itemId });
     if (!item) {
-        throw new AppError('ITEM_NOT_FOUND', 404);
+        throw new AppError("ITEM_NOT_FOUND", 404);
     }
 
     // sort_number
@@ -36,13 +36,13 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
     // search_text
     const searchText = `
     ${item.name}
-    ${item.Video?.title ?? ''}
-    ${item.Category?.name ?? ''}
-    ${item.Category?.parent?.name ?? ''}
-    ${item.User?.user_name ?? ''}
+    ${item.Video?.title ?? ""}
+    ${item.Category?.name ?? ""}
+    ${item.Category?.parent?.name ?? ""}
+    ${item.User?.user_name ?? ""}
     `;
 
-    const normalizeSearchText = normalizeJapanese(searchText ?? '');
+    const normalizeSearchText = normalizeJapanese(searchText ?? "");
 
     // データ更新
     await updatePublishItem({
@@ -62,6 +62,6 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
             message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
         },
     }).catch((err) => {
-        console.error('service createNormalNotification error', err);
+        console.error("service createNormalNotification error", err);
     });
 };

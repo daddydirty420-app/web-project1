@@ -1,8 +1,8 @@
-import { Comment } from '../../models/index.js';
-import { getAllReply } from '../../services/comment.js';
-import { countCommentLike, getCommentLikeOne } from '../../services/commentLike.js';
-import { countCommentReport } from '../../services/commentReport.js';
-import { patchCommentSortNumberAddUseCase } from './patchSortNumber.js';
+import { Comment } from "../../models/index.js";
+import { getAllReply } from "../../services/comment.js";
+import { countCommentLike, getCommentLikeOne } from "../../services/commentLike.js";
+import { countCommentReport } from "../../services/commentReport.js";
+import { patchCommentSortNumberAddUseCase } from "./patchSortNumber.js";
 
 type Params = {
     parentCommentId: number;
@@ -14,7 +14,7 @@ type Params = {
 export const getAllReplysUseCase = async ({ parentCommentId, userId, sellerMe, admin }: Params) => {
     if (!sellerMe && !admin) {
         patchCommentSortNumberAddUseCase({ commentId: parentCommentId, number: 10 }).catch((err) => {
-            console.error('patchCommentSortNumberAdd error:', err);
+            console.error("patchCommentSortNumberAdd error:", err);
         });
     }
 

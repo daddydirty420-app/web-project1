@@ -1,16 +1,16 @@
-import styles from './video.module.css';
-import { Item } from '../itemPageTypes';
-import { FollowButton, Star } from '@/components';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { faStore, faTag } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
+import styles from "./video.module.css";
+import { Item } from "../itemPageTypes";
+import { FollowButton, Star } from "@/components";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 type Props = {
     item: Item;
     sellerMe?: boolean;
-    page: 'normal' | 'admin';
+    page: "normal" | "admin";
     userId: string | null;
 };
 
@@ -24,7 +24,7 @@ export const UserSection = ({ item, sellerMe, page, userId }: Props) => {
             <div className={styles.userFlex}>
                 <Link href={profileUrl} className={styles.userLink}>
                     <Image
-                        src={user?.profile_image || '/default-profile.png'}
+                        src={user?.profile_image || "/default-profile.png"}
                         alt="プロフィール画像"
                         width={45}
                         height={45}
@@ -48,13 +48,13 @@ export const UserSection = ({ item, sellerMe, page, userId }: Props) => {
                             {user && user?.star_amount > 0 && (
                                 <small className={styles.starAverage}>{Number(user.star_average).toFixed(1)}</small>
                             )}
-                            <Star userId={sellerId ?? ''} />
+                            <Star userId={sellerId ?? ""} />
                             <small className={styles.starAmount}>{user?.star_amount.toLocaleString()}</small>
                         </div>
                     </div>
                 </Link>
-                {!sellerMe && page === 'normal' && (
-                    <FollowButton targetUserId={sellerId ?? ''} currentUserId={userId} />
+                {!sellerMe && page === "normal" && (
+                    <FollowButton targetUserId={sellerId ?? ""} currentUserId={userId} />
                 )}
             </div>
         </section>

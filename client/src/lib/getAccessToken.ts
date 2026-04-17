@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 export async function getAccessToken() {
-    const match = document.cookie.split('; ').find((row) => row.startsWith('access-token='));
+    const match = document.cookie.split("; ").find((row) => row.startsWith("access-token="));
 
-    const accessToken = match ? match.split('=')[1] : null;
+    const accessToken = match ? match.split("=")[1] : null;
 
     if (!accessToken) {
         return await refreshAccessToken();
@@ -16,13 +16,13 @@ export async function getAccessToken() {
         const currentTime = Math.floor(Date.now() / 1000);
 
         if (decoded.exp <= currentTime) {
-            console.log('Token expired, refreshing...');
+            console.log("Token expired, refreshing...");
             return await refreshAccessToken();
         }
 
         return accessToken;
     } catch (err) {
-        console.error('Failed to decode token:', err);
+        console.error("Failed to decode token:", err);
         return await refreshAccessToken();
     }
 }
@@ -30,8 +30,8 @@ export async function getAccessToken() {
 async function refreshAccessToken() {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
-            method: 'POST',
-            credentials: 'include',
+            method: "POST",
+            credentials: "include",
         });
 
         if (!res.ok) return null;
@@ -39,7 +39,7 @@ async function refreshAccessToken() {
         const data = await res.json();
         return data.accessToken;
     } catch (err) {
-        console.error('refreshAccessToken error:', err);
+        console.error("refreshAccessToken error:", err);
         return null;
     }
 }

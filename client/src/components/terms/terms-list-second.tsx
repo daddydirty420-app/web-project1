@@ -1,4 +1,4 @@
-import styles from '@/styles/terms.module.css';
+import styles from "@/styles/terms.module.css";
 
 type TermsListSecondProps = {
     alfabet: string;

@@ -1,16 +1,16 @@
-import { TitleAndBack, Accordion, AccordionGrid } from '@/components';
-import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide';
-import { ListUl, ListFlow, ListFlowArrow, ListCheck } from '@/components/list';
-import styles from '@/styles/guide.module.css';
-import clsx from 'clsx';
-import Link from 'next/link';
+import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
+import { GuideSubTitle, GuideSmall, GuideSection } from "@/components/guide";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck } from "@/components/list";
+import styles from "@/styles/guide.module.css";
+import clsx from "clsx";
+import Link from "next/link";
 
 export const Content = () => {
     return (
         <>
             <TitleAndBack title="ショップガイド" />
 
-            <p className={clsx('mb-2', styles.sectionChildP)}>
+            <p className={clsx("mb-2", styles.sectionChildP)}>
                 ※出品、売上金、振込申請については、「
                 <Link href="seller" className="text-blue-600 hover:text-blue-800 hover:cursor-pointer">
                     ガイド-出品者の方
@@ -148,13 +148,13 @@ export const Content = () => {
                 <Accordion heading="売上データの閲覧">
                     <p className="mt-4">マイページもしくは商品ページから売上データにアクセスできます。</p>
 
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>ショップの売上</p>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>ショップの売上</p>
                     <ListUl>
                         <ListCheck>日別売上推移</ListCheck>
                         <ListCheck>月別売上推移</ListCheck>
                     </ListUl>
 
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>商品の売上</p>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>商品の売上</p>
                     <ListUl>
                         <ListCheck>日別売上推移</ListCheck>
                         <ListCheck>日別販売個数推移</ListCheck>
@@ -163,7 +163,7 @@ export const Content = () => {
                 </Accordion>
 
                 <Accordion heading="ショップ情報の閲覧">
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>
                         ショップ情報はショップの「特定商取引法に基づく表示」の機能を兼ねております。
                     </p>
 

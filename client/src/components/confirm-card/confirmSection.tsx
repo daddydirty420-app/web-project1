@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import styles from './confirmcard.module.css';
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import { ja } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useRouter } from "next/navigation";
+import styles from "./confirmcard.module.css";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import { ja } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 type RadioOption = {
     label: string;
@@ -68,7 +68,7 @@ export const ConfirmSection = ({
             </div>
 
             <p className={styles.content}>
-                {(content ?? '').split('\n').map((line, i) => (
+                {(content ?? "").split("\n").map((line, i) => (
                     <span key={i} className="mt-0">
                         {line}
                         <br />

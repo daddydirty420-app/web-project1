@@ -1,12 +1,12 @@
-import { TitleAndBack, Container, AccordionGrid } from '@/components';
-import { GuideLink } from '@/components/guide';
-import { Metadata } from 'next';
-import Header from '@/components/header/header';
-import Footer from '@/components/footer/footer';
+import { TitleAndBack, Container, AccordionGrid } from "@/components";
+import { GuideLink } from "@/components/guide";
+import { Metadata } from "next";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
-    title: 'ご利用ガイド',
-    description: 'ご不明な点などあればこちら！○○についてわかりやすく解説しています。',
+    title: "ご利用ガイド",
+    description: "ご不明な点などあればこちら！○○についてわかりやすく解説しています。",
     robots: {
         index: false,
         follow: false,

@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class ShippingDayOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ ShippingDayOption.init(
     },
     {
         sequelize,
-        modelName: 'ShippingDayOption',
-        tableName: 'shipping_day_option',
+        modelName: "ShippingDayOption",
+        tableName: "shipping_day_option",
         freezeTableName: true,
         timestamps: false,
     },

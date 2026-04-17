@@ -1,8 +1,8 @@
-import { Container } from '@/components';
-import { VerifyForm } from './verify-form';
-import { Resend } from './resend';
-import styles from '@/styles/login.module.css';
-import { Suspense } from 'react';
+import { Container } from "@/components";
+import { VerifyForm } from "./verify-form";
+import { Resend } from "./resend";
+import styles from "@/styles/login.module.css";
+import { Suspense } from "react";
 
 export default function Page() {
     return (

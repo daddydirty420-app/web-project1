@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import styles from './material.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import styles from "./material.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export type MaterialValue = {
     materials: {
@@ -18,7 +18,7 @@ type Props = {
 
 export const MaterialInput = ({ value, onChange }: Props) => {
     const createEmptyMaterial = () => ({
-        name: '',
+        name: "",
         ratio: 1,
     });
 
@@ -74,7 +74,7 @@ export const MaterialInput = ({ value, onChange }: Props) => {
                         <p className={styles.inputTitle}>素材名</p>
                         <input
                             type="text"
-                            value={m.name ?? ''}
+                            value={m.name ?? ""}
                             onChange={(e) => handleChangeName(e.target.value, index)}
                             placeholder="例：綿"
                             className={styles.nameInput}

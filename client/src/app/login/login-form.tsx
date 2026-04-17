@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
-import styles from '@/styles/login.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-import toast from 'react-hot-toast';
-import { sleep } from '@/lib/sleep';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import styles from "@/styles/login.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
+import { sleep } from "@/lib/sleep";
 
 export const LoginForm = () => {
     const [visible, setVisible] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -20,22 +20,22 @@ export const LoginForm = () => {
     const handleSubmit = async () => {
         setLoading(true);
 
-        const res = await signIn('credentials', {
+        const res = await signIn("credentials", {
             redirect: false,
             email,
             password,
-            rememberMe: rememberMe ? 'true' : 'false',
+            rememberMe: rememberMe ? "true" : "false",
         });
 
         setLoading(false);
 
         if (res?.error) {
-            toast.error('メールアドレスまたはパスワードが正しくありません。');
+            toast.error("メールアドレスまたはパスワードが正しくありません。");
         } else if (res?.ok) {
-            toast.success('ログインしました');
+            toast.success("ログインしました");
 
             await sleep(1200);
-            router.push('/my-page');
+            router.push("/my-page");
         }
     };
 
@@ -59,7 +59,7 @@ export const LoginForm = () => {
                 <p className={styles.formText}>パスワード</p>
                 <div className="relative">
                     <input
-                        type={visible ? 'text' : 'password'}
+                        type={visible ? "text" : "password"}
                         name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -87,7 +87,7 @@ export const LoginForm = () => {
             </label>
 
             <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
-                {loading ? 'ログイン中...' : 'ログインする'}
+                {loading ? "ログイン中..." : "ログインする"}
             </button>
         </div>
     );

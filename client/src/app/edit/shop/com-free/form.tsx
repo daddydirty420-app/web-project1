@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import styles from '../../edit.module.css';
-import { ComOrFreeOption, ShopInfo } from '../../type';
-import { useRouter } from 'next/navigation';
-import EditUI from '../../editUI';
-import { Button, InputTitle } from '@/components/inputForm';
-import clsx from 'clsx';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { useState } from "react";
+import styles from "../../edit.module.css";
+import { ComOrFreeOption, ShopInfo } from "../../type";
+import { useRouter } from "next/navigation";
+import EditUI from "../../editUI";
+import { Button, InputTitle } from "@/components/inputForm";
+import clsx from "clsx";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -17,18 +17,18 @@ type Props = {
 };
 
 export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
-    const [selectOption, setSelectOption] = useState(shopInfo.ComOrFreeOption?.id ?? '');
+    const [selectOption, setSelectOption] = useState(shopInfo.ComOrFreeOption?.id ?? "");
 
     const router = useRouter();
 
     const submit = async () => {
         if (selectOption === null || selectOption === undefined) {
-            toast.error('事業形態を選択してください。');
+            toast.error("事業形態を選択してください。");
             return;
         }
 
         if (shopInfo.ComOrFreeOption?.id === selectOption) {
-            toast.error('事業形態が変更されていません。');
+            toast.error("事業形態が変更されていません。");
             return;
         }
 
@@ -36,14 +36,14 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/com-free-edit/${shopId}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ selectOption }),
@@ -52,7 +52,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error('事業形態の更新に失敗しました。');
+                toast.error("事業形態の更新に失敗しました。");
                 console.error(data.message);
                 return;
             }
@@ -60,7 +60,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
             router.push(`/edit/shop/com-free/confirm/${data.editId}`);
         } catch (err) {
             console.error(err);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 
@@ -86,7 +86,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
                 </div>
             </section>
 
-            <p className={clsx(styles.centerSmall, 'mt-4')}>
+            <p className={clsx(styles.centerSmall, "mt-4")}>
                 ※事業形態の変更は審査が必要になります。登録される事業形態の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。
             </p>
 

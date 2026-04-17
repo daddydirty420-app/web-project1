@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 :root {
     /* カラー */
@@ -68,7 +68,7 @@
 body {
     background: var(--background);
     color: var(--text);
-    font-family: 'Noto Sans JP', Arial, Helvetica, sans-serif;
+    font-family: "Noto Sans JP", Arial, Helvetica, sans-serif;
     font-size: var(--body);
     letter-spacing: 0.01em;
 }

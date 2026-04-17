@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import styles from './mypage.module.css';
-import { Res, User } from './types';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStore, faTag } from '@fortawesome/free-solid-svg-icons';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import Link from "next/link";
+import styles from "./mypage.module.css";
+import { Res, User } from "./types";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 type Props = {
     user: User;
@@ -17,7 +17,7 @@ export const ProfileSection = ({ user, data, profileLink }: Props) => {
         <section className={styles.block}>
             <Link href={profileLink} className={styles.profileBlock}>
                 <Image
-                    src={user.profile_image || '/default-profile.png'}
+                    src={user.profile_image || "/default-profile.png"}
                     alt="プロフィール画像"
                     width={50}
                     height={50}

@@ -1,12 +1,12 @@
-import { Res } from './profileTypes';
-import { EditButton } from './editButton';
-import { FollowButton } from '@/components';
-import styles from './profile.module.css';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStore, faTag } from '@fortawesome/free-solid-svg-icons';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { Introduction } from './introduction';
+import { Res } from "./profileTypes";
+import { EditButton } from "./editButton";
+import { FollowButton } from "@/components";
+import styles from "./profile.module.css";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { Introduction } from "./introduction";
 
 type Props = {
     data: Res;
@@ -24,7 +24,7 @@ export const ProfileMain = ({ data, userId, currentUserId, adminPage, loggedIn }
             <section className={styles.profileBlock}>
                 <div className={styles.userDiv}>
                     <Image
-                        src={data.user.profile_image ? encodeURI(data.user.profile_image) : '/default-profile.png'}
+                        src={data.user.profile_image ? encodeURI(data.user.profile_image) : "/default-profile.png"}
                         alt="プロフィール画像"
                         width={60}
                         height={60}

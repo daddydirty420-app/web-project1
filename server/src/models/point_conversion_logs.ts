@@ -1,9 +1,9 @@
 // ポイント変換時ログ
 
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class PointConversionLogs extends Model {
     declare id: number;
@@ -17,7 +17,7 @@ export class PointConversionLogs extends Model {
 
     static associate() {
         PointConversionLogs.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -62,8 +62,8 @@ PointConversionLogs.init(
     },
     {
         sequelize,
-        modelName: 'PointConversionLogs',
-        tableName: 'point_conversion_logs',
+        modelName: "PointConversionLogs",
+        tableName: "point_conversion_logs",
         freezeTableName: true,
         timestamps: true,
     },

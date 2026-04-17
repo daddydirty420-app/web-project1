@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { Op, Sequelize } from 'sequelize';
-import { authenticateToken } from '../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { Op, Sequelize } from "sequelize";
+import { authenticateToken } from "../middleware/index.js";
 import {
     Delivery,
     ShippingDayOption,
@@ -11,13 +11,13 @@ import {
     Item,
     Address,
     Name,
-} from '../models/index.js';
-import { postDeliveryBuyUseCase } from '../usecases/delivery/postBuy.js';
+} from "../models/index.js";
+import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 
 const router = Router();
 
 // POST /delivery/:id
-router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const itemId = Number(req.params.id);
@@ -32,24 +32,24 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
 });
 
 router.get(
-    '/index-wait-item-list',
+    "/index-wait-item-list",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const currentUserId = req.user!.id;
 
             const data = await Delivery.findAll({
-                attributes: ['id'],
+                attributes: ["id"],
                 where: { buyer_user_id: currentUserId, cancel: false, delivery_status_id: { [Op.ne]: 4 } },
-                order: [['buy_date', 'DESC']],
+                order: [["buy_date", "DESC"]],
                 include: [
                     {
                         model: Item,
-                        attributes: ['id', 'name', [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url']],
+                        attributes: ["id", "name", [Sequelize.literal(`"Item"."image_url"[1]`), "first_image_url"]],
                     },
                     {
                         model: Orders,
-                        attributes: ['id'],
+                        attributes: ["id"],
                     },
                 ],
             });
@@ -62,41 +62,41 @@ router.get(
 );
 
 router.get(
-    '/buy-trans/:id',
+    "/buy-trans/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Delivery.findByPk(req.params.id, {
-                attributes: ['id', 'buyer_phone_number'],
+                attributes: ["id", "buyer_phone_number"],
                 include: [
                     {
                         model: Address,
-                        attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
                     {
                         model: Name,
-                        attributes: ['sei', 'mei'],
+                        attributes: ["sei", "mei"],
                     },
                     { model: ShippingDayOption },
                     { model: ShippingServiceOption },
                     {
                         model: TodouhukenOption,
-                        as: 'DeliveryTodouhuken',
+                        as: "DeliveryTodouhuken",
                     },
                     {
                         model: Item,
                         attributes: [
-                            'id',
-                            'name',
-                            'price',
-                            'stock_now',
-                            [Sequelize.literal(`"Item"."image_url"[1]`), 'first_image_url'],
+                            "id",
+                            "name",
+                            "price",
+                            "stock_now",
+                            [Sequelize.literal(`"Item"."image_url"[1]`), "first_image_url"],
                         ],
                     },
                 ],

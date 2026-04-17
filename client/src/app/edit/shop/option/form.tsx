@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import styles from '../../edit.module.css';
-import { ShopInfo } from '../../type';
-import { useRouter } from 'next/navigation';
-import EditUI from '../../editUI';
-import { Button, InputTitle } from '@/components/inputForm';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { useState } from "react";
+import styles from "../../edit.module.css";
+import { ShopInfo } from "../../type";
+import { useRouter } from "next/navigation";
+import EditUI from "../../editUI";
+import { Button, InputTitle } from "@/components/inputForm";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -15,8 +15,8 @@ type Props = {
 };
 
 export const Form = ({ shopId, shopInfo }: Props) => {
-    const [autoTrans, setAutoTrans] = useState(shopInfo.auto_trans ? 'はい' : 'いいえ');
-    const [openInfo, setOpenInfo] = useState(shopInfo.open_info ? 'はい' : 'いいえ');
+    const [autoTrans, setAutoTrans] = useState(shopInfo.auto_trans ? "はい" : "いいえ");
+    const [openInfo, setOpenInfo] = useState(shopInfo.open_info ? "はい" : "いいえ");
 
     const router = useRouter();
 
@@ -25,14 +25,14 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/option-edit/${shopId}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ autoTrans, openInfo }),
@@ -42,13 +42,13 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('オプション設定変更に失敗しました。');
+                toast.error("オプション設定変更に失敗しました。");
             }
 
-            toast.success('オプション設定を変更しました。');
+            toast.success("オプション設定を変更しました。");
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -63,7 +63,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                             type="radio"
                             name="autoTrans"
                             value="はい"
-                            checked={autoTrans === 'はい'}
+                            checked={autoTrans === "はい"}
                             onChange={(e) => setAutoTrans(e.target.value)}
                             className={styles.radio}
                         />
@@ -75,7 +75,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                             type="radio"
                             name="autoTrans"
                             value="いいえ"
-                            checked={autoTrans === 'いいえ'}
+                            checked={autoTrans === "いいえ"}
                             onChange={(e) => setAutoTrans(e.target.value)}
                             className={styles.radio}
                         />
@@ -95,7 +95,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                             type="radio"
                             name="openInfo"
                             value="はい"
-                            checked={openInfo === 'はい'}
+                            checked={openInfo === "はい"}
                             onChange={(e) => setOpenInfo(e.target.value)}
                             className={styles.radio}
                         />
@@ -107,7 +107,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                             type="radio"
                             name="openInfo"
                             value="いいえ"
-                            checked={openInfo === 'いいえ'}
+                            checked={openInfo === "いいえ"}
                             onChange={(e) => setOpenInfo(e.target.value)}
                             className={styles.radio}
                         />

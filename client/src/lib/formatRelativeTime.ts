@@ -1,6 +1,6 @@
 export function formatRelativeTime(date: Date | string): string {
     const now = new Date();
-    const d = typeof date === 'string' ? new Date(date) : date;
+    const d = typeof date === "string" ? new Date(date) : date;
     const diffMs = now.getTime() - d.getTime();
     const diffSec = Math.floor(diffMs / 1000);
     const diffMin = Math.floor(diffSec / 60);
@@ -15,13 +15,13 @@ export function formatRelativeTime(date: Date | string): string {
         } else if (diffMin >= 1) {
             return `${diffMin}分前`;
         } else {
-            return '1分前';
+            return "1分前";
         }
     } else {
-        return d.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
+        return d.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
         });
     }
 }

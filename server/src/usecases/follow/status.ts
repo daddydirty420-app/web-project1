@@ -1,4 +1,4 @@
-import { findFollow } from '../../services/follow.js';
+import { findFollow } from "../../services/follow.js";
 
 type Params = {
     currentUserId: number;

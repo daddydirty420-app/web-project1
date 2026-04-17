@@ -1,5 +1,5 @@
-import styles from './mypage.module.css';
-import { User } from './types';
+import styles from "./mypage.module.css";
+import { User } from "./types";
 
 type Props = {
     user: User;

@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import { Dialect } from 'sequelize';
+import dotenv from "dotenv";
+import { Dialect } from "sequelize";
 
 dotenv.config();
 
@@ -24,18 +24,18 @@ interface IConfigEnv {
 
 const config: IConfigEnv = {
     development: {
-        use_env_variable: 'DATABASE_URL',
-        dialect: 'postgres',
+        use_env_variable: "DATABASE_URL",
+        dialect: "postgres",
     },
     test: {
-        use_env_variable: 'DATABASE_URL',
-        dialect: 'postgres',
+        use_env_variable: "DATABASE_URL",
+        dialect: "postgres",
     },
     production: {
-        use_env_variable: 'DATABASE_URL',
-        dialect: 'postgres',
+        use_env_variable: "DATABASE_URL",
+        dialect: "postgres",
         dialectOptions: {
-            ssl: process.env.DB_SSL === 'true',
+            ssl: process.env.DB_SSL === "true",
         },
     },
 };

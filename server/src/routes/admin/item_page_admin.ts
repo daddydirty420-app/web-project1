@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
     Item,
     User,
@@ -17,12 +17,12 @@ import {
     ItemShippingProfile,
     Categories,
     Brands,
-} from '../../models/index.js';
+} from "../../models/index.js";
 
 const router = Router();
 
 router.get(
-    '/:id',
+    "/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -32,44 +32,44 @@ router.get(
         try {
             const item = await Item.findByPk(itemId, {
                 attributes: {
-                    exclude: ['sort_number', 'views_count', 'checked', 'createdAt', 'search_text'],
+                    exclude: ["sort_number", "views_count", "checked", "createdAt", "search_text"],
                 },
                 include: [
                     { model: ItemConditionOption },
                     {
                         model: User,
                         attributes: [
-                            'id',
-                            'user_name',
-                            'profile_image',
-                            'early_seller',
-                            'honnin_verified',
-                            'star_amount',
-                            'star_average',
+                            "id",
+                            "user_name",
+                            "profile_image",
+                            "early_seller",
+                            "honnin_verified",
+                            "star_amount",
+                            "star_average",
                         ],
                         include: [
                             {
                                 model: ShopInfo,
-                                attributes: ['id'],
+                                attributes: ["id"],
                             },
                         ],
                     },
                     {
                         model: Video,
                         attributes: [
-                            'id',
-                            'thumbnail_url',
-                            'title',
-                            'summary',
-                            'duration',
-                            'play_count',
-                            'original_url',
-                            'converted_url',
+                            "id",
+                            "thumbnail_url",
+                            "title",
+                            "summary",
+                            "duration",
+                            "play_count",
+                            "original_url",
+                            "converted_url",
                         ],
                     },
                     {
                         model: Sale,
-                        attributes: ['id', 'before_price', 'discount_rate', 'discount_amount', 'sale_flag'],
+                        attributes: ["id", "before_price", "discount_rate", "discount_amount", "sale_flag"],
                     },
                     {
                         model: ItemShippingProfile,
@@ -81,32 +81,32 @@ router.get(
                     },
                     {
                         model: Categories,
-                        as: 'Category',
+                        as: "Category",
                         include: [
                             {
                                 model: Categories,
-                                attributes: ['id', 'name', 'level', 'parent_id', 'allowed_gender', 'allowed_age'],
-                                as: 'children',
+                                attributes: ["id", "name", "level", "parent_id", "allowed_gender", "allowed_age"],
+                                as: "children",
                                 required: false,
                             },
                             {
                                 model: Categories,
-                                attributes: ['id', 'name', 'level', 'allowed_gender', 'allowed_age'],
-                                as: 'parent',
+                                attributes: ["id", "name", "level", "allowed_gender", "allowed_age"],
+                                as: "parent",
                                 required: false,
                             },
                         ],
                     },
                     {
                         model: Brands,
-                        as: 'brand',
+                        as: "brand",
                         required: false,
                     },
                 ],
             });
 
             if (!item) {
-                res.status(404).json({ message: 'アイテムが見つかりません。' });
+                res.status(404).json({ message: "アイテムが見つかりません。" });
                 return;
             }
 
@@ -126,7 +126,7 @@ router.get(
 
             if (userId) {
                 me = await User.findByPk(userId, {
-                    attributes: ['id', 'user_name', 'profile_image'],
+                    attributes: ["id", "user_name", "profile_image"],
                 });
             }
 

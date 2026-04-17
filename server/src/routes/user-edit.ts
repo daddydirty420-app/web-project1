@@ -1,31 +1,31 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { User, GenderOption, Address, Name, TodouhukenOption, IdCard, ShopInfo } from '../models/index.js';
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import sequelize from '../db.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { User, GenderOption, Address, Name, TodouhukenOption, IdCard, ShopInfo } from "../models/index.js";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import sequelize from "../db.js";
 
 const router = Router();
 
 const bucket = process.env.AWS_BUCKET;
 const region = process.env.AWS_REGION;
 const s3 = new S3Client({
-    region: region || 'ap-northeast-1',
+    region: region || "ap-northeast-1",
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
     },
 });
 
 router.patch(
-    '/profile-update',
+    "/profile-update",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const fileName = req.body.fileName || null;
         const contentType = req.body.contentType;
-        const imageEdit = req.query.imageEdit === 'true';
+        const imageEdit = req.query.imageEdit === "true";
 
         try {
             const user = await User.findByPk(userId, {
@@ -38,7 +38,7 @@ router.patch(
                 ],
             });
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
@@ -80,7 +80,7 @@ router.patch(
             }
 
             if ((!fileName && imageEdit) || (imageUrl && oldImageUrl && imageUrl !== oldImageUrl)) {
-                const oldKey = oldImageUrl.split('.com/')[1];
+                const oldKey = oldImageUrl.split(".com/")[1];
                 const deleteCmd = new DeleteObjectCommand({
                     Bucket: bucket,
                     Key: oldKey,
@@ -90,7 +90,7 @@ router.patch(
             }
 
             res.status(200).json({
-                message: 'プロフィール更新完了！',
+                message: "プロフィール更新完了！",
                 signedUrl,
                 imageUrl,
             });
@@ -101,19 +101,19 @@ router.patch(
 );
 
 router.patch(
-    '/phone-number-edit',
+    "/phone-number-edit",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const user = await User.findByPk(req.user!.id);
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
             await user.update({ phone_number: req.body.phoneNumber });
 
-            res.status(200).json({ message: '電話番号を更新しました。' });
+            res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {
             next(err);
         }
@@ -121,7 +121,7 @@ router.patch(
 );
 
 router.patch(
-    '/honnin-submit',
+    "/honnin-submit",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -153,7 +153,7 @@ router.patch(
                 include: [{ model: Address }, { model: Name }, { model: IdCard }],
             });
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
@@ -161,7 +161,7 @@ router.patch(
                 where: { name: todouhuken },
             });
             if (!todouhukenData || todouhukenData.id < 1 || todouhukenData.id > 47) {
-                res.status(404).json({ message: '都道府県データが見つかりません。' });
+                res.status(404).json({ message: "都道府県データが見つかりません。" });
                 return;
             }
             const todouhukenId = todouhukenData.id;
@@ -202,7 +202,7 @@ router.patch(
             }
 
             if (idFrontUpload && oldFrontUrl && frontUrl && frontUrl !== oldFrontUrl) {
-                const oldFrontKey = oldFrontUrl.split('.com/')[1];
+                const oldFrontKey = oldFrontUrl.split(".com/")[1];
                 const deleteFrontCmd = new DeleteObjectCommand({
                     Bucket: bucket,
                     Key: oldFrontKey,
@@ -212,7 +212,7 @@ router.patch(
             }
 
             if (idRearUpload && oldRearUrl && rearUrl && rearUrl !== oldRearUrl) {
-                const oldRearKey = oldRearUrl.split('.com/')[1];
+                const oldRearKey = oldRearUrl.split(".com/")[1];
                 const deleteRearCmd = new DeleteObjectCommand({
                     Bucket: bucket,
                     Key: oldRearKey,
@@ -281,7 +281,7 @@ router.patch(
             });
 
             res.status(200).json({
-                message: '本人確認のリクエストが完了しました。',
+                message: "本人確認のリクエストが完了しました。",
                 frontSignedUrl,
                 rearSignedUrl,
                 frontUrl,
@@ -293,29 +293,29 @@ router.patch(
     },
 );
 
-router.get('/honnin', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await User.findByPk(req.user!.id, {
-            attributes: ['id', 'birthday', 'phone_number', 'gender_id'],
+            attributes: ["id", "birthday", "phone_number", "gender_id"],
             include: [
                 { model: GenderOption },
                 {
                     model: Address,
-                    attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
+                    attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
                     include: [
                         {
                             model: TodouhukenOption,
-                            as: 'AddressTodouhuken',
+                            as: "AddressTodouhuken",
                         },
                     ],
                 },
                 {
                     model: Name,
-                    attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                 },
                 {
                     model: IdCard,
-                    attributes: ['id', 'id_card_front', 'id_card_rear'],
+                    attributes: ["id", "id_card_front", "id_card_rear"],
                 },
             ],
         });
@@ -323,7 +323,7 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response, nex
         const genderAllOptions = await GenderOption.findAll();
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 
@@ -337,16 +337,16 @@ router.get('/honnin', authenticateToken, async (req: Request, res: Response, nex
 });
 
 router.get(
-    '/phone-number',
+    "/phone-number",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await User.findByPk(req.user!.id, {
-                attributes: ['id', 'phone_number'],
+                attributes: ["id", "phone_number"],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -358,16 +358,16 @@ router.get(
 );
 
 router.get(
-    '/profile-edit',
+    "/profile-edit",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const userData = await User.findByPk(req.user!.id, {
-                attributes: ['id', 'user_name', 'user_introduction', 'profile_image'],
+                attributes: ["id", "user_name", "user_introduction", "profile_image"],
             });
 
             if (!userData) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 

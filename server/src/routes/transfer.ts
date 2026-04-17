@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
 import {
     Transfer,
     BankAccount,
@@ -11,14 +11,14 @@ import {
     PointsHistory,
     Journal,
     PointConversionLogs,
-} from '../models/index.js';
-import sequelize from '../db.js';
-import crypto from 'crypto';
+} from "../models/index.js";
+import sequelize from "../db.js";
+import crypto from "crypto";
 
 const router = Router();
 
 router.post(
-    '/request-create',
+    "/request-create",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -27,7 +27,7 @@ router.post(
         const limit = Number(req.body.limit);
 
         if (requestValue < 1000) {
-            res.status(400).json({ message: '申請金額は1,000円以上にしてください。' });
+            res.status(400).json({ message: "申請金額は1,000円以上にしてください。" });
             return;
         }
         if (requestValue > limit) {
@@ -54,7 +54,7 @@ router.post(
                 include: [{ model: UriagekinHistory }],
             });
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
@@ -95,11 +95,11 @@ router.post(
 
             const generateTransferId = async (): Promise<string> => {
                 for (let i = 0; i < 5; i++) {
-                    const id = crypto.randomBytes(11).toString('hex');
+                    const id = crypto.randomBytes(11).toString("hex");
                     const existing = await Transfer.findOne({ where: { transfer_id: id } });
                     if (!existing) return id;
                 }
-                throw new Error('Failed to generate unique transfer_id after 5 attempts.');
+                throw new Error("Failed to generate unique transfer_id after 5 attempts.");
             };
 
             const transferId = await generateTransferId();
@@ -130,7 +130,7 @@ router.post(
 
             await t.commit();
             res.status(200).json({
-                message: '振込申請が完了しました。',
+                message: "振込申請が完了しました。",
                 transId: transfer.id,
             });
         } catch (err) {
@@ -141,7 +141,7 @@ router.post(
 );
 
 router.post(
-    '/points-create',
+    "/points-create",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -149,7 +149,7 @@ router.post(
         const limit = Number(req.body.limit);
 
         if (value === 0) {
-            res.status(400).json({ message: '変換金額を1円以上指定してください。' });
+            res.status(400).json({ message: "変換金額を1円以上指定してください。" });
             return;
         }
 
@@ -165,7 +165,7 @@ router.post(
                 include: [{ model: UriagekinHistory }],
             });
             if (!user) {
-                res.status(404).json({ message: 'ユーザーが見つかりません。' });
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
                 return;
             }
 
@@ -222,7 +222,7 @@ router.post(
                     converted_points: value,
                     before_points: oldPoints,
                     after_points: oldPoints + value,
-                    reason: '売上金ポイント変換',
+                    reason: "売上金ポイント変換",
                     plus: true,
                     user_id: userId,
                 },
@@ -246,7 +246,7 @@ router.post(
             );
 
             await t.commit();
-            res.status(200).json({ message: '売上金をポイント変換しました。' });
+            res.status(200).json({ message: "売上金をポイント変換しました。" });
         } catch (err) {
             await t.rollback();
             next(err);
@@ -254,21 +254,21 @@ router.post(
     },
 );
 
-router.get('/detail/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/detail/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Transfer.findByPk(req.params.id, {
-            attributes: ['id', 'trans_money', 'transfer_id', 'createdAt'],
+            attributes: ["id", "trans_money", "transfer_id", "createdAt"],
             include: [
                 {
                     model: BankAccount,
-                    attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                    attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
                     include: [{ model: AccountTypeOption }],
                 },
             ],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 
@@ -278,12 +278,12 @@ router.get('/detail/:id', authenticateToken, async (req: Request, res: Response,
     }
 });
 
-router.get('/history', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
-            attributes: ['id', 'trans_money', 'trans_finish'],
+            attributes: ["id", "trans_money", "trans_finish"],
             where: { user_id: req.user!.id },
-            order: [['createdAt', 'DESC']],
+            order: [["createdAt", "DESC"]],
         });
 
         res.json({ dataList });

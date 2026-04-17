@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import styles from './profile.module.css';
-import Link from 'next/link';
+import styles from "./profile.module.css";
+import Link from "next/link";
 
 export const EditButton = () => {
     return (

@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { ItemBuyerReportOption } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { ItemBuyerReportOption } from "../models/index.js";
 
 const router = Router();
 
 router.get(
-    '/all-options',
+    "/all-options",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {

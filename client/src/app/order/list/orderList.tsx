@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import styles from './order.module.css';
-import useSWR from 'swr';
-import { fetcher } from '@/lib/fetcher';
-import { Orders } from '../type';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState } from "react";
+import styles from "./order.module.css";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
+import { Orders } from "../type";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
-    page: 'purchased' | 'sold';
-    tab: 'all' | 'wait' | 'shipping' | 'complete';
+    page: "purchased" | "sold";
+    tab: "all" | "wait" | "shipping" | "complete";
 };
 
 type Responce = {
@@ -25,16 +25,16 @@ export const OrderList = ({ page, tab }: Props) => {
 
     // apiフェッチ
     const getApiQuery = () => {
-        if (page === 'purchased') {
-            if (tab === 'all') return `?type=purchased&page=${pageNumber}`;
-            if (tab === 'wait') return `?type=purchased&page=${pageNumber}&status=paid`;
-            if (tab === 'shipping') return `?type=purchased&page=${pageNumber}&status=shipped`;
-            if (tab === 'complete') return `?type=purchased&page=${pageNumber}&status=completed`;
-        } else if (page === 'sold') {
-            if (tab === 'all') return `?type=sold&page=${pageNumber}`;
-            if (tab === 'wait') return `?type=sold&page=${pageNumber}&status=paid`;
-            if (tab === 'shipping') return `?type=sold&page=${pageNumber}&status=shipped`;
-            if (tab === 'complete') return `?type=sold&page=${pageNumber}&status=completed`;
+        if (page === "purchased") {
+            if (tab === "all") return `?type=purchased&page=${pageNumber}`;
+            if (tab === "wait") return `?type=purchased&page=${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=purchased&page=${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=purchased&page=${pageNumber}&status=completed`;
+        } else if (page === "sold") {
+            if (tab === "all") return `?type=sold&page=${pageNumber}`;
+            if (tab === "wait") return `?type=sold&page=${pageNumber}&status=paid`;
+            if (tab === "shipping") return `?type=sold&page=${pageNumber}&status=shipped`;
+            if (tab === "complete") return `?type=sold&page=${pageNumber}&status=completed`;
         }
 
         return null;
@@ -54,17 +54,17 @@ export const OrderList = ({ page, tab }: Props) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
-        const delta = typeof window !== 'undefined' && window.innerWidth >= 768 ? 2 : 1;
+        const delta = typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
 
         pages.push(1);
 
-        if (currentPage - delta > 2) pages.push('...');
+        if (currentPage - delta > 2) pages.push("...");
 
         for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
             pages.push(i);
         }
 
-        if (currentPage + delta < totalPages - 1) pages.push('...');
+        if (currentPage + delta < totalPages - 1) pages.push("...");
 
         if (totalPages > 1) pages.push(totalPages);
 
@@ -81,7 +81,7 @@ export const OrderList = ({ page, tab }: Props) => {
                 </button>
 
                 {pages.map((p, idx) =>
-                    p === '...' ? (
+                    p === "..." ? (
                         <span key={idx} className={styles.ellipsis}>
                             ...
                         </span>
@@ -89,7 +89,7 @@ export const OrderList = ({ page, tab }: Props) => {
                         <button
                             type="button"
                             key={idx}
-                            className={`${styles.pageButton} ${currentPage === p ? styles.active : ''}`}
+                            className={`${styles.pageButton} ${currentPage === p ? styles.active : ""}`}
                             onClick={() => onPageChange(p as number)}
                         >
                             {p}
@@ -116,11 +116,11 @@ export const OrderList = ({ page, tab }: Props) => {
                 <main className={styles.orderListSection}>
                     {ordersList.map((order) => {
                         const link =
-                            page === 'purchased'
+                            page === "purchased"
                                 ? `/order/purchased/${order.id}`
-                                : page === 'sold'
+                                : page === "sold"
                                   ? `/order/sold/${order.id}`
-                                  : '';
+                                  : "";
 
                         return (
                             <section key={order.id} className={styles.orderSection}>
@@ -129,7 +129,7 @@ export const OrderList = ({ page, tab }: Props) => {
                                         <div className={styles.imageText}>
                                             <div className={styles.imageDiv}>
                                                 <Image
-                                                    src={order.purchase_snapshot.item_image || '/no-image(1x1).png'}
+                                                    src={order.purchase_snapshot.item_image || "/no-image(1x1).png"}
                                                     alt="商品画像"
                                                     width={80}
                                                     height={80}
@@ -139,14 +139,14 @@ export const OrderList = ({ page, tab }: Props) => {
 
                                             <div className={styles.itemTextArea}>
                                                 <h2 className={`${styles.itemName} ${styles.line1}`}>
-                                                    {order.purchase_snapshot.item_name || ''}
+                                                    {order.purchase_snapshot.item_name || ""}
                                                 </h2>
 
                                                 <div
                                                     className={`${styles.transDiv} ${
-                                                        ['cancelled', 'returnd'].includes(order.status)
+                                                        ["cancelled", "returnd"].includes(order.status)
                                                             ? styles.transCancel
-                                                            : ''
+                                                            : ""
                                                     }`}
                                                 >
                                                     <p className={styles.transLabel}>配送状況：</p>
@@ -155,9 +155,9 @@ export const OrderList = ({ page, tab }: Props) => {
                                                     </p>
                                                 </div>
 
-                                                {['cancelled', 'returned'].includes(order.status) && (
+                                                {["cancelled", "returned"].includes(order.status) && (
                                                     <p className={styles.cancel}>
-                                                        {order.status === 'returned' ? '返品' : 'キャンセル'}
+                                                        {order.status === "returned" ? "返品" : "キャンセル"}
                                                     </p>
                                                 )}
                                             </div>
@@ -167,7 +167,7 @@ export const OrderList = ({ page, tab }: Props) => {
                                                     ￥{order.total_amount.toLocaleString()}
                                                 </h3>
 
-                                                {page === 'purchased' && order.point_used > 0 && (
+                                                {page === "purchased" && order.point_used > 0 && (
                                                     <div className={styles.pointDiv}>
                                                         <p className={styles.pointLabel}>ポイント利用：</p>
                                                         <p className={styles.point}>
@@ -191,11 +191,11 @@ export const OrderList = ({ page, tab }: Props) => {
 
             {ordersList?.length === 0 && (
                 <p className={styles.noList}>
-                    {page === 'purchased'
-                        ? '購入した商品がありません'
-                        : page === 'sold'
-                          ? '売却した商品はありません'
-                          : ''}
+                    {page === "purchased"
+                        ? "購入した商品がありません"
+                        : page === "sold"
+                          ? "売却した商品はありません"
+                          : ""}
                 </p>
             )}
         </>

@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
-import { Blog, BlogCategoryOption } from '../../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { Blog, BlogCategoryOption } from "../../models/index.js";
 
 const router = Router();
 
 router.get(
-    '/confirm/:id',
+    "/confirm/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -16,7 +16,7 @@ router.get(
             });
 
             if (!blog) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -28,7 +28,7 @@ router.get(
 );
 
 router.get(
-    '/edit/:id',
+    "/edit/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -36,7 +36,7 @@ router.get(
             const blog = await Blog.findByPk(req.params.id);
 
             if (!blog) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -53,7 +53,7 @@ router.get(
 );
 
 router.get(
-    '/draft-list',
+    "/draft-list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -63,9 +63,9 @@ router.get(
             const offset = (page - 1) * limit;
 
             const list = await Blog.findAll({
-                attributes: ['id', 'title', 'summary', 'image_url', 'views_count', 'uploaded_at'],
+                attributes: ["id", "title", "summary", "image_url", "views_count", "uploaded_at"],
                 where: { public: false },
-                order: [['uploaded_date', 'DESC']],
+                order: [["uploaded_date", "DESC"]],
                 limit,
                 offset,
             });

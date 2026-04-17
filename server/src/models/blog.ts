@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import BlogCategoryOption from './blog_category_option.js';
+import BlogCategoryOption from "./blog_category_option.js";
 
 export class Blog extends Model {
     declare id: number;
@@ -20,7 +20,7 @@ export class Blog extends Model {
 
     static associate() {
         Blog.belongsTo(BlogCategoryOption, {
-            foreignKey: 'blog_category_id',
+            foreignKey: "blog_category_id",
         });
     }
 
@@ -56,8 +56,8 @@ Blog.init(
     },
     {
         sequelize,
-        modelName: 'Blog',
-        tableName: 'blog',
+        modelName: "Blog",
+        tableName: "blog",
         freezeTableName: true,
         timestamps: true,
     },

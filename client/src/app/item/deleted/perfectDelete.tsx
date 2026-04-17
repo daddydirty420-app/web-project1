@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import styles from './deleted.module.css';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { X } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "./deleted.module.css";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -20,12 +20,12 @@ export const PerfectDelete = ({ id }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/perfect`, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -34,13 +34,13 @@ export const PerfectDelete = ({ id }: Props) => {
             if (res.ok) {
                 const data = await res.json();
                 alert(data.message);
-                router.push('/my-page');
+                router.push("/my-page");
             } else {
-                console.error('APIフェッチエラー：', res.status);
-                toast.error('商品の削除に失敗しました。');
+                console.error("APIフェッチエラー：", res.status);
+                toast.error("商品の削除に失敗しました。");
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

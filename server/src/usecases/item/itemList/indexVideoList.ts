@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getIndexVideosWithCount } from '../../../services/items/index.js';
+import { Op } from "sequelize";
+import { getIndexVideosWithCount } from "../../../services/items/index.js";
 
 type Params = {
     userId: number | null;
@@ -8,7 +8,7 @@ type Params = {
 };
 
 export const getIndexVideosUseCase = async ({ userId, page, limit }: Params) => {
-    const where: any = { status: 'active' };
+    const where: any = { status: "active" };
     if (userId) {
         where.seller_id = { [Op.ne]: userId };
     }

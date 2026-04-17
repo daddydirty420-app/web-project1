@@ -1,10 +1,10 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { CookieSet } from './cookieSet';
-import { MypageElement } from './mypageElement';
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { CookieSet } from "./cookieSet";
+import { MypageElement } from "./mypageElement";
 
 type User = {
     id: number;
@@ -28,8 +28,8 @@ type Res = {
 };
 
 export const metadata: Metadata = {
-    title: 'マイページ',
-    description: '〇〇のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！',
+    title: "マイページ",
+    description: "〇〇のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
     robots: {
         index: false,
         follow: false,
@@ -40,31 +40,31 @@ export default async function Page() {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get('access-token')?.value;
+    const accessToken = cookieStore.get("access-token")?.value;
 
-    if (!accessToken || !session) redirect('/login');
+    if (!accessToken || !session) redirect("/login");
 
     const res = await fetch(`${process.env.API_URL}/user/my-page`, {
-        method: 'GET',
+        method: "GET",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        cache: 'no-store',
+        cache: "no-store",
     });
 
     if (!res.ok) {
-        console.error('認証に失敗しました。', await res.text());
-        redirect('/login');
+        console.error("認証に失敗しました。", await res.text());
+        redirect("/login");
     }
 
     const data: Res = await res.json();
 
     if (!data.userData || !data.userData.user) {
-        console.error('ユーザーが見つかりません。');
-        redirect('/login');
+        console.error("ユーザーが見つかりません。");
+        redirect("/login");
     }
 
-    const profileLink = `/profile/${session?.user?.id ?? ''}`;
+    const profileLink = `/profile/${session?.user?.id ?? ""}`;
 
     return (
         <>

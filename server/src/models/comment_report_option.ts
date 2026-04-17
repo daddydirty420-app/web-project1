@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class CommentReportOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ CommentReportOption.init(
     },
     {
         sequelize,
-        modelName: 'CommentReportOption',
-        tableName: 'comment_report_option',
+        modelName: "CommentReportOption",
+        tableName: "comment_report_option",
         freezeTableName: true,
         timestamps: false,
     },

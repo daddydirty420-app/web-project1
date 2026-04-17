@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import styles from './buy.module.css';
-import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "./buy.module.css";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -25,13 +25,13 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                     const accessToken = await getAccessToken();
 
                     if (!accessToken) {
-                        alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                        alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                         return;
                     }
 
                     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}/status`, {
-                        method: 'GET',
-                        cache: 'no-store',
+                        method: "GET",
+                        cache: "no-store",
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                         },
@@ -58,23 +58,23 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
 
             if (res.ok) {
-                toast.success('カートに追加しました。');
+                toast.success("カートに追加しました。");
             }
         } catch (err) {
             setCartIn(false);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -86,42 +86,42 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
 
             if (res.ok) {
-                toast.success('カートから削除しました。');
+                toast.success("カートから削除しました。");
             }
         } catch (err) {
             setCartIn(true);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     const buy = async () => {
         if (!loggedIn) {
-            return router.push('/login');
+            return router.push("/login");
         }
 
         try {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery/${id}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -138,7 +138,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                 toast.error(data.message);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -159,7 +159,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                 {loggedIn && (
                     <div className={styles.cartDiv} onClick={cartIn ? remove : add}>
                         <FontAwesomeIcon icon={faCartShopping} className={styles.cartIcon} />
-                        <p className={styles.cartText}>{cartIn ? 'カートから削除' : 'カートに入れる'}</p>
+                        <p className={styles.cartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
                     </div>
                 )}
             </div>
@@ -178,7 +178,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                 {loggedIn && (
                     <div className={styles.floatCartDiv} onClick={cartIn ? remove : add}>
                         <FontAwesomeIcon icon={faCartShopping} className={styles.floatCartIcon} />
-                        <p className={styles.floatCartText}>{cartIn ? 'カートから削除' : 'カートに入れる'}</p>
+                        <p className={styles.floatCartText}>{cartIn ? "カートから削除" : "カートに入れる"}</p>
                     </div>
                 )}
             </div>

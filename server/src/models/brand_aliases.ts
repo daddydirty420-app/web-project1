@@ -1,6 +1,6 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
-import Brands from './brands.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
+import Brands from "./brands.js";
 
 export class BrandAliases extends Model {
     declare id: number;
@@ -10,8 +10,8 @@ export class BrandAliases extends Model {
 
     static associate() {
         BrandAliases.belongsTo(Brands, {
-            foreignKey: 'brand_id',
-            as: 'brand',
+            foreignKey: "brand_id",
+            as: "brand",
         });
     }
 
@@ -34,8 +34,8 @@ BrandAliases.init(
     },
     {
         sequelize,
-        modelName: 'BrandAliases',
-        tableName: 'brand_aliases',
+        modelName: "BrandAliases",
+        tableName: "brand_aliases",
         freezeTableName: true,
         timestamps: false,
     },

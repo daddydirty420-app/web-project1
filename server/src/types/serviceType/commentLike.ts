@@ -1,4 +1,4 @@
-import { CommentLike, ShopInfo, User } from '../../models/index.js';
+import { CommentLike, ShopInfo, User } from "../../models/index.js";
 
 export type CommentIdParams = {
     commentId: number;

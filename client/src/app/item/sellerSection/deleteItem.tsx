@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import styles from './seller.module.css';
-import { useState } from 'react';
-import { X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "./seller.module.css";
+import { useState } from "react";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
-    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
+    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
 };
 
 export const DeleteItem = ({ id, page }: Props) => {
@@ -17,22 +17,22 @@ export const DeleteItem = ({ id, page }: Props) => {
 
     const deleteItem = async () => {
         const apiUrl =
-            page === 'draft'
+            page === "draft"
                 ? `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/draft`
                 : `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logical`;
 
-        const routerPage = page === 'draft' ? '/my-page' : `/item/deleted/${id}`;
+        const routerPage = page === "draft" ? "/my-page" : `/item/deleted/${id}`;
 
         try {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(apiUrl, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -41,7 +41,7 @@ export const DeleteItem = ({ id, page }: Props) => {
             const data = await res.json();
 
             if (res.ok) {
-                alert('商品を削除しました');
+                alert("商品を削除しました");
                 setPopup(false);
                 router.push(routerPage);
             } else if (data.message) {
@@ -49,7 +49,7 @@ export const DeleteItem = ({ id, page }: Props) => {
                 console.error(data.message);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };

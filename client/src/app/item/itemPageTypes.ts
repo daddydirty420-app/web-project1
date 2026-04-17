@@ -1,4 +1,4 @@
-import type { ItemAttributes } from '@/types/itemAttributes';
+import type { ItemAttributes } from "@/types/itemAttributes";
 
 export type ItemConditionOption = {
     id: string;
@@ -33,8 +33,8 @@ export type Categories = {
     id: string;
     name: string;
     level: number;
-    allowed_gender: 'men' | 'women' | 'both';
-    allowed_age: 'adult' | 'kids' | 'both';
+    allowed_gender: "men" | "women" | "both";
+    allowed_age: "adult" | "kids" | "both";
     parent?: Categories | null;
 };
 
@@ -104,14 +104,14 @@ export type Item = {
     first_image_url: string;
     price: number;
     seller_id: number;
-    status: 'editing' | 'draft' | 'active' | 'hidden' | 'soldout' | 'deleted';
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     early_sell: boolean;
     updatedAt: Date;
     uploaded_at: Date;
     save_at: Date;
     deleted_at: Date;
-    gender_type: 'men' | 'women' | 'unisex';
-    age_type: 'adult' | 'kids' | 'both';
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
     attributes: ItemAttributes;
     recommend: boolean;
     ItemConditionOption?: ItemConditionOption | null;

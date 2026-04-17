@@ -1,8 +1,8 @@
-import { s3Domain } from '../../../../infra/aws/s3.js';
-import { SignedUrlWithIndex } from '../../../../infra/aws/type.js';
-import { Item } from '../../../../models/index.js';
-import { Body } from '../../../../types/serviceType/items/uploadBody.js';
-import { generateSignedUrl } from '../../../../utils/s3/index.js';
+import { s3Domain } from "../../../../infra/aws/s3.js";
+import { SignedUrlWithIndex } from "../../../../infra/aws/type.js";
+import { Item } from "../../../../models/index.js";
+import { Body } from "../../../../types/serviceType/items/uploadBody.js";
+import { generateSignedUrl } from "../../../../utils/s3/index.js";
 
 type Params = {
     itemId: number;
@@ -21,7 +21,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
     let videoUrl: string | null = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
     if (video?.name && !video.uploaded && video.type) {
-        const ext = video.name.split('.').pop();
+        const ext = video.name.split(".").pop();
         const originalKey = `video/original/${userId}/${itemId}_${now}_${ext}`;
 
         videoSignedUrl = await generateSignedUrl({ key: originalKey, contentType: video.type });
@@ -34,7 +34,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
     let thumbnailUrl: string | null = item.Video?.thumbnail_url ?? null;
 
     if (thumbnail?.name && !thumbnail.uploaded && thumbnail.type) {
-        const ext = thumbnail.name.split('.').pop();
+        const ext = thumbnail.name.split(".").pop();
         const key = `thumbnail/${userId}/${itemId}_${now}_${ext}`;
 
         thumbnailSignedUrl = await generateSignedUrl({ key, contentType: thumbnail.type });
@@ -53,7 +53,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
         (itemImages ?? []).map(async (img, index) => {
             if (!img || img.uploaded || !img.type) return;
 
-            const ext = img.name.split('.').pop();
+            const ext = img.name.split(".").pop();
             const key = `item-image/${userId}/${itemId}_${index}_${now}_${ext}`;
 
             const signedUrl = await generateSignedUrl({ key, contentType: img.type });
@@ -101,7 +101,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
         attributesTargets.map(async (v) => {
             if (!v.image || !v.image.type) return;
 
-            const ext = v.image?.name.split('.').pop();
+            const ext = v.image?.name.split(".").pop();
             const key = `attributes/${userId}/${itemId}_${v.uiId}_${now}_${ext}`;
 
             const signedUrl = await generateSignedUrl({ key, contentType: v.image?.type });

@@ -1,29 +1,29 @@
-import sequelize from '../../../../db.js';
-import type { ItemAttributes } from '../../../../types/itemAttributes.js';
-import { copyS3Object, getFileName } from '../../../../utils/s3/index.js';
-import { getItemWithVideoSaleShipping } from '../../../../services/items/index.js';
-import { AppError } from '../../../../errors.js';
-import { createItemCopyUpload } from '../../../../services/items/index.js';
-import { createVideoCopyUpload } from '../../../../services/video.js';
-import { createSaleCopyUpload } from '../../../../services/sale.js';
-import { createShippingCopyUpload } from '../../../../services/itemShippingProfile.js';
+import sequelize from "../../../../db.js";
+import type { ItemAttributes } from "../../../../types/itemAttributes.js";
+import { copyS3Object, getFileName } from "../../../../utils/s3/index.js";
+import { getItemWithVideoSaleShipping } from "../../../../services/items/index.js";
+import { AppError } from "../../../../errors.js";
+import { createItemCopyUpload } from "../../../../services/items/index.js";
+import { createVideoCopyUpload } from "../../../../services/video.js";
+import { createSaleCopyUpload } from "../../../../services/sale.js";
+import { createShippingCopyUpload } from "../../../../services/itemShippingProfile.js";
 
 type Params = {
     itemId: number;
     userId: number;
 };
 
-type ColorVariant = NonNullable<ItemAttributes['colorVariants']>[number];
-type ColorVariantSize = NonNullable<ColorVariant['sizes']>[number];
+type ColorVariant = NonNullable<ItemAttributes["colorVariants"]>[number];
+type ColorVariantSize = NonNullable<ColorVariant["sizes"]>[number];
 
 export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
     // item取得
     const item = await getItemWithVideoSaleShipping({ itemId });
 
-    if (!item) throw new AppError('ITEM_NOT_FOUND', 404);
-    if (!item.Video) throw new AppError('VIDEO_NOT_FOUND', 404);
-    if (!item.Sale) throw new AppError('SALE_NOT_FOUND', 404);
-    if (!item.ItemShippingProfile) throw new AppError('SHIPPING_NOT_FOUND', 404);
+    if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
+    if (!item.Video) throw new AppError("VIDEO_NOT_FOUND", 404);
+    if (!item.Sale) throw new AppError("SALE_NOT_FOUND", 404);
+    if (!item.ItemShippingProfile) throw new AppError("SHIPPING_NOT_FOUND", 404);
 
     // dbバリデーション
     const videoOriginalUrl = item.Video?.original_url ?? null;
@@ -104,17 +104,17 @@ export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
     const newItemImageUrls = newUrls.itemImageUrl;
     const newItemImageFirst = Array.isArray(newUrls.itemImageUrl) ? newUrls.itemImageUrl[0] : null;
     if (!newItemImageFirst || !newItemImageUrls || newItemImageUrls.length === 0) {
-        throw new AppError('NEW_ITEM_IMAGE_NOT_FOUND', 404);
+        throw new AppError("NEW_ITEM_IMAGE_NOT_FOUND", 404);
     }
 
     const newThumbnailUrl = newUrls.thumbnailUrl;
     const newOriginalUrl = newUrls.videoOriginalUrl || null;
     const newConvertUrl = newUrls.videoConvertedUrl || null;
     if (!newThumbnailUrl) {
-        throw new AppError('NEW_THUMBNAIL_URL_NOT_FOUND', 404);
+        throw new AppError("NEW_THUMBNAIL_URL_NOT_FOUND", 404);
     }
     if (!newOriginalUrl && !newConvertUrl) {
-        throw new AppError('NEW_VIDEO_URL_NOT_FOUND', 404);
+        throw new AppError("NEW_VIDEO_URL_NOT_FOUND", 404);
     }
 
     await sequelize.transaction(async (t) => {
@@ -174,7 +174,7 @@ export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
     });
 
     if (!newItemId || isNaN(newItemId)) {
-        throw new AppError('NEW_ITEM_ID_INVALID', 400);
+        throw new AppError("NEW_ITEM_ID_INVALID", 400);
     }
 
     return newItemId;

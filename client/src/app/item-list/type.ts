@@ -1,4 +1,4 @@
-import { ItemAttributes } from '@/types/itemAttributes';
+import { ItemAttributes } from "@/types/itemAttributes";
 
 export type Sale = {
     id: string;
@@ -17,9 +17,9 @@ export type Item = {
     id: string;
     name: string;
     price: number;
-    status: 'editing' | 'draft' | 'active' | 'hidden' | 'soldout' | 'deleted';
-    gender_type: 'men' | 'women' | 'unisex';
-    age_type: 'adult' | 'kids' | 'both';
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
     save_at: Date;
     first_image_url: string;
     attributes: ItemAttributes;

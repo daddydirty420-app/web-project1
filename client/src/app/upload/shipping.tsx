@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { ShippingDayOption, ShippingServiceOption, TodouhukenOption } from './types/type';
-import styles from './upload.module.css';
-import { InputTitle, Textarea } from '@/components/inputForm';
+import { useEffect, useState } from "react";
+import { ShippingDayOption, ShippingServiceOption, TodouhukenOption } from "./types/type";
+import styles from "./upload.module.css";
+import { InputTitle, Textarea } from "@/components/inputForm";
 
 export type ShippingValue = {
     day_id: string | null;
@@ -26,21 +26,21 @@ type Props = {
 export const ShippingInput = ({ allDay, allService, allPlace, value, onChange }: Props) => {
     const [openServiceSelect, setOpenServiceSelect] = useState(false);
     const [openPlaceSelect, setOpenPlaceSelect] = useState(false);
-    const [selectDayText, setSelectDayText] = useState('');
-    const [selectServiceText, setSelectServiceText] = useState('');
-    const [selectPlaceText, setSelectPlaceText] = useState('');
+    const [selectDayText, setSelectDayText] = useState("");
+    const [selectServiceText, setSelectServiceText] = useState("");
+    const [selectPlaceText, setSelectPlaceText] = useState("");
 
     useEffect(() => {
         if (value.day_id) {
-            setSelectDayText(value.day_name ?? '');
+            setSelectDayText(value.day_name ?? "");
         }
 
         if (value.service_id) {
-            setSelectServiceText(value.service_name ?? '');
+            setSelectServiceText(value.service_name ?? "");
         }
 
         if (value.place_id) {
-            setSelectPlaceText(value.place_name ?? '');
+            setSelectPlaceText(value.place_name ?? "");
         }
     }, [value.day_id, value.day_name, value.service_id, value.service_name, value.place_id, value.place_name]);
 
@@ -176,7 +176,7 @@ export const ShippingInput = ({ allDay, allService, allPlace, value, onChange }:
             {/* free_text */}
             <Textarea
                 title="配送に関する備考（自由入力）"
-                value={value.free_text ?? ''}
+                value={value.free_text ?? ""}
                 onChange={handleChangeFree}
                 maxLength={500}
                 placeholder="配送方法や梱包、開封方法、対応可能時間など自由入力"

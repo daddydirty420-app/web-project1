@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getIndexRecommendItems } from '../../../../services/items/index.js';
+import { Op } from "sequelize";
+import { getIndexRecommendItems } from "../../../../services/items/index.js";
 
 type Params = {
     userId: number | null;
@@ -7,7 +7,7 @@ type Params = {
 
 export const getIndexRecommendUseCase = async ({ userId }: Params) => {
     const where: any = {
-        status: 'active',
+        status: "active",
         recommend: true,
         ...(userId && { seller_id: { [Op.ne]: userId } }),
     };

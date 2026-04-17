@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class DeliveryStatusOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ DeliveryStatusOption.init(
     },
     {
         sequelize,
-        modelName: 'DeliveryStatusOption',
-        tableName: 'delivery_status_option',
+        modelName: "DeliveryStatusOption",
+        tableName: "delivery_status_option",
         freezeTableName: true,
         timestamps: false,
     },

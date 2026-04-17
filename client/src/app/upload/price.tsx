@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { InputTitle } from '@/components/inputForm';
-import styles from './upload.module.css';
-import { useEffect, useState } from 'react';
+import { InputTitle } from "@/components/inputForm";
+import styles from "./upload.module.css";
+import { useEffect, useState } from "react";
 
 export type PriceValue = {
     price: string;
@@ -18,7 +18,7 @@ export const PriceInput = ({ value, onChange }: Props) => {
     const [commission, setCommission] = useState(0);
 
     useEffect(() => {
-        const num = Number(value.price.replace(/,/g, ''));
+        const num = Number(value.price.replace(/,/g, ""));
 
         if (!Number.isNaN(num) && num > 0) {
             setGain(num * 0.9);
@@ -34,7 +34,7 @@ export const PriceInput = ({ value, onChange }: Props) => {
             price: raw,
         });
 
-        const num = Number(raw.replace(/,/g, ''));
+        const num = Number(raw.replace(/,/g, ""));
 
         if (!Number.isNaN(num)) {
             setGain(num * 0.9);

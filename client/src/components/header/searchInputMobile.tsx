@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import styles from './header.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { normalizeJapanese } from '@/lib/normalizeJapanese';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { useEffect, useRef, useState } from "react";
+import styles from "./header.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
+import clsx from "clsx";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { normalizeJapanese } from "@/lib/normalizeJapanese";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     loggedIn: boolean;
@@ -20,7 +20,7 @@ type SearchHistoryItem = {
 };
 
 export const SearchInputMobile = ({ loggedIn }: Props) => {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState("");
     const [isMobile, setIsMobile] = useState(true);
     const [searchMode, setSearchMode] = useState(false);
     const [searchHis, setSearchHis] = useState<string[]>([]);
@@ -33,8 +33,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
     useEffect(() => {
         const checkWidth = () => setIsMobile(window.innerWidth < 768);
         checkWidth();
-        window.addEventListener('resize', checkWidth);
-        return () => window.removeEventListener('resize', checkWidth);
+        window.addEventListener("resize", checkWidth);
+        return () => window.removeEventListener("resize", checkWidth);
     }, []);
 
     if (!isMobile) return null;
@@ -46,8 +46,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
             if (!accessToken) return;
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/history`, {
-                method: 'GET',
-                cache: 'no-store',
+                method: "GET",
+                cache: "no-store",
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
 
@@ -77,8 +77,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/suggest?keyword=${word}`, {
-                method: 'GET',
-                cache: 'no-store',
+                method: "GET",
+                cache: "no-store",
             });
 
             const data: { suggest: string[] } = await res.json();
@@ -195,7 +195,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                             />
                             <FontAwesomeIcon
                                 icon={faSearch}
-                                className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ''}`}
+                                className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ""}`}
                                 onClick={() => {
                                     if (!value.trim()) return;
                                     router.push(`/search?keyword=${encodeURIComponent(value)}`);

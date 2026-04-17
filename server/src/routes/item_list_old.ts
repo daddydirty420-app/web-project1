@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, authenticateOptional } from '../middleware/index.js';
-import { Op, literal } from 'sequelize';
-import { Item, User, Video, Sale, Search } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, authenticateOptional } from "../middleware/index.js";
+import { Op, literal } from "sequelize";
+import { Item, User, Video, Sale, Search } from "../models/index.js";
 
 const router = Router();
 
 router.get(
-    '/item-money-management/item-list/:id',
+    "/item-money-management/item-list/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -15,17 +15,17 @@ router.get(
             const currentUserId = req.user!.id;
 
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'first_image_url'],
+                attributes: ["id", "name", "price", "status", "uploaded_at", "first_image_url"],
                 where: {
                     seller_id: currentUserId,
-                    status: { [Op.in]: ['active', 'hidden', 'soldout'] },
+                    status: { [Op.in]: ["active", "hidden", "soldout"] },
                     id: { [Op.ne]: itemId },
                 },
-                order: [['uploaded_at', 'DESC']],
+                order: [["uploaded_at", "DESC"]],
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                        attributes: ["discount_rate", "discount_amount", "sale_flag"],
                     },
                 ],
             });
@@ -38,23 +38,23 @@ router.get(
 );
 
 router.get(
-    '/money-management/item-list',
+    "/money-management/item-list",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const currentUserId = req.user!.id;
 
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'price', 'status', 'uploaded_at', 'first_image_url'],
+                attributes: ["id", "name", "price", "status", "uploaded_at", "first_image_url"],
                 where: {
                     seller_id: currentUserId,
-                    status: { [Op.in]: ['active', 'hidden', 'soldout'] },
+                    status: { [Op.in]: ["active", "hidden", "soldout"] },
                 },
-                order: [['uploaded_at', 'DESC']],
+                order: [["uploaded_at", "DESC"]],
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                        attributes: ["discount_rate", "discount_amount", "sale_flag"],
                     },
                 ],
             });
@@ -67,7 +67,7 @@ router.get(
 );
 
 router.get(
-    '/search/video-list',
+    "/search/video-list",
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -94,34 +94,34 @@ router.get(
                         user_id: currentUserId,
                         search_text: { [Op.ne]: null },
                     },
-                    order: [['createdAt', 'DESC']],
+                    order: [["createdAt", "DESC"]],
                 });
             }
 
-            const searchWord = latestSearch?.search_text || '';
+            const searchWord = latestSearch?.search_text || "";
 
             const escapeWord = searchWord.replace(/'/g, "''");
 
             const itemList = await Item.findAll({
                 attributes: [
-                    'id',
-                    'name',
-                    'price',
-                    'status',
-                    'search_text',
-                    'sort_number',
+                    "id",
+                    "name",
+                    "price",
+                    "status",
+                    "search_text",
+                    "sort_number",
                     [
                         literal(`(
                     sort_number * (
                     SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
                     )
                     )`),
-                        'score',
+                        "score",
                     ],
                 ],
                 where: {
                     seller_id: { [Op.ne]: currentUserId },
-                    status: { [Op.in]: ['active', 'soldout'] },
+                    status: { [Op.in]: ["active", "soldout"] },
                     search_text: { [Op.iLike]: `%${searchWord}%` },
                 },
                 order: [
@@ -131,7 +131,7 @@ router.get(
                     SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
                     )
                     )`),
-                        'DESC',
+                        "DESC",
                     ],
                 ],
                 limit,
@@ -139,15 +139,15 @@ router.get(
                 include: [
                     {
                         model: Video,
-                        attributes: ['thumbnail_url', 'duration', 'title'],
+                        attributes: ["thumbnail_url", "duration", "title"],
                     },
                     {
                         model: Sale,
-                        attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
+                        attributes: ["sale_flag", "before_price", "discount_rate", "discount_amount"],
                     },
                     {
                         model: User,
-                        attributes: ['user_name', 'profile_image'],
+                        attributes: ["user_name", "profile_image"],
                     },
                 ],
             });
@@ -160,7 +160,7 @@ router.get(
 );
 
 router.get(
-    '/search/item-list',
+    "/search/item-list",
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -187,35 +187,35 @@ router.get(
                         user_id: currentUserId,
                         search_text: { [Op.ne]: null },
                     },
-                    order: [['createdAt', 'DESC']],
+                    order: [["createdAt", "DESC"]],
                 });
             }
 
-            const searchWord = latestSearch?.search_text || '';
+            const searchWord = latestSearch?.search_text || "";
 
             const escapeWord = searchWord.replace(/'/g, "''");
 
             const itemList = await Item.findAll({
                 attributes: [
-                    'id',
-                    'name',
-                    'price',
-                    'status',
-                    'search_text',
-                    'first_image_url',
-                    'sort_number',
+                    "id",
+                    "name",
+                    "price",
+                    "status",
+                    "search_text",
+                    "first_image_url",
+                    "sort_number",
                     [
                         literal(`(
                     sort_number * (
                     SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
                     )
                     )`),
-                        'score',
+                        "score",
                     ],
                 ],
                 where: {
                     seller_id: { [Op.ne]: currentUserId },
-                    status: { [Op.in]: ['active', 'soldout'] },
+                    status: { [Op.in]: ["active", "soldout"] },
                     search_text: { [Op.iLike]: `%${searchWord}%` },
                 },
                 order: [
@@ -225,7 +225,7 @@ router.get(
                     SELECT COUNT(*) FROM regexp_matches(search_text, '${escapeWord}', 'gi')
                     )
                     )`),
-                        'DESC',
+                        "DESC",
                     ],
                 ],
                 limit,
@@ -233,7 +233,7 @@ router.get(
                 include: [
                     {
                         model: Sale,
-                        attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
+                        attributes: ["sale_flag", "discount_rate", "discount_amount"],
                     },
                 ],
             });
@@ -246,7 +246,7 @@ router.get(
 );
 
 router.get(
-    '/search2/video-list',
+    "/search2/video-list",
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -259,7 +259,7 @@ router.get(
             const searchId = req.query.search_id;
 
             if (!searchId) {
-                res.status(400).json({ message: 'search_idが指定されていません。' });
+                res.status(400).json({ message: "search_idが指定されていません。" });
                 return;
             }
 
@@ -268,14 +268,14 @@ router.get(
             });
 
             if (!search) {
-                res.status(404).json({ message: '検索情報が見つかりません。' });
+                res.status(404).json({ message: "検索情報が見つかりません。" });
                 return;
             }
 
             const categoryText = search.category_text;
             let categoryCondition = {};
 
-            const parts = categoryText.split(' - ').map((p: string) => p.trim());
+            const parts = categoryText.split(" - ").map((p: string) => p.trim());
 
             if (parts.length === 1) {
                 categoryCondition = {
@@ -286,27 +286,27 @@ router.get(
             }
 
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'price', 'status', 'sort_number'],
+                attributes: ["id", "name", "price", "status", "sort_number"],
                 where: {
                     seller_id: { [Op.ne]: currentUserId },
-                    status: { [Op.in]: ['active', 'soldout'] },
+                    status: { [Op.in]: ["active", "soldout"] },
                     ...categoryCondition,
                 },
-                order: [['sort_number', 'DESC']],
+                order: [["sort_number", "DESC"]],
                 limit,
                 offset,
                 include: [
                     {
                         model: Video,
-                        attributes: ['thumbnail_url', 'duration', 'title'],
+                        attributes: ["thumbnail_url", "duration", "title"],
                     },
                     {
                         model: Sale,
-                        attributes: ['sale_flag', 'before_price', 'discount_rate', 'discount_amount'],
+                        attributes: ["sale_flag", "before_price", "discount_rate", "discount_amount"],
                     },
                     {
                         model: User,
-                        attributes: ['user_name', 'profile_image'],
+                        attributes: ["user_name", "profile_image"],
                     },
                 ],
             });
@@ -319,7 +319,7 @@ router.get(
 );
 
 router.get(
-    '/search2/item-list',
+    "/search2/item-list",
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -332,7 +332,7 @@ router.get(
             const searchId = req.query.search_id;
 
             if (!searchId) {
-                res.status(400).json({ message: 'search_idが指定されていません 。' });
+                res.status(400).json({ message: "search_idが指定されていません 。" });
                 return;
             }
 
@@ -341,14 +341,14 @@ router.get(
             });
 
             if (!search) {
-                res.status(404).json({ message: '検索情報が見つかりません。' });
+                res.status(404).json({ message: "検索情報が見つかりません。" });
                 return;
             }
 
             const categoryText = search.category_text;
             let categoryCondition = {};
 
-            const parts = categoryText.split(' - ').map((p: string) => p.trim());
+            const parts = categoryText.split(" - ").map((p: string) => p.trim());
 
             if (parts.length === 1) {
                 categoryCondition = {
@@ -359,19 +359,19 @@ router.get(
             }
 
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'price', 'status', 'sort_number', 'first_image_url'],
+                attributes: ["id", "name", "price", "status", "sort_number", "first_image_url"],
                 where: {
                     seller_id: { [Op.ne]: currentUserId },
-                    status: { [Op.in]: ['active', 'soldout'] },
+                    status: { [Op.in]: ["active", "soldout"] },
                     ...categoryCondition,
                 },
-                order: [['sort_number', 'DESC']],
+                order: [["sort_number", "DESC"]],
                 limit,
                 offset,
                 include: [
                     {
                         model: Sale,
-                        attributes: ['sale_flag', 'discount_rate', 'discount_amount'],
+                        attributes: ["sale_flag", "discount_rate", "discount_amount"],
                     },
                 ],
             });

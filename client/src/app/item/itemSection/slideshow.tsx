@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import styles from './slide.module.css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import Image from "next/image";
+import styles from "./slide.module.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useState } from "react";
+import { X } from "lucide-react";
 
 type Props = {
     images: string[];
@@ -35,7 +35,7 @@ export const Slideshow = ({ images }: Props) => {
                                 src={src}
                                 alt={`Slide ${i + 1}`}
                                 fill
-                                style={{ objectFit: 'cover' }}
+                                style={{ objectFit: "cover" }}
                                 className={styles.image}
                             />
                         </div>

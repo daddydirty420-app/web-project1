@@ -1,4 +1,4 @@
-import { TodouhukenOption } from '../models/index.js';
+import { TodouhukenOption } from "../models/index.js";
 
 type TodouhukenIdParams = {
     todouhukenId: number;

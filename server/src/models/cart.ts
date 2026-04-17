@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import Item from './item.js';
-import User from './user.js';
+import Item from "./item.js";
+import User from "./user.js";
 
 export class Cart extends Model {
     declare id: number;
@@ -13,10 +13,10 @@ export class Cart extends Model {
 
     static associate() {
         Cart.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Cart.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -45,8 +45,8 @@ Cart.init(
     },
     {
         sequelize,
-        modelName: 'Cart',
-        tableName: 'cart',
+        modelName: "Cart",
+        tableName: "cart",
         freezeTableName: true,
         timestamps: true,
     },

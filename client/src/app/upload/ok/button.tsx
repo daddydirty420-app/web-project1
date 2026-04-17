@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './ok.module.css';
+import Link from "next/link";
+import styles from "./ok.module.css";
 
 type Props = {
     itemId: string;

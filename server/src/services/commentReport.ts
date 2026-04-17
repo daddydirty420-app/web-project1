@@ -1,5 +1,5 @@
-import { CommentReport, CommentReportOption } from '../models/index.js';
-import { CommentIdParams, CreateCommentReportParams, OptionIdParams } from '../types/serviceType/commentReport.js';
+import { CommentReport, CommentReportOption } from "../models/index.js";
+import { CommentIdParams, CreateCommentReportParams, OptionIdParams } from "../types/serviceType/commentReport.js";
 
 export const countCommentReport = ({ commentId }: CommentIdParams) => {
     return CommentReport.count({

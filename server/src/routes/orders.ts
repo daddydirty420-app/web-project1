@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { Op } from 'sequelize';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { Op } from "sequelize";
 import {
     Orders,
     PaymentMethodOption,
@@ -19,21 +19,21 @@ import {
     Cancel,
     Sale,
     Categories,
-} from '../models/index.js';
-import { AppError } from '../errors.js';
-import { getPurchasedListUseCase } from '../usecases/order/getPurchasedList.js';
-import { getSoldListUseCase } from '../usecases/order/getSoldList.js';
+} from "../models/index.js";
+import { AppError } from "../errors.js";
+import { getPurchasedListUseCase } from "../usecases/order/getPurchasedList.js";
+import { getSoldListUseCase } from "../usecases/order/getSoldList.js";
 
 const router = Router();
 
 // /orders?type="purchased"&page=number&status=""
-router.get('/', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const type = req.query.type;
 
-    if (type !== 'purchased' && type !== 'sold') {
-        throw new AppError('INVALID_TYPE', 400);
+    if (type !== "purchased" && type !== "sold") {
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;
@@ -42,7 +42,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response, next: Nex
 
     const params = { page, userId, status };
 
-    const usecase = type === 'purchased' ? () => getPurchasedListUseCase(params) : () => getSoldListUseCase(params);
+    const usecase = type === "purchased" ? () => getPurchasedListUseCase(params) : () => getSoldListUseCase(params);
 
     try {
         const { ordersList, totalPages } = await usecase();
@@ -53,56 +53,56 @@ router.get('/', authenticateToken, async (req: Request, res: Response, next: Nex
     }
 });
 
-router.get('/buy/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/buy/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Orders.findByPk(req.params.id, {
-            attributes: ['id', 'price', 'total_amount', 'item_count', 'purchase_snapshot'],
+            attributes: ["id", "price", "total_amount", "item_count", "purchase_snapshot"],
             include: [
                 {
                     model: Item,
-                    attributes: ['id', 'name', 'first_image_url'],
+                    attributes: ["id", "name", "first_image_url"],
                 },
                 {
                     model: Delivery,
-                    attributes: ['id', 'buyer_phone_number', 'arrive_specified_date'],
+                    attributes: ["id", "buyer_phone_number", "arrive_specified_date"],
                     include: [
                         { model: ShippingDayOption },
                         { model: ShippingServiceOption },
                         {
                             model: TodouhukenOption,
-                            as: 'DeliveryTodouhuken',
+                            as: "DeliveryTodouhuken",
                         },
                         {
                             model: Address,
-                            attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                            attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                             include: [
                                 {
                                     model: TodouhukenOption,
-                                    as: 'AddressTodouhuken',
+                                    as: "AddressTodouhuken",
                                 },
                             ],
                         },
                         {
                             model: Name,
-                            attributes: ['sei', 'mei'],
+                            attributes: ["sei", "mei"],
                         },
                     ],
                 },
                 {
                     model: User,
-                    as: 'Seller',
-                    attributes: ['id', 'user_name'],
+                    as: "Seller",
+                    attributes: ["id", "user_name"],
                 },
                 {
                     model: User,
-                    as: 'Buyer',
-                    attributes: ['id', 'points'],
+                    as: "Buyer",
+                    attributes: ["id", "points"],
                 },
             ],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データを取得できません。' });
+            res.status(404).json({ message: "データを取得できません。" });
             return;
         }
 
@@ -113,25 +113,25 @@ router.get('/buy/:id', authenticateToken, async (req: Request, res: Response, ne
 });
 
 router.get(
-    '/buy-item-after/:id',
+    "/buy-item-after/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Orders.findByPk(req.params.id, {
                 attributes: [
-                    'id',
-                    'unit_price',
-                    'subtotal_amount',
-                    'discount_amount',
-                    'total_amount',
-                    'points_used',
-                    'paid_amount',
-                    'item_count',
-                    'buy_at',
-                    'paid_at',
-                    'status',
-                    'order_id',
-                    'purchase_snapshot',
+                    "id",
+                    "unit_price",
+                    "subtotal_amount",
+                    "discount_amount",
+                    "total_amount",
+                    "points_used",
+                    "paid_amount",
+                    "item_count",
+                    "buy_at",
+                    "paid_at",
+                    "status",
+                    "order_id",
+                    "purchase_snapshot",
                 ],
                 include: [
                     {
@@ -142,26 +142,26 @@ router.get(
                         model: Chat,
                         required: false,
                         attributes: [
-                            'seller_username',
-                            'seller_chat',
-                            'buyer_username',
-                            'buyer_chat',
-                            'createdAt',
-                            'updatedAt',
+                            "seller_username",
+                            "seller_chat",
+                            "buyer_username",
+                            "buyer_chat",
+                            "createdAt",
+                            "updatedAt",
                         ],
                     },
                     {
                         model: Item,
-                        attributes: ['id', 'name', 'first_image_url'],
+                        attributes: ["id", "name", "first_image_url"],
                         include: [
                             {
                                 model: Categories,
-                                as: 'children',
+                                as: "children",
                                 required: false,
                                 innclude: [
                                     {
                                         model: Categories,
-                                        as: 'parent',
+                                        as: "parent",
                                         required: false,
                                     },
                                 ],
@@ -170,48 +170,48 @@ router.get(
                     },
                     {
                         model: User,
-                        as: 'Seller',
-                        attributes: ['id', 'user_name', 'profile_image', 'verified', 'star_amount', 'star_average'],
+                        as: "Seller",
+                        attributes: ["id", "user_name", "profile_image", "verified", "star_amount", "star_average"],
                         include: [
                             {
                                 model: ShopInfo,
-                                attributes: ['id'],
+                                attributes: ["id"],
                                 required: false,
                             },
                         ],
                     },
                     {
                         model: Delivery,
-                        attributes: ['id', 'buyer_phone_number', 'shipping_at', 'arrived_at', 'arrive_specified_date'],
+                        attributes: ["id", "buyer_phone_number", "shipping_at", "arrived_at", "arrive_specified_date"],
                         include: [
                             { model: ShippingDayOption },
                             { model: DeliveryStatusOption },
                             {
                                 model: Address,
-                                attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                                 include: [
                                     {
                                         model: TodouhukenOption,
-                                        as: 'AddressTodouhuken',
+                                        as: "AddressTodouhuken",
                                     },
                                 ],
                             },
                             {
                                 model: Name,
-                                attributes: ['sei', 'mei'],
+                                attributes: ["sei", "mei"],
                             },
                         ],
                     },
                     {
                         model: Cancel,
                         required: false,
-                        attributes: ['id', 'cancel_flag'],
+                        attributes: ["id", "cancel_flag"],
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データを取得できません。' });
+                res.status(404).json({ message: "データを取得できません。" });
                 return;
             }
 
@@ -224,25 +224,25 @@ router.get(
             const targetParentId = baseCategory.parent_id ?? baseCategory.id;
 
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'price', 'first_image_url'],
+                attributes: ["id", "name", "price", "first_image_url"],
                 where: {
-                    status: 'active',
+                    status: "active",
                     id: { [Op.ne]: itemId },
                     seller_id: { [Op.ne]: currentUserId },
                 },
-                order: [['sort_number', 'DESC']],
+                order: [["sort_number", "DESC"]],
                 limit: 20,
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag'],
+                        attributes: ["discount_rate", "discount_amount", "sale_flag"],
                     },
                     {
                         model: Categories,
                         where: {
                             [Op.or]: [{ parent_id: targetParentId }, { id: targetParentId }],
                         },
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: true,
                     },
                 ],
@@ -256,25 +256,25 @@ router.get(
 );
 
 router.get(
-    '/cancel-page/:id',
+    "/cancel-page/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Orders.findByPk(req.params.id, {
-                attributes: ['id', 'total_amount', 'item_count'],
+                attributes: ["id", "total_amount", "item_count"],
                 include: [
                     {
                         model: Item,
-                        attributes: ['id', 'name', 'first_image_url'],
+                        attributes: ["id", "name", "first_image_url"],
                     },
                     {
                         model: User,
-                        as: 'Seller',
-                        attributes: ['id', 'user_name', 'profile_image', 'verified'],
+                        as: "Seller",
+                        attributes: ["id", "user_name", "profile_image", "verified"],
                         include: [
                             {
                                 model: ShopInfo,
-                                attributes: ['id'],
+                                attributes: ["id"],
                             },
                         ],
                     },
@@ -282,7 +282,7 @@ router.get(
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データを取得できません。' });
+                res.status(404).json({ message: "データを取得できません。" });
                 return;
             }
 
@@ -294,87 +294,87 @@ router.get(
 );
 
 router.get(
-    '/item-transport/:id',
+    "/item-transport/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Orders.findByPk(req.params.id, {
                 attributes: [
-                    'id',
-                    'unit_price',
-                    'subtotal_amount',
-                    'discount_amount',
-                    'total_amount',
-                    'item_count',
-                    'buy_at',
-                    'paid_at',
-                    'status',
-                    'order_id',
-                    'sales_commission_amount',
-                    'gain_amount',
-                    'purchase_snapshot',
+                    "id",
+                    "unit_price",
+                    "subtotal_amount",
+                    "discount_amount",
+                    "total_amount",
+                    "item_count",
+                    "buy_at",
+                    "paid_at",
+                    "status",
+                    "order_id",
+                    "sales_commission_amount",
+                    "gain_amount",
+                    "purchase_snapshot",
                 ],
                 include: [
                     {
                         model: Chat,
                         required: false,
                         attributes: [
-                            'seller_username',
-                            'seller_chat',
-                            'buyer_username',
-                            'buyer_chat',
-                            'createdAt',
-                            'updatedAt',
+                            "seller_username",
+                            "seller_chat",
+                            "buyer_username",
+                            "buyer_chat",
+                            "createdAt",
+                            "updatedAt",
                         ],
                     },
                     {
                         model: Item,
-                        attributes: ['id', 'name', 'first_image_url'],
+                        attributes: ["id", "name", "first_image_url"],
                     },
                     {
                         model: User,
-                        as: 'Buyer',
-                        attributes: ['id', 'user_name', 'profile_image', 'verified'],
+                        as: "Buyer",
+                        attributes: ["id", "user_name", "profile_image", "verified"],
                         include: [
                             {
                                 model: ShopInfo,
-                                attributes: ['id'],
+                                attributes: ["id"],
                                 required: false,
                             },
                         ],
                     },
                     {
                         model: Delivery,
-                        attributes: ['id', 'buyer_phone_number', 'shipping_at', 'arrived_at', 'arrive_specified_date'],
+                        attributes: ["id", "buyer_phone_number", "shipping_at", "arrived_at", "arrive_specified_date"],
                         include: [
                             { model: ShippingDayOption },
                             { model: DeliveryStatusOption },
                             {
                                 model: Address,
-                                attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                                 include: [
                                     {
                                         model: TodouhukenOption,
-                                        as: 'AddressTodouhuken',
+                                        as: "AddressTodouhuken",
                                     },
                                 ],
                             },
                             {
                                 model: Name,
-                                attributes: ['sei', 'mei'],
+                                attributes: ["sei", "mei"],
                             },
                         ],
                     },
                     {
                         model: Cancel,
                         required: false,
-                        attributes: ['id', 'cancel_flag', 'cancel_reason', 'item_count'],
+                        attributes: ["id", "cancel_flag", "cancel_reason", "item_count"],
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データを取得できません。' });
+                res.status(404).json({ message: "データを取得できません。" });
                 return;
             }
 

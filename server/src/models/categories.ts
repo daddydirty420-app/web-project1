@@ -1,6 +1,6 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
-import type { BodyCategory, LifeStyleCategory, Layer } from '../types/itemAttributes.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
+import type { BodyCategory, LifeStyleCategory, Layer } from "../types/itemAttributes.js";
 
 export class Categories extends Model {
     declare id: number;
@@ -8,8 +8,8 @@ export class Categories extends Model {
     declare level: number;
     declare sort_order: number;
     declare parent_id: number | null;
-    declare allowed_gender: 'men' | 'women' | 'unisex';
-    declare allowed_age: 'adult' | 'kids' | 'both';
+    declare allowed_gender: "men" | "women" | "unisex";
+    declare allowed_age: "adult" | "kids" | "both";
     declare body_category: BodyCategory | null;
     declare lifestyle_category: LifeStyleCategory | null;
     declare layer?: Layer | null;
@@ -17,12 +17,12 @@ export class Categories extends Model {
 
     static associate() {
         Categories.belongsTo(Categories, {
-            foreignKey: 'parent_id',
-            as: 'parent',
+            foreignKey: "parent_id",
+            as: "parent",
         });
         Categories.hasMany(Categories, {
-            foreignKey: 'parent_id',
-            as: 'children',
+            foreignKey: "parent_id",
+            as: "children",
         });
     }
 
@@ -59,12 +59,12 @@ Categories.init(
         allowed_gender: {
             type: DataTypes.STRING(20),
             allowNull: false,
-            defaultValue: 'unisex',
+            defaultValue: "unisex",
         },
         allowed_age: {
             type: DataTypes.STRING(20),
             allowNull: false,
-            defaultValue: 'both',
+            defaultValue: "both",
         },
         body_category: DataTypes.STRING(255),
         lifestyle_category: DataTypes.STRING(255),
@@ -73,8 +73,8 @@ Categories.init(
     },
     {
         sequelize,
-        modelName: 'Categories',
-        tableName: 'categories',
+        modelName: "Categories",
+        tableName: "categories",
         freezeTableName: true,
         timestamps: false,
     },

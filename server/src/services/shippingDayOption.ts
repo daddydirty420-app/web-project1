@@ -1,4 +1,4 @@
-import { ShippingDayOption } from '../models/index.js';
+import { ShippingDayOption } from "../models/index.js";
 
 type ShippingDayIdParams = {
     dayId: number;

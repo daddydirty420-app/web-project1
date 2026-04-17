@@ -1,4 +1,4 @@
-import { WatchHistory } from '../../models/index.js';
+import { WatchHistory } from "../../models/index.js";
 
 export type ItemUserParams = {
     itemId: number;

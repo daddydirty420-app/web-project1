@@ -1,12 +1,12 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import styles from './header.module.css';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
-import { SearchInputPC } from './searchInputPC';
-import { SearchInputMobile } from './searchInputMobile';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import styles from "./header.module.css";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import clsx from "clsx";
+import { SearchInputPC } from "./searchInputPC";
+import { SearchInputMobile } from "./searchInputMobile";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
@@ -38,12 +38,12 @@ export default async function Header() {
                     )}
 
                     {loggedIn && (
-                        <p className={clsx('block mr-[1rem]', styles.menuP)}>
+                        <p className={clsx("block mr-[1rem]", styles.menuP)}>
                             <Link href="/my-page">マイページ</Link>
                         </p>
                     )}
 
-                    <Link href={loggedIn ? '/upload/before' : '/login'} className={styles.uploadDiv}>
+                    <Link href={loggedIn ? "/upload/before" : "/login"} className={styles.uploadDiv}>
                         <FontAwesomeIcon icon={faUpload} className={styles.uploadIcon} />
                         <p className={styles.uploadP}>出品する</p>
                     </Link>

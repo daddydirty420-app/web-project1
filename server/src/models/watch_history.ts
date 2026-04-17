@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
-import Item from './item.js';
+import User from "./user.js";
+import Item from "./item.js";
 
 export class WatchHistory extends Model {
     declare id: number;
@@ -13,10 +13,10 @@ export class WatchHistory extends Model {
 
     static associate() {
         WatchHistory.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         WatchHistory.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -42,8 +42,8 @@ WatchHistory.init(
     },
     {
         sequelize,
-        modelName: 'WatchHistory',
-        tableName: 'watch_history',
+        modelName: "WatchHistory",
+        tableName: "watch_history",
         freezeTableName: true,
         timestamps: true,
     },

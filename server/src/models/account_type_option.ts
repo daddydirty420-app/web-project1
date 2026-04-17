@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class AccountTypeOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ AccountTypeOption.init(
     },
     {
         sequelize,
-        modelName: 'AccountTypeOption',
-        tableName: 'account_type_option',
+        modelName: "AccountTypeOption",
+        tableName: "account_type_option",
         freezeTableName: true,
         timestamps: false,
     },

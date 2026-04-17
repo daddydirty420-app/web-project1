@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class GenderOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ GenderOption.init(
     },
     {
         sequelize,
-        modelName: 'GenderOption',
-        tableName: 'gender_option',
+        modelName: "GenderOption",
+        tableName: "gender_option",
         freezeTableName: true,
         timestamps: false,
     },

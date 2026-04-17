@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
 import {
     ShopInfoEdit,
     ComOrFreeOption,
@@ -11,10 +11,10 @@ import {
     BankAccount,
     AccountTypeOption,
     Notification,
-} from '../models/index.js';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import sequelize from '../db.js';
+} from "../models/index.js";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import sequelize from "../db.js";
 
 const router = Router();
 
@@ -22,15 +22,15 @@ const bucket = process.env.AWS_BUCKET;
 const region = process.env.AWS_REGION;
 const s3Domain = `https://${bucket}.s3.${region}.amazonaws.com`;
 const s3 = new S3Client({
-    region: region || 'ap-northeast-1',
+    region: region || "ap-northeast-1",
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
     },
 });
 
 router.post(
-    '/com-free-edit/:id',
+    "/com-free-edit/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = req.params.id;
@@ -45,19 +45,19 @@ router.post(
                     { model: Address },
                     {
                         model: Name,
-                        as: 'RepresentativeName',
+                        as: "RepresentativeName",
                     },
                     { model: BankAccount },
                 ],
             });
 
             if (!shop) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
             if (comFreeId === Number(shop.com_or_free_id)) {
-                res.status(400).json({ message: '事業形態が変更されていません。' });
+                res.status(400).json({ message: "事業形態が変更されていません。" });
                 return;
             }
 
@@ -102,7 +102,7 @@ router.post(
                     sei_kana: name.sei_kana,
                     mei_kana: name.mei_kana,
                     shop_info_edit_id: shopEdit.id,
-                    shop_type: 'representative',
+                    shop_type: "representative",
                 },
                 { transaction: t },
             );
@@ -131,7 +131,7 @@ router.post(
     },
 );
 
-router.patch('/edit/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopEditId = req.params.id;
     const updateData = req.body;
 
@@ -141,7 +141,7 @@ router.patch('/edit/:id', authenticateToken, async (req: Request, res: Response,
         });
 
         res.status(200).json({
-            message: '更新しました。',
+            message: "更新しました。",
             updated: updateData,
         });
     } catch (err) {
@@ -150,7 +150,7 @@ router.patch('/edit/:id', authenticateToken, async (req: Request, res: Response,
 });
 
 router.patch(
-    '/id-image-upload/:id',
+    "/id-image-upload/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
@@ -159,7 +159,7 @@ router.patch(
             req.body;
 
         if (!frontFileName || !frontFileType || !rearFileName || !rearFileType) {
-            res.status(400).json({ message: '身分証がアップロードされていない、または不正なファイルです。' });
+            res.status(400).json({ message: "身分証がアップロードされていない、または不正なファイルです。" });
             return;
         }
 
@@ -172,7 +172,7 @@ router.patch(
                 include: [{ model: ShopInfo }],
             });
             if (!shopEdit) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -254,7 +254,7 @@ router.patch(
                 {
                     read_user_id: userId,
                     message:
-                        '事業形態の変更が完了しました。審査完了まで1~2週間ほどお時間を頂戴しておりますため、しばらくお待ちください。',
+                        "事業形態の変更が完了しました。審査完了まで1~2週間ほどお時間を頂戴しておりますため、しばらくお待ちください。",
                 },
                 { transaction: t },
             );
@@ -262,7 +262,7 @@ router.patch(
             await t.commit();
 
             res.status(200).json({
-                message: '身分証・許認可証のDB登録が完了しました。',
+                message: "身分証・許認可証のDB登録が完了しました。",
                 frontSignedUrl,
                 frontUrl,
                 rearSignedUrl,
@@ -278,19 +278,19 @@ router.patch(
 );
 
 router.get(
-    '/com-free/:id',
+    "/com-free/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = req.params.id;
 
         try {
             const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ['id', 'com_or_free_id'],
+                attributes: ["id", "com_or_free_id"],
                 include: [{ model: ComOrFreeOption }],
             });
 
             if (!shop) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -304,24 +304,24 @@ router.get(
 );
 
 router.get(
-    '/rep-name/:id',
+    "/rep-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
 
         try {
             const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ['id'],
+                attributes: ["id"],
                 include: [
                     {
                         model: Name,
-                        attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -333,23 +333,23 @@ router.get(
 );
 
 router.get(
-    '/con-name/:id',
+    "/con-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
 
         try {
             const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ['id'],
+                attributes: ["id"],
                 include: [
                     {
                         model: ShopInfo,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         include: [
                             {
                                 model: Name,
-                                as: 'ContactName',
-                                attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                                as: "ContactName",
+                                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                             },
                         ],
                     },
@@ -357,7 +357,7 @@ router.get(
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -369,22 +369,22 @@ router.get(
 );
 
 router.get(
-    '/address/:id',
+    "/address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
 
         try {
             const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ['id'],
+                attributes: ["id"],
                 include: [
                     {
                         model: Address,
-                        attributes: ['id', 'post_number', 'todouhuken_id', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
@@ -392,7 +392,7 @@ router.get(
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -404,26 +404,26 @@ router.get(
 );
 
 router.get(
-    '/account/:id',
+    "/account/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
 
         try {
             const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ['id'],
+                attributes: ["id"],
                 include: [
                     {
                         model: BankAccount,
                         attributes: [
-                            'id',
-                            'bank_name',
-                            'bank_code',
-                            'branch',
-                            'branch_code',
-                            'account_type_id',
-                            'account_number',
-                            'meigi',
+                            "id",
+                            "bank_name",
+                            "bank_code",
+                            "branch",
+                            "branch_code",
+                            "account_type_id",
+                            "account_number",
+                            "meigi",
                         ],
                         include: [{ model: AccountTypeOption }],
                     },
@@ -431,7 +431,7 @@ router.get(
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 
@@ -443,7 +443,7 @@ router.get(
 );
 
 router.get(
-    '/confirm/:id',
+    "/confirm/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = req.params.id;
@@ -456,7 +456,7 @@ router.get(
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
@@ -469,15 +469,15 @@ router.get(
                     {
                         model: ShopInfo,
                         attributes: [
-                            'id',
-                            'company_name',
-                            'email',
-                            'phone_number',
-                            'homepage_url',
-                            'open_date_time',
-                            'company_number',
-                            'capital',
-                            'member_count',
+                            "id",
+                            "company_name",
+                            "email",
+                            "phone_number",
+                            "homepage_url",
+                            "open_date_time",
+                            "company_number",
+                            "capital",
+                            "member_count",
                         ],
                         include: [
                             {
@@ -485,17 +485,17 @@ router.get(
                                 include: [
                                     {
                                         model: TodouhukenOption,
-                                        as: 'AddressTodouhuken',
+                                        as: "AddressTodouhuken",
                                     },
                                 ],
                             },
                             {
                                 model: Name,
-                                as: 'RepresentativeName',
+                                as: "RepresentativeName",
                             },
                             {
                                 model: Name,
-                                as: 'ContactName',
+                                as: "ContactName",
                             },
                             {
                                 model: BankAccount,
@@ -508,7 +508,7 @@ router.get(
             });
 
             if (!data) {
-                res.status(404).json({ message: 'ショップデータが見つかりません。' });
+                res.status(404).json({ message: "ショップデータが見つかりません。" });
                 return;
             }
 

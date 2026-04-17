@@ -1,11 +1,11 @@
-import { Cart, Item, Sale, Video } from '../models/index.js';
+import { Cart, Item, Sale, Video } from "../models/index.js";
 import {
     CartListParams,
     DestroyAllParams,
     DestroyParams,
     ItemIdParams,
     ItemUserParams,
-} from '../types/serviceType/cart.js';
+} from "../types/serviceType/cart.js";
 
 export const getCartOne = async ({ itemId, userId }: ItemUserParams) => {
     return Cart.findOne({
@@ -24,9 +24,9 @@ export const getAllCarts = async ({ itemId }: ItemIdParams) => {
 
 export const getUserItemsCartList = async ({ itemWhere, limit, offset, userId }: CartListParams) => {
     const cartList = await Cart.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where: { user_id: userId },
-        order: [['createdAt', 'DESC']],
+        order: [["createdAt", "DESC"]],
         limit,
         offset,
         include: [
@@ -34,25 +34,25 @@ export const getUserItemsCartList = async ({ itemWhere, limit, offset, userId }:
                 model: Item,
                 where: itemWhere,
                 attributes: [
-                    'id',
-                    'name',
-                    'price',
-                    'status',
-                    'seller_id',
-                    'first_image_url',
-                    'gender_type',
-                    'age_type',
+                    "id",
+                    "name",
+                    "price",
+                    "status",
+                    "seller_id",
+                    "first_image_url",
+                    "gender_type",
+                    "age_type",
                 ],
                 required: true,
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag', 'before_price'],
+                        attributes: ["discount_rate", "discount_amount", "sale_flag", "before_price"],
                         required: false,
                     },
                     {
                         model: Video,
-                        attributes: ['title'],
+                        attributes: ["title"],
                     },
                 ],
             },

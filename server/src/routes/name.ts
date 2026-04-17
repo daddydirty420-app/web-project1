@@ -1,18 +1,18 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { Name } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { Name } from "../models/index.js";
 
 const router = Router();
 
 router.patch(
-    '/name-edit/:id',
+    "/name-edit/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const nameId = req.params.id;
         const { sei, mei, seiKana, meiKana } = req.body;
         if (!sei || !mei || !seiKana || !meiKana) {
-            res.status(404).json({ message: '必須項目が入力されていません。' });
+            res.status(404).json({ message: "必須項目が入力されていません。" });
             return;
         }
 
@@ -27,7 +27,7 @@ router.patch(
                 { where: { id: nameId } },
             );
 
-            res.status(200).json({ message: '氏名を更新しました。' });
+            res.status(200).json({ message: "氏名を更新しました。" });
         } catch (err) {
             next(err);
         }
@@ -35,17 +35,17 @@ router.patch(
 );
 
 router.get(
-    '/delivery-name/:id',
+    "/delivery-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await Name.findOne({
-                attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana', 'delivery_id'],
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
                 where: { delivery_id: req.params.id },
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -56,15 +56,15 @@ router.get(
     },
 );
 
-router.get('/myname', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/myname", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await Name.findOne({
-            attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+            attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             where: { user_id: req.user!.id },
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 

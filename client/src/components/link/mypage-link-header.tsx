@@ -1,4 +1,4 @@
-import styles from './normal-link.module.css';
+import styles from "./normal-link.module.css";
 
 type MypageLinkHeaderProps = {
     text: string;

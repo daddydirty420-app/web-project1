@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op } from "sequelize";
 import {
     Item,
     Video,
@@ -15,10 +15,10 @@ import {
     User,
     BankAccount,
     Transfer,
-} from '../../models/index.js';
-import sequelize from '../../db.js';
-import moveToGlacier from './moveToGlacier.js';
-import crypto from 'crypto';
+} from "../../models/index.js";
+import sequelize from "../../db.js";
+import moveToGlacier from "./moveToGlacier.js";
+import crypto from "crypto";
 
 async function adminDeleteItem(itemId: number, adminId: number, deleteReason: string) {
     const today = new Date();
@@ -51,7 +51,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
         const orders = await Orders.findAll({
             where: {
                 item_id: item.id,
-                status: { [Op.notIn]: ['cancelled', 'returned'] },
+                status: { [Op.notIn]: ["cancelled", "returned"] },
             },
             include: [
                 {
@@ -71,7 +71,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
             for (const order of orders) {
                 await order.update(
                     {
-                        status: 'cancelled',
+                        status: "cancelled",
                     },
                     { transaction: t },
                 );
@@ -86,7 +86,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 await Cancel.upsert(
                     {
                         orders_id: order.id,
-                        cancel_reason: '商品削除',
+                        cancel_reason: "商品削除",
                         return_amount: order.total_amount,
                         item_count: order.item_count,
                         cancel_flag: true,
@@ -110,14 +110,14 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                             `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
                             `${
                                 buyerHasAccount
-                                    ? '口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。'
-                                    : ''
+                                    ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。"
+                                    : ""
                             }`,
                     },
                     { transaction: t },
                 );
 
-                const transferId = crypto.randomBytes(11).toString('hex');
+                const transferId = crypto.randomBytes(11).toString("hex");
 
                 await Transfer.create(
                     {
@@ -135,9 +135,9 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 deleteOrder.push({
                     orders_id: order.id,
                     delivery_id: order.Delivery.id,
-                    cancel_reason: '商品削除',
-                    refund_status: '未返金',
-                    refund_method: '口座振込',
+                    cancel_reason: "商品削除",
+                    refund_status: "未返金",
+                    refund_method: "口座振込",
                     refund_amount: order.total_amount,
                     deleted_by: adminId,
                 });
@@ -178,7 +178,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 thumbnail_url: newThumbnailUrl,
                 video_title: item.Video ? item.Video.title : null,
                 video_summary: item.Video ? item.Video.summary : null,
-                delete_reason: '強制削除',
+                delete_reason: "強制削除",
                 deleted_by: adminId,
             },
             { transaction: t },
@@ -189,7 +189,7 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
                 item_id: item.id,
                 delete_user_id: adminId,
                 delete_by_admin: true,
-                delete_reason: '強制削除',
+                delete_reason: "強制削除",
             },
             { transaction: t },
         );

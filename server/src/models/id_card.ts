@@ -1,9 +1,9 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
-import ShopInfo from './shop_info.js';
-import ShopInfoEdit from './shop_info_edit.js';
+import User from "./user.js";
+import ShopInfo from "./shop_info.js";
+import ShopInfoEdit from "./shop_info_edit.js";
 
 export class IdCard extends Model {
     declare id: number;
@@ -17,13 +17,13 @@ export class IdCard extends Model {
 
     static associate() {
         IdCard.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
         IdCard.belongsTo(ShopInfo, {
-            foreignKey: 'shop_info_id',
+            foreignKey: "shop_info_id",
         });
         IdCard.belongsTo(ShopInfoEdit, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
     }
 
@@ -59,8 +59,8 @@ IdCard.init(
     },
     {
         sequelize,
-        modelName: 'IdCard',
-        tableName: 'id_card',
+        modelName: "IdCard",
+        tableName: "id_card",
         freezeTableName: true,
         timestamps: true,
     },

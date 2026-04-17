@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import styles from '../ss.module.css';
-import SSUI from '../ssUI';
-import { StepBar } from '../stepBar';
-import { ButtonDiv } from '../buttonDiv';
-import { ShopInfo } from '../type';
-import React, { useRef, useState } from 'react';
-import { InputTitle } from '@/components/inputForm';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../ss.module.css";
+import SSUI from "../ssUI";
+import { StepBar } from "../stepBar";
+import { ButtonDiv } from "../buttonDiv";
+import { ShopInfo } from "../type";
+import React, { useRef, useState } from "react";
+import { InputTitle } from "@/components/inputForm";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
@@ -26,12 +26,12 @@ type PermitImage = {
 };
 
 export const Form = ({ shopId, shopInfo }: Props) => {
-    const [idCardFront, setIdCardFront] = useState<File | string | undefined>(shopInfo.id_card_front ?? '');
-    const [idFrontPreview, setIdFrontPreview] = useState(shopInfo.id_card_front ?? '');
+    const [idCardFront, setIdCardFront] = useState<File | string | undefined>(shopInfo.id_card_front ?? "");
+    const [idFrontPreview, setIdFrontPreview] = useState(shopInfo.id_card_front ?? "");
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);
 
-    const [idCardRear, setIdCardRear] = useState<File | string | undefined>(shopInfo.id_card_rear ?? '');
-    const [idRearPreview, setIdRearPreview] = useState(shopInfo.id_card_rear ?? '');
+    const [idCardRear, setIdCardRear] = useState<File | string | undefined>(shopInfo.id_card_rear ?? "");
+    const [idRearPreview, setIdRearPreview] = useState(shopInfo.id_card_rear ?? "");
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const [checked, setChecked] = useState(false);
@@ -87,12 +87,12 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
     const submit = async () => {
         if (!idCardFront || !idCardRear) {
-            toast.error('身分証がアップロードされていません。');
+            toast.error("身分証がアップロードされていません。");
             return;
         }
 
         if (checked && permitImages.length === 0) {
-            toast.error('許認可証がアップロードされていません。');
+            toast.error("許認可証がアップロードされていません。");
             return;
         }
 
@@ -122,7 +122,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                     };
                 }
 
-                const fileName = (img.preview ?? '').split('/').pop() || 'unknown';
+                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
 
                 return {
                     fileName,
@@ -146,14 +146,14 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/3/${shopId}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
@@ -163,36 +163,36 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('画像データの送信に失敗しました。');
+                toast.error("画像データの送信に失敗しました。");
                 return;
             }
 
             if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': idCardFront.type,
+                        "Content-Type": idCardFront.type,
                     },
                     body: idCardFront,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error('身分証（表面）のアップロードに失敗しました。');
+                    toast.error("身分証（表面）のアップロードに失敗しました。");
                     return;
                 }
             }
 
             if (idRearUpload && data.rearSignedUrl && idCardRear instanceof File) {
                 const uploadFrontRes = await fetch(data.rearSignedUrl, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': idCardRear.type,
+                        "Content-Type": idCardRear.type,
                     },
                     body: idCardRear,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error('身分証（裏面）のアップロードに失敗しました。');
+                    toast.error("身分証（裏面）のアップロードに失敗しました。");
                     return;
                 }
             }
@@ -205,15 +205,15 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                     const signedUrl = data.permitSignedUrls[i];
 
                     const upload = await fetch(signedUrl, {
-                        method: 'PUT',
+                        method: "PUT",
                         headers: {
-                            'Content-Type': file.type,
+                            "Content-Type": file.type,
                         },
                         body: file,
                     });
 
                     if (!upload.ok) {
-                        toast.error('許認可証のアップロードに失敗しました。');
+                        toast.error("許認可証のアップロードに失敗しました。");
                         return;
                     }
                 }
@@ -221,7 +221,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
             router.push(`/shop-signup/step4/${shopId}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -245,7 +245,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                     ref={idFrontRef}
                 />
                 <Image
-                    src={idFrontPreview || '/no-image(1x1).png'}
+                    src={idFrontPreview || "/no-image(1x1).png"}
                     alt="身分証（表面）"
                     width={120}
                     height={120}
@@ -263,7 +263,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                     required
                 />
                 <Image
-                    src={idRearPreview || '/no-image(1x1).png'}
+                    src={idRearPreview || "/no-image(1x1).png"}
                     alt="身分証（裏面）"
                     width={120}
                     height={120}

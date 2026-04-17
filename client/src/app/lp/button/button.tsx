@@ -1,5 +1,5 @@
-import styles from '../lp.module.css';
-import Link from 'next/link';
+import styles from "../lp.module.css";
+import Link from "next/link";
 
 type Props = {
     shopPage?: boolean;
@@ -8,11 +8,11 @@ type Props = {
 };
 
 export const Button = async ({ shopPage, hasShop, loggedIn }: Props) => {
-    const signupPage = '/signup';
-    const loginPage = '/login';
-    const uploadPage = '/upload/before';
-    const myPage = '/my-page';
-    const shopSignPage = '/shop-signup/step1';
+    const signupPage = "/signup";
+    const loginPage = "/login";
+    const uploadPage = "/upload/before";
+    const myPage = "/my-page";
+    const shopSignPage = "/shop-signup/step1";
 
     return (
         <nav>

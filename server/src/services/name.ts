@@ -1,5 +1,5 @@
-import { Name } from '../models/index.js';
-import { CreateDeliveryNameParams, CreateNameParams, UserIdParams } from '../types/serviceType/name.js';
+import { Name } from "../models/index.js";
+import { CreateDeliveryNameParams, CreateNameParams, UserIdParams } from "../types/serviceType/name.js";
 
 export const getNameOne = ({ userId }: UserIdParams) => {
     return Name.findOne({

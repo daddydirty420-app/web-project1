@@ -1,6 +1,6 @@
-import { destroyItemLike, getItemLikeOne } from '../../services/itemLike.js';
-import { AppError } from '../../errors.js';
-import { patchSortNumberDecreaseUseCase } from '../item/sortNumber/sortNumber.js';
+import { destroyItemLike, getItemLikeOne } from "../../services/itemLike.js";
+import { AppError } from "../../errors.js";
+import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;
@@ -12,7 +12,7 @@ export const deleteItemLikeUseCase = async ({ itemId, userId }: Params) => {
     const data = await getItemLikeOne({ itemId, userId });
 
     if (!data) {
-        throw new AppError('NOT_LIKE_ITEM', 409, 'いいねしていません');
+        throw new AppError("NOT_LIKE_ITEM", 409, "いいねしていません");
     }
 
     // itemLike削除
@@ -23,6 +23,6 @@ export const deleteItemLikeUseCase = async ({ itemId, userId }: Params) => {
     const buzzNumber = 200;
 
     patchSortNumberDecreaseUseCase({ itemId, number, buzzNumber }).catch((err) => {
-        console.error('usecase patchSortNumberDecrease error:', err);
+        console.error("usecase patchSortNumberDecrease error:", err);
     });
 };

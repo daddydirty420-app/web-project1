@@ -1,4 +1,4 @@
-import { ItemDataParams, ItemTransactionParams, LogicalDeleteParams } from '../../../types/serviceType/items/items.js';
+import { ItemDataParams, ItemTransactionParams, LogicalDeleteParams } from "../../../types/serviceType/items/items.js";
 
 export const updateLogicalDeleteItem = async ({ item, data, transaction }: LogicalDeleteParams) => {
     const nowDate = new Date();
@@ -8,7 +8,7 @@ export const updateLogicalDeleteItem = async ({ item, data, transaction }: Logic
             uploaded_at: null,
             sort_number: 0,
             sort_buzz_number: 0,
-            status: 'deleted',
+            status: "deleted",
             deleted_at: nowDate,
             ...data,
         },

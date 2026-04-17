@@ -1,14 +1,14 @@
-import { Client } from './client';
-import { TitleAndBack, Accordion, AccordionGrid } from '@/components';
-import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide';
-import { ListUl, ListFlow, ListFlowArrow, ListCheck } from '@/components/list';
-import { TermsList, TermsListDiv } from '@/components/terms';
-import { RowTextContainer } from '@/components/two-text-container/tow-text-container';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
-import styles from '@/styles/guide.module.css';
-import clsx from 'clsx';
-import Link from 'next/link';
+import { Client } from "./client";
+import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
+import { GuideSubTitle, GuideSmall, GuideSection } from "@/components/guide";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck } from "@/components/list";
+import { TermsList, TermsListDiv } from "@/components/terms";
+import { RowTextContainer } from "@/components/two-text-container/tow-text-container";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import styles from "@/styles/guide.module.css";
+import clsx from "clsx";
+import Link from "next/link";
 
 export const Content = () => {
     return (
@@ -18,7 +18,7 @@ export const Content = () => {
             <GuideSubTitle text="出品について" />
             <AccordionGrid>
                 <Accordion heading="出品方法">
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>かんたん出品ガイド</p>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>かんたん出品ガイド</p>
 
                     <ListUl>
                         <ListFlow number={1}>
@@ -53,7 +53,7 @@ export const Content = () => {
                         <ListCheck>動画の概要</ListCheck>
                     </ListUl>
 
-                    <p className={clsx('mt-4', styles.PHeading)}>タイトル、概要</p>
+                    <p className={clsx("mt-4", styles.PHeading)}>タイトル、概要</p>
                     <p className="mt-2">
                         動画のタイトルは、動画や商品の内容を踏まえて一言で表し、なるべく見た人がわかりやすく、興味を引くようなタイトルをつけましょう。
                         <br />
@@ -89,7 +89,7 @@ export const Content = () => {
                     </p>
 
                     <p>手数料率は以下の通りです。</p>
-                    <p className={clsx('mt-2 ml-[2rem]', styles.PHeading)}>
+                    <p className={clsx("mt-2 ml-[2rem]", styles.PHeading)}>
                         商品代金の<span className="text-[var(--theme)]">10%</span>
                     </p>
 
@@ -143,7 +143,7 @@ export const Content = () => {
                 </Accordion>
 
                 <Accordion heading="振込日について">
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>
                         振込申請を行った日の<span className="text-[var(--alert)]">翌々週金曜日</span>に振込されます。
                     </p>
 
@@ -156,7 +156,7 @@ export const Content = () => {
                 </Accordion>
 
                 <Accordion heading="売上金の保管期限">
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>
                         売上金の保管期限は、当該売上金が加算された日から
                         <span className="text-[var(--alert)]">180日後</span>です。
                     </p>
@@ -395,7 +395,7 @@ export const Content = () => {
                         <ListCheck>受取済み</ListCheck>
                     </ListUl>
 
-                    <p className={clsx('mt-4', styles.PHeading)}>配送状況は、以下により変化します。</p>
+                    <p className={clsx("mt-4", styles.PHeading)}>配送状況は、以下により変化します。</p>
                     <div className="mt-2 ml-[1rem]">
                         <RowTextContainer heading="発送待ち→配送中：">
                             出品者が配送会社と配送手続きを完了し、取引明細ページの「
@@ -462,7 +462,7 @@ export const Content = () => {
                     <p className="mt-4 mb-2">商品ページに記載の主な内容は以下の通りです。</p>
                     <GuideSection heading="動画">商品に関連する動画です。どなたでもご覧いただけます。</GuideSection>
 
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>商品</p>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>商品</p>
                     <p className={styles.sectionChild}>商品ページには以下の内容が記載されています。</p>
                     <ListUl>
                         <ListCheck>商品名</ListCheck>

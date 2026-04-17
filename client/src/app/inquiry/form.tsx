@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { User } from './type';
-import { Button, InputStr, Textarea } from '@/components/inputForm';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { User } from "./type";
+import { Button, InputStr, Textarea } from "@/components/inputForm";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
     loggedIn: boolean;
@@ -12,39 +12,39 @@ type Props = {
 };
 
 export const Form = ({ loggedIn, user }: Props) => {
-    const [name, setName] = useState(user?.user_name ?? '');
-    const [email, setEmail] = useState(user?.email ?? '');
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
+    const [name, setName] = useState(user?.user_name ?? "");
+    const [email, setEmail] = useState(user?.email ?? "");
+    const [title, setTitle] = useState("");
+    const [body, setBody] = useState("");
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
     const submit = async () => {
-        if (!name || name.trim() === '') {
-            toast.error('お名前を入力してください');
+        if (!name || name.trim() === "") {
+            toast.error("お名前を入力してください");
             return;
         }
 
-        if (!email || email.trim() === '') {
-            toast.error('メールアドレスを入力してください');
+        if (!email || email.trim() === "") {
+            toast.error("メールアドレスを入力してください");
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
-            toast.error('正しいメールアドレス形式で入力してください');
+            toast.error("正しいメールアドレス形式で入力してください");
             return;
         }
 
-        if (!title || title.trim() === '') {
-            toast.error('件名を入力してください');
+        if (!title || title.trim() === "") {
+            toast.error("件名を入力してください");
             return;
         }
 
-        if (!body || body.trim() === '') {
-            toast.error('本文を入力してください');
+        if (!body || body.trim() === "") {
+            toast.error("本文を入力してください");
             return;
         }
 
@@ -52,10 +52,10 @@ export const Form = ({ loggedIn, user }: Props) => {
             setLoading(true);
 
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/inquiry/user-submit${loggedIn ? `?userId=${user?.id ?? ''}` : ''}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/inquiry/user-submit${loggedIn ? `?userId=${user?.id ?? ""}` : ""}`,
                 {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         name,
                         email,
@@ -69,12 +69,12 @@ export const Form = ({ loggedIn, user }: Props) => {
 
             if (!res.ok) {
                 setLoading(false);
-                toast.error('お問い合わせ内容の送信に失敗しました');
+                toast.error("お問い合わせ内容の送信に失敗しました");
                 console.error(data.message);
                 return;
             }
 
-            toast.success('お問い合わせ内容を送信しました！');
+            toast.success("お問い合わせ内容を送信しました！");
             console.log(data.message);
 
             setTimeout(() => {
@@ -83,19 +83,19 @@ export const Form = ({ loggedIn, user }: Props) => {
             }, 1000);
         } catch (err) {
             setLoading(false);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     return (
         <>
-            <InputStr title="お名前" type="text" value={name || ''} onChange={setName} placeholder="お名前" hissu />
+            <InputStr title="お名前" type="text" value={name || ""} onChange={setName} placeholder="お名前" hissu />
 
             <InputStr
                 title="メールアドレス"
                 type="text"
-                value={email || ''}
+                value={email || ""}
                 onChange={setEmail}
                 placeholder="****@*****.***"
                 hissu
@@ -104,7 +104,7 @@ export const Form = ({ loggedIn, user }: Props) => {
             <InputStr
                 title="件名"
                 type="text"
-                value={title || ''}
+                value={title || ""}
                 onChange={setTitle}
                 placeholder="件名（最大50文字まで）"
                 maxLength={50}
@@ -113,14 +113,14 @@ export const Form = ({ loggedIn, user }: Props) => {
 
             <Textarea
                 title="お問い合わせ内容"
-                value={body || ''}
+                value={body || ""}
                 onChange={setBody}
                 maxLength={500}
                 placeholder="お問い合わせ内容（最大500文字まで）"
                 hissu
             />
 
-            <Button onClick={submit}>{loading ? '送信中...' : '送信する'}</Button>
+            <Button onClick={submit}>{loading ? "送信中..." : "送信する"}</Button>
         </>
     );
 };

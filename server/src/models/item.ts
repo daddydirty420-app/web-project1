@@ -1,20 +1,20 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
-import type { ItemAttributes } from '../types/itemAttributes.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
+import type { ItemAttributes } from "../types/itemAttributes.js";
 
-import User from './user.js';
-import ItemConditionOption from './item_condition_option.js';
-import Cart from './cart.js';
-import ItemLike from './item_like.js';
-import Video from './video.js';
-import Sale from './sale.js';
-import ItemReport from './item_report.js';
-import Categories from './categories.js';
-import Brands from './brands.js';
-import ItemShippingProfile from './item_shipping_profile.js';
-import BrandAliases from './brand_aliases.js';
-import Comment from './comment.js';
-import WatchHistory from './watch_history.js';
+import User from "./user.js";
+import ItemConditionOption from "./item_condition_option.js";
+import Cart from "./cart.js";
+import ItemLike from "./item_like.js";
+import Video from "./video.js";
+import Sale from "./sale.js";
+import ItemReport from "./item_report.js";
+import Categories from "./categories.js";
+import Brands from "./brands.js";
+import ItemShippingProfile from "./item_shipping_profile.js";
+import BrandAliases from "./brand_aliases.js";
+import Comment from "./comment.js";
+import WatchHistory from "./watch_history.js";
 
 export class Item extends Model {
     declare id: number;
@@ -36,9 +36,9 @@ export class Item extends Model {
     declare deleted_at: Date | null;
     declare first_image_url: string | null;
     declare save_at: Date | null;
-    declare gender_type: 'men' | 'women' | 'unisex';
-    declare age_type: 'adult' | 'kids' | 'both';
-    declare status: 'editing' | 'draft' | 'active' | 'hidden' | 'soldout' | 'deleted';
+    declare gender_type: "men" | "women" | "unisex";
+    declare age_type: "adult" | "kids" | "both";
+    declare status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     declare category_id: number | null;
     declare brand_id: number | null;
     declare brand_aliases_id: number | null;
@@ -48,45 +48,45 @@ export class Item extends Model {
 
     static associate() {
         Item.belongsTo(User, {
-            foreignKey: 'seller_id',
+            foreignKey: "seller_id",
         });
         Item.belongsTo(ItemConditionOption, {
-            foreignKey: 'item_condition_id',
+            foreignKey: "item_condition_id",
         });
         Item.belongsTo(Categories, {
-            foreignKey: 'category_id',
-            as: 'Category',
+            foreignKey: "category_id",
+            as: "Category",
         });
         Item.belongsTo(Brands, {
-            foreignKey: 'brand_id',
-            as: 'Brand',
+            foreignKey: "brand_id",
+            as: "Brand",
         });
         Item.belongsTo(BrandAliases, {
-            foreignKey: 'brand_aliases_id',
+            foreignKey: "brand_aliases_id",
         });
         Item.hasMany(Cart, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasMany(ItemLike, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasOne(Video, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasOne(Sale, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasMany(ItemReport, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasOne(ItemShippingProfile, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasMany(Comment, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Item.hasMany(WatchHistory, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
     }
 
@@ -122,7 +122,7 @@ Item.init(
             validate: {
                 maxArrayLength(value: string[]) {
                     if (value && value.length > 10) {
-                        throw new Error('画像は最大10枚までです。');
+                        throw new Error("画像は最大10枚までです。");
                     }
                 },
             },
@@ -132,7 +132,7 @@ Item.init(
             type: DataTypes.DECIMAL,
             get() {
                 // getterで明示的にNumberに変換
-                return Number(this.getDataValue('sort_number'));
+                return Number(this.getDataValue("sort_number"));
             },
         },
         views_count: {
@@ -155,26 +155,26 @@ Item.init(
             type: DataTypes.DECIMAL,
             get() {
                 // getterで明示的にNumberに変換
-                return Number(this.getDataValue('sort_buzz_number'));
+                return Number(this.getDataValue("sort_buzz_number"));
             },
         },
         deleted_at: DataTypes.DATE,
         first_image_url: DataTypes.TEXT,
         save_at: DataTypes.DATE,
         gender_type: {
-            type: DataTypes.ENUM('men', 'women', 'unisex'),
+            type: DataTypes.ENUM("men", "women", "unisex"),
             allowNull: false,
-            defaultValue: 'unisex',
+            defaultValue: "unisex",
         },
         age_type: {
-            type: DataTypes.ENUM('adult', 'kids', 'both'),
+            type: DataTypes.ENUM("adult", "kids", "both"),
             allowNull: false,
-            defaultValue: 'both',
+            defaultValue: "both",
         },
         status: {
-            type: DataTypes.ENUM('editing', 'draft', 'active', 'hidden', 'soldout', 'deleted'),
+            type: DataTypes.ENUM("editing", "draft", "active", "hidden", "soldout", "deleted"),
             allowNull: false,
-            defaultValue: 'editing',
+            defaultValue: "editing",
         },
         category_id: DataTypes.INTEGER,
         brand_id: DataTypes.INTEGER,
@@ -196,8 +196,8 @@ Item.init(
     },
     {
         sequelize,
-        modelName: 'Item',
-        tableName: 'item',
+        modelName: "Item",
+        tableName: "item",
         freezeTableName: true,
         timestamps: true,
     },

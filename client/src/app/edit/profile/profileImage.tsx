@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import styles from '../edit.module.css';
-import { InputTitle } from '@/components/inputForm';
-import React, { useEffect, useRef, useState } from 'react';
-import { User } from '../type';
-import Image from 'next/image';
+import styles from "../edit.module.css";
+import { InputTitle } from "@/components/inputForm";
+import React, { useEffect, useRef, useState } from "react";
+import { User } from "../type";
+import Image from "next/image";
 
 type Props = {
     user: User;
@@ -14,8 +14,8 @@ type Props = {
 };
 
 export const ProfileImage = ({ user, setFile, defaultImage, setDefaultImage }: Props) => {
-    const originalImage = user.profile_image || '/default-profile.png';
-    const [preview, setPreview] = useState<string>(user.profile_image || '/default-profile.png');
+    const originalImage = user.profile_image || "/default-profile.png";
+    const [preview, setPreview] = useState<string>(user.profile_image || "/default-profile.png");
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -30,11 +30,11 @@ export const ProfileImage = ({ user, setFile, defaultImage, setDefaultImage }: P
         setDefaultImage(checked);
 
         if (checked) {
-            setPreview('/default-profile.png');
+            setPreview("/default-profile.png");
             setFile(null);
 
             if (fileInputRef.current) {
-                fileInputRef.current.value = '';
+                fileInputRef.current.value = "";
             }
         } else {
             setPreview(originalImage);
@@ -62,7 +62,7 @@ export const ProfileImage = ({ user, setFile, defaultImage, setDefaultImage }: P
                 ref={fileInputRef}
             />
             <Image
-                src={defaultImage ? '/default-profile.png' : preview || '/default-profile.png'}
+                src={defaultImage ? "/default-profile.png" : preview || "/default-profile.png"}
                 alt="プロフィール画像プレビュー"
                 width={90}
                 height={90}

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { InputTitle } from '@/components/inputForm';
-import styles from './upload.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { InputTitle } from "@/components/inputForm";
+import styles from "./upload.module.css";
+import { useEffect, useRef, useState } from "react";
 
 export type BrandValue = {
     id: string | null;
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const BrandInput = ({ value, onChange }: Props) => {
-    const [brandName, setBrandName] = useState('');
+    const [brandName, setBrandName] = useState("");
     const [openSuggest, setOpenSuggest] = useState(false);
     const [isSelecting, setIsSelecting] = useState(false);
 
@@ -50,13 +50,13 @@ export const BrandInput = ({ value, onChange }: Props) => {
         suggestTimeout.current = setTimeout(async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/brands/suggest?keyword=${brandName}`, {
-                    cache: 'no-store',
+                    cache: "no-store",
                 });
 
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error('ブランド名検索エラー：', data.message);
+                    console.error("ブランド名検索エラー：", data.message);
                     setSuggestions([]);
                     setOpenSuggest(false);
                     return;

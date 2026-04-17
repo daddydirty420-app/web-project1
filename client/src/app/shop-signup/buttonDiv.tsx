@@ -1,4 +1,4 @@
-import styles from './ss.module.css';
+import styles from "./ss.module.css";
 
 type Props = {
     nextClick: () => void;

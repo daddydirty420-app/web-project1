@@ -1,8 +1,8 @@
-import { AppError } from '../../errors.js';
-import { countSellItem, countSoldItem } from '../../services/items/index.js';
-import { countUnread } from '../../services/notification.js';
-import { countReferenceOutput } from '../../services/referenceCode.js';
-import { getMeMypage } from '../../services/users.js';
+import { AppError } from "../../errors.js";
+import { countSellItem, countSoldItem } from "../../services/items/index.js";
+import { countUnread } from "../../services/notification.js";
+import { countReferenceOutput } from "../../services/referenceCode.js";
+import { getMeMypage } from "../../services/users/query.js";
 
 type Params = {
     userId: number;
@@ -11,7 +11,7 @@ type Params = {
 export const getMyPageUseCase = async ({ userId }: Params) => {
     const user = await getMeMypage({ userId });
 
-    if (!user) throw new AppError('USER_NOT_FOUND', 404);
+    if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
     const hasShop = !!user.ShopInfo;
 

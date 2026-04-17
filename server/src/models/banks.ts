@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../db.js';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../db.js";
 
 export class Banks extends Model {
     declare id: number;
@@ -33,8 +33,8 @@ Banks.init(
     },
     {
         sequelize,
-        modelName: 'Banks',
-        tableName: 'banks',
+        modelName: "Banks",
+        tableName: "banks",
         freezeTableName: true,
         timestamps: false,
     },

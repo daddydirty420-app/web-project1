@@ -1,10 +1,11 @@
-import { AppError } from '../../errors.js';
-import { createUser, getUserEmailOne } from '../../services/users.js';
-import bcrypt from 'bcrypt';
-import crypto from 'crypto';
-import { generateRandomUserName } from '../../utils/generateRandomUserName.js';
-import sequelize from '../../db.js';
-import { createSignupToken } from '../../services/tokenSignupVerificationCode.js';
+import bcrypt from "bcrypt";
+import crypto from "crypto";
+import sequelize from "../../db.js";
+import { AppError } from "../../errors.js";
+import { createSignupToken } from "../../services/tokenSignupVerificationCode.js";
+import { createUser } from "../../services/users/command.js";
+import { getUserEmailOne } from "../../services/users/query.js";
+import { generateRandomUserName } from "../../utils/generateRandomUserName.js";
 
 type Params = {
     email: string;
@@ -15,12 +16,12 @@ export const signupUseCase = async ({ email, password }: Params) => {
     // user取得
     const existingUser = await getUserEmailOne({ email });
 
-    if (existingUser) throw new AppError('EXISTING_USER', 409);
+    if (existingUser) throw new AppError("EXISTING_USER", 409);
 
     // パスワード　バリデーションチェック
     const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-    if (!regex.test(password)) throw new AppError('INVALID_PASSWORD', 400);
+    if (!regex.test(password)) throw new AppError("INVALID_PASSWORD", 400);
 
     // パスワード　ハッシュ化
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,7 +33,7 @@ export const signupUseCase = async ({ email, password }: Params) => {
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
 
-    const reissueToken = crypto.randomBytes(20).toString('hex');
+    const reissueToken = crypto.randomBytes(20).toString("hex");
     const reissueTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
 
     await sequelize.transaction(async (t) => {

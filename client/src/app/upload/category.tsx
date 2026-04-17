@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { Categories } from './types/type';
-import styles from './upload.module.css';
-import toast from 'react-hot-toast';
-import { InputTitle } from '@/components/inputForm';
+import { useEffect, useRef, useState } from "react";
+import { Categories } from "./types/type";
+import styles from "./upload.module.css";
+import toast from "react-hot-toast";
+import { InputTitle } from "@/components/inputForm";
 
 export type CategoryValue = {
     id: string | null;
@@ -19,8 +19,8 @@ type Props = {
     onChange: (v: CategoryValue) => void;
     onConstraintChange: (
         c: {
-            allowed_gender: 'men' | 'women' | 'unisex' | null;
-            allowed_age: 'adult' | 'kids' | 'both' | null;
+            allowed_gender: "men" | "women" | "unisex" | null;
+            allowed_age: "adult" | "kids" | "both" | null;
         } | null,
     ) => void;
 };
@@ -28,8 +28,8 @@ type Props = {
 export const Category = ({ level1List, value, onChange, onConstraintChange }: Props) => {
     const [level2List, setLevel2List] = useState<Categories[]>([]);
     const [selectedLevel1, setSelectedLevel1] = useState<CategoryValue | null>(null);
-    const [displayLevel1, setDisplayLevel1] = useState('');
-    const [displayLevel2, setDisplayLevel2] = useState('');
+    const [displayLevel1, setDisplayLevel1] = useState("");
+    const [displayLevel2, setDisplayLevel2] = useState("");
     const [loading, setLoading] = useState(false);
     const [openLevel1, setOpenLevel1] = useState(false);
     const [openLevel2, setOpenLevel2] = useState(false);
@@ -42,7 +42,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         if (value.level === 1) {
             setSelectedLevel1(value);
             setDisplayLevel1(value.name);
-            setDisplayLevel2('');
+            setDisplayLevel2("");
 
             const cat = level1List.find((c) => c.id === value.id);
             if (cat) {
@@ -64,7 +64,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                     level: 1,
                 };
 
-                setDisplayLevel1(parent?.name ?? '');
+                setDisplayLevel1(parent?.name ?? "");
                 setSelectedLevel1(parentCategoryValue);
                 setDisplayLevel2(value.name);
 
@@ -82,7 +82,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
     const NONE_CATEGORY: CategoryValue = {
         id: null,
-        name: '選択しない',
+        name: "選択しない",
         parent_id: null,
         level: 2,
     };
@@ -104,7 +104,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
         });
 
         setDisplayLevel1(cat.name);
-        setDisplayLevel2('');
+        setDisplayLevel2("");
         setOpenLevel1(false);
 
         const idNum = Number(cat.id);
@@ -118,14 +118,14 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/${parentId}/level2`, {
-                cache: 'no-store',
+                cache: "no-store",
             });
 
             const data = await res.json();
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('詳細カテゴリーの取得に失敗しました。');
+                toast.error("詳細カテゴリーの取得に失敗しました。");
                 setLoading(false);
                 return;
             }
@@ -136,7 +136,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
 
             setLoading(false);
         } catch (err) {
-            toast.error('詳細カテゴリーの取得に失敗しました。');
+            toast.error("詳細カテゴリーの取得に失敗しました。");
             console.error(err);
             setLoading(false);
         }
@@ -155,7 +155,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
                 level: 1,
             });
 
-            setDisplayLevel2('選択しない');
+            setDisplayLevel2("選択しない");
             setOpenLevel2(false);
             return;
         }
@@ -212,7 +212,7 @@ export const Category = ({ level1List, value, onChange, onConstraintChange }: Pr
             </div>
 
             {/* category2 */}
-            {displayLevel1 !== '' && (
+            {displayLevel1 !== "" && (
                 <div className={styles.selectColumn}>
                     <InputTitle title="詳細カテゴリー" />
 

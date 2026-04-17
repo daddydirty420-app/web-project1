@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getSoldOrders } from '../../services/orders.js';
+import { Op } from "sequelize";
+import { getSoldOrders } from "../../services/orders.js";
 
 type Params = {
     page: number;
@@ -15,10 +15,10 @@ export const getSoldListUseCase = async ({ page, userId, status }: Params) => {
         seller_user_id: userId,
     };
 
-    if (status && ['paid', 'shipped', 'completed'].includes(status)) {
+    if (status && ["paid", "shipped", "completed"].includes(status)) {
         where.status = status;
     } else {
-        where.status = { [Op.ne]: 'pending' };
+        where.status = { [Op.ne]: "pending" };
     }
 
     return await getSoldOrders({ where, limit, offset });

@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class PaymentMethodOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ PaymentMethodOption.init(
     },
     {
         sequelize,
-        modelName: 'PaymentMethodOption',
-        tableName: 'payment_method_option',
+        modelName: "PaymentMethodOption",
+        tableName: "payment_method_option",
         freezeTableName: true,
         timestamps: false,
     },

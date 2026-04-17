@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import styles from '../ss.module.css';
-import { StepBar } from '../stepBar';
-import SSUI from '../ssUI';
-import { ButtonDiv } from '../buttonDiv';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../ss.module.css";
+import { StepBar } from "../stepBar";
+import SSUI from "../ssUI";
+import { ButtonDiv } from "../buttonDiv";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     shopId: string;
 };
 
 export const Form = ({ shopId }: Props) => {
-    const [autoTrans, setAutoTrans] = useState('いいえ');
-    const [openInfo, setOpenInfo] = useState('いいえ');
+    const [autoTrans, setAutoTrans] = useState("いいえ");
+    const [openInfo, setOpenInfo] = useState("いいえ");
 
     const router = useRouter();
 
@@ -24,14 +24,14 @@ export const Form = ({ shopId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/4/${shopId}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ autoTrans, openInfo }),
@@ -41,12 +41,12 @@ export const Form = ({ shopId }: Props) => {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('オプション設定に失敗しました。');
+                toast.error("オプション設定に失敗しました。");
             }
 
             router.push(`/shop-signup/step5/${shopId}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -67,7 +67,7 @@ export const Form = ({ shopId }: Props) => {
                                 type="radio"
                                 name="autoTrans"
                                 value="はい"
-                                checked={autoTrans === 'はい'}
+                                checked={autoTrans === "はい"}
                                 onChange={(e) => setAutoTrans(e.target.value)}
                                 className={styles.radio}
                             />
@@ -79,7 +79,7 @@ export const Form = ({ shopId }: Props) => {
                                 type="radio"
                                 name="autoTrans"
                                 value="いいえ"
-                                checked={autoTrans === 'いいえ'}
+                                checked={autoTrans === "いいえ"}
                                 onChange={(e) => setAutoTrans(e.target.value)}
                                 className={styles.radio}
                             />
@@ -103,7 +103,7 @@ export const Form = ({ shopId }: Props) => {
                                 type="radio"
                                 name="openInfo"
                                 value="はい"
-                                checked={openInfo === 'はい'}
+                                checked={openInfo === "はい"}
                                 onChange={(e) => setOpenInfo(e.target.value)}
                                 className={styles.radio}
                             />
@@ -115,7 +115,7 @@ export const Form = ({ shopId }: Props) => {
                                 type="radio"
                                 name="openInfo"
                                 value="いいえ"
-                                checked={openInfo === 'いいえ'}
+                                checked={openInfo === "いいえ"}
                                 onChange={(e) => setOpenInfo(e.target.value)}
                                 className={styles.radio}
                             />

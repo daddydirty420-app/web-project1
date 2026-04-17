@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
-import toast from 'react-hot-toast';
-import { ItemImageValue } from '../itemImage';
-import { AttributesValue } from '../attributes';
+import { useCallback } from "react";
+import toast from "react-hot-toast";
+import { ItemImageValue } from "../itemImage";
+import { AttributesValue } from "../attributes";
 
 type SignedUrlItem = {
     index: number;
@@ -40,23 +40,23 @@ export const useFileUpload = () => {
 
             // s3直接アップロード
             const uploadRes = await fetch(videoSignedUrl, {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    'Content-Type': videoFile.type,
+                    "Content-Type": videoFile.type,
                 },
                 body: videoFile,
             });
 
             if (!uploadRes.ok) {
-                toast.error('動画のアップロードに失敗しました');
+                toast.error("動画のアップロードに失敗しました");
                 return false;
             }
 
             // ffmpeg変換
             const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${videoId}/convert`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
@@ -82,15 +82,15 @@ export const useFileUpload = () => {
             }
 
             const thumbnailRes = await fetch(thumbnailSignedUrl, {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    'Content-Type': thumbnailFile.type,
+                    "Content-Type": thumbnailFile.type,
                 },
                 body: thumbnailFile,
             });
 
             if (!thumbnailRes.ok) {
-                toast.error('サムネイルのアップロードに失敗しました');
+                toast.error("サムネイルのアップロードに失敗しました");
                 return false;
             }
 
@@ -116,9 +116,9 @@ export const useFileUpload = () => {
                         }
 
                         const res = await fetch(url, {
-                            method: 'PUT',
+                            method: "PUT",
                             headers: {
-                                'Content-Type': target.file.type,
+                                "Content-Type": target.file.type,
                             },
                             body: target.file,
                         });
@@ -133,7 +133,7 @@ export const useFileUpload = () => {
                 return true;
             } catch (err) {
                 console.error(err);
-                toast.error('商品画像のアップロードに失敗しました');
+                toast.error("商品画像のアップロードに失敗しました");
                 return false;
             }
         },
@@ -164,9 +164,9 @@ export const useFileUpload = () => {
                         }
 
                         const res = await fetch(signedUrl, {
-                            method: 'PUT',
+                            method: "PUT",
                             headers: {
-                                'Content-Type': target.type,
+                                "Content-Type": target.type,
                             },
                             body: target,
                         });
@@ -180,7 +180,7 @@ export const useFileUpload = () => {
                 return true;
             } catch (err) {
                 console.error(err);
-                toast.error('商品画像のアップロードに失敗しました');
+                toast.error("商品画像のアップロードに失敗しました");
                 return false;
             }
         },

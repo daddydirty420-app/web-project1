@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import styles from './comment.module.css';
-import { Comment, Item, User } from '../itemPageTypes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CommentText } from './commentText';
-import { CommentDataDiv } from './commentDataDiv';
-import { Like } from './like';
-import { ReportFloat } from './reportFloat';
-import { DeleteComment } from './deleteComment';
-import { ProfileImage } from './profileImage';
-import { useState } from 'react';
-import { faCommentDots } from '@fortawesome/free-regular-svg-icons';
-import { Pin } from './pin';
-import { CommentForm } from './commentForm';
-import { ReplyList } from './replyList';
-import { KeyedMutator } from 'swr';
+import styles from "./comment.module.css";
+import { Comment, Item, User } from "../itemPageTypes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CommentText } from "./commentText";
+import { CommentDataDiv } from "./commentDataDiv";
+import { Like } from "./like";
+import { ReportFloat } from "./reportFloat";
+import { DeleteComment } from "./deleteComment";
+import { ProfileImage } from "./profileImage";
+import { useState } from "react";
+import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
+import { Pin } from "./pin";
+import { CommentForm } from "./commentForm";
+import { ReplyList } from "./replyList";
+import { KeyedMutator } from "swr";
 
 type Props = {
     id: string;
     sellerMe?: boolean;
     comments: Comment[];
-    page: 'normal' | 'admin';
+    page: "normal" | "admin";
     loggedIn: boolean;
     item: Item;
     me: User | null;
@@ -45,7 +45,7 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
 
     // CommentFormに渡すmutateをラップ
     const replyMutate = (parentId: string) => (updater?: any, revalidate?: boolean) => {
-        if (typeof updater === 'function') {
+        if (typeof updater === "function") {
             // 返信　楽観的更新
             setOptimisticReplies((prev) => ({
                 ...prev,
@@ -106,7 +106,7 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
                                                 <Like comment={comment} loggedIn={loggedIn} />
                                                 <ReportFloat comment={comment} page={page} />
 
-                                                {(comment.isMyComment || page === 'admin') && (
+                                                {(comment.isMyComment || page === "admin") && (
                                                     <DeleteComment comment={comment} page={page} />
                                                 )}
                                             </>
@@ -116,8 +116,8 @@ export const CommentList = ({ id, sellerMe, comments, page, loggedIn, item, me, 
                             </section>
 
                             {!optimistic && (
-                                <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ''}`}>
-                                    {page === 'normal' && (
+                                <section className={`${styles.replySection} ${isVisibleReply ? styles.replyOpen : ""}`}>
+                                    {page === "normal" && (
                                         <CommentForm
                                             id={id}
                                             sellerMe={sellerMe}

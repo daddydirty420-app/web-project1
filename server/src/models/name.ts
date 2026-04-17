@@ -1,10 +1,10 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import ShopInfo from './shop_info.js';
-import ShopInfoEdit from './shop_info_edit.js';
-import Delivery from './delivery.js';
-import User from './user.js';
+import ShopInfo from "./shop_info.js";
+import ShopInfoEdit from "./shop_info_edit.js";
+import Delivery from "./delivery.js";
+import User from "./user.js";
 
 export class Name extends Model {
     declare id: number;
@@ -21,21 +21,21 @@ export class Name extends Model {
 
     static associate() {
         Name.belongsTo(ShopInfoEdit, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
         Name.belongsTo(Delivery, {
-            foreignKey: 'delivery_id',
+            foreignKey: "delivery_id",
         });
         Name.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
         Name.hasOne(ShopInfo, {
-            foreignKey: 'name_representative_id',
-            as: 'Representative',
+            foreignKey: "name_representative_id",
+            as: "Representative",
         });
         Name.hasOne(ShopInfo, {
-            foreignKey: 'name_contact_id',
-            as: 'Contact',
+            foreignKey: "name_contact_id",
+            as: "Contact",
         });
     }
 
@@ -62,7 +62,7 @@ Name.init(
         shop_type: {
             type: DataTypes.STRING(20),
             validate: {
-                isIn: [['representative', 'contact']],
+                isIn: [["representative", "contact"]],
             },
         },
         shop_info_edit_id: {
@@ -80,8 +80,8 @@ Name.init(
     },
     {
         sequelize,
-        modelName: 'Name',
-        tableName: 'name',
+        modelName: "Name",
+        tableName: "name",
         freezeTableName: true,
         timestamps: true,
     },

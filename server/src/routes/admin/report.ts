@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
     ItemReport,
     Item,
@@ -13,36 +13,36 @@ import {
     ItemBuyerReportOption,
     Orders,
     Video,
-} from '../../models/index.js';
-import { col, fn, literal } from 'sequelize';
+} from "../../models/index.js";
+import { col, fn, literal } from "sequelize";
 
 const router = Router();
 
 router.get(
-    '/item/report-all',
+    "/item/report-all",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const itemList = await Item.findAll({
-                attributes: ['id', 'name', 'uploaded_at', [fn('COUNT', col('ItemReports.id')), 'report_count']],
+                attributes: ["id", "name", "uploaded_at", [fn("COUNT", col("ItemReports.id")), "report_count"]],
                 include: [
                     {
                         model: Video,
-                        attributes: ['play_count'],
+                        attributes: ["play_count"],
                         required: false,
                     },
                     {
                         model: ItemReport,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: true,
                     },
                 ],
-                group: ['Item.id', 'Video.id'],
+                group: ["Item.id", "Video.id"],
                 order: [
-                    [literal('report_count'), 'DESC'],
-                    [col('Video.play_count'), 'DESC'],
-                    ['uploaded_date', 'DESC'],
+                    [literal("report_count"), "DESC"],
+                    [col("Video.play_count"), "DESC"],
+                    ["uploaded_date", "DESC"],
                 ],
                 subQuery: false,
             });
@@ -55,24 +55,24 @@ router.get(
 );
 
 router.get(
-    '/comment/report-all',
+    "/comment/report-all",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const commentList = await Comment.findAll({
-                attributes: ['id', 'text', [fn('COUNT', col('CommentReports.id')), 'report_count']],
+                attributes: ["id", "text", [fn("COUNT", col("CommentReports.id")), "report_count"]],
                 include: [
                     {
                         model: CommentReport,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: true,
                     },
                 ],
-                group: ['Comment.id'],
+                group: ["Comment.id"],
                 order: [
-                    [literal('report_count'), 'DESC'],
-                    ['createdAt', 'DESC'],
+                    [literal("report_count"), "DESC"],
+                    ["createdAt", "DESC"],
                 ],
                 subQuery: false,
             });
@@ -85,7 +85,7 @@ router.get(
 );
 
 router.get(
-    '/item/report-list/:id',
+    "/item/report-list/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -94,12 +94,12 @@ router.get(
         try {
             const reportList = await ItemReport.findAll({
                 where: { item_id: itemId },
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
                 include: [
                     { model: ItemReportOption },
                     {
                         model: Item,
-                        attributes: ['id', 'name'],
+                        attributes: ["id", "name"],
                     },
                 ],
             });
@@ -112,7 +112,7 @@ router.get(
 );
 
 router.get(
-    '/comment/report-list/:id',
+    "/comment/report-list/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -121,12 +121,12 @@ router.get(
         try {
             const reportList = await CommentReport.findAll({
                 where: { comment_id: commentId },
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
                 include: [
                     { model: CommentReportOption },
                     {
                         model: Comment,
-                        attributes: ['id', 'text'],
+                        attributes: ["id", "text"],
                     },
                 ],
             });
@@ -139,32 +139,32 @@ router.get(
 );
 
 router.get(
-    '/buyer/report-list',
+    "/buyer/report-list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const dataList = await ItemBuyerReport.findAll({
                 where: { checked: false },
-                order: [['createdAt', 'ASC']],
+                order: [["createdAt", "ASC"]],
                 include: [
                     {
                         model: User,
-                        attributes: ['id', 'user_name', 'email'],
+                        attributes: ["id", "user_name", "email"],
                     },
                     {
                         model: Item,
-                        attributes: ['id', 'name'],
+                        attributes: ["id", "name"],
                     },
                     { model: ItemBuyerReportOption },
                     {
                         model: Orders,
-                        attributes: ['id', 'total_amount', 'sales_commission_amount', 'gain_amount', 'status'],
+                        attributes: ["id", "total_amount", "sales_commission_amount", "gain_amount", "status"],
                         include: [
                             {
                                 model: User,
-                                as: 'Seller',
-                                attributes: ['id', 'user_name', 'email'],
+                                as: "Seller",
+                                attributes: ["id", "user_name", "email"],
                             },
                         ],
                     },

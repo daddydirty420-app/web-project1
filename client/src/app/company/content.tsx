@@ -1,6 +1,6 @@
-import { TokuteiSection } from '@/components/tokutei';
-import Link from 'next/link';
-import styles from '@/styles/tokutei.module.css';
+import { TokuteiSection } from "@/components/tokutei";
+import Link from "next/link";
+import styles from "@/styles/tokutei.module.css";
 
 export const Content = () => {
     return (

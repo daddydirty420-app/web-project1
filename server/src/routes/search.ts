@@ -1,29 +1,29 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { Search, SuggestWords } from '../models/index.js';
-import { authenticateToken } from '../middleware/authMiddleware.js';
-import { Sequelize } from 'sequelize';
-import { Op } from 'sequelize';
-import { normalizeJapanese } from '../utils/normalizeJapanese.js';
-import sequelize from '../db.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { Search, SuggestWords } from "../models/index.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
+import { Sequelize } from "sequelize";
+import { Op } from "sequelize";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import sequelize from "../db.js";
 
 const router = Router();
 
-router.get('/history', authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
+router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
 
     try {
         const searchHistory = await Search.findAll({
-            attributes: [[Sequelize.fn('MAX', Sequelize.col('createdAt')), 'createdAt'], 'search_text'],
+            attributes: [[Sequelize.fn("MAX", Sequelize.col("createdAt")), "createdAt"], "search_text"],
             where: {
                 user_id: userId,
                 search_text: {
-                    [Op.ne]: '',
+                    [Op.ne]: "",
                     [Op.not]: null,
                 },
             },
-            group: ['search_text'],
-            order: [[Sequelize.literal('MAX("createdAt")'), 'DESC']],
+            group: ["search_text"],
+            order: [[Sequelize.literal('MAX("createdAt")'), "DESC"]],
         });
 
         const sortedData = searchHistory.sort((a: any, b: any) => b.createdAt - a.createdAt);
@@ -34,8 +34,8 @@ router.get('/history', authenticateToken, async (req: Request, res: Response, ne
     }
 });
 
-router.get('/suggest', async (req: Request, res: Response): Promise<void> => {
-    const keyword = normalizeJapanese((req.query.keyword ?? '') as string);
+router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
+    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
     if (!keyword) {
         res.status(200).json({ suggest: [] });
@@ -44,7 +44,7 @@ router.get('/suggest', async (req: Request, res: Response): Promise<void> => {
 
     try {
         const words = await SuggestWords.findAll({
-            attributes: ['word'],
+            attributes: ["word"],
             where: {
                 normalized_word: {
                     [Op.iLike]: `%${keyword}%`,
@@ -59,9 +59,9 @@ router.get('/suggest', async (req: Request, res: Response): Promise<void> => {
                         ELSE 3
                         END
                     `),
-                    'ASC',
+                    "ASC",
                 ],
-                [sequelize.fn('length', sequelize.col('word')), 'ASC'],
+                [sequelize.fn("length", sequelize.col("word")), "ASC"],
             ],
             limit: 10,
         });

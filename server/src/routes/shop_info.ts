@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption } from '../models/index.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption } from "../models/index.js";
 
 const router = Router();
 
-router.get('/com-or-free', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/com-or-free", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ComOrFreeOption.findAll();
 
@@ -16,7 +16,7 @@ router.get('/com-or-free', async (req: Request, res: Response, next: NextFunctio
 });
 
 router.get(
-    '/has-shop/me',
+    "/has-shop/me",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const currentUserId = req.user!.id;
@@ -41,17 +41,17 @@ router.get(
 );
 
 router.get(
-    '/edit-form/:id',
+    "/edit-form/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await ShopInfo.findByPk(req.params.id, {
-                attributes: ['id'],
+                attributes: ["id"],
                 include: [{ model: ComOrFreeOption }],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -68,24 +68,24 @@ router.get(
 );
 
 router.get(
-    '/edit-other/:id',
+    "/edit-other/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const data = await ShopInfo.findByPk(req.params.id, {
                 attributes: [
-                    'id',
-                    'homepage_url',
-                    'open_date_time',
-                    'company_number',
-                    'capital',
-                    'menber_count',
-                    'founded_date',
+                    "id",
+                    "homepage_url",
+                    "open_date_time",
+                    "company_number",
+                    "capital",
+                    "menber_count",
+                    "founded_date",
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 
@@ -96,39 +96,39 @@ router.get(
     },
 );
 
-router.get('/infopage/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/infopage/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
             attributes: [
-                'id',
-                'company_name',
-                'shop_name',
-                'email',
-                'phone_number',
-                'homepage_url',
-                'open_date_time',
-                'open_info',
+                "id",
+                "company_name",
+                "shop_name",
+                "email",
+                "phone_number",
+                "homepage_url",
+                "open_date_time",
+                "open_info",
             ],
             include: [
                 {
                     model: Address,
-                    attributes: ['post_number', 'shikutyouson', 'banchi', 'building'],
+                    attributes: ["post_number", "shikutyouson", "banchi", "building"],
                     include: [
                         {
                             model: TodouhukenOption,
-                            as: 'AddressTodouhuken',
+                            as: "AddressTodouhuken",
                         },
                     ],
                 },
                 {
                     model: Name,
-                    attributes: ['sei', 'mei', 'sei_kana', 'mei_kana'],
+                    attributes: ["sei", "mei", "sei_kana", "mei_kana"],
                 },
             ],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 
@@ -138,14 +138,14 @@ router.get('/infopage/:id', async (req: Request, res: Response, next: NextFuncti
     }
 });
 
-router.get('/open-info-request/:id', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/open-info-request/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ['id', 'shop_name'],
+            attributes: ["id", "shop_name"],
         });
 
         if (!data) {
-            res.status(404).json({ message: 'データが見つかりません。' });
+            res.status(404).json({ message: "データが見つかりません。" });
             return;
         }
 

@@ -1,5 +1,5 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
 export class PointsUriageOver extends Model {
     declare id: number;
@@ -26,8 +26,8 @@ PointsUriageOver.init(
     },
     {
         sequelize,
-        modelName: 'PointsUriageOver',
-        tableName: 'points_uriage_over',
+        modelName: "PointsUriageOver",
+        tableName: "points_uriage_over",
         freezeTableName: true,
         timestamps: true,
     },

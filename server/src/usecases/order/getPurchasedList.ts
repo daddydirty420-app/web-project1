@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { getPurchasedOrders } from '../../services/orders.js';
+import { Op } from "sequelize";
+import { getPurchasedOrders } from "../../services/orders.js";
 
 type Params = {
     page: number;
@@ -15,10 +15,10 @@ export const getPurchasedListUseCase = async ({ page, userId, status }: Params) 
         buyer_user_id: userId,
     };
 
-    if (status && ['paid', 'shipped', 'completed'].includes(status)) {
+    if (status && ["paid", "shipped", "completed"].includes(status)) {
         where.status = status;
     } else {
-        where.status = { [Op.ne]: 'pending' };
+        where.status = { [Op.ne]: "pending" };
     }
 
     return await getPurchasedOrders({ where, limit, offset });

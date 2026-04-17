@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import styles from './list.module.css';
-import { ReactNode } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import styles from "./list.module.css";
+import { ReactNode } from "react";
 
 type ListCheckProps = {
     children: ReactNode;

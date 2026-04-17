@@ -1,13 +1,13 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import ShippingDayOption from './shipping_day_option.js';
-import ShippingServiceOption from './shipping_service_option.js';
-import DeliveryStatusOption from './delivery_status_option.js';
-import TodouhukenOption from './todouhuken_option.js';
-import Orders from './orders.js';
-import Address from './address.js';
-import Name from './name.js';
+import ShippingDayOption from "./shipping_day_option.js";
+import ShippingServiceOption from "./shipping_service_option.js";
+import DeliveryStatusOption from "./delivery_status_option.js";
+import TodouhukenOption from "./todouhuken_option.js";
+import Orders from "./orders.js";
+import Address from "./address.js";
+import Name from "./name.js";
 
 export class Delivery extends Model {
     declare id: number;
@@ -35,25 +35,25 @@ export class Delivery extends Model {
 
     static associate() {
         Delivery.belongsTo(ShippingDayOption, {
-            foreignKey: 'shipping_day_id',
+            foreignKey: "shipping_day_id",
         });
         Delivery.belongsTo(ShippingServiceOption, {
-            foreignKey: 'shipping_service_id',
+            foreignKey: "shipping_service_id",
         });
         Delivery.belongsTo(DeliveryStatusOption, {
-            foreignKey: 'delivery_status_id',
+            foreignKey: "delivery_status_id",
         });
         Delivery.belongsTo(TodouhukenOption, {
-            foreignKey: 'shipping_place_id',
+            foreignKey: "shipping_place_id",
         });
         Delivery.belongsTo(Orders, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
         Delivery.hasOne(Address, {
-            foreignKey: 'delivery_id',
+            foreignKey: "delivery_id",
         }); // buyer
         Delivery.hasOne(Name, {
-            foreignKey: 'delivery_id',
+            foreignKey: "delivery_id",
         }); // buyer
     }
 
@@ -104,8 +104,8 @@ Delivery.init(
     },
     {
         sequelize,
-        modelName: 'Delivery',
-        tableName: 'delivery',
+        modelName: "Delivery",
+        tableName: "delivery",
         freezeTableName: true,
         timestamps: true,
     },

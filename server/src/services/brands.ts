@@ -1,7 +1,7 @@
-import { Op } from 'sequelize';
-import { Brands } from '../models/index.js';
-import { BrandIdParams, GetAllBrandsParams, NormalizedParams } from '../types/serviceType/brands.js';
-import sequelize from '../db.js';
+import { Op } from "sequelize";
+import { Brands } from "../models/index.js";
+import { BrandIdParams, GetAllBrandsParams, NormalizedParams } from "../types/serviceType/brands.js";
+import sequelize from "../db.js";
 
 export type BrandsInstance = InstanceType<typeof Brands>;
 
@@ -22,7 +22,7 @@ export const getAllBrands = ({ keyword }: GetAllBrandsParams) => {
                 [Op.iLike]: `%${keyword}%`,
             },
         },
-        order: [[sequelize.fn('length', sequelize.col('Brands.name')), 'ASC']],
+        order: [[sequelize.fn("length", sequelize.col("Brands.name")), "ASC"]],
         limit: 15,
     }) as unknown as BrandsInstance[];
 };

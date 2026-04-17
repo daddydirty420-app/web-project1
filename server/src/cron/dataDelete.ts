@@ -1,13 +1,13 @@
-import cron from 'node-cron';
-import { Op } from 'sequelize';
-import { Search, WatchHistory } from '../models/index.js';
+import cron from "node-cron";
+import { Op } from "sequelize";
+import { Search, WatchHistory } from "../models/index.js";
 
 export const DataDeleteCron = () => {
     const now = Date.now();
 
     // 90日経過WatchHistory削除
     cron.schedule(
-        '0 12 * * *',
+        "0 12 * * *",
         async () => {
             const ninetyDaysAgo = new Date(now - 1000 * 60 * 60 * 24 * 90);
 
@@ -20,17 +20,17 @@ export const DataDeleteCron = () => {
 
                 console.log(`[cron] 90日経過WatchHistoryを削除しました: ${deleted}件`);
             } catch (err) {
-                console.error('WatchHistory削除エラー：', err);
+                console.error("WatchHistory削除エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 
     // 180日経過search削除
     cron.schedule(
-        '0 12 * * *',
+        "0 12 * * *",
         async () => {
             const halfYearsAgo = new Date(now - 1000 * 60 * 60 * 24 * 180);
 
@@ -45,7 +45,7 @@ export const DataDeleteCron = () => {
             } catch (err) {}
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 };

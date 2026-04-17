@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { Item, ItemLike, Sale, ShopInfo, User, Video } from '../models/index.js';
+import { Op } from "sequelize";
+import { Item, ItemLike, Sale, ShopInfo, User, Video } from "../models/index.js";
 import {
     DestroyParams,
     DestroyTransactionParams,
@@ -8,7 +8,7 @@ import {
     ItemUserParams,
     ListParams,
     UserItemsLikesParams,
-} from '../types/serviceType/itemLike.js';
+} from "../types/serviceType/itemLike.js";
 
 export const getItemLikeOne = async ({ itemId, userId }: ItemUserParams) => {
     return ItemLike.findOne({
@@ -29,20 +29,20 @@ export const getItemLikeList = async ({ itemId, keyword }: ListParams) => {
     const userWhere = keyword ? { user_name: { [Op.iLike]: `%${String(keyword).trim()}%` } } : undefined;
 
     return ItemLike.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where: { item_id: itemId },
-        order: [['createdAt', 'DESC']],
+        order: [["createdAt", "DESC"]],
         distinct: true,
         include: [
             {
                 model: User,
                 where: userWhere,
                 required: !!keyword,
-                attributes: ['id', 'user_name', 'profile_image', 'honnin_verified', 'early_seller'],
+                attributes: ["id", "user_name", "profile_image", "honnin_verified", "early_seller"],
                 include: [
                     {
                         model: ShopInfo,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         required: false,
                     },
                 ],
@@ -53,9 +53,9 @@ export const getItemLikeList = async ({ itemId, keyword }: ListParams) => {
 
 export const getUserItemsLikesList = async ({ itemWhere, limit, offset, userId }: UserItemsLikesParams) => {
     const likeList = await ItemLike.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where: { user_id: userId },
-        order: [['createdAt', 'DESC']],
+        order: [["createdAt", "DESC"]],
         limit,
         offset,
         include: [
@@ -63,25 +63,25 @@ export const getUserItemsLikesList = async ({ itemWhere, limit, offset, userId }
                 model: Item,
                 where: itemWhere,
                 attributes: [
-                    'id',
-                    'name',
-                    'price',
-                    'status',
-                    'seller_id',
-                    'first_image_url',
-                    'gender_type',
-                    'age_type',
+                    "id",
+                    "name",
+                    "price",
+                    "status",
+                    "seller_id",
+                    "first_image_url",
+                    "gender_type",
+                    "age_type",
                 ],
                 required: true,
                 include: [
                     {
                         model: Sale,
-                        attributes: ['discount_rate', 'discount_amount', 'sale_flag', 'before_price'],
+                        attributes: ["discount_rate", "discount_amount", "sale_flag", "before_price"],
                         required: false,
                     },
                     {
                         model: Video,
-                        attributes: ['title'],
+                        attributes: ["title"],
                     },
                 ],
             },

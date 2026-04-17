@@ -1,4 +1,4 @@
-import { Sale } from '../models/index.js';
+import { Sale } from "../models/index.js";
 import {
     CreateSaleCopyUploadParams,
     CreateSaleParams,
@@ -6,7 +6,7 @@ import {
     SaleIdParams,
     UpdateSaleEditParams,
     UpdateSaleParams,
-} from '../types/serviceType/sale.js';
+} from "../types/serviceType/sale.js";
 
 export const getSale = ({ saleId }: SaleIdParams) => {
     return Sale.findByPk(saleId);

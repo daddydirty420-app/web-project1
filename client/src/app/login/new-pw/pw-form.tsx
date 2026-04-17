@@ -1,60 +1,65 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import styles from '@/styles/login.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-import toast from 'react-hot-toast';
+import styles from "@/styles/login.module.css";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "@/lib/sleep";
 
 export const PwForm = () => {
     const [visible, setVisible] = useState(false);
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
     const searchParams = useSearchParams();
-    const token = searchParams.get('token');
 
     const handleSubmit = async () => {
+        const token = searchParams.get("token");
+
         if (!token) {
-            toast.error('無効なリンクです。');
-            router.push('/login');
+            toast.error("無効なリンクです。");
+            router.push("/login");
             return;
         }
 
         if (password !== confirmPassword) {
-            setErrorMsg('パスワードが一致しません。');
+            setErrorMsg("パスワードが一致しません。");
             return;
         }
 
         const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regex.test(password)) {
-            setErrorMsg('パスワードは半角小文字英字と数字を含む8文字以上にしてください。');
+            setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください。");
             return;
         }
 
-        setErrorMsg('');
+        setErrorMsg("");
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-pw`, {
-                method: 'POST',
-                headers: { 'Content-type': 'application/json' },
+                method: "POST",
+                headers: { "Content-type": "application/json" },
                 body: JSON.stringify({ token, password }),
             });
 
             const data = await res.json();
 
             if (res.ok) {
+                toast.success("パスワードを更新しました。もう一度ログインしてください！");
                 console.log(data.message);
-                router.push('/login');
+
+                await sleep(1500);
+                router.push("/login");
             } else {
-                toast.error('新しいパスワードの設定に失敗しました。');
+                toast.error("新しいパスワードの設定に失敗しました。");
                 console.error(data.message);
             }
         } catch (err) {
             console.error(err);
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 
@@ -66,7 +71,7 @@ export const PwForm = () => {
                 <p className={styles.formText}>パスワード</p>
                 <div className="relative">
                     <input
-                        type={visible ? 'text' : 'password'}
+                        type={visible ? "text" : "password"}
                         name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -88,7 +93,7 @@ export const PwForm = () => {
                 <p className={styles.formText}>パスワード（確認用）</p>
                 <div className="relative">
                     <input
-                        type={visible ? 'text' : 'password'}
+                        type={visible ? "text" : "password"}
                         name="confirmPassword"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}

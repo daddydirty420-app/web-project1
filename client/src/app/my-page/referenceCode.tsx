@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { X } from 'lucide-react';
-import { useState } from 'react';
-import styles from './mypage.module.css';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { X } from "lucide-react";
+import { useState } from "react";
+import styles from "./mypage.module.css";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type ReferenceCode = {
     output: string;
@@ -24,12 +24,12 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference-code/output`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -41,7 +41,7 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                 setVisiblePopup(true);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -66,11 +66,11 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                             onClick={async () => {
                                 try {
                                     await navigator.clipboard.writeText(referenceCodeOutput.output);
-                                    console.log('コピーしました：', referenceCodeOutput.output);
-                                    toast.success('コピーしました');
+                                    console.log("コピーしました：", referenceCodeOutput.output);
+                                    toast.success("コピーしました");
                                 } catch (err) {
-                                    toast.error('コピー失敗しました。');
-                                    console.error('コピー失敗:', err);
+                                    toast.error("コピー失敗しました。");
+                                    console.error("コピー失敗:", err);
                                 }
                             }}
                         >

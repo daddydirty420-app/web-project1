@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import styles from '../edit.module.css';
-import { InputStr, Button, InputTitle } from '@/components/inputForm/index';
-import EditUI from '../editUI';
-import { BankAccount } from '../type';
-import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import clsx from 'clsx';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../edit.module.css";
+import { InputStr, Button, InputTitle } from "@/components/inputForm/index";
+import EditUI from "../editUI";
+import { BankAccount } from "../type";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import clsx from "clsx";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     account: BankAccount;
-    page: 'normal' | 'transfer' | 'shop' | 'shop-signup' | 'com-free';
+    page: "normal" | "transfer" | "shop" | "shop-signup" | "com-free";
     shopId?: string;
     shopEditId?: string;
 };
 
 export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) => {
-    const [bankQuery, setBankQuery] = useState(account?.bank_name ?? '');
+    const [bankQuery, setBankQuery] = useState(account?.bank_name ?? "");
     const [bankSuggestions, setBankSuggestions] = useState<
         {
             name: string;
@@ -31,9 +31,9 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
     const [showBankSuggest, setShowBankSuggest] = useState(false);
     const [isSelectingBank, setIsSelectingBank] = useState(false);
 
-    const [bankCode, setBankCode] = useState(account?.bank_code ?? '');
+    const [bankCode, setBankCode] = useState(account?.bank_code ?? "");
 
-    const [branchQuery, setBranchQuery] = useState(account?.branch ?? '');
+    const [branchQuery, setBranchQuery] = useState(account?.branch ?? "");
     const [branchSuggestions, setBranchSuggestions] = useState<
         {
             name: string;
@@ -45,11 +45,11 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
     const [showBranchSuggest, setShowBranchSuggest] = useState(false);
     const [isSelectingBranch, setIsSelectingBranch] = useState(false);
 
-    const [branchCode, setBranchCode] = useState(account?.branch_code ?? '');
+    const [branchCode, setBranchCode] = useState(account?.branch_code ?? "");
 
-    const [accountType, setAccountType] = useState(account?.AccountTypeOption?.name ?? '');
-    const [accountNumber, setAccountNumber] = useState(account?.account_number ?? '');
-    const [meigi, setMeigi] = useState(account?.meigi ?? '');
+    const [accountType, setAccountType] = useState(account?.AccountTypeOption?.name ?? "");
+    const [accountNumber, setAccountNumber] = useState(account?.account_number ?? "");
+    const [meigi, setMeigi] = useState(account?.meigi ?? "");
 
     const router = useRouter();
 
@@ -74,7 +74,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error('銀行名検索エラー：', data.message);
+                    console.error("銀行名検索エラー：", data.message);
                     setBankSuggestions([]);
                     setShowBankSuggest(false);
                     return;
@@ -92,7 +92,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 setBankSuggestions(suggestions);
                 setShowBankSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error('銀行名検索エラー：', err);
+                console.error("銀行名検索エラー：", err);
                 setBankSuggestions([]);
                 setShowBankSuggest(false);
             }
@@ -121,7 +121,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error('支店名検索エラー：', data.message);
+                    console.error("支店名検索エラー：", data.message);
                     setBranchSuggestions([]);
                     setShowBranchSuggest(false);
                     return;
@@ -138,7 +138,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 setBranchSuggestions(suggestions);
                 setShowBranchSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error('支店名検索エラー：', err);
+                console.error("支店名検索エラー：", err);
                 setBranchSuggestions([]);
                 setShowBranchSuggest(false);
             }
@@ -152,12 +152,12 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
 
     const submit = async () => {
         if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
-            toast.error('空の項目があります。');
+            toast.error("空の項目があります。");
             return;
         }
 
         if (!/^[0-9]{5,7}$/.test(accountNumber)) {
-            toast.error('口座番号は5〜7桁の半角数字で入力してください。');
+            toast.error("口座番号は5〜7桁の半角数字で入力してください。");
             return;
         }
 
@@ -167,7 +167,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             branch: branchQuery.trim(),
             branchCode: branchCode,
             accountType: accountType,
-            accountNumber: accountNumber.padStart(7, '0'),
+            accountNumber: accountNumber.padStart(7, "0"),
             meigi: meigi.trim(),
         };
 
@@ -175,15 +175,15 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
-            if (page === 'shop') {
+            if (page === "shop") {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/account-edit/${shopId}`, {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-type': 'application/json',
+                        "Content-type": "application/json",
                         Authorization: `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify(body),
@@ -192,20 +192,20 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    toast.error('更新に失敗しました。');
+                    toast.error("更新に失敗しました。");
                     console.error(data.message);
                     return;
                 }
 
-                alert('口座情報の変更を受け付けました。審査完了までしばらくお待ちください。');
+                alert("口座情報の変更を受け付けました。審査完了までしばらくお待ちください。");
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/account-edit/${account.id}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
@@ -214,29 +214,29 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || '更新に失敗しました。');
+                alert(data.message || "更新に失敗しました。");
                 return;
             }
 
-            if (page === 'normal') {
-                toast.success('口座情報を更新しました。');
-                router.push('/my-page');
-            } else if (page === 'transfer') {
-                router.push('/transfer/request');
-            } else if (page === 'shop-signup') {
+            if (page === "normal") {
+                toast.success("口座情報を更新しました。");
+                router.push("/my-page");
+            } else if (page === "transfer") {
+                router.push("/transfer/request");
+            } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
-            } else if (page === 'com-free') {
+            } else if (page === "com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
 
     return (
         <EditUI title="振込口座の設定">
-            {page === 'normal' && <p className={styles.small}>※振込申請の際にも口座を設定できます。</p>}
+            {page === "normal" && <p className={styles.small}>※振込申請の際にも口座を設定できます。</p>}
 
             <div className={styles.inputDiv}>
                 <InputTitle title="銀行名" hissu />
@@ -341,7 +341,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 title="口座番号"
                 type="text"
                 value={accountNumber}
-                onChange={(v) => setAccountNumber(v.replace(/[^0-9]/g, ''))}
+                onChange={(v) => setAccountNumber(v.replace(/[^0-9]/g, ""))}
                 placeholder="0000000（半角数字のみ）"
                 hissu
                 numeric
@@ -350,8 +350,8 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
 
             <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder="〇〇　〇〇" hissu />
 
-            {page === 'shop' && (
-                <p className={clsx(styles.centerSmall, 'mt-4')}>
+            {page === "shop" && (
+                <p className={clsx(styles.centerSmall, "mt-4")}>
                     ※口座情報の変更は審査が必要になります。登録される口座情報の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。
                 </p>
             )}

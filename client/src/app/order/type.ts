@@ -1,4 +1,4 @@
-import { PurchaseSnapshot } from '@/types/purchaseSnapshot';
+import { PurchaseSnapshot } from "@/types/purchaseSnapshot";
 
 export type DeliveryStatusOption = {
     id: string;
@@ -16,7 +16,7 @@ export type Orders = {
     point_used: number;
     item_count: number;
     buy_at: Date;
-    status: 'pending' | 'paid' | 'shipped' | 'completed' | 'cancelled' | 'returned';
+    status: "pending" | "paid" | "shipped" | "completed" | "cancelled" | "returned";
     purchase_snapshot: PurchaseSnapshot;
     Delivery?: Delivery;
 };

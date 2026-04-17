@@ -1,5 +1,5 @@
-import { Address } from '../models/index.js';
-import { CreateAddressParams, CreateDeliveryAddressParams, UserIdParams } from '../types/serviceType/address.js';
+import { Address } from "../models/index.js";
+import { CreateAddressParams, CreateDeliveryAddressParams, UserIdParams } from "../types/serviceType/address.js";
 
 export const getAddressOne = ({ userId }: UserIdParams) => {
     return Address.findOne({

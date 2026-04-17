@@ -1,4 +1,4 @@
-import { Transaction } from 'sequelize';
+import { Transaction } from "sequelize";
 
 export type UserIdParams = {
     userId: number;

@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
-import { Op } from 'sequelize';
-import { Orders, Item, Delivery, DeliveryStatusOption, User } from '../../models/index.js';
-import { subDays } from 'date-fns';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { Op } from "sequelize";
+import { Orders, Item, Delivery, DeliveryStatusOption, User } from "../../models/index.js";
+import { subDays } from "date-fns";
 
 const router = Router();
 
 router.get(
-    '/30',
+    "/30",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -16,31 +16,31 @@ router.get(
 
         try {
             const dataList = await Orders.findAll({
-                attributes: ['id', 'gain_amount', 'buy_at'],
+                attributes: ["id", "gain_amount", "buy_at"],
                 where: {
                     cancel: false,
                     buy_date: { [Op.lt]: thirtyDaysAgo },
                 },
-                order: [['buy_at', 'ASC']],
+                order: [["buy_at", "ASC"]],
                 include: [
                     {
                         model: Item,
-                        attributes: ['id', 'name'],
+                        attributes: ["id", "name"],
                     },
                     {
                         model: User,
-                        as: 'Seller',
-                        attributes: ['id', 'user_name', 'email'],
+                        as: "Seller",
+                        attributes: ["id", "user_name", "email"],
                     },
                     {
                         model: User,
-                        as: 'Buyer',
-                        attributes: ['id', 'user_name', 'email'],
+                        as: "Buyer",
+                        attributes: ["id", "user_name", "email"],
                     },
                     {
                         model: Delivery,
                         required: true,
-                        attributes: ['id'],
+                        attributes: ["id"],
                         where: {
                             delivery_status_id: { [Op.ne]: 4 },
                         },

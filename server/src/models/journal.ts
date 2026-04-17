@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import KanjyoOption from './kanjyo_option.js';
-import JournalReasonOption from './journal_reason_option.js';
+import KanjyoOption from "./kanjyo_option.js";
+import JournalReasonOption from "./journal_reason_option.js";
 
 export class Journal extends Model {
     declare id: number;
@@ -20,23 +20,23 @@ export class Journal extends Model {
 
     static associate() {
         Journal.belongsTo(KanjyoOption, {
-            foreignKey: 'kanjyo_kari1',
-            as: 'Kari1',
+            foreignKey: "kanjyo_kari1",
+            as: "Kari1",
         });
         Journal.belongsTo(KanjyoOption, {
-            foreignKey: 'kanjyo_kari2',
-            as: 'Kari2',
+            foreignKey: "kanjyo_kari2",
+            as: "Kari2",
         });
         Journal.belongsTo(KanjyoOption, {
-            foreignKey: 'kanjyo_kashi1',
-            as: 'Kashi1',
+            foreignKey: "kanjyo_kashi1",
+            as: "Kashi1",
         });
         Journal.belongsTo(KanjyoOption, {
-            foreignKey: 'kanjyo_kashi2',
-            as: 'Kashi2',
+            foreignKey: "kanjyo_kashi2",
+            as: "Kashi2",
         });
         Journal.belongsTo(JournalReasonOption, {
-            foreignKey: 'reason_id',
+            foreignKey: "reason_id",
         });
     }
 
@@ -66,8 +66,8 @@ Journal.init(
     },
     {
         sequelize,
-        modelName: 'Journal',
-        tableName: 'journal',
+        modelName: "Journal",
+        tableName: "journal",
         freezeTableName: true,
         timestamps: true,
     },

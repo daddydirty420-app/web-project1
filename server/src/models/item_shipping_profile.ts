@@ -1,10 +1,10 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import Item from './item.js';
-import ShippingDayOption from './shipping_day_option.js';
-import ShippingServiceOption from './shipping_service_option.js';
-import TodouhukenOption from './todouhuken_option.js';
+import Item from "./item.js";
+import ShippingDayOption from "./shipping_day_option.js";
+import ShippingServiceOption from "./shipping_service_option.js";
+import TodouhukenOption from "./todouhuken_option.js";
 
 export class ItemShippingProfile extends Model {
     declare id: number;
@@ -18,16 +18,16 @@ export class ItemShippingProfile extends Model {
 
     static associate() {
         ItemShippingProfile.belongsTo(ShippingDayOption, {
-            foreignKey: 'shipping_day_id',
+            foreignKey: "shipping_day_id",
         });
         ItemShippingProfile.belongsTo(ShippingServiceOption, {
-            foreignKey: 'shipping_service_id',
+            foreignKey: "shipping_service_id",
         });
         ItemShippingProfile.belongsTo(TodouhukenOption, {
-            foreignKey: 'shipping_place_id',
+            foreignKey: "shipping_place_id",
         });
         ItemShippingProfile.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
     }
 
@@ -59,8 +59,8 @@ ItemShippingProfile.init(
     },
     {
         sequelize,
-        modelName: 'ItemShippingProfile',
-        tableName: 'item_shipping_profile',
+        modelName: "ItemShippingProfile",
+        tableName: "item_shipping_profile",
         freezeTableName: true,
         timestamps: true,
     },

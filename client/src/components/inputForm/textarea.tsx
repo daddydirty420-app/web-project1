@@ -1,5 +1,5 @@
-import styles from './imputForm.module.css';
-import { InputTitle } from './inputTitle';
+import styles from "./imputForm.module.css";
+import { InputTitle } from "./inputTitle";
 
 type Props = {
     title: string;

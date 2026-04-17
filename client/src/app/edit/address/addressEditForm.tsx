@@ -1,29 +1,29 @@
-'use client';
+"use client";
 
-import { InputStr, Button } from '@/components/inputForm';
-import EditUI from '../editUI';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Address } from '../type';
-import clsx from 'clsx';
-import styles from '../edit.module.css';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { InputStr, Button } from "@/components/inputForm";
+import EditUI from "../editUI";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Address } from "../type";
+import clsx from "clsx";
+import styles from "../edit.module.css";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     address: Address;
-    page: 'normal' | 'delivery' | 'shop' | 'shop-signup' | 'com-free';
+    page: "normal" | "delivery" | "shop" | "shop-signup" | "com-free";
     deliveryId?: string;
     shopId?: string;
     shopEditId?: string;
 };
 
 export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId }: Props) => {
-    const [postNumber, setPostNumber] = useState(address?.post_number ?? '');
-    const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken?.name ?? '');
-    const [shikutyouson, setShikutyouson] = useState(address?.shikutyouson ?? '');
-    const [banchi, setBanchi] = useState(address?.banchi ?? '');
-    const [building, setBuilding] = useState(address?.building ?? '');
+    const [postNumber, setPostNumber] = useState(address?.post_number ?? "");
+    const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken?.name ?? "");
+    const [shikutyouson, setShikutyouson] = useState(address?.shikutyouson ?? "");
+    const [banchi, setBanchi] = useState(address?.banchi ?? "");
+    const [building, setBuilding] = useState(address?.building ?? "");
 
     const [isInitialLoad, setIsInitialLoad] = useState(true);
 
@@ -42,14 +42,14 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            toast.error('7桁の郵便番号を入力してください。');
+            toast.error("7桁の郵便番号を入力してください。");
             return;
         }
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
-                method: 'GET',
-                cache: 'no-store',
+                method: "GET",
+                cache: "no-store",
             });
 
             const data = await res.json();
@@ -67,13 +67,13 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
 
     const submit = async () => {
         if (!postNumber || !todouhuken || !shikutyouson || !banchi) {
-            toast.error('必須項目が空になっています。');
+            toast.error("必須項目が空になっています。");
             return;
         }
 
-        const normalizedPostNumber = postNumber.replace(/-/g, '');
+        const normalizedPostNumber = postNumber.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
-            toast.error('郵便番号は半角数字7桁で入力してください。');
+            toast.error("郵便番号は半角数字7桁で入力してください。");
             return;
         }
 
@@ -81,15 +81,15 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
-            if (page === 'shop') {
+            if (page === "shop") {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/address-edit/${shopId}`, {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                        'Content-type': 'application/json',
+                        "Content-type": "application/json",
                         Authorization: `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify({
@@ -104,20 +104,20 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 const data = await res.json();
 
                 if (!res.ok) {
-                    toast.error('住所変更に失敗しました。');
+                    toast.error("住所変更に失敗しました。");
                     console.error(data.message);
                     return;
                 }
 
-                toast.success('住所変更の受付が完了しました。審査完了までしばらくお待ちください。');
+                toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/address-edit/${address.id}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
@@ -132,23 +132,23 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error('住所変更に失敗しました。');
+                toast.error("住所変更に失敗しました。");
                 console.error(data.message);
                 return;
             }
 
-            if (page === 'delivery') {
+            if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
-            } else if (page === 'shop-signup') {
+            } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
-            } else if (page === 'com-free') {
+            } else if (page === "com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                toast.success('住所を変更しました。');
-                router.push('/my-page');
+                toast.success("住所を変更しました。");
+                router.push("/my-page");
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -191,8 +191,8 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 hissu={false}
             />
 
-            {page === 'shop' && (
-                <p className={clsx(styles.centerSmall, 'mt-4')}>
+            {page === "shop" && (
+                <p className={clsx(styles.centerSmall, "mt-4")}>
                     ※会社所在地の変更は審査が必要になります。登録される所在地の変更は審査が完了し次第となります。審査には1~2週間ほどお時間を頂戴しております。
                 </p>
             )}

@@ -1,5 +1,5 @@
-import { Transaction } from 'sequelize';
-import { ItemShippingProfile } from '../../models/index.js';
+import { Transaction } from "sequelize";
+import { ItemShippingProfile } from "../../models/index.js";
 
 export type CreateShippingParams = {
     itemId: number;

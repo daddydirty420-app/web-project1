@@ -1,11 +1,11 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import TodouhukenOption from './todouhuken_option.js';
-import ShopInfo from './shop_info.js';
-import ShopInfoEdit from './shop_info_edit.js';
-import Delivery from './delivery.js';
-import User from './user.js';
+import TodouhukenOption from "./todouhuken_option.js";
+import ShopInfo from "./shop_info.js";
+import ShopInfoEdit from "./shop_info_edit.js";
+import Delivery from "./delivery.js";
+import User from "./user.js";
 
 export class Address extends Model {
     declare id: number;
@@ -23,20 +23,20 @@ export class Address extends Model {
 
     static associate() {
         Address.belongsTo(TodouhukenOption, {
-            foreignKey: 'todouhuken_id',
-            as: 'AddressTodouhuken',
+            foreignKey: "todouhuken_id",
+            as: "AddressTodouhuken",
         });
         Address.belongsTo(ShopInfo, {
-            foreignKey: 'shop_info_id',
+            foreignKey: "shop_info_id",
         });
         Address.belongsTo(ShopInfoEdit, {
-            foreignKey: 'shop_info_edit_id',
+            foreignKey: "shop_info_edit_id",
         });
         Address.belongsTo(Delivery, {
-            foreignKey: 'delivery_id',
+            foreignKey: "delivery_id",
         });
         Address.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -81,8 +81,8 @@ Address.init(
     },
     {
         sequelize,
-        modelName: 'Address',
-        tableName: 'address',
+        modelName: "Address",
+        tableName: "address",
         freezeTableName: true,
         timestamps: true,
     },

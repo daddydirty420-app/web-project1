@@ -1,4 +1,4 @@
-import { Comment, User } from '../models/index.js';
+import { Comment, User } from "../models/index.js";
 import {
     CommentIdParams,
     CreateCommentParams,
@@ -7,7 +7,7 @@ import {
     ItemIdParams,
     UpdateParams,
     UpdateReportScoreParams,
-} from '../types/serviceType/comment.js';
+} from "../types/serviceType/comment.js";
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
@@ -26,14 +26,14 @@ export const getAllCommentsItemPage = ({ itemId }: ItemIdParams) => {
             parent_comment_id: null,
         },
         order: [
-            ['pin', 'DESC'],
-            ['sort_number', 'DESC'],
-            ['createdAt', 'DESC'],
+            ["pin", "DESC"],
+            ["sort_number", "DESC"],
+            ["createdAt", "DESC"],
         ],
         include: [
             {
                 model: User,
-                attributes: ['id', 'user_name', 'profile_image'],
+                attributes: ["id", "user_name", "profile_image"],
             },
         ],
     });
@@ -43,13 +43,13 @@ export const getAllReply = ({ commentId }: CommentIdParams) => {
     return Comment.findAll({
         where: { parent_comment_id: commentId },
         order: [
-            ['sort_number', 'DESC'],
-            ['createdAt', 'DESC'],
+            ["sort_number", "DESC"],
+            ["createdAt", "DESC"],
         ],
         include: [
             {
                 model: User,
-                attributes: ['id', 'user_name', 'profile_image'],
+                attributes: ["id", "user_name", "profile_image"],
             },
         ],
     });

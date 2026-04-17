@@ -1,5 +1,5 @@
-import { IdCard } from '../models/index.js';
-import { Transaction } from 'sequelize';
+import { IdCard } from "../models/index.js";
+import { Transaction } from "sequelize";
 
 type CreateIdParams = {
     data: {

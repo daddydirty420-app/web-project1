@@ -1,4 +1,4 @@
-import { ReferenceCode } from '../models/index.js';
+import { ReferenceCode } from "../models/index.js";
 
 type UserIdParams = {
     userId: number;

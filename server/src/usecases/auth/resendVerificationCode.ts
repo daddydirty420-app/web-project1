@@ -1,6 +1,6 @@
-import { AppError } from '../../errors.js';
-import { getTokenReissueOne, updateReissueToken } from '../../services/tokenSignupVerificationCode.js';
-import crypto from 'crypto';
+import crypto from "crypto";
+import { AppError } from "../../errors.js";
+import { getTokenReissueOne, updateReissueToken } from "../../services/tokenSignupVerificationCode.js";
 
 type Params = {
     token: string;
@@ -10,17 +10,17 @@ export const resendVerificationCodeUseCase = async ({ token }: Params) => {
     // トークン照合
     const tokenRecord = await getTokenReissueOne({ token });
 
-    if (!tokenRecord) throw new AppError('TOKEN_NOT_FOUND', 404);
-    if (!tokenRecord.User) throw new AppError('USER_NOT_FOUND', 404);
+    if (!tokenRecord) throw new AppError("TOKEN_NOT_FOUND", 404);
+    if (!tokenRecord.User) throw new AppError("USER_NOT_FOUND", 404);
     if (new Date() > new Date(tokenRecord.reissue_token_expires)) {
-        throw new AppError('EXPIRED_TOKEN', 410);
+        throw new AppError("EXPIRED_TOKEN", 410);
     }
 
     // 新しいトークン発行
     const newVereficationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const newExpiresAt = new Date(Date.now() + 30 * 60 * 1000);
 
-    const newReissueToken = crypto.randomBytes(20).toString('hex');
+    const newReissueToken = crypto.randomBytes(20).toString("hex");
     const newReissueTokenExpires = new Date(Date.now() + 30 * 60 * 1000);
 
     // db更新

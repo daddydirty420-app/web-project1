@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class JournalReasonOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ JournalReasonOption.init(
     },
     {
         sequelize,
-        modelName: 'JournalReasonOption',
-        tableName: 'journal_reason_option',
+        modelName: "JournalReasonOption",
+        tableName: "journal_reason_option",
         freezeTableName: true,
         timestamps: false,
     },

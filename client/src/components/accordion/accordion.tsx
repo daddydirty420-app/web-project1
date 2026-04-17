@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import styles from './styles/accordion.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { ReactNode } from 'react';
+import { useState, useRef, useEffect } from "react";
+import styles from "./styles/accordion.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { ReactNode } from "react";
 
 type accordionProps = {
     heading: string;
@@ -26,13 +26,13 @@ export const Accordion = ({ heading, children }: accordionProps) => {
         if (textIsOpen) {
             el.style.height = `${el.scrollHeight}px`;
             const timeout = setTimeout(() => {
-                el.style.height = 'auto';
+                el.style.height = "auto";
             }, 500);
             return () => clearTimeout(timeout);
         } else {
             el.style.height = `${el.scrollHeight}px`;
             requestAnimationFrame(() => {
-                el.style.height = '0px';
+                el.style.height = "0px";
             });
         }
     }, [textIsOpen]);

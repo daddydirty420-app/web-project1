@@ -1,11 +1,11 @@
-import { Item } from '../itemPageTypes';
-import styles from './video.module.css';
-import { VideoElem } from './videoElem';
-import { CountElem } from './countElem';
-import { Summary } from './summary';
-import { UserSection } from './userSection';
-import { Report } from '../others/report';
-import { ItemPeek } from './itemPeek';
+import { Item } from "../itemPageTypes";
+import styles from "./video.module.css";
+import { VideoElem } from "./videoElem";
+import { CountElem } from "./countElem";
+import { Summary } from "./summary";
+import { UserSection } from "./userSection";
+import { Report } from "../others/report";
+import { ItemPeek } from "./itemPeek";
 
 type Props = {
     id: string;
@@ -13,7 +13,7 @@ type Props = {
     sellerMe?: boolean;
     likeCount?: number;
     isLike?: boolean;
-    page: 'normal' | 'admin' | 'draft' | 'confirm' | 'deleted';
+    page: "normal" | "admin" | "draft" | "confirm" | "deleted";
     reportCount?: number;
     userId: string | null;
     loggedIn: boolean;
@@ -35,12 +35,12 @@ export const VideoSection = ({ id, item, sellerMe, likeCount, isLike, page, repo
                 loggedIn={loggedIn}
             />
             <Summary id={id} item={item} sellerMe={sellerMe} page={page} />
-            {['normal', 'admin'].includes(page) && (
+            {["normal", "admin"].includes(page) && (
                 <>
-                    <UserSection item={item} sellerMe={sellerMe} page={page as 'normal' | 'admin'} userId={userId} />
+                    <UserSection item={item} sellerMe={sellerMe} page={page as "normal" | "admin"} userId={userId} />
 
                     {!sellerMe && (
-                        <Report id={id} itemReport={true} page={page as 'normal' | 'admin'} reportCount={reportCount} />
+                        <Report id={id} itemReport={true} page={page as "normal" | "admin"} reportCount={reportCount} />
                     )}
                 </>
             )}

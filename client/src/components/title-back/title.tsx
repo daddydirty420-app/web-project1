@@ -1,4 +1,4 @@
-import styles from './title-back.module.css';
+import styles from "./title-back.module.css";
 
 type Props = {
     title: string;

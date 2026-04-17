@@ -1,17 +1,17 @@
-import { Delivery, DeliveryStatusOption, Orders } from '../models/index.js';
-import { OrderListParams } from '../types/serviceType/orders.js';
+import { Delivery, DeliveryStatusOption, Orders } from "../models/index.js";
+import { OrderListParams } from "../types/serviceType/orders.js";
 
 export const getPurchasedOrders = async ({ where, limit, offset }: OrderListParams) => {
     const ordersList = await Orders.findAll({
-        attributes: ['id', 'total_amount', 'buy_at', 'item_count', 'points_used', 'status', 'purchase_snapshot'],
+        attributes: ["id", "total_amount", "buy_at", "item_count", "points_used", "status", "purchase_snapshot"],
         where,
-        order: [['buy_at', 'DESC']],
+        order: [["buy_at", "DESC"]],
         limit,
         offset,
         include: [
             {
                 model: Delivery,
-                attributes: ['id'],
+                attributes: ["id"],
                 required: true,
                 include: [{ model: DeliveryStatusOption }],
             },
@@ -36,15 +36,15 @@ export const getPurchasedOrders = async ({ where, limit, offset }: OrderListPara
 
 export const getSoldOrders = async ({ where, limit, offset }: OrderListParams) => {
     const ordersList = await Orders.findAll({
-        attributes: ['id', 'total_amount', 'buy_at', 'item_count', 'status', 'purchase_snapshot'],
+        attributes: ["id", "total_amount", "buy_at", "item_count", "status", "purchase_snapshot"],
         where,
-        order: [['buy_at', 'DESC']],
+        order: [["buy_at", "DESC"]],
         limit,
         offset,
         include: [
             {
                 model: Delivery,
-                attributes: ['id'],
+                attributes: ["id"],
                 required: true,
                 include: [{ model: DeliveryStatusOption }],
             },

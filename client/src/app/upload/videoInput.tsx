@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { InputStr, InputTitle, Textarea } from '@/components/inputForm';
-import styles from './upload.module.css';
-import Image from 'next/image';
+import { InputStr, InputTitle, Textarea } from "@/components/inputForm";
+import styles from "./upload.module.css";
+import Image from "next/image";
 
 export type VideoInputValue = {
     videoFile: File | null;
@@ -30,8 +30,8 @@ export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVi
         if (!file) return;
 
         if (file.size > MAX_SIZE) {
-            alert('動画は500MB以内にしてください');
-            e.target.value = '';
+            alert("動画は500MB以内にしてください");
+            e.target.value = "";
             return;
         }
 
@@ -109,7 +109,7 @@ export const VideoInput = ({ value, onChange, videoRef, thumbnailRef, existingVi
                         required
                     />
                     <Image
-                        src={value.thumbnailPreview || '/no-image(1x1).png'}
+                        src={value.thumbnailPreview || "/no-image(1x1).png"}
                         alt="サムネイル"
                         width={220}
                         height={160}

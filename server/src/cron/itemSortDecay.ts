@@ -1,15 +1,15 @@
-import cron from 'node-cron';
-import { Op } from 'sequelize';
-import { Item } from '../models/index.js';
+import cron from "node-cron";
+import { Op } from "sequelize";
+import { Item } from "../models/index.js";
 
 export const startItemSortDecayCron = () => {
     cron.schedule(
-        '0, 30 * * * *',
+        "0, 30 * * * *",
         async () => {
             try {
                 const items = await Item.findAll({
                     where: {
-                        status: { [Op.in]: ['active', 'hidden'] },
+                        status: { [Op.in]: ["active", "hidden"] },
                         sort_buzz_number: { [Op.gt]: 0.01 },
                     },
                 });
@@ -22,23 +22,23 @@ export const startItemSortDecayCron = () => {
                     });
                 }
 
-                console.log('[cron] Item.sort_buzz_numberを減算しました。');
+                console.log("[cron] Item.sort_buzz_numberを減算しました。");
             } catch (err) {
-                console.error('Item.sort_buzz_number減算エラー：', err);
+                console.error("Item.sort_buzz_number減算エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 
     cron.schedule(
-        '0 */3 * * *',
+        "0 */3 * * *",
         async () => {
             try {
                 const items = await Item.findAll({
                     where: {
-                        status: { [Op.in]: ['active', 'hidden'] },
+                        status: { [Op.in]: ["active", "hidden"] },
                         sort_number: { [Op.gt]: 0.01 },
                     },
                 });
@@ -51,13 +51,13 @@ export const startItemSortDecayCron = () => {
                     });
                 }
 
-                console.log('[cron] Item.sort_numberを減算しました。');
+                console.log("[cron] Item.sort_numberを減算しました。");
             } catch (err) {
-                console.error('Item.sort_number減算エラー：', err);
+                console.error("Item.sort_number減算エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 };

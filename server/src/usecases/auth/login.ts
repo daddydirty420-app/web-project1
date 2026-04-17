@@ -1,8 +1,8 @@
-import { AppError } from '../../errors.js';
-import { getUserEmailOne } from '../../services/users.js';
-import bcrypt from 'bcrypt';
-import { generateAccessToken, generateRefreshToken } from '../../utils/jwtHelper.js';
-import { createRefreshToken, destroyRefreshToken } from '../../services/refreshTokens.js';
+import bcrypt from "bcrypt";
+import { AppError } from "../../errors.js";
+import { createRefreshToken, destroyRefreshToken } from "../../services/refreshTokens.js";
+import { getUserEmailOne } from "../../services/users/query.js";
+import { generateAccessToken, generateRefreshToken } from "../../utils/jwtHelper.js";
 
 type Params = {
     email: string;
@@ -14,14 +14,13 @@ export const loginUseCase = async ({ email, password, rememberMe }: Params) => {
     // User取得
     const user = await getUserEmailOne({ email });
 
-    if (!user) throw new AppError('USER_NOT_FOUND', 404);
-
-    if (!user.email_verified) throw new AppError('THIS_USER_INVALID', 403);
+    if (!user) throw new AppError("USER_NOT_FOUND", 404);
+    if (!user.email_verified) throw new AppError("INVALID_USER", 401);
 
     // パスワード照合
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) throw new AppError('PASSWORD_IS_NOT_MATCH', 401);
+    if (!isMatch) throw new AppError("PASSWORD_IS_NOT_MATCH", 401);
 
     const userId = user.id;
 

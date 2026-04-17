@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import styles from './itemList.module.css';
-import { Item } from './type';
-import useSWR from 'swr';
-import { fetcher } from '@/lib/fetcher';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesLeft, faAnglesRight, faSearch } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
-import Image from 'next/image';
-import { formatRelativeTime } from '@/lib/formatRelativeTime';
-import { RemoveFloat } from './removeFloat';
-import { CartElement } from './cartElement';
-import { Items } from '@/types/itemListTypes';
-import { ItemListRow } from '@/components';
+import { useState } from "react";
+import styles from "./itemList.module.css";
+import { Item } from "./type";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesLeft, faAnglesRight, faSearch } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import Image from "next/image";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
+import { RemoveFloat } from "./removeFloat";
+import { CartElement } from "./cartElement";
+import { Items } from "@/types/itemListTypes";
+import { ItemListRow } from "@/components";
 
 type Props = {
-    page: 'cart' | 'deleted' | 'draft' | 'like' | 'stock' | 'uploaded' | 'watch-history';
-    uploadedTab?: 'all' | 'selling' | 'sold';
+    page: "cart" | "deleted" | "draft" | "like" | "stock" | "uploaded" | "watch-history";
+    uploadedTab?: "all" | "selling" | "sold";
     relatedItemList?: Items[];
 };
 
@@ -27,22 +27,22 @@ type Responce = {
 };
 
 export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
-    const [searchValue, setSearchValue] = useState('');
-    const [searchKeyword, setSearchKeyword] = useState('');
+    const [searchValue, setSearchValue] = useState("");
+    const [searchKeyword, setSearchKeyword] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
 
     // apiフェッチ
     const getApiQuery = () => {
-        if (page === 'cart') return `?type=cart&page=${pageNumber}`;
-        if (page === 'draft') return `?type=draft&page=${pageNumber}`;
-        if (page === 'deleted') return `?type=deleted&page=${pageNumber}`;
-        if (page === 'like') return `?type=like&page=${pageNumber}`;
-        if (page === 'watch-history') return `?type=watchHistory&page=${pageNumber}`;
-        if (page === 'stock') return `?type=stock&page=${pageNumber}`;
-        if (page === 'uploaded') {
-            if (uploadedTab === 'all') return `?type=uploaded&page=${pageNumber}`;
-            if (uploadedTab === 'selling') return `?type=uploaded&page=${pageNumber}&status=active`;
-            if (uploadedTab === 'sold') return `?type=uploaded&page=${pageNumber}&status=soldout`;
+        if (page === "cart") return `?type=cart&page=${pageNumber}`;
+        if (page === "draft") return `?type=draft&page=${pageNumber}`;
+        if (page === "deleted") return `?type=deleted&page=${pageNumber}`;
+        if (page === "like") return `?type=like&page=${pageNumber}`;
+        if (page === "watch-history") return `?type=watchHistory&page=${pageNumber}`;
+        if (page === "stock") return `?type=stock&page=${pageNumber}`;
+        if (page === "uploaded") {
+            if (uploadedTab === "all") return `?type=uploaded&page=${pageNumber}`;
+            if (uploadedTab === "selling") return `?type=uploaded&page=${pageNumber}&status=active`;
+            if (uploadedTab === "sold") return `?type=uploaded&page=${pageNumber}&status=soldout`;
         }
 
         return null;
@@ -52,7 +52,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
 
     const apiUrl = apiQuery
         ? `${process.env.NEXT_PUBLIC_API_URL}/users/me/items${apiQuery}${
-              searchKeyword.trim() ? `&keyword=${encodeURIComponent(searchKeyword.trim())}` : ''
+              searchKeyword.trim() ? `&keyword=${encodeURIComponent(searchKeyword.trim())}` : ""
           }`
         : null;
 
@@ -68,8 +68,8 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         setPageNumber(1);
         setSearchValue(val);
 
-        if (val.trim() === '') {
-            setSearchKeyword('');
+        if (val.trim() === "") {
+            setSearchKeyword("");
         }
     };
 
@@ -78,17 +78,17 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
-        const delta = typeof window !== 'undefined' && window.innerWidth >= 768 ? 2 : 1;
+        const delta = typeof window !== "undefined" && window.innerWidth >= 768 ? 2 : 1;
 
         pages.push(1);
 
-        if (currentPage - delta > 2) pages.push('...');
+        if (currentPage - delta > 2) pages.push("...");
 
         for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
             pages.push(i);
         }
 
-        if (currentPage + delta < totalPages - 1) pages.push('...');
+        if (currentPage + delta < totalPages - 1) pages.push("...");
 
         if (totalPages > 1) pages.push(totalPages);
 
@@ -105,7 +105,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                 </button>
 
                 {pages.map((p, idx) =>
-                    p === '...' ? (
+                    p === "..." ? (
                         <span key={idx} className={styles.ellipsis}>
                             ...
                         </span>
@@ -113,7 +113,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                         <button
                             type="button"
                             key={idx}
-                            className={`${styles.pageButton} ${currentPage === p ? styles.active : ''}`}
+                            className={`${styles.pageButton} ${currentPage === p ? styles.active : ""}`}
                             onClick={() => onPageChange(p as number)}
                         >
                             {p}
@@ -145,7 +145,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                     value={searchValue}
                     onChange={onChange}
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
+                        if (e.key === "Enter") {
                             setPageNumber(1);
                             setSearchKeyword(searchValue);
                         }
@@ -157,7 +157,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                     name="search_icon"
                     className={`
                 ${styles.searchIcon} 
-                ${searchValue.trim() ? styles.activeIcon : ''}
+                ${searchValue.trim() ? styles.activeIcon : ""}
             `}
                     onClick={() => {
                         setPageNumber(1);
@@ -169,21 +169,21 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
             {itemList && itemList.length > 0 && (
                 <main className={styles.itemListSection}>
                     {itemList.map((item) => {
-                        let itemPageLink = '';
+                        let itemPageLink = "";
 
-                        if (['cart', 'good', 'stock', 'uploaded', 'watch-history'].includes(page)) {
+                        if (["cart", "good", "stock", "uploaded", "watch-history"].includes(page)) {
                             itemPageLink = `/item/${item.id}`;
-                        } else if (page === 'draft') {
+                        } else if (page === "draft") {
                             itemPageLink = `/item/draft/${item.id}`;
-                        } else if (page === 'deleted') {
+                        } else if (page === "deleted") {
                             itemPageLink = `/item/deleted/${item.id}`;
                         }
 
-                        const previewDateLabel = page === 'draft' ? '保存日時' : page === 'deleted' ? '削除日時' : '';
+                        const previewDateLabel = page === "draft" ? "保存日時" : page === "deleted" ? "削除日時" : "";
 
-                        let previewDate = '';
+                        let previewDate = "";
 
-                        if (['deleted', 'draft'].includes(page)) {
+                        if (["deleted", "draft"].includes(page)) {
                             previewDate = formatRelativeTime(item.save_at);
                         }
 
@@ -194,15 +194,15 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                                         <div className={styles.itemImageText}>
                                             <div className={styles.imageDiv}>
                                                 <Image
-                                                    src={item.first_image_url || '/no-image(1x1).png'}
+                                                    src={item.first_image_url || "/no-image(1x1).png"}
                                                     alt="商品画像"
                                                     width={80}
                                                     height={80}
                                                     className={styles.image}
                                                 />
 
-                                                {['uploaded', 'good', 'watch-history'].includes(page) &&
-                                                    item.status === 'soldout' && (
+                                                {["uploaded", "good", "watch-history"].includes(page) &&
+                                                    item.status === "soldout" && (
                                                         <div className={styles.sold}>
                                                             <p className={styles.soldP}>SOLD</p>
                                                         </div>
@@ -211,10 +211,10 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
 
                                             <div className={styles.itemTextArea}>
                                                 <h2 className={`${styles.itemName} ${styles.line1}`}>
-                                                    {item.name ?? ''}
+                                                    {item.name ?? ""}
                                                 </h2>
 
-                                                {['deleted', 'draft'].includes(page) && (
+                                                {["deleted", "draft"].includes(page) && (
                                                     <div className={styles.dateDiv}>
                                                         <p className={`${styles.dateText} ${styles.line1}`}>
                                                             {previewDateLabel}:
@@ -225,27 +225,27 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                                                     </div>
                                                 )}
 
-                                                {['cart', 'good', 'watch-history', 'uploaded'].includes(page) &&
-                                                    (['men', 'women', 'unisex'].includes(item.gender_type) ||
-                                                        item.age_type === 'kids') && (
+                                                {["cart", "good", "watch-history", "uploaded"].includes(page) &&
+                                                    (["men", "women", "unisex"].includes(item.gender_type) ||
+                                                        item.age_type === "kids") && (
                                                         <div className={styles.typeRow}>
-                                                            {item.gender_type === 'men' && (
+                                                            {item.gender_type === "men" && (
                                                                 <span className={`${styles.typeText} ${styles.line1}`}>
                                                                     メンズ
                                                                 </span>
                                                             )}
-                                                            {item.gender_type === 'women' && (
+                                                            {item.gender_type === "women" && (
                                                                 <span className={`${styles.typeText} ${styles.line1}`}>
                                                                     レディース
                                                                 </span>
                                                             )}
-                                                            {item.gender_type === 'unisex' && (
+                                                            {item.gender_type === "unisex" && (
                                                                 <span className={`${styles.typeText} ${styles.line1}`}>
                                                                     ユニセックス
                                                                 </span>
                                                             )}
 
-                                                            {item.age_type === 'kids' && (
+                                                            {item.age_type === "kids" && (
                                                                 <span className={`${styles.typeText} ${styles.line1}`}>
                                                                     キッズ
                                                                 </span>
@@ -254,7 +254,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                                                     )}
 
                                                 {/* カラー別作るかも */}
-                                                {page === 'stock' && (
+                                                {page === "stock" && (
                                                     <div className={styles.stockDiv}>
                                                         <p className={styles.stockLabel}>在庫数：</p>
                                                         <p className={`${styles.stock} ${styles.line1}`}>
@@ -266,7 +266,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                                                 <div className={styles.videoTitleDiv}>
                                                     <p className={styles.titleLabel}>動画：</p>
                                                     <h4 className={`${styles.videoTitle} ${styles.line1}`}>
-                                                        {item.Video?.title ?? ''}
+                                                        {item.Video?.title ?? ""}
                                                     </h4>
                                                 </div>
                                             </div>
@@ -274,7 +274,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
 
                                         <div className={styles.priceColumn}>
                                             <h3 className={styles.price}>￥{item.price.toLocaleString()}</h3>
-                                            {['cart', 'stock', 'uploaded', 'good', 'watch-history'].includes(page) &&
+                                            {["cart", "stock", "uploaded", "good", "watch-history"].includes(page) &&
                                                 item.Sale?.sale_flag && (
                                                     <>
                                                         <p className={styles.beforePrice}>
@@ -295,12 +295,12 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                                         </div>
                                     </Link>
 
-                                    {['draft', 'good', 'watch-history'].includes(page) && (
+                                    {["draft", "good", "watch-history"].includes(page) && (
                                         <RemoveFloat item={item} page={page} mutate={mutate} />
                                     )}
                                 </div>
 
-                                {page === 'cart' && <CartElement item={item} mutate={mutate} />}
+                                {page === "cart" && <CartElement item={item} mutate={mutate} />}
                             </section>
                         );
                     })}
@@ -309,7 +309,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                         setPageNumber(p);
                     })}
 
-                    {page === 'cart' && relatedItemList && relatedItemList.length > 1 && (
+                    {page === "cart" && relatedItemList && relatedItemList.length > 1 && (
                         <nav className={styles.related}>
                             <ItemListRow itemList={relatedItemList} />
                         </nav>

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import {
     Categories,
     Item,
@@ -8,25 +8,25 @@ import {
     ShippingDayOption,
     ShippingServiceOption,
     TodouhukenOption,
-} from './types/type';
-import styles from './upload.module.css';
-import UploadUI from './uploadUI';
-import { VideoInput, VideoInputValue } from './videoInput';
-import { ItemImage } from './itemImage';
-import { ItemNameDetail, ItemNameDetailValue } from './itemNameDetail';
-import { Category, CategoryValue } from './category';
-import { GenderAge, GenderAgeValue } from './genderAge';
-import { BrandInput, BrandValue } from './brandInput';
-import { AttributesInput, AttributesValue } from './attributes';
-import { MaterialInput, MaterialValue } from './material';
-import { ConditionInput, ConditionValue } from './condition';
-import { ShippingInput, ShippingValue } from './shipping';
-import { PriceInput, PriceValue } from './price';
-import toast from 'react-hot-toast';
-import { TopLoader } from '@/components';
-import { useUpload } from './hooks/useUpload';
-import { useFileUpload } from './hooks/useFileUpload';
-import { getAccessToken } from '@/lib/getAccessToken';
+} from "./types/type";
+import styles from "./upload.module.css";
+import UploadUI from "./uploadUI";
+import { VideoInput, VideoInputValue } from "./videoInput";
+import { ItemImage } from "./itemImage";
+import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
+import { Category, CategoryValue } from "./category";
+import { GenderAge, GenderAgeValue } from "./genderAge";
+import { BrandInput, BrandValue } from "./brandInput";
+import { AttributesInput, AttributesValue } from "./attributes";
+import { MaterialInput, MaterialValue } from "./material";
+import { ConditionInput, ConditionValue } from "./condition";
+import { ShippingInput, ShippingValue } from "./shipping";
+import { PriceInput, PriceValue } from "./price";
+import toast from "react-hot-toast";
+import { TopLoader } from "@/components";
+import { useUpload } from "./hooks/useUpload";
+import { useFileUpload } from "./hooks/useFileUpload";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     itemId: string;
@@ -37,7 +37,7 @@ type Props = {
     allService: ShippingServiceOption[];
     allPlace: TodouhukenOption[];
     hasShop: boolean;
-    page: 'normal' | 'draft' | 'edit';
+    page: "normal" | "draft" | "edit";
 };
 
 type ItemImage = {
@@ -55,27 +55,27 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
         videoFile: null,
         thumbnailFile: null,
         thumbnailPreview: initialThumbnailPreview,
-        title: item.Video?.title ?? '',
-        summary: item.Video?.summary ?? '',
+        title: item.Video?.title ?? "",
+        summary: item.Video?.summary ?? "",
         videoUploaded: !!existingVideoUrl,
         thumbnailUploaded: !!initialThumbnailPreview,
     });
 
     const [itemNameDetail, setItemNameDetail] = useState<ItemNameDetailValue>({
-        name: item.name ?? '',
-        detail: item.detail ?? '',
+        name: item.name ?? "",
+        detail: item.detail ?? "",
     });
 
     const [categoryValue, setCategoryValue] = useState<CategoryValue>({
-        id: item.Category?.id ?? '',
-        name: item.Category?.name ?? '',
+        id: item.Category?.id ?? "",
+        name: item.Category?.name ?? "",
         parent_id: item.Category?.parent_id ?? null,
         level: item.Category?.level ?? 0,
     });
 
     const [categoryConstraint, setCategoryConstraint] = useState<{
-        allowed_gender: 'men' | 'women' | 'unisex' | null;
-        allowed_age: 'adult' | 'kids' | 'both' | null;
+        allowed_gender: "men" | "women" | "unisex" | null;
+        allowed_age: "adult" | "kids" | "both" | null;
     } | null>(
         item.Category
             ? {
@@ -86,13 +86,13 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
     );
 
     const [genderAgeValue, setGenderAgeValue] = useState<GenderAgeValue>({
-        gender_type: item.gender_type ?? 'unisex',
-        age_type: item.age_type ?? 'both',
+        gender_type: item.gender_type ?? "unisex",
+        age_type: item.age_type ?? "both",
     });
 
     const [brandValue, setBrandValue] = useState<BrandValue>({
         id: item.Brand?.id ?? null,
-        name: item.Brand?.name ?? '',
+        name: item.Brand?.name ?? "",
     });
 
     const initialAttributesValue: AttributesValue = {
@@ -125,14 +125,14 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
     const [materialValue, setMaterialValue] = useState<MaterialValue>({
         materials: (item.attributes?.materials ?? []).map((m) => ({
-            name: m.name ?? '',
+            name: m.name ?? "",
             ratio: m.ratio ?? 1,
         })),
     });
 
     const [conditionValue, setConditionValue] = useState<ConditionValue>({
-        id: item.ItemConditionOption?.id ?? '',
-        name: item.ItemConditionOption?.name ?? '',
+        id: item.ItemConditionOption?.id ?? "",
+        name: item.ItemConditionOption?.name ?? "",
     });
 
     const shipping = item.ItemShippingProfile;
@@ -148,7 +148,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
     });
 
     const [priceValue, setPriceValue] = useState<PriceValue>({
-        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price) ? String(item.Sale?.before_price) : '',
+        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price) ? String(item.Sale?.before_price) : "",
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
@@ -202,7 +202,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
             if (existingUrl) {
                 return {
-                    name: existingUrl.split('/').pop(),
+                    name: existingUrl.split("/").pop(),
                     type: null,
                     uploaded: true,
                 };
@@ -228,7 +228,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
         const validate = validateUpload(params);
         if (!validate.ok) {
-            toast.error(validate.message ?? '');
+            toast.error(validate.message ?? "");
             setLoading(false);
             return;
         }
@@ -239,7 +239,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 setLoading(false);
                 return;
             }
@@ -247,7 +247,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const result = await submitMain({ itemId, body, accessToken });
 
             if (!result.ok) {
-                toast.error('データ作成に失敗しました');
+                toast.error("データ作成に失敗しました");
                 setLoading(false);
                 return;
             }
@@ -300,11 +300,11 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
                 return;
             }
 
-            toast.success('商品データを登録しました');
+            toast.success("商品データを登録しました");
             setLoading(false);
 
-            if (page === 'edit') {
-                if (item.status === 'active') {
+            if (page === "edit") {
+                if (item.status === "active") {
                     window.location.assign(`/item/${itemId}`);
                 } else {
                     window.location.assign(`/item/confirm/${itemId}`);
@@ -313,7 +313,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
                 window.location.assign(`/item/confirm/${itemId}`);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
             setLoading(false);
         }
@@ -336,7 +336,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const existingUrl = initialAttributesImageUrlMap.get(v._uiId);
             if (existingUrl) {
                 return {
-                    name: existingUrl.split('/').pop(),
+                    name: existingUrl.split("/").pop(),
                     type: null,
                     uploaded: true,
                 };
@@ -362,7 +362,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
         const validate = validateForDraft(params);
         if (!validate.ok) {
-            toast.error(validate.message ?? '');
+            toast.error(validate.message ?? "");
             setDraftLoading(false);
             return;
         }
@@ -373,7 +373,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 setDraftLoading(false);
                 return;
             }
@@ -381,7 +381,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const result = await submitDraft({ itemId, body, accessToken });
 
             if (!result.ok) {
-                toast.error('下書き保存に失敗しました');
+                toast.error("下書き保存に失敗しました");
                 setDraftLoading(false);
                 return;
             }
@@ -434,11 +434,11 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
                 return;
             }
 
-            toast.success('下書き保存しました');
+            toast.success("下書き保存しました");
             setDraftLoading(false);
-            window.location.assign('/item-list/draft');
+            window.location.assign("/item-list/draft");
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
             setDraftLoading(false);
         }
@@ -504,12 +504,12 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
             <div className={styles.formButtonDiv}>
                 <button type="button" className={styles.uploadButton} onClick={upload} disabled={loading}>
-                    {loading ? '登録中...' : '出品する'}
+                    {loading ? "登録中..." : "出品する"}
                 </button>
 
-                {page !== 'edit' && (
+                {page !== "edit" && (
                     <button type="button" className={styles.draftButton} onClick={draft} disabled={draftLoading}>
-                        {draftLoading ? '保存中...' : '下書き保存する'}
+                        {draftLoading ? "保存中..." : "下書き保存する"}
                     </button>
                 )}
             </div>

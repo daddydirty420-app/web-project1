@@ -1,4 +1,4 @@
-import styles from './styles/guide-subtitle.module.css';
+import styles from "./styles/guide-subtitle.module.css";
 
 type GuideSubTitleProps = {
     text: string;

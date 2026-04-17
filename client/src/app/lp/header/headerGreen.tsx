@@ -1,4 +1,4 @@
-import styles from '../lp.module.css';
+import styles from "../lp.module.css";
 
 type Props = {
     shopPage?: boolean;

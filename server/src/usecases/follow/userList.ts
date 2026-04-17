@@ -1,5 +1,5 @@
-import { FollowType } from '../../types/serviceType/follow.js';
-import { getFollowings, getFollowList } from '../../services/follow.js';
+import { FollowType } from "../../types/serviceType/follow.js";
+import { getFollowings, getFollowList } from "../../services/follow.js";
 
 type Params = {
     currentUserId: number | null;
@@ -9,12 +9,12 @@ type Params = {
 };
 
 export const getFollowUserListUseCase = async ({ currentUserId, pageUserId, type, keyword }: Params) => {
-    const myFollow = currentUserId === pageUserId && type === 'follow';
+    const myFollow = currentUserId === pageUserId && type === "follow";
 
     // フォロー・フォロワーのリスト
     const followList = await getFollowList({ pageUserId, type, keyword });
 
-    const as = type === 'follow' ? 'FollowerUser' : 'FollowUser';
+    const as = type === "follow" ? "FollowerUser" : "FollowUser";
 
     // 自分がフォローしているかどうか（is_following）を追加
     let finalFollowList = null;

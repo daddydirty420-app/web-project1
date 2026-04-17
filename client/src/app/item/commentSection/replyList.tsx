@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import styles from './comment.module.css';
-import { ProfileImage } from './profileImage';
-import { Comment } from '../itemPageTypes';
-import { useEffect, useState } from 'react';
-import { Pin } from './pin';
-import { CommentDataDiv } from './commentDataDiv';
-import { CommentText } from './commentText';
-import { Like } from './like';
-import { ReportFloat } from './reportFloat';
-import { DeleteComment } from './deleteComment';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "./comment.module.css";
+import { ProfileImage } from "./profileImage";
+import { Comment } from "../itemPageTypes";
+import { useEffect, useState } from "react";
+import { Pin } from "./pin";
+import { CommentDataDiv } from "./commentDataDiv";
+import { CommentText } from "./commentText";
+import { Like } from "./like";
+import { ReportFloat } from "./reportFloat";
+import { DeleteComment } from "./deleteComment";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     parentId: string;
-    page: 'normal' | 'admin';
+    page: "normal" | "admin";
     loggedIn: boolean;
     sellerMe?: boolean;
     optimisticComments?: Comment[];
@@ -30,18 +30,18 @@ export const ReplyList = ({ parentId, page, loggedIn, sellerMe, optimisticCommen
                 const accessToken = await getAccessToken();
 
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/comment/${parentId}/reply?sellerMe=${sellerMe}${page === 'admin' ? '?admin=true' : ''}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/comment/${parentId}/reply?sellerMe=${sellerMe}${page === "admin" ? "?admin=true" : ""}`,
                     {
-                        method: 'GET',
+                        method: "GET",
                         headers: {
-                            Authorization: `Bearer ${accessToken ?? ''}`,
+                            Authorization: `Bearer ${accessToken ?? ""}`,
                         },
-                        cache: 'no-store',
+                        cache: "no-store",
                     },
                 );
 
                 if (!res.ok) {
-                    console.error('APIフェッチエラー：', res.status);
+                    console.error("APIフェッチエラー：", res.status);
                     return;
                 }
 

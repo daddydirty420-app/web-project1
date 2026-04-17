@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class ItemReportOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ ItemReportOption.init(
     },
     {
         sequelize,
-        modelName: 'ItemReportOption',
-        tableName: 'item_report_option',
+        modelName: "ItemReportOption",
+        tableName: "item_report_option",
         freezeTableName: true,
         timestamps: false,
     },

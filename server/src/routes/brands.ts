@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import type { Request, Response } from 'express-serve-static-core';
-import { normalizeJapanese } from '../utils/normalizeJapanese.js';
-import { getBrandsSuggestUseCase } from '../usecases/brands/getBrandsSuggest.js';
+import { Router } from "express";
+import type { Request, Response } from "express-serve-static-core";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import { getBrandsSuggestUseCase } from "../usecases/brands/getBrandsSuggest.js";
 
 const router = Router();
 
 // GET /brands/suggest?keyword=""
-router.get('/suggest', async (req: Request, res: Response): Promise<void> => {
-    const keyword = normalizeJapanese((req.query.keyword ?? '') as string);
+router.get("/suggest", async (req: Request, res: Response): Promise<void> => {
+    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
 
     if (!keyword) {
         res.status(200).json({ suggest: [] });

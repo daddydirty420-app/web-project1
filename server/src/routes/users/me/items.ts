@@ -1,27 +1,27 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../../../middleware/index.js';
-import { normalizeJapanese } from '../../../utils/normalizeJapanese.js';
-import { AppError } from '../../../errors.js';
-import { UserItemsListType } from '../../../types/usecaseType.js';
-import { getDraftItemsUseCase } from '../../../usecases/item/itemList/userItems/getDraftItems.js';
-import { getUserItemsCartsUseCase } from '../../../usecases/item/itemList/userItems/getCarts.js';
-import { getDeletedItemsUseCase } from '../../../usecases/item/itemList/userItems/getDeletedItems.js';
-import { getUserItemsLikesUseCase } from '../../../usecases/item/itemList/userItems/getLikes.js';
-import { getStockItemsUseCase } from '../../../usecases/item/itemList/userItems/getStock.js';
-import { getUploadedItemsUseCase } from '../../../usecases/item/itemList/userItems/getUploaded.js';
-import { getUserItemsWatchUseCase } from '../../../usecases/item/itemList/userItems/getWatchHistory.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../../../middleware/index.js";
+import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
+import { AppError } from "../../../errors.js";
+import { UserItemsListType } from "../../../types/usecaseType.js";
+import { getDraftItemsUseCase } from "../../../usecases/item/itemList/userItems/getDraftItems.js";
+import { getUserItemsCartsUseCase } from "../../../usecases/item/itemList/userItems/getCarts.js";
+import { getDeletedItemsUseCase } from "../../../usecases/item/itemList/userItems/getDeletedItems.js";
+import { getUserItemsLikesUseCase } from "../../../usecases/item/itemList/userItems/getLikes.js";
+import { getStockItemsUseCase } from "../../../usecases/item/itemList/userItems/getStock.js";
+import { getUploadedItemsUseCase } from "../../../usecases/item/itemList/userItems/getUploaded.js";
+import { getUserItemsWatchUseCase } from "../../../usecases/item/itemList/userItems/getWatchHistory.js";
 
 const router = Router();
 
 // /users/me/items?type="typename"(&page=number&status=""&keyword="search")
-router.get('/', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
     const type = req.query.type as UserItemsListType;
 
     if (!type) {
-        throw new AppError('INVALID_TYPE', 400);
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     const page = parseInt(req.query.page as string) || 1;
@@ -47,7 +47,7 @@ router.get('/', authenticateToken, async (req: Request, res: Response, next: Nex
     const usecase = usecaseMap[type];
 
     if (!usecase) {
-        throw new AppError('INVALID_TYPE', 400);
+        throw new AppError("INVALID_TYPE", 400);
     }
 
     try {

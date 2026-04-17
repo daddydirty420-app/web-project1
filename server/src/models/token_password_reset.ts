@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class TokenPasswordReset extends Model {
     declare id: number;
@@ -13,7 +13,7 @@ export class TokenPasswordReset extends Model {
 
     static associate() {
         TokenPasswordReset.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -46,8 +46,8 @@ TokenPasswordReset.init(
     },
     {
         sequelize,
-        modelName: 'TokenPasswordReset',
-        tableName: 'token_password_reset',
+        modelName: "TokenPasswordReset",
+        tableName: "token_password_reset",
         freezeTableName: true,
         timestamps: true,
     },

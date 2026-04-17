@@ -1,12 +1,12 @@
-import { TitleAndBack, Accordion, AccordionGrid } from '@/components';
-import { GuideSubTitle, GuideSmall, GuideSection } from '@/components/guide';
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list';
-import { RowTextContainer } from '@/components/two-text-container/tow-text-container';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlag } from '@fortawesome/free-solid-svg-icons';
-import styles from '@/styles/guide.module.css';
-import clsx from 'clsx';
-import Link from 'next/link';
+import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
+import { GuideSubTitle, GuideSmall, GuideSection } from "@/components/guide";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from "@/components/list";
+import { RowTextContainer } from "@/components/two-text-container/tow-text-container";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import styles from "@/styles/guide.module.css";
+import clsx from "clsx";
+import Link from "next/link";
 
 export const Content = () => {
     return (
@@ -16,7 +16,7 @@ export const Content = () => {
             <GuideSubTitle text="購入方法" />
             <AccordionGrid>
                 <Accordion heading="購入方法">
-                    <p className={clsx('mt-4 mb-2', styles.PHeading)}>かんたん購入ガイド</p>
+                    <p className={clsx("mt-4 mb-2", styles.PHeading)}>かんたん購入ガイド</p>
 
                     <ListUl>
                         <ListFlow number={1}>
@@ -171,7 +171,7 @@ export const Content = () => {
                         <ListCheck>受取済み</ListCheck>
                     </ListUl>
 
-                    <p className={clsx('mt-4', styles.PHeading)}>配送状況は、以下により変化します。</p>
+                    <p className={clsx("mt-4", styles.PHeading)}>配送状況は、以下により変化します。</p>
                     <div className="mt-2 ml-[1rem]">
                         <RowTextContainer heading="発送待ち→配送中：">
                             出品者が配送会社と配送手続きを完了し、取引詳細ページの「

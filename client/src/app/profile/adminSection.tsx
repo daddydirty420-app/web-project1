@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { User } from './profileTypes';
-import styles from './profile-admin.module.css';
-import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import clsx from 'clsx';
-import { getAccessToken } from '@/lib/getAccessToken';
+import { User } from "./profileTypes";
+import styles from "./profile-admin.module.css";
+import { useEffect, useState } from "react";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import clsx from "clsx";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     userId: string;
@@ -18,7 +18,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
     const [popup, setPopup] = useState(false);
     const [addPenalty, setAddPenalty] = useState(0);
     const [deleteUriage, setDeleteUriage] = useState(0);
-    const [deleteReason, setDeleteReason] = useState('');
+    const [deleteReason, setDeleteReason] = useState("");
     const router = useRouter();
 
     useEffect(() => {
@@ -32,13 +32,13 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 const accessToken = await getAccessToken();
 
                 if (!accessToken) {
-                    alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                     return;
                 }
 
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
-                    method: 'GET',
-                    cache: 'no-store',
+                    method: "GET",
+                    cache: "no-store",
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -66,14 +66,14 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/add-penalty/${userId}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ addPenalty }),
@@ -90,7 +90,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 console.error(data.message);
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -100,14 +100,14 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-uriage/${userId}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ deleteUriage }),
@@ -123,7 +123,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 router.refresh();
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -133,14 +133,14 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-user/${userId}`, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({ deleteReason }),
@@ -150,12 +150,12 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
             alert(data.message);
             if (res.ok) {
-                setDeleteReason('');
+                setDeleteReason("");
                 setPopup(false);
                 router.refresh();
             }
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -166,7 +166,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 <p>
                     ペナルティポイント：<span className="font-bold">{data?.penalty_points}ポイント</span>
                 </p>
-                <button type="button" className={clsx('mt-4 mb-4', styles.adButton)} onClick={() => setPopup(true)}>
+                <button type="button" className={clsx("mt-4 mb-4", styles.adButton)} onClick={() => setPopup(true)}>
                     売上金没収/削除
                 </button>
             </div>

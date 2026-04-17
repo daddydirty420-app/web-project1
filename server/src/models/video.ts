@@ -1,8 +1,8 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
-import Item from './item.js';
+import User from "./user.js";
+import Item from "./item.js";
 
 export class Video extends Model {
     declare id: number;
@@ -21,10 +21,10 @@ export class Video extends Model {
 
     static associate() {
         Video.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
         Video.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
     }
 
@@ -62,8 +62,8 @@ Video.init(
     },
     {
         sequelize,
-        modelName: 'Video',
-        tableName: 'video',
+        modelName: "Video",
+        tableName: "video",
         freezeTableName: true,
         timestamps: true,
     },

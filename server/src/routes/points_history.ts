@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../middleware/index.js';
-import { Op } from 'sequelize';
-import { PointsHistory, User } from '../models/index.js';
-import { subDays } from 'date-fns';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { Op } from "sequelize";
+import { PointsHistory, User } from "../models/index.js";
+import { subDays } from "date-fns";
 
 const router = Router();
 
 router.get(
-    '/admin/180',
+    "/admin/180",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -19,16 +19,16 @@ router.get(
                 where: {
                     createdAt: { [Op.lt]: halfYearAgo },
                 },
-                order: [['createdAt', 'ASC']],
+                order: [["createdAt", "ASC"]],
                 include: [
                     {
                         model: User,
-                        attributes: ['id', 'user_name', 'email'],
+                        attributes: ["id", "user_name", "email"],
                     },
                 ],
             });
 
-            const totalPoints = await PointsHistory.sum('points', {
+            const totalPoints = await PointsHistory.sum("points", {
                 where: {
                     createdAt: { [Op.lt]: halfYearAgo },
                 },

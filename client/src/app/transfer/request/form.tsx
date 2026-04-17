@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import styles from '../transfer.module.css';
-import TransferUI from '../transferUI';
-import { User } from '../types';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { X } from 'lucide-react';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../transfer.module.css";
+import TransferUI from "../transferUI";
+import { User } from "../types";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -23,7 +23,7 @@ export const Form = ({ user }: Props) => {
 
     const pageButtonHandle = () => {
         if (!value || value < 1000) {
-            toast.error('1,000円以上から申請可能です。');
+            toast.error("1,000円以上から申請可能です。");
             return;
         }
 
@@ -32,7 +32,7 @@ export const Form = ({ user }: Props) => {
 
     const submit = async () => {
         if (!value || value < 1000) {
-            toast.error('1,000円以上から申請可能です。');
+            toast.error("1,000円以上から申請可能です。");
             return;
         }
 
@@ -45,14 +45,14 @@ export const Form = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/request-create`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
@@ -64,15 +64,15 @@ export const Form = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error('振込申請データの登録に失敗しました。');
+                toast.error("振込申請データの登録に失敗しました。");
                 console.error(data.message);
                 return;
             }
 
-            alert('振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。');
+            alert("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
             router.push(`/transfer/detail/${data.transId}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -104,7 +104,7 @@ export const Form = ({ user }: Props) => {
                                 }
                             }}
                             placeholder="例）30,000"
-                            className={`${styles.transValueInput} ${isInvalid ? styles.invalidInput : ''}`}
+                            className={`${styles.transValueInput} ${isInvalid ? styles.invalidInput : ""}`}
                             required
                         />
                     </div>

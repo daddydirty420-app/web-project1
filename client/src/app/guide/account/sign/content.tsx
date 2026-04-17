@@ -1,9 +1,9 @@
-import { Accordion, AccordionGrid, TitleAndBack } from '@/components';
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from '@/components/list';
-import { GuideSmall } from '@/components/guide';
-import styles from '@/styles/guide.module.css';
-import clsx from 'clsx';
-import Link from 'next/link';
+import { Accordion, AccordionGrid, TitleAndBack } from "@/components";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from "@/components/list";
+import { GuideSmall } from "@/components/guide";
+import styles from "@/styles/guide.module.css";
+import clsx from "clsx";
+import Link from "next/link";
 
 export const Content = () => {
     return (
@@ -14,7 +14,7 @@ export const Content = () => {
                 <Accordion heading="会員登録について・会員の機能">
                     <p className="mt-4 mb-2">会員登録は無料です！</p>
 
-                    <p className={clsx('mt-6', styles.PHeading)}>会員登録のプロセス</p>
+                    <p className={clsx("mt-6", styles.PHeading)}>会員登録のプロセス</p>
                     <ListUl>
                         <ListFlow number={1}>「会員登録」ボタンをクリック</ListFlow>
                         <ListFlowArrow />

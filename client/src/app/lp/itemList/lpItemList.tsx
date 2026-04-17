@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
-import styles from './lpItemList.module.css';
-import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesLeft, faAnglesRight, faList, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { Items } from '@/types/itemListTypes';
-import { formatDuration } from '@/lib/formatDuration';
-import { getAccessToken } from '@/lib/getAccessToken';
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "./lpItemList.module.css";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { Items } from "@/types/itemListTypes";
+import { formatDuration } from "@/lib/formatDuration";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Res = {
     items: Items[];
@@ -49,11 +49,11 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=index&limit=${limit}`,
                 {
-                    method: 'GET',
+                    method: "GET",
                     headers: {
-                        Authorization: `Bearer ${accessToken ?? ''}`,
+                        Authorization: `Bearer ${accessToken ?? ""}`,
                     },
-                    cache: 'no-store',
+                    cache: "no-store",
                 },
             );
 
@@ -76,11 +76,11 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=index&limit=${limit}`,
                 {
-                    method: 'GET',
+                    method: "GET",
                     headers: {
-                        Authorization: `Bearer ${accessToken ?? ''}`,
+                        Authorization: `Bearer ${accessToken ?? ""}`,
                     },
-                    cache: 'no-store',
+                    cache: "no-store",
                 },
             );
 
@@ -104,13 +104,13 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
 
         pages.push(1);
 
-        if (currentPage - delta > 2) pages.push('...');
+        if (currentPage - delta > 2) pages.push("...");
 
         for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
             pages.push(i);
         }
 
-        if (currentPage + delta < totalPages - 1) pages.push('...');
+        if (currentPage + delta < totalPages - 1) pages.push("...");
 
         if (totalPages > 1) pages.push(totalPages);
 
@@ -127,7 +127,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                 </button>
 
                 {pages.map((p, idx) =>
-                    p === '...' ? (
+                    p === "..." ? (
                         <span key={idx} className={styles.ellipsis}>
                             ...
                         </span>
@@ -182,8 +182,8 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                             <section className={styles.videoListSection} key={data.id}>
                                 <Link href={itemLink} className={styles.thumbnail}>
                                     <Image
-                                        src={data.Video?.thumbnail_url ?? '/no-image(16x9).png'}
-                                        alt={data.Video?.title ?? '動画サムネイル'}
+                                        src={data.Video?.thumbnail_url ?? "/no-image(16x9).png"}
+                                        alt={data.Video?.title ?? "動画サムネイル"}
                                         fill
                                     />
                                     <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
@@ -192,7 +192,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                                 <div className={styles.itemData}>
                                     <Link href={itemLink} className={styles.videoUser}>
                                         <Image
-                                            src={data.User?.profile_image || '/default-profile.png'}
+                                            src={data.User?.profile_image || "/default-profile.png"}
                                             alt="プロフィール画像"
                                             width={36}
                                             height={36}
@@ -248,7 +248,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                                 <Link href={itemLink}>
                                     <div className={styles.ILImageDiv}>
                                         <Image
-                                            src={data.first_image_url || '/no-image(1x1).png'}
+                                            src={data.first_image_url || "/no-image(1x1).png"}
                                             alt={data.name}
                                             fill
                                             sizes="(max-width: 768px) 33vw, 16.66vw"

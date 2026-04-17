@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from './inquiry.module.css';
+import Link from "next/link";
+import styles from "./inquiry.module.css";
 
 export const LinkElement = () => {
     return (

@@ -1,16 +1,16 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken } from '../middleware/index.js';
-import { deleteItemLikeUseCase } from '../usecases/itemLike/delete.js';
-import { addItemLikeUseCase } from '../usecases/itemLike/add.js';
-import { itemLikeStatusUseCase } from '../usecases/itemLike/status.js';
-import { itemLikeCountUseCase } from '../usecases/itemLike/count.js';
-import { getItemLikeUserListUseCase } from '../usecases/itemLike/userList.js';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken } from "../middleware/index.js";
+import { deleteItemLikeUseCase } from "../usecases/itemLike/delete.js";
+import { addItemLikeUseCase } from "../usecases/itemLike/add.js";
+import { itemLikeStatusUseCase } from "../usecases/itemLike/status.js";
+import { itemLikeCountUseCase } from "../usecases/itemLike/count.js";
+import { getItemLikeUserListUseCase } from "../usecases/itemLike/userList.js";
 
 const router = Router();
 
 // POST /item-like/:id
-router.post('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;
@@ -25,7 +25,7 @@ router.post('/:id', authenticateToken, async (req: Request, res: Response, next:
 });
 
 // DELETE /item-like/:id
-router.delete('/:id', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;
@@ -40,7 +40,7 @@ router.delete('/:id', authenticateToken, async (req: Request, res: Response, nex
 });
 
 // GET /item-like/:id/status
-router.get('/:id/status', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/status", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;
@@ -55,7 +55,7 @@ router.get('/:id/status', authenticateToken, async (req: Request, res: Response,
 });
 
 // GET /item-like/:id/count
-router.get('/:id/count', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/count", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     try {
@@ -68,7 +68,7 @@ router.get('/:id/count', async (req: Request, res: Response, next: NextFunction)
 });
 
 // GET /item-like/:id/user(?keyword="")
-router.get('/:id/user', authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.get("/:id/user", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const userId = req.user!.id;

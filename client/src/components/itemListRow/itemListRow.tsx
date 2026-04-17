@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import styles from './itemListRow.module.css';
-import { Items } from '@/types/itemListTypes';
-import Image from 'next/image';
+import Link from "next/link";
+import styles from "./itemListRow.module.css";
+import { Items } from "@/types/itemListTypes";
+import Image from "next/image";
 
 type Props = {
     itemList: Items[];
@@ -18,13 +18,13 @@ export const ItemListRow = ({ itemList }: Props) => {
                         <Link href={`/item/${item.id}`}>
                             <div className={styles.imageDiv}>
                                 <Image
-                                    src={item.first_image_url || '/no-image(1x1).png'}
+                                    src={item.first_image_url || "/no-image(1x1).png"}
                                     alt={item.name}
                                     width={100}
                                     height={100}
                                     className={styles.itemImage}
                                 />
-                                {item.status === 'soldout' && (
+                                {item.status === "soldout" && (
                                     <div className={styles.sold}>
                                         <p className={styles.soldP}>SOLD</p>
                                     </div>

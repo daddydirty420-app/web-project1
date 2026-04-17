@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { InputStr, Textarea } from '@/components/inputForm';
-import styles from './upload.module.css';
+import { InputStr, Textarea } from "@/components/inputForm";
+import styles from "./upload.module.css";
 
 export type ItemNameDetailValue = {
     name: string;

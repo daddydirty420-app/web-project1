@@ -1,4 +1,4 @@
-import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from '@/types/itemAttributes';
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "@/types/itemAttributes";
 
 export type ShippingDayOption = {
     id: string;
@@ -29,8 +29,8 @@ export type Categories = {
     id: string;
     name: string;
     level: number;
-    allowed_gender: 'men' | 'women' | 'unisex';
-    allowed_age: 'adult' | 'kids' | 'both';
+    allowed_gender: "men" | "women" | "unisex";
+    allowed_age: "adult" | "kids" | "both";
     parent_id: number;
     body_category: BodyCategory;
     lifestyle_category: LifeStyleCategory;
@@ -68,10 +68,10 @@ export type Item = {
     name: string;
     detail: string;
     seller_id: string | number;
-    gender_type: 'men' | 'women' | 'unisex';
-    age_type: 'adult' | 'kids' | 'both';
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
     attributes: ItemAttributes;
-    status: 'editing' | 'draft' | 'active' | 'hidden' | 'soldout' | 'deleted';
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     price: number;
     Video?: Video | null;
     Sale?: Sale | null;

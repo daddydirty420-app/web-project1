@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import styles from '@/styles/login.module.css';
-import toast from 'react-hot-toast';
+import { useState } from "react";
+import styles from "@/styles/login.module.css";
+import toast from "react-hot-toast";
 
 export const ResetForm = () => {
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState("");
 
     const handleSubmit = async () => {
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
             });
 
-            toast.success('メールを送信しました');
+            toast.success("メールを送信しました");
         } catch (err) {
-            toast.success('メールを送信しました');
+            toast.success("メールを送信しました");
         }
     };
 

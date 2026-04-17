@@ -1,11 +1,11 @@
-import styles from '../lp.module.css';
-import { PamphletLink } from './mainComponent/pamphletLink';
-import LightPic from '@/assets/images/ahmed-zayan-6h0xlEZoYZY-unsplash.jpg';
-import CameraPic from '@/assets/images/sam-mcghee-KieCLNzKoBo-unsplash.jpg';
-import { MainP } from './mainComponent/mainP';
-import { MainH3 } from './mainComponent/mainh3';
-import Link from 'next/link';
-import Image from 'next/image';
+import styles from "../lp.module.css";
+import { PamphletLink } from "./mainComponent/pamphletLink";
+import LightPic from "@/assets/images/ahmed-zayan-6h0xlEZoYZY-unsplash.jpg";
+import CameraPic from "@/assets/images/sam-mcghee-KieCLNzKoBo-unsplash.jpg";
+import { MainP } from "./mainComponent/mainP";
+import { MainH3 } from "./mainComponent/mainh3";
+import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
     shopPage?: boolean;

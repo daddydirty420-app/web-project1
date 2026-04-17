@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import styles from './variants.module.css';
-import Image from 'next/image';
-import { Item } from '../itemPageTypes';
-import { useState } from 'react';
+import styles from "./variants.module.css";
+import Image from "next/image";
+import { Item } from "../itemPageTypes";
+import { useState } from "react";
 
 type Props = {
     item: Item;
@@ -28,13 +28,13 @@ export const VariantsList = ({ item }: Props) => {
                         key={i}
                         className={`
                         ${styles.variantCard}
-                        ${openIndex === i ? styles.active : ''}
+                        ${openIndex === i ? styles.active : ""}
                     `}
                         onClick={() => setOpenIndex(openIndex === i ? null : i)}
                     >
                         <div className={styles.imageWrapper}>
                             <Image
-                                src={variant.image_url ?? ''}
+                                src={variant.image_url ?? ""}
                                 alt="バリエーション画像"
                                 width={100}
                                 height={100}
@@ -80,8 +80,8 @@ export const VariantsList = ({ item }: Props) => {
                                                     key={i}
                                                     className={`
                                                     ${styles.sizeChip}
-                                                    ${soldout ? styles.soldChip : ''}
-                                                    ${lowStock ? styles.lowChip : ''}
+                                                    ${soldout ? styles.soldChip : ""}
+                                                    ${lowStock ? styles.lowChip : ""}
                                                 `}
                                                 >
                                                     {size.size}

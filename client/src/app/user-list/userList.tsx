@@ -1,24 +1,24 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { User } from './type';
-import styles from './userList.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck, faSearch, faStore, faTag } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
-import { FollowButton } from './followButton';
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
-import useSWR from 'swr';
-import { fetcher } from '@/lib/fetcher';
-import { getAccessToken } from '@/lib/getAccessToken';
+import Image from "next/image";
+import { User } from "./type";
+import styles from "./userList.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import { FollowButton } from "./followButton";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     loggedIn: boolean;
     id: string;
     currentUserId: string;
-    page: 'follow' | 'item-like' | 'comment-like';
-    followTab?: 'follow' | 'follower' | null;
+    page: "follow" | "item-like" | "comment-like";
+    followTab?: "follow" | "follower" | null;
     myFollow?: boolean;
 };
 
@@ -27,15 +27,15 @@ type Response = {
 };
 
 export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState("");
 
     const getBasePath = () => {
-        if (page === 'item-like') return `item-like/${id}/user`;
-        if (page === 'comment-like') return `comment-like/${id}/user`;
+        if (page === "item-like") return `item-like/${id}/user`;
+        if (page === "comment-like") return `comment-like/${id}/user`;
 
-        if (page === 'follow') {
-            if (followTab === 'follow') return `follow/${id}/user?type=follow`;
-            if (followTab === 'follower') return `follow/${id}/user?type=follower`;
+        if (page === "follow") {
+            if (followTab === "follow") return `follow/${id}/user?type=follow`;
+            if (followTab === "follower") return `follow/${id}/user?type=follower`;
 
             return `follow/${id}?type=follow`; // デフォルト
         }
@@ -49,7 +49,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         if (!basePath) return null;
         const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/${basePath}`);
         if (searchValue.trim()) {
-            url.searchParams.set('keyword', searchValue.trim());
+            url.searchParams.set("keyword", searchValue.trim());
         }
         return url.toString();
     };
@@ -73,12 +73,12 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
             if (!accessToken) {
                 mutate();
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}`, {
-                method: 'DELETE',
+                method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -87,7 +87,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             if (!res.ok) {
                 mutate();
                 const data = await res.json();
-                toast.error('フォロー解除に失敗しました');
+                toast.error("フォロー解除に失敗しました");
                 console.error(data.message);
                 return;
             }
@@ -95,7 +95,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             mutate();
         } catch (err) {
             mutate();
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -122,7 +122,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                     name="search_icon"
                     className={`
                 ${styles.searchIcon} 
-                ${searchValue.trim() ? styles.activeIcon : ''}
+                ${searchValue.trim() ? styles.activeIcon : ""}
             `}
                 />
             </section>
@@ -133,7 +133,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                         <section key={user.id} className={styles.userSection}>
                             <Link href={`/profile/${user.id}`} className={styles.userImageNameFlex}>
                                 <Image
-                                    src={user.profile_image ?? '/default-profile.png'}
+                                    src={user.profile_image ?? "/default-profile.png"}
                                     alt="プロフィール画像"
                                     width={45}
                                     height={45}
@@ -159,9 +159,9 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
                             {loggedIn && currentUserId !== user.id && (
                                 <>
-                                    {!(followTab === 'follow' && myFollow) && <FollowButton user={user} />}
+                                    {!(followTab === "follow" && myFollow) && <FollowButton user={user} />}
 
-                                    {followTab === 'follow' && myFollow && (
+                                    {followTab === "follow" && myFollow && (
                                         <button
                                             type="button"
                                             className={styles.followRemoveButton}
@@ -183,11 +183,11 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
                     {searchValue.trim().length === 0 && (
                         <p className={styles.noUser}>
-                            {['item-like', 'comment-like'].includes(page)
-                                ? 'いいねしたユーザーがいません'
-                                : followTab === 'follow'
-                                  ? 'フォロー中のユーザーがいません'
-                                  : 'フォロワーがいません'}
+                            {["item-like", "comment-like"].includes(page)
+                                ? "いいねしたユーザーがいません"
+                                : followTab === "follow"
+                                  ? "フォロー中のユーザーがいません"
+                                  : "フォロワーがいません"}
                         </p>
                     )}
                 </>

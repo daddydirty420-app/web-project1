@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class TokenEmailChange extends Model {
     declare id: number;
@@ -14,7 +14,7 @@ export class TokenEmailChange extends Model {
 
     static associate() {
         TokenEmailChange.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -51,8 +51,8 @@ TokenEmailChange.init(
     },
     {
         sequelize,
-        modelName: 'TokenEmailChange',
-        tableName: 'token_email_change',
+        modelName: "TokenEmailChange",
+        tableName: "token_email_change",
         freezeTableName: true,
         timestamps: true,
     },

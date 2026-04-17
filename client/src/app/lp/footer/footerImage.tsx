@@ -1,9 +1,9 @@
-import styles from '../lp.module.css';
-import Pic from '@/assets/images/pexels-xue-guangjian-815005-1687845.jpg';
-import Image from 'next/image';
-import Link from 'next/link';
-import { InquiryButton } from '../button/inquiryButton';
-import clsx from 'clsx';
+import styles from "../lp.module.css";
+import Pic from "@/assets/images/pexels-xue-guangjian-815005-1687845.jpg";
+import Image from "next/image";
+import Link from "next/link";
+import { InquiryButton } from "../button/inquiryButton";
+import clsx from "clsx";
 
 type Props = {
     shopPage?: boolean;
@@ -12,9 +12,9 @@ type Props = {
 };
 
 export const FooterImage = async ({ shopPage, hasShop, loggedIn }: Props) => {
-    const signup = '/signup';
-    const login = '/login';
-    const shopSign = '/shop-signup/step1';
+    const signup = "/signup";
+    const login = "/login";
+    const shopSign = "/shop-signup/step1";
 
     return (
         <>
@@ -39,7 +39,7 @@ export const FooterImage = async ({ shopPage, hasShop, loggedIn }: Props) => {
 
             {shopPage && (!loggedIn || !hasShop) && (
                 <>
-                    <nav className={clsx('mb-8', styles.footerImageNav, styles.shopPage)}>
+                    <nav className={clsx("mb-8", styles.footerImageNav, styles.shopPage)}>
                         <Image
                             src={Pic}
                             alt="フッター画像　テントが張られてる丘から見える夕日"

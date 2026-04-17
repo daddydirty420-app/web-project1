@@ -1,10 +1,10 @@
-import cron from 'node-cron';
-import { Op } from 'sequelize';
-import { Comment } from '../models/index.js';
+import cron from "node-cron";
+import { Op } from "sequelize";
+import { Comment } from "../models/index.js";
 
 export const startCommentSortDecayCron = () => {
     cron.schedule(
-        '0 */2 * * *',
+        "0 */2 * * *",
         async () => {
             try {
                 const comments = await Comment.findAll({
@@ -21,13 +21,13 @@ export const startCommentSortDecayCron = () => {
                     });
                 }
 
-                console.log('[cron] Comment.sort_numberを減算しました。');
+                console.log("[cron] Comment.sort_numberを減算しました。");
             } catch (err) {
-                console.error('Comment.sort_number減算エラー：', err);
+                console.error("Comment.sort_number減算エラー：", err);
             }
         },
         {
-            timezone: 'Asia/Tokyo',
+            timezone: "Asia/Tokyo",
         },
     );
 };

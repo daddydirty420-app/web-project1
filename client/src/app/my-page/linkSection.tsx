@@ -1,8 +1,8 @@
-import { ChildrenLink, MypageLinkHeader, NormalLink, NormalLinkContainer } from '@/components/link';
-import styles from './mypage.module.css';
-import { Res, User } from './types';
-import { ReferenceCode } from './referenceCode';
-import Link from 'next/link';
+import { ChildrenLink, MypageLinkHeader, NormalLink, NormalLinkContainer } from "@/components/link";
+import styles from "./mypage.module.css";
+import { Res, User } from "./types";
+import { ReferenceCode } from "./referenceCode";
+import Link from "next/link";
 
 type Props = {
     user: User;

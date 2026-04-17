@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import type { NextFunction, Request, Response } from 'express-serve-static-core';
-import { authenticateToken, isAdmin } from '../../middleware/index.js';
-import { Op, fn, WhereOptions, literal } from 'sequelize';
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { Op, fn, WhereOptions, literal } from "sequelize";
 import {
     ShopInfo,
     User,
@@ -12,13 +12,13 @@ import {
     BankAccount,
     AccountTypeOption,
     UriagekinHistory,
-} from '../../models/index.js';
-import { subDays, subMonths, startOfMonth, endOfMonth } from 'date-fns';
+} from "../../models/index.js";
+import { subDays, subMonths, startOfMonth, endOfMonth } from "date-fns";
 
 const router = Router();
 
 router.get(
-    '/list',
+    "/list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -42,24 +42,24 @@ router.get(
 
         try {
             const dataList = await ShopInfo.findAll({
-                attributes: ['id', 'company_name', 'shop_name'],
+                attributes: ["id", "company_name", "shop_name"],
                 where: whereCondition,
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
                 include: [
                     { model: ComOrFreeOption },
                     {
                         model: Address,
-                        attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
                     {
                         model: Name,
-                        attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     },
                 ],
             });
@@ -72,33 +72,33 @@ router.get(
 );
 
 router.get(
-    '/signup-list',
+    "/signup-list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const dataList = await ShopInfo.findAll({
-                attributes: ['id', 'company_name', 'id_card_front', 'id_card_rear'],
+                attributes: ["id", "company_name", "id_card_front", "id_card_rear"],
                 where: {
                     request_all: true,
                     verified: false,
                 },
-                order: [['createdAt', 'ASC']],
+                order: [["createdAt", "ASC"]],
                 include: [
                     { model: ComOrFreeOption },
                     {
                         model: Address,
-                        attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
                     {
                         model: Name,
-                        attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     },
                 ],
             });
@@ -125,7 +125,7 @@ router.get(
 );
 
 router.get(
-    '/trans-auto-make',
+    "/trans-auto-make",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -134,38 +134,38 @@ router.get(
 
         try {
             const dataList = await ShopInfo.findAll({
-                attributes: ['id', 'company_name', 'shop_name'],
+                attributes: ["id", "company_name", "shop_name"],
                 where: { auto_trans: true },
-                order: [['createdAt', 'DESC']],
+                order: [["createdAt", "DESC"]],
                 include: [
                     {
                         model: BankAccount,
-                        attributes: ['id'],
+                        attributes: ["id"],
                     },
                     {
                         model: User,
                         attributes: [
-                            'id',
-                            'user_name',
-                            'email',
+                            "id",
+                            "user_name",
+                            "email",
                             [
                                 fn(
-                                    'COALESCE',
+                                    "COALESCE",
                                     fn(
-                                        'SUM',
+                                        "SUM",
                                         literal(
                                             '"User->UriagekinHistories"."uriagekin" - "User->UriagekinHistories"."uriagekin_used"',
                                         ),
                                     ),
                                     0,
                                 ),
-                                'monthly_uriagekin',
+                                "monthly_uriagekin",
                             ],
                         ],
                         include: [
                             {
                                 model: UriagekinHistory,
-                                attributes: ['id'],
+                                attributes: ["id"],
                                 where: {
                                     createdAt: {
                                         [Op.between]: [startOfLastMonth, endOfLastMonth],
@@ -176,14 +176,14 @@ router.get(
                         ],
                     },
                 ],
-                group: ['ShopInfo.id', 'BankAccount.id', 'User.id'],
+                group: ["ShopInfo.id", "BankAccount.id", "User.id"],
                 subQuery: false,
             });
 
             const dataCount = dataList.length || 0;
 
             const uriagekinAmount = dataList.reduce((sum: number, data: any) => {
-                const monthly = Number(data.User?.get?.('monthly_uriagekin') ?? 0);
+                const monthly = Number(data.User?.get?.("monthly_uriagekin") ?? 0);
                 return sum + monthly;
             }, 0);
 
@@ -199,7 +199,7 @@ router.get(
 );
 
 router.get(
-    '/:id',
+    "/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -209,28 +209,28 @@ router.get(
                     { model: ComOrFreeOption },
                     {
                         model: Address,
-                        attributes: ['id', 'post_number', 'shikutyouson', 'banchi', 'building'],
+                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                         include: [
                             {
                                 model: TodouhukenOption,
-                                as: 'AddressTodouhuken',
+                                as: "AddressTodouhuken",
                             },
                         ],
                     },
                     {
                         model: Name,
-                        attributes: ['id', 'sei', 'mei', 'sei_kana', 'mei_kana'],
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
                     },
                     {
                         model: BankAccount,
-                        attributes: ['id', 'bank_name', 'branch_code', 'account_number', 'meigi'],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
                         include: [{ model: AccountTypeOption }],
                     },
                 ],
             });
 
             if (!data) {
-                res.status(404).json({ message: 'データが見つかりません。' });
+                res.status(404).json({ message: "データが見つかりません。" });
                 return;
             }
 

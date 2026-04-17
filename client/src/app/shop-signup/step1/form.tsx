@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import styles from '../ss.module.css';
-import SSUIBack from '../ssUiBack';
-import { ComOrFreeOption, ShopInfo, User } from '../type';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { InputStr, InputTitle, InputStrAndSmall } from '@/components/inputForm';
-import Link from 'next/link';
-import { ButtonDiv } from '../buttonDiv';
-import DatePicker from 'react-datepicker';
-import { ja } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
-import { StepBar } from '../stepBar';
-import clsx from 'clsx';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../ss.module.css";
+import SSUIBack from "../ssUiBack";
+import { ComOrFreeOption, ShopInfo, User } from "../type";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { InputStr, InputTitle, InputStrAndSmall } from "@/components/inputForm";
+import Link from "next/link";
+import { ButtonDiv } from "../buttonDiv";
+import DatePicker from "react-datepicker";
+import { ja } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+import { StepBar } from "../stepBar";
+import clsx from "clsx";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -24,37 +24,37 @@ type Props = {
 
 export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
     const [selectOption, setSelectOption] = useState<number | null>(null);
-    const [companyName, setCompanyName] = useState(shopInfo?.company_name ?? '');
+    const [companyName, setCompanyName] = useState(shopInfo?.company_name ?? "");
     const [shopName, setShopName] = useState(shopInfo?.shop_name ?? user.user_name);
     const [phoneNumber, setPhoneNumber] = useState(shopInfo?.phone_number ?? user.phone_number);
-    const [email, setEmail] = useState(shopInfo?.email ?? user.email ?? '');
-    const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time ?? '');
+    const [email, setEmail] = useState(shopInfo?.email ?? user.email ?? "");
+    const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time ?? "");
     const [foundedDate, setFoundedDate] = useState<Date | null>(shopInfo?.founded_date ?? null);
     const [memberCount, setMemberCount] = useState(shopInfo?.member_count ?? 0);
-    const [homepage, setHomepage] = useState<string | null>(shopInfo?.homepage_url ?? '');
+    const [homepage, setHomepage] = useState<string | null>(shopInfo?.homepage_url ?? "");
 
-    const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? '');
+    const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? "");
     const [capital, setCapital] = useState<number | null>(shopInfo?.capital ?? null);
 
-    const [repSei, setRepSei] = useState(shopInfo?.RepresentativeName?.sei ?? user.Name?.sei ?? '');
-    const [repMei, setRepMei] = useState(shopInfo?.RepresentativeName?.mei ?? user.Name?.mei ?? '');
-    const [repSeiKana, setRepSeiKana] = useState(shopInfo?.RepresentativeName?.sei_kana ?? user.Name?.sei_kana ?? '');
-    const [repMeiKana, setRepMeiKana] = useState(shopInfo?.RepresentativeName?.mei_kana ?? user.Name?.mei_kana ?? '');
+    const [repSei, setRepSei] = useState(shopInfo?.RepresentativeName?.sei ?? user.Name?.sei ?? "");
+    const [repMei, setRepMei] = useState(shopInfo?.RepresentativeName?.mei ?? user.Name?.mei ?? "");
+    const [repSeiKana, setRepSeiKana] = useState(shopInfo?.RepresentativeName?.sei_kana ?? user.Name?.sei_kana ?? "");
+    const [repMeiKana, setRepMeiKana] = useState(shopInfo?.RepresentativeName?.mei_kana ?? user.Name?.mei_kana ?? "");
 
-    const [conSei, setConSei] = useState(shopInfo?.ContactName?.sei ?? user.Name?.sei ?? '');
-    const [conMei, setConMei] = useState(shopInfo?.ContactName?.mei ?? user.Name?.mei ?? '');
-    const [conSeiKana, setConSeiKana] = useState(shopInfo?.ContactName?.sei_kana ?? user.Name?.sei_kana ?? '');
-    const [conMeiKana, setConMeiKana] = useState(shopInfo?.ContactName?.mei_kana ?? user.Name?.mei_kana ?? '');
+    const [conSei, setConSei] = useState(shopInfo?.ContactName?.sei ?? user.Name?.sei ?? "");
+    const [conMei, setConMei] = useState(shopInfo?.ContactName?.mei ?? user.Name?.mei ?? "");
+    const [conSeiKana, setConSeiKana] = useState(shopInfo?.ContactName?.sei_kana ?? user.Name?.sei_kana ?? "");
+    const [conMeiKana, setConMeiKana] = useState(shopInfo?.ContactName?.mei_kana ?? user.Name?.mei_kana ?? "");
 
-    const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number ?? '');
+    const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number ?? "");
     const [todouhuken, setTodouhuken] = useState(
-        shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name ?? '',
+        shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name ?? "",
     );
     const [shikutyouson, setShikutyouson] = useState(
-        shopInfo?.Address?.shikutyouson ?? user.Address?.shikutyouson ?? '',
+        shopInfo?.Address?.shikutyouson ?? user.Address?.shikutyouson ?? "",
     );
-    const [banchi, setBanchi] = useState(shopInfo?.Address?.banchi ?? user.Address?.banchi ?? '');
-    const [building, setBuilding] = useState(shopInfo?.Address?.building ?? user.Address?.building ?? '');
+    const [banchi, setBanchi] = useState(shopInfo?.Address?.banchi ?? user.Address?.banchi ?? "");
+    const [building, setBuilding] = useState(shopInfo?.Address?.building ?? user.Address?.building ?? "");
 
     const [check, setCheck] = useState(false);
 
@@ -75,14 +75,14 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            toast.error('7桁の郵便番号を入力してください。');
+            toast.error("7桁の郵便番号を入力してください。");
             return;
         }
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
-                method: 'GET',
-                cache: 'no-store',
+                method: "GET",
+                cache: "no-store",
             });
 
             const data = await res.json();
@@ -100,23 +100,23 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const submit = async () => {
         if (!check) {
-            toast.error('利用規約およびプライバシーポリシーに同意の上、チェックボタンを押してください。');
+            toast.error("利用規約およびプライバシーポリシーに同意の上、チェックボタンを押してください。");
             return;
         }
 
-        const normalizedPostNumber = postNumber?.replace(/-/g, '');
-        if (!/^[0-9]{7}$/.test(normalizedPostNumber || '')) {
-            toast.error('郵便番号は半角数字7桁で入力してください。');
+        const normalizedPostNumber = postNumber?.replace(/-/g, "");
+        if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
+            toast.error("郵便番号は半角数字7桁で入力してください。");
             return;
         }
 
         if (memberCount > 100000000 || memberCount === 0) {
-            toast.error('従業員数が不正な値です。');
+            toast.error("従業員数が不正な値です。");
             return;
         }
 
         if ((!/^\d+$/.test(companyNumber) || companyNumber.length !== 13) && selectOption === 1) {
-            toast.error('法人番号が正しくありません。');
+            toast.error("法人番号が正しくありません。");
             return;
         }
 
@@ -173,8 +173,8 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             ...(selectOption === 1 ? [companyNumber, capital] : []),
         ];
 
-        if (requiredBody.some((v) => v === '' || v === undefined || v === null)) {
-            toast.error('未入力の項目があります。');
+        if (requiredBody.some((v) => v === "" || v === undefined || v === null)) {
+            toast.error("未入力の項目があります。");
             return;
         }
 
@@ -182,14 +182,14 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/1`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
@@ -198,14 +198,14 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error('データ登録に失敗しました。');
+                toast.error("データ登録に失敗しました。");
                 console.error(data.message);
                 return;
             }
 
             router.push(`/shop-signup/step2/${data.id}`);
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -287,7 +287,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             />
 
             <div className={styles.inputDiv}>
-                <InputTitle title={`${selectOption === 1 ? '登記年月日' : '創業日'}`} hissu />
+                <InputTitle title={`${selectOption === 1 ? "登記年月日" : "創業日"}`} hissu />
 
                 <DatePicker
                     selected={foundedDate}
@@ -309,7 +309,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
                 <input
                     type="number"
-                    value={memberCount || ''}
+                    value={memberCount || ""}
                     onChange={(e) => setMemberCount(Number(e.target.value))}
                     className={styles.input}
                     placeholder="50"
@@ -320,7 +320,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="ホームページURL（任意）"
                 type="text"
-                value={homepage || ''}
+                value={homepage || ""}
                 onChange={setHomepage}
                 placeholder="http://*******.***"
                 hissu={false}
@@ -344,7 +344,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                             <p className={styles.text14}>￥</p>
                             <input
                                 type="number"
-                                value={capital || ''}
+                                value={capital || ""}
                                 onChange={(e) => setCapital(Number(e.target.value))}
                                 placeholder="3,000,000"
                                 className={styles.input}
@@ -358,15 +358,15 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <h2 className={styles.subtitle}>代表者氏名</h2>
 
             <div className={styles.nameFlex}>
-                <InputStr title="姓" type="text" value={repSei || ''} onChange={setRepSei} placeholder="山田" hissu />
-                <InputStr title="名" type="text" value={repMei || ''} onChange={setRepMei} placeholder="太郎" hissu />
+                <InputStr title="姓" type="text" value={repSei || ""} onChange={setRepSei} placeholder="山田" hissu />
+                <InputStr title="名" type="text" value={repMei || ""} onChange={setRepMei} placeholder="太郎" hissu />
             </div>
 
             <div className={styles.nameFlex}>
                 <InputStr
                     title="セイ"
                     type="text"
-                    value={repSeiKana || ''}
+                    value={repSeiKana || ""}
                     onChange={setRepSeiKana}
                     placeholder="ヤマダ"
                     hissu
@@ -374,7 +374,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 <InputStr
                     title="メイ"
                     type="text"
-                    value={repMeiKana || ''}
+                    value={repMeiKana || ""}
                     onChange={setRepMeiKana}
                     placeholder="タロウ"
                     hissu
@@ -384,15 +384,15 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <h2 className={styles.subtitle}>担当者氏名</h2>
 
             <div className={styles.nameFlex}>
-                <InputStr title="姓" type="text" value={conSei || ''} onChange={setConSei} placeholder="山田" hissu />
-                <InputStr title="名" type="text" value={conMei || ''} onChange={setConMei} placeholder="太郎" hissu />
+                <InputStr title="姓" type="text" value={conSei || ""} onChange={setConSei} placeholder="山田" hissu />
+                <InputStr title="名" type="text" value={conMei || ""} onChange={setConMei} placeholder="太郎" hissu />
             </div>
 
             <div className={styles.nameFlex}>
                 <InputStr
                     title="セイ"
                     type="text"
-                    value={conSeiKana || ''}
+                    value={conSeiKana || ""}
                     onChange={setConSeiKana}
                     placeholder="ヤマダ"
                     hissu
@@ -400,14 +400,14 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 <InputStr
                     title="メイ"
                     type="text"
-                    value={conMeiKana || ''}
+                    value={conMeiKana || ""}
                     onChange={setConMeiKana}
                     placeholder="タロウ"
                     hissu
                 />
             </div>
 
-            <p className={clsx('mt-1', styles.centerSmall)}>
+            <p className={clsx("mt-1", styles.centerSmall)}>
                 ※代表者・担当者氏名は同一人物でも異なる人物でも構いません。
             </p>
 
@@ -416,7 +416,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="郵便番号 ※ハイフン無し"
                 type="text"
-                value={postNumber || ''}
+                value={postNumber || ""}
                 onChange={setPostNumber}
                 placeholder="0000000（ハイフン無し、半角）"
                 hissu
@@ -426,7 +426,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="都道府県"
                 type="text"
-                value={todouhuken || ''}
+                value={todouhuken || ""}
                 onChange={setTodouhuken}
                 placeholder="〇〇県"
                 hissu
@@ -434,7 +434,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="市区町村"
                 type="text"
-                value={shikutyouson || ''}
+                value={shikutyouson || ""}
                 onChange={setShikutyouson}
                 placeholder="〇〇市"
                 hissu
@@ -442,7 +442,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="町名・番地"
                 type="text"
-                value={banchi || ''}
+                value={banchi || ""}
                 onChange={setBanchi}
                 placeholder="〇-〇〇"
                 hissu
@@ -450,7 +450,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="建物名・部屋番号"
                 type="text"
-                value={building || ''}
+                value={building || ""}
                 onChange={setBuilding}
                 placeholder="〇〇マンション××号室"
                 hissu={false}

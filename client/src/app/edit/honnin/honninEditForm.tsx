@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import styles from '../edit.module.css';
-import { InputStr, Button, InputTitle } from '@/components/inputForm';
-import EditUI from '../editUI';
-import { GenderOption, User } from '../type';
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import DatePicker from 'react-datepicker';
-import { ja } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
-import toast from 'react-hot-toast';
-import { getAccessToken } from '@/lib/getAccessToken';
+import styles from "../edit.module.css";
+import { InputStr, Button, InputTitle } from "@/components/inputForm";
+import EditUI from "../editUI";
+import { GenderOption, User } from "../type";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import DatePicker from "react-datepicker";
+import { ja } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+import toast from "react-hot-toast";
+import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -57,21 +57,21 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            toast.error('7桁の郵便番号を入力してください。');
+            toast.error("7桁の郵便番号を入力してください。");
             return;
         }
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
-                method: 'GET',
-                cache: 'no-store',
+                method: "GET",
+                cache: "no-store",
             });
 
             const data = await res.json();
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error('サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。');
+                toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
             }
 
             setTodouhuken(data.address.todouhuken_name);
@@ -101,9 +101,9 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
     };
 
     const submit = async () => {
-        const normalizedPostNumber = postNumber?.replace(/-/g, '');
-        if (!/^[0-9]{7}$/.test(normalizedPostNumber || '')) {
-            toast.error('郵便番号は半角数字7桁で入力してください。');
+        const normalizedPostNumber = postNumber?.replace(/-/g, "");
+        if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
+            toast.error("郵便番号は半角数字7桁で入力してください。");
             return;
         }
 
@@ -162,8 +162,8 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         const hasFrontImage = !!(idCardFront || frontFileName);
         const hasRearImage = !!(idCardRear || rearFileName);
 
-        if (requiredBody.some((v) => v === '' || v === undefined || v === null) || !hasFrontImage || !hasRearImage) {
-            toast.error('未入力の必須項目があります。');
+        if (requiredBody.some((v) => v === "" || v === undefined || v === null) || !hasFrontImage || !hasRearImage) {
+            toast.error("未入力の必須項目があります。");
             return;
         }
 
@@ -171,14 +171,14 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert('認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。');
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
                 return;
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/honnin-submit`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-type': 'application/json',
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(body),
@@ -187,47 +187,47 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error('本人確認情報の送信に失敗しました。');
+                toast.error("本人確認情報の送信に失敗しました。");
                 console.error(data.message);
                 return;
             }
 
             if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': idCardFront.type,
+                        "Content-Type": idCardFront.type,
                     },
                     body: idCardFront,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    console.error('身分証（表面）のアップロードに失敗しました。');
-                    toast.error('身分証（表面）のアップロードに失敗しました。');
+                    console.error("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました。");
                     return;
                 }
             }
 
             if (idRearUpload && data.rearSignedUrl && idCardRear instanceof File) {
                 const uploadFrontRes = await fetch(data.rearSignedUrl, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
-                        'Content-Type': idCardRear.type,
+                        "Content-Type": idCardRear.type,
                     },
                     body: idCardRear,
                 });
 
                 if (!uploadFrontRes.ok) {
-                    console.error('身分証（裏面）のアップロードに失敗しました。');
-                    toast.error('身分証（裏面）のアップロードに失敗しました。');
+                    console.error("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました。");
                     return;
                 }
             }
 
-            toast.success('本人確認情報を送信しました。');
-            router.push('/my-page');
+            toast.success("本人確認情報を送信しました。");
+            router.push("/my-page");
         } catch (err) {
-            alert('システムエラーが発生しました。時間をおいて再試行してください。');
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
         }
     };
@@ -235,15 +235,15 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
     return (
         <EditUI title="本人確認情報入力">
             <div className={styles.nameFlex}>
-                <InputStr title="姓" type="text" value={sei || ''} onChange={setSei} placeholder="山田" hissu />
-                <InputStr title="名" type="text" value={mei || ''} onChange={setMei} placeholder="太郎" hissu />
+                <InputStr title="姓" type="text" value={sei || ""} onChange={setSei} placeholder="山田" hissu />
+                <InputStr title="名" type="text" value={mei || ""} onChange={setMei} placeholder="太郎" hissu />
             </div>
 
             <div className={styles.nameFlex}>
                 <InputStr
                     title="セイ"
                     type="text"
-                    value={seiKana || ''}
+                    value={seiKana || ""}
                     onChange={setSeiKana}
                     placeholder="ヤマダ"
                     hissu
@@ -251,7 +251,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 <InputStr
                     title="メイ"
                     type="text"
-                    value={meiKana || ''}
+                    value={meiKana || ""}
                     onChange={setMeiKana}
                     placeholder="タロウ"
                     hissu
@@ -287,7 +287,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                     ref={idFrontRef}
                 />
                 <Image
-                    src={idFrontPreview || '/no-image(1x1).png'}
+                    src={idFrontPreview || "/no-image(1x1).png"}
                     alt="身分証（表面）"
                     width={120}
                     height={120}
@@ -305,7 +305,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                     required
                 />
                 <Image
-                    src={idRearPreview || '/no-image(1x1).png'}
+                    src={idRearPreview || "/no-image(1x1).png"}
                     alt="身分証（裏面）"
                     width={120}
                     height={120}
@@ -324,7 +324,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             <InputStr
                 title="郵便番号 ※ハイフン無し"
                 type="text"
-                value={postNumber || ''}
+                value={postNumber || ""}
                 onChange={setPostNumber}
                 placeholder="0000000（ハイフン無し、半角）"
                 hissu
@@ -334,7 +334,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             <InputStr
                 title="都道府県"
                 type="text"
-                value={todouhuken || ''}
+                value={todouhuken || ""}
                 onChange={setTodouhuken}
                 placeholder="〇〇県"
                 hissu
@@ -342,7 +342,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             <InputStr
                 title="市区町村"
                 type="text"
-                value={shikutyouson || ''}
+                value={shikutyouson || ""}
                 onChange={setShikutyouson}
                 placeholder="〇〇市"
                 hissu
@@ -350,7 +350,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             <InputStr
                 title="町名・番地"
                 type="text"
-                value={banchi || ''}
+                value={banchi || ""}
                 onChange={setBanchi}
                 placeholder="〇-〇〇"
                 hissu
@@ -358,7 +358,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             <InputStr
                 title="建物名・部屋番号"
                 type="text"
-                value={building || ''}
+                value={building || ""}
                 onChange={setBuilding}
                 placeholder="〇〇マンション××号室"
                 hissu={false}

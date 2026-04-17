@@ -1,6 +1,6 @@
-import { Transaction } from 'sequelize';
-import { Item } from '../../../models/index.js';
-import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from '../../itemAttributes.js';
+import { Transaction } from "sequelize";
+import { Item } from "../../../models/index.js";
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../../itemAttributes.js";
 
 export type ItemIdParams = {
     itemId: number;
@@ -112,7 +112,7 @@ export type UpdateItemParams = {
 
         price: number;
         first_image_url: string;
-        status: 'editing' | 'draft';
+        status: "editing" | "draft";
     };
     transaction: Transaction;
 };

@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class TodouhukenOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ TodouhukenOption.init(
     },
     {
         sequelize,
-        modelName: 'TodouhukenOption',
-        tableName: 'todouhuken_option',
+        modelName: "TodouhukenOption",
+        tableName: "todouhuken_option",
         freezeTableName: true,
         timestamps: false,
     },

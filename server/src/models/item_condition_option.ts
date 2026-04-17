@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes } from "sequelize";
+import sequelize from "../db.js";
 
 export class ItemConditionOption extends Model {
     declare id: number;
@@ -21,8 +21,8 @@ ItemConditionOption.init(
     },
     {
         sequelize,
-        modelName: 'ItemConditionOption',
-        tableName: 'item_condition_option',
+        modelName: "ItemConditionOption",
+        tableName: "item_condition_option",
         freezeTableName: true,
         timestamps: false,
     },

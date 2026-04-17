@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo, useState } from 'react';
-import CStyles from './upload.module.css';
-import styles from './attributesCard.module.css';
-import { InputTitle } from '@/components/inputForm';
-import Image from 'next/image';
-import { X } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useMemo, useState } from "react";
+import CStyles from "./upload.module.css";
+import styles from "./attributesCard.module.css";
+import { InputTitle } from "@/components/inputForm";
+import Image from "next/image";
+import { X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export type AttributesValue = {
     all_inventory: number;
@@ -96,7 +96,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
     });
 
     const createEmptySize = () => ({
-        size: '',
+        size: "",
         inventory: 1,
     });
 
@@ -235,7 +235,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                                     onChange={(e) => {
                                         const file = e.target.files?.[0];
                                         if (file) handleChangeCardImage(file, variant._uiId);
-                                        e.currentTarget.value = '';
+                                        e.currentTarget.value = "";
                                     }}
                                     placeholder="画像をアップロード"
                                     className={styles.cardImageInput}
@@ -243,7 +243,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                                 />
 
                                 <Image
-                                    src={previewUrl ?? ''}
+                                    src={previewUrl ?? ""}
                                     alt="attributes_preview"
                                     width={80}
                                     height={80}
@@ -255,7 +255,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                                         <p className={styles.cardInputTitle}>カラー</p>
                                         <input
                                             type="text"
-                                            value={variant.color ?? ''}
+                                            value={variant.color ?? ""}
                                             onChange={(e) => handleChangeVariantColor(variant._uiId, e.target.value)}
                                             placeholder="カラーを入力してください"
                                             className={styles.colorInput}
@@ -285,7 +285,7 @@ export const AttributesInput = ({ value, onChange, imageUrlMap }: Props) => {
                                                 <p className={styles.sizeInputTitle}>サイズ</p>
                                                 <input
                                                     type="text"
-                                                    value={s.size ?? ''}
+                                                    value={s.size ?? ""}
                                                     onChange={(e) =>
                                                         handleChangeSize(variant._uiId, e.target.value, index)
                                                     }

@@ -1,5 +1,5 @@
-import { createOutputData } from '../../services/referenceCode.js';
-import { generateRandomReferenceCode } from '../../utils/generateReferenceCode.js';
+import { createOutputData } from "../../services/referenceCode.js";
+import { generateRandomReferenceCode } from "../../utils/generateReferenceCode.js";
 
 type Params = {
     userId: number;

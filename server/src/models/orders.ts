@@ -1,13 +1,13 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
-import type { PurchaseSnapshot } from '../types/purchaseSnapshot.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
+import type { PurchaseSnapshot } from "../types/purchaseSnapshot.js";
 
-import PaymentMethodOption from './payment_method_option.js';
-import Item from './item.js';
-import Delivery from './delivery.js';
-import User from './user.js';
-import Chat from './chat.js';
-import Cancel from './cancel.js';
+import PaymentMethodOption from "./payment_method_option.js";
+import Item from "./item.js";
+import Delivery from "./delivery.js";
+import User from "./user.js";
+import Chat from "./chat.js";
+import Cancel from "./cancel.js";
 
 export class Orders extends Model {
     declare id: number;
@@ -29,32 +29,32 @@ export class Orders extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
     declare order_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");
-    declare status: 'pending' | 'paid' | 'shipped' | 'completed' | 'cancelled' | 'returned';
+    declare status: "pending" | "paid" | "shipped" | "completed" | "cancelled" | "returned";
     declare purchase_snapshot: PurchaseSnapshot;
 
     static associate() {
         Orders.belongsTo(PaymentMethodOption, {
-            foreignKey: 'payment_method_id',
+            foreignKey: "payment_method_id",
         });
         Orders.belongsTo(Item, {
-            foreignKey: 'item_id',
+            foreignKey: "item_id",
         });
         Orders.belongsTo(User, {
-            foreignKey: 'seller_user_id',
-            as: 'Seller',
+            foreignKey: "seller_user_id",
+            as: "Seller",
         });
         Orders.belongsTo(User, {
-            foreignKey: 'buyer_user_id',
-            as: 'Buyer',
+            foreignKey: "buyer_user_id",
+            as: "Buyer",
         });
         Orders.hasOne(Delivery, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
         Orders.hasOne(Chat, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
         Orders.hasOne(Cancel, {
-            foreignKey: 'orders_id',
+            foreignKey: "orders_id",
         });
     }
 
@@ -96,9 +96,9 @@ Orders.init(
             unique: true,
         },
         status: {
-            type: DataTypes.ENUM('pending', 'paid', 'shipped', 'completed', 'cancelled', 'returned'),
+            type: DataTypes.ENUM("pending", "paid", "shipped", "completed", "cancelled", "returned"),
             allowNull: false,
-            defaultValue: 'pending',
+            defaultValue: "pending",
         },
         purchase_snapshot: {
             type: DataTypes.JSONB,
@@ -108,8 +108,8 @@ Orders.init(
     },
     {
         sequelize,
-        modelName: 'Orders',
-        tableName: 'orders',
+        modelName: "Orders",
+        tableName: "orders",
         freezeTableName: true,
         timestamps: true,
     },

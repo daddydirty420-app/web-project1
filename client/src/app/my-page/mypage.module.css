@@ -68,7 +68,7 @@
     color: var(--link-hover);
 }
 .profileLinkText::after {
-    content: ' →';
+    content: " →";
 }
 
 .uploadButton {
@@ -114,7 +114,7 @@
 .money {
     font-size: 18px;
     font-weight: 700;
-    font-feature-settings: 'tnum';
+    font-feature-settings: "tnum";
 }
 
 .linkElem {

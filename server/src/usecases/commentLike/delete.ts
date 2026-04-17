@@ -1,6 +1,6 @@
-import { destroyCommentLike, getCommentLikeOne } from '../../services/commentLike.js';
-import { AppError } from '../../errors.js';
-import { patchCommentSortNumberDecreaseUseCase } from '../comment/patchSortNumber.js';
+import { destroyCommentLike, getCommentLikeOne } from "../../services/commentLike.js";
+import { AppError } from "../../errors.js";
+import { patchCommentSortNumberDecreaseUseCase } from "../comment/patchSortNumber.js";
 
 type Params = {
     commentId: number;
@@ -12,7 +12,7 @@ export const deleteCommentLikeUseCase = async ({ commentId, userId }: Params) =>
     const data = await getCommentLikeOne({ commentId, userId });
 
     if (!data) {
-        throw new AppError('NOT_LIKE_COMMENT', 409, 'いいねしていません');
+        throw new AppError("NOT_LIKE_COMMENT", 409, "いいねしていません");
     }
 
     // CommentLike削除
@@ -22,6 +22,6 @@ export const deleteCommentLikeUseCase = async ({ commentId, userId }: Params) =>
     const number = 100;
 
     patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
-        console.error('usecase patchCommentSortNumberAdd error:', err);
+        console.error("usecase patchCommentSortNumberAdd error:", err);
     });
 };

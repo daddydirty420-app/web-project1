@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Rating, Star as RatingStar } from '@smastrom/react-rating';
-import '@smastrom/react-rating/style.css';
-import { useEffect, useState } from 'react';
+import { Rating, Star as RatingStar } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+import { useEffect, useState } from "react";
 
 type Props = {
     userId: string;
@@ -21,8 +21,8 @@ export const Star = ({ userId }: Props) => {
         const fetchData = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/star`, {
-                    method: 'GET',
-                    cache: 'no-store',
+                    method: "GET",
+                    cache: "no-store",
                 });
 
                 if (res.ok) {
@@ -44,8 +44,8 @@ export const Star = ({ userId }: Props) => {
             readOnly
             itemStyles={{
                 itemShapes: RatingStar,
-                activeFillColor: '#facc15',
-                inactiveFillColor: '#d5d7dc',
+                activeFillColor: "#facc15",
+                inactiveFillColor: "#d5d7dc",
             }}
         />
     );

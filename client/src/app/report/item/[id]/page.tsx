@@ -1,10 +1,10 @@
-import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
-import { Form } from '../../form';
-import ReportUI from '../../reportUI';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { Form } from "../../form";
+import ReportUI from "../../reportUI";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 type Props = {
     params: { id: string };
@@ -12,8 +12,8 @@ type Props = {
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: '報告する',
-        description: '利用規約違反や不愉快なコンテンツ等を報告できます。',
+        title: "報告する",
+        description: "利用規約違反や不愉快なコンテンツ等を報告できます。",
         robots: {
             index: false,
             follow: false,
@@ -27,9 +27,9 @@ export default async function Page({ params }: Props) {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get('access-token')?.value;
+    const accessToken = cookieStore.get("access-token")?.value;
 
-    if (!session || !accessToken) redirect('/login');
+    if (!session || !accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.API_URL}/item-report/all-options`);
 

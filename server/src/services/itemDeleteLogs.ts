@@ -1,5 +1,5 @@
-import { Transaction } from 'sequelize';
-import { ItemDeleteLogs } from '../models/index.js';
+import { Transaction } from "sequelize";
+import { ItemDeleteLogs } from "../models/index.js";
 
 type PerfectDeleteParams = {
     itemId: number;
@@ -13,7 +13,7 @@ export const createPerfectDelete = async ({ itemId, userId, transaction }: Perfe
             item_id: itemId,
             delete_user_id: userId,
             delete_by_admin: false,
-            delete_reason: '自主削除',
+            delete_reason: "自主削除",
         },
         { transaction },
     );

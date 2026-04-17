@@ -1,7 +1,7 @@
-import { Container, Title } from '@/components';
-import Header from '@/components/header/header';
-import Footer from '@/components/footer/footer';
-import { ReactNode } from 'react';
+import { Container, Title } from "@/components";
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
+import { ReactNode } from "react";
 
 type Props = {
     title: string;

@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import styles from '../lp.module.css';
+import Link from "next/link";
+import styles from "../lp.module.css";
 
 export const FooterSitemap = () => {
     return (

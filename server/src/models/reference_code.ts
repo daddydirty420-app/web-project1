@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class ReferenceCode extends Model {
     declare id: number;
@@ -15,12 +15,12 @@ export class ReferenceCode extends Model {
 
     static associate() {
         ReferenceCode.belongsTo(User, {
-            foreignKey: 'input_user_id',
-            as: 'InputUser',
+            foreignKey: "input_user_id",
+            as: "InputUser",
         });
         ReferenceCode.belongsTo(User, {
-            foreignKey: 'output_user_id',
-            as: 'OutputUser',
+            foreignKey: "output_user_id",
+            as: "OutputUser",
         });
     }
 
@@ -52,8 +52,8 @@ ReferenceCode.init(
     },
     {
         sequelize,
-        modelName: 'ReferenceCode',
-        tableName: 'reference_code',
+        modelName: "ReferenceCode",
+        tableName: "reference_code",
         freezeTableName: true,
         timestamps: true,
     },

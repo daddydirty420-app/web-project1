@@ -1,11 +1,11 @@
-import { Container } from '@/components';
-import { SignupForm } from './signup-form';
-import { Metadata } from 'next';
-import styles from '@/styles/login.module.css';
+import { Container } from "@/components";
+import { SignupForm } from "./signup-form";
+import { Metadata } from "next";
+import styles from "@/styles/login.module.css";
 
 export const metadata: Metadata = {
-    title: '会員登録',
-    description: '会員登録はこちら！',
+    title: "会員登録",
+    description: "会員登録はこちら！",
     robots: {
         index: false,
         follow: false,

@@ -1,7 +1,7 @@
-import { Model, DataTypes, Association } from 'sequelize';
-import sequelize from '../db.js';
+import { Model, DataTypes, Association } from "sequelize";
+import sequelize from "../db.js";
 
-import User from './user.js';
+import User from "./user.js";
 
 export class TokenSignupVerification extends Model {
     declare id: number;
@@ -15,7 +15,7 @@ export class TokenSignupVerification extends Model {
 
     static associate() {
         TokenSignupVerification.belongsTo(User, {
-            foreignKey: 'user_id',
+            foreignKey: "user_id",
         });
     }
 
@@ -57,8 +57,8 @@ TokenSignupVerification.init(
     },
     {
         sequelize,
-        modelName: 'TokenSignupVerification',
-        tableName: 'token_signup_verification',
+        modelName: "TokenSignupVerification",
+        tableName: "token_signup_verification",
         freezeTableName: true,
         timestamps: true,
     },

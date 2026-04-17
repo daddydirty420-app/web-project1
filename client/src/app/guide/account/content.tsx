@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { TitleAndBack, Accordion, AccordionGrid } from '@/components';
-import { GuideSubTitle, GuideSmall, GuideLink } from '@/components/guide';
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado, ListUlSecond, ListDiscSecond } from '@/components/list';
-import styles from '@/styles/guide.module.css';
-import clsx from 'clsx';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
+import { GuideSubTitle, GuideSmall, GuideLink } from "@/components/guide";
+import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado, ListUlSecond, ListDiscSecond } from "@/components/list";
+import styles from "@/styles/guide.module.css";
+import clsx from "clsx";
 
 export const Content = () => {
     return (
@@ -74,14 +74,14 @@ export const Content = () => {
                         プロフィール情報、アカウント情報は以下の内容を登録することができます。
                     </p>
 
-                    <p className={clsx('mt-6', styles.PHeading)}>プロフィール情報</p>
+                    <p className={clsx("mt-6", styles.PHeading)}>プロフィール情報</p>
                     <ListUl>
                         <ListCheck>プロフィール画像</ListCheck>
                         <ListCheck>ユーザーネーム</ListCheck>
                         <ListCheck>自己紹介文</ListCheck>
                     </ListUl>
 
-                    <p className={clsx('mt-6', styles.PHeading)}>アカウント情報</p>
+                    <p className={clsx("mt-6", styles.PHeading)}>アカウント情報</p>
                     <ListUl>
                         <ListCheck>氏名（漢字・カナ）</ListCheck>
                         <ListCheck>住所</ListCheck>

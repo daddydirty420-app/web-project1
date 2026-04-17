@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Item } from '../itemPageTypes';
-import styles from './peek.module.css';
+import Image from "next/image";
+import { Item } from "../itemPageTypes";
+import styles from "./peek.module.css";
 
 type Props = {
     item: Item;
@@ -10,10 +10,10 @@ type Props = {
 
 export const ItemPeek = ({ item }: Props) => {
     const handleScroll = () => {
-        const target = document.getElementById('itemName');
+        const target = document.getElementById("itemName");
         target?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
+            behavior: "smooth",
+            block: "start",
         });
     };
 
@@ -25,15 +25,15 @@ export const ItemPeek = ({ item }: Props) => {
                 <div className={styles.nameType}>
                     <p className={styles.name}>{item.name}</p>
 
-                    {(['men', 'women', 'unisex'].includes(item.gender_type) || item.age_type === 'kids') && (
+                    {(["men", "women", "unisex"].includes(item.gender_type) || item.age_type === "kids") && (
                         <div className={styles.typeRow}>
-                            {item.gender_type === 'men' && <span className={styles.typeText}>メンズ</span>}
-                            {item.gender_type === 'women' && <span className={styles.typeText}>レディース</span>}
-                            {item.gender_type === 'unisex' && <span className={styles.typeText}>ユニセックス</span>}
+                            {item.gender_type === "men" && <span className={styles.typeText}>メンズ</span>}
+                            {item.gender_type === "women" && <span className={styles.typeText}>レディース</span>}
+                            {item.gender_type === "unisex" && <span className={styles.typeText}>ユニセックス</span>}
 
-                            {item.age_type === 'kids' && (
+                            {item.age_type === "kids" && (
                                 <>
-                                    {['men', 'women', 'unisex'].includes(item.gender_type) && (
+                                    {["men", "women", "unisex"].includes(item.gender_type) && (
                                         <span className={styles.typeText}>/</span>
                                     )}
                                     <span className={styles.typeText}>キッズ</span>
@@ -46,9 +46,9 @@ export const ItemPeek = ({ item }: Props) => {
 
             <p
                 className={`${styles.price}
-            ${item.status === 'soldout' ? `${styles.sold}` : ''}`}
+            ${item.status === "soldout" ? `${styles.sold}` : ""}`}
             >
-                {item.status === 'soldout' ? 'SOLD OUT' : `￥${item.price.toLocaleString()}`}
+                {item.status === "soldout" ? "SOLD OUT" : `￥${item.price.toLocaleString()}`}
             </p>
         </section>
     );

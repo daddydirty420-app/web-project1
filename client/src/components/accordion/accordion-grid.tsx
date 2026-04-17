@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import styles from './styles/accordion-grid.module.css';
+import { ReactNode } from "react";
+import styles from "./styles/accordion-grid.module.css";
 
 type AccordionGridProps = {
     children: ReactNode;

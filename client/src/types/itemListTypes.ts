@@ -1,4 +1,4 @@
-import type { ItemAttributes } from './itemAttributes';
+import type { ItemAttributes } from "./itemAttributes";
 
 export type Brand = {
     id: string;
@@ -10,8 +10,8 @@ export type Categories = {
     name: string;
     level: number;
     parent?: Categories | null;
-    allowed_gender: 'men' | 'women' | 'both';
-    allowed_age: 'adult' | 'kids' | 'both';
+    allowed_gender: "men" | "women" | "both";
+    allowed_age: "adult" | "kids" | "both";
 };
 
 export type User = {
@@ -36,9 +36,9 @@ export type Items = {
     id: string;
     name: string;
     price: number;
-    gender_type: 'men' | 'women' | 'unisex';
-    age_type: 'adult' | 'kids' | 'both';
-    status: 'editing' | 'draft' | 'active' | 'hidden' | 'soldout' | 'deleted';
+    gender_type: "men" | "women" | "unisex";
+    age_type: "adult" | "kids" | "both";
+    status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     uploaded_at: Date;
     seller_id: string;
     first_image_url: string;

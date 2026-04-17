@@ -1,10 +1,10 @@
-import { Metadata } from 'next';
-import { ItemPage } from '../../itemPage';
-import { Item } from '../../itemPageTypes';
-import { notFound, redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { cookies } from 'next/headers';
+import { Metadata } from "next";
+import { ItemPage } from "../../itemPage";
+import { Item } from "../../itemPageTypes";
+import { notFound, redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 type Props = {
     params: { id: string };
@@ -13,8 +13,8 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
-        method: 'GET',
-        cache: 'no-store',
+        method: "GET",
+        cache: "no-store",
     });
 
     const data = await res.json();
@@ -35,13 +35,13 @@ export default async function Page({ params }: Props) {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get('access-token')?.value;
+    const accessToken = cookieStore.get("access-token")?.value;
 
     if (!accessToken || !session) redirect(`/item/${id}`);
 
     const res = await fetch(`${process.env.API_URL}/item-page-admin/${id}`, {
-        method: 'GET',
-        cache: 'no-store',
+        method: "GET",
+        cache: "no-store",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -67,7 +67,7 @@ export default async function Page({ params }: Props) {
             commentCount={commentCount}
             likeCount={likeCount}
             reportCount={reportCount}
-            userId={userId || ''}
+            userId={userId || ""}
             loggedIn
         />
     );

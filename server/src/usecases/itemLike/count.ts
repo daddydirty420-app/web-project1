@@ -1,4 +1,4 @@
-import { countItemLike } from '../../services/itemLike.js';
+import { countItemLike } from "../../services/itemLike.js";
 
 type Params = {
     itemId: number;
