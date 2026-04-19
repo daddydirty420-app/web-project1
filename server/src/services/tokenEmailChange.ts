@@ -1,4 +1,9 @@
+import { Op } from "sequelize";
 import { TokenEmailChange } from "../models/index.js";
+
+type TokenParams = {
+    token: string;
+};
 
 type TokenCreateParams = {
     data: {
@@ -7,6 +12,15 @@ type TokenCreateParams = {
         user_id: number;
         new_email: string;
     };
+};
+
+export const getTokenEmailChangeOne = ({ token }: TokenParams) => {
+    return TokenEmailChange.findOne({
+        where: {
+            token_hash: token,
+            expires_at: { [Op.gt]: new Date() },
+        },
+    });
 };
 
 export const createTokenEmailChange = async ({ data }: TokenCreateParams) => {

@@ -7,8 +7,6 @@ import { useState } from "react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
-import { sleep } from "../../../lib/sleep";
-import { useRouter } from "next/navigation";
 
 type Props = {
     session: Session | null;
@@ -16,8 +14,6 @@ type Props = {
 
 export const EmailEditForm = ({ session }: Props) => {
     const [value, setValue] = useState(session?.user.email || "");
-
-    const router = useRouter();
 
     const submit = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,13 +57,9 @@ export const EmailEditForm = ({ session }: Props) => {
                 return;
             }
 
-            toast.success("メールアドレスを変更しました");
+            toast.success("新しいメールアドレスにメールを送信しました");
             console.log(data.message);
             setValue("");
-
-            await sleep(1500);
-
-            router.push("/my-page");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);
@@ -88,7 +80,7 @@ export const EmailEditForm = ({ session }: Props) => {
             <Button onClick={submit}>登録する</Button>
 
             <p className={styles.textBottomSmall}>
-                ※ボタンをクリックすると、新しいメールアドレスに本登録URLを記載したメールを送信いたします。こちらのページでメールアドレスの変更が完了するわけではございません。
+                ※ボタンをクリックすると、新しいメールアドレスに本登録URLを記載したメールを送信いたします。メールが送信されない場合、再度新しいメールアドレスを入力して登録するボタンを押してください。
             </p>
         </EditUI>
     );

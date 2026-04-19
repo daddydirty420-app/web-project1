@@ -5,7 +5,7 @@ import { getItemFormData } from "../../../services/items/index.js";
 import { findAllShippingDay } from "../../../services/shippingDay.js";
 import { findAllShippingService } from "../../../services/shippingService.js";
 import { getAllTodouhuken } from "../../../services/todouhuken.js";
-import { getHasShop } from "../../../services/users/query.js";
+import { getUserHasShop } from "../../../services/users/query.js";
 
 type Params = {
     itemId: number;
@@ -25,7 +25,7 @@ export const getFormDataUseCase = async ({ itemId }: Params) => {
         findAllShippingDay(),
         findAllShippingService(),
         getAllTodouhuken(),
-        getHasShop({ userId: item.seller_id }),
+        getUserHasShop({ userId: item.seller_id }),
     ]);
 
     const hasShop = !!userHasShop.ShopInfo;

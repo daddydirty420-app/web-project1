@@ -1,7 +1,7 @@
+import crypto from "crypto";
 import { AppError } from "../../errors.js";
 import { createTokenEmailChange } from "../../services/tokenEmailChange.js";
 import { getUser } from "../../services/users/query.js";
-import crypto from "crypto";
 
 type Params = {
     userId: number;

@@ -1,10 +1,10 @@
-import crypto from "crypto";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, TokenEmailChange, User } from "../models/index.js";
+import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
 import { rehashPasswordUseCase } from "../usecases/auth/rehashPassword.js";
@@ -14,7 +14,7 @@ import { resetPWUseCase } from "../usecases/auth/resetPW.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
-import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
+import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
 
 const router = Router();
 
@@ -198,46 +198,12 @@ router.patch("/email", authenticateToken, async (req: Request, res: Response, ne
     }
 });
 
-router.patch("/new-email-change", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const token = req.query.token;
+// PATCH /auth/new-email
+router.patch("/new-email", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const token = String(req.query.token);
 
     try {
-        const emailTokenData = await TokenEmailChange.findOne({
-            where: {
-                token_hash: token,
-                expires_at: { [Op.gt]: new Date() },
-            },
-        });
-        if (!emailTokenData) {
-            res.status(404).json({ message: "新しいメールアドレスデータが見つかりません。" });
-            return;
-        }
-
-        const userId = emailTokenData.user_id;
-
-        const user = await User.findByPk(userId, {
-            include: [
-                {
-                    model: ShopInfo,
-                    where: { verified: true },
-                    required: false,
-                },
-            ],
-        });
-        if (!user) {
-            res.status(404).json({ message: "ユーザーが見つかりません。" });
-            return;
-        }
-
-        const hasShop = !!user.ShopInfo;
-
-        const newEmail = emailTokenData.new_email;
-
-        await user.update({ email: newEmail });
-
-        if (hasShop) {
-            await user.ShopInfo.update({ email: newEmail });
-        }
+        await changeNewEmailUseCase({ token });
 
         res.status(200).json({ message: "メールアドレスを更新しました。" });
     } catch (err) {

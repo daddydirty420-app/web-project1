@@ -33,3 +33,11 @@ export type UpdatePasswordParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateEmailParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        email: string;
+    };
+    transaction?: Transaction;
+};

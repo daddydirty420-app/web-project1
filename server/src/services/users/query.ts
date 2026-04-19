@@ -60,11 +60,12 @@ export const getProfileUser = ({ userId }: UserIdParams) => {
     });
 };
 
-export const getHasShop = async ({ userId }: UserIdParams) => {
+export const getUserHasShop = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [
             {
                 model: ShopInfo,
+                where: { verified: true },
                 required: false,
             },
         ],
