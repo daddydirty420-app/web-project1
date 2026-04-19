@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
@@ -8,6 +7,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { ShopInfo, TokenEmailChange, User } from "../models/index.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
+import { rehashPasswordUseCase } from "../usecases/auth/rehashPassword.js";
 import { requestPasswordResetUseCase } from "../usecases/auth/requestPasswordReset.js";
 import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificationCode.js";
 import { resetPWUseCase } from "../usecases/auth/resetPW.js";
@@ -166,23 +166,19 @@ router.post("/refresh-token", async (req: Request, res: Response, next: NextFunc
     }
 });
 
+// ここから仕様書まだ！
 // POST /auth/rehash-password
 router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const email = req.body.email?.trim();
     const plainPassword = req.body.password?.trim();
 
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-        res.status(404).json({ message: "ユーザーが見つかりません。" });
-        return;
+    try {
+        await rehashPasswordUseCase({ email, plainPassword });
+
+        res.status(200).json({ message: "パスワードをハッシュ化して保存しました！" });
+    } catch (err) {
+        next(err);
     }
-
-    const hashed = await bcrypt.hash(plainPassword, 10);
-
-    user.password = hashed;
-    await user.save();
-
-    res.json({ message: "パスワードをハッシュ化して保存しました！" });
 });
 
 // PATCH /auth/email
