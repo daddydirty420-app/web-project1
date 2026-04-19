@@ -1,12 +1,12 @@
 "use client";
 
-import styles from "../edit.module.css";
-import { InputStr, Button } from "@/components/inputForm";
-import EditUI from "../editUI";
-import { useState } from "react";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
+import { Button, InputStr } from "@/components/inputForm";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { Session } from "next-auth";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import styles from "../edit.module.css";
+import EditUI from "../editUI";
 
 type Props = {
     session: Session | null;
@@ -50,7 +50,7 @@ export const EmailEditForm = ({ session }: Props) => {
 
             if (!res.ok) {
                 if (res.status === 400) {
-                    toast.error("現在と異なるメールアドレスを入力してください")
+                    toast.error("現在と異なるメールアドレスを入力してください");
                 } else {
                     toast.error("メールアドレスの変更に失敗しました。");
                 }

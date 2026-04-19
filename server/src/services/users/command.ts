@@ -1,5 +1,10 @@
 import { User } from "../../models/index.js";
-import { CreateUserParams, EmailVerifyParams, UpdateEmailParams, UpdatePasswordParams } from "../../types/serviceType/users.js";
+import {
+    CreateUserParams,
+    EmailVerifyParams,
+    UpdateEmailParams,
+    UpdatePasswordParams,
+} from "../../types/serviceType/users.js";
 
 export const createUser = ({ data, transaction }: CreateUserParams) => {
     return User.create(data, { transaction });
