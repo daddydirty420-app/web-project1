@@ -30,7 +30,7 @@ export const EmailEditForm = ({ session }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/email-edit`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/email`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

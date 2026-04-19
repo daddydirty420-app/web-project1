@@ -185,57 +185,43 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
     res.json({ message: "パスワードをハッシュ化して保存しました！" });
 });
 
-router.post(
-    "/check-token",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        res.status(200).json({
-            valid: true,
-            userId: req.user!.id,
-        });
-    },
-);
+// PATCH /auth/email
+router.patch("/email", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+    const newEmail = req.body.email;
 
-router.patch(
-    "/email-edit",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const newEmail = req.body.email;
-
-        try {
-            const user = await User.findByPk(userId);
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-            if (newEmail === user.email) {
-                res.status(400).json({ message: "現在と異なるメールアドレスを入力してください。" });
-                return;
-            }
-
-            const token = crypto.randomBytes(20).toString("hex");
-            const tokenExpires = new Date(Date.now() + 30 * 60 * 1000);
-
-            await TokenEmailChange.create({
-                token_hash: token,
-                expires_at: tokenExpires,
-                user_id: userId,
-                new_email: newEmail,
-            });
-
-            const url = `${process.env.CLIENT_URL}/edit/email/new-email/${token}`;
-
-            // メール送信処理
-
-            res.status(200).json({
-                message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
-            });
-        } catch (err) {
-            next(err);
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            res.status(404).json({ message: "ユーザーが見つかりません。" });
+            return;
         }
-    },
-);
+        if (newEmail === user.email) {
+            res.status(400).json({ message: "現在と異なるメールアドレスを入力してください。" });
+            return;
+        }
+
+        const token = crypto.randomBytes(20).toString("hex");
+        const tokenExpires = new Date(Date.now() + 30 * 60 * 1000);
+
+        await TokenEmailChange.create({
+            token_hash: token,
+            expires_at: tokenExpires,
+            user_id: userId,
+            new_email: newEmail,
+        });
+
+        const url = `${process.env.CLIENT_URL}/edit/email/new-email/${token}`;
+
+        // メール送信処理
+
+        res.status(200).json({
+            message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.patch("/new-email-change", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const token = req.query.token;
@@ -284,16 +270,8 @@ router.patch("/new-email-change", async (req: Request, res: Response, next: Next
     }
 });
 
-router.get("/check-token", authenticateToken, (req: Request, res: Response, next: NextFunction): void => {
-    res.status(200).json({ message: "トークン有効", user: req.user });
-});
-
-router.get("/check-cookies", (req: Request, res: Response, next: NextFunction): void => {
-    res.status(200).json(req.cookies);
-});
-
 router.get("/status", authenticateToken, (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({ loggedIn: true, user: req.user });
+    res.status(200).json({ message: "トークン有効", loggedIn: true, user: req.user });
 });
 
 export default router;
