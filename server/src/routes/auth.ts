@@ -1,11 +1,10 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op } from "sequelize";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfo, TokenEmailChange, User } from "../models/index.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
 import { loginUseCase } from "../usecases/auth/login.js";
+import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
 import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
 import { rehashPasswordUseCase } from "../usecases/auth/rehashPassword.js";
 import { requestPasswordResetUseCase } from "../usecases/auth/requestPasswordReset.js";
@@ -14,7 +13,6 @@ import { resetPWUseCase } from "../usecases/auth/resetPW.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
-import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
 
 const router = Router();
 
@@ -167,7 +165,6 @@ router.post("/refresh-token", async (req: Request, res: Response, next: NextFunc
     }
 });
 
-// ここから仕様書まだ！
 // POST /auth/rehash-password
 router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const email = req.body.email?.trim();
