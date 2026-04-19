@@ -7,6 +7,8 @@ import { useState } from "react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
+import { useRouter } from "next/navigation";
 
 type Props = {
     session: Session | null;
@@ -15,10 +17,17 @@ type Props = {
 export const EmailEditForm = ({ session }: Props) => {
     const [value, setValue] = useState(session?.user.email || "");
 
+    const router = useRouter();
+
     const submit = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
             toast.error("正しいメールアドレスの形式で入力してください。");
+            return;
+        }
+
+        if (value === session?.user.email) {
+            toast.error("現在と異なるメールアドレスを入力してください");
             return;
         }
 
@@ -44,13 +53,21 @@ export const EmailEditForm = ({ session }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("メールアドレスの変更に失敗しました。");
-                console.error(data.message);
+                if (res.status === 400) {
+                    toast.error("現在と異なるメールアドレスを入力してください")
+                } else {
+                    toast.error("メールアドレスの変更に失敗しました。");
+                }
                 return;
             }
 
-            toast.success(data.message);
+            toast.success("メールアドレスを変更しました");
+            console.log(data.message);
             setValue("");
+
+            await sleep(1500);
+
+            router.push("/my-page");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
             console.error(err);

@@ -14,6 +14,7 @@ import { resetPWUseCase } from "../usecases/auth/resetPW.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
+import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
 
 const router = Router();
 
@@ -187,29 +188,7 @@ router.patch("/email", authenticateToken, async (req: Request, res: Response, ne
     const newEmail = req.body.email;
 
     try {
-        const user = await User.findByPk(userId);
-        if (!user) {
-            res.status(404).json({ message: "ユーザーが見つかりません。" });
-            return;
-        }
-        if (newEmail === user.email) {
-            res.status(400).json({ message: "現在と異なるメールアドレスを入力してください。" });
-            return;
-        }
-
-        const token = crypto.randomBytes(20).toString("hex");
-        const tokenExpires = new Date(Date.now() + 30 * 60 * 1000);
-
-        await TokenEmailChange.create({
-            token_hash: token,
-            expires_at: tokenExpires,
-            user_id: userId,
-            new_email: newEmail,
-        });
-
-        const url = `${process.env.CLIENT_URL}/edit/email/new-email/${token}`;
-
-        // メール送信処理
+        await changeEmailUseCase({ userId, newEmail });
 
         res.status(200).json({
             message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
