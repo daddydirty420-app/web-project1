@@ -16,15 +16,18 @@ export const VerifyForm = () => {
     const router = useRouter();
 
     const handleSubmit = async () => {
-        if (!code || code === "") {
+        const trimCode = code.trim();
+        if (!trimCode || trimCode === "") {
             toast.error("認証コードを入力してください。");
             return;
         }
         setLoading(true);
 
+        const trimReferenceCode = referenceCode.trim();
+
         try {
             const res = await signIn("verify", {
-                verificationCode: code,
+                verificationCode: trimCode,
                 rememberMe,
                 redirect: false,
             });
@@ -33,7 +36,7 @@ export const VerifyForm = () => {
                 const refRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference_code/input`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ input: referenceCode }),
+                    body: JSON.stringify({ input: trimReferenceCode }),
                 });
 
                 if (!refRes.ok) {

@@ -22,8 +22,16 @@ export const SignupForm = () => {
             return;
         }
 
-        const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        if (!regex.test(password)) {
+        const trimEmail = email.trim();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimEmail)) {
+            toast.error("正しいメールアドレスの形式で入力してください。");
+            return;
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください。");
             return;
         }
@@ -34,7 +42,10 @@ export const SignupForm = () => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({
+                    email: trimEmail,
+                    password
+                }),
             });
 
             const data = await res.json();

@@ -16,13 +16,15 @@ export const EmailEditForm = ({ session }: Props) => {
     const [value, setValue] = useState(session?.user.email || "");
 
     const submit = async () => {
+        const trimEmail = value.trim();
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
+        if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください。");
             return;
         }
 
-        if (value === session?.user.email) {
+        if (trimEmail === session?.user.email) {
             toast.error("現在と異なるメールアドレスを入力してください");
             return;
         }
@@ -42,7 +44,7 @@ export const EmailEditForm = ({ session }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
-                    email: value,
+                    email: trimEmail,
                 }),
             });
 

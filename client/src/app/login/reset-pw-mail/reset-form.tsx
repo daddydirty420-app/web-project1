@@ -8,11 +8,20 @@ export const ResetForm = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = async () => {
+
+        const trimEmail = email.trim();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimEmail)) {
+            toast.error("正しいメールアドレスの形式で入力してください。");
+            return;
+        }
+
         try {
             await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email: trimEmail }),
             });
 
             toast.success("メールを送信しました");

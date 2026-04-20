@@ -7,15 +7,15 @@ import { outputReferenceCodeUseCase } from "../usecases/referenceCode/output.js"
 const router = Router();
 
 router.post("/input", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const input = req.body;
+    const currentUserId = req.user!.id;
+        
+    if (!input) {
+        res.status(400).json({ message: "紹介コードがありません。" });
+        return;
+    }
+    
     try {
-        const { input } = req.body;
-        const currentUserId = req.user!.id;
-
-        if (!input) {
-            res.status(400).json({ message: "紹介コードがありません。" });
-            return;
-        }
-
         const newRecord = await ReferenceCode.create({
             input,
             output: null,

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
-import styles from "@/styles/login.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
 import { sleep } from "@/lib/sleep";
+import styles from "@/styles/login.module.css";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const LoginForm = () => {
     const [visible, setVisible] = useState(false);
@@ -20,22 +20,35 @@ export const LoginForm = () => {
     const handleSubmit = async () => {
         setLoading(true);
 
-        const res = await signIn("credentials", {
-            redirect: false,
-            email,
-            password,
-            rememberMe: rememberMe ? "true" : "false",
-        });
+        const trimEmail = email.trim();
 
-        setLoading(false);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimEmail)) {
+            toast.error("正しいメールアドレスの形式で入力してください。");
+            return;
+        }
 
-        if (res?.error) {
-            toast.error("メールアドレスまたはパスワードが正しくありません。");
-        } else if (res?.ok) {
-            toast.success("ログインしました");
+        try {
+            const res = await signIn("credentials", {
+                redirect: false,
+                email: trimEmail,
+                password,
+                rememberMe: rememberMe ? "true" : "false",
+            });
 
-            await sleep(1200);
-            router.push("/my-page");
+            setLoading(false);
+
+            if (res?.error) {
+                toast.error("メールアドレスまたはパスワードが正しくありません。");
+            } else if (res?.ok) {
+                toast.success("ログインしました");
+
+                await sleep(1200);
+                router.push("/my-page");
+            }
+        } catch (err) {
+            console.error("login error:", err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 
