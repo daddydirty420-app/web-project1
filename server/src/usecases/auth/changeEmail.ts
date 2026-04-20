@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { AppError } from "../../errors.js";
 import { createTokenEmailChange } from "../../services/tokenEmailChange.js";
-import { getUser } from "../../services/users/query.js";
+import { getAllEmail, getUser } from "../../services/users/query.js";
 
 type Params = {
     userId: number;
@@ -14,6 +14,11 @@ export const changeEmailUseCase = async ({ userId, newEmail }: Params) => {
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
     if (newEmail === user.email) throw new AppError("INVALID_EMAIL", 400);
+
+    // メールアドレス被りチェック
+    const emailUser = await getAllEmail({ email: newEmail });
+
+    if (emailUser.length > 0) throw new AppError("ALREADY_USED_EMAIL", 400);
 
     // トークン発行
     const token = crypto.randomBytes(20).toString("hex");

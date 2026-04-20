@@ -186,8 +186,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
     if (err instanceof AppError) {
         return res.status(err.statusCode).json({
-            error: err.code,
-            message: err.publicMessage ?? undefined,
+            code: err.code,
+            message: err.publicMessage ?? err.code,
         });
     }
 

@@ -49,10 +49,15 @@ export const EmailEditForm = ({ session }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                if (res.status === 400) {
-                    toast.error("現在と異なるメールアドレスを入力してください");
-                } else {
-                    toast.error("メールアドレスの変更に失敗しました。");
+                switch (data.code) {
+                    case "INVALID_EMAIL":
+                        toast.error("現在と異なるメールアドレスを入力してください");
+                        break;
+                    case "ALREADY_USED_EMAIL":
+                        toast.error("このメールアドレスは既に使用されています");
+                        break;
+                    default:
+                        toast.error("メールアドレスの変更に失敗しました");
                 }
                 return;
             }

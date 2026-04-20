@@ -74,6 +74,13 @@ export const getUserHasShop = async ({ userId }: UserIdParams) => {
 
 export const getUserEmailOne = ({ email }: EmailParams) => {
     return User.findOne({
-        where: { email: email },
+        where: { email },
     });
+};
+
+// メールアドレス被りチェック
+export const getAllEmail = ({ email }: EmailParams) => {
+    return User.findAll({
+        where: { email },
+    })
 };
