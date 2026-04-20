@@ -208,6 +208,7 @@ router.patch("/new-email", async (req: Request, res: Response, next: NextFunctio
     }
 });
 
+// GET /auth/status
 router.get("/status", authenticateToken, (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "トークン有効", loggedIn: true, user: req.user });
 });

@@ -170,7 +170,7 @@
 
 ---
 
-## POST /auth/rehash-password — パスワード再ハッシュ化
+## PATCH /auth/rehash-password — パスワード再ハッシュ化
 
 ### リクエスト
 
@@ -186,7 +186,7 @@
 
 ---
 
-## POST /auth/email — メールアドレス更新トークン作成
+## PATCH /auth/email — メールアドレス更新トークン作成
 
 ### リクエスト
 
@@ -202,7 +202,7 @@
 
 ---
 
-## POST /auth/new-email — メールアドレス更新
+## PATCH /auth/new-email — メールアドレス更新
 
 ### リクエスト
 
