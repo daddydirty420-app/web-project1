@@ -151,24 +151,28 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
     }, [branchQuery, bankCode, account, isSelectingBranch]);
 
     const submit = async () => {
-        if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
+        const bankTrim = bankQuery.trim();
+        const branchTrim = branchQuery.trim();
+        const accountNumberTrim = accountNumber.trim();
+
+        if (!bankTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi.trim()) {
             toast.error("空の項目があります。");
             return;
         }
 
-        if (!/^[0-9]{5,7}$/.test(accountNumber)) {
+        if (!/^[0-9]{5,7}$/.test(accountNumberTrim)) {
             toast.error("口座番号は5〜7桁の半角数字で入力してください。");
             return;
         }
 
         const body = {
-            bankName: bankQuery.trim(),
-            bankCode: bankCode,
-            branch: branchQuery.trim(),
-            branchCode: branchCode,
+            bankName: bankTrim,
+            bankCode: bankCode.trim(),
+            branch: branchTrim,
+            branchCode: branchCode.trim(),
             accountType: accountType,
-            accountNumber: accountNumber.padStart(7, "0"),
-            meigi: meigi.trim(),
+            accountNumber: accountNumberTrim.padStart(7, "0"),
+            meigi: meigi,
         };
 
         try {
@@ -202,7 +206,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/account-edit/${account.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/${account.id}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

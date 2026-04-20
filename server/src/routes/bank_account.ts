@@ -1,84 +1,87 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import { BankAccount, AccountTypeOption, Banks, Branches } from "../models/index.js";
 import { Op, literal } from "sequelize";
 import sequelize from "../db.js";
+import { AppError } from "../errors.js";
+import { authenticateToken } from "../middleware/index.js";
+import { AccountTypeOption, BankAccount, Banks, Branches } from "../models/index.js";
+import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
 
 const router = Router();
 
-router.post(
-    "/account-edit/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const { bankName, branch, accountType, accountNumber, meigi } = req.body;
-        if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
-            res.status(400).json({ message: "未入力項目があります。" });
+// POST /bank-account/:id
+router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { bankName, branch, accountType, accountNumber, meigi } = req.body;
+
+    const bankNameTrim = bankName.trim();
+    const branchTrim = branch.trim();
+    const accountNumberTrim = accountNumber.trim();
+
+    if (!bankNameTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi) {
+        throw new AppError("INVALID_QUERY", 400, "未入力項目があります");
+    }
+
+    try {
+        const matchedBank = await Banks.findOne({
+            where: {
+                [Op.or]: [
+                    { name: bankName },
+                    sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
+                ],
+            },
+        });
+        if (!matchedBank) {
+            res.status(400).json({ message: "指定された銀行名が存在しません。" });
             return;
         }
 
-        try {
-            const matchedBank = await Banks.findOne({
-                where: {
-                    [Op.or]: [
-                        { name: bankName },
-                        sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
-                    ],
-                },
-            });
-            if (!matchedBank) {
-                res.status(400).json({ message: "指定された銀行名が存在しません。" });
-                return;
-            }
-
-            const matchedBranch = await Branches.findOne({
-                where: {
-                    bank_code: matchedBank.code,
-                    [Op.or]: [
-                        { name: branch },
-                        sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
-                    ],
-                },
-            });
-            if (!matchedBranch) {
-                res.status(400).json({ message: "指定された支店名が存在しません。" });
-                return;
-            }
-
-            const account = await BankAccount.findByPk(req.params.id);
-            if (!account) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            const accountTypeData = await AccountTypeOption.findOne({
-                where: { name: accountType },
-            });
-            if (!accountTypeData) {
-                res.status(400).json({ message: "口座種別が無効な値です。" });
-                return;
-            }
-
-            await account.update({
+        const matchedBranch = await Branches.findOne({
+            where: {
                 bank_code: matchedBank.code,
-                bank_name: matchedBank.normalize?.name || matchedBank.name,
-                branch_code: matchedBranch.code,
-                branch: matchedBranch.normalize?.name || matchedBranch.name,
-                account_type_id: accountTypeData.id,
-                account_number: accountNumber,
-                meigi: meigi,
-            });
-
-            res.status(200).json({ message: "口座情報を更新しました。" });
-        } catch (err) {
-            next(err);
+                [Op.or]: [
+                    { name: branch },
+                    sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
+                    sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
+                ],
+            },
+        });
+        if (!matchedBranch) {
+            res.status(400).json({ message: "指定された支店名が存在しません。" });
+            return;
         }
-    },
-);
+
+        const account = await BankAccount.findByPk(req.params.id);
+        if (!account) {
+            res.status(404).json({ message: "データが見つかりません。" });
+            return;
+        }
+
+        const accountTypeData = await AccountTypeOption.findOne({
+            where: { name: accountType },
+        });
+        if (!accountTypeData) {
+            res.status(400).json({ message: "口座種別が無効な値です。" });
+            return;
+        }
+
+        await account.update({
+            bank_code: matchedBank.code,
+            bank_name: matchedBank.normalize?.name || matchedBank.name,
+            branch_code: matchedBranch.code,
+            branch: matchedBranch.normalize?.name || matchedBranch.name,
+            account_type_id: accountTypeData.id,
+            account_number: accountNumber,
+            meigi: meigi,
+        });
+
+        res.status(200).json({ message: "口座情報を更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get("/search-bank-name", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const keyword = (req.query.keyword as string)?.trim() ?? "";
@@ -171,27 +174,12 @@ router.get("/search-branch", async (req: Request, res: Response, next: NextFunct
     }
 });
 
+// GET /bank-account/myaccount
 router.get("/myaccount", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await BankAccount.findOne({
-            attributes: [
-                "id",
-                "bank_name",
-                "branch",
-                "account_type_id",
-                "account_number",
-                "meigi",
-                "bank_code",
-                "branch_code",
-            ],
-            where: { user_id: req.user!.id },
-            include: [{ model: AccountTypeOption }],
-        });
+    const userId = req.user!.id;
 
-        if (!data) {
-            res.status(404).json({ message: "口座情報が見つかりません。" });
-            return;
-        }
+    try {
+        const data = await getMyAccountUseCase({ userId });
 
         res.status(200).json({ data });
     } catch (err) {
