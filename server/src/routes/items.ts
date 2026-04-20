@@ -42,11 +42,6 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
     }
 });
 
-const foo = {
-    name: "test",
-    age: 20,
-};
-
 // POST /items/:id/copy-upload
 router.post(
     "/:id/copy-upload",

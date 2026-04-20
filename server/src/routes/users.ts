@@ -8,12 +8,14 @@ import { getProfileUseCase } from "../usecases/user/getProfile.js";
 
 const router = Router();
 
+// GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    res.json({ currentUserId: req.user?.id ?? null });
+    res.status(200).json({ currentUserId: req.user?.id ?? null });
 });
 
+// GET /user/me-admin
 router.get("/me-admin", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    res.json({ admin: !!req.user!.admin });
+    res.status(200).json({ admin: !!req.user!.admin });
 });
 
 // GET /:id/profile

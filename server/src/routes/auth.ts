@@ -19,15 +19,20 @@ const router = Router();
 // POST /auth/login
 router.post("/login", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password, rememberMe } = req.body;
+    const emailTrim = email.trim();
 
-    if (!email) {
+    if (!emailTrim) {
         throw new AppError("INVALID_EMAIL", 400, "メールアドレスがありません。");
     } else if (!password) {
         throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
     }
 
     try {
-        const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({ email, password, rememberMe });
+        const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
+            email: emailTrim,
+            password,
+            rememberMe,
+        });
 
         res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
@@ -58,10 +63,17 @@ router.post("/set-cookie", async (req: Request, res: Response, next: NextFunctio
 // POST /auth/signup
 router.post("/signup", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password } = req.body;
+    const emailTrim = email.trim();
+
+    if (!emailTrim) {
+        throw new AppError("INVALID_EMAIL", 400, "メールアドレスがありません。");
+    } else if (!password) {
+        throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
+    }
 
     try {
         const { expiresAt, reissueUrl } = await signupUseCase({
-            email,
+            email: emailTrim,
             password,
         });
 
@@ -99,6 +111,8 @@ router.post("/resend-verification-code", async (req: Request, res: Response, nex
 // POST /auth/signup-verify
 router.post("/signup-verify", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { verificationCode, rememberMe, referenceCode } = req.body;
+    
+    if (!verificationCode) throw new AppError("INVALID_CODE", 400);
 
     try {
         const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
@@ -123,7 +137,9 @@ router.post("/signup-verify", async (req: Request, res: Response, next: NextFunc
 
 // POST /auth/request-password-reset
 router.post("/request-password-reset", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { email } = req.body;
+    const email = req.body.email.trim();
+
+    if (!email) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         await requestPasswordResetUseCase({ email });
@@ -183,7 +199,7 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 // PATCH /auth/email
 router.patch("/email", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
-    const newEmail = req.body.email;
+    const newEmail = req.body.email.trim();
 
     try {
         await changeEmailUseCase({ userId, newEmail });
