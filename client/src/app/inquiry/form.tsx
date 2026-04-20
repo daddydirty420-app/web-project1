@@ -59,9 +59,6 @@ export const Form = ({ user }: Props) => {
             setLoading(true);
 
             const accessToken = await getAccessToken();
-            console.log("accessToken:", accessToken); 
-
-            console.log("API_URL:", process.env.NEXT_PUBLIC_API_URL);
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiry`, {
                 method: "POST",

@@ -88,5 +88,5 @@ export const getUserEmailOne = ({ email }: EmailParams) => {
 export const getAllEmail = ({ email }: EmailParams) => {
     return User.findAll({
         where: { email },
-    })
+    });
 };

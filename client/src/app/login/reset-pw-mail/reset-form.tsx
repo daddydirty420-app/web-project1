@@ -8,7 +8,6 @@ export const ResetForm = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = async () => {
-
         const trimEmail = email.trim();
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

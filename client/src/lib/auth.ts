@@ -59,7 +59,7 @@ export const authOptions: NextAuthOptions = {
             credentials: {
                 verificationCode: { label: "verificationCode", type: "text" },
                 rememberMe: { label: "RememberMe", type: "checkbox" },
-                referenceCode: { label: "referenceCode" , type: "string" },
+                referenceCode: { label: "referenceCode", type: "string" },
             },
             async authorize(credentials): Promise<AuthUser | null> {
                 if (!credentials?.verificationCode) return null;
