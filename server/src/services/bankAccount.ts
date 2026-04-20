@@ -1,15 +1,8 @@
-import { Transaction } from "sequelize";
 import { AccountTypeOption, BankAccount } from "../models/index.js";
+import { AccountIdParams, CreateBankParams, updateBankParams, UserIdParams } from "../types/serviceType/bankAccount.js";
 
-type UserIdParams = {
-    userId: number;
-};
-
-type CreateBankParams = {
-    data: {
-        user_id: number;
-    };
-    transaction?: Transaction;
+export const getBankAccount = ({ accountId }: AccountIdParams) => {
+    return BankAccount.findByPk(accountId);
 };
 
 export const getMyAccountOne = ({ userId }: UserIdParams) => {
@@ -29,6 +22,10 @@ export const getMyAccountOne = ({ userId }: UserIdParams) => {
     });
 };
 
-export const createBank = async ({ data, transaction }: CreateBankParams) => {
+export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {
     await BankAccount.create(data, { transaction });
+};
+
+export const updateBankAccount = async ({ account, data }: updateBankParams) => {
+    await account.update(data);
 };

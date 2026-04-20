@@ -1,0 +1,30 @@
+import { Transaction } from "sequelize";
+import { BankAccount } from "../../models/index.js";
+
+export type AccountIdParams = {
+    accountId: number;
+};
+
+export type UserIdParams = {
+    userId: number;
+};
+
+export type CreateBankParams = {
+    data: {
+        user_id: number;
+    };
+    transaction?: Transaction;
+};
+
+export type updateBankParams = {
+    account: InstanceType<typeof BankAccount>;
+    data: {
+        bank_code: number;
+        bank_name: string;
+        branch_code: number;
+        branch: string;
+        account_type_id: number;
+        account_number: string;
+        meigi: string;
+    };
+};

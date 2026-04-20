@@ -1,0 +1,57 @@
+import { AppError } from "../../errors.js";
+import { getAccountTypeOne } from "../../services/accountTypeOption.js";
+import { getBankAccount, updateBankAccount } from "../../services/bankAccount.js";
+import { getBankOne } from "../../services/banks.js";
+import { getBranchOne } from "../../services/branches.js";
+
+type Params = {
+    accountId: number;
+    bankName: string;
+    branch: string;
+    accountType: string;
+    accountNumber: string;
+    meigi: string;
+};
+
+export const editAccountUseCase = async ({
+    accountId,
+    bankName,
+    branch,
+    accountType,
+    accountNumber,
+    meigi,
+}: Params) => {
+    // 銀行名照合
+    const matchedBank = await getBankOne({ bankName });
+
+    if (!matchedBank) throw new AppError("INVALID_BANK", 400);
+
+    // 支店名照合
+    const matchedBranch = await getBranchOne({ bankCode: matchedBank.code, branch });
+
+    if (!matchedBranch) throw new AppError("INVALID_BRANCH", 400);
+
+    // 口座情報取得
+    const account = await getBankAccount({ accountId });
+
+    if (!account) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
+
+    // 口座種別照合
+    const accountTypeData = await getAccountTypeOne({ accountType });
+
+    if (!accountTypeData) throw new AppError("INVALID_ACCOUNT_TYPE", 400);
+
+    // db更新
+    await updateBankAccount({
+        account,
+        data: {
+            bank_code: matchedBank.code,
+            bank_name: matchedBank.normalize?.name || matchedBank.name,
+            branch_code: matchedBranch.code,
+            branch: matchedBranch.normalize?.name || matchedBranch.name,
+            account_type_id: accountTypeData.id,
+            account_number: accountNumber,
+            meigi: meigi,
+        },
+    });
+};

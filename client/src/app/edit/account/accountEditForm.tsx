@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     account: BankAccount;
@@ -207,7 +208,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             }
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/${account.id}`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
@@ -218,12 +219,29 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             const data = await res.json();
 
             if (!res.ok) {
-                alert(data.message || "更新に失敗しました。");
+                switch (data.code) {
+                    case "INVALID_BANK":
+                        toast.error("銀行が見つかりません");
+                        break;
+                    case "INVALID_BRANCH":
+                        toast.error("支店名が見つかりません");
+                        break;
+                    case "INVALID_ACCOUNT_TYPE":
+                        toast.error("不正な口座種別です");
+                        break;
+                    case "INVALID_QUERY":
+                        toast.error("未入力項目があります");
+                        break;
+                    default:
+                        toast.error("口座情報の更新に失敗しました");
+                }
                 return;
             }
 
+            toast.success("口座情報を更新しました。");
+            await sleep(1500);
+
             if (page === "normal") {
-                toast.success("口座情報を更新しました。");
                 router.push("/my-page");
             } else if (page === "transfer") {
                 router.push("/transfer/request");

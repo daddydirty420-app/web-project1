@@ -1,16 +1,17 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op, literal } from "sequelize";
-import sequelize from "../db.js";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { AccountTypeOption, BankAccount, Banks, Branches } from "../models/index.js";
+import { Banks, Branches } from "../models/index.js";
+import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
 
 const router = Router();
 
-// POST /bank-account/:id
-router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// PATCH /bank-account/:id
+router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const accountId = Number(req.params.id);
+
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
 
     const bankNameTrim = bankName.trim();
@@ -22,59 +23,13 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
     }
 
     try {
-        const matchedBank = await Banks.findOne({
-            where: {
-                [Op.or]: [
-                    { name: bankName },
-                    sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
-                ],
-            },
-        });
-        if (!matchedBank) {
-            res.status(400).json({ message: "指定された銀行名が存在しません。" });
-            return;
-        }
-
-        const matchedBranch = await Branches.findOne({
-            where: {
-                bank_code: matchedBank.code,
-                [Op.or]: [
-                    { name: branch },
-                    sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
-                ],
-            },
-        });
-        if (!matchedBranch) {
-            res.status(400).json({ message: "指定された支店名が存在しません。" });
-            return;
-        }
-
-        const account = await BankAccount.findByPk(req.params.id);
-        if (!account) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
-
-        const accountTypeData = await AccountTypeOption.findOne({
-            where: { name: accountType },
-        });
-        if (!accountTypeData) {
-            res.status(400).json({ message: "口座種別が無効な値です。" });
-            return;
-        }
-
-        await account.update({
-            bank_code: matchedBank.code,
-            bank_name: matchedBank.normalize?.name || matchedBank.name,
-            branch_code: matchedBranch.code,
-            branch: matchedBranch.normalize?.name || matchedBranch.name,
-            account_type_id: accountTypeData.id,
-            account_number: accountNumber,
-            meigi: meigi,
+        await editAccountUseCase({
+            accountId,
+            bankName: bankNameTrim,
+            branch: branchTrim,
+            accountType,
+            accountNumber: accountNumberTrim,
+            meigi,
         });
 
         res.status(200).json({ message: "口座情報を更新しました。" });
