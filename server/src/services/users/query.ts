@@ -23,6 +23,12 @@ export const getStar = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getInquiryUser = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "user_name", "email"],
+    });
+};
+
 export const getMeMypage = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image", "early_seller", "honnin_verified", "points", "uriagekin"],

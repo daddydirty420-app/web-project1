@@ -5,6 +5,7 @@ import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
 import { getProfileUseCase } from "../usecases/user/getProfile.js";
+import { getInquiryUserUseCase } from "../usecases/user/getInquiryUser.js";
 
 const router = Router();
 
@@ -87,6 +88,19 @@ router.get("/my-page", authenticateToken, async (req: Request, res: Response, ne
             unreadCount,
             referenceCount,
         });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GET /user/inquiry
+router.get("/inquiry", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const user = await getInquiryUserUseCase({ userId });
+
+        res.status(200).json({ user });
     } catch (err) {
         next(err);
     }

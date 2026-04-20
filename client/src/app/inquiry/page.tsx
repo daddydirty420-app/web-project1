@@ -24,7 +24,7 @@ export default async function Page() {
     let user: User | undefined = undefined;
 
     if (accessToken) {
-        const res = await fetch(`${process.env.API_URL}/inquiry/user`, {
+        const res = await fetch(`${process.env.API_URL}/user/inquiry`, {
             method: "GET",
             cache: "no-store",
             headers: {
