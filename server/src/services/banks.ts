@@ -18,3 +18,7 @@ export const getBankOne = ({ bankName }: BankNameParams) => {
         },
     });
 };
+
+export const getBanksAll = () => {
+    return Banks.findAll();
+};
