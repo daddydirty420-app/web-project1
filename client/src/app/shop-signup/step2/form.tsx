@@ -66,9 +66,7 @@ export const Form = ({ shopId, account }: Props) => {
 
         suggestTimeout.current = setTimeout(async () => {
             try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/banks/search?keyword=${bankQuery}`,
-                );
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/banks/search?keyword=${bankQuery}`);
 
                 const data = await res.json();
 
