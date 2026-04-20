@@ -3,9 +3,9 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
+import { getInquiryUserUseCase } from "../usecases/user/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
 import { getProfileUseCase } from "../usecases/user/getProfile.js";
-import { getInquiryUserUseCase } from "../usecases/user/getInquiryUser.js";
 
 const router = Router();
 

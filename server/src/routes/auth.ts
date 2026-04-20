@@ -21,11 +21,13 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction): P
     const { email, password, rememberMe } = req.body;
     const emailTrim = email.trim();
 
-    if (!emailTrim) {
-        throw new AppError("INVALID_EMAIL", 400, "メールアドレスがありません。");
-    } else if (!password) {
+    if (!password) {
         throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
@@ -65,11 +67,13 @@ router.post("/signup", async (req: Request, res: Response, next: NextFunction): 
     const { email, password } = req.body;
     const emailTrim = email.trim();
 
-    if (!emailTrim) {
-        throw new AppError("INVALID_EMAIL", 400, "メールアドレスがありません。");
-    } else if (!password) {
+    if (!password) {
         throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         const { expiresAt, reissueUrl } = await signupUseCase({
@@ -111,7 +115,7 @@ router.post("/resend-verification-code", async (req: Request, res: Response, nex
 // POST /auth/signup-verify
 router.post("/signup-verify", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { verificationCode, rememberMe, referenceCode } = req.body;
-    
+
     if (!verificationCode) throw new AppError("INVALID_CODE", 400);
 
     try {
@@ -139,7 +143,9 @@ router.post("/signup-verify", async (req: Request, res: Response, next: NextFunc
 router.post("/request-password-reset", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const email = req.body.email.trim();
 
-    if (!email) throw new AppError("INVALID_EMAIL", 400);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         await requestPasswordResetUseCase({ email });
@@ -187,6 +193,10 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
     const email = req.body.email?.trim();
     const plainPassword = req.body.password?.trim();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) throw new AppError("INVALID_EMAIL", 400);
+
     try {
         await rehashPasswordUseCase({ email, plainPassword });
 
@@ -200,6 +210,10 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 router.patch("/email", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
     const newEmail = req.body.email.trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(newEmail)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         await changeEmailUseCase({ userId, newEmail });

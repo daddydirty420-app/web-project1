@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
 import { Inquiry, User } from "../models/index.js";
 
 const router = Router();
@@ -7,6 +8,11 @@ const router = Router();
 router.post("/user-submit", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.query.userId;
     const { name, email, title, body } = req.body;
+    const emailTrim = email.trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
         let user: typeof User | undefined = undefined;
