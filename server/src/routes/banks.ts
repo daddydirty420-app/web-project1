@@ -5,9 +5,9 @@ import { searchBanksUseCase } from "../usecases/banks/search.js";
 
 const router = Router();
 
-// GET /banks/search
+// GET /banks/search?keyword=""
 router.get("/search", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const keyword = (req.query.keyword as string)?.trim() ?? "";
+    const keyword = (req.query.keyword as string)?.trim() ?? undefined;
 
     const kw = keyword.toLowerCase();
 

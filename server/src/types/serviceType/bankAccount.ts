@@ -19,9 +19,9 @@ export type CreateBankParams = {
 export type updateBankParams = {
     account: InstanceType<typeof BankAccount>;
     data: {
-        bank_code: number;
+        bank_code: string;
         bank_name: string;
-        branch_code: number;
+        branch_code: string;
         branch: string;
         account_type_id: number;
         account_number: string;

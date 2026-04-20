@@ -9,6 +9,7 @@ export const searchBanksUseCase = async ({ kw }: Params) => {
     // 銀行全件取得
     const banks = await getBanksAll();
 
+    // 検索
     const matchedBanks = banks
         .filter((bank: InstanceType<typeof Banks>) => {
             const name = (bank.name || "").toLowerCase();

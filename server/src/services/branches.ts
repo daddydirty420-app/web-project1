@@ -2,8 +2,12 @@ import { literal, Op } from "sequelize";
 import { Branches } from "../models/index.js";
 import sequelize from "../db.js";
 
+type BankCodeParams = {
+    bankCode: string;
+};
+
 type MatchedBranchParams = {
-    bankCode: number;
+    bankCode: string;
     branch: string;
 };
 
@@ -18,5 +22,11 @@ export const getBranchOne = ({ bankCode, branch }: MatchedBranchParams) => {
                 sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
             ],
         },
+    });
+};
+
+export const getBranchesAll = ({ bankCode }: BankCodeParams) => {
+    return Branches.findAll({
+        where: { bank_code: bankCode },
     });
 };

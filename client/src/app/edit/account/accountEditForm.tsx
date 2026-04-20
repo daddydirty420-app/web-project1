@@ -116,7 +116,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
         const timeoutId = setTimeout(async () => {
             try {
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/bank-account/search-branch?keyword=${branchQuery}&bankCode=${bankCode || account.bank_code}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/branches/search?keyword=${branchQuery}&bankCode=${bankCode || account.bank_code}`,
                 );
 
                 const data = await res.json();
