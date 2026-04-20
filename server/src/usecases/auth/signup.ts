@@ -4,7 +4,7 @@ import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createSignupToken } from "../../services/tokenSignupVerificationCode.js";
 import { createUser } from "../../services/users/command.js";
-import { getUserEmailOne } from "../../services/users/query.js";
+import { getAllEmail } from "../../services/users/query.js";
 import { generateRandomUserName } from "../../utils/generateRandomUserName.js";
 
 type Params = {
@@ -13,10 +13,10 @@ type Params = {
 };
 
 export const signupUseCase = async ({ email, password }: Params) => {
-    // user取得
-    const existingUser = await getUserEmailOne({ email });
+    // メールアドレス被りチェック
+    const emailUser = await getAllEmail({ email });
 
-    if (existingUser) throw new AppError("EXISTING_USER", 409);
+    if (emailUser.length > 0) throw new AppError("ALREADY_USED_EMAIL", 400);
 
     // パスワード　バリデーションチェック
     const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;

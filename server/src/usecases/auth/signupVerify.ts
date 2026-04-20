@@ -4,6 +4,7 @@ import { createAddress } from "../../services/address.js";
 import { createBank } from "../../services/bankAccount.js";
 import { createIdCard } from "../../services/idCard.js";
 import { createName } from "../../services/name.js";
+import { createInputCode } from "../../services/referenceCode.js";
 import { createRefreshToken } from "../../services/refreshTokens.js";
 import { destroyToken, getTokenVerificationOne } from "../../services/tokenSignupVerificationCode.js";
 import { emailVerifyUser } from "../../services/users/command.js";
@@ -13,9 +14,10 @@ import { generateAccessToken, generateRefreshToken } from "../../utils/jwtHelper
 type Params = {
     verificationCode: string;
     rememberMe: boolean;
+    referenceCode: string | null;
 };
 
-export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Params) => {
+export const signupVerifyUseCase = async ({ verificationCode, rememberMe, referenceCode }: Params) => {
     // 認証コード照合
     const tokenRecord = await getTokenVerificationOne({ verificationCode });
 
@@ -96,6 +98,18 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe }: Para
     destroyToken({ tokenRecord }).catch((err) => {
         console.error("service tokenSignuVerificationCode destroyToken error:", err);
     });
+
+    // 紹介コード入力DB登録
+    if (referenceCode) {
+        createInputCode({
+            data: {
+                input: referenceCode,
+                input_user_id: userId,
+            },
+        }).catch((err) => {
+            console.error("service createInputCode referenceCode error:", err);
+        });
+    }
 
     return {
         id: userId,

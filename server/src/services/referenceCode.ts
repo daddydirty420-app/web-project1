@@ -1,17 +1,11 @@
 import { ReferenceCode } from "../models/index.js";
+import { CreateInputParams, CreateOutputParams, UserIdParams } from "../types/serviceType/referenceCode.js";
 
-type UserIdParams = {
-    userId: number;
+export const createInputCode = async ({ data }: CreateInputParams) => {
+    await ReferenceCode.create(data);
 };
 
-type CreateOutputParams = {
-    data: {
-        output: string;
-        output_user_id: number;
-    };
-};
-
-export const createOutputData = async ({ data }: CreateOutputParams) => {
+export const createOutputCode = async ({ data }: CreateOutputParams) => {
     await ReferenceCode.create(data);
 };
 

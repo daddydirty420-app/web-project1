@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { sleep } from "@/lib/sleep";
 import styles from "@/styles/login.module.css";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { sleep } from "@/lib/sleep";
 
 export const VerifyForm = () => {
     const [code, setCode] = useState("");
@@ -29,23 +29,9 @@ export const VerifyForm = () => {
             const res = await signIn("verify", {
                 verificationCode: trimCode,
                 rememberMe,
+                referenceCode: trimReferenceCode || undefined,
                 redirect: false,
             });
-
-            if (typeof referenceCode === "string" && referenceCode.trim() !== "") {
-                const refRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference_code/input`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ input: trimReferenceCode }),
-                });
-
-                if (!refRes.ok) {
-                    const errorData = await refRes.json();
-                    toast.error("紹介コードが正しくありません。");
-                    console.error(errorData.message);
-                    return;
-                }
-            }
 
             setLoading(false);
 

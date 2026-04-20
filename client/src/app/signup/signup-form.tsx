@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import styles from "@/styles/login.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
 import { sleep } from "@/lib/sleep";
+import styles from "@/styles/login.module.css";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const SignupForm = () => {
     const [visible, setVisible] = useState(false);
@@ -44,21 +44,31 @@ export const SignupForm = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: trimEmail,
-                    password
+                    password,
                 }),
             });
 
             const data = await res.json();
 
-            if (res.ok) {
-                toast.success("認証コードを発行しました");
-                console.log(data.message);
-
-                await sleep(1500);
-                router.push(data.reissueUrl);
-            } else {
-                toast.error("サインアップに失敗しました。");
+            if (!res.ok) {
+                switch (data.code) {
+                    case "ALREADY_USED_EMAIL":
+                        toast.error("このメールアドレスは既に使用されています");
+                        break;
+                    case "INVALID_PASSWORD":
+                        toast.error("このパスワードは無効です");
+                        break;
+                    default:
+                        toast.error("会員登録に失敗しました");
+                }
+                return;
             }
+
+            toast.success("認証コードを発行しました");
+            console.log(data.message);
+
+            await sleep(1500);
+            router.push(data.reissueUrl);
         } catch (error) {
             console.error(error);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");

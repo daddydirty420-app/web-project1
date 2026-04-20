@@ -1,4 +1,4 @@
-import { createOutputData } from "../../services/referenceCode.js";
+import { createOutputCode } from "../../services/referenceCode.js";
 import { generateRandomReferenceCode } from "../../utils/generateReferenceCode.js";
 
 type Params = {
@@ -9,7 +9,7 @@ export const outputReferenceCodeUseCase = async ({ userId }: Params) => {
     // 紹介コード生成
     const output = generateRandomReferenceCode();
 
-    await createOutputData({
+    await createOutputCode({
         data: {
             output,
             output_user_id: userId,
