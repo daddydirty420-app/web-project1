@@ -32,7 +32,7 @@ export default async function Page() {
     const res = await fetch(`${process.env.API_URL}/items?type=video&page=1&view=index&limit=${defaultLimit}`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
         next: { revalidate: 300 },
     });

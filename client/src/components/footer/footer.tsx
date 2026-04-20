@@ -20,7 +20,7 @@ export default async function Footer() {
     if (loggedIn) {
         const res = await fetch(`${process.env.API_URL}/notification/unread-count`, {
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             },
             cache: "no-store",
         });

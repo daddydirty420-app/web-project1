@@ -1,12 +1,14 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
-import { Inquiry, User } from "../models/index.js";
+import { authenticateOptional } from "../middleware/authOptional.js";
+import { createInquiryUseCase } from "../usecases/inquiry/create.js";
 
 const router = Router();
 
-router.post("/user-submit", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.query.userId;
+router.post("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? null;
+    console.log("userId:", userId);
     const { name, email, title, body } = req.body;
     const emailTrim = email.trim();
 
@@ -15,19 +17,7 @@ router.post("/user-submit", async (req: Request, res: Response, next: NextFuncti
     if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
 
     try {
-        let user: typeof User | undefined = undefined;
-
-        if (userId) {
-            user = await User.findByPk(userId);
-        }
-
-        await Inquiry.create({
-            user_id: user?.id ?? null,
-            name,
-            email,
-            title,
-            body,
-        });
+        await createInquiryUseCase({ userId, name, email, title, body });
 
         res.status(200).json({ message: "お問い合わせを送信しました！" });
     } catch (err) {

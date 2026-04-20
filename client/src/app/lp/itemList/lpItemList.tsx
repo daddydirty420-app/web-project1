@@ -51,7 +51,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                 {
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${accessToken ?? ""}`,
+                        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
                     },
                     cache: "no-store",
                 },
@@ -78,7 +78,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                 {
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${accessToken ?? ""}`,
+                        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
                     },
                     cache: "no-store",
                 },

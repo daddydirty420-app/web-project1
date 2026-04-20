@@ -1,39 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { User } from "./type";
 import { Button, InputStr, Textarea } from "@/components/inputForm";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { getAccessToken } from "../../lib/getAccessToken";
+import { sleep } from "../../lib/sleep";
+import { User } from "./type";
 
 type Props = {
-    loggedIn: boolean;
     user?: User;
 };
 
-export const Form = ({ loggedIn, user }: Props) => {
+export const Form = ({ user }: Props) => {
     const [name, setName] = useState(user?.user_name ?? "");
     const [email, setEmail] = useState(user?.email ?? "");
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        router.refresh();
+    }, []);
+
     const router = useRouter();
 
     const submit = async () => {
+        const emailTrim = email.trim();
+
         if (!name || name.trim() === "") {
             toast.error("お名前を入力してください");
             return;
         }
 
-        if (!email || email.trim() === "") {
+        if (!email || emailTrim === "") {
             toast.error("メールアドレスを入力してください");
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailRegex.test(email)) {
+        if (!emailRegex.test(emailTrim)) {
             toast.error("正しいメールアドレス形式で入力してください");
             return;
         }
@@ -51,19 +58,24 @@ export const Form = ({ loggedIn, user }: Props) => {
         try {
             setLoading(true);
 
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/inquiry/user-submit${loggedIn ? `?userId=${user?.id ?? ""}` : ""}`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        title,
-                        body,
-                    }),
+            const accessToken = await getAccessToken();
+            console.log("accessToken:", accessToken); 
+
+            console.log("API_URL:", process.env.NEXT_PUBLIC_API_URL);
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiry`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
                 },
-            );
+                body: JSON.stringify({
+                    name,
+                    email: emailTrim,
+                    title,
+                    body,
+                }),
+            });
 
             const data = await res.json();
 
@@ -77,10 +89,10 @@ export const Form = ({ loggedIn, user }: Props) => {
             toast.success("お問い合わせ内容を送信しました！");
             console.log(data.message);
 
-            setTimeout(() => {
-                setLoading(false);
-                router.back();
-            }, 1000);
+            await sleep(1500);
+
+            setLoading(false);
+            router.back();
         } catch (err) {
             setLoading(false);
             alert("システムエラーが発生しました。時間をおいて再試行してください。");

@@ -8,7 +8,7 @@ export async function getAccessToken() {
     const accessToken = match ? match.split("=")[1] : null;
 
     if (!accessToken) {
-        return await refreshAccessToken();
+        return null;
     }
 
     try {
@@ -23,7 +23,7 @@ export async function getAccessToken() {
         return accessToken;
     } catch (err) {
         console.error("Failed to decode token:", err);
-        return await refreshAccessToken();
+        return null;
     }
 }
 

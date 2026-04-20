@@ -1,9 +1,9 @@
 "use client";
 
 import { NormalLinkContainer } from "@/components/link";
-import styles from "./mypage.module.css";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import styles from "./mypage.module.css";
 
 export const Logout = () => {
     const router = useRouter();
@@ -12,6 +12,11 @@ export const Logout = () => {
         try {
             await signOut({
                 redirect: false,
+            });
+
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/clear-cookie`, {
+                method: "POST",
+                credentials: "include",
             });
 
             router.push("/");

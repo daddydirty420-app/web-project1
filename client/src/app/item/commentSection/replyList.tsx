@@ -34,7 +34,7 @@ export const ReplyList = ({ parentId, page, loggedIn, sellerMe, optimisticCommen
                     {
                         method: "GET",
                         headers: {
-                            Authorization: `Bearer ${accessToken ?? ""}`,
+                            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
                         },
                         cache: "no-store",
                     },

@@ -39,7 +39,7 @@ export default async function Page() {
     return (
         <InquiryUI title="お問い合わせ">
             <LinkElement />
-            <Form user={user ?? undefined} loggedIn={!!accessToken} />
+            <Form user={user ?? undefined} />
         </InquiryUI>
     );
 }

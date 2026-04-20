@@ -43,7 +43,7 @@ export default async function Page({ params }: Props) {
         method: "GET",
         cache: "no-store",
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
     });
 
@@ -64,7 +64,7 @@ export default async function Page({ params }: Props) {
         method: "GET",
         cache: "no-store",
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
     });
 
@@ -78,7 +78,7 @@ export default async function Page({ params }: Props) {
     const accessRes = await fetch(`${process.env.API_URL}/items/${id}/logs/access`, {
         method: "PATCH",
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
     });
 

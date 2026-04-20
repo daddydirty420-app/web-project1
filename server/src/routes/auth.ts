@@ -12,7 +12,11 @@ import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificati
 import { resetPWUseCase } from "../usecases/auth/resetPW.js";
 import { signupUseCase } from "../usecases/auth/signup.js";
 import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
-import { getRefreshTokenCookieOptions } from "../utils/getRefreshCookies.js";
+import {
+    getClearAccessTokenCookieOptions,
+    getClearRefreshTokenCookieOptions,
+    getRefreshTokenCookieOptions,
+} from "../utils/getRefreshCookies.js";
 
 const router = Router();
 
@@ -60,6 +64,14 @@ router.post("/set-cookie", async (req: Request, res: Response, next: NextFunctio
     res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
     res.status(200).json({ message: "Cookieをセットしました" });
+});
+
+// POST /auth/clear-cookie
+router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    res.clearCookie("access-token", getClearAccessTokenCookieOptions());
+    res.clearCookie("refreshToken", getClearRefreshTokenCookieOptions());
+
+    res.status(200).json({ message: "Cookieを削除しました" });
 });
 
 // POST /auth/signup

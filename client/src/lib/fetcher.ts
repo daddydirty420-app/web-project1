@@ -5,7 +5,7 @@ export const fetcher = async <T>(url: string): Promise<T> => {
 
     const res = await fetch(url, {
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
     });
     if (!res.ok) throw new Error("Fetch failed!!");

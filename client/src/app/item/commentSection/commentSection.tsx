@@ -27,7 +27,7 @@ const fetcher = async (url: string) => {
         const res = await fetch(url, {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             },
             cache: "no-store",
         });

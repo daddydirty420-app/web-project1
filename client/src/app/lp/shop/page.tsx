@@ -34,7 +34,7 @@ export default async function Page() {
         {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${accessToken ?? ""}`,
+                ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             },
             next: { revalidate: 300 },
         },
@@ -45,7 +45,7 @@ export default async function Page() {
     const shopRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/has-shop/me`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${accessToken ?? ""}`,
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
         },
         cache: "no-store",
     });
