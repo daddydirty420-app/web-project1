@@ -19,6 +19,7 @@ import {
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
+import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
 
 const router = Router();
 
@@ -456,24 +457,10 @@ router.get(
     "/address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
+        const shopEditId = Number(req.params.id);
 
         try {
-            const data = await Address.findOne({
-                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-                where: { shop_info_id: shopId },
-                include: [
-                    {
-                        model: TodouhukenOption,
-                        as: "AddressTodouhuken",
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
+            const data = await getAddressShopEditUseCase({ shopEditId });
 
             res.status(200).json({ data });
         } catch (err) {

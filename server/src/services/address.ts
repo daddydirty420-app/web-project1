@@ -5,6 +5,7 @@ import {
     CreateAddressShopEditParams,
     CreateDeliveryAddressParams,
     DeliveryIdParams,
+    ShopEditIdParams,
     ShopIdParams,
     UpdateAddressParams,
     UserIdParams,
@@ -50,6 +51,19 @@ export const getAddressShopOne = ({ shopId }: ShopIdParams) => {
     return Address.findOne({
         attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
         where: { shop_info_id: shopId },
+        include: [
+            {
+                model: TodouhukenOption,
+                as: "AddressTodouhuken",
+            },
+        ],
+    });
+};
+
+export const getAddressShopEditOne = ({ shopEditId }: ShopEditIdParams) => {
+    return Address.findOne({
+        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+        where: { shop_info_edit_id: shopEditId },
         include: [
             {
                 model: TodouhukenOption,
