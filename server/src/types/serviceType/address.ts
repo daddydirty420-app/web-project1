@@ -13,6 +13,14 @@ export type DeliveryIdParams = {
     deliveryId: number;
 };
 
+export type ShopIdParams = {
+    shopId: number;
+};
+
+export type ShopEditIdParams = {
+    shopEditId: number;
+};
+
 export type CreateAddressParams = {
     data: {
         user_id: number;

@@ -326,36 +326,6 @@ router.patch(
 );
 
 router.get(
-    "/address/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const data = await Address.findOne({
-                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-                where: { shop_info_id: shopId },
-                include: [
-                    {
-                        model: TodouhukenOption,
-                        as: "AddressTodouhuken",
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/phone-number/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -480,6 +450,37 @@ router.get("/option/:id", authenticateToken, async (req: Request, res: Response,
         next(err);
     }
 });
+
+// GET /shop-info-edit/address/:id
+router.get(
+    "/address/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        try {
+            const data = await Address.findOne({
+                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+                where: { shop_info_id: shopId },
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            });
+
+            if (!data) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /shop-info-edit/bank-account/:id
 router.get(

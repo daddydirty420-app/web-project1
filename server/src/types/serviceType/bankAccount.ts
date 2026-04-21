@@ -9,6 +9,14 @@ export type UserIdParams = {
     userId: number;
 };
 
+export type ShopIdParams = {
+    shopId: number;
+};
+
+export type ShopEditIdParams = {
+    shopEditId: number;
+};
+
 export type CreateBankParams = {
     data: {
         user_id: number;

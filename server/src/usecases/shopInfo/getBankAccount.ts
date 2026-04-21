@@ -1,14 +1,14 @@
 import { AppError } from "../../errors.js";
-import { getShopWithBankAccount } from "../../services/shopInfo.js";
+import { getBankAccountShopOne } from "../../services/bankAccount.js";
 
 type Params = {
     shopId: number;
 };
 
 export const getBankAccountUseCase = async ({ shopId }: Params) => {
-    const shop = await getShopWithBankAccount({ shopId });
+    const data = await getBankAccountShopOne({ shopId });
 
-    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (!data) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
 
-    return { data: shop.BankAccount };
+    return data;
 };

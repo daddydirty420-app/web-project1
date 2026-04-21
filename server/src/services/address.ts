@@ -5,6 +5,7 @@ import {
     CreateAddressShopEditParams,
     CreateDeliveryAddressParams,
     DeliveryIdParams,
+    ShopIdParams,
     UpdateAddressParams,
     UserIdParams,
 } from "../types/serviceType/address.js";
@@ -36,6 +37,19 @@ export const getMyAddressOne = ({ userId }: UserIdParams) => {
     return Address.findOne({
         attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
         where: { user_id: userId },
+        include: [
+            {
+                model: TodouhukenOption,
+                as: "AddressTodouhuken",
+            },
+        ],
+    });
+};
+
+export const getAddressShopOne = ({ shopId }: ShopIdParams) => {
+    return Address.findOne({
+        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+        where: { shop_info_id: shopId },
         include: [
             {
                 model: TodouhukenOption,
