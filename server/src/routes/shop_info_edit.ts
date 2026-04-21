@@ -19,6 +19,7 @@ import {
 } from "../models/index.js";
 import fetchAddressFromZip from "../services/old/addressService.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
+import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 
 const router = Router();
 
@@ -511,6 +512,23 @@ router.get("/option/:id", authenticateToken, async (req: Request, res: Response,
         next(err);
     }
 });
+
+// GET /shop-info-edit/bank-account/:id
+router.get(
+    "/bank-account/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = Number(req.params.id);
+
+        try {
+            const data = await getBankAccountUseCase({ shopEditId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 router.get(
     "/admin/list",

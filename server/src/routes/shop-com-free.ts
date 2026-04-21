@@ -1,33 +1,23 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import {
-    ShopInfoEdit,
-    ComOrFreeOption,
-    Address,
-    Name,
-    TodouhukenOption,
-    ShopInfo,
-    BankAccount,
-    AccountTypeOption,
-    Notification,
-} from "../models/index.js";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import sequelize from "../db.js";
+import { authenticateToken } from "../middleware/index.js";
+import {
+    AccountTypeOption,
+    Address,
+    BankAccount,
+    ComOrFreeOption,
+    Name,
+    Notification,
+    ShopInfo,
+    ShopInfoEdit,
+    TodouhukenOption,
+} from "../models/index.js";
+import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 
 const router = Router();
-
-const bucket = process.env.AWS_BUCKET;
-const region = process.env.AWS_REGION;
-const s3Domain = `https://${bucket}.s3.${region}.amazonaws.com`;
-const s3 = new S3Client({
-    region: region || "ap-northeast-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
-});
 
 router.post(
     "/com-free-edit/:id",
@@ -387,45 +377,6 @@ router.get(
                                 as: "AddressTodouhuken",
                             },
                         ],
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/account/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
-
-        try {
-            const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: BankAccount,
-                        attributes: [
-                            "id",
-                            "bank_name",
-                            "bank_code",
-                            "branch",
-                            "branch_code",
-                            "account_type_id",
-                            "account_number",
-                            "meigi",
-                        ],
-                        include: [{ model: AccountTypeOption }],
                     },
                 ],
             });

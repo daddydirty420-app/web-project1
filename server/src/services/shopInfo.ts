@@ -1,5 +1,5 @@
 import { Transaction } from "sequelize";
-import { BankAccount, ShopInfo } from "../models/index.js";
+import { AccountTypeOption, BankAccount, ShopInfo } from "../models/index.js";
 
 type ShopIdParams = {
     shopId: number;
@@ -29,6 +29,7 @@ export const getShopWithBankAccount = ({ shopId }: ShopIdParams) => {
                     "bank_code",
                     "branch_code",
                 ],
+                include: [{ model: AccountTypeOption }],
             },
         ],
     });

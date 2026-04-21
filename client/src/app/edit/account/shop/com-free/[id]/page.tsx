@@ -1,9 +1,9 @@
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { AccountEditForm } from "../../../accountEditForm";
-import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 type Props = {
     params: { id: string };
@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-com-free/account/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info-edit/bank-account/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -45,5 +45,5 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    return <AccountEditForm account={data.data.BankAccount} page="com-free" shopEditId={id} />;
+    return <AccountEditForm account={data.data} page="com-free" shopEditId={id} />;
 }
