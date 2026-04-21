@@ -9,6 +9,10 @@ export type UserIdParams = {
     userId: number;
 };
 
+export type DeliveryIdParams = {
+    deliveryId: number;
+};
+
 export type CreateAddressParams = {
     data: {
         user_id: number;

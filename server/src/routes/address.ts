@@ -2,10 +2,10 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Address, TodouhukenOption } from "../models/index.js";
 import { editAddressUseCase } from "../usecases/address/editAddress.js";
-import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
+import { getDeliveryAddressUseCase } from "../usecases/address/getDeliveryAddress.js";
 import { getMyAddressUseCase } from "../usecases/address/getMyAddress.js";
+import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
 
 const router = Router();
 
@@ -58,26 +58,15 @@ router.get("/myaddress", authenticateToken, async (req: Request, res: Response, 
     }
 });
 
+// GET /address/delivery-address/:id
 router.get(
     "/delivery-address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const data = await Address.findOne({
-                attributes: ["id", "post_number", "shikutyouson", "banchi", "building", "delivery_id", "user_id"],
-                where: { delivery_id: req.params.id },
-                include: [
-                    {
-                        model: TodouhukenOption,
-                        as: "AddressTodouhuken",
-                    },
-                ],
-            });
+        const deliveryId = Number(req.params.id);
 
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
+        try {
+            const data = await getDeliveryAddressUseCase({ deliveryId });
 
             res.status(200).json({ data });
         } catch (err) {
