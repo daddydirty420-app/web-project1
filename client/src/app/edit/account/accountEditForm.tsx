@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { Button, InputStr, InputTitle } from "@/components/inputForm/index";
+import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import styles from "../edit.module.css";
-import { InputStr, Button, InputTitle } from "@/components/inputForm/index";
 import EditUI from "../editUI";
 import { BankAccount } from "../type";
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import clsx from "clsx";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
-import { sleep } from "../../../lib/sleep";
+import { showBankErrorToast } from "./bankErrorMessage";
 
 type Props = {
     account: BankAccount;
@@ -183,7 +184,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             }
 
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/account-edit/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/bank-account/${shopId}`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
@@ -195,12 +196,13 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    toast.error("更新に失敗しました。");
-                    console.error(data.message);
+                    showBankErrorToast(data.code);
                     return;
                 }
 
-                alert("口座情報の変更を受け付けました。審査完了までしばらくお待ちください。");
+                toast.success("口座情報の変更を受け付けました。審査完了までしばらくお待ちください");
+                await sleep(1500);
+
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
@@ -217,26 +219,11 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             const data = await res.json();
 
             if (!res.ok) {
-                switch (data.code) {
-                    case "INVALID_BANK":
-                        toast.error("銀行が見つかりません");
-                        break;
-                    case "INVALID_BRANCH":
-                        toast.error("支店名が見つかりません");
-                        break;
-                    case "INVALID_ACCOUNT_TYPE":
-                        toast.error("不正な口座種別です");
-                        break;
-                    case "INVALID_QUERY":
-                        toast.error("未入力項目があります");
-                        break;
-                    default:
-                        toast.error("口座情報の更新に失敗しました");
-                }
+                showBankErrorToast(data.code);
                 return;
             }
 
-            toast.success("口座情報を更新しました。");
+            toast.success("口座情報を更新しました");
             await sleep(1500);
 
             if (page === "normal") {

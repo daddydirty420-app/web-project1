@@ -18,7 +18,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     const accountNumberTrim = accountNumber.trim();
 
     if (!bankNameTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi) {
-        throw new AppError("INVALID_QUERY", 400, "未入力項目があります");
+        throw new AppError("INVALID_QUERY", 400);
     }
 
     try {

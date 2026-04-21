@@ -13,3 +13,11 @@ export type CreateNormalTransactionParams = {
     };
     transaction?: Transaction;
 };
+
+export type CreateUserMessageParams = {
+    data: {
+        read_user_id: number;
+        message: string;
+    };
+    transaction?: Transaction;
+};

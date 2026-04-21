@@ -1,38 +1,26 @@
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import sequelize from "../db.js";
+import { AppError } from "../errors.js";
+import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import {
-    ShopInfoEdit,
-    ComOrFreeOption,
     Address,
-    Name,
-    TodouhukenOption,
-    ShopInfo,
-    User,
     BankAccount,
-    Branches,
-    Banks,
-    AccountTypeOption,
+    ComOrFreeOption,
+    Name,
     Notification,
+    ShopInfo,
+    ShopInfoEdit,
+    TodouhukenOption,
+    User,
 } from "../models/index.js";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import fetchAddressFromZip from "../services/old/addressService.js";
-import sequelize from "../db.js";
-import { literal, Op } from "sequelize";
+import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 
 const router = Router();
-
-const bucket = process.env.AWS_BUCKET;
-const region = process.env.AWS_REGION;
-const s3Domain = `https://${bucket}.s3.${region}.amazonaws.com`;
-const s3 = new S3Client({
-    region: region || "ap-northeast-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
-});
 
 router.patch(
     "/phone-number-edit/:id",
@@ -261,96 +249,37 @@ router.post(
     },
 );
 
+// POST /shop-info-edit/bank-account/:id
 router.post(
-    "/account-edit/:id",
+    "/bank-account/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
+        const shopId = Number(req.params.id);
         const userId = req.user!.id;
+
         const { bankName, branch, accountType, accountNumber, meigi } = req.body;
-        if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
-            res.status(400).json({ message: "未入力項目があります。" });
-            return;
+
+        const bankNameTrim = bankName.trim();
+        const branchTrim = branch.trim();
+        const accountNumberTrim = accountNumber.trim();
+
+        if (!bankNameTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi) {
+            throw new AppError("INVALID_QUERY", 400);
         }
 
-        const t = await sequelize.transaction();
-
         try {
-            const matchedBank = await Banks.findOne({
-                where: {
-                    [Op.or]: [
-                        { name: bankName },
-                        sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
-                    ],
-                },
+            await createBankAccountUseCase({
+                userId,
+                shopId,
+                bankName: bankNameTrim,
+                branch: branchTrim,
+                accountType,
+                accountNumber: accountNumberTrim,
+                meigi,
             });
-            if (!matchedBank) {
-                res.status(400).json({ message: "指定された銀行名が存在しません。" });
-                return;
-            }
-
-            const matchedBranch = await Branches.findOne({
-                where: {
-                    bank_code: matchedBank.code,
-                    [Op.or]: [
-                        { name: branch },
-                        sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
-                        sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
-                    ],
-                },
-            });
-            if (!matchedBranch) {
-                res.status(400).json({ message: "指定された支店名が存在しません。" });
-                return;
-            }
-
-            const accountTypeData = await AccountTypeOption.findOne({
-                where: { name: accountType },
-            });
-            if (!accountTypeData) {
-                res.status(400).json({ message: "口座種別が無効な値です。" });
-                return;
-            }
-
-            const shopEdit = await ShopInfoEdit.create(
-                {
-                    user_id: userId,
-                    shop_info_id: shopId,
-                },
-                { transaction: t },
-            );
-
-            await BankAccount.create(
-                {
-                    bank_code: matchedBank.code,
-                    bank_name: matchedBank.normalize?.name || matchedBank.name,
-                    branch_code: matchedBranch.code,
-                    branch: matchedBranch.normalize?.name || matchedBranch.name,
-                    account_type_id: accountTypeData.id,
-                    account_number: accountNumber,
-                    meigi: meigi,
-                    shop_info_edit_id: shopEdit.id,
-                },
-                { transaction: t },
-            );
-
-            await Notification.create(
-                {
-                    read_user_id: userId,
-                    message:
-                        "口座情報の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
-                },
-                { transaction: t },
-            );
-
-            await t.commit();
 
             res.status(200).json({ message: "口座情報の変更を受け付けました。" });
         } catch (err) {
-            await t.rollback();
             next(err);
         }
     },
