@@ -80,7 +80,7 @@ router.get(
 router.get("/search", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const zipcode = req.query.zipcode as string;
 
-    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400)
+    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
 
     try {
         const address = await fetchAddressFromZipUseCase({ zipcode });

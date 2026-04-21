@@ -20,7 +20,7 @@ export const fetchZipCloud = async ({ zipcode }: Params) => {
             throw new AppError("ZIPCLOUD_FETCH_ERROR", 400);
         }
 
-        const data = await res.json() as ZipCloudResponse;
+        const data = (await res.json()) as ZipCloudResponse;
 
         return data;
     } catch (err) {
