@@ -13,4 +13,4 @@ const s3 = new S3Client({
     },
 });
 
-export { bucket, region, s3Domain, s3 };
+export { bucket, region, s3, s3Domain };

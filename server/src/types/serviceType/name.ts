@@ -1,5 +1,4 @@
 import { Transaction } from "sequelize";
-import { Name } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
@@ -13,7 +12,12 @@ export type CreateNameParams = {
 };
 
 export type CreateDeliveryNameParams = {
-    deliveryId: number;
-    userName?: InstanceType<typeof Name>;
+    data: {
+        delivery_id: number;
+        sei: string | null;
+        mei: string | null;
+        sei_kana: string | null;
+        mei_kana: string | null;
+    };
     transaction: Transaction;
 };

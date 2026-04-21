@@ -11,15 +11,6 @@ export const createName = async ({ data, transaction }: CreateNameParams) => {
     await Name.create(data, { transaction });
 };
 
-export const createDeliveryName = async ({ deliveryId, userName, transaction }: CreateDeliveryNameParams) => {
-    return Name.create(
-        {
-            delivery_id: deliveryId,
-            sei: userName?.sei ?? null,
-            mei: userName?.mei ?? null,
-            sei_kana: userName?.sei_kana ?? null,
-            mei_kana: userName?.mei_kana ?? null,
-        },
-        { transaction },
-    );
+export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNameParams) => {
+    return Name.create(data, { transaction });
 };

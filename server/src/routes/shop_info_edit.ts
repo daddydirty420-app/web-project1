@@ -16,7 +16,7 @@ import {
     TodouhukenOption,
     User,
 } from "../models/index.js";
-import fetchAddressFromZip from "../services/old/addressService.js";
+import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 
@@ -193,7 +193,7 @@ router.post(
             }
 
             try {
-                const fromZip = await fetchAddressFromZip(postNumber);
+                const fromZip = await fetchAddressFromZipUseCase(postNumber);
 
                 if (fromZip.todouhuken_name !== todouhuken) {
                     res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });

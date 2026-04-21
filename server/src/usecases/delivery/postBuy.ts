@@ -39,9 +39,28 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
 
         const id = newDelivery.id;
 
-        await createDeliveryAddress({ deliveryId: id, userAddress, transaction: t });
+        await createDeliveryAddress({
+            data: {
+                delivery_id: deliveryId,
+                post_number: userAddress?.post_number ?? null,
+                todouhuken_id: userAddress?.todouhuken_id ?? null,
+                shikutyouson: userAddress?.shikutyouson ?? null,
+                banchi: userAddress?.banchi ?? null,
+                building: userAddress?.building ?? null,
+            },
+            transaction: t,
+        });
 
-        await createDeliveryName({ deliveryId: id, userName, transaction: t });
+        await createDeliveryName({
+            data: {
+                delivery_id: deliveryId,
+                sei: userName?.sei ?? null,
+                mei: userName?.mei ?? null,
+                sei_kana: userName?.sei_kana ?? null,
+                mei_kana: userName?.mei_kana ?? null,
+            },
+            transaction: t,
+        });
 
         return id;
     });

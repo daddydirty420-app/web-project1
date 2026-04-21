@@ -1,14 +1,16 @@
 "use client";
 
-import { InputStr, Button } from "@/components/inputForm";
-import EditUI from "../editUI";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Address } from "../type";
-import clsx from "clsx";
-import styles from "../edit.module.css";
-import toast from "react-hot-toast";
+import { Button, InputStr } from "@/components/inputForm";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import styles from "../edit.module.css";
+import EditUI from "../editUI";
+import { Address } from "../type";
+import { showAddressErrorToast } from "./addressErrorMessage";
 
 type Props = {
     address: Address;
@@ -104,12 +106,13 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 const data = await res.json();
 
                 if (!res.ok) {
-                    toast.error("住所変更に失敗しました。");
-                    console.error(data.message);
+                    showAddressErrorToast(data.code);
                     return;
                 }
 
                 toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
+                await sleep(1500);
+
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
@@ -132,10 +135,12 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("住所変更に失敗しました。");
-                console.error(data.message);
+                showAddressErrorToast(data.code);
                 return;
             }
+
+            toast.success("住所を更新しました");
+            await sleep(1500);
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
@@ -144,7 +149,6 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             } else if (page === "com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                toast.success("住所を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {

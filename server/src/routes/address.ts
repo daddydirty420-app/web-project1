@@ -3,13 +3,14 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { Address, TodouhukenOption } from "../models/index.js";
-import fetchAddressFromZip from "../services/old/addressService.js";
+import { editAddressUseCase } from "../usecases/address/editAddress.js";
+import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
 
 const router = Router();
 
 // PATCH /address/:id
 router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const addressId = req.params.id;
+    const addressId = Number(req.params.id);
 
     // 空チェック
     const fields = {
@@ -35,54 +36,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     }
 
     try {
-        const address = await Address.findByPk(req.params.id, {
-            include: [
-                {
-                    model: TodouhukenOption,
-                    as: "AddressTodouhuken",
-                },
-            ],
-        });
-        if (!address) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
-
-        const todouhukenData = await TodouhukenOption.findOne({
-            where: {
-                name: todouhuken,
-            },
-        });
-        if (!todouhukenData || todouhukenData.id < 1 || todouhukenData.id > 47) {
-            res.status(404).json({ message: "都道府県が不正な値です。" });
-            return;
-        }
-
-        try {
-            const fromZip = await fetchAddressFromZip(postNumber);
-
-            if (fromZip.todouhuken_name !== todouhuken) {
-                res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
-                return;
-            }
-
-            if (fromZip.shikutyouson !== shikutyouson) {
-                res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
-                return;
-            }
-        } catch (err) {
-            console.error("住所チェックエラー：", err);
-            res.status(400).json({ message: "郵便番号が不正です。" });
-            return;
-        }
-
-        await address.update({
-            post_number: postNumber,
-            todouhuken_id: todouhukenData.id,
-            shikutyouson: shikutyouson,
-            banchi: req.body.banchi,
-            building: req.body.building,
-        });
+        await editAddressUseCase({ addressId, postNumber, todouhuken, shikutyouson, banchi, building });
 
         res.status(200).json({ message: "住所を更新しました。" });
     } catch (err) {
@@ -152,7 +106,7 @@ router.get("/get-address", async (req: Request, res: Response, next: NextFunctio
     }
 
     try {
-        const address = await fetchAddressFromZip(zipcode);
+        const address = await fetchAddressFromZipUseCase({ zipcode });
         res.json({ address });
     } catch (err) {
         next(err);

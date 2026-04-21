@@ -1,21 +1,21 @@
-import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import {
-    ShopInfo,
-    Address,
-    Name,
-    TodouhukenOption,
-    BankAccount,
-    AccountTypeOption,
-    Banks,
-    Branches,
-} from "../models/index.js";
-import sequelize from "../db.js";
-import fetchAddressFromZip from "../services/old/addressService.js";
-import { literal, Op } from "sequelize";
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { Router } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { literal, Op } from "sequelize";
+import sequelize from "../db.js";
+import { authenticateToken } from "../middleware/index.js";
+import {
+    AccountTypeOption,
+    Address,
+    BankAccount,
+    Banks,
+    Branches,
+    Name,
+    ShopInfo,
+    TodouhukenOption,
+} from "../models/index.js";
+import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
 
 const router = Router();
 
@@ -102,7 +102,7 @@ router.post("/1", authenticateToken, async (req: Request, res: Response, next: N
         }
 
         try {
-            const fromZip = await fetchAddressFromZip(postNumber);
+            const fromZip = await fetchAddressFromZipUseCase(postNumber);
 
             if (fromZip.todouhuken_name !== todouhuken) {
                 res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
