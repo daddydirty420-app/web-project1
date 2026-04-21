@@ -49,7 +49,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
                 method: "GET",
                 cache: "no-store",
             });

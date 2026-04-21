@@ -75,13 +75,11 @@ router.get(
     },
 );
 
-router.get("/get-address", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /address/search
+router.get("/search", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const zipcode = req.query.zipcode as string;
 
-    if (!zipcode) {
-        res.status(400).json({ message: "郵便番号が必要です。" });
-        return;
-    }
+    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400)
 
     try {
         const address = await fetchAddressFromZipUseCase({ zipcode });

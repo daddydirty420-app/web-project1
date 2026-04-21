@@ -15,6 +15,7 @@ import { StepBar } from "../stepBar";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
 
 type Props = {
     user: User;
@@ -80,7 +81,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
                 method: "GET",
                 cache: "no-store",
             });
@@ -88,7 +89,9 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
+                showAddressErrorToast(data.code);
                 console.error(data.message);
+                return;
             }
 
             setTodouhuken(data.address.todouhuken_name);

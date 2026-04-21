@@ -12,6 +12,7 @@ import { ja } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { showAddressErrorToast } from "../address/addressErrorMessage";
 
 type Props = {
     user: User;
@@ -62,7 +63,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/get-address?zipcode=${postNumber}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
                 method: "GET",
                 cache: "no-store",
             });
@@ -70,6 +71,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
+                showAddressErrorToast(data.code);
                 console.error(data.message);
                 toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
             }
