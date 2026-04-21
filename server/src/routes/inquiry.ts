@@ -9,7 +9,7 @@ const router = Router();
 router.post("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user?.id ?? null;
     const { name, email, title, body } = req.body;
-    const emailTrim = email.trim();
+    const emailTrim = email?.trim();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

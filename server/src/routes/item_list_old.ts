@@ -275,7 +275,7 @@ router.get(
             const categoryText = search.category_text;
             let categoryCondition = {};
 
-            const parts = categoryText.split(" - ").map((p: string) => p.trim());
+            const parts = categoryText.split(" - ").map((p: string) => p?.trim());
 
             if (parts.length === 1) {
                 categoryCondition = {
@@ -348,7 +348,7 @@ router.get(
             const categoryText = search.category_text;
             let categoryCondition = {};
 
-            const parts = categoryText.split(" - ").map((p: string) => p.trim());
+            const parts = categoryText.split(" - ").map((p: string) => p?.trim());
 
             if (parts.length === 1) {
                 categoryCondition = {

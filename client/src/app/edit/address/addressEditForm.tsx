@@ -93,7 +93,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                         Authorization: `Bearer ${accessToken}`,
                     },
                     body: JSON.stringify({
-                        postNumber,
+                        postNumber: normalizedPostNumber,
                         todouhuken,
                         shikutyouson,
                         banchi,
@@ -114,7 +114,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/address-edit/${address.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/${address.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

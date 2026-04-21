@@ -8,7 +8,6 @@ import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import {
     Address,
-    BankAccount,
     ComOrFreeOption,
     Name,
     Notification,
@@ -260,13 +259,14 @@ router.post(
 
         const { bankName, branch, accountType, accountNumber, meigi } = req.body;
 
+        // 空チェック
+        const fields = { bankName, branch, accountType, accountNumber, meigi };
+        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
+        if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+
         const bankNameTrim = bankName.trim();
         const branchTrim = branch.trim();
         const accountNumberTrim = accountNumber.trim();
-
-        if (!bankNameTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi) {
-            throw new AppError("INVALID_QUERY", 400);
-        }
 
         try {
             await createBankAccountUseCase({

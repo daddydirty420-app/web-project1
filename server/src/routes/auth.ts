@@ -23,7 +23,7 @@ const router = Router();
 // POST /auth/login
 router.post("/login", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password, rememberMe } = req.body;
-    const emailTrim = email.trim();
+    const emailTrim = email?.trim();
 
     if (!password) {
         throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
@@ -77,7 +77,7 @@ router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunct
 // POST /auth/signup
 router.post("/signup", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { email, password } = req.body;
-    const emailTrim = email.trim();
+    const emailTrim = email?.trim();
 
     if (!password) {
         throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
@@ -153,7 +153,7 @@ router.post("/signup-verify", async (req: Request, res: Response, next: NextFunc
 
 // POST /auth/request-password-reset
 router.post("/request-password-reset", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const email = req.body.email.trim();
+    const email = req.body.email?.trim();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -221,7 +221,7 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 // PATCH /auth/email
 router.patch("/email", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
-    const newEmail = req.body.email.trim();
+    const newEmail = req.body.email?.trim();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

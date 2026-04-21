@@ -13,13 +13,14 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
 
     const { bankName, branch, accountType, accountNumber, meigi } = req.body;
 
+    // 空チェック
+    const fields = { bankName, branch, accountType, accountNumber, meigi };
+    const hasEmpty = Object.values(fields).some((v) => !v?.trim());
+    if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+
     const bankNameTrim = bankName.trim();
     const branchTrim = branch.trim();
     const accountNumberTrim = accountNumber.trim();
-
-    if (!bankNameTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi) {
-        throw new AppError("INVALID_QUERY", 400);
-    }
 
     try {
         await editAccountUseCase({
