@@ -14,6 +14,7 @@ export const fetchAddressFromZipUseCase = async ({ zipcode }: Params): Promise<A
     if (data.results && data.results.length > 0) {
         const result = data.results[0];
 
+        // 都道府県マスターバリデーションチェック
         const todouhuken = await getTodouhukenOne({ todouhuken: result.address1 });
 
         if (!todouhuken) throw new AppError("TODOUHUKEN_NOT_FOUND", 404);
