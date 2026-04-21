@@ -57,7 +57,9 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             const data = await res.json();
 
             if (!res.ok) {
+                showAddressErrorToast(data.code);
                 console.error(data.message);
+                return;
             }
 
             setTodouhuken(data.address.todouhuken_name);

@@ -5,6 +5,7 @@ import { authenticateToken } from "../middleware/index.js";
 import { Address, TodouhukenOption } from "../models/index.js";
 import { editAddressUseCase } from "../usecases/address/editAddress.js";
 import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
+import { getMyAddressUseCase } from "../usecases/address/getMyAddress.js";
 
 const router = Router();
 
@@ -44,26 +45,14 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     }
 });
 
+// GET /address/myaddress
 router.get("/myaddress", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
     try {
-        const data = await Address.findOne({
-            attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-            where: { user_id: req.user!.id },
-            include: [
-                {
-                    model: TodouhukenOption,
-                    as: "AddressTodouhuken",
-                    required: false,
-                },
-            ],
-        });
+        const data = await getMyAddressUseCase({ userId });
 
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
-
-        res.json({ data });
+        res.status(200).json({ data });
     } catch (err) {
         next(err);
     }
@@ -90,7 +79,7 @@ router.get(
                 return;
             }
 
-            res.json({ data });
+            res.status(200).json({ data });
         } catch (err) {
             next(err);
         }
@@ -107,7 +96,8 @@ router.get("/get-address", async (req: Request, res: Response, next: NextFunctio
 
     try {
         const address = await fetchAddressFromZipUseCase({ zipcode });
-        res.json({ address });
+
+        res.status(200).json({ address });
     } catch (err) {
         next(err);
     }

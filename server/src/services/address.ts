@@ -30,6 +30,19 @@ export const getAddressOne = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMyAddressOne = ({ userId }: UserIdParams) => {
+    return Address.findOne({
+        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+        where: { user_id: userId },
+        include: [
+            {
+                model: TodouhukenOption,
+                as: "AddressTodouhuken",
+            },
+        ],
+    });
+};
+
 export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
     await Address.create(data, { transaction });
 };
