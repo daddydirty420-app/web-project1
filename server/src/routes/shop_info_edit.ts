@@ -16,7 +16,7 @@ import {
     TodouhukenOption,
     User,
 } from "../models/index.js";
-import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
+import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 
@@ -167,83 +167,51 @@ router.post(
     },
 );
 
+// POST /shop-info-edit/address/:id
 router.post(
-    "/address-edit/:id",
+    "/address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
+        const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const { postNumber, todouhuken, shikutyouson, banchi, building } = req.body;
-        if (!postNumber || !todouhuken || !shikutyouson || !banchi) {
-            res.status(400).json({ message: "必須項目が未入力です。" });
-            return;
+
+        // 空チェック
+        const fields = {
+            postNumber: req.body.postNumber,
+            todouhuken: req.body.todouhuken,
+            shikutyouson: req.body.shikutyouson,
+            banchi: req.body.banchi,
+        };
+
+        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
+
+        if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+
+        const postNumber = req.body.postNumber.trim();
+        const todouhuken = req.body.todouhuken.trim();
+        const shikutyouson = req.body.shikutyouson.trim();
+        const banchi = req.body.banchi.trim();
+        const building = req.body.building?.trim();
+
+        // 郵便番号正規化バリデーションチェック
+        const normalizedPostNumber = postNumber.replace(/-/g, "");
+        if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
+            throw new AppError("INVALID_POST_NUMBER", 400);
         }
 
-        const t = await sequelize.transaction();
-
         try {
-            const todouhukenData = await TodouhukenOption.findOne({
-                where: {
-                    name: todouhuken,
-                },
+            await createAddressShopEditUseCase({
+                shopId,
+                userId,
+                postNumber,
+                todouhuken,
+                shikutyouson,
+                banchi,
+                building,
             });
-            if (!todouhukenData || todouhukenData.id < 1 || todouhukenData.id > 47) {
-                res.status(404).json({ message: "都道府県が不正な値です。" });
-                return;
-            }
-
-            try {
-                const fromZip = await fetchAddressFromZipUseCase(postNumber);
-
-                if (fromZip.todouhuken_name !== todouhuken) {
-                    res.status(400).json({ message: "郵便番号と都道府県が一致しません。" });
-                    return;
-                }
-
-                if (fromZip.shikutyouson !== shikutyouson) {
-                    res.status(400).json({ message: "郵便番号と市区町村が一致しません。" });
-                    return;
-                }
-            } catch (err) {
-                console.error("住所チェックエラー：", err);
-                res.status(400).json({ message: "郵便番号が不正です。" });
-                return;
-            }
-
-            const shopEdit = await ShopInfoEdit.create(
-                {
-                    user_id: userId,
-                    shop_info_id: shopId,
-                },
-                { transaction: t },
-            );
-
-            await Address.create(
-                {
-                    post_number: postNumber,
-                    todouhuken_id: todouhukenData.id,
-                    shikutyouson: shikutyouson,
-                    banchi: banchi,
-                    building: building,
-                    shop_info_edit_id: shopEdit.id,
-                },
-                { transaction: t },
-            );
-
-            await Notification.create(
-                {
-                    read_user_id: userId,
-                    message:
-                        "会社所在地の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
-                },
-                { transaction: t },
-            );
-
-            await t.commit();
 
             res.status(200).json({ message: "住所の変更を受け付けました。" });
         } catch (err) {
-            await t.rollback();
             next(err);
         }
     },

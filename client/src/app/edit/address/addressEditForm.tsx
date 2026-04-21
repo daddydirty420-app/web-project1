@@ -90,7 +90,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             }
 
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/address-edit/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/address/${shopId}`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

@@ -31,6 +31,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     const banchi = req.body.banchi.trim();
     const building = req.body.building?.trim();
 
+    // 郵便番号正規化バリデーションチェック
     const normalizedPostNumber = postNumber.replace(/-/g, "");
     if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
         throw new AppError("INVALID_POST_NUMBER", 400);
