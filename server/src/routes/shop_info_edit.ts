@@ -440,44 +440,6 @@ router.get(
 );
 
 router.get(
-    "/account/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: BankAccount,
-                        attributes: [
-                            "id",
-                            "bank_name",
-                            "branch",
-                            "account_type_id",
-                            "account_number",
-                            "meigi",
-                            "bank_code",
-                            "branch_code",
-                        ],
-                    },
-                ],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data: shop.BankAccount });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/con-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

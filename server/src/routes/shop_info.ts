@@ -1,7 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { ShopInfo, ComOrFreeOption, Address, Name, TodouhukenOption } from "../models/index.js";
+import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
+import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
 
 const router = Router();
 
@@ -154,5 +155,22 @@ router.get("/open-info-request/:id", async (req: Request, res: Response, next: N
         next(err);
     }
 });
+
+// GET /shop-info/bank-account/:id
+router.get(
+    "/bank-account/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        try {
+            const data = await getBankAccountUseCase({ shopId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
