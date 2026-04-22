@@ -1,13 +1,14 @@
 import { AppError } from "../../errors.js";
-import { getAddressShopOne } from "../../services/address.js";
+import { getShopHasAddress } from "../../services/shopInfo.js";
 
 type Params = {
     shopId: number;
 };
 
 export const getAddressShopUseCase = async ({ shopId }: Params) => {
-    const data = await getAddressShopOne({ shopId });
+    const shop = await getShopHasAddress({ shopId });
 
+    const data = shop.Address;
     if (!data) throw new AppError("ADDRESS_NOT_FOUND", 404);
 
     return data;

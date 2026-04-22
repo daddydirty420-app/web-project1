@@ -1,5 +1,9 @@
 import { Transaction } from "sequelize";
-import { ShopInfoEdit } from "../models/index.js";
+import { AccountTypeOption, Address, BankAccount, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
+
+type ShopEditIdParams = {
+    shopEditId: number;
+};
 
 type CreateShopEditParams = {
     data: {
@@ -7,6 +11,46 @@ type CreateShopEditParams = {
         shop_info_id: number;
     };
     transaction?: Transaction;
+};
+
+export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
+    return ShopInfoEdit.findByPk(shopEditId, {
+        attributes: ["id"],
+        include: [
+            {
+                model: BankAccount,
+                attributes: [
+                    "id",
+                    "bank_name",
+                    "branch",
+                    "account_type_id",
+                    "account_number",
+                    "meigi",
+                    "bank_code",
+                    "branch_code",
+                ],
+                include: [{ model: AccountTypeOption }],
+            },
+        ],
+    });
+};
+
+export const getShopEditHasAddress = ({ shopEditId }: ShopEditIdParams) => {
+    return ShopInfoEdit.findByPk(shopEditId, {
+        attributes: ["id"],
+        include: [
+            {
+                model: Address,
+                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+        ],
+    });
 };
 
 export const createShopEdit = ({ data, transaction }: CreateShopEditParams) => {
