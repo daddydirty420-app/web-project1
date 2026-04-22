@@ -21,5 +21,21 @@
         "**/.git/objects/**": true,
         "**/node_modules/**": true,
         "**/tmp/**": true
-    }
+    },
+    "cSpell.words": [
+        "WATCHPACK",
+        "usecase",
+        "usecases",
+        "infopage",
+        "myaddress",
+        "todouhuken",
+        "Todouhuken",
+        "shikutyouson",
+        "banchi",
+        "Banchi",
+        "meigi",
+        "idcard",
+        "hissu",
+        "uriagekin"
+    ]
 }

@@ -23,7 +23,7 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
 
     const hasEmpty = Object.values(fields).some((v) => !v?.trim());
 
-    if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+    if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
 
     const postNumber = req.body.postNumber.trim();
     const todouhuken = req.body.todouhuken.trim();

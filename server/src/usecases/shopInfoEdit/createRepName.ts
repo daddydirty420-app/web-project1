@@ -44,7 +44,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
 
     const hasEmpty = Object.values(fields).some((v) => !v?.trim());
 
-    if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+    if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
 
     const sei = seiValue.trim();
     const mei = meiValue.trim();

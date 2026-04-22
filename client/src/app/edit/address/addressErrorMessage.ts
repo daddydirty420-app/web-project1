@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 
 export const showAddressErrorToast = (code: string) => {
     const messages: Record<string, string> = {
-        INVALID_OUERY: "空の項目があります",
+        INVALID_QUERY: "空の項目があります",
         INVALID_POST_NUMBER: "不正な郵便番号です",
         ADDRESS_NOT_FOUND: "住所が見つかりません",
         TODOUHUKEN_NOT_FOUND: "都道府県が見つかりません",

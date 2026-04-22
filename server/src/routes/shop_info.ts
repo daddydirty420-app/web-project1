@@ -103,7 +103,7 @@ router.get(
                     "open_date_time",
                     "company_number",
                     "capital",
-                    "menber_count",
+                    "member_count",
                     "founded_date",
                 ],
             });
