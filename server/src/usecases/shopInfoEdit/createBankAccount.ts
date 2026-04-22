@@ -1,7 +1,7 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { getAccountTypeOne } from "../../services/accountTypeOption.js";
-import { createBankAccountShopEdit } from "../../services/bankAccount.js";
+import { createBankAccount } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
 import { createNotification } from "../../services/notification.js";
@@ -51,7 +51,7 @@ export const createBankAccountUseCase = async ({
             transaction: t,
         });
 
-        await createBankAccountShopEdit({
+        await createBankAccount({
             data: {
                 bank_code: matchedBank.code,
                 bank_name: matchedBank.normalize?.name || matchedBank.name,

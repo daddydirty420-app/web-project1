@@ -2,11 +2,7 @@ import { Address, TodouhukenOption } from "../models/index.js";
 import {
     AddressIdParams,
     CreateAddressParams,
-    CreateAddressShopEditParams,
-    CreateDeliveryAddressParams,
     DeliveryIdParams,
-    ShopEditIdParams,
-    ShopIdParams,
     UpdateAddressParams,
     UserIdParams,
 } from "../types/serviceType/address.js";
@@ -61,14 +57,6 @@ export const getDeliveryAddressOne = ({ deliveryId }: DeliveryIdParams) => {
 };
 
 export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
-    await Address.create(data, { transaction });
-};
-
-export const createDeliveryAddress = async ({ data, transaction }: CreateDeliveryAddressParams) => {
-    await Address.create(data, { transaction });
-};
-
-export const createAddressShopEdit = async ({ data, transaction }: CreateAddressShopEditParams) => {
     await Address.create(data, { transaction });
 };
 

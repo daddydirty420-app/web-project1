@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { getAllLevel1 } from "../../../services/categories.js";
-import { findAllCondition } from "../../../services/itemCondition.js";
+import { findAllCondition } from "../../../services/itemConditionOption.js";
 import { getItemFormData } from "../../../services/items/index.js";
 import { findAllShippingDay } from "../../../services/shippingDay.js";
 import { findAllShippingService } from "../../../services/shippingService.js";

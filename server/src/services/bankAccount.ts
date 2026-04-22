@@ -1,13 +1,5 @@
 import { AccountTypeOption, BankAccount } from "../models/index.js";
-import {
-    AccountIdParams,
-    CreateBankParams,
-    CreateBankShopEditParams,
-    ShopEditIdParams,
-    ShopIdParams,
-    updateBankParams,
-    UserIdParams,
-} from "../types/serviceType/bankAccount.js";
+import { AccountIdParams, CreateBankParams, updateBankParams, UserIdParams } from "../types/serviceType/bankAccount.js";
 
 export const getBankAccount = ({ accountId }: AccountIdParams) => {
     return BankAccount.findByPk(accountId);
@@ -31,10 +23,6 @@ export const getMyAccountOne = ({ userId }: UserIdParams) => {
 };
 
 export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {
-    await BankAccount.create(data, { transaction });
-};
-
-export const createBankAccountShopEdit = async ({ data, transaction }: CreateBankShopEditParams) => {
     await BankAccount.create(data, { transaction });
 };
 

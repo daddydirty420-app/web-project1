@@ -1,9 +1,9 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createDeliveryAddress, getAddressOne } from "../../services/address.js";
+import { createAddress, getAddressOne } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
-import { createDeliveryName, getNameOne } from "../../services/name.js";
+import { createName, getNameOne } from "../../services/name.js";
 import { getUser } from "../../services/users/query.js";
 
 type Params = {
@@ -39,7 +39,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
 
         const id = newDelivery.id;
 
-        await createDeliveryAddress({
+        await createAddress({
             data: {
                 delivery_id: deliveryId,
                 post_number: userAddress?.post_number ?? null,
@@ -51,7 +51,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             transaction: t,
         });
 
-        await createDeliveryName({
+        await createName({
             data: {
                 delivery_id: deliveryId,
                 sei: userName?.sei ?? null,
