@@ -1,4 +1,11 @@
-import { CountParams, DestroyParams, FollowingsParams, FollowWithUser, ListParams, UserParams } from "../types/serviceType/follow.js";
+import {
+    CountParams,
+    DestroyParams,
+    FollowingsParams,
+    FollowWithUser,
+    ListParams,
+    UserParams,
+} from "../types/serviceType/follow.js";
 import { Follow, ShopInfo, User } from "../models/index.js";
 import { Op } from "sequelize";
 

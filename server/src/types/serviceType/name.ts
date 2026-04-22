@@ -39,7 +39,7 @@ export type CreateRepNameParams = {
         mei_kana: string;
         shop_info_edit_id: number | null;
         shop_type: "representative" | "contact" | null;
-    },
+    };
     transaction?: Transaction;
 };
 
