@@ -37,29 +37,10 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     }
 });
 
-router.get(
-    "/delivery-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const data = await Name.findOne({
-                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
-                where: { delivery_id: req.params.id },
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
+// GET /name/myname
 router.get("/myname", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
     try {
         const data = await Name.findOne({
             attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
@@ -71,10 +52,35 @@ router.get("/myname", authenticateToken, async (req: Request, res: Response, nex
             return;
         }
 
-        res.json({ data });
+        res.status(200).json({ data });
     } catch (err) {
         next(err);
     }
 });
+
+// GET /name/delivery-name/:id
+router.get(
+    "/delivery-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const deliveryId = Number(req.params.id);
+
+        try {
+            const data = await Name.findOne({
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
+                where: { delivery_id: req.params.id },
+            });
+
+            if (!data) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

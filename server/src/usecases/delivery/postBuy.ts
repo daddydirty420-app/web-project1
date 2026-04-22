@@ -3,7 +3,7 @@ import { AppError } from "../../errors.js";
 import { createDeliveryAddress, getAddressOne } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
-import { createDeliveryName, getNameOne } from "../../services/name.js";
+import { createDeliveryName, getMyname } from "../../services/name.js";
 import { getUser } from "../../services/users/query.js";
 
 type Params = {
@@ -31,7 +31,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     // 住所・氏名取得
     const userAddress = await getAddressOne({ userId });
 
-    const userName = await getNameOne({ userId });
+    const userName = await getMyname({ userId });
 
     // データ作成
     const deliveryId = await sequelize.transaction(async (t) => {

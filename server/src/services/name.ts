@@ -5,7 +5,7 @@ export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
 };
 
-export const getNameOne = ({ userId }: UserIdParams) => {
+export const getMyname = ({ userId }: UserIdParams) => {
     return Name.findOne({
         where: { user_id: userId },
     });
