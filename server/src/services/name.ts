@@ -1,6 +1,8 @@
 import { Name } from "../models/index.js";
 import {
+    CreateDeliveryNameParams,
     CreateNameParams,
+    CreateRepNameParams,
     DeliveryIdParams,
     NameIdParams,
     UpdateNameParams,
@@ -33,6 +35,14 @@ export const getDeliveryNameOne = ({ deliveryId }: DeliveryIdParams) => {
 
 export const createName = async ({ data, transaction }: CreateNameParams) => {
     await Name.create(data, { transaction });
+};
+
+export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNameParams) => {
+    return Name.create(data, { transaction });
+};
+
+export const createRepNameShopEdit = async ({ data, transaction }: CreateRepNameParams) => {
+    return Name.create(data, { transaction });
 };
 
 export const updateName = async ({ name, data, transaction }: UpdateNameParams) => {

@@ -1,6 +1,6 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createAddress } from "../../services/address.js";
+import { createAddressShopEdit } from "../../services/address.js";
 import { createNotification } from "../../services/notification.js";
 import { createShopEdit } from "../../services/shopInfoEdit.js";
 import { fetchAddressFromZipUseCase } from "../address/zipUseCase.js";
@@ -45,7 +45,7 @@ export const createAddressShopEditUseCase = async ({
             transaction: t,
         });
 
-        await createAddress({
+        await createAddressShopEdit({
             data: {
                 post_number: postNumber,
                 todouhuken_id: fromZip.todouhuken_id,

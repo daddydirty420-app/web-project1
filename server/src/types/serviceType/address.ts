@@ -23,14 +23,31 @@ export type ShopEditIdParams = {
 
 export type CreateAddressParams = {
     data: {
-        user_id?: number;
-        post_number?: string;
-        todouhuken_id?: number;
-        shikutyouson?: string;
-        banchi?: string;
+        user_id: number;
+    };
+    transaction?: Transaction;
+};
+
+export type CreateDeliveryAddressParams = {
+    data: {
+        delivery_id: number;
+        post_number: string;
+        todouhuken_id: number;
+        shikutyouson: string;
+        banchi: string;
         building?: string;
-        shop_info_edit_id?: number;
-        delivery_id?: number;
+    };
+    transaction?: Transaction;
+};
+
+export type CreateAddressShopEditParams = {
+    data: {
+        post_number: string;
+        todouhuken_id: number;
+        shikutyouson: string;
+        banchi: string;
+        building?: string;
+        shop_info_edit_id: number;
     };
     transaction?: Transaction;
 };

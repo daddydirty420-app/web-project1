@@ -1,7 +1,7 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
-import { createName } from "../../services/name.js";
+import { createRepNameShopEdit } from "../../services/name.js";
 import { createNotification } from "../../services/notification.js";
 import { getShop } from "../../services/shopInfo.js";
 import { createShopEdit } from "../../services/shopInfoEdit.js";
@@ -90,7 +90,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
             transaction: t,
         });
 
-        await createName({
+        await createRepNameShopEdit({
             data: {
                 sei: sei,
                 mei: mei,

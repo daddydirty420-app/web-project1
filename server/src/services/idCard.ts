@@ -3,7 +3,7 @@ import { Transaction } from "sequelize";
 
 type CreateIdParams = {
     data: {
-        user_id?: number;
+        user_id: number;
     };
     transaction?: Transaction;
 };

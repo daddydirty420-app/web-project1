@@ -2,9 +2,9 @@ import { Transaction } from "sequelize";
 import { ItemDeleteLogs } from "../models/index.js";
 
 type PerfectDeleteParams = {
-    itemId?: number;
-    userId?: number;
-    transaction?: Transaction;
+    itemId: number;
+    userId: number;
+    transaction: Transaction;
 };
 
 export const createPerfectDelete = async ({ itemId, userId, transaction }: PerfectDeleteParams) => {

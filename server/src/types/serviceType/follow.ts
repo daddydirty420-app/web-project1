@@ -1,3 +1,5 @@
+import { Follow, User } from "../../models/index.js";
+
 export type FollowType = "follow" | "follower";
 
 export type FollowingsParams = {
@@ -18,4 +20,13 @@ export type ListParams = {
     pageUserId: number;
     type: FollowType;
     keyword?: string;
+};
+
+export type DestroyParams = {
+    follow: InstanceType<typeof Follow>;
+};
+
+export type FollowWithUser = InstanceType<typeof Follow> & {
+    FollowerUser: InstanceType<typeof User>;
+    FollowUser: InstanceType<typeof User>;
 };

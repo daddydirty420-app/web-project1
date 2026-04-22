@@ -1,15 +1,6 @@
-import { CountParams, FollowingsParams, ListParams, UserParams } from "../types/serviceType/follow.js";
+import { CountParams, DestroyParams, FollowingsParams, FollowWithUser, ListParams, UserParams } from "../types/serviceType/follow.js";
 import { Follow, ShopInfo, User } from "../models/index.js";
 import { Op } from "sequelize";
-
-type DestroyParams = {
-    follow: InstanceType<typeof Follow>;
-};
-
-type FollowWithUser = InstanceType<typeof Follow> & {
-    FollowerUser: InstanceType<typeof User>;
-    FollowUser: InstanceType<typeof User>;
-};
 
 export const getFollowings = async ({ currentUserId, targetUserIds }: FollowingsParams) => {
     return (await Follow.findAll({

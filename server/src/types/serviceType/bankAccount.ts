@@ -19,15 +19,21 @@ export type ShopEditIdParams = {
 
 export type CreateBankParams = {
     data: {
-        user_id?: number;
-        bank_code?: string;
-        bank_name?: string;
-        branch_code?: string;
-        branch?: string;
-        account_type_id?: number;
-        account_number?: string;
-        meigi?: string;
-        shop_info_edit_id?: number;
+        user_id: number;
+    };
+    transaction?: Transaction;
+};
+
+export type CreateBankShopEditParams = {
+    data: {
+        bank_code: string;
+        bank_name: string;
+        branch_code: string;
+        branch: string;
+        account_type_id: number;
+        account_number: string;
+        meigi: string;
+        shop_info_edit_id: number;
     };
     transaction?: Transaction;
 };
@@ -35,12 +41,12 @@ export type CreateBankParams = {
 export type updateBankParams = {
     account: InstanceType<typeof BankAccount>;
     data: {
-        bank_code?: string;
-        bank_name?: string;
-        branch_code?: string;
-        branch?: string;
-        account_type_id?: number;
-        account_number?: string;
-        meigi?: string;
+        bank_code: string;
+        bank_name: string;
+        branch_code: string;
+        branch: string;
+        account_type_id: number;
+        account_number: string;
+        meigi: string;
     };
 };
