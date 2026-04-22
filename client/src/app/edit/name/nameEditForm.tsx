@@ -169,7 +169,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             }
 
             if (page === "rep-shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/rep-name-edit/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/rep-name/${shopId}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -186,27 +186,28 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                     return;
                 }
                 toast.success("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。");
+                await sleep(1500);
+
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/rep-name-edit/${shopId}`,
-                    {
-                        method: "PATCH",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                        body: JSON.stringify(body),
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/rep-name/${shopId}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
                     },
-                );
+                    body: JSON.stringify(body),
+                });
 
                 const data = await res.json();
 
                 if (!res.ok) {
                     console.error(data.message);
-                    alert("氏名の変更に失敗しました。");
+                    toast.error("氏名の変更に失敗しました。");
                     return;
                 }
+                toast.success("代表者氏名を変更しました");
+                await sleep(1500);
 
                 router.push(`/shop-signup/step5/${shopId}`);
             }

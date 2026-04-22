@@ -1,7 +1,7 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createAddressShopEdit } from "../../services/address.js";
-import { createUserMessageNotification } from "../../services/notification.js";
+import { createNotification } from "../../services/notification.js";
 import { createShopEdit } from "../../services/shopInfoEdit.js";
 import { fetchAddressFromZipUseCase } from "../address/zipUseCase.js";
 
@@ -59,13 +59,13 @@ export const createAddressShopEditUseCase = async ({
     });
 
     // お知らせ作成
-    createUserMessageNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             message:
                 "会社所在地の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
         },
     }).catch((err) => {
-        console.error("service createUsermessageNotification error:", err);
+        console.error("service createNotification error:", err);
     });
 };

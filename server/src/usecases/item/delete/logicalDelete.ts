@@ -1,11 +1,11 @@
-import { AppError } from "../../../errors.js";
 import sequelize from "../../../db.js";
-import { createNormalNotification } from "../../../services/notification.js";
-import { getItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
-import { destroyItemLikeTransaction, getAllItemLikes } from "../../../services/itemLike.js";
-import { destroyAllComments, getAllComments } from "../../../services/comment.js";
+import { AppError } from "../../../errors.js";
 import { destroyAllCarts, getAllCarts } from "../../../services/cart.js";
+import { destroyAllComments, getAllComments } from "../../../services/comment.js";
 import { findDeliveryNow } from "../../../services/delivery.js";
+import { destroyItemLikeTransaction, getAllItemLikes } from "../../../services/itemLike.js";
+import { getItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
+import { createNotification } from "../../../services/notification.js";
 import { updateLogicalDelete } from "../../../services/sale.js";
 
 type Params = {
@@ -54,7 +54,7 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
     });
 
     // Notification作成
-    createNormalNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             url: `/item/deleted/${itemId}`,
@@ -62,6 +62,6 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
             message: `${item.name}を削除しました。削除から1か月間はマイページの「削除した商品」、もしくはこのお知らせからアーカイブを確認・復元することができます。削除から1か月以上経過すると、アーカイブの確認・復元ができなくなりますのでご注意ください。`,
         },
     }).catch((err) => {
-        console.error("service createNormalNotification error", err);
+        console.error("service createNotification error", err);
     });
 };

@@ -4,19 +4,11 @@ export type UserIdParams = {
     userId: number;
 };
 
-export type CreateNormalTransactionParams = {
+export type CreateNotificationParams = {
     data: {
         read_user_id: number;
-        url: string;
-        message_image: string;
-        message: string;
-    };
-    transaction?: Transaction;
-};
-
-export type CreateUserMessageParams = {
-    data: {
-        read_user_id: number;
+        url?: string | null;
+        message_image?: string | null;
         message: string;
     };
     transaction?: Transaction;

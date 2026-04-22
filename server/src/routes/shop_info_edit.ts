@@ -1,10 +1,6 @@
-import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import sequelize from "../db.js";
 import { AppError } from "../errors.js";
-import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import {
     Address,
@@ -18,6 +14,7 @@ import {
 } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
+import { createRepNameUseCase } from "../usecases/shopInfoEdit/createRepName.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/getConName.js";
@@ -54,117 +51,6 @@ router.patch(
 
             res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.post(
-    "/rep-name-edit/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-        const userId = req.user!.id;
-        const {
-            seiValue,
-            meiValue,
-            seiKanaValue,
-            meiKanaValue,
-            frontFileName,
-            frontFileType,
-            rearFileName,
-            rearFileType,
-            idFrontUpload,
-            idRearUpload,
-        } = req.body;
-
-        if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue || !frontFileName || !rearFileName) {
-            res.status(400).json({ message: "入力されていない項目があります。" });
-            return;
-        }
-
-        const now = Date.now();
-
-        const t = await sequelize.transaction();
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId);
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            // 身分証アップロード
-            let frontSignedUrl: string | null = null;
-            let rearSignedUrl: string | null = null;
-            let frontUrl: string | null = null;
-            let rearUrl: string | null = null;
-
-            if (frontFileName && idFrontUpload) {
-                const frontKey = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
-
-                const frontCommand = new PutObjectCommand({
-                    Bucket: bucket,
-                    Key: frontKey,
-                    ContentType: frontFileType,
-                });
-
-                frontSignedUrl = await getSignedUrl(s3, frontCommand, { expiresIn: 60 });
-
-                frontUrl = `${s3Domain}/${frontKey}`;
-            }
-
-            if (rearFileName && idRearUpload) {
-                const rearKey = `idcard/shop/rear/${shopId}/${now}_${rearFileName}`;
-
-                const rearCommand = new PutObjectCommand({
-                    Bucket: bucket,
-                    Key: rearKey,
-                    ContentType: rearFileType,
-                });
-
-                rearSignedUrl = await getSignedUrl(s3, rearCommand, { expiresIn: 60 });
-
-                rearUrl = `${s3Domain}/${rearKey}`;
-            }
-
-            // データ作成
-            const shopEdit = await ShopInfoEdit.create(
-                {
-                    id_card_front: frontUrl,
-                    id_card_rear: rearUrl,
-                    user_id: userId,
-                    shop_info_id: shopId,
-                },
-                { transaction: t },
-            );
-
-            await Name.create(
-                {
-                    sei: seiValue,
-                    mei: meiValue,
-                    sei_kana: seiKanaValue,
-                    mei_kana: meiKanaValue,
-                    shop_info_edit_id: shopEdit.id,
-                    shop_type: "representative",
-                },
-                { transaction: t },
-            );
-
-            await Notification.create(
-                {
-                    read_user_id: userId,
-                    message:
-                        "代表者氏名の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
-                },
-                { transaction: t },
-            );
-
-            await t.commit();
-
-            res.status(200).json({ message: "代表者氏名の変更を受け付けました。" });
-        } catch (err) {
-            await t.rollback();
             next(err);
         }
     },
@@ -251,6 +137,27 @@ router.post(
             });
 
             res.status(200).json({ message: "口座情報の変更を受け付けました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// POST /shop-info/rep-name/:id
+router.post(
+    "/rep-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
+        const body = req.body;
+
+        try {
+            await createRepNameUseCase({ shopId, userId, body });
+
+            res.status(200).json({ message: "代表者氏名の変更を受け付けました。" });
         } catch (err) {
             next(err);
         }

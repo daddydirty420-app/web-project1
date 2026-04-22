@@ -13,6 +13,10 @@ type UpdateShopEmailParams = {
     transaction?: Transaction;
 };
 
+export const getShop = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId);
+};
+
 export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
         attributes: ["id"],

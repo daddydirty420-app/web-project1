@@ -30,6 +30,8 @@ export class ShopInfo extends Model {
     declare founded_date: Date | null;
     declare open_info: boolean;
     declare permit_url: string[] | null;
+    declare name_representative_id: number | null;
+    declare name_contact_id: number | null;
 
     static associate() {
         ShopInfo.belongsTo(User, {

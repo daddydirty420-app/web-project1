@@ -1,8 +1,8 @@
 import { AppError } from "../../../errors.js";
-import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
-import { createNormalNotification } from "../../../services/notification.js";
-import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
 import { countFollower } from "../../../services/follow.js";
+import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
+import { createNotification } from "../../../services/notification.js";
+import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 
 type Params = {
     itemId: number;
@@ -54,7 +54,7 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
         },
     });
 
-    createNormalNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             url: `/item/${itemId}`,
@@ -62,6 +62,6 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
             message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
         },
     }).catch((err) => {
-        console.error("service createNormalNotification error", err);
+        console.error("service createNotification error", err);
     });
 };

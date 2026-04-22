@@ -1,16 +1,16 @@
-import { AppError } from "../../../errors.js";
-import { getItemWithVideoSaleShipping } from "../../../services/items/index.js";
-import { Body } from "../../../types/serviceType/items/uploadBody.js";
 import sequelize from "../../../db.js";
-import { updateVideo } from "../../../services/video.js";
-import { updateSale } from "../../../services/sale.js";
+import { AppError } from "../../../errors.js";
 import { updateShipping } from "../../../services/itemShippingProfile.js";
 import { updateImage, updateItem } from "../../../services/items/command/update.js";
-import { createNormalNotification } from "../../../services/notification.js";
+import { getItemWithVideoSaleShipping } from "../../../services/items/index.js";
+import { createNotification } from "../../../services/notification.js";
+import { updateSale } from "../../../services/sale.js";
+import { updateVideo } from "../../../services/video.js";
+import { Body } from "../../../types/serviceType/items/uploadBody.js";
 import { buildSignedUrls } from "./shared/buildSignedUrls.js";
-import { validateNumber } from "./shared/validateNumber.js";
-import { validateMaster } from "./shared/validateMaster.js";
 import { resolveBrand } from "./shared/resolveBrand.js";
+import { validateMaster } from "./shared/validateMaster.js";
+import { validateNumber } from "./shared/validateNumber.js";
 
 type Params = {
     itemId: number;
@@ -154,7 +154,7 @@ export const uploadDraftUseCase = async ({ itemId, userId, body }: Params) => {
     });
 
     // お知らせ作成
-    createNormalNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             url: `/item/draft/${itemId}`,
@@ -162,7 +162,7 @@ export const uploadDraftUseCase = async ({ itemId, userId, body }: Params) => {
             message: `${item.name}の下書きを作成しました。下書きの閲覧・編集・出品はこちらから！`,
         },
     }).catch((err) => {
-        console.error("service createNormalNotification error", err);
+        console.error("service createNotification error", err);
     });
 
     return {

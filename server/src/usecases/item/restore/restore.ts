@@ -1,7 +1,6 @@
-import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { getItem, updateRestoreItem } from "../../../services/items/index.js";
-import { createNormalNotification } from "../../../services/notification.js";
+import { createNotification } from "../../../services/notification.js";
 
 type Params = {
     itemId: number;
@@ -18,7 +17,7 @@ export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
     // データ作成
     await updateRestoreItem({ item });
 
-    createNormalNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             url: `/item/${itemId}`,
@@ -26,6 +25,6 @@ export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
             message: `「${item.name}」を復元しました。こちらから復元した商品を確認できます。`,
         },
     }).catch((err) => {
-        console.error("service createNormalNotification error", err);
+        console.error("service createNotification error", err);
     });
 };

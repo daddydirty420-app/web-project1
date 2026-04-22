@@ -15,7 +15,13 @@ export type DeliveryIdParams = {
 
 export type CreateNameParams = {
     data: {
-        user_id: number;
+        user_id?: number | null;
+        sei?: string;
+        mei?: string;
+        sei_kana?: string;
+        mei_kana?: string;
+        shop_info_edit_id?: number | null;
+        shop_type?: "representative" | "contact" | null;
     };
     transaction?: Transaction;
 };

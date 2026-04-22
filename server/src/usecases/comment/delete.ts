@@ -1,7 +1,7 @@
 import { AppError } from "../../errors.js";
 import { destroyComment, getComment } from "../../services/comment.js";
 import { getItem } from "../../services/items/index.js";
-import { createNormalNotification } from "../../services/notification.js";
+import { createNotification } from "../../services/notification.js";
 
 type Params = {
     userId: number;
@@ -28,7 +28,7 @@ export const deleteCommentUseCase = async ({ userId, commentId, page }: Params) 
             ? `利用規約違反が確認されたため、当該コメントが削除されました。「${comment.text}」`
             : `コメントを削除しました。「${comment.text}」`;
 
-    createNormalNotification({
+    createNotification({
         data: {
             read_user_id: userId,
             url: `/item/${item.id}`,
@@ -36,6 +36,6 @@ export const deleteCommentUseCase = async ({ userId, commentId, page }: Params) 
             message,
         },
     }).catch((err) => {
-        console.error("service createNormalNotification error", err);
+        console.error("service createNotification error", err);
     });
 };

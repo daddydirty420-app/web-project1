@@ -17,6 +17,8 @@ type CreateShopEditParams = {
     data: {
         user_id: number;
         shop_info_id: number;
+        id_card_front?: string | null;
+        id_card_rear?: string | null;
     };
     transaction?: Transaction;
 };
