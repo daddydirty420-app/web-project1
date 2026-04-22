@@ -15,6 +15,7 @@ export const editNameUseCase = async ({ nameId, sei, mei, seiKana, meiKana }: Pa
 
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 
+    // db更新
     await updateName({
         name,
         data: {

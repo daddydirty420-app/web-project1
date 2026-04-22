@@ -1,5 +1,12 @@
 import { Name } from "../models/index.js";
-import { CreateDeliveryNameParams, CreateNameParams, DeliveryIdParams, NameIdParams, UpdateNameParams, UserIdParams } from "../types/serviceType/name.js";
+import {
+    CreateDeliveryNameParams,
+    CreateNameParams,
+    DeliveryIdParams,
+    NameIdParams,
+    UpdateNameParams,
+    UserIdParams,
+} from "../types/serviceType/name.js";
 
 export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
