@@ -4,6 +4,7 @@ import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { Name } from "../models/index.js";
 import { editNameUseCase } from "../usecases/name/editName.js";
+import { getMyNameUseCase } from "../usecases/name/getMyName.js";
 
 const router = Router();
 
@@ -42,15 +43,7 @@ router.get("/myname", authenticateToken, async (req: Request, res: Response, nex
     const userId = req.user!.id;
 
     try {
-        const data = await Name.findOne({
-            attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-            where: { user_id: req.user!.id },
-        });
-
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
+        const data = await getMyNameUseCase({ userId });
 
         res.status(200).json({ data });
     } catch (err) {
