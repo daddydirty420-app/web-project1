@@ -5,10 +5,12 @@ type ShopIdParams = {
     shopId: number;
 };
 
-type UpdateShopEmailParams = {
+type UpdateShopParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: {
-        email: string;
+        email?: string;
+        id_card_front?: string | null;
+        id_card_rear?: string | null;
     };
     transaction?: Transaction;
 };
@@ -83,6 +85,6 @@ export const getShopHasConName = ({ shopId }: ShopIdParams) => {
     });
 };
 
-export const updateEmailShop = async ({ shopInfo, data, transaction }: UpdateShopEmailParams) => {
+export const updateShop = async ({ shopInfo, data, transaction }: UpdateShopParams) => {
     await shopInfo.update(data, { transaction });
 };

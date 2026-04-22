@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { updateEmailShop } from "../../services/shopInfo.js";
+import { updateShop } from "../../services/shopInfo.js";
 import { getTokenEmailChangeOne } from "../../services/tokenEmailChange.js";
 import { updateEmailUser } from "../../services/users/command.js";
 import { getUserHasShop } from "../../services/users/query.js";
@@ -31,7 +31,7 @@ export const changeNewEmailUseCase = async ({ token }: Params) => {
     });
 
     if (user.ShopInfo) {
-        await updateEmailShop({
+        await updateShop({
             shopInfo: user.ShopInfo,
             data: {
                 email: newEmail,

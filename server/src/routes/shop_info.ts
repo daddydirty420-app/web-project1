@@ -6,8 +6,28 @@ import { getAddressShopUseCase } from "../usecases/shopInfo/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
 import { getConNameUseCase } from "../usecases/shopInfo/getConName.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/getRepName.js";
+import { updateRepNameUseCase } from "../usecases/shopInfo/updateRepName.js";
 
 const router = Router();
+
+// PATCH /shop-info/rep-name/:id
+router.patch(
+    "/rep-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        const body = req.body;
+
+        try {
+            await updateRepNameUseCase({ shopId, body });
+
+            res.status(200).json({ message: "代表者氏名を変更しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 router.get("/com-or-free", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

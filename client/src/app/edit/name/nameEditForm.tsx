@@ -190,7 +190,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/rep-name/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/rep-name/${shopId}`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",

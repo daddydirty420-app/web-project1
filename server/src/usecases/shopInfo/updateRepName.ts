@@ -1,20 +1,17 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
-import { createName } from "../../services/name.js";
-import { createNotification } from "../../services/notification.js";
-import { getShop } from "../../services/shopInfo.js";
-import { createShopEdit } from "../../services/shopInfoEdit.js";
+import { updateName } from "../../services/name.js";
+import { getShopHasRepName, updateShop } from "../../services/shopInfo.js";
 import { RepNameBody } from "../../types/repNameBody.js";
 import { generateSignedUrl } from "../../utils/s3/index.js";
 
 type Params = {
     shopId: number;
-    userId: number;
     body: RepNameBody;
 };
 
-export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => {
+export const updateRepNameUseCase = async ({ shopId, body }: Params) => {
     const now = Date.now();
 
     const {
@@ -52,7 +49,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
     const meiKana = meiKanaValue.trim();
 
     // ショップ取得
-    const shop = await getShop({ shopId });
+    const shop = await getShopHasRepName({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
 
@@ -80,37 +77,24 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
 
     // データ作成
     await sequelize.transaction(async (t) => {
-        const shopEdit = await createShopEdit({
+        await updateShop({
+            shopInfo: shop,
             data: {
                 id_card_front: frontUrl,
                 id_card_rear: rearUrl,
-                user_id: userId,
-                shop_info_id: shopId,
             },
             transaction: t,
         });
 
-        await createName({
+        await updateName({
+            name: shop.RepresentativeName,
             data: {
                 sei: sei,
                 mei: mei,
                 sei_kana: seiKana,
                 mei_kana: meiKana,
-                shop_info_edit_id: shopEdit.id,
-                shop_type: "representative",
             },
             transaction: t,
         });
-    });
-
-    // お知らせ作成
-    createNotification({
-        data: {
-            read_user_id: userId,
-            message:
-                "代表者氏名の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
-        },
-    }).catch((err) => {
-        console.error("service createNotification error:", err);
     });
 };
