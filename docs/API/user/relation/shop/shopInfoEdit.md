@@ -47,3 +47,33 @@
 - お知らせ作成（非同期）
 
 ---
+
+## POST /shop-info-edit/rep-name/:id — 代表者氏名変更受付
+
+### リクエスト
+
+- params:
+    - shopId
+- body:
+    - seiValue
+    - meiValue
+    - seiKanaValue
+    - meiKanaValue
+    - frontFileName
+    - frontFileType
+    - rearFileName
+    - rearFileType
+    - idFrontUpload
+    - idRearUpload
+
+### ビジネスロジック
+
+- 空チェック
+- トリム
+- ショップデータ取得
+- 身分証アップロード
+- ShopInfoEdit作成
+- 氏名データ作成
+- お知らせ作成（非同期）
+
+---
