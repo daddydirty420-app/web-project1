@@ -9,6 +9,6 @@ export const getMyNameUseCase = async ({ userId }: Params) => {
     const data = await getMyNameOne({ userId });
 
     if (!data) throw new AppError("NAME_NOT_FOUND", 404);
-    
+
     return data;
 };

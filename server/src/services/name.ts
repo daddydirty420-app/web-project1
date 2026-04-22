@@ -1,5 +1,5 @@
 import { Name } from "../models/index.js";
-import { CreateDeliveryNameParams, CreateNameParams, NameIdParams, UpdateNameParams, UserIdParams } from "../types/serviceType/name.js";
+import { CreateDeliveryNameParams, CreateNameParams, DeliveryIdParams, NameIdParams, UpdateNameParams, UserIdParams } from "../types/serviceType/name.js";
 
 export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
@@ -15,6 +15,13 @@ export const getMyNameOne = ({ userId }: UserIdParams) => {
     return Name.findOne({
         attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
         where: { user_id: userId },
+    });
+};
+
+export const getDeliveryNameOne = ({ deliveryId }: DeliveryIdParams) => {
+    return Name.findOne({
+        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
+        where: { delivery_id: deliveryId },
     });
 };
 

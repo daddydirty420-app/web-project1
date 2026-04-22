@@ -2,8 +2,8 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Name } from "../models/index.js";
 import { editNameUseCase } from "../usecases/name/editName.js";
+import { getDeliveryNameUseCase } from "../usecases/name/getDeliveryName.js";
 import { getMyNameUseCase } from "../usecases/name/getMyName.js";
 
 const router = Router();
@@ -59,15 +59,7 @@ router.get(
         const deliveryId = Number(req.params.id);
 
         try {
-            const data = await Name.findOne({
-                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
-                where: { delivery_id: req.params.id },
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
+            const data = await getDeliveryNameUseCase({ deliveryId });
 
             res.status(200).json({ data });
         } catch (err) {
