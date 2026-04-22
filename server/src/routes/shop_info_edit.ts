@@ -18,8 +18,8 @@ import {
 } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
-import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
+import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 
 const router = Router();
 
@@ -350,66 +350,6 @@ router.get(
 );
 
 router.get(
-    "/rep-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "RepresentativeName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ name: shop.RepresentativeName });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/con-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "ContactName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ name: shop.ContactName });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/company-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -480,6 +420,68 @@ router.get(
             const data = await getBankAccountUseCase({ shopEditId });
 
             res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info-edit/rep-name/:id
+router.get(
+    "/rep-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = req.params.id;
+
+        try {
+            const shop = await ShopInfo.findByPk(shopEditId, {
+                attributes: ["id"],
+                include: [
+                    {
+                        model: Name,
+                        as: "RepresentativeName",
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
+            });
+
+            if (!shop) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ name: shop.RepresentativeName });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info-edit/con-name/:id
+router.get(
+    "/con-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = req.params.id;
+
+        try {
+            const shop = await ShopInfo.findByPk(shopEditId, {
+                attributes: ["id"],
+                include: [
+                    {
+                        model: Name,
+                        as: "ContactName",
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
+            });
+
+            if (!shop) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ name: shop.ContactName });
         } catch (err) {
             next(err);
         }

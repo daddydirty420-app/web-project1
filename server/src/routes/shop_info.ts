@@ -191,4 +191,66 @@ router.get(
     },
 );
 
+// GET /shop-info/rep-name/:id
+router.get(
+    "/rep-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = req.params.id;
+
+        try {
+            const shop = await ShopInfo.findByPk(shopId, {
+                attributes: ["id"],
+                include: [
+                    {
+                        model: Name,
+                        as: "RepresentativeName",
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
+            });
+
+            if (!shop) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ name: shop.RepresentativeName });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/con-name/:id
+router.get(
+    "/con-name/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = req.params.id;
+
+        try {
+            const shop = await ShopInfo.findByPk(shopId, {
+                attributes: ["id"],
+                include: [
+                    {
+                        model: Name,
+                        as: "ContactName",
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
+            });
+
+            if (!shop) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.status(200).json({ name: shop.ContactName });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
 export default router;
