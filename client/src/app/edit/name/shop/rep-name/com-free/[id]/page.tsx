@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-com-free/rep-name/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info-edit/rep-name/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -45,5 +45,5 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    return <NameEditForm name={data.data.Name} page="rep-com-free" shopEditId={id} />;
+    return <NameEditForm name={data.name} page="rep-com-free" shopEditId={id} />;
 }

@@ -20,6 +20,8 @@ import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAdd
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
+import { getConNameEditUseCase } from "../usecases/shopInfoEdit/getConName.js";
+import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/getRepName.js";
 
 const router = Router();
 
@@ -431,26 +433,12 @@ router.get(
     "/rep-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
+        const shopEditId = Number(req.params.id);
 
         try {
-            const shop = await ShopInfo.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "RepresentativeName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
+            const name = await getRepNameEditUseCase({ shopEditId });
 
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ name: shop.RepresentativeName });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }
@@ -462,26 +450,12 @@ router.get(
     "/con-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
+        const shopEditId = Number(req.params.id);
 
         try {
-            const shop = await ShopInfo.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "ContactName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
+            const name = await getConNameEditUseCase({ shopEditId });
 
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ name: shop.ContactName });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }

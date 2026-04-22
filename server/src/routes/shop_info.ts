@@ -4,8 +4,8 @@ import { authenticateToken } from "../middleware/index.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
-import { getRepNameUseCase } from "../usecases/shopInfo/getRepName.js";
 import { getConNameUseCase } from "../usecases/shopInfo/getConName.js";
+import { getRepNameUseCase } from "../usecases/shopInfo/getRepName.js";
 
 const router = Router();
 
@@ -218,9 +218,9 @@ router.get(
         const shopId = Number(req.params.id);
 
         try {
-            const shop = await getConNameUseCase({ shopId });
+            const name = await getConNameUseCase({ shopId });
 
-            res.status(200).json({ name: shop.ContactName });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }

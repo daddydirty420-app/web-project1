@@ -1,8 +1,9 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import sequelize from "../db.js";
+import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     AccountTypeOption,
@@ -15,7 +16,6 @@ import {
     ShopInfoEdit,
     TodouhukenOption,
 } from "../models/index.js";
-import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 
 const router = Router();
 
@@ -287,106 +287,6 @@ router.get(
             const comFree = await ComOrFreeOption.findAll();
 
             res.status(200).json({ shop, comFree });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/rep-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
-
-        try {
-            const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/con-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
-
-        try {
-            const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: ShopInfo,
-                        attributes: ["id"],
-                        include: [
-                            {
-                                model: Name,
-                                as: "ContactName",
-                                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                            },
-                        ],
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/address/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
-
-        try {
-            const data = await ShopInfoEdit.findByPk(shopEditId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Address,
-                        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-                        include: [
-                            {
-                                model: TodouhukenOption,
-                                as: "AddressTodouhuken",
-                            },
-                        ],
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
         } catch (err) {
             next(err);
         }

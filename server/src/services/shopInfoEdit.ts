@@ -1,5 +1,13 @@
 import { Transaction } from "sequelize";
-import { AccountTypeOption, Address, BankAccount, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
+import {
+    AccountTypeOption,
+    Address,
+    BankAccount,
+    Name,
+    ShopInfo,
+    ShopInfoEdit,
+    TodouhukenOption,
+} from "../models/index.js";
 
 type ShopEditIdParams = {
     shopEditId: number;
@@ -59,7 +67,6 @@ export const getShopEditHasRepName = ({ shopEditId }: ShopEditIdParams) => {
         include: [
             {
                 model: Name,
-                as: "RepresentativeName",
                 attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
@@ -71,9 +78,15 @@ export const getShopEditHasConName = ({ shopEditId }: ShopEditIdParams) => {
         attributes: ["id"],
         include: [
             {
-                model: Name,
-                as: "ContactName",
-                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                model: ShopInfo,
+                attributes: ["id"],
+                include: [
+                    {
+                        model: Name,
+                        as: "ContactName",
+                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
             },
         ],
     });
