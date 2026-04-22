@@ -1,38 +1,41 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { Name } from "../models/index.js";
+import { editNameUseCase } from "../usecases/name/editName.js";
 
 const router = Router();
 
-router.patch(
-    "/name-edit/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const nameId = req.params.id;
-        const { sei, mei, seiKana, meiKana } = req.body;
-        if (!sei || !mei || !seiKana || !meiKana) {
-            res.status(404).json({ message: "必須項目が入力されていません。" });
-            return;
-        }
+// PATCH /name/:id
+router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const nameId = Number(req.params.id);
 
-        try {
-            await Name.update(
-                {
-                    sei,
-                    mei,
-                    sei_kana: seiKana,
-                    mei_kana: meiKana,
-                },
-                { where: { id: nameId } },
-            );
+    // 空チェック
+    const fields = {
+        sei: req.body.sei,
+        mei: req.body.mei,
+        seiKana: req.body.seiKana,
+        meiKana: req.body.meiKana,
+    };
 
-            res.status(200).json({ message: "氏名を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
+    const hasEmpty = Object.values(fields).some((v) => !v?.trim());
+
+    if (hasEmpty) throw new AppError("INVALID_OUERY", 400);
+
+    const sei = req.body.sei.trim();
+    const mei = req.body.mei.trim();
+    const seiKana = req.body.seiKana.trim();
+    const meiKana = req.body.meiKana.trim();
+
+    try {
+        await editNameUseCase({ nameId, sei, mei, seiKana, meiKana });
+
+        res.status(200).json({ message: "氏名を更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get(
     "/delivery-name/:id",

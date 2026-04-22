@@ -1,15 +1,16 @@
 "use client";
 
-import styles from "../edit.module.css";
-import { InputStr, Button, InputTitle } from "@/components/inputForm";
-import EditUI from "../editUI";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Name } from "../type";
-import Image from "next/image";
-import clsx from "clsx";
-import toast from "react-hot-toast";
+import { Button, InputStr, InputTitle } from "@/components/inputForm";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import styles from "../edit.module.css";
+import EditUI from "../editUI";
+import { Name } from "../type";
 
 type Props = {
     name: Name;
@@ -78,17 +79,17 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/name-edit/${name.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/${name.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
-                    sei: seiValue,
-                    mei: meiValue,
-                    seiKana: seiKanaValue,
-                    meiKana: meiKanaValue,
+                    sei: seiValue.trim(),
+                    mei: meiValue.trim(),
+                    seiKana: seiKanaValue.trim(),
+                    meiKana: meiKanaValue.trim(),
                 }),
             });
 
@@ -100,17 +101,18 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 return;
             }
 
+            toast.success("氏名を更新しました");
+            await sleep(1500);
+
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
             } else if (page === "con-shop") {
-                toast.success("氏名を変更しました。");
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "con-shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else if (page === "rep-com-free" || page === "con-com-free") {
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             } else {
-                toast.success("氏名を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {

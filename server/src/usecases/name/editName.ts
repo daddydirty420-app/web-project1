@@ -1,0 +1,27 @@
+import { AppError } from "../../errors.js";
+import { getName, updateName } from "../../services/name.js";
+
+type Params = {
+    nameId: number;
+    sei: string;
+    mei: string;
+    seiKana: string;
+    meiKana: string;
+};
+
+export const editNameUseCase = async ({ nameId, sei, mei, seiKana, meiKana }: Params) => {
+    // name取得
+    const name = await getName({ nameId });
+
+    if (!name) throw new AppError("NAME_NOT_FOUND", 404);
+
+    await updateName({
+        name,
+        data: {
+            sei,
+            mei,
+            sei_kana: seiKana,
+            mei_kana: meiKana,
+        },
+    });
+};

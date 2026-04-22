@@ -1,5 +1,9 @@
 import { Name } from "../models/index.js";
-import { CreateDeliveryNameParams, CreateNameParams, UserIdParams } from "../types/serviceType/name.js";
+import { CreateDeliveryNameParams, CreateNameParams, NameIdParams, UpdateNameParams, UserIdParams } from "../types/serviceType/name.js";
+
+export const getName = ({ nameId }: NameIdParams) => {
+    return Name.findByPk(nameId);
+};
 
 export const getNameOne = ({ userId }: UserIdParams) => {
     return Name.findOne({
@@ -13,4 +17,8 @@ export const createName = async ({ data, transaction }: CreateNameParams) => {
 
 export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNameParams) => {
     return Name.create(data, { transaction });
+};
+
+export const updateName = async ({ name, data, transaction }: UpdateNameParams) => {
+    await name.update(data, { transaction });
 };
