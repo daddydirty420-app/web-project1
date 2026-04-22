@@ -11,5 +11,5 @@ export const getBankAccountUseCase = async ({ shopId }: Params) => {
     const data = shop.BankAccount;
     if (!data) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
 
-    return { data };
+    return data;
 };

@@ -1,5 +1,5 @@
 import { Transaction } from "sequelize";
-import { AccountTypeOption, Address, BankAccount, ShopInfo, TodouhukenOption } from "../models/index.js";
+import { AccountTypeOption, Address, BankAccount, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
 
 type ShopIdParams = {
     shopId: number;
@@ -48,6 +48,32 @@ export const getShopHasAddress = ({ shopId }: ShopIdParams) => {
                         as: "AddressTodouhuken",
                     },
                 ],
+            },
+        ],
+    });
+};
+
+export const getShopHasRepName = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id"],
+        include: [
+            {
+                model: Name,
+                as: "RepresentativeName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+        ],
+    });
+};
+
+export const getShopHasConName = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id"],
+        include: [
+            {
+                model: Name,
+                as: "ContactName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
     });

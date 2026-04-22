@@ -2,8 +2,10 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
-import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/getAddress.js";
+import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
+import { getRepNameUseCase } from "../usecases/shopInfo/getRepName.js";
+import { getConNameUseCase } from "../usecases/shopInfo/getConName.js";
 
 const router = Router();
 
@@ -196,26 +198,12 @@ router.get(
     "/rep-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
+        const shopId = Number(req.params.id);
 
         try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "RepresentativeName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
+            const name = await getRepNameUseCase({ shopId });
 
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ name: shop.RepresentativeName });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }
@@ -227,24 +215,10 @@ router.get(
     "/con-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
+        const shopId = Number(req.params.id);
 
         try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "ContactName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
+            const shop = await getConNameUseCase({ shopId });
 
             res.status(200).json({ name: shop.ContactName });
         } catch (err) {
