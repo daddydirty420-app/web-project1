@@ -75,7 +75,7 @@ export const updateRepNameUseCase = async ({ shopId, body }: Params) => {
         rearUrl = `${s3Domain}/${key}`;
     }
 
-    // データ作成
+    // データ更新
     await sequelize.transaction(async (t) => {
         await updateShop({
             shopInfo: shop,
