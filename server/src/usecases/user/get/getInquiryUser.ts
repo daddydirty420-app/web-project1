@@ -1,5 +1,5 @@
-import { AppError } from "../../errors.js";
-import { getInquiryUser } from "../../services/users/query.js";
+import { AppError } from "../../../errors.js";
+import { getInquiryUser } from "../../../services/users/query.js";
 
 type Params = {
     userId: number;

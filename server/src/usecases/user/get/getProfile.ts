@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
-import { AppError } from "../../errors.js";
-import { getProfileVideosWithCount } from "../../services/items/index.js";
-import { getProfileUser } from "../../services/users/query.js";
+import { AppError } from "../../../errors.js";
+import { getProfileVideosWithCount } from "../../../services/items/index.js";
+import { getProfileUser } from "../../../services/users/query.js";
 
 type Params = {
     userId: number;

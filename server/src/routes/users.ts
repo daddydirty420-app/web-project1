@@ -1,13 +1,41 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
-import { getInquiryUserUseCase } from "../usecases/user/getInquiryUser.js";
-import { getMyPageUseCase } from "../usecases/user/getMyPage.js";
-import { getProfileUseCase } from "../usecases/user/getProfile.js";
+import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
+import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
+import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
 
 const router = Router();
+
+// PATCH /user/phone-number
+router.patch(
+    "/phone-number",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        const phoneNumber = req.body.phoneNumber?.trim();
+
+        if (!phoneNumber) throw new AppError("INVALID_PHONE_NUMBER", 400);
+
+        try {
+            const user = await User.findByPk(userId);
+            if (!user) {
+                res.status(404).json({ message: "ユーザーが見つかりません。" });
+                return;
+            }
+
+            await user.update({ phone_number: phoneNumber });
+
+            res.status(200).json({ message: "電話番号を更新しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {

@@ -1,22 +1,13 @@
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken } from "../middleware/index.js";
-import { User, GenderOption, Address, Name, TodouhukenOption, IdCard, ShopInfo } from "../models/index.js";
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import sequelize from "../db.js";
+import { bucket, region, s3 } from "../infra/aws/s3.js";
+import { authenticateToken } from "../middleware/index.js";
+import { Address, GenderOption, IdCard, Name, ShopInfo, TodouhukenOption, User } from "../models/index.js";
 
 const router = Router();
-
-const bucket = process.env.AWS_BUCKET;
-const region = process.env.AWS_REGION;
-const s3 = new S3Client({
-    region: region || "ap-northeast-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
-});
 
 router.patch(
     "/profile-update",
@@ -94,26 +85,6 @@ router.patch(
                 signedUrl,
                 imageUrl,
             });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.patch(
-    "/phone-number-edit",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const user = await User.findByPk(req.user!.id);
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            await user.update({ phone_number: req.body.phoneNumber });
-
-            res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {
             next(err);
         }
