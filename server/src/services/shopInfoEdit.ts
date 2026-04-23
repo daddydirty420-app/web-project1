@@ -1,4 +1,3 @@
-import { Transaction } from "sequelize";
 import {
     AccountTypeOption,
     Address,
@@ -8,24 +7,15 @@ import {
     ShopInfoEdit,
     TodouhukenOption,
 } from "../models/index.js";
-
-type ShopEditIdParams = {
-    shopEditId: number;
-};
-
-type CreateShopEditParams = {
-    data: {
-        user_id: number;
-        shop_info_id: number;
-        id_card_front?: string | null;
-        id_card_rear?: string | null;
-    };
-    transaction?: Transaction;
-};
+import {
+    CreateShopEditParams,
+    CreateShopEditWithIdCardParams,
+    ShopEditIdParams,
+} from "../types/serviceType/shopInfoEdit.js";
 
 export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: BankAccount,
@@ -47,7 +37,7 @@ export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
 
 export const getShopEditHasAddress = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: Address,
@@ -65,7 +55,7 @@ export const getShopEditHasAddress = ({ shopEditId }: ShopEditIdParams) => {
 
 export const getShopEditHasRepName = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: Name,
@@ -77,7 +67,7 @@ export const getShopEditHasRepName = ({ shopEditId }: ShopEditIdParams) => {
 
 export const getShopEditHasConName = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: ShopInfo,
@@ -95,5 +85,9 @@ export const getShopEditHasConName = ({ shopEditId }: ShopEditIdParams) => {
 };
 
 export const createShopEdit = ({ data, transaction }: CreateShopEditParams) => {
+    return ShopInfoEdit.create(data, { transaction });
+};
+
+export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWithIdCardParams) => {
     return ShopInfoEdit.create(data, { transaction });
 };

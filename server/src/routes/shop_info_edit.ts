@@ -11,13 +11,13 @@ import {
     ShopInfoEdit,
     TodouhukenOption,
 } from "../models/index.js";
-import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
-import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
-import { createRepNameUseCase } from "../usecases/shopInfoEdit/createRepName.js";
-import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
-import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
-import { getConNameEditUseCase } from "../usecases/shopInfoEdit/getConName.js";
-import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/getRepName.js";
+import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
+import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
+import { createRepNameUseCase } from "../usecases/shopInfoEdit/create/createRepName.js";
+import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/get/getAddress.js";
+import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/get/getBankAccount.js";
+import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
+import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
 
 const router = Router();
 
@@ -250,8 +250,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const data = await getAddressShopEditUseCase({ shopEditId });
+            const data = await getAddressShopEditUseCase({ shopEditId, userId });
 
             res.status(200).json({ data });
         } catch (err) {
@@ -267,8 +269,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const data = await getBankAccountShopEditUseCase({ shopEditId });
+            const data = await getBankAccountShopEditUseCase({ shopEditId, userId });
 
             res.status(200).json({ data });
         } catch (err) {
@@ -284,8 +288,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const name = await getRepNameEditUseCase({ shopEditId });
+            const name = await getRepNameEditUseCase({ shopEditId, userId });
 
             res.status(200).json({ name });
         } catch (err) {
@@ -301,8 +307,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const name = await getConNameEditUseCase({ shopEditId });
+            const name = await getConNameEditUseCase({ shopEditId, userId });
 
             res.status(200).json({ name });
         } catch (err) {

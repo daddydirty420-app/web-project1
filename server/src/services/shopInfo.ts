@@ -12,7 +12,7 @@ export const getShop = ({ shopId }: ShopIdParams) => {
 
 export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: BankAccount,
@@ -34,7 +34,7 @@ export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
 
 export const getShopHasAddress = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: Address,
@@ -52,7 +52,7 @@ export const getShopHasAddress = ({ shopId }: ShopIdParams) => {
 
 export const getShopHasRepName = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: Name,
@@ -65,7 +65,7 @@ export const getShopHasRepName = ({ shopId }: ShopIdParams) => {
 
 export const getShopHasConName = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
-        attributes: ["id"],
+        attributes: ["id", "user_id"],
         include: [
             {
                 model: Name,

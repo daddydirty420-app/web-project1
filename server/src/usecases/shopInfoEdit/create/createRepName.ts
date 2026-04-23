@@ -1,12 +1,12 @@
-import sequelize from "../../db.js";
-import { AppError } from "../../errors.js";
-import { s3Domain } from "../../infra/aws/s3.js";
-import { createRepNameShopEdit } from "../../services/name.js";
-import { createNotification } from "../../services/notification.js";
-import { getShop } from "../../services/shopInfo.js";
-import { createShopEdit } from "../../services/shopInfoEdit.js";
-import { RepNameBody } from "../../types/repNameBody.js";
-import { generateSignedUrl } from "../../utils/s3/index.js";
+import sequelize from "../../../db.js";
+import { AppError } from "../../../errors.js";
+import { s3Domain } from "../../../infra/aws/s3.js";
+import { createRepNameShopEdit } from "../../../services/name.js";
+import { createNotification } from "../../../services/notification.js";
+import { getShop } from "../../../services/shopInfo.js";
+import { createShopEditWithIdCard } from "../../../services/shopInfoEdit.js";
+import { RepNameBody } from "../../../types/repNameBody.js";
+import { generateSignedUrl } from "../../../utils/s3/index.js";
 
 type Params = {
     shopId: number;
@@ -55,6 +55,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
     const shop = await getShop({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;
@@ -80,7 +81,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
 
     // データ作成
     await sequelize.transaction(async (t) => {
-        const shopEdit = await createShopEdit({
+        const shopEdit = await createShopEditWithIdCard({
             data: {
                 id_card_front: frontUrl,
                 id_card_rear: rearUrl,

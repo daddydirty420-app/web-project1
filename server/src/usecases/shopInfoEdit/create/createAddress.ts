@@ -1,9 +1,10 @@
-import sequelize from "../../db.js";
-import { AppError } from "../../errors.js";
-import { createAddressShopEdit } from "../../services/address.js";
-import { createNotification } from "../../services/notification.js";
-import { createShopEdit } from "../../services/shopInfoEdit.js";
-import { fetchAddressFromZipUseCase } from "../address/zipUseCase.js";
+import sequelize from "../../../db.js";
+import { AppError } from "../../../errors.js";
+import { createAddressShopEdit } from "../../../services/address.js";
+import { createNotification } from "../../../services/notification.js";
+import { getShop } from "../../../services/shopInfo.js";
+import { createShopEdit } from "../../../services/shopInfoEdit.js";
+import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
 
 type Params = {
     shopId: number;
@@ -24,6 +25,12 @@ export const createAddressShopEditUseCase = async ({
     banchi,
     building,
 }: Params) => {
+    // shopInfo取得
+    const shop = await getShop({ shopId });
+
+    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
+
     // 住所バリデーションチェック
     const fromZip = await fetchAddressFromZipUseCase({ zipcode: postNumber });
 

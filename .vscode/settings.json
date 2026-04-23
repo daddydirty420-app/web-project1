@@ -37,6 +37,7 @@
         "idcard",
         "hissu",
         "uriagekin",
-        "honnin"
+        "honnin",
+        "POSTNUMBER"
     ]
 }
