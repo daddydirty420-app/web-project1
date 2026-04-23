@@ -4,6 +4,7 @@ import {
     EmailVerifyParams,
     UpdateEmailParams,
     UpdatePasswordParams,
+    UpdatePhoneNumberParams,
 } from "../../types/serviceType/users.js";
 
 export const createUser = ({ data, transaction }: CreateUserParams) => {
@@ -19,5 +20,9 @@ export const updatePasswordUser = async ({ user, data, transaction }: UpdatePass
 };
 
 export const updateEmailUser = async ({ user, data, transaction }: UpdateEmailParams) => {
+    await user.update(data, { transaction });
+};
+
+export const updatePhoneNumberUser = async ({ user, data, transaction }: UpdatePhoneNumberParams) => {
     await user.update(data, { transaction });
 };

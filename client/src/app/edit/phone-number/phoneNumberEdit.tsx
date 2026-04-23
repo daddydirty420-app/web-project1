@@ -1,12 +1,13 @@
 "use client";
 
-import { InputStr, Button } from "@/components/inputForm";
-import EditUI from "../editUI";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { User } from "../type";
-import toast from "react-hot-toast";
+import { Button, InputStr } from "@/components/inputForm";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import EditUI from "../editUI";
+import { User } from "../type";
 
 type Props = {
     user: User;
@@ -21,11 +22,11 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
 
     const submit = async () => {
         if (!/^[0-9]+$/.test(value)) {
-            toast.error("電話番号は半角数字のみで入力してください。");
+            toast.error("電話番号は半角数字のみで入力してください");
             return;
         }
         if (!value) {
-            toast.error("電話番号を入力してください。");
+            toast.error("電話番号を入力してください");
             return;
         }
 
@@ -56,11 +57,13 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
 
                 if (!res.ok) {
                     console.error(data.message);
-                    toast.error("電話番号の変更に失敗しました。");
+                    toast.error("電話番号の更新に失敗しました");
                     return;
                 }
 
-                toast.success("電話番号を変更しました。");
+                toast.success("電話番号を更新しました");
+                await sleep(1500);
+
                 router.push(`/shop-info/${shopId}`);
                 return;
             }
@@ -80,14 +83,16 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
 
             if (!res.ok) {
                 console.error(data.message);
-                toast.error("電話番号の変更に失敗しました。");
+                toast.error("電話番号の更新に失敗しました");
                 return;
             }
+
+            toast.success("電話番号を更新しました");
+            await sleep(1500);
 
             if (page === "delivery") {
                 router.push(`/buy/trans/${deliveryId}`);
             } else {
-                toast.success("電話番号を変更しました。");
                 router.push("/my-page");
             }
         } catch (err) {

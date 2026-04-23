@@ -7,6 +7,7 @@ import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
 import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
+import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
 
 const router = Router();
 
@@ -19,16 +20,12 @@ router.patch(
 
         const phoneNumber = req.body.phoneNumber?.trim();
 
-        if (!phoneNumber) throw new AppError("INVALID_PHONE_NUMBER", 400);
+        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) { 
+            throw new AppError("INVALID_PHONE_NUMBER", 400);
+        }
 
         try {
-            const user = await User.findByPk(userId);
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            await user.update({ phone_number: phoneNumber });
+            await editPhoneNumber({ userId, phoneNumber });
 
             res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {

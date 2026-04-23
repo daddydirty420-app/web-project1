@@ -41,3 +41,11 @@ export type UpdateEmailParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdatePhoneNumberParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        phone_number: string;
+    };
+    transaction?: Transaction;
+};
