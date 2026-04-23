@@ -70,6 +70,10 @@ export const getProfileUser = ({ userId }: UserIdParams) => {
             },
         ],
     });
+};export const getProfileEditData = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "user_name", "user_introduction", "profile_image"],
+    });
 };
 
 export const getUserHasShop = async ({ userId }: UserIdParams) => {

@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { ProfileEditForm } from "./profileEditForm";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { User } from "../type";
-import { cookies } from "next/headers";
+import { ProfileEditForm } from "./profileEditForm";
 
 export async function generateMetadata(): Promise<Metadata> {
     const session = await getServerSession(authOptions);
@@ -28,7 +28,7 @@ export default async function Page() {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/user-edit/profile-edit`, {
+    const res = await fetch(`${process.env.API_URL}/user/profile-edit-data`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -43,7 +43,7 @@ export default async function Page() {
         notFound();
     }
 
-    const userData: User = data.userData;
+    const user: User = data.user;
 
-    return <ProfileEditForm user={userData} />;
+    return <ProfileEditForm user={user} />;
 }

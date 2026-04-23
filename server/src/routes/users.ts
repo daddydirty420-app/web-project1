@@ -9,6 +9,7 @@ import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/user/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
+import { getProfileEditDataUseCase } from "../usecases/user/get/getProfileEditData.js";
 
 const router = Router();
 
@@ -141,6 +142,23 @@ router.get(
 
         try {
             const user = await getPhoneNumberUseCase({ userId });
+
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /user/profile-edit-data
+router.get(
+    "/profile-edit-data",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const user = await getProfileEditDataUseCase({ userId });
 
             res.status(200).json({ user });
         } catch (err) {

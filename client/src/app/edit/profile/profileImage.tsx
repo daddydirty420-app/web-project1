@@ -1,10 +1,10 @@
 "use client";
 
-import styles from "../edit.module.css";
 import { InputTitle } from "@/components/inputForm";
-import React, { useEffect, useRef, useState } from "react";
-import { User } from "../type";
 import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import styles from "../edit.module.css";
+import { User } from "../type";
 
 type Props = {
     user: User;

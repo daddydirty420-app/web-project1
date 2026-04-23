@@ -307,25 +307,4 @@ router.get("/honnin", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-router.get(
-    "/profile-edit",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const userData = await User.findByPk(req.user!.id, {
-                attributes: ["id", "user_name", "user_introduction", "profile_image"],
-            });
-
-            if (!userData) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.json({ userData });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
 export default router;

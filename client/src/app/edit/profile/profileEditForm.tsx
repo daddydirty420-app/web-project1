@@ -1,13 +1,13 @@
 "use client";
 
-import { InputStr, Button, Textarea } from "@/components/inputForm";
-import EditUI from "../editUI";
+import { Button, InputStr, Textarea } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
