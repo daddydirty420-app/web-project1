@@ -5,7 +5,7 @@ type Params = {
     shopEditId: number;
 };
 
-export const getBankAccountUseCase = async ({ shopEditId }: Params) => {
+export const getBankAccountShopEditUseCase = async ({ shopEditId }: Params) => {
     const shopEdit = await getShopEditHasBankAccount({ shopEditId });
 
     const data = shopEdit.BankAccount;

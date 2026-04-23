@@ -15,7 +15,7 @@ import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAdd
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
 import { createRepNameUseCase } from "../usecases/shopInfoEdit/createRepName.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/getAddress.js";
-import { getBankAccountUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
+import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/getBankAccount.js";
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/getRepName.js";
 
@@ -291,7 +291,7 @@ router.get(
         const shopEditId = Number(req.params.id);
 
         try {
-            const data = await getBankAccountUseCase({ shopEditId });
+            const data = await getBankAccountShopEditUseCase({ shopEditId });
 
             res.status(200).json({ data });
         } catch (err) {
