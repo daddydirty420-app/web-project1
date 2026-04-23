@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -16,7 +17,7 @@ type Props = {
 export const ProfileEditForm = ({ user }: Props) => {
     const [file, setFile] = useState<File | null>(null);
     const [userNameValue, setUserNameValue] = useState(user.user_name);
-    const [introductionValue, setIntroductionValue] = useState(user.user_introduction);
+    const [introductionValue, setIntroductionValue] = useState(user.user_introduction ?? null);
     const [defaultImage, setDefaultImage] = useState(false);
     const router = useRouter();
 
@@ -36,7 +37,7 @@ export const ProfileEditForm = ({ user }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/profile-update${query}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile${query}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
@@ -46,7 +47,7 @@ export const ProfileEditForm = ({ user }: Props) => {
                     fileName: file?.name,
                     contentType: file?.type,
                     userName: userNameValue,
-                    introduction: introductionValue,
+                    introduction: introductionValue ?? null,
                 }),
             });
 
@@ -72,6 +73,9 @@ export const ProfileEditForm = ({ user }: Props) => {
                     return;
                 }
             }
+
+            toast.success("プロフィールを変更しました");
+            await sleep(1500);
 
             router.push(`/profile/${user.id}`);
         } catch (err) {
