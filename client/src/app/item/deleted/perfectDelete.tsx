@@ -31,7 +31,7 @@ export const PerfectDelete = ({ id }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            
+
             const data = await res.json();
 
             if (res.ok) {

@@ -5,7 +5,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import sequelize from "../db.js";
 import { bucket, region, s3 } from "../infra/aws/s3.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Address, GenderOption, IdCard, Name, TodouhukenOption, User } from "../models/index.js";
+import { Address, IdCard, Name, TodouhukenOption, User } from "../models/index.js";
 
 const router = Router();
 

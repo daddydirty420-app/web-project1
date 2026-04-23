@@ -39,7 +39,7 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
 
     const playCount = async () => {
         if (sellerMe || page !== "normal") return;
-        
+
         const accessToken = await getAccessToken();
 
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${item.Video?.id}/onplay`, {
