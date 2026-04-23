@@ -9,9 +9,10 @@ import { generateSignedUrl } from "../../../utils/s3/index.js";
 type Params = {
     shopId: number;
     body: RepNameBody;
+    userId: number;
 };
 
-export const updateRepNameUseCase = async ({ shopId, body }: Params) => {
+export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => {
     const now = Date.now();
 
     const {
@@ -52,6 +53,7 @@ export const updateRepNameUseCase = async ({ shopId, body }: Params) => {
     const shop = await getShopHasRepName({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;

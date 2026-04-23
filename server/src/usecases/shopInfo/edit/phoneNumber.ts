@@ -15,6 +15,7 @@ export const editShopPhoneNumberUseCase = async ({ shopId, userId, phoneNumber }
     const shop = await getShop({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // user取得
     const user = await getUser({ userId });

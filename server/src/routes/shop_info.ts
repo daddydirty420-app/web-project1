@@ -20,10 +20,12 @@ router.patch(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         const body = req.body;
 
         try {
-            await updateRepNameUseCase({ shopId, body });
+            await updateRepNameUseCase({ shopId, userId, body });
 
             res.status(200).json({ message: "代表者氏名を変更しました。" });
         } catch (err) {
@@ -214,8 +216,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const data = await getAddressShopUseCase({ shopId });
+            const data = await getAddressShopUseCase({ shopId, userId });
 
             res.status(200).json({ data });
         } catch (err) {
@@ -231,8 +235,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const data = await getBankAccountUseCase({ shopId });
+            const data = await getBankAccountUseCase({ shopId, userId });
 
             res.status(200).json({ data });
         } catch (err) {
@@ -248,8 +254,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const name = await getRepNameUseCase({ shopId });
+            const name = await getRepNameUseCase({ shopId, userId });
 
             res.status(200).json({ name });
         } catch (err) {
@@ -265,8 +273,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const name = await getConNameUseCase({ shopId });
+            const name = await getConNameUseCase({ shopId, userId });
 
             res.status(200).json({ name });
         } catch (err) {
@@ -282,8 +292,10 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
 
+        const userId = req.user!.id;
+
         try {
-            const shop = await getShopPhoneNumberUseCase({ shopId });
+            const shop = await getShopPhoneNumberUseCase({ shopId, userId });
 
             res.status(200).json({ shop });
         } catch (err) {
