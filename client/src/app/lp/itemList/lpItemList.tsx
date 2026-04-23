@@ -1,15 +1,15 @@
 "use client";
 
+import { formatDuration } from "@/lib/formatDuration";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { Items } from "@/types/itemListTypes";
+import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./lpItemList.module.css";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
-import { Items } from "@/types/itemListTypes";
-import { formatDuration } from "@/lib/formatDuration";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from "./lpItemList.module.css";
 
 type Res = {
     items: Items[];
@@ -64,9 +64,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                 setTotalPagesVL(data.totalPages);
                 setPageVL(page);
             }
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) {}
     };
 
     const setIL = async (page: number, limit: number) => {
@@ -91,12 +89,10 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
                 setTotalPagesIL(data.totalPages);
                 setPageIL(page);
             }
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) {}
     };
 
-    const renderPagenation = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
+    const renderPagination = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
@@ -115,7 +111,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
         if (totalPages > 1) pages.push(totalPages);
 
         return (
-            <div className={styles.pagenation}>
+            <div className={styles.pagination}>
                 <button
                     type="button"
                     disabled={currentPage === 1}
@@ -232,7 +228,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
             </section>
 
             {!visibleIL &&
-                renderPagenation(pageVL, totalPagesVL, (p) => {
+                renderPagination(pageVL, totalPagesVL, (p) => {
                     setPageVL(p);
                     setVL(p, limitVL);
                 })}
@@ -276,7 +272,7 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
             </section>
 
             {visibleIL &&
-                renderPagenation(pageIL, totalPagesIL, (p) => {
+                renderPagination(pageIL, totalPagesIL, (p) => {
                     setPageIL(p);
                     setIL(p, limitIL);
                 })}

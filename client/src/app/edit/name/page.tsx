@@ -1,7 +1,7 @@
 import { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { NameEditForm } from "./nameEditForm";
-import { cookies } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {

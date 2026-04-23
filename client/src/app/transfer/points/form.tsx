@@ -1,13 +1,14 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import styles from "../transfer.module.css";
 import TransferUI from "../transferUI";
 import { User } from "../types";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -23,12 +24,12 @@ export const Form = ({ user }: Props) => {
 
     const submit = async () => {
         if (value === 0) {
-            toast.error("変換金額を入力してください。");
+            toast.error("変換金額を入力してください");
             return;
         }
 
         if (value > limit) {
-            toast.error(`変換金額は売上金${limit.toLocaleString()}円以内にしてください。`);
+            toast.error(`変換金額は売上金${limit.toLocaleString()}円以内にしてください`);
             return;
         }
 
@@ -36,7 +37,7 @@ export const Form = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -52,18 +53,18 @@ export const Form = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("ポイント変換に失敗しました。");
-                console.error(data.message);
+                toast.error("ポイント変換に失敗しました");
                 return;
             }
 
-            alert(
-                `売上金${value.toLocaleString()}円をポイントに変換しました。ポイントの有効期限は本日から180日後になります。`,
+            toast.success(
+                `売上金${value.toLocaleString()}円をポイントに変換しました。ポイントの有効期限は本日から180日後になります`,
             );
+            await sleep(1500);
+
             router.push("/my-page");
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

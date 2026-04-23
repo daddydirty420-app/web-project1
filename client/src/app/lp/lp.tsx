@@ -1,9 +1,9 @@
 import { Container } from "@/components";
-import { TwoColumn } from "./two-column";
-import { HeaderSection } from "./header/headerSection";
+import { Items } from "@/types/itemListTypes";
 import { FooterImage } from "./footer/footerImage";
 import { FooterSitemap } from "./footer/footerSitemap";
-import { Items } from "@/types/itemListTypes";
+import { HeaderSection } from "./header/headerSection";
+import { TwoColumn } from "./two-column";
 
 type Res = {
     items: Items[];

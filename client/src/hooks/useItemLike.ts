@@ -1,5 +1,5 @@
-import useSWR, { mutate } from "swr";
 import { fetcher } from "@/lib/fetcher";
+import useSWR, { mutate } from "swr";
 
 type LikeCountResponse = { count: number };
 

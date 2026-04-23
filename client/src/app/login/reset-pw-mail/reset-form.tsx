@@ -12,7 +12,7 @@ export const ResetForm = () => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
-            toast.error("正しいメールアドレスの形式で入力してください。");
+            toast.error("正しいメールアドレスの形式で入力してください");
             return;
         }
 

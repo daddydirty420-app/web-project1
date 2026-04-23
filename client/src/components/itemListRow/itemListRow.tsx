@@ -1,7 +1,7 @@
-import Link from "next/link";
-import styles from "./itemListRow.module.css";
 import { Items } from "@/types/itemListTypes";
 import Image from "next/image";
+import Link from "next/link";
+import styles from "./itemListRow.module.css";
 
 type Props = {
     itemList: Items[];

@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Item } from "../types/type";
 import styles from "./ok.module.css";
-import Image from "next/image";
 
 type Props = {
     itemId: string;

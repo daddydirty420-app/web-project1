@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
 
         CredentialsProvider({
             id: "verify",
-            name: "SingupVerify",
+            name: "SignupVerify",
             credentials: {
                 verificationCode: { label: "verificationCode", type: "text" },
                 rememberMe: { label: "RememberMe", type: "checkbox" },

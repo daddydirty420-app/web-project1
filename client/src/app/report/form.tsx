@@ -1,12 +1,13 @@
 "use client";
 
+import { Button, InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../lib/sleep";
 import styles from "./report.module.css";
 import { Option } from "./type";
-import { useRouter } from "next/navigation";
-import { Button, InputTitle } from "@/components/inputForm";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -29,7 +30,7 @@ export const Form = ({ id, options, page }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -56,6 +57,8 @@ export const Form = ({ id, options, page }: Props) => {
             } else {
                 console.error("ページが正しくありません");
                 toast.error("ページが正しくありません");
+                await sleep(1500);
+
                 router.back();
                 return;
             }
@@ -64,16 +67,15 @@ export const Form = ({ id, options, page }: Props) => {
 
             if (!res.ok) {
                 toast.error("報告の送信に失敗しました");
-                console.error(data.message);
                 return;
             }
 
             toast.success("報告を送信しました");
-            console.log(data.message);
+            await sleep(1500);
+
             router.back();
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

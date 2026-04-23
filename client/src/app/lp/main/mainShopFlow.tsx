@@ -1,8 +1,8 @@
 import styles from "../lp.module.css";
 import { MainH2 } from "./mainComponent/mainh2";
 import { MainH3 } from "./mainComponent/mainh3";
-import { ShopStep } from "./mainComponent/shopStep";
 import { ShopFlowP } from "./mainComponent/shopFlowP";
+import { ShopStep } from "./mainComponent/shopStep";
 
 export const MainShopFlow = () => {
     return (

@@ -1,10 +1,10 @@
 "use client";
 
-import styles from "./video.module.css";
-import { Item } from "../itemPageTypes";
-import { useEffect, useRef } from "react";
-import Hls from "hls.js";
 import { getAccessToken } from "@/lib/getAccessToken";
+import Hls from "hls.js";
+import { useEffect, useRef } from "react";
+import { Item } from "../itemPageTypes";
+import styles from "./video.module.css";
 
 type Props = {
     item: Item;
@@ -39,18 +39,15 @@ export const VideoElem = ({ item, sellerMe, page }: Props) => {
 
     const playCount = async () => {
         if (sellerMe || page !== "normal") return;
-        try {
-            const accessToken = await getAccessToken();
+        
+        const accessToken = await getAccessToken();
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${item.Video?.id}/onplay`, {
-                method: "PATCH",
-                headers: {
-                    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-                },
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${item.Video?.id}/onplay`, {
+            method: "PATCH",
+            headers: {
+                ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+            },
+        });
     };
 
     return (

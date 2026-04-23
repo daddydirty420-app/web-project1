@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import ItemListUI from "../itemListUI";
-import { ItemList } from "../itemList";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ItemList } from "../itemList";
+import ItemListUI from "../itemListUI";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {

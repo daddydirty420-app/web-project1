@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import styles from "./imputForm.module.css";
+import styles from "./inputForm.module.css";
 
 type Props = {
     onClick: () => void;

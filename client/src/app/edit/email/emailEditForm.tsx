@@ -20,7 +20,7 @@ export const EmailEditForm = ({ session }: Props) => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
-            toast.error("正しいメールアドレスの形式で入力してください。");
+            toast.error("正しいメールアドレスの形式で入力してください");
             return;
         }
 
@@ -33,7 +33,7 @@ export const EmailEditForm = ({ session }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -65,11 +65,9 @@ export const EmailEditForm = ({ session }: Props) => {
             }
 
             toast.success("新しいメールアドレスにメールを送信しました");
-            console.log(data.message);
             setValue("");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
         }
     };
 

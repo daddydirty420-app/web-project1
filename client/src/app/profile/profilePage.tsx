@@ -1,11 +1,11 @@
 import { Back, Container } from "@/components";
-import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import { Res } from "./profileTypes";
-import { ProfileMain } from "./profileMain";
+import Header from "@/components/header/header";
 import { AdminSection } from "./adminSection";
-import { SocialSection } from "./socialSection";
 import { ItemList } from "./itemList";
+import { ProfileMain } from "./profileMain";
+import { Res } from "./profileTypes";
+import { SocialSection } from "./socialSection";
 
 type Props = {
     data: Res;

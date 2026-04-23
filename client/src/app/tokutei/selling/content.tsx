@@ -1,5 +1,5 @@
 import { TitleAndBack } from "@/components";
-import { TokuteiContainer, TokuteiSection, SecondHeader } from "@/components/tokutei";
+import { SecondHeader, TokuteiContainer, TokuteiSection } from "@/components/tokutei";
 import styles from "@/styles/tokutei.module.css";
 import Link from "next/link";
 

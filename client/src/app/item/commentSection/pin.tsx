@@ -1,6 +1,6 @@
-import styles from "./comment.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./comment.module.css";
 
 export const Pin = () => {
     return (

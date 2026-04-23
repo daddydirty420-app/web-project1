@@ -1,21 +1,21 @@
-import { Container, Back } from "@/components";
-import Header from "@/components/header/header";
+import { Back, Container } from "@/components";
 import Footer from "@/components/footer/footer";
-import { Item, User } from "./itemPageTypes";
+import Header from "@/components/header/header";
 import { Items } from "@/types/itemListTypes";
-import { Main } from "./main";
-import { SellerSectionBottom } from "./sellerSection/sellerSectionBottom";
-import { ItemListSection } from "./itemListSection";
-import { CommentSection } from "./commentSection/commentSection";
 import Link from "next/link";
-import styles from "./itemCommon.module.css";
-import { EditButton } from "./draft/editButton";
 import { DeleteButton } from "./admin/deleteButton";
+import { CommentSection } from "./commentSection/commentSection";
 import { Title } from "./confirm/title";
 import { UploadButton } from "./confirm/uploadButton";
-import { DeleteItem } from "./sellerSection/deleteItem";
-import { Restore } from "./deleted/restore";
 import { PerfectDelete } from "./deleted/perfectDelete";
+import { Restore } from "./deleted/restore";
+import { EditButton } from "./draft/editButton";
+import styles from "./itemCommon.module.css";
+import { ItemListSection } from "./itemListSection";
+import { Item, User } from "./itemPageTypes";
+import { Main } from "./main";
+import { DeleteItem } from "./sellerSection/deleteItem";
+import { SellerSectionBottom } from "./sellerSection/sellerSectionBottom";
 
 type Props = {
     id: string;

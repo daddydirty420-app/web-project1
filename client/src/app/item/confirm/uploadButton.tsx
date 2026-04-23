@@ -1,12 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import styles from "./confirm.module.css";
-import { useState } from "react";
-import { X } from "lucide-react";
 import { TermsList } from "@/components/terms";
-import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import styles from "./confirm.module.css";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     id: string;
@@ -19,7 +21,7 @@ export const UploadButton = ({ id }: Props) => {
 
     const upload = async () => {
         if (!check) {
-            alert("利用規約に同意し、チェックしてください。");
+            alert("利用規約に同意し、チェックしてください");
             return;
         }
 
@@ -27,7 +29,7 @@ export const UploadButton = ({ id }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -39,15 +41,17 @@ export const UploadButton = ({ id }: Props) => {
             });
 
             if (!res.ok) {
-                alert("サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください。");
+                alert("サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください");
                 return;
             }
 
             const data = await res.json();
-            console.log(data.message);
+            toast.success("商品を出品しました");
+            await sleep(1500);
+
             router.push(`/upload/ok/${id}`);
         } catch (err) {
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

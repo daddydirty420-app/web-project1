@@ -1,10 +1,10 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useState } from "react";
-import styles from "./mypage.module.css";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from "./mypage.module.css";
 
 type ReferenceCode = {
     output: string;
@@ -24,7 +24,7 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -41,8 +41,7 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                 setVisiblePopup(true);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

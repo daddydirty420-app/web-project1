@@ -1,6 +1,21 @@
 "use client";
 
+import { TopLoader } from "@/components";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { AttributesInput, AttributesValue } from "./attributes";
+import { BrandInput, BrandValue } from "./brandInput";
+import { Category, CategoryValue } from "./category";
+import { ConditionInput, ConditionValue } from "./condition";
+import { GenderAge, GenderAgeValue } from "./genderAge";
+import { useFileUpload } from "./hooks/useFileUpload";
+import { useUpload } from "./hooks/useUpload";
+import { ItemImage } from "./itemImage";
+import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
+import { MaterialInput, MaterialValue } from "./material";
+import { PriceInput, PriceValue } from "./price";
+import { ShippingInput, ShippingValue } from "./shipping";
 import {
     Categories,
     Item,
@@ -12,21 +27,7 @@ import {
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { VideoInput, VideoInputValue } from "./videoInput";
-import { ItemImage } from "./itemImage";
-import { ItemNameDetail, ItemNameDetailValue } from "./itemNameDetail";
-import { Category, CategoryValue } from "./category";
-import { GenderAge, GenderAgeValue } from "./genderAge";
-import { BrandInput, BrandValue } from "./brandInput";
-import { AttributesInput, AttributesValue } from "./attributes";
-import { MaterialInput, MaterialValue } from "./material";
-import { ConditionInput, ConditionValue } from "./condition";
-import { ShippingInput, ShippingValue } from "./shipping";
-import { PriceInput, PriceValue } from "./price";
-import toast from "react-hot-toast";
-import { TopLoader } from "@/components";
-import { useUpload } from "./hooks/useUpload";
-import { useFileUpload } from "./hooks/useFileUpload";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../lib/sleep";
 
 type Props = {
     itemId: string;
@@ -239,7 +240,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 setLoading(false);
                 return;
             }
@@ -302,6 +303,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
             toast.success("商品データを登録しました");
             setLoading(false);
+            await sleep(1500);
 
             if (page === "edit") {
                 if (item.status === "active") {
@@ -313,8 +315,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
                 window.location.assign(`/item/confirm/${itemId}`);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
             setLoading(false);
         }
     };
@@ -373,7 +374,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 setDraftLoading(false);
                 return;
             }
@@ -436,10 +437,11 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
             toast.success("下書き保存しました");
             setDraftLoading(false);
+            await sleep(1500);
+
             window.location.assign("/item-list/draft");
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
             setDraftLoading(false);
         }
     };

@@ -79,12 +79,10 @@ export const Form = ({ user }: Props) => {
             if (!res.ok) {
                 setLoading(false);
                 toast.error("お問い合わせ内容の送信に失敗しました");
-                console.error(data.message);
                 return;
             }
 
             toast.success("お問い合わせ内容を送信しました！");
-            console.log(data.message);
 
             await sleep(1500);
 
@@ -92,8 +90,7 @@ export const Form = ({ user }: Props) => {
             router.back();
         } catch (err) {
             setLoading(false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

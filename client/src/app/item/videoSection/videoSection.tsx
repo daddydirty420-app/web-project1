@@ -1,11 +1,11 @@
 import { Item } from "../itemPageTypes";
-import styles from "./video.module.css";
-import { VideoElem } from "./videoElem";
+import { Report } from "../others/report";
 import { CountElem } from "./countElem";
+import { ItemPeek } from "./itemPeek";
 import { Summary } from "./summary";
 import { UserSection } from "./userSection";
-import { Report } from "../others/report";
-import { ItemPeek } from "./itemPeek";
+import styles from "./video.module.css";
+import { VideoElem } from "./videoElem";
 
 type Props = {
     id: string;

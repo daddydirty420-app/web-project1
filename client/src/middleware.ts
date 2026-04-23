@@ -1,7 +1,6 @@
-import { NextResponse } from "next/server";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { getToken } from "next-auth/jwt";
-import jwt from "jsonwebtoken";
-import { JwtPayload } from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function middleware(req) {
     console.log("MIDDLEWARE FIRED:", req.url);
@@ -85,7 +84,7 @@ export const config = {
         "/money-management/:path*",
         "/my-page/:path*",
         "/notification/:path*",
-        "/personal-infomation/:path*",
+        "/personal-information/:path*",
         "/profile/admin/:path*",
         "/shop-signup/:path*",
         "/transfer/:path*",

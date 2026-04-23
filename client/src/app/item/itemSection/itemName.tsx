@@ -1,7 +1,7 @@
-import styles from "./item.module.css";
-import { Item } from "../itemPageTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Item } from "../itemPageTypes";
+import styles from "./item.module.css";
 
 type Props = {
     item: Item;

@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import FollowUI from "../followUI";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
 import { UserList } from "../../userList";
 import { FollowHeader } from "../followHeader";
+import FollowUI from "../followUI";
 
 type Props = {
     params: { id: string };

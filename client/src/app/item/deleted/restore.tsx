@@ -1,12 +1,13 @@
 "use client";
 
-import { Item } from "../itemPageTypes";
-import styles from "./deleted.module.css";
-import { useState } from "react";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
+import { Item } from "../itemPageTypes";
+import styles from "./deleted.module.css";
 
 type Props = {
     id: string;
@@ -22,7 +23,7 @@ export const Restore = ({ id, item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -37,17 +38,16 @@ export const Restore = ({ id, item }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error("APIフェッチエラー：", res.status);
-                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください");
                 return;
             }
 
             toast.success("この商品を復元しました！");
-            console.log(data.message);
+            await sleep(1500);
+
             router.push(`/item/${id}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

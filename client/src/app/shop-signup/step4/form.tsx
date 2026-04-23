@@ -1,13 +1,14 @@
 "use client";
 
-import styles from "../ss.module.css";
-import { StepBar } from "../stepBar";
-import SSUI from "../ssUI";
-import { ButtonDiv } from "../buttonDiv";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import { ButtonDiv } from "../buttonDiv";
+import styles from "../ss.module.css";
+import SSUI from "../ssUI";
+import { StepBar } from "../stepBar";
 
 type Props = {
     shopId: string;
@@ -24,7 +25,7 @@ export const Form = ({ shopId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -40,14 +41,15 @@ export const Form = ({ shopId }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
-                toast.error("オプション設定に失敗しました。");
+                toast.error("オプション設定に失敗しました");
             }
+
+            toast.success("オプションを設定しました");
+            await sleep(1500);
 
             router.push(`/shop-signup/step5/${shopId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

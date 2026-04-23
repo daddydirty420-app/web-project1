@@ -1,13 +1,14 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import styles from "../transfer.module.css";
 import TransferUI from "../transferUI";
 import { User } from "../types";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -23,7 +24,7 @@ export const Form = ({ user }: Props) => {
 
     const pageButtonHandle = () => {
         if (!value || value < 1000) {
-            toast.error("1,000円以上から申請可能です。");
+            toast.error("1,000円以上から申請可能です");
             return;
         }
 
@@ -32,12 +33,12 @@ export const Form = ({ user }: Props) => {
 
     const submit = async () => {
         if (!value || value < 1000) {
-            toast.error("1,000円以上から申請可能です。");
+            toast.error("1,000円以上から申請可能です");
             return;
         }
 
         if (value > limit) {
-            toast.error(`申請金額は売上金${limit.toLocaleString()}円以内にしてください。`);
+            toast.error(`申請金額は売上金${limit.toLocaleString()}円以内にしてください`);
             return;
         }
 
@@ -45,7 +46,7 @@ export const Form = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -64,16 +65,16 @@ export const Form = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("振込申請データの登録に失敗しました。");
-                console.error(data.message);
+                toast.error("振込申請データの登録に失敗しました");
                 return;
             }
 
-            alert("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
+            toast.success("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
+            await sleep(1500);
+
             router.push(`/transfer/detail/${data.transId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

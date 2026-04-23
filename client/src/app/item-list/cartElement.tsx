@@ -1,20 +1,20 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
 import styles from "./cart.module.css";
 import { Item } from "./type";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/lib/getAccessToken";
 
-type Responce = {
+type Response = {
     itemList: Item[];
     totalPages: number;
 };
 
 type Props = {
     item: Item;
-    mutate: KeyedMutator<Responce>;
+    mutate: KeyedMutator<Response>;
 };
 
 export const CartElement = ({ item, mutate }: Props) => {
@@ -45,15 +45,13 @@ export const CartElement = ({ item, mutate }: Props) => {
             // 配送ページとカラー選択ページをできれば1つにまとめる
             router.push(`/buy/trans/${deliveryId}`);
         } catch (err) {
-            console.error(err);
-
             if (err instanceof Error) {
                 if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 } else if (err.message === "FETCH_ERROR") {
-                    toast.error("購入手続きの開始に失敗しました。時間を置いてもう一度お試しください。");
+                    toast.error("購入手続きの開始に失敗しました。時間を置いてもう一度お試しください");
                 } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                    alert("システムエラーが発生しました。時間をおいて再試行してください");
                 }
             }
         }
@@ -93,15 +91,14 @@ export const CartElement = ({ item, mutate }: Props) => {
             toast.success("カートから削除しました");
         } catch (err) {
             mutate(); // ロールバック
-            console.error(err);
 
             if (err instanceof Error) {
                 if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 } else if (err.message === "DELETE_ERROR") {
                     toast.error("カート削除に失敗しました");
                 } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                    alert("システムエラーが発生しました。時間をおいて再試行してください");
                 }
             }
         }

@@ -1,10 +1,10 @@
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 import { ItemPage } from "../../itemPage";
 import { Item } from "../../itemPageTypes";
-import { notFound, redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { cookies } from "next/headers";
 
 type Props = {
     params: { id: string };

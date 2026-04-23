@@ -1,7 +1,7 @@
 "use client";
 
-import styles from "./followHeader.module.css";
 import { useRouter } from "next/navigation";
+import styles from "./followHeader.module.css";
 
 type Props = {
     id: string;

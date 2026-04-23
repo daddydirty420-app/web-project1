@@ -1,16 +1,16 @@
 "use client";
 
-import styles from "./comment.module.css";
-import { ProfileImage } from "./profileImage";
-import { Comment } from "../itemPageTypes";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { useEffect, useState } from "react";
-import { Pin } from "./pin";
+import { Comment } from "../itemPageTypes";
+import styles from "./comment.module.css";
 import { CommentDataDiv } from "./commentDataDiv";
 import { CommentText } from "./commentText";
-import { Like } from "./like";
-import { ReportFloat } from "./reportFloat";
 import { DeleteComment } from "./deleteComment";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { Like } from "./like";
+import { Pin } from "./pin";
+import { ProfileImage } from "./profileImage";
+import { ReportFloat } from "./reportFloat";
 
 type Props = {
     parentId: string;
@@ -47,9 +47,7 @@ export const ReplyList = ({ parentId, page, loggedIn, sellerMe, optimisticCommen
 
                 const data = await res.json();
                 setComments(data.commentList);
-            } catch (err) {
-                console.error(err);
-            }
+            } catch (err) {}
         };
 
         fetchComment();

@@ -1,14 +1,14 @@
 "use client";
 
-import styles from "./comment.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
-import { Comment } from "../itemPageTypes";
 import { updateCommentLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useCommentLike";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
+import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { Comment } from "../itemPageTypes";
+import styles from "./comment.module.css";
 
 type Props = {
     comment: Comment;
@@ -33,7 +33,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -45,8 +45,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
             });
         } catch (err) {
             updateCommentLikeCache(id, false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -57,7 +56,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -69,8 +68,7 @@ export const Like = ({ comment, loggedIn }: Props) => {
             });
         } catch (err) {
             updateCommentLikeCache(id, true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

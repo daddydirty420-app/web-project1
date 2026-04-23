@@ -1,15 +1,16 @@
 "use client";
 
-import styles from "./comment.module.css";
-import { Comment } from "../itemPageTypes";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Portial from "../portial";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
+import { Comment } from "../itemPageTypes";
+import Portial from "../portial";
+import styles from "./comment.module.css";
 
 type Props = {
     comment: Comment;
@@ -25,7 +26,7 @@ export const DeleteComment = ({ comment, page }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -36,19 +37,19 @@ export const DeleteComment = ({ comment, page }: Props) => {
                 },
             });
 
+            const data = await res.json();
+
             if (!res.ok) {
-                const errorData = await res.json();
                 toast.error("コメント削除エラー");
-                console.error(errorData.message);
                 return;
             }
 
-            const data = await res.json();
-            alert(data.message);
+            toast.success("コメントを削除しました");
+            await sleep(1500);
+
             router.refresh();
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

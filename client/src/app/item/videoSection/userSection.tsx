@@ -1,11 +1,11 @@
-import styles from "./video.module.css";
-import { Item } from "../itemPageTypes";
 import { FollowButton, Star } from "@/components";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
+import { Item } from "../itemPageTypes";
+import styles from "./video.module.css";
 
 type Props = {
     item: Item;

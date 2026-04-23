@@ -1,8 +1,8 @@
 import { ChildrenLink, MypageLinkHeader, NormalLink, NormalLinkContainer } from "@/components/link";
-import styles from "./mypage.module.css";
-import { Res, User } from "./types";
-import { ReferenceCode } from "./referenceCode";
 import Link from "next/link";
+import styles from "./mypage.module.css";
+import { ReferenceCode } from "./referenceCode";
+import { Res, User } from "./types";
 
 type Props = {
     user: User;
@@ -20,7 +20,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                 <NormalLink url="/edit/email" text="メールアドレス設定" />
                 {!data.userData.hasShop && (
                     <>
-                        <NormalLink url="/personal-infomation" text="個人情報設定" />
+                        <NormalLink url="/personal-information" text="個人情報設定" />
                         <NormalLink url="/edit/account" text="振込口座設定" />
                         <NormalLink url="/shop-signup/step1" text="ショップ登録" />
                         {!user.honnin_verified && (

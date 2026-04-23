@@ -1,8 +1,8 @@
 "use client";
 
-import styles from "./material.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./material.module.css";
 
 export type MaterialValue = {
     materials: {

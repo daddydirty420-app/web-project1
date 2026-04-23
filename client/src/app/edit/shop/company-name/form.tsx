@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import styles from "../../edit.module.css";
-import { ShopInfo } from "../../type";
-import { useRouter } from "next/navigation";
-import EditUI from "../../editUI";
 import { Button, InputStr } from "@/components/inputForm";
-import clsx from "clsx";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../../lib/sleep";
+import styles from "../../edit.module.css";
+import EditUI from "../../editUI";
+import { ShopInfo } from "../../type";
 
 type Props = {
     shopId: string;
@@ -23,7 +24,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
     const submit = async () => {
         if (!companyName) {
-            toast.error(`${title}を入力してください。`);
+            toast.error(`${title}を入力してください`);
             return;
         }
 
@@ -31,7 +32,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -47,19 +48,19 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("更新に失敗しました。");
-                console.error(data.message);
+                toast.error("更新に失敗しました");
                 return;
             }
 
             const alertText =
-                comFree === 1 ? "会社名の変更を受け付けました。審査完了までお待ちください。" : "屋号を変更しました。";
+                comFree === 1 ? "会社名の変更を受け付けました。審査完了までお待ちください" : "屋号を変更しました";
 
             toast.success(`${alertText}`);
+            await sleep(1500);
+
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

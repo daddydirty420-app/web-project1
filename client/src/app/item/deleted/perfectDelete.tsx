@@ -1,11 +1,12 @@
 "use client";
 
-import styles from "./deleted.module.css";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import styles from "./deleted.module.css";
 
 type Props = {
     id: string;
@@ -20,7 +21,7 @@ export const PerfectDelete = ({ id }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -30,18 +31,19 @@ export const PerfectDelete = ({ id }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
+            
+            const data = await res.json();
 
             if (res.ok) {
-                const data = await res.json();
-                alert(data.message);
+                toast.success("商品を削除しました");
+                await sleep(1500);
+
                 router.push("/my-page");
             } else {
-                console.error("APIフェッチエラー：", res.status);
-                toast.error("商品の削除に失敗しました。");
+                toast.error("商品の削除に失敗しました");
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

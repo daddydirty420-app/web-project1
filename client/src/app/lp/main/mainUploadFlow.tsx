@@ -1,10 +1,10 @@
+import { faBoxOpen, faCamera, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { UploadButton } from "../button/uploadButton";
 import styles from "../lp.module.css";
 import { MainP } from "./mainComponent/mainP";
-import { MainH3 } from "./mainComponent/mainh3";
 import { MainH2 } from "./mainComponent/mainh2";
-import { UploadButton } from "../button/uploadButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBoxOpen, faCamera, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { MainH3 } from "./mainComponent/mainh3";
 
 type Props = {
     loggedIn: boolean;
@@ -15,7 +15,7 @@ export const MainUploadFlow = ({ loggedIn }: Props) => {
         <>
             <MainH2>出品の流れ</MainH2>
 
-            <section className={styles.mainnSec}>
+            <section className={styles.mainSec}>
                 <MainH3>
                     <span className="text-[var(--theme)]">STEP 1</span>
                 </MainH3>

@@ -1,8 +1,8 @@
 "use client";
 
 import { InputTitle } from "@/components/inputForm";
-import styles from "./upload.module.css";
 import { useEffect, useRef, useState } from "react";
+import styles from "./upload.module.css";
 
 export type BrandValue = {
     id: string | null;

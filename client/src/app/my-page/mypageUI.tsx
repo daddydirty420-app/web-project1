@@ -1,6 +1,6 @@
 import { Back, Container } from "@/components";
-import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
+import Header from "@/components/header/header";
 import { ReactNode } from "react";
 
 type Props = {

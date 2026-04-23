@@ -1,8 +1,8 @@
 "use client";
 
+import { useFollowCount } from "@/hooks/useFollow";
 import Link from "next/link";
 import styles from "./profile.module.css";
-import { useFollowCount } from "@/hooks/useFollow";
 
 type Props = {
     userId: string;

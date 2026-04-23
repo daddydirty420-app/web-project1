@@ -1,10 +1,10 @@
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./mypage.module.css";
 import { Res, User } from "./types";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 type Props = {
     user: User;

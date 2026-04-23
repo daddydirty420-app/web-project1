@@ -74,7 +74,6 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error("銀行名検索エラー：", data.message);
                     setBankSuggestions([]);
                     setShowBankSuggest(false);
                     return;
@@ -92,7 +91,6 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 setBankSuggestions(suggestions);
                 setShowBankSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error("銀行名検索エラー：", err);
                 setBankSuggestions([]);
                 setShowBankSuggest(false);
             }
@@ -121,7 +119,6 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error("支店名検索エラー：", data.message);
                     setBranchSuggestions([]);
                     setShowBranchSuggest(false);
                     return;
@@ -138,7 +135,6 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 setBranchSuggestions(suggestions);
                 setShowBranchSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error("支店名検索エラー：", err);
                 setBranchSuggestions([]);
                 setShowBranchSuggest(false);
             }
@@ -156,12 +152,12 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
         const accountNumberTrim = accountNumber.trim();
 
         if (!bankTrim || !branchTrim || !accountType || !accountNumberTrim || !meigi.trim()) {
-            toast.error("空の項目があります。");
+            toast.error("空の項目があります");
             return;
         }
 
         if (!/^[0-9]{5,7}$/.test(accountNumberTrim)) {
-            toast.error("口座番号は5〜7桁の半角数字で入力してください。");
+            toast.error("口座番号は5〜7桁の半角数字で入力してください");
             return;
         }
 
@@ -179,7 +175,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -236,8 +232,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

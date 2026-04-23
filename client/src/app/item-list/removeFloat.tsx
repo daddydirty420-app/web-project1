@@ -1,15 +1,15 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
+import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
 import styles from "./removeFloat.module.css";
 import { Item } from "./type";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
 
-type Responce = {
+type Response = {
     itemList: Item[];
     totalPages: number;
 };
@@ -17,7 +17,7 @@ type Responce = {
 type Props = {
     item: Item;
     page: "cart" | "deleted" | "draft" | "like" | "stock" | "uploaded" | "watch-history";
-    mutate: KeyedMutator<Responce>;
+    mutate: KeyedMutator<Response>;
 };
 
 export const RemoveFloat = ({ item, page, mutate }: Props) => {
@@ -38,6 +38,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
         if (!apiUrl?.trim()) {
             console.error("削除URLが見つかりません");
+            toast.error("削除に失敗しました");
             return;
         }
 
@@ -84,15 +85,14 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
             toast.success(`${toastBaseText}を削除しました`);
         } catch (err) {
             mutate(); // ロールバック
-            console.error(err);
 
             if (err instanceof Error) {
                 if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 } else if (err.message === "DELETE_ERROR") {
                     toast.error(`${toastBaseText}の削除に失敗しました`);
                 } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                    alert("システムエラーが発生しました。時間をおいて再試行してください");
                 }
             }
         }

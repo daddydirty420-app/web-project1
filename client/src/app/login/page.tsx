@@ -1,8 +1,8 @@
 import { Container } from "@/components";
-import { LoginForm } from "./login-form";
-import Link from "next/link";
 import styles from "@/styles/login.module.css";
 import { Metadata } from "next";
+import Link from "next/link";
+import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
     title: "ログイン",

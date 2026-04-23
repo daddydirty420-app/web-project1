@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import styles from "../../edit.module.css";
-import { ComOrFreeOption, ShopInfo } from "../../type";
-import { useRouter } from "next/navigation";
-import EditUI from "../../editUI";
 import { Button, InputTitle } from "@/components/inputForm";
-import clsx from "clsx";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import styles from "../../edit.module.css";
+import EditUI from "../../editUI";
+import { ComOrFreeOption, ShopInfo } from "../../type";
 
 type Props = {
     shopId: string;
@@ -23,12 +23,12 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
 
     const submit = async () => {
         if (selectOption === null || selectOption === undefined) {
-            toast.error("事業形態を選択してください。");
+            toast.error("事業形態を選択してください");
             return;
         }
 
         if (shopInfo.ComOrFreeOption?.id === selectOption) {
-            toast.error("事業形態が変更されていません。");
+            toast.error("事業形態が変更されていません");
             return;
         }
 
@@ -36,7 +36,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -52,15 +52,13 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("事業形態の更新に失敗しました。");
-                console.error(data.message);
+                toast.error("事業形態の更新に失敗しました");
                 return;
             }
 
             router.push(`/edit/shop/com-free/confirm/${data.editId}`);
         } catch (err) {
-            console.error(err);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

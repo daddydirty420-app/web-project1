@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import styles from "./profile.module.css";
 import { Res } from "./profileTypes";
-import { useEffect, useRef, useState } from "react";
 
 type Props = {
     data: Res;

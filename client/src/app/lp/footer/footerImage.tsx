@@ -1,9 +1,9 @@
-import styles from "../lp.module.css";
 import Pic from "@/assets/images/pexels-xue-guangjian-815005-1687845.jpg";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { InquiryButton } from "../button/inquiryButton";
-import clsx from "clsx";
+import styles from "../lp.module.css";
 
 type Props = {
     shopPage?: boolean;

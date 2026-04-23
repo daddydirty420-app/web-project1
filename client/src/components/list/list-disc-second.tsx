@@ -1,6 +1,6 @@
-import styles from "./list.module.css";
-import { ReactNode } from "react";
 import clsx from "clsx";
+import { ReactNode } from "react";
+import styles from "./list.module.css";
 
 type ListCheckProps = {
     children: ReactNode;

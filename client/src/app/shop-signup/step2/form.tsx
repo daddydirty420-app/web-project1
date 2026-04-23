@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { InputStr, InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
-import { BankAccount } from "../type";
-import { useEffect, useRef, useState } from "react";
 import { StepBar } from "../stepBar";
-import { InputStr, InputTitle } from "@/components/inputForm";
-import { ButtonDiv } from "../buttonDiv";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { BankAccount } from "../type";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -71,7 +72,6 @@ export const Form = ({ shopId, account }: Props) => {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error("銀行名検索エラー：", data.message);
                     setBankSuggestions([]);
                     setShowBankSuggest(false);
                     return;
@@ -89,7 +89,6 @@ export const Form = ({ shopId, account }: Props) => {
                 setBankSuggestions(suggestions);
                 setShowBankSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error("銀行名検索エラー：", err);
                 setBankSuggestions([]);
                 setShowBankSuggest(false);
             }
@@ -118,7 +117,6 @@ export const Form = ({ shopId, account }: Props) => {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error("支店名検索エラー：", data.message);
                     setBranchSuggestions([]);
                     setShowBranchSuggest(false);
                     return;
@@ -135,7 +133,6 @@ export const Form = ({ shopId, account }: Props) => {
                 setBranchSuggestions(suggestions);
                 setShowBranchSuggest(suggestions.length > 0);
             } catch (err) {
-                console.error("支店名検索エラー：", err);
                 setBranchSuggestions([]);
                 setShowBranchSuggest(false);
             }
@@ -149,12 +146,12 @@ export const Form = ({ shopId, account }: Props) => {
 
     const submit = async () => {
         if (!bankQuery.trim() || !branchQuery.trim() || !accountType || !accountNumber.trim() || !meigi.trim()) {
-            toast.error("空の項目があります。");
+            toast.error("空の項目があります");
             return;
         }
 
         if (!/^[0-9]{5,7}$/.test(accountNumber)) {
-            toast.error("口座番号は5〜7桁の半角数字で入力してください。");
+            toast.error("口座番号は5〜7桁の半角数字で入力してください");
             return;
         }
 
@@ -172,7 +169,7 @@ export const Form = ({ shopId, account }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -188,15 +185,14 @@ export const Form = ({ shopId, account }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
-                toast.error("口座情報の登録に失敗しました。");
+                toast.error("口座情報の登録に失敗しました");
                 return;
             }
+            await sleep(1500);
 
             router.push(`/shop-signup/step3/${shopId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

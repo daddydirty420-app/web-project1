@@ -33,8 +33,7 @@ export const FetchClient = ({ token }: Props) => {
                 await sleep(2000);
                 router.push("/my-page");
             } catch (err) {
-                console.error(err);
-                alert("サーバーエラーが発生しました。通信環境を確認し、再度ページを読み込んでください。");
+                alert("サーバーエラーが発生しました。通信環境を確認し、再度ページを読み込んでください");
             }
         };
 

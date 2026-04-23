@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./itemList.module.css";
-import { Item } from "./type";
-import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight, faSearch } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-import Image from "next/image";
-import { formatRelativeTime } from "@/lib/formatRelativeTime";
-import { RemoveFloat } from "./removeFloat";
-import { CartElement } from "./cartElement";
-import { Items } from "@/types/itemListTypes";
 import { ItemListRow } from "@/components";
+import { fetcher } from "@/lib/fetcher";
+import { formatRelativeTime } from "@/lib/formatRelativeTime";
+import { Items } from "@/types/itemListTypes";
+import { faAnglesLeft, faAnglesRight, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import useSWR from "swr";
+import { CartElement } from "./cartElement";
+import styles from "./itemList.module.css";
+import { RemoveFloat } from "./removeFloat";
+import { Item } from "./type";
 
 type Props = {
     page: "cart" | "deleted" | "draft" | "like" | "stock" | "uploaded" | "watch-history";
@@ -21,7 +21,7 @@ type Props = {
     relatedItemList?: Items[];
 };
 
-type Responce = {
+type Response = {
     itemList: Item[];
     totalPages: number;
 };
@@ -56,7 +56,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
           }`
         : null;
 
-    const { data, mutate } = useSWR<Responce>(apiUrl, fetcher);
+    const { data, mutate } = useSWR<Response>(apiUrl, fetcher);
 
     const itemList = data?.itemList;
     const totalPages = data?.totalPages ?? 1;
@@ -74,7 +74,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
     };
 
     // ページネーション
-    const renderPagenation = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
+    const renderPagination = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
@@ -93,7 +93,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
         if (totalPages > 1) pages.push(totalPages);
 
         return (
-            <div className={styles.pagenation}>
+            <div className={styles.pagination}>
                 <button
                     type="button"
                     disabled={currentPage === 1}
@@ -305,7 +305,7 @@ export const ItemList = ({ page, uploadedTab, relatedItemList }: Props) => {
                         );
                     })}
 
-                    {renderPagenation(pageNumber, totalPages, (p) => {
+                    {renderPagination(pageNumber, totalPages, (p) => {
                         setPageNumber(p);
                     })}
 

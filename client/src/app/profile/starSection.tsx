@@ -1,7 +1,7 @@
-import { User } from "./profileTypes";
 import { Star } from "@/components";
-import styles from "./profile.module.css";
 import clsx from "clsx";
+import styles from "./profile.module.css";
+import { User } from "./profileTypes";
 
 type Props = {
     user: User;

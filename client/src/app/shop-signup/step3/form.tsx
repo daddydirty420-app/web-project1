@@ -1,18 +1,19 @@
 "use client";
 
+import { InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
-import { ButtonDiv } from "../buttonDiv";
 import { ShopInfo } from "../type";
-import React, { useRef, useState } from "react";
-import { InputTitle } from "@/components/inputForm";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -87,12 +88,12 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
     const submit = async () => {
         if (!idCardFront || !idCardRear) {
-            toast.error("身分証がアップロードされていません。");
+            toast.error("身分証がアップロードされていません");
             return;
         }
 
         if (checked && permitImages.length === 0) {
-            toast.error("許認可証がアップロードされていません。");
+            toast.error("許認可証がアップロードされていません");
             return;
         }
 
@@ -146,7 +147,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -162,8 +163,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
-                toast.error("画像データの送信に失敗しました。");
+                toast.error("画像データの送信に失敗しました");
                 return;
             }
 
@@ -177,7 +177,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました");
                     return;
                 }
             }
@@ -192,7 +192,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました");
                     return;
                 }
             }
@@ -213,16 +213,17 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                     });
 
                     if (!upload.ok) {
-                        toast.error("許認可証のアップロードに失敗しました。");
+                        toast.error("許認可証のアップロードに失敗しました");
                         return;
                     }
                 }
             }
+            toast.success("身分証・各種証明書をアップロードしました");
+            await sleep(1500);
 
             router.push(`/shop-signup/step4/${shopId}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -291,7 +292,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
             </label>
 
             {checked && (
-                <section className={styles.permitSecton}>
+                <section className={styles.permitSection}>
                     <h2 className={styles.subtitle}>許認可証アップロード</h2>
 
                     <div className={styles.imageInputDivPermit}>

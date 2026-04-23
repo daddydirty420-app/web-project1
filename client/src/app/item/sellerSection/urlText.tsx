@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import styles from "./seller.module.css";
 import toast from "react-hot-toast";
+import styles from "./seller.module.css";
 
 export const UrlText = () => {
     const pathname = usePathname();
@@ -14,7 +14,6 @@ export const UrlText = () => {
             await navigator.clipboard.writeText(fullUrl);
             toast.success("リンクをコピーしました！");
         } catch (err) {
-            console.error(err);
             toast.error("コピー失敗！");
         }
     };

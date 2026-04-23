@@ -18,7 +18,7 @@ export const VerifyForm = () => {
     const handleSubmit = async () => {
         const trimCode = code.trim();
         if (!trimCode || trimCode === "") {
-            toast.error("認証コードを入力してください。");
+            toast.error("認証コードを入力してください");
             return;
         }
         setLoading(true);
@@ -36,18 +36,16 @@ export const VerifyForm = () => {
             setLoading(false);
 
             if (res?.error) {
-                toast.error("認証に失敗しました。");
-
+                toast.error("認証に失敗しました");
                 return;
             }
 
             toast.success("認証成功しました");
-
             await sleep(1500);
+
             router.push("/my-page");
         } catch (err) {
-            console.error("Verify error:", err);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

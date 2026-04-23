@@ -1,21 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./order.module.css";
-import useSWR from "swr";
 import { fetcher } from "@/lib/fetcher";
-import { Orders } from "../type";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import useSWR from "swr";
+import { Orders } from "../type";
+import styles from "./order.module.css";
 
 type Props = {
     page: "purchased" | "sold";
     tab: "all" | "wait" | "shipping" | "complete";
 };
 
-type Responce = {
+type Response = {
     ordersList: Orders[];
     totalPages: number;
 };
@@ -44,13 +44,13 @@ export const OrderList = ({ page, tab }: Props) => {
 
     const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/orders${apiQuery}`;
 
-    const { data } = useSWR<Responce>(apiUrl, fetcher);
+    const { data } = useSWR<Response>(apiUrl, fetcher);
 
     const ordersList = data?.ordersList;
     const totalPages = data?.totalPages ?? 1;
 
     // ページネーション
-    const renderPagenation = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
+    const renderPagination = (currentPage: number, totalPages: number, onPageChange: (page: number) => void) => {
         if (totalPages <= 1) return null;
 
         const pages: (number | string)[] = [];
@@ -69,7 +69,7 @@ export const OrderList = ({ page, tab }: Props) => {
         if (totalPages > 1) pages.push(totalPages);
 
         return (
-            <div className={styles.pagenation}>
+            <div className={styles.pagination}>
                 <button
                     type="button"
                     disabled={currentPage === 1}
@@ -144,7 +144,7 @@ export const OrderList = ({ page, tab }: Props) => {
 
                                                 <div
                                                     className={`${styles.transDiv} ${
-                                                        ["cancelled", "returnd"].includes(order.status)
+                                                        ["cancelled", "returned"].includes(order.status)
                                                             ? styles.transCancel
                                                             : ""
                                                     }`}
@@ -183,7 +183,7 @@ export const OrderList = ({ page, tab }: Props) => {
                         );
                     })}
 
-                    {renderPagenation(pageNumber, totalPages, (p) => {
+                    {renderPagination(pageNumber, totalPages, (p) => {
                         setPageNumber(p);
                     })}
                 </main>

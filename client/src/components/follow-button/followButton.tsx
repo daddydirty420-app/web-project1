@@ -1,9 +1,9 @@
 "use client";
 
-import { useFollowStatus, updateFollowCache } from "@/hooks/useFollow";
-import styles from "./followButton.module.css";
-import clsx from "clsx";
+import { updateFollowCache, useFollowStatus } from "@/hooks/useFollow";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import styles from "./followButton.module.css";
 
 type Props = {
     targetUserId: string;
@@ -22,7 +22,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -35,8 +35,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -47,7 +46,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -59,8 +58,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             });
         } catch (err) {
             updateFollowCache(targetUserId, currentUserId, true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

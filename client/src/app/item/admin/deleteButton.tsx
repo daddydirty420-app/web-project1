@@ -1,11 +1,11 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
+import { X } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
-import { X } from "lucide-react";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -18,7 +18,7 @@ export const DeleteButton = ({ id, item }: Props) => {
 
     const deleteItem = async () => {
         if (!deleteReason || deleteReason === "") {
-            toast.error("削除理由を入力してください。");
+            toast.error("削除理由を入力してください");
             return;
         }
 
@@ -26,7 +26,7 @@ export const DeleteButton = ({ id, item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -45,8 +45,7 @@ export const DeleteButton = ({ id, item }: Props) => {
                 setPopup(false);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

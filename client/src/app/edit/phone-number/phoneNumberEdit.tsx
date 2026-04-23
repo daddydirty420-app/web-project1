@@ -34,7 +34,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -53,7 +53,6 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error(data.message);
                     toast.error("電話番号の更新に失敗しました");
                     return;
                 }
@@ -79,7 +78,6 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
                 toast.error("電話番号の更新に失敗しました");
                 return;
             }
@@ -93,8 +91,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
                 router.push("/my-page");
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

@@ -1,4 +1,4 @@
-import styles from "./imputForm.module.css";
+import styles from "./inputForm.module.css";
 import { InputTitle } from "./inputTitle";
 
 type Props = {

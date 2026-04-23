@@ -1,10 +1,10 @@
 "use client";
 
+import { InputTitle } from "@/components/inputForm";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { Categories } from "./types/type";
 import styles from "./upload.module.css";
-import toast from "react-hot-toast";
-import { InputTitle } from "@/components/inputForm";
 
 export type CategoryValue = {
     id: string | null;

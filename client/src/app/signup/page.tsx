@@ -1,7 +1,7 @@
 import { Container } from "@/components";
-import { SignupForm } from "./signup-form";
-import { Metadata } from "next";
 import styles from "@/styles/login.module.css";
+import { Metadata } from "next";
+import { SignupForm } from "./signup-form";
 
 export const metadata: Metadata = {
     title: "会員登録",

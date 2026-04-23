@@ -1,8 +1,8 @@
 import styles from "./itemCommon.module.css";
 import { Item } from "./itemPageTypes";
-import { VideoSection } from "./videoSection/videoSection";
 import { ItemSection } from "./itemSection/itemSection";
 import { SellerSectionTop } from "./sellerSection/sellerSectionTop";
+import { VideoSection } from "./videoSection/videoSection";
 
 type Props = {
     id: string;

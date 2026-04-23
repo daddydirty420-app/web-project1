@@ -1,12 +1,14 @@
 "use client";
 
-import { User } from "./profileTypes";
-import styles from "./profile-admin.module.css";
-import { useEffect, useState } from "react";
+import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import clsx from "clsx";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../lib/sleep";
+import styles from "./profile-admin.module.css";
+import { User } from "./profileTypes";
 
 type Props = {
     userId: string;
@@ -53,9 +55,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                     const data = await res.json();
                     setData(data);
                 }
-            } catch (err) {
-                console.error(err);
-            }
+            } catch (err) {}
         };
 
         fetchData();
@@ -66,7 +66,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -85,13 +85,13 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 setAddPenalty(0);
                 setPopup(false);
                 setData((prev) => (prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty } : prev));
+                toast.success("ペナルティポイントを付与しました");
+                await sleep(1500);
+
                 router.refresh();
-            } else {
-                console.error(data.message);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -115,16 +115,17 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
             const data = await res.json();
 
-            alert(data.message);
             if (res.ok) {
                 setDeleteUriage(0);
                 setPopup(false);
                 setData((prev) => (prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage } : prev));
+                toast.success("売上金を没収しました");
+                await sleep(1500);
+
                 router.refresh();
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -133,7 +134,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -148,15 +149,16 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
             const data = await res.json();
 
-            alert(data.message);
             if (res.ok) {
                 setDeleteReason("");
                 setPopup(false);
+                toast.success("ユーザーを削除しました");
+                await sleep(2000);
+
                 router.refresh();
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

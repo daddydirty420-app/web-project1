@@ -1,5 +1,5 @@
-import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
-import { GuideSubTitle, GuideSection } from "@/components/guide";
+import { Accordion, AccordionGrid, TitleAndBack } from "@/components";
+import { GuideSection, GuideSubTitle } from "@/components/guide";
 import { ListDiscSecond } from "@/components/list";
 import { TermsList, TermsListDiv } from "@/components/terms";
 import Link from "next/link";

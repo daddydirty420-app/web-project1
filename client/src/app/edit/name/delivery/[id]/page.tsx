@@ -1,10 +1,10 @@
-import { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import { NameEditForm } from "../../nameEditForm";
-import { Name } from "../../../type";
-import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
+import { notFound, redirect } from "next/navigation";
+import { Name } from "../../../type";
+import { NameEditForm } from "../../nameEditForm";
 
 type Props = {
     params: { id: string };

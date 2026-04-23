@@ -1,8 +1,8 @@
 "use client";
 
 import { InputStr, InputTitle, Textarea } from "@/components/inputForm";
-import styles from "./upload.module.css";
 import Image from "next/image";
+import styles from "./upload.module.css";
 
 export type VideoInputValue = {
     videoFile: File | null;

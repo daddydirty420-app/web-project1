@@ -1,8 +1,8 @@
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Client } from "./client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {

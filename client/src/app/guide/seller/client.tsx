@@ -1,10 +1,10 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
 import guideImage1 from "@/assets/images/website-image/guide-image/2026年9月10日に1,000獲得.png";
 import guideImage2 from "@/assets/images/website-image/guide-image/売上金使用フローガイド.png";
-import { useState } from "react";
 import { X } from "lucide-react";
+import Image, { StaticImageData } from "next/image";
+import { useState } from "react";
 
 export const Client = () => {
     const [modalSrc, setModalSrc] = useState<StaticImageData | null>(null);

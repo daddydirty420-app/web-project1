@@ -1,12 +1,12 @@
 "use client";
 
+import { sleep } from "@/lib/sleep";
 import styles from "@/styles/login.module.css";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { sleep } from "@/lib/sleep";
 
 export const PwForm = () => {
     const [visible, setVisible] = useState(false);
@@ -20,19 +20,21 @@ export const PwForm = () => {
         const token = searchParams.get("token");
 
         if (!token) {
-            toast.error("無効なリンクです。");
+            toast.error("無効なリンクです");
+            await sleep(1000);
+
             router.push("/login");
             return;
         }
 
         if (password !== confirmPassword) {
-            setErrorMsg("パスワードが一致しません。");
+            setErrorMsg("パスワードが一致しません");
             return;
         }
 
         const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regex.test(password)) {
-            setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください。");
+            setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
             return;
         }
 
@@ -48,18 +50,15 @@ export const PwForm = () => {
             const data = await res.json();
 
             if (res.ok) {
-                toast.success("パスワードを更新しました。もう一度ログインしてください！");
-                console.log(data.message);
-
+                toast.success("パスワードを更新しました。もう一度ログインしてください");
                 await sleep(1500);
+
                 router.push("/login");
             } else {
-                toast.error("新しいパスワードの設定に失敗しました。");
-                console.error(data.message);
+                toast.error("新しいパスワードの設定に失敗しました");
             }
         } catch (err) {
-            console.error(err);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { InputTitle } from "@/components/inputForm";
-import styles from "./upload.module.css";
 import { useEffect, useState } from "react";
+import styles from "./upload.module.css";
 
 export type PriceValue = {
     price: string;

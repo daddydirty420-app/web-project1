@@ -1,9 +1,9 @@
 "use client";
 
+import { getAccessToken } from "@/lib/getAccessToken";
 import { useState } from "react";
 import styles from "./button.module.css";
 import { User } from "./type";
-import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     user: User;
@@ -21,7 +21,7 @@ export const FollowButton = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -33,8 +33,7 @@ export const FollowButton = ({ user }: Props) => {
             });
         } catch (err) {
             setIsFollowing(!next);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -47,7 +46,7 @@ export const FollowButton = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -59,8 +58,7 @@ export const FollowButton = ({ user }: Props) => {
             });
         } catch (err) {
             setIsFollowing(!next);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

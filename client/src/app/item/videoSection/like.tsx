@@ -1,13 +1,13 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./video.module.css";
-import { useLikeStatus, useLikeCount, updateItemLikeCache } from "@/hooks/useItemLike";
-import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
+import { updateItemLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useItemLike";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
+import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from "./video.module.css";
 
 type Props = {
     id: string;
@@ -33,7 +33,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -45,8 +45,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             });
         } catch (err) {
             updateItemLikeCache(id, false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -57,7 +56,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -69,8 +68,7 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
             });
         } catch (err) {
             updateItemLikeCache(id, true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

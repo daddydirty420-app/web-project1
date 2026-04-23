@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
@@ -58,7 +59,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            toast.error("7桁の郵便番号を入力してください。");
+            toast.error("7桁の郵便番号を入力してください");
             return;
         }
 
@@ -72,14 +73,14 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
 
             if (!res.ok) {
                 showAddressErrorToast(data.code);
-                toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
+                toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください");
             }
 
             setTodouhuken(data.address.todouhuken_name);
             setShikutyouson(data.address.shikutyouson);
             setBanchi(data.address.banchi);
         } catch (err) {
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -104,7 +105,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
     const submit = async () => {
         const normalizedPostNumber = postNumber?.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
-            toast.error("郵便番号は半角数字7桁で入力してください。");
+            toast.error("郵便番号は半角数字7桁で入力してください");
             return;
         }
 
@@ -164,7 +165,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         const hasRearImage = !!(idCardRear || rearFileName);
 
         if (requiredBody.some((v) => v === "" || v === undefined || v === null) || !hasFrontImage || !hasRearImage) {
-            toast.error("未入力の必須項目があります。");
+            toast.error("未入力の必須項目があります");
             return;
         }
 
@@ -172,7 +173,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -188,8 +189,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("本人確認情報の送信に失敗しました。");
-                console.error(data.message);
+                toast.error("本人確認情報の送信に失敗しました");
                 return;
             }
 
@@ -203,8 +203,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    console.error("身分証（表面）のアップロードに失敗しました。");
-                    toast.error("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました");
                     return;
                 }
             }
@@ -219,17 +218,17 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    console.error("身分証（裏面）のアップロードに失敗しました。");
-                    toast.error("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました");
                     return;
                 }
             }
 
-            toast.success("本人確認情報を送信しました。");
+            toast.success("本人確認情報を送信しました");
+            await sleep(1500);
+
             router.push("/my-page");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
         }
     };
 

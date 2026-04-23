@@ -1,6 +1,6 @@
-import styles from "./comment.module.css";
 import Image from "next/image";
 import { User } from "../itemPageTypes";
+import styles from "./comment.module.css";
 
 type Props = {
     user: User | null | undefined;

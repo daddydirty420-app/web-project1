@@ -1,11 +1,11 @@
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import styles from "./footer.module.css";
+import { faCircleUser, faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import { faBell, faHome, faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faShoppingBag, faBell } from "@fortawesome/free-solid-svg-icons";
-import { faSquarePlus, faCircleUser } from "@fortawesome/free-regular-svg-icons";
-import Link from "next/link";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import Link from "next/link";
+import styles from "./footer.module.css";
 
 export default async function Footer() {
     const session = await getServerSession(authOptions);

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import styles from "./normal-link.module.css";
 import { ReactNode } from "react";
+import styles from "./normal-link.module.css";
 
 type NormalLinkProps = {
     url: string;

@@ -1,5 +1,5 @@
-import styles from "./profile.module.css";
 import Link from "next/link";
+import styles from "./profile.module.css";
 
 type Props = {
     shopId: string;

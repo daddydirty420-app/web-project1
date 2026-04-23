@@ -24,7 +24,7 @@ export const LoginForm = () => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
-            toast.error("正しいメールアドレスの形式で入力してください。");
+            toast.error("正しいメールアドレスの形式で入力してください");
             return;
         }
 
@@ -39,16 +39,15 @@ export const LoginForm = () => {
             setLoading(false);
 
             if (res?.error) {
-                toast.error("メールアドレスまたはパスワードが正しくありません。");
+                toast.error("メールアドレスまたはパスワードが正しくありません");
             } else if (res?.ok) {
                 toast.success("ログインしました");
-
                 await sleep(1200);
+
                 router.push("/my-page");
             }
         } catch (err) {
-            console.error("login error:", err);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

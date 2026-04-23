@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./comment.module.css";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Comment, Item, User } from "../itemPageTypes";
-import { getAccessToken } from "@/lib/getAccessToken";
+import styles from "./comment.module.css";
 
 type Props = {
     id: string;
@@ -29,7 +29,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
         }
 
         if (inputComment.length === 0) {
-            toast.error("コメントを入力してください。");
+            toast.error("コメントを入力してください");
             return;
         }
 
@@ -89,15 +89,14 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
             toast.success("コメントを投稿しました！");
         } catch (err) {
             mutate();
-            console.error(err);
 
             if (err instanceof Error) {
                 if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 } else if (err.message === "UPLOAD_ERROR") {
-                    toast.error("コメントの投稿に失敗しました。");
+                    toast.error("コメントの投稿に失敗しました");
                 } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください。");
+                    alert("システムエラーが発生しました。時間をおいて再試行してください");
                 }
             }
         }

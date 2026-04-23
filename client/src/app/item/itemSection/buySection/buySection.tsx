@@ -1,13 +1,13 @@
 "use client";
 
-import styles from "./buy.module.css";
-import { useRouter } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import styles from "./buy.module.css";
 
 type Props = {
     id: string;
@@ -25,7 +25,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                     const accessToken = await getAccessToken();
 
                     if (!accessToken) {
-                        alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                        alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                         return;
                     }
 
@@ -42,9 +42,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                     if (res.ok) {
                         setCartIn(data.status);
                     }
-                } catch (err) {
-                    console.error(err);
-                }
+                } catch (err) {}
             };
 
             fetchData();
@@ -58,7 +56,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -70,12 +68,11 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             });
 
             if (res.ok) {
-                toast.success("カートに追加しました。");
+                toast.success("カートに追加しました");
             }
         } catch (err) {
             setCartIn(false);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -86,7 +83,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -98,12 +95,11 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             });
 
             if (res.ok) {
-                toast.success("カートから削除しました。");
+                toast.success("カートから削除しました");
             }
         } catch (err) {
             setCartIn(true);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -116,7 +112,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -138,8 +134,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                 toast.error(data.message);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

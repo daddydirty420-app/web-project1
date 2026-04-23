@@ -1,11 +1,11 @@
-import { Logout } from "./logout";
-import styles from "./mypage.module.css";
 import Link from "next/link";
-import { User, Res } from "./types";
+import { LinkSection } from "./linkSection";
+import { Logout } from "./logout";
+import { MoneySection } from "./moneySection";
+import styles from "./mypage.module.css";
 import MypageUI from "./mypageUI";
 import { ProfileSection } from "./profileSection";
-import { MoneySection } from "./moneySection";
-import { LinkSection } from "./linkSection";
+import { Res, User } from "./types";
 
 type Props = {
     user: User;

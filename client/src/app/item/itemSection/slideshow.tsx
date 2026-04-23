@@ -1,14 +1,14 @@
 "use client";
 
+import { X } from "lucide-react";
 import Image from "next/image";
-import styles from "./slide.module.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useState } from "react";
-import { X } from "lucide-react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import styles from "./slide.module.css";
 
 type Props = {
     images: string[];

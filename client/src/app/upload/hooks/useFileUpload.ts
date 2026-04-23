@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import { ItemImageValue } from "../itemImage";
 import { AttributesValue } from "../attributes";
+import { ItemImageValue } from "../itemImage";
 
 type SignedUrlItem = {
     index: number;
@@ -64,11 +64,9 @@ export const useFileUpload = () => {
             const data = await convertRes.json();
 
             if (!convertRes.ok) {
-                console.warn(data.message);
                 return true;
             }
 
-            console.log(data.message);
             return true;
         },
         [],
@@ -124,7 +122,6 @@ export const useFileUpload = () => {
                         });
 
                         if (!res.ok) {
-                            console.log(res.status, res.statusText);
                             throw new Error(`画像${index + 1}枚目のアップロードに失敗`);
                         }
                     }),
@@ -132,7 +129,6 @@ export const useFileUpload = () => {
 
                 return true;
             } catch (err) {
-                console.error(err);
                 toast.error("商品画像のアップロードに失敗しました");
                 return false;
             }
@@ -179,7 +175,6 @@ export const useFileUpload = () => {
 
                 return true;
             } catch (err) {
-                console.error(err);
                 toast.error("商品画像のアップロードに失敗しました");
                 return false;
             }

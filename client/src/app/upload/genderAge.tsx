@@ -1,9 +1,9 @@
 "use state";
 
 import { InputTitle } from "@/components/inputForm";
-import styles from "./upload.module.css";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import styles from "./upload.module.css";
 
 export type GenderAgeValue = {
     gender_type: "men" | "women" | "unisex" | null;

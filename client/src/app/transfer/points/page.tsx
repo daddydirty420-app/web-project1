@@ -1,9 +1,9 @@
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Form } from "./form";
-import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -35,7 +35,7 @@ export default async function Page() {
     const data = await res.json();
 
     if (!res.ok) {
-        console.error(data.messaage);
+        console.error(data.message);
         notFound();
     }
 

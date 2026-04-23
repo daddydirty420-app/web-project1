@@ -1,17 +1,17 @@
 "use client";
 
-import Image from "next/image";
-import { User } from "./type";
-import styles from "./userList.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fetcher } from "@/lib/fetcher";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
-import { FollowButton } from "./followButton";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
-import { fetcher } from "@/lib/fetcher";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { FollowButton } from "./followButton";
+import { User } from "./type";
+import styles from "./userList.module.css";
 
 type Props = {
     loggedIn: boolean;
@@ -88,15 +88,13 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                 mutate();
                 const data = await res.json();
                 toast.error("フォロー解除に失敗しました");
-                console.error(data.message);
                 return;
             }
 
             mutate();
         } catch (err) {
             mutate();
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

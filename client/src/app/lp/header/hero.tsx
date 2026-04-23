@@ -1,7 +1,7 @@
-import styles from "../lp.module.css";
 import headerPic from "@/assets/images/scott-goodwill-y8Ngwq34_Ak-unsplash.jpg";
-import Image from "next/image";
 import clsx from "clsx";
+import Image from "next/image";
+import styles from "../lp.module.css";
 
 type Props = {
     shopPage?: boolean;

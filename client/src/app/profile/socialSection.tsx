@@ -1,8 +1,8 @@
-import styles from "./profile.module.css";
 import { FollowSection } from "./followSection";
-import { StarSection } from "./starSection";
-import { ShopButton } from "./shopButton";
+import styles from "./profile.module.css";
 import { Res } from "./profileTypes";
+import { ShopButton } from "./shopButton";
+import { StarSection } from "./starSection";
 
 type Props = {
     data: Res;

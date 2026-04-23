@@ -1,15 +1,16 @@
 "use client";
 
-import styles from "../../../edit.module.css";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import EditUI from "@/app/edit/editUI";
 import { Button, InputTitle } from "@/components/inputForm";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../../../lib/sleep";
+import styles from "../../../edit.module.css";
 
 type Props = {
     shopEditId: string;
@@ -142,7 +143,7 @@ export default function Client({ shopEditId }: Props) {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -158,8 +159,7 @@ export default function Client({ shopEditId }: Props) {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
-                toast.error("画像データの送信に失敗しました。");
+                toast.error("画像データの送信に失敗しました");
                 return;
             }
 
@@ -173,7 +173,7 @@ export default function Client({ shopEditId }: Props) {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（表面）のアップロードに失敗しました。");
+                    toast.error("身分証（表面）のアップロードに失敗しました");
                     return;
                 }
             }
@@ -188,7 +188,7 @@ export default function Client({ shopEditId }: Props) {
                 });
 
                 if (!uploadFrontRes.ok) {
-                    toast.error("身分証（裏面）のアップロードに失敗しました。");
+                    toast.error("身分証（裏面）のアップロードに失敗しました");
                     return;
                 }
             }
@@ -209,17 +209,18 @@ export default function Client({ shopEditId }: Props) {
                     });
 
                     if (!upload.ok) {
-                        toast.error("許認可証のアップロードに失敗しました。");
+                        toast.error("許認可証のアップロードに失敗しました");
                         return;
                     }
                 }
             }
 
             toast.success("画像のアップロードが完了しました！");
+            await sleep(1500);
+
             router.replace("/edit/shop/com-free/complete");
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -284,7 +285,7 @@ export default function Client({ shopEditId }: Props) {
             </label>
 
             {checked && (
-                <section className={styles.permitSecton}>
+                <section className={styles.permitSection}>
                     <h2 className={styles.subtitle}>許認可証アップロード</h2>
 
                     <div className={styles.imageInputDivPermit}>

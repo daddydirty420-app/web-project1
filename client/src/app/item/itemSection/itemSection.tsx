@@ -1,12 +1,12 @@
 import { Item } from "../itemPageTypes";
-import styles from "./item.module.css";
-import { Slideshow } from "./slideshow";
-import { Detail } from "./detail";
-import { CategoryText } from "./categoryText";
-import { VariantsList } from "./variantsList";
-import { DeliverySection } from "./deliverySection";
 import { BuySection } from "./buySection/buySection";
+import { CategoryText } from "./categoryText";
+import { DeliverySection } from "./deliverySection";
+import { Detail } from "./detail";
+import styles from "./item.module.css";
 import { ItemHeader } from "./itemHeader";
+import { Slideshow } from "./slideshow";
+import { VariantsList } from "./variantsList";
 
 type Props = {
     id: string;

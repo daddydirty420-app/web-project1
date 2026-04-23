@@ -1,20 +1,20 @@
 "use client";
 
-import styles from "./comment.module.css";
-import { Comment, Item, User } from "../itemPageTypes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CommentText } from "./commentText";
-import { CommentDataDiv } from "./commentDataDiv";
-import { Like } from "./like";
-import { ReportFloat } from "./reportFloat";
-import { DeleteComment } from "./deleteComment";
-import { ProfileImage } from "./profileImage";
-import { useState } from "react";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
-import { Pin } from "./pin";
-import { CommentForm } from "./commentForm";
-import { ReplyList } from "./replyList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { KeyedMutator } from "swr";
+import { Comment, Item, User } from "../itemPageTypes";
+import styles from "./comment.module.css";
+import { CommentDataDiv } from "./commentDataDiv";
+import { CommentForm } from "./commentForm";
+import { CommentText } from "./commentText";
+import { DeleteComment } from "./deleteComment";
+import { Like } from "./like";
+import { Pin } from "./pin";
+import { ProfileImage } from "./profileImage";
+import { ReplyList } from "./replyList";
+import { ReportFloat } from "./reportFloat";
 
 type Props = {
     id: string;

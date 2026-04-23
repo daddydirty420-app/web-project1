@@ -1,13 +1,13 @@
 "use client";
 
-import styles from "@/components/confirm-card/confirmcard.module.css";
 import EditUI from "@/app/edit/editUI";
 import { ShopInfo, ShopInfoEdit } from "@/app/edit/type";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ConfirmSection } from "@/components";
+import styles from "@/components/confirm-card/confirmcard.module.css";
 import { Button } from "@/components/inputForm";
 import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
     shopId: string;
@@ -35,7 +35,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -48,8 +48,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
                 body: JSON.stringify({ [field]: value }),
             });
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

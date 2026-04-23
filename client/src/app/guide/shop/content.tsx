@@ -1,6 +1,6 @@
-import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
-import { GuideSubTitle, GuideSmall, GuideSection } from "@/components/guide";
-import { ListUl, ListFlow, ListFlowArrow, ListCheck } from "@/components/list";
+import { Accordion, AccordionGrid, TitleAndBack } from "@/components";
+import { GuideSection, GuideSmall, GuideSubTitle } from "@/components/guide";
+import { ListCheck, ListFlow, ListFlowArrow, ListUl } from "@/components/list";
 import styles from "@/styles/guide.module.css";
 import clsx from "clsx";
 import Link from "next/link";

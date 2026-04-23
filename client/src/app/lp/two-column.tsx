@@ -1,15 +1,15 @@
-import styles from "./lp.module.css";
-import { LpItemList } from "./itemList/lpItemList";
-import { MainAbout } from "./main/mainAbout";
-import { MainUploadFlow } from "./main/mainUploadFlow";
-import { MainShopFlow } from "./main/mainShopFlow";
-import { MainQA } from "./main/mainQA";
-import { InquiryButton } from "./button/inquiryButton";
-import { Button } from "./button/button";
-import { MainAllUser } from "./main/mainAllUser";
-import { MainShopUtil } from "./main/mainShopUtil";
-import { MainCampaign } from "./main/mainCampaign";
 import { Items } from "@/types/itemListTypes";
+import { Button } from "./button/button";
+import { InquiryButton } from "./button/inquiryButton";
+import { LpItemList } from "./itemList/lpItemList";
+import styles from "./lp.module.css";
+import { MainAbout } from "./main/mainAbout";
+import { MainAllUser } from "./main/mainAllUser";
+import { MainCampaign } from "./main/mainCampaign";
+import { MainQA } from "./main/mainQA";
+import { MainShopFlow } from "./main/mainShopFlow";
+import { MainShopUtil } from "./main/mainShopUtil";
+import { MainUploadFlow } from "./main/mainUploadFlow";
 
 type Res = {
     items: Items[];

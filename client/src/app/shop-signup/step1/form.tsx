@@ -1,21 +1,22 @@
 "use client";
 
+import { InputStr, InputStrAndSmall, InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import { ja } from "date-fns/locale";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import toast from "react-hot-toast";
+import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
+import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUIBack from "../ssUiBack";
-import { ComOrFreeOption, ShopInfo, User } from "../type";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { InputStr, InputTitle, InputStrAndSmall } from "@/components/inputForm";
-import Link from "next/link";
-import { ButtonDiv } from "../buttonDiv";
-import DatePicker from "react-datepicker";
-import { ja } from "date-fns/locale";
-import "react-datepicker/dist/react-datepicker.css";
 import { StepBar } from "../stepBar";
-import clsx from "clsx";
-import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
-import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
+import { ComOrFreeOption, ShopInfo, User } from "../type";
+import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -76,7 +77,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
-            toast.error("7桁の郵便番号を入力してください。");
+            toast.error("7桁の郵便番号を入力してください");
             return;
         }
 
@@ -90,36 +91,33 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
             if (!res.ok) {
                 showAddressErrorToast(data.code);
-                console.error(data.message);
                 return;
             }
 
             setTodouhuken(data.address.todouhuken_name);
             setShikutyouson(data.address.shikutyouson);
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) {}
     };
 
     const submit = async () => {
         if (!check) {
-            toast.error("利用規約およびプライバシーポリシーに同意の上、チェックボタンを押してください。");
+            toast.error("利用規約およびプライバシーポリシーに同意の上、チェックボタンを押してください");
             return;
         }
 
         const normalizedPostNumber = postNumber?.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber || "")) {
-            toast.error("郵便番号は半角数字7桁で入力してください。");
+            toast.error("郵便番号は半角数字7桁で入力してください");
             return;
         }
 
         if (memberCount > 100000000 || memberCount === 0) {
-            toast.error("従業員数が不正な値です。");
+            toast.error("従業員数が不正な値です");
             return;
         }
 
         if ((!/^\d+$/.test(companyNumber) || companyNumber.length !== 13) && selectOption === 1) {
-            toast.error("法人番号が正しくありません。");
+            toast.error("法人番号が正しくありません");
             return;
         }
 
@@ -177,7 +175,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         ];
 
         if (requiredBody.some((v) => v === "" || v === undefined || v === null)) {
-            toast.error("未入力の項目があります。");
+            toast.error("未入力の項目があります");
             return;
         }
 
@@ -185,7 +183,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -201,15 +199,15 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("データ登録に失敗しました。");
-                console.error(data.message);
+                toast.error("データ登録に失敗しました");
                 return;
             }
+            toast.success("ショップデータを登録しました");
+            await sleep(1500);
 
             router.push(`/shop-signup/step2/${data.id}`);
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

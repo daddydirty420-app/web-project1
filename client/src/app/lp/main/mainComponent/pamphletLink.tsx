@@ -1,5 +1,5 @@
-import styles from "../../lp.module.css";
 import Image from "next/image";
+import styles from "../../lp.module.css";
 
 export const PamphletLink = () => {
     return (

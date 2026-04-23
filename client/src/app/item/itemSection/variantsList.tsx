@@ -1,9 +1,9 @@
 "use client";
 
-import styles from "./variants.module.css";
 import Image from "next/image";
-import { Item } from "../itemPageTypes";
 import { useState } from "react";
+import { Item } from "../itemPageTypes";
+import styles from "./variants.module.css";
 
 type Props = {
     item: Item;

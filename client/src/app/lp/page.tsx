@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import { Lp } from "./lp";
-import { Items } from "@/types/itemListTypes";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Items } from "@/types/itemListTypes";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { Lp } from "./lp";
 
 type Res = {
     items: Items[];

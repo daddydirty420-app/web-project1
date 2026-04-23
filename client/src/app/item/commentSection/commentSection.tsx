@@ -1,14 +1,14 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./comment.module.css";
-import { useState } from "react";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import useSWR from "swr";
+import { Item, User } from "../itemPageTypes";
+import styles from "./comment.module.css";
 import { CommentForm } from "./commentForm";
 import { CommentList } from "./commentList";
-import { Item, User } from "../itemPageTypes";
-import useSWR from "swr";
-import { getAccessToken } from "@/lib/getAccessToken";
 
 type Props = {
     id: string;
@@ -38,9 +38,7 @@ const fetcher = async (url: string) => {
 
         const data = await res.json();
         return data.commentList;
-    } catch (err) {
-        console.error(err);
-    }
+    } catch (err) {}
 };
 
 export const CommentSection = ({ id, sellerMe, commentCount, page, loggedIn, item, me }: Props) => {

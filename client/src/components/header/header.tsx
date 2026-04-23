@@ -1,12 +1,12 @@
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import styles from "./header.module.css";
-import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
-import { SearchInputPC } from "./searchInputPC";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import styles from "./header.module.css";
 import { SearchInputMobile } from "./searchInputMobile";
+import { SearchInputPC } from "./searchInputPC";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
@@ -15,7 +15,7 @@ export default async function Header() {
 
     return (
         <header className={styles.header}>
-            <section className={styles.headerConteiner}>
+            <section className={styles.headerContainer}>
                 <Link href="/" className={styles.logo}>
                     <div className={styles.logoArea}>
                         <p className={styles.logoText}>LOGO</p>

@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "../itemCommon.module.css";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import styles from "../itemCommon.module.css";
 
 type Props = {
     id: string;
@@ -22,7 +22,7 @@ export const Report = ({ id, itemReport, page, reportCount }: Props) => {
     } else if (page === "admin") {
         link = `${itemReport ? adminItemLink : adminCommentLink}`;
     } else {
-        console.error("ページ信号が正しくありません。");
+        console.error("ページ信号が正しくありません");
         return;
     }
 

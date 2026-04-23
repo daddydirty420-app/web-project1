@@ -1,6 +1,6 @@
-import { Hero } from "./hero";
-import { HeaderGreen } from "./headerGreen";
 import { Button } from "../button/button";
+import { HeaderGreen } from "./headerGreen";
+import { Hero } from "./hero";
 
 type Props = {
     shopPage?: boolean;

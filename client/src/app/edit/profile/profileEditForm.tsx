@@ -23,7 +23,7 @@ export const ProfileEditForm = ({ user }: Props) => {
 
     const submit = async () => {
         if (!userNameValue) {
-            toast.error("必須項目が空になっています。");
+            toast.error("必須項目が空になっていま。");
             return;
         }
 
@@ -33,7 +33,7 @@ export const ProfileEditForm = ({ user }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -54,7 +54,7 @@ export const ProfileEditForm = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                toast.error("プロフィールの変更に失敗しました。");
+                toast.error("プロフィールの変更に失敗しました");
                 return;
             }
 
@@ -68,7 +68,7 @@ export const ProfileEditForm = ({ user }: Props) => {
                 });
 
                 if (!uploadRes.ok) {
-                    toast.error("プロフィール画像のS3アップロードに失敗しました。");
+                    toast.error("プロフィール画像のS3アップロードに失敗しました");
                     return;
                 }
             }
@@ -79,7 +79,6 @@ export const ProfileEditForm = ({ user }: Props) => {
             router.push(`/profile/${user.id}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
         }
     };
 

@@ -14,7 +14,7 @@
     box-shadow: var(--shadow-mini);
 }
 
-.headerConteiner {
+.headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -231,7 +231,7 @@
         align-items: flex-end;
     }
 
-    .headerConteiner {
+    .headerContainer {
         gap: 50px;
         height: 60px;
     }

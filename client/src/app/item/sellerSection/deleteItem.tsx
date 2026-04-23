@@ -1,10 +1,12 @@
 "use client";
 
-import styles from "./seller.module.css";
-import { useState } from "react";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import styles from "./seller.module.css";
 
 type Props = {
     id: string;
@@ -27,7 +29,7 @@ export const DeleteItem = ({ id, page }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -41,16 +43,18 @@ export const DeleteItem = ({ id, page }: Props) => {
             const data = await res.json();
 
             if (res.ok) {
-                alert("商品を削除しました");
+                toast.success("商品を削除しました");
                 setPopup(false);
+                await sleep(1500);
+
                 router.push(routerPage);
             } else if (data.message) {
-                alert(data.message);
-                console.error(data.message);
+                toast.error("商品の削除に失敗しました");
+                setPopup(false);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setPopup(false);
         }
     };
 

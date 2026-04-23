@@ -18,7 +18,7 @@ export const SignupForm = () => {
 
     const handleSubmit = async () => {
         if (password !== confirmPassword) {
-            setErrorMsg("パスワードが一致しません。");
+            setErrorMsg("パスワードが一致しません");
             return;
         }
 
@@ -26,13 +26,13 @@ export const SignupForm = () => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
-            toast.error("正しいメールアドレスの形式で入力してください。");
+            toast.error("正しいメールアドレスの形式で入力してください");
             return;
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
-            setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください。");
+            setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
             return;
         }
 
@@ -65,13 +65,11 @@ export const SignupForm = () => {
             }
 
             toast.success("認証コードを発行しました");
-            console.log(data.message);
-
             await sleep(1500);
+
             router.push(data.reissueUrl);
-        } catch (error) {
-            console.error(error);
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
+        } catch (err) {
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

@@ -2,8 +2,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import styles from "./stepBar.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
+import styles from "./stepBar.module.css";
 
 export const StepBar = () => {
     const [width, setWidth] = useState(0);

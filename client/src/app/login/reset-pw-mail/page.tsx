@@ -1,7 +1,7 @@
 import { Container } from "@/components";
-import { ResetForm } from "./reset-form";
-import { Metadata } from "next";
 import styles from "@/styles/login.module.css";
+import { Metadata } from "next";
+import { ResetForm } from "./reset-form";
 
 export const metadata: Metadata = {
     title: "パスワードリセット",

@@ -1,6 +1,6 @@
-import { TitleAndBack, Container } from "@/components";
-import Header from "@/components/header/header";
+import { Container, TitleAndBack } from "@/components";
 import Footer from "@/components/footer/footer";
+import Header from "@/components/header/header";
 import { NormalLink, NormalLinkContainer } from "@/components/link";
 import { Metadata } from "next";
 

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import CStyles from "./upload.module.css";
-import styles from "./attributesCard.module.css";
 import { InputTitle } from "@/components/inputForm";
-import Image from "next/image";
-import { X } from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { X } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import styles from "./attributesCard.module.css";
+import CStyles from "./upload.module.css";
 
 export type AttributesValue = {
     all_inventory: number;

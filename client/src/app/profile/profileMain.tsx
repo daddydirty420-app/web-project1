@@ -1,12 +1,12 @@
-import { Res } from "./profileTypes";
-import { EditButton } from "./editButton";
 import { FollowButton } from "@/components";
-import styles from "./profile.module.css";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { faStore, faTag } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { EditButton } from "./editButton";
 import { Introduction } from "./introduction";
+import styles from "./profile.module.css";
+import { Res } from "./profileTypes";
 
 type Props = {
     data: Res;

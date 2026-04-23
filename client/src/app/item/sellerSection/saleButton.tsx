@@ -1,13 +1,14 @@
 "use client";
 
-import styles from "./seller.module.css";
-import { Item } from "../itemPageTypes";
-import { useState } from "react";
+import { InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { InputTitle } from "@/components/inputForm";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
+import { Item } from "../itemPageTypes";
+import styles from "./seller.module.css";
 
 type Props = {
     item: Item;
@@ -45,7 +46,7 @@ export const SaleButton = ({ item }: Props) => {
 
         if (selected === "rate") {
             if (rate < 1 || rate > 50) {
-                toast.error("値引き率は1～50%の間で設定してください。");
+                toast.error("値引き率は1～50%の間で設定してください");
                 return;
             }
         }
@@ -53,7 +54,7 @@ export const SaleButton = ({ item }: Props) => {
         if (selected === "amount") {
             const maxAmount = sale ? Math.round(sale.before_price / 2) : 0;
             if (amount < 1 || amount > maxAmount) {
-                toast.error(`値引き額は1円～${maxAmount}円の間で設定してください。`);
+                toast.error(`値引き額は1円～${maxAmount}円の間で設定してください`);
                 return;
             }
         }
@@ -62,7 +63,7 @@ export const SaleButton = ({ item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -79,16 +80,17 @@ export const SaleButton = ({ item }: Props) => {
 
             if (res.ok) {
                 toast.success("値引きしました！");
-                console.log(data.message);
                 setSalePopup(false);
+                await sleep(1500);
+
                 router.refresh();
             } else {
-                toast.error("値引きに失敗しました。");
-                console.error(data.message);
+                toast.error("値引きに失敗しました");
+                setSalePopup(false);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setSalePopup(false);
         }
     };
 
@@ -97,7 +99,7 @@ export const SaleButton = ({ item }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -111,17 +113,18 @@ export const SaleButton = ({ item }: Props) => {
             const data = await res.json();
 
             if (res.ok) {
-                toast.success("値引きを終了しました！");
-                console.log(data.message);
+                toast.success("値引きを終了しました");
                 setSaleStopPopup(false);
+                await sleep(1500);
+
                 router.refresh();
             } else {
-                toast.error("値引きの終了に失敗しました。");
-                console.error(data.message);
+                toast.error("値引きの終了に失敗しました");
+                setSaleStopPopup(false);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setSaleStopPopup(false);
         }
     };
 

@@ -58,26 +58,25 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
 
             if (!res.ok) {
                 showAddressErrorToast(data.code);
-                console.error(data.message);
                 return;
             }
 
             setTodouhuken(data.address.todouhuken_name);
             setShikutyouson(data.address.shikutyouson);
         } catch (err) {
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
     const submit = async () => {
         if (!postNumber || !todouhuken || !shikutyouson || !banchi) {
-            toast.error("必須項目が空になっています。");
+            toast.error("必須項目が空になっています");
             return;
         }
 
         const normalizedPostNumber = postNumber.replace(/-/g, "");
         if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
-            toast.error("郵便番号は半角数字7桁で入力してください。");
+            toast.error("郵便番号は半角数字7桁で入力してください");
             return;
         }
 
@@ -85,7 +84,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -112,7 +111,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                     return;
                 }
 
-                toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください。");
+                toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください");
                 await sleep(1500);
 
                 router.push(`/shop-info/${shopId}`);
@@ -154,8 +153,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 router.push("/my-page");
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

@@ -1,10 +1,10 @@
 "use client";
 
-import styles from "./seller.module.css";
-import Link from "next/link";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { getAccessToken } from "@/lib/getAccessToken";
+import clsx from "clsx";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import styles from "./seller.module.css";
 
 type Props = {
     id: string;

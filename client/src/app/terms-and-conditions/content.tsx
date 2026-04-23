@@ -1,11 +1,11 @@
 import { TitleAndBack } from "@/components";
 import {
-    TermsSection,
-    TermsMiniSection,
     TermsKakko,
     TermsList,
     TermsListDiv,
     TermsListSecond,
+    TermsMiniSection,
+    TermsSection,
 } from "@/components/terms";
 import styles from "@/styles/terms.module.css";
 import clsx from "clsx";

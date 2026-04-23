@@ -67,7 +67,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
     const submit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            toast.error("空の項目があります。");
+            toast.error("空の項目があります");
             return;
         }
 
@@ -75,7 +75,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -96,8 +96,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
-                toast.error("氏名の変更に失敗しました。");
+                toast.error("氏名の変更に失敗しました");
                 return;
             }
 
@@ -116,19 +115,18 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 router.push("/my-page");
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
     const repSubmit = async () => {
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
-            toast.error("空の項目があります。");
+            toast.error("空の項目があります");
             return;
         }
 
         if (!idCardFront || !idCardRear) {
-            toast.error("身分証がアップロードされていません。");
+            toast.error("身分証がアップロードされていません");
             return;
         }
 
@@ -164,7 +162,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -181,11 +179,11 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error(data.message);
-                    toast.error("氏名の変更に失敗しました。");
+                    toast.error("氏名の変更に失敗しました");
                     return;
                 }
-                toast.success("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください。");
+
+                toast.success("代表者氏名の変更を受け付けました。審査完了までしばらくお待ちください");
                 await sleep(1500);
 
                 router.push(`/shop-info/${shopId}`);
@@ -202,18 +200,17 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
                 const data = await res.json();
 
                 if (!res.ok) {
-                    console.error(data.message);
-                    toast.error("氏名の変更に失敗しました。");
+                    toast.error("氏名の変更に失敗しました");
                     return;
                 }
+
                 toast.success("代表者氏名を変更しました");
                 await sleep(1500);
 
                 router.push(`/shop-signup/step5/${shopId}`);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

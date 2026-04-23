@@ -1,11 +1,11 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./comment.module.css";
-import { useState } from "react";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { Report } from "../others/report";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { Comment } from "../itemPageTypes";
+import { Report } from "../others/report";
+import styles from "./comment.module.css";
 
 type Props = {
     comment: Comment;

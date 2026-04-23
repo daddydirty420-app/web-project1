@@ -279,7 +279,6 @@ export const useUpload = () => {
         const data = await res.json();
 
         if (!res.ok) {
-            console.error(data.message);
             return { ok: false, data };
         }
 
@@ -299,7 +298,6 @@ export const useUpload = () => {
         const data = await res.json();
 
         if (!res.ok) {
-            console.error(data.message);
             return { ok: false, data };
         }
 

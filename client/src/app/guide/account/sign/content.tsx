@@ -1,6 +1,6 @@
 import { Accordion, AccordionGrid, TitleAndBack } from "@/components";
-import { ListUl, ListFlow, ListFlowArrow, ListCheck, Nado } from "@/components/list";
 import { GuideSmall } from "@/components/guide";
+import { ListCheck, ListFlow, ListFlowArrow, ListUl, Nado } from "@/components/list";
 import styles from "@/styles/guide.module.css";
 import clsx from "clsx";
 import Link from "next/link";

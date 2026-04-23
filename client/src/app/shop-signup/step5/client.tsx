@@ -1,14 +1,15 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import styles from "@/components/confirm-card/confirmcard.module.css";
-import { ShopInfo } from "../type";
-import SSUI from "../ssUI";
-import { ButtonDiv } from "../buttonDiv";
 import { ConfirmSection } from "@/components";
+import styles from "@/components/confirm-card/confirmcard.module.css";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { sleep } from "../../../lib/sleep";
+import { ButtonDiv } from "../buttonDiv";
+import SSUI from "../ssUI";
+import { ShopInfo } from "../type";
 
 type Props = {
     shopId: string;
@@ -39,7 +40,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -52,8 +53,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 body: JSON.stringify({ [field]: value }),
             });
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -62,7 +62,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
             const accessToken = await getAccessToken();
 
             if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
                 return;
             }
 
@@ -76,15 +76,16 @@ export const Client = ({ shopId, shopInfo }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.log(data.message);
-                toast.error("データ登録に失敗しました。");
+                toast.error("データ登録に失敗しました");
                 return;
             }
 
+            toast.success("ショップデータの登録が完了しました");
+            await sleep(1500);
+
             router.replace("/shop-signup/complete");
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 

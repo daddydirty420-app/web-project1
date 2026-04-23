@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import styles from "./header.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAccessToken } from "@/lib/getAccessToken";
+import { normalizeJapanese } from "@/lib/normalizeJapanese";
 import { faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { normalizeJapanese } from "@/lib/normalizeJapanese";
-import { getAccessToken } from "@/lib/getAccessToken";
+import { useEffect, useRef, useState } from "react";
+import styles from "./header.module.css";
 
 type Props = {
     loggedIn: boolean;
@@ -58,10 +58,7 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
 
             const data = await res.json();
 
-            if (!res.ok) {
-                console.error(data.message);
-                return;
-            }
+            if (!res.ok) return;
 
             const dataList: string[] = (data.sortedData as SearchHistoryItem[]).map(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,9 +66,7 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
             );
 
             setSearchHis(dataList);
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) {}
     };
 
     const fetchSuggest = async (word: string) => {
@@ -90,7 +85,6 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
 
             setSuggestList(data.suggest);
         } catch (err) {
-            console.error(err);
             setSuggestList([]);
         }
     };

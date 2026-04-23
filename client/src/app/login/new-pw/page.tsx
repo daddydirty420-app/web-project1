@@ -1,8 +1,8 @@
 import { Container } from "@/components";
-import { PwForm } from "./pw-form";
-import { Metadata } from "next";
 import styles from "@/styles/login.module.css";
+import { Metadata } from "next";
 import { Suspense } from "react";
+import { PwForm } from "./pw-form";
 
 export const metadata: Metadata = {
     title: "新しいパスワード",

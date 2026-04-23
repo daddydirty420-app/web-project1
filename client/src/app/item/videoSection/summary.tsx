@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import styles from "../itemCommon.module.css";
 import { Item } from "../itemPageTypes";
-import { useEffect, useRef, useState } from "react";
 
 type Props = {
     id: string;
@@ -28,18 +28,10 @@ export const Summary = ({ id, item, sellerMe, page }: Props) => {
         setExpanded(!expanded);
         if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
 
-        try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
-                method: "PATCH",
-                headers: { "Content-type": "application/json" },
-            });
-
-            if (!res.ok) {
-                console.error("APIエラー：", res.status);
-            }
-        } catch (err) {
-            console.error(err);
-        }
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
+            method: "PATCH",
+            headers: { "Content-type": "application/json" },
+        });
     };
 
     return (
