@@ -24,10 +24,12 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
 
     const { userName, introduction, fileName, contentType } = body;
 
+    // user取得
     const user = await getUserHasShop({ userId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
+    // プロフィール画像署名付きurl取得
     let signedUrl: string | null = null;
     let imageUrl: string | null = null;
     let oldImageUrl = user.profile_image;
@@ -40,6 +42,7 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
         imageUrl = `${s3Domain}/${key}`;
     }
 
+    // DB更新
     const updateData: any = {
         user_name: userName,
         user_introduction: introduction,
@@ -54,6 +57,7 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
         data: updateData,
     });
 
+    // ショップ判定・ショップDB更新
     const hasShop = !!user.ShopInfo;
 
     if (hasShop) {
@@ -63,6 +67,7 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
         });
     }
 
+    // 旧プロフィール画像URL削除
     if ((!fileName && imageEdit && oldImageUrl) || (imageUrl && oldImageUrl && imageUrl !== oldImageUrl)) {
         const oldKey = oldImageUrl.split(".com/")[1];
 
@@ -71,5 +76,5 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
         });
     }
 
-    return { signedUrl, imageUrl };
+    return signedUrl;
 };

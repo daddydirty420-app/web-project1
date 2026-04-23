@@ -6,12 +6,12 @@ import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
 import { editProfileUseCase } from "../usecases/user/edit/profile.js";
+import { getHonninEditUseCase } from "../usecases/user/get/getHonnin.js";
 import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/user/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/user/get/getProfileEditData.js";
-import { getHonninEditUseCase } from "../usecases/user/get/getHonnin.js";
 
 const router = Router();
 
@@ -23,12 +23,11 @@ router.patch("/profile", authenticateToken, async (req: Request, res: Response, 
     const imageEdit = req.query.imageEdit === "true";
 
     try {
-        const { signedUrl, imageUrl } = await editProfileUseCase({ userId, body, imageEdit });
+        const signedUrl = await editProfileUseCase({ userId, body, imageEdit });
 
         res.status(200).json({
             message: "プロフィール更新完了！",
             signedUrl,
-            imageUrl,
         });
     } catch (err) {
         next(err);
@@ -194,10 +193,7 @@ router.get("/honnin", authenticateToken, async (req: Request, res: Response, nex
     const userId = req.user!.id;
 
     try {
-        const {
-            user,
-            genderAllOptions
-        } = await getHonninEditUseCase({ userId });
+        const { user, genderAllOptions } = await getHonninEditUseCase({ userId });
 
         res.status(200).json({
             user,
