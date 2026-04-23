@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateName } from "../../../services/name.js";
-import { getShopHasRepName, updateShop } from "../../../services/shopInfo.js";
+import { getShopHasRepName, updateShopIdCard } from "../../../services/shopInfo.js";
 import { RepNameBody } from "../../../types/repNameBody.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
 
@@ -77,7 +77,7 @@ export const updateRepNameUseCase = async ({ shopId, body }: Params) => {
 
     // データ更新
     await sequelize.transaction(async (t) => {
-        await updateShop({
+        await updateShopIdCard({
             shopInfo: shop,
             data: {
                 id_card_front: frontUrl,

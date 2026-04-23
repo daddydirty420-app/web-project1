@@ -2,7 +2,8 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption, User } from "../models/index.js";
+import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
+import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
@@ -46,19 +47,7 @@ router.patch(
         }
 
         try {
-            await ShopInfo.update(
-                {
-                    phone_number: phoneNumber,
-                },
-                { where: { id: shopId } },
-            );
-
-            await User.update(
-                {
-                    phone_number: phoneNumber,
-                },
-                { where: { id: userId } },
-            );
+            await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
 
             res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {

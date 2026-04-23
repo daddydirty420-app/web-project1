@@ -1,19 +1,10 @@
-import { Transaction } from "sequelize";
 import { AccountTypeOption, Address, BankAccount, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
-
-type ShopIdParams = {
-    shopId: number;
-};
-
-type UpdateShopParams = {
-    shopInfo: InstanceType<typeof ShopInfo>;
-    data: {
-        email?: string;
-        id_card_front?: string | null;
-        id_card_rear?: string | null;
-    };
-    transaction?: Transaction;
-};
+import {
+    ShopIdParams,
+    UpdateShopEmailParams,
+    UpdateShopIdCardParams,
+    UpdateShopPhoneNumberParams,
+} from "../types/serviceType/shopInfo.js";
 
 export const getShop = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId);
@@ -85,6 +76,14 @@ export const getShopHasConName = ({ shopId }: ShopIdParams) => {
     });
 };
 
-export const updateShop = async ({ shopInfo, data, transaction }: UpdateShopParams) => {
+export const updateShopEmail = async ({ shopInfo, data, transaction }: UpdateShopEmailParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopIdCard = async ({ shopInfo, data, transaction }: UpdateShopIdCardParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopPhoneNumber = async ({ shopInfo, data, transaction }: UpdateShopPhoneNumberParams) => {
     await shopInfo.update(data, { transaction });
 };

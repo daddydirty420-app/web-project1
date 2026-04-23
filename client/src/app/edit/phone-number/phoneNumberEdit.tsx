@@ -40,7 +40,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
 
             if (page === "shop") {
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/phone-number-edit/${shopId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/shop-info/phone-number/${shopId}`,
                     {
                         method: "PATCH",
                         headers: {
