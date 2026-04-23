@@ -29,6 +29,12 @@ export const getInquiryUser = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMePhoneNumber = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "phone_number"],
+    });
+};
+
 export const getMeMypage = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image", "early_seller", "honnin_verified", "points", "uriagekin"],

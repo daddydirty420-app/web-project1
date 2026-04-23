@@ -308,27 +308,6 @@ router.get("/honnin", authenticateToken, async (req: Request, res: Response, nex
 });
 
 router.get(
-    "/phone-number",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const data = await User.findByPk(req.user!.id, {
-                attributes: ["id", "phone_number"],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/profile-edit",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

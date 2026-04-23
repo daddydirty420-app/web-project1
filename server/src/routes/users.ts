@@ -4,10 +4,11 @@ import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
+import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
 import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
+import { getPhoneNumberUseCase } from "../usecases/user/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
-import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.patch(
 
         const phoneNumber = req.body.phoneNumber?.trim();
 
-        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) { 
+        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
             throw new AppError("INVALID_PHONE_NUMBER", 400);
         }
 
@@ -130,6 +131,23 @@ router.get("/inquiry", authenticateToken, async (req: Request, res: Response, ne
         next(err);
     }
 });
+
+// GET /user/phone-number
+router.get(
+    "/phone-number",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const user = await getPhoneNumberUseCase({ userId });
+
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 router.get(
     "/transfer-request",

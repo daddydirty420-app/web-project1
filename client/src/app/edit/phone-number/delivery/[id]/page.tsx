@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/user-edit/phone-number`, {
+    const res = await fetch(`${process.env.API_URL}/user/phone-number`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -45,7 +45,7 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    const phoneNumber = data.data;
+    const phoneNumber = data.user;
 
     return <PhoneNumberEdit user={phoneNumber} page="normal" deliveryId={id} />;
 }
