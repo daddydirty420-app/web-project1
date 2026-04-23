@@ -11,6 +11,7 @@ import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/user/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/user/get/getProfileEditData.js";
+import { getHonninEditUseCase } from "../usecases/user/get/getHonnin.js";
 
 const router = Router();
 
@@ -187,6 +188,25 @@ router.get(
         }
     },
 );
+
+// GET /user/honnin
+router.get("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const {
+            user,
+            genderAllOptions
+        } = await getHonninEditUseCase({ userId });
+
+        res.status(200).json({
+            user,
+            genderAllOptions,
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get(
     "/transfer-request",

@@ -1,4 +1,4 @@
-import { ShopInfo, User } from "../../models/index.js";
+import { Address, GenderOption, IdCard, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
 import { EmailParams, UserIdParams } from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
@@ -84,9 +84,36 @@ export const getProfileUser = ({ userId }: UserIdParams) => {
     });
 };
 
-export const getProfileEditData = ({ userId }: UserIdParams) => {
+export const getProfileEditUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "user_introduction", "profile_image"],
+    });
+};
+
+export const getHonninEditUser = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "birthday", "phone_number", "gender_id"],
+        include: [
+            { model: GenderOption },
+            {
+                model: Address,
+                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+            {
+                model: Name,
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+            {
+                model: IdCard,
+                attributes: ["id", "id_card_front", "id_card_rear"],
+            },
+        ],
     });
 };
 

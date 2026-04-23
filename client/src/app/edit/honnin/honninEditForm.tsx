@@ -1,18 +1,18 @@
 "use client";
 
-import styles from "../edit.module.css";
-import { InputStr, Button, InputTitle } from "@/components/inputForm";
-import EditUI from "../editUI";
-import { GenderOption, User } from "../type";
-import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import DatePicker from "react-datepicker";
+import { Button, InputStr, InputTitle } from "@/components/inputForm";
+import { getAccessToken } from "@/lib/getAccessToken";
 import { ja } from "date-fns/locale";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
+import styles from "../edit.module.css";
+import EditUI from "../editUI";
+import { GenderOption, User } from "../type";
 
 type Props = {
     user: User;
@@ -72,7 +72,6 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
 
             if (!res.ok) {
                 showAddressErrorToast(data.code);
-                console.error(data.message);
                 toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください。");
             }
 

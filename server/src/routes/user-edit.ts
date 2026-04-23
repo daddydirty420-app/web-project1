@@ -182,47 +182,4 @@ router.patch(
     },
 );
 
-router.get("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await User.findByPk(req.user!.id, {
-            attributes: ["id", "birthday", "phone_number", "gender_id"],
-            include: [
-                { model: GenderOption },
-                {
-                    model: Address,
-                    attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-                    include: [
-                        {
-                            model: TodouhukenOption,
-                            as: "AddressTodouhuken",
-                        },
-                    ],
-                },
-                {
-                    model: Name,
-                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                },
-                {
-                    model: IdCard,
-                    attributes: ["id", "id_card_front", "id_card_rear"],
-                },
-            ],
-        });
-
-        const genderAllOptions = await GenderOption.findAll();
-
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
-        }
-
-        res.json({
-            data,
-            genderAllOptions,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
 export default router;

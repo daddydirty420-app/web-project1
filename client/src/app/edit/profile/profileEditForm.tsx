@@ -5,10 +5,10 @@ import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -54,7 +54,6 @@ export const ProfileEditForm = ({ user }: Props) => {
             const data = await res.json();
 
             if (!res.ok) {
-                console.error(data.message);
                 toast.error("プロフィールの変更に失敗しました。");
                 return;
             }

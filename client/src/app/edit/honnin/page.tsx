@@ -1,9 +1,9 @@
+import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { HonninEditForm } from "./honninEditForm";
-import { cookies } from "next/headers";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -25,7 +25,7 @@ export default async function Page() {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/user-edit/honnin`, {
+    const res = await fetch(`${process.env.API_URL}/user/honnin`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -36,9 +36,9 @@ export default async function Page() {
     const data = await res.json();
 
     if (!res.ok) {
-        console.error(data.message);
+        console.error(data.code);
         notFound();
     }
 
-    return <HonninEditForm user={data.data} genderOptions={data.genderAllOptions} campaign />;
+    return <HonninEditForm user={data.user} genderOptions={data.genderAllOptions} campaign />;
 }
