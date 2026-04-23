@@ -5,6 +5,7 @@ import {
     UpdateEmailParams,
     UpdatePasswordParams,
     UpdatePhoneNumberParams,
+    UpdateProfileParams,
 } from "../../types/serviceType/users.js";
 
 export const createUser = ({ data, transaction }: CreateUserParams) => {
@@ -24,5 +25,9 @@ export const updateEmailUser = async ({ user, data, transaction }: UpdateEmailPa
 };
 
 export const updatePhoneNumberUser = async ({ user, data, transaction }: UpdatePhoneNumberParams) => {
+    await user.update(data, { transaction });
+};
+
+export const updateProfileUser = async ({ user, data, transaction }: UpdateProfileParams) => {
     await user.update(data, { transaction });
 };

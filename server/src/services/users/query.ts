@@ -5,6 +5,18 @@ export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
 };
 
+export const getUserHasShop = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            {
+                model: ShopInfo,
+                where: { verified: true },
+                required: false,
+            },
+        ],
+    });
+};
+
 export const getMeHighlight = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image"],
@@ -70,21 +82,11 @@ export const getProfileUser = ({ userId }: UserIdParams) => {
             },
         ],
     });
-};export const getProfileEditData = ({ userId }: UserIdParams) => {
-    return User.findByPk(userId, {
-        attributes: ["id", "user_name", "user_introduction", "profile_image"],
-    });
 };
 
-export const getUserHasShop = async ({ userId }: UserIdParams) => {
+export const getProfileEditData = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [
-            {
-                model: ShopInfo,
-                where: { verified: true },
-                required: false,
-            },
-        ],
+        attributes: ["id", "user_name", "user_introduction", "profile_image"],
     });
 };
 

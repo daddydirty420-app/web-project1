@@ -5,91 +5,9 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import sequelize from "../db.js";
 import { bucket, region, s3 } from "../infra/aws/s3.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Address, GenderOption, IdCard, Name, ShopInfo, TodouhukenOption, User } from "../models/index.js";
+import { Address, GenderOption, IdCard, Name, TodouhukenOption, User } from "../models/index.js";
 
 const router = Router();
-
-router.patch(
-    "/profile-update",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const fileName = req.body.fileName || null;
-        const contentType = req.body.contentType;
-        const imageEdit = req.query.imageEdit === "true";
-
-        try {
-            const user = await User.findByPk(userId, {
-                include: [
-                    {
-                        model: ShopInfo,
-                        where: { verified: true },
-                        required: false,
-                    },
-                ],
-            });
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            let signedUrl: string | null = null;
-            let imageUrl: string | null = null;
-            let oldImageUrl = user.profile_image;
-
-            if (fileName) {
-                const Key = `profile-image/${userId}/${Date.now()}_${fileName}`;
-
-                const command = new PutObjectCommand({
-                    Bucket: bucket,
-                    Key: Key,
-                    ContentType: contentType,
-                });
-
-                signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 });
-
-                imageUrl = `https://${bucket}.s3.${region}.amazonaws.com/${Key}`;
-            }
-
-            const updateData: any = {
-                user_name: req.body.userName,
-                user_introduction: req.body.introduction,
-            };
-
-            if (imageEdit) {
-                updateData.profile_image = imageUrl || null;
-            }
-
-            await user.update(updateData);
-
-            const hasShop = !!user.ShopInfo;
-
-            if (hasShop) {
-                await user.ShopInfo.update({
-                    shop_name: req.body.userName,
-                });
-            }
-
-            if ((!fileName && imageEdit) || (imageUrl && oldImageUrl && imageUrl !== oldImageUrl)) {
-                const oldKey = oldImageUrl.split(".com/")[1];
-                const deleteCmd = new DeleteObjectCommand({
-                    Bucket: bucket,
-                    Key: oldKey,
-                });
-                await s3.send(deleteCmd);
-                console.log(`${oldKey}削除`);
-            }
-
-            res.status(200).json({
-                message: "プロフィール更新完了！",
-                signedUrl,
-                imageUrl,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
 
 router.patch(
     "/honnin-submit",

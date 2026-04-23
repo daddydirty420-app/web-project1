@@ -29,3 +29,11 @@ export type UpdateShopPhoneNumberParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateShopNameParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        shop_name: string;
+    };
+    transaction?: Transaction;
+};

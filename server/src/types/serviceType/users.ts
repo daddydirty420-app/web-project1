@@ -1,5 +1,5 @@
-import { User } from "../../models/index.js";
 import { Transaction } from "sequelize";
+import { User } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
@@ -46,6 +46,16 @@ export type UpdatePhoneNumberParams = {
     user: InstanceType<typeof User>;
     data: {
         phone_number: string;
+    };
+    transaction?: Transaction;
+};
+
+export type UpdateProfileParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        user_name: string;
+        user_introduction: string | null;
+        profile_image?: string;
     };
     transaction?: Transaction;
 };
