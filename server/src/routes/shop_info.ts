@@ -9,6 +9,7 @@ import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
 import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
+import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 
 const router = Router();
 
@@ -268,6 +269,23 @@ router.get(
             const name = await getConNameUseCase({ shopId });
 
             res.status(200).json({ name });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/phone-number
+router.get(
+    "/phone-number/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        try {
+            const shop = await getShopPhoneNumberUseCase({ shopId });
+
+            res.status(200).json({ shop });
         } catch (err) {
             next(err);
         }

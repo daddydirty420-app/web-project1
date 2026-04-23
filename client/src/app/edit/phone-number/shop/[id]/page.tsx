@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-info-edit/phone-number/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info/phone-number/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -45,5 +45,5 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    return <PhoneNumberEdit user={data.data} page="shop" shopId={id} />;
+    return <PhoneNumberEdit user={data.shop} page="shop" shopId={id} />;
 }

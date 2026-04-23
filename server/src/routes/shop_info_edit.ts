@@ -201,29 +201,6 @@ router.patch(
 );
 
 router.get(
-    "/phone-number/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const data = await ShopInfo.findByPk(shopId, {
-                attributes: ["id", "phone_number"],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/company-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

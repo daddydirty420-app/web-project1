@@ -76,6 +76,12 @@ export const getShopHasConName = ({ shopId }: ShopIdParams) => {
     });
 };
 
+export const getShopPhoneNumber = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id", "phone_number", "user_id"],
+    });
+};
+
 export const updateShopEmail = async ({ shopInfo, data, transaction }: UpdateShopEmailParams) => {
     await shopInfo.update(data, { transaction });
 };
