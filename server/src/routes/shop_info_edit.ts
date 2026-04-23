@@ -10,7 +10,6 @@ import {
     ShopInfo,
     ShopInfoEdit,
     TodouhukenOption,
-    User,
 } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/createBankAccount.js";
@@ -21,40 +20,6 @@ import { getConNameEditUseCase } from "../usecases/shopInfoEdit/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/getRepName.js";
 
 const router = Router();
-
-router.patch(
-    "/phone-number-edit/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-        const userId = req.user!.id;
-        const phoneNumber = req.body.phoneNumber;
-        if (!phoneNumber) {
-            res.status(400).json({ message: "電話番号がありません。" });
-            return;
-        }
-
-        try {
-            await ShopInfo.update(
-                {
-                    phone_number: phoneNumber,
-                },
-                { where: { id: shopId } },
-            );
-
-            await User.update(
-                {
-                    phone_number: phoneNumber,
-                },
-                { where: { id: userId } },
-            );
-
-            res.status(200).json({ message: "電話番号を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
 
 // POST /shop-info-edit/address/:id
 router.post(

@@ -1,12 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
-import { getAddressShopUseCase } from "../usecases/shopInfo/getAddress.js";
-import { getBankAccountUseCase } from "../usecases/shopInfo/getBankAccount.js";
-import { getConNameUseCase } from "../usecases/shopInfo/getConName.js";
-import { getRepNameUseCase } from "../usecases/shopInfo/getRepName.js";
-import { updateRepNameUseCase } from "../usecases/shopInfo/updateRepName.js";
+import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption, User } from "../models/index.js";
+import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
+import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
+import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
+import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
+import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
 
 const router = Router();
 
@@ -23,6 +24,43 @@ router.patch(
             await updateRepNameUseCase({ shopId, body });
 
             res.status(200).json({ message: "代表者氏名を変更しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/phone-number/:id
+router.patch(
+    "/phone-number/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
+        const phoneNumber = req.body.phoneNumber?.trim();
+
+        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
+            throw new AppError("INVALID_PHONE_NUMBER", 400);
+        }
+
+        try {
+            await ShopInfo.update(
+                {
+                    phone_number: phoneNumber,
+                },
+                { where: { id: shopId } },
+            );
+
+            await User.update(
+                {
+                    phone_number: phoneNumber,
+                },
+                { where: { id: userId } },
+            );
+
+            res.status(200).json({ message: "電話番号を更新しました。" });
         } catch (err) {
             next(err);
         }
