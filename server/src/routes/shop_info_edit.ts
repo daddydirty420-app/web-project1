@@ -18,6 +18,7 @@ import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/get/getAddre
 import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/get/getBankAccount.js";
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
+import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
 
 const router = Router();
 
@@ -129,41 +130,20 @@ router.post(
     },
 );
 
+// POST /shop-info-edit/company-name/:id
 router.post(
-    "/company-name-edit/:id",
+    "/company-name/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
+        const shopId = Number(req.params.id);
+
         const userId = req.user!.id;
-        const companyName = req.body.companyName;
+
+        const companyName = String(req.body.companyName);
+        if (!companyName) throw new AppError("INVALID_COMPANY_NAME", 400);
 
         try {
-            const shop = await ShopInfo.findByPk(shopId);
-
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            const comFreeId = shop.com_or_free_id;
-
-            if (comFreeId === 1) {
-                await ShopInfoEdit.create({
-                    company_name: companyName,
-                    user_id: userId,
-                    shop_info_id: shopId,
-                });
-
-                await Notification.create({
-                    read_user_id: userId,
-                    message:
-                        "会社名の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
-                });
-            } else if (comFreeId === 2) {
-                await shop.update({
-                    company_name: companyName,
-                });
-            }
+            await createCompanyNameUseCase({ shopId, userId, companyName });
 
             res.status(200).json({ message: "会社名の変更を受け付けました。" });
         } catch (err) {

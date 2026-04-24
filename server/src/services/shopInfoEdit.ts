@@ -8,6 +8,7 @@ import {
     TodouhukenOption,
 } from "../models/index.js";
 import {
+    CreateShopEditCompanyNameParams,
     CreateShopEditParams,
     CreateShopEditWithIdCardParams,
     ShopEditIdParams,
@@ -89,5 +90,9 @@ export const createShopEdit = ({ data, transaction }: CreateShopEditParams) => {
 };
 
 export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWithIdCardParams) => {
+    return ShopInfoEdit.create(data, { transaction });
+};
+
+export const createShopEditCompanyName = ({ data, transaction }: CreateShopEditCompanyNameParams) => {
     return ShopInfoEdit.create(data, { transaction });
 };

@@ -37,3 +37,11 @@ export type UpdateShopNameParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateCompanyNameParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        company_name: string;
+    };
+    transaction?: Transaction;
+};

@@ -21,3 +21,12 @@ export type CreateShopEditWithIdCardParams = {
     };
     transaction?: Transaction;
 };
+
+export type CreateShopEditCompanyNameParams = {
+    data: {
+        user_id: number;
+        shop_info_id: number;
+        company_name: string;
+    };
+    transaction?: Transaction;
+};

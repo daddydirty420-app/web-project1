@@ -9,6 +9,7 @@ import {
 } from "../models/index.js";
 import {
     ShopIdParams,
+    UpdateCompanyNameParams,
     UpdateShopEmailParams,
     UpdateShopIdCardParams,
     UpdateShopNameParams,
@@ -111,5 +112,9 @@ export const updateShopPhoneNumber = async ({ shopInfo, data, transaction }: Upd
 };
 
 export const updateShopName = async ({ shopInfo, data, transaction }: UpdateShopNameParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopCompanyName = async ({ shopInfo, data, transaction }: UpdateCompanyNameParams) => {
     await shopInfo.update(data, { transaction });
 };
