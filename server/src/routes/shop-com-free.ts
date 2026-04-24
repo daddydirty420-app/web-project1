@@ -65,7 +65,7 @@ router.post(
                     member_count: shop.member_count,
                     homepage_url: shop.homepage_url,
                     company_number: shop.company_number,
-                    captal: shop.capital,
+                    capital: shop.capital,
                     user_id: userId,
                     shop_info_id: shopId,
                     com_or_free_id: comFreeId,
@@ -262,32 +262,6 @@ router.patch(
             });
         } catch (err) {
             await t.rollback();
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/com-free/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id", "com_or_free_id"],
-                include: [{ model: ComOrFreeOption }],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            const comFree = await ComOrFreeOption.findAll();
-
-            res.status(200).json({ shop, comFree });
-        } catch (err) {
             next(err);
         }
     },

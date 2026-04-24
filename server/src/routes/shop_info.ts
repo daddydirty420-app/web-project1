@@ -8,6 +8,7 @@ import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumbe
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
+import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
 import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
@@ -350,5 +351,23 @@ router.get("/option/:id", authenticateToken, async (req: Request, res: Response,
         next(err);
     }
 });
+
+// GET /shop-info/com-free/:id
+router.get(
+    "/com-free/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
+
+            res.status(200).json({ shop, comFree });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
