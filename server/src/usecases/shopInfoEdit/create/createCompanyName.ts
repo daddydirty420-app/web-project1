@@ -1,6 +1,7 @@
 import { AppError } from "../../../errors.js";
 import { createNotification } from "../../../services/notification.js";
-import { getShop, updateShopCompanyName } from "../../../services/shopInfo.js";
+import { updateShopCompanyName } from "../../../services/shopInfo/command.js";
+import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditCompanyName } from "../../../services/shopInfoEdit.js";
 
 type Params = {

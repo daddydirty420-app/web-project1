@@ -3,7 +3,7 @@ import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { createRepNameShopEdit } from "../../../services/name.js";
 import { createNotification } from "../../../services/notification.js";
-import { getShop } from "../../../services/shopInfo.js";
+import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditWithIdCard } from "../../../services/shopInfoEdit.js";
 import { RepNameBody } from "../../../types/repNameBody.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";

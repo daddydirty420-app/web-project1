@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
-import { updateShopName } from "../../../services/shopInfo.js";
+import { updateShopName } from "../../../services/shopInfo/command.js";
 import { updateProfileUser } from "../../../services/users/command.js";
 import { getUserHasShop } from "../../../services/users/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";

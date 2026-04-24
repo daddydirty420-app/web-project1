@@ -6,15 +6,8 @@ import {
     Name,
     ShopInfo,
     TodouhukenOption,
-} from "../models/index.js";
-import {
-    ShopIdParams,
-    UpdateCompanyNameParams,
-    UpdateShopEmailParams,
-    UpdateShopIdCardParams,
-    UpdateShopNameParams,
-    UpdateShopPhoneNumberParams,
-} from "../types/serviceType/shopInfo.js";
+} from "../../models/index.js";
+import { ShopIdParams } from "../../types/serviceType/shopInfo.js";
 
 export const getShop = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId);
@@ -99,22 +92,8 @@ export const getShopHasComFree = ({ shopId }: ShopIdParams) => {
     });
 };
 
-export const updateShopEmail = async ({ shopInfo, data, transaction }: UpdateShopEmailParams) => {
-    await shopInfo.update(data, { transaction });
-};
-
-export const updateShopIdCard = async ({ shopInfo, data, transaction }: UpdateShopIdCardParams) => {
-    await shopInfo.update(data, { transaction });
-};
-
-export const updateShopPhoneNumber = async ({ shopInfo, data, transaction }: UpdateShopPhoneNumberParams) => {
-    await shopInfo.update(data, { transaction });
-};
-
-export const updateShopName = async ({ shopInfo, data, transaction }: UpdateShopNameParams) => {
-    await shopInfo.update(data, { transaction });
-};
-
-export const updateShopCompanyName = async ({ shopInfo, data, transaction }: UpdateCompanyNameParams) => {
-    await shopInfo.update(data, { transaction });
+export const getShopOption = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id", "auto_trans", "open_info", "user_id"],
+    });
 };

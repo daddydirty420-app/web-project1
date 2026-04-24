@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { createAddressShopEdit } from "../../../services/address.js";
 import { createNotification } from "../../../services/notification.js";
-import { getShop } from "../../../services/shopInfo.js";
+import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEdit } from "../../../services/shopInfoEdit.js";
 import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
 

@@ -180,25 +180,6 @@ router.patch(
     },
 );
 
-router.get("/option/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = req.params.id;
-
-    try {
-        const shop = await ShopInfo.findByPk(shopId, {
-            attributes: ["id", "auto_trans", "open_info"],
-        });
-
-        if (!shop) {
-            res.status(404).json({ message: "ショップデータが見つかりません。" });
-            return;
-        }
-
-        res.status(200).json({ shop });
-    } catch (err) {
-        next(err);
-    }
-});
-
 // GET /shop-info-edit/address/:id
 router.get(
     "/address/:id",

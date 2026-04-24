@@ -2,7 +2,8 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateName } from "../../../services/name.js";
-import { getShopHasRepName, updateShopIdCard } from "../../../services/shopInfo.js";
+import { updateShopIdCard } from "../../../services/shopInfo/command.js";
+import { getShopHasRepName } from "../../../services/shopInfo/query.js";
 import { RepNameBody } from "../../../types/repNameBody.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
 

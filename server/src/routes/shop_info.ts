@@ -11,6 +11,7 @@ import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
+import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 
 const router = Router();
 
@@ -20,9 +21,7 @@ router.patch(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
-
         const body = req.body;
 
         try {
@@ -41,9 +40,7 @@ router.patch(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
-
         const phoneNumber = req.body.phoneNumber?.trim();
 
         if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
@@ -216,7 +213,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -235,7 +231,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -254,7 +249,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -273,7 +267,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -292,7 +285,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -311,7 +303,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -323,5 +314,19 @@ router.get(
         }
     },
 );
+
+// GET /shop-info/option/:id
+router.get("/option/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+
+    try {
+        const shop = await getShopOptionUseCase({ shopId, userId });
+
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+});
 
 export default router;

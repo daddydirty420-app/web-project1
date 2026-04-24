@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { updateShopEmail } from "../../services/shopInfo.js";
+import { updateShopEmail } from "../../services/shopInfo/command.js";
 import { getTokenEmailChangeOne } from "../../services/tokenEmailChange.js";
 import { updateEmailUser } from "../../services/users/command.js";
 import { getUserHasShop } from "../../services/users/query.js";

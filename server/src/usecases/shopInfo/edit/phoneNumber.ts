@@ -1,6 +1,7 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { getShop, updateShopPhoneNumber } from "../../../services/shopInfo.js";
+import { updateShopPhoneNumber } from "../../../services/shopInfo/command.js";
+import { getShop } from "../../../services/shopInfo/query.js";
 import { updatePhoneNumberUser } from "../../../services/users/command.js";
 import { getUser } from "../../../services/users/query.js";
 

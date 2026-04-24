@@ -1,13 +1,13 @@
 import { AppError } from "../../../errors.js";
-import { getShopHasComFree } from "../../../services/shopInfo/query.js";
+import { getShopOption } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
     userId: number;
 };
 
-export const getCompanyNameUseCase = async ({ shopId, userId }: Params) => {
-    const shop = await getShopHasComFree({ shopId });
+export const getShopOptionUseCase = async ({ shopId, userId }: Params) => {
+    const shop = await getShopOption({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
     if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
