@@ -177,7 +177,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-edit/honnin-submit`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/honnin`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

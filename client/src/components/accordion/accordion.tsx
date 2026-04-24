@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import styles from "./styles/accordion.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { ReactNode } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import styles from "./styles/accordion.module.css";
 
 type accordionProps = {
     heading: string;

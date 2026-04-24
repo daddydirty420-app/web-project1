@@ -65,11 +65,9 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                             onClick={async () => {
                                 try {
                                     await navigator.clipboard.writeText(referenceCodeOutput.output);
-                                    console.log("コピーしました：", referenceCodeOutput.output);
                                     toast.success("コピーしました");
                                 } catch (err) {
                                     toast.error("コピー失敗しました。");
-                                    console.error("コピー失敗:", err);
                                 }
                             }}
                         >

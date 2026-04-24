@@ -3,6 +3,7 @@ import {
     CreateUserParams,
     EmailVerifyParams,
     UpdateEmailParams,
+    UpdateHonninParams,
     UpdatePasswordParams,
     UpdatePhoneNumberParams,
     UpdateProfileParams,
@@ -29,5 +30,9 @@ export const updatePhoneNumberUser = async ({ user, data, transaction }: UpdateP
 };
 
 export const updateProfileUser = async ({ user, data, transaction }: UpdateProfileParams) => {
+    await user.update(data, { transaction });
+};
+
+export const updateHonninUser = async ({ user, data, transaction }: UpdateHonninParams) => {
     await user.update(data, { transaction });
 };

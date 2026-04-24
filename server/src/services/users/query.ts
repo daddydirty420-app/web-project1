@@ -17,6 +17,24 @@ export const getUserHasShop = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            {
+                model: Address,
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+            { model: Name },
+            { model: IdCard },
+        ],
+    });
+};
+
 export const getMeHighlight = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image"],

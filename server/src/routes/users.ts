@@ -4,6 +4,7 @@ import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
+import { editHonninUserUseCase } from "../usecases/user/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
 import { editProfileUseCase } from "../usecases/user/edit/profile.js";
 import { getHonninEditUseCase } from "../usecases/user/get/getHonnin.js";
@@ -56,6 +57,25 @@ router.patch(
         }
     },
 );
+
+// PATCH /user/honnin
+router.patch("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    const body = req.body;
+
+    try {
+        const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
+
+        res.status(200).json({
+            message: "本人確認のリクエストが完了しました。",
+            frontSignedUrl,
+            rearSignedUrl,
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {

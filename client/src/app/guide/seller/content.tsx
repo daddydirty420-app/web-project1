@@ -1,14 +1,14 @@
-import { Client } from "./client";
-import { TitleAndBack, Accordion, AccordionGrid } from "@/components";
-import { GuideSubTitle, GuideSmall, GuideSection } from "@/components/guide";
-import { ListUl, ListFlow, ListFlowArrow, ListCheck } from "@/components/list";
+import { Accordion, AccordionGrid, TitleAndBack } from "@/components";
+import { GuideSection, GuideSmall, GuideSubTitle } from "@/components/guide";
+import { ListCheck, ListFlow, ListFlowArrow, ListUl } from "@/components/list";
 import { TermsList, TermsListDiv } from "@/components/terms";
 import { RowTextContainer } from "@/components/two-text-container/tow-text-container";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import styles from "@/styles/guide.module.css";
+import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Link from "next/link";
+import { Client } from "./client";
 
 export const Content = () => {
     return (

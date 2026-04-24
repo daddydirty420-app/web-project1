@@ -59,3 +59,15 @@ export type UpdateProfileParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateHonninParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        honnin_verify_request: boolean;
+        honnin_verified: boolean;
+        birthday: Date;
+        phone_number: string;
+        gender_id: number;
+    };
+    transaction?: Transaction;
+};
