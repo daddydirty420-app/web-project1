@@ -14,6 +14,7 @@ import { getShopComFreeConfirmUseCase } from "../usecases/shopInfoEdit/get/getCo
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
 import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
+import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
 
 const router = Router();
 
@@ -177,6 +178,36 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
         next(err);
     }
 });
+
+// PATCH /shop-info-edit/id-image-upload/:id
+// summary: 事業者登録　代表者身分証アップロード
+// page: edit/shop/com-free/upload/[id]
+router.patch(
+    "/id-image-upload/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+        const body = req.body;
+
+        try {
+            const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({
+                shopEditId,
+                userId,
+                body,
+            });
+
+            res.status(200).json({
+                message: "身分証・許認可証のDB登録が完了しました。",
+                frontSignedUrl,
+                rearSignedUrl,
+                permitSignedUrls,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /shop-info-edit/address/:id
 router.get(

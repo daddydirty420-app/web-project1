@@ -147,7 +147,7 @@ export default function Client({ shopEditId }: Props) {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/id-image-upload/${shopEditId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/id-image-upload/${shopEditId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

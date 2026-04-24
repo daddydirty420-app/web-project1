@@ -116,7 +116,7 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
     }
 
     if (rearFileName && rearFileType && idRearUpload) {
-        const key = `idcard/front/${userId}/${now}_${rearFileName}`;
+        const key = `idcard/rear/${userId}/${now}_${rearFileName}`;
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 

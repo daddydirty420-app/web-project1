@@ -14,6 +14,12 @@ export const getShopEdit = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId);
 };
 
+export const getShopEditHasShop = ({ shopEditId }: ShopEditIdParams) => {
+    return ShopInfoEdit.findByPk(shopEditId, {
+        include: [{ model: ShopInfo }],
+    });
+};
+
 export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
         attributes: ["id", "user_id"],
