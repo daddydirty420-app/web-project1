@@ -44,3 +44,18 @@
 - DB更新
     - ショップ更新
     - ユーザー更新
+
+---
+
+## PATCH /shop-info/option/:id — オプション更新
+
+### リクエスト
+
+- body:
+    - authTrans
+    - openInfo
+
+### ビジネスロジック
+
+- ショップデータ取得
+- DB更新

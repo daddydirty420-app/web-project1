@@ -77,3 +77,21 @@
 - お知らせ作成（非同期）
 
 ---
+
+## POST /shop-info-edit/company-name/:id — 会社名変更受付
+
+### リクエスト
+
+- params:
+    - shopId
+- body:
+    - companyName
+
+### ビジネスロジック
+
+- ショップデータ取得
+- 法人
+    - ShopInfoEdit作成
+    - お知らせ作成（非同期）
+- 個人
+    - ショップDB更新
