@@ -39,7 +39,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/edit/${shopEditId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopEditId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

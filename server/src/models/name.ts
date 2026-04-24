@@ -20,9 +20,6 @@ export class Name extends Model {
     declare user_id: number | null;
 
     static associate() {
-        Name.belongsTo(ShopInfoEdit, {
-            foreignKey: "shop_info_edit_id",
-        });
         Name.belongsTo(Delivery, {
             foreignKey: "delivery_id",
         });
@@ -34,6 +31,14 @@ export class Name extends Model {
             as: "Representative",
         });
         Name.hasOne(ShopInfo, {
+            foreignKey: "name_contact_id",
+            as: "Contact",
+        });
+        Name.hasOne(ShopInfoEdit, {
+            foreignKey: "name_representative_id",
+            as: "Representative",
+        });
+        Name.hasOne(ShopInfoEdit, {
             foreignKey: "name_contact_id",
             as: "Contact",
         });
@@ -64,10 +69,6 @@ Name.init(
             validate: {
                 isIn: [["representative", "contact"]],
             },
-        },
-        shop_info_edit_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
         },
         delivery_id: {
             type: DataTypes.INTEGER,

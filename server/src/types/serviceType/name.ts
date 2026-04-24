@@ -43,6 +43,18 @@ export type CreateNameShopEditParams = {
     transaction?: Transaction;
 };
 
+export type CreateNameShopEditAllowNullParams = {
+    data: {
+        sei: string | null;
+        mei: string | null;
+        sei_kana: string | null;
+        mei_kana: string | null;
+        shop_info_edit_id: number | null;
+        shop_type: "representative" | "contact" | null;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateNameParams = {
     name: InstanceType<typeof Name>;
     data: {

@@ -1,8 +1,8 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createAddressShopEdit } from "../../../services/address.js";
-import { createBankAccountShopEdit } from "../../../services/bankAccount.js";
-import { createNameShopEdit } from "../../../services/name.js";
+import { createAddressShopEditAllowNull } from "../../../services/address.js";
+import { createBankAccountShopEditAllowNull } from "../../../services/bankAccount.js";
+import { createNameShopEditAllowNull } from "../../../services/name.js";
 import { getShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
 import { createShopEditComFree } from "../../../services/shopInfoEdit/command.js";
 
@@ -47,63 +47,55 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
             transaction: t,
         });
 
-        if (address) {
-            await createAddressShopEdit({
-                data: {
-                    post_number: address.post_number,
-                    todouhuken_id: address.todouhuken_id,
-                    shikutyouson: address.shikutyouson,
-                    banchi: address.banchi,
-                    building: address.building,
-                    shop_info_edit_id: shopEdit.id,
-                },
-                transaction: t,
-            });
-        }
+        await createAddressShopEditAllowNull({
+            data: {
+                post_number: address?.post_number ?? null,
+                todouhuken_id: address?.todouhuken_id ?? null,
+                shikutyouson: address?.shikutyouson ?? null,
+                banchi: address?.banchi ?? null,
+                building: address?.building ?? null,
+                shop_info_edit_id: shopEdit.id,
+            },
+            transaction: t,
+        });
 
-        if (repName) {
-            await createNameShopEdit({
-                data: {
-                    sei: repName.sei,
-                    mei: repName.mei,
-                    sei_kana: repName.sei_kana,
-                    mei_kana: repName.mei_kana,
-                    shop_info_edit_id: shopEdit.id,
-                    shop_type: "representative",
-                },
-                transaction: t,
-            });
-        }
+        await createNameShopEditAllowNull({
+            data: {
+                sei: repName?.sei ?? null,
+                mei: repName?.mei ?? null,
+                sei_kana: repName?.sei_kana ?? null,
+                mei_kana: repName?.mei_kana ?? null,
+                shop_info_edit_id: shopEdit.id,
+                shop_type: "representative",
+            },
+            transaction: t,
+        });
 
-        if (conName) {
-            await createNameShopEdit({
-                data: {
-                    sei: conName.sei,
-                    mei: conName.mei,
-                    sei_kana: conName.sei_kana,
-                    mei_kana: conName.mei_kana,
-                    shop_info_edit_id: shopEdit.id,
-                    shop_type: "contact",
-                },
-                transaction: t,
-            });
-        }
+        await createNameShopEditAllowNull({
+            data: {
+                sei: conName?.sei ?? null,
+                mei: conName?.mei ?? null,
+                sei_kana: conName?.sei_kana ?? null,
+                mei_kana: conName?.mei_kana ?? null,
+                shop_info_edit_id: shopEdit.id,
+                shop_type: "contact",
+            },
+            transaction: t,
+        });
 
-        if (bank) {
-            await createBankAccountShopEdit({
-                data: {
-                    bank_name: bank.bank_name,
-                    bank_code: bank.bank_code,
-                    branch: bank.branch,
-                    branch_code: bank.branch_code,
-                    account_type_id: bank.account_type_id,
-                    account_number: bank.account_number,
-                    meigi: bank.meigi,
-                    shop_info_edit_id: shopEdit.id,
-                },
-                transaction: t,
-            });
-        }
+        await createBankAccountShopEditAllowNull({
+            data: {
+                bank_name: bank?.bank_name ?? null,
+                bank_code: bank?.bank_code ?? null,
+                branch: bank?.branch ?? null,
+                branch_code: bank?.branch_code ?? null,
+                account_type_id: bank?.account_type_id ?? null,
+                account_number: bank?.account_number ?? null,
+                meigi: bank?.meigi ?? null,
+                shop_info_edit_id: shopEdit.id,
+            },
+            transaction: t,
+        });
 
         return shopEdit.id;
     });

@@ -2,6 +2,7 @@ import { AccountTypeOption, BankAccount } from "../models/index.js";
 import {
     AccountIdParams,
     CreateBankParams,
+    CreateBankShopEditAllowNullParams,
     CreateBankShopEditParams,
     updateBankParams,
     UserIdParams,
@@ -33,6 +34,10 @@ export const createBankAccount = async ({ data, transaction }: CreateBankParams)
 };
 
 export const createBankAccountShopEdit = async ({ data, transaction }: CreateBankShopEditParams) => {
+    await BankAccount.create(data, { transaction });
+};
+
+export const createBankAccountShopEditAllowNull = async ({ data, transaction }: CreateBankShopEditAllowNullParams) => {
     await BankAccount.create(data, { transaction });
 };
 

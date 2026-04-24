@@ -9,24 +9,6 @@ import { Notification, ShopInfo, ShopInfoEdit } from "../models/index.js";
 
 const router = Router();
 
-router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopEditId = req.params.id;
-    const updateData = req.body;
-
-    try {
-        await ShopInfoEdit.update(updateData, {
-            where: { id: shopEditId },
-        });
-
-        res.status(200).json({
-            message: "更新しました。",
-            updated: updateData,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
 router.patch(
     "/id-image-upload/:id",
     authenticateToken,

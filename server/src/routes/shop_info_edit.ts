@@ -13,6 +13,7 @@ import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/get/getB
 import { getShopComFreeConfirmUseCase } from "../usecases/shopInfoEdit/get/getComFreeConfirm.js";
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
+import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
 
 const router = Router();
 
@@ -161,6 +162,21 @@ router.post(
         }
     },
 );
+
+// PATCH /shop-info-edit/:id
+router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const shopEditId = Number(req.params.id);
+    const userId = req.user!.id;
+    const updateData = req.body;
+
+    try {
+        await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
+
+        res.status(200).json({ message: "更新しました" });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // GET /shop-info-edit/address/:id
 router.get(

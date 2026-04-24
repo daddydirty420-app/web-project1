@@ -2,6 +2,7 @@ import { Name } from "../models/index.js";
 import {
     CreateDeliveryNameParams,
     CreateNameParams,
+    CreateNameShopEditAllowNullParams,
     CreateNameShopEditParams,
     DeliveryIdParams,
     NameIdParams,
@@ -42,6 +43,10 @@ export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNa
 };
 
 export const createNameShopEdit = async ({ data, transaction }: CreateNameShopEditParams) => {
+    return Name.create(data, { transaction });
+};
+
+export const createNameShopEditAllowNull = async ({ data, transaction }: CreateNameShopEditAllowNullParams) => {
     return Name.create(data, { transaction });
 };
 

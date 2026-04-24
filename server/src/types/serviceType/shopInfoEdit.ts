@@ -1,4 +1,5 @@
 import { Transaction } from "sequelize";
+import { ShopInfoEdit } from "../../models/index.js";
 
 export type ShopEditIdParams = {
     shopEditId: number;
@@ -46,5 +47,11 @@ export type CreateShopEditComFreeParams = {
         shop_info_id: number;
         com_or_free_id: number;
     };
+    transaction?: Transaction;
+};
+
+export type UpdateShopEditAnyParams = {
+    shopEdit: InstanceType<typeof ShopInfoEdit>;
+    data: any;
     transaction?: Transaction;
 };

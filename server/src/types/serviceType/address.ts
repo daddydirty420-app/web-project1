@@ -52,6 +52,18 @@ export type CreateAddressShopEditParams = {
     transaction?: Transaction;
 };
 
+export type CreateAddressShopEditAllowNullParams = {
+    data: {
+        post_number: string | null;
+        todouhuken_id: number | null;
+        shikutyouson: string | null;
+        banchi: string | null;
+        building?: string | null;
+        shop_info_edit_id: number;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateAddressParams = {
     address: InstanceType<typeof Address>;
     data: {

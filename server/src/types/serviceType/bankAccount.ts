@@ -38,6 +38,20 @@ export type CreateBankShopEditParams = {
     transaction?: Transaction;
 };
 
+export type CreateBankShopEditAllowNullParams = {
+    data: {
+        bank_code: string | null;
+        bank_name: string | null;
+        branch_code: string | null;
+        branch: string | null;
+        account_type_id: number | null;
+        account_number: string | null;
+        meigi: string | null;
+        shop_info_edit_id: number;
+    };
+    transaction?: Transaction;
+};
+
 export type updateBankParams = {
     account: InstanceType<typeof BankAccount>;
     data: {

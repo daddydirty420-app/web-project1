@@ -10,6 +10,10 @@ import {
 } from "../../models/index.js";
 import { ShopEditIdParams } from "../../types/serviceType/shopInfoEdit.js";
 
+export const getShopEdit = ({ shopEditId }: ShopEditIdParams) => {
+    return ShopInfoEdit.findByPk(shopEditId);
+};
+
 export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
         attributes: ["id", "user_id"],
