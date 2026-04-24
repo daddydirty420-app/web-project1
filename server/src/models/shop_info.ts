@@ -1,11 +1,11 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import User from "./user.js";
-import ComOrFreeOption from "./com_or_free_option.js";
 import Address from "./address.js";
-import Name from "./name.js";
 import BankAccount from "./bank_account.js";
+import ComOrFreeOption from "./com_or_free_option.js";
+import Name from "./name.js";
+import User from "./user.js";
 
 export class ShopInfo extends Model {
     declare id: number;

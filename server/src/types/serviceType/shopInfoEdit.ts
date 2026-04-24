@@ -19,6 +19,7 @@ export type CreateShopEditWithIdCardParams = {
         shop_info_id: number;
         id_card_front: string | null;
         id_card_rear: string | null;
+        name_representative_id: number;
     };
     transaction?: Transaction;
 };
@@ -46,6 +47,8 @@ export type CreateShopEditComFreeParams = {
         user_id: number;
         shop_info_id: number;
         com_or_free_id: number;
+        name_representative_id: number;
+        name_contact_id: number;
     };
     transaction?: Transaction;
 };

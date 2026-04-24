@@ -67,6 +67,8 @@ export type ShopInfoEdit = {
     Address?: Address | null;
     Name?: Name | null;
     BankAccount?: BankAccount | null;
+    RepresentativeNameEdit?: Name | null;
+    ContactNameEdit?: Name | null;
 };
 
 export type ShopInfo = {

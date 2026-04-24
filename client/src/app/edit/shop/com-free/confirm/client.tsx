@@ -66,7 +66,8 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
         day: "numeric",
     });
 
-    const name = shopInfoEdit.Name ?? shopInfo.RepresentativeName;
+    const repName = shopInfoEdit.RepresentativeNameEdit ?? shopInfo.RepresentativeName;
+    const conName = shopInfoEdit.ContactNameEdit ?? shopInfo.ContactName;
     const address = shopInfoEdit.Address ?? shopInfo.Address;
     const bankAccount = shopInfoEdit.BankAccount ?? shopInfo.BankAccount;
 
@@ -166,25 +167,25 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
 
                 <ConfirmSection
                     title="代表者氏名"
-                    content={`${name?.sei ?? ""} ${name?.mei ?? ""}`}
+                    content={`${repName?.sei ?? ""} ${repName?.mei ?? ""}`}
                     link={`/edit/name/shop/rep-name/com-free/${shopEditId}`}
                 />
 
                 <ConfirmSection
                     title="代表者氏名（カナ）"
-                    content={`${name?.sei_kana ?? ""} ${name?.mei_kana ?? ""}`}
+                    content={`${repName?.sei_kana ?? ""} ${repName?.mei_kana ?? ""}`}
                     link={`/edit/name/shop/rep-name/com-free/${shopEditId}`}
                 />
 
                 <ConfirmSection
                     title="担当者氏名"
-                    content={`${shopInfo.ContactName?.sei ?? ""} ${shopInfo.ContactName?.mei ?? ""}`}
+                    content={`${conName?.sei ?? ""} ${conName?.mei ?? ""}`}
                     link={`/edit/name/shop/con-name/com-free/${shopEditId}`}
                 />
 
                 <ConfirmSection
                     title="担当者氏名（カナ）"
-                    content={`${shopInfo.ContactName?.sei_kana ?? ""} ${shopInfo.ContactName?.mei_kana ?? ""}`}
+                    content={`${conName?.sei_kana ?? ""} ${conName?.mei_kana ?? ""}`}
                     link={`/edit/name/shop/con-name/com-free/${shopEditId}`}
                 />
 

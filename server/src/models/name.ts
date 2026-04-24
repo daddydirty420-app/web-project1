@@ -28,19 +28,19 @@ export class Name extends Model {
         });
         Name.hasOne(ShopInfo, {
             foreignKey: "name_representative_id",
-            as: "Representative",
+            as: "RepresentativeName",
         });
         Name.hasOne(ShopInfo, {
             foreignKey: "name_contact_id",
-            as: "Contact",
+            as: "ContactName",
         });
         Name.hasOne(ShopInfoEdit, {
             foreignKey: "name_representative_id",
-            as: "Representative",
+            as: "RepresentativeNameEdit",
         });
         Name.hasOne(ShopInfoEdit, {
             foreignKey: "name_contact_id",
-            as: "Contact",
+            as: "ContactNameEdit",
         });
     }
 

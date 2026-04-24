@@ -29,6 +29,28 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
 
     // db作成
     const editId = await sequelize.transaction(async (t) => {
+        const newRepName = await createNameShopEditAllowNull({
+            data: {
+                sei: repName?.sei ?? null,
+                mei: repName?.mei ?? null,
+                sei_kana: repName?.sei_kana ?? null,
+                mei_kana: repName?.mei_kana ?? null,
+                shop_type: "representative",
+            },
+            transaction: t,
+        });
+
+        const newConName = await createNameShopEditAllowNull({
+            data: {
+                sei: conName?.sei ?? null,
+                mei: conName?.mei ?? null,
+                sei_kana: conName?.sei_kana ?? null,
+                mei_kana: conName?.mei_kana ?? null,
+                shop_type: "contact",
+            },
+            transaction: t,
+        });
+
         const shopEdit = await createShopEditComFree({
             data: {
                 company_name: shop.company_name,
@@ -43,6 +65,8 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
                 user_id: userId,
                 shop_info_id: shopId,
                 com_or_free_id: comFreeId,
+                name_representative_id: newRepName.id,
+                name_contact_id: newConName.id,
             },
             transaction: t,
         });
@@ -55,30 +79,6 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
                 banchi: address?.banchi ?? null,
                 building: address?.building ?? null,
                 shop_info_edit_id: shopEdit.id,
-            },
-            transaction: t,
-        });
-
-        await createNameShopEditAllowNull({
-            data: {
-                sei: repName?.sei ?? null,
-                mei: repName?.mei ?? null,
-                sei_kana: repName?.sei_kana ?? null,
-                mei_kana: repName?.mei_kana ?? null,
-                shop_info_edit_id: shopEdit.id,
-                shop_type: "representative",
-            },
-            transaction: t,
-        });
-
-        await createNameShopEditAllowNull({
-            data: {
-                sei: conName?.sei ?? null,
-                mei: conName?.mei ?? null,
-                sei_kana: conName?.sei_kana ?? null,
-                mei_kana: conName?.mei_kana ?? null,
-                shop_info_edit_id: shopEdit.id,
-                shop_type: "contact",
             },
             transaction: t,
         });

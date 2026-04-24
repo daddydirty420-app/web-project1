@@ -1,12 +1,12 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import User from "./user.js";
-import ShopInfo from "./shop_info.js";
-import ComOrFreeOption from "./com_or_free_option.js";
 import Address from "./address.js";
-import Name from "./name.js";
 import BankAccount from "./bank_account.js";
+import ComOrFreeOption from "./com_or_free_option.js";
+import Name from "./name.js";
+import ShopInfo from "./shop_info.js";
+import User from "./user.js";
 
 export class ShopInfoEdit extends Model {
     declare id: number;
@@ -38,10 +38,15 @@ export class ShopInfoEdit extends Model {
         ShopInfoEdit.belongsTo(ComOrFreeOption, {
             foreignKey: "com_or_free_id",
         });
-        ShopInfoEdit.hasOne(Address, {
-            foreignKey: "shop_info_edit_id",
+        ShopInfoEdit.belongsTo(Name, {
+            foreignKey: "name_representative_id",
+            as: "RepresentativeNameEdit",
         });
-        ShopInfoEdit.hasOne(Name, {
+        ShopInfoEdit.belongsTo(Name, {
+            foreignKey: "name_contact_id",
+            as: "ContactNameEdit",
+        });
+        ShopInfoEdit.hasOne(Address, {
             foreignKey: "shop_info_edit_id",
         });
         ShopInfoEdit.hasOne(BankAccount, {
@@ -91,6 +96,8 @@ ShopInfoEdit.init(
                 },
             },
         },
+        name_representative_id: DataTypes.INTEGER,
+        name_contact_id: DataTypes.INTEGER,
     },
     {
         sequelize,

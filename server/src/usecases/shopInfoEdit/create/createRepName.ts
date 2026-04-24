@@ -81,24 +81,24 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
 
     // データ作成
     await sequelize.transaction(async (t) => {
-        const shopEdit = await createShopEditWithIdCard({
-            data: {
-                id_card_front: frontUrl,
-                id_card_rear: rearUrl,
-                user_id: userId,
-                shop_info_id: shopId,
-            },
-            transaction: t,
-        });
-
-        await createNameShopEdit({
+        const newRepName = await createNameShopEdit({
             data: {
                 sei: sei,
                 mei: mei,
                 sei_kana: seiKana,
                 mei_kana: meiKana,
-                shop_info_edit_id: shopEdit.id,
                 shop_type: "representative",
+            },
+            transaction: t,
+        });
+
+        await createShopEditWithIdCard({
+            data: {
+                id_card_front: frontUrl,
+                id_card_rear: rearUrl,
+                user_id: userId,
+                shop_info_id: shopId,
+                name_representative_id: newRepName.id,
             },
             transaction: t,
         });

@@ -37,7 +37,6 @@ export type CreateNameShopEditParams = {
         mei: string;
         sei_kana: string;
         mei_kana: string;
-        shop_info_edit_id: number | null;
         shop_type: "representative" | "contact" | null;
     };
     transaction?: Transaction;
@@ -49,7 +48,6 @@ export type CreateNameShopEditAllowNullParams = {
         mei: string | null;
         sei_kana: string | null;
         mei_kana: string | null;
-        shop_info_edit_id: number | null;
         shop_type: "representative" | "contact" | null;
     };
     transaction?: Transaction;

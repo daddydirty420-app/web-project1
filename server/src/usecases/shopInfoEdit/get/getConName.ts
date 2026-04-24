@@ -11,9 +11,9 @@ export const getConNameEditUseCase = async ({ shopEditId, userId }: Params) => {
 
     if (shopEdit.user_id !== userId) throw new AppError("FORBIDDEN", 403);
     console.log("shopInfo:", shopEdit.ShopInfo);
-    console.log("conName:", shopEdit.ShopInfo.ContactName);
+    console.log("conName:", shopEdit.ContactNameEdit);
 
-    const name = shopEdit.ShopInfo.ContactName;
+    const name = shopEdit.ContactNameEdit;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 
     return name;

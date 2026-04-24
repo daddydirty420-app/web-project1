@@ -60,6 +60,7 @@ export const getShopEditHasRepName = ({ shopEditId }: ShopEditIdParams) => {
         include: [
             {
                 model: Name,
+                as: "RepresentativeNameEdit",
                 attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
@@ -71,15 +72,9 @@ export const getShopEditHasConName = ({ shopEditId }: ShopEditIdParams) => {
         attributes: ["id", "user_id"],
         include: [
             {
-                model: ShopInfo,
-                attributes: ["id"],
-                include: [
-                    {
-                        model: Name,
-                        as: "ContactName",
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
+                model: Name,
+                as: "ContactNameEdit",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
     });
@@ -97,7 +92,14 @@ export const getShopEditComFreeConfirm = ({ shopEditId }: ShopEditIdParams) => {
                     },
                 ],
             },
-            { model: Name },
+            {
+                model: Name,
+                as: "RepresentativeNameEdit",
+            },
+            {
+                model: Name,
+                as: "ContactNameEdit",
+            },
             {
                 model: BankAccount,
                 include: [{ model: AccountTypeOption }],
