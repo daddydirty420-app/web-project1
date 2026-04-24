@@ -134,3 +134,29 @@
 
 - ShopInfoEdit取得
 - DB更新
+
+---
+
+## PATCH /shop-info-edit/id-image-upload/:id — 事業者登録　代表者身分証アップロード
+
+### リクエスト
+
+- params:
+    - shopEditId
+- body
+
+### ビジネスロジック
+
+- body空チェック
+- ShopInfoEdit取得
+- 代表者身分証アップロード
+- 許認可証アップロード
+- DB更新
+- メール送信
+- お知らせ作成（非同期）
+
+### レスポンス
+
+- frontSignedUrl
+- rearSignedUrl
+- permitSignedUrl
