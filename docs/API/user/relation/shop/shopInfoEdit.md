@@ -95,3 +95,42 @@
     - お知らせ作成（非同期）
 - 個人
     - ショップDB更新
+
+---
+
+## POST /shop-info-edit/com-free/:id — 事業形態変更受付
+
+### リクエスト
+
+- params:
+    - shopId
+- body:
+    - selectOption（comFreeId）
+
+### ビジネスロジック
+
+- ショップデータ取得
+- 代表者氏名データ作成
+- 担当者氏名データ作成
+- ShopInfoEdit作成
+- 住所データ作成
+- 口座番号データ作成
+
+### レスポンス
+
+- editId
+
+---
+
+## PATCH /shop-info-edit/:id — ShopInfoEditカラム変更
+
+### リクエスト
+
+- params:
+    - shopEditId
+- body
+
+### ビジネスロジック
+
+- ShopInfoEdit取得
+- DB更新
