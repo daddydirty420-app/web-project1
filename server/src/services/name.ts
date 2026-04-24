@@ -2,7 +2,7 @@ import { Name } from "../models/index.js";
 import {
     CreateDeliveryNameParams,
     CreateNameParams,
-    CreateRepNameParams,
+    CreateNameShopEditParams,
     DeliveryIdParams,
     NameIdParams,
     UpdateNameParams,
@@ -41,7 +41,7 @@ export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNa
     return Name.create(data, { transaction });
 };
 
-export const createRepNameShopEdit = async ({ data, transaction }: CreateRepNameParams) => {
+export const createNameShopEdit = async ({ data, transaction }: CreateNameShopEditParams) => {
     return Name.create(data, { transaction });
 };
 

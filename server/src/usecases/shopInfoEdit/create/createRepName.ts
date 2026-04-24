@@ -1,7 +1,7 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
-import { createRepNameShopEdit } from "../../../services/name.js";
+import { createNameShopEdit } from "../../../services/name.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditWithIdCard } from "../../../services/shopInfoEdit/command.js";
@@ -91,7 +91,7 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
             transaction: t,
         });
 
-        await createRepNameShopEdit({
+        await createNameShopEdit({
             data: {
                 sei: sei,
                 mei: mei,

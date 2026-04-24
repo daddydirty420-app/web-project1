@@ -30,3 +30,21 @@ export type CreateShopEditCompanyNameParams = {
     };
     transaction?: Transaction;
 };
+
+export type CreateShopEditComFreeParams = {
+    data: {
+        company_name: string | null;
+        phone_number: string | null;
+        email: string | null;
+        open_date_time: string | null;
+        founded_date: Date | null;
+        member_count: number | null;
+        homepage_url: string | null;
+        company_number: string | null;
+        capital: number | null;
+        user_id: number;
+        shop_info_id: number;
+        com_or_free_id: number;
+    };
+    transaction?: Transaction;
+};

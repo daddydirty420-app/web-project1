@@ -5,6 +5,7 @@ import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
+import { createShopEditComFreeUseCase } from "../usecases/shopInfoEdit/create/createComFree.js";
 import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
 import { createRepNameUseCase } from "../usecases/shopInfoEdit/create/createRepName.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/get/getAddress.js";
@@ -136,6 +137,25 @@ router.post(
             await createCompanyNameUseCase({ shopId, userId, companyName });
 
             res.status(200).json({ message: "会社名の変更を受け付けました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// POST /shop-info-edit/com-free/:id
+router.post(
+    "/com-free/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const comFreeId = Number(req.body.selectOption);
+
+        try {
+            const editId = await createShopEditComFreeUseCase({ shopId, userId, comFreeId });
+
+            res.status(200).json({ editId });
         } catch (err) {
             next(err);
         }

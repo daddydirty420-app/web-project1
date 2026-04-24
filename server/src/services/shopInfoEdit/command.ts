@@ -1,5 +1,6 @@
 import { ShopInfoEdit } from "../../models/index.js";
 import {
+    CreateShopEditComFreeParams,
     CreateShopEditCompanyNameParams,
     CreateShopEditParams,
     CreateShopEditWithIdCardParams,
@@ -14,5 +15,9 @@ export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWi
 };
 
 export const createShopEditCompanyName = ({ data, transaction }: CreateShopEditCompanyNameParams) => {
+    return ShopInfoEdit.create(data, { transaction });
+};
+
+export const createShopEditComFree = ({ data, transaction }: CreateShopEditComFreeParams) => {
     return ShopInfoEdit.create(data, { transaction });
 };

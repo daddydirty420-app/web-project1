@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ComOrFreeOption, ShopInfo } from "../../type";
+import { sleep } from "../../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -40,7 +41,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-com-free/com-free-edit/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/com-free/${shopId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -55,6 +56,9 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
                 toast.error("事業形態の更新に失敗しました");
                 return;
             }
+
+            toast.success("事業形態を更新しました");
+            await sleep(1500);
 
             router.push(`/edit/shop/com-free/confirm/${data.editId}`);
         } catch (err) {

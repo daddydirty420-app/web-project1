@@ -97,3 +97,20 @@ export const getShopOption = ({ shopId }: ShopIdParams) => {
         attributes: ["id", "auto_trans", "open_info", "user_id"],
     });
 };
+
+export const getShopHasAddressNameBank = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        include: [
+            { model: Address },
+            {
+                model: Name,
+                as: "RepresentativeName",
+            },
+            {
+                model: Name,
+                as: "ContactName",
+            },
+            { model: BankAccount },
+        ],
+    });
+};
