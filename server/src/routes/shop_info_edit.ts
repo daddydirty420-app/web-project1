@@ -200,30 +200,6 @@ router.patch(
     },
 );
 
-router.get(
-    "/company-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId, {
-                attributes: ["id", "company_name", "com_or_free_id"],
-                include: [{ model: ComOrFreeOption }],
-            });
-
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
 router.get("/option/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
 

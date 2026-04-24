@@ -1,4 +1,12 @@
-import { AccountTypeOption, Address, BankAccount, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
+import {
+    AccountTypeOption,
+    Address,
+    BankAccount,
+    ComOrFreeOption,
+    Name,
+    ShopInfo,
+    TodouhukenOption,
+} from "../models/index.js";
 import {
     ShopIdParams,
     UpdateShopEmailParams,
@@ -80,6 +88,13 @@ export const getShopHasConName = ({ shopId }: ShopIdParams) => {
 export const getShopPhoneNumber = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
         attributes: ["id", "phone_number", "user_id"],
+    });
+};
+
+export const getShopHasComFree = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id", "company_name", "com_or_free_id", "user_id"],
+        include: [{ model: ComOrFreeOption }],
     });
 };
 
