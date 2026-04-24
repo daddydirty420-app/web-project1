@@ -2,17 +2,13 @@ import {
     AccountTypeOption,
     Address,
     BankAccount,
+    ComOrFreeOption,
     Name,
     ShopInfo,
     ShopInfoEdit,
     TodouhukenOption,
-} from "../models/index.js";
-import {
-    CreateShopEditCompanyNameParams,
-    CreateShopEditParams,
-    CreateShopEditWithIdCardParams,
-    ShopEditIdParams,
-} from "../types/serviceType/shopInfoEdit.js";
+} from "../../models/index.js";
+import { ShopEditIdParams } from "../../types/serviceType/shopInfoEdit.js";
 
 export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
@@ -85,14 +81,62 @@ export const getShopEditHasConName = ({ shopEditId }: ShopEditIdParams) => {
     });
 };
 
-export const createShopEdit = ({ data, transaction }: CreateShopEditParams) => {
-    return ShopInfoEdit.create(data, { transaction });
-};
-
-export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWithIdCardParams) => {
-    return ShopInfoEdit.create(data, { transaction });
-};
-
-export const createShopEditCompanyName = ({ data, transaction }: CreateShopEditCompanyNameParams) => {
-    return ShopInfoEdit.create(data, { transaction });
+export const getShopEditComFreeConfirm = ({ shopEditId }: ShopEditIdParams) => {
+    return ShopInfoEdit.findByPk(shopEditId, {
+        include: [
+            {
+                model: Address,
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+            { model: Name },
+            {
+                model: BankAccount,
+                include: [{ model: AccountTypeOption }],
+            },
+            { model: ComOrFreeOption },
+            {
+                model: ShopInfo,
+                attributes: [
+                    "id",
+                    "company_name",
+                    "email",
+                    "phone_number",
+                    "homepage_url",
+                    "open_date_time",
+                    "company_number",
+                    "capital",
+                    "member_count",
+                ],
+                include: [
+                    {
+                        model: Address,
+                        include: [
+                            {
+                                model: TodouhukenOption,
+                                as: "AddressTodouhuken",
+                            },
+                        ],
+                    },
+                    {
+                        model: Name,
+                        as: "RepresentativeName",
+                    },
+                    {
+                        model: Name,
+                        as: "ContactName",
+                    },
+                    {
+                        model: BankAccount,
+                        include: [{ model: AccountTypeOption }],
+                    },
+                    { model: ComOrFreeOption },
+                ],
+            },
+        ],
+    });
 };

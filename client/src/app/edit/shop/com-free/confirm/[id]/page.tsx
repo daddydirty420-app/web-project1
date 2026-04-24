@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-com-free/confirm/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info-edit/com-free-confirm/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -45,7 +45,9 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
+    const shopEdit = data.shopEdit;
+
     return (
-        <Client shopId={data.data.ShopInfo.id} shopInfo={data.data.ShopInfo} shopEditId={id} shopInfoEdit={data.data} />
+        <Client shopId={shopEdit.ShopInfo.id} shopInfo={shopEdit.ShopInfo} shopEditId={id} shopInfoEdit={shopEdit} />
     );
 }

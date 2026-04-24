@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopEditHasRepName } from "../../../services/shopInfoEdit.js";
+import { getShopEditHasRepName } from "../../../services/shopInfoEdit/query.js";
 
 type Params = {
     shopEditId: number;

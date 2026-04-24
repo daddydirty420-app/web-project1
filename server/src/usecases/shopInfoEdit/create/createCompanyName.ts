@@ -2,7 +2,7 @@ import { AppError } from "../../../errors.js";
 import { createNotification } from "../../../services/notification.js";
 import { updateShopCompanyName } from "../../../services/shopInfo/command.js";
 import { getShop } from "../../../services/shopInfo/query.js";
-import { createShopEditCompanyName } from "../../../services/shopInfoEdit.js";
+import { createShopEditCompanyName } from "../../../services/shopInfoEdit/command.js";
 
 type Params = {
     shopId: number;

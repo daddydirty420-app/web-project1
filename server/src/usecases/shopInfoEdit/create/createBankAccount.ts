@@ -6,7 +6,7 @@ import { getBankOne } from "../../../services/banks.js";
 import { getBranchOne } from "../../../services/branches.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
-import { createShopEdit } from "../../../services/shopInfoEdit.js";
+import { createShopEdit } from "../../../services/shopInfoEdit/command.js";
 
 type Params = {
     shopId: number;

@@ -5,17 +5,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import sequelize from "../db.js";
 import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken } from "../middleware/index.js";
-import {
-    AccountTypeOption,
-    Address,
-    BankAccount,
-    ComOrFreeOption,
-    Name,
-    Notification,
-    ShopInfo,
-    ShopInfoEdit,
-    TodouhukenOption,
-} from "../models/index.js";
+import { Address, BankAccount, Name, Notification, ShopInfo, ShopInfoEdit } from "../models/index.js";
 
 const router = Router();
 
@@ -262,83 +252,6 @@ router.patch(
             });
         } catch (err) {
             await t.rollback();
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/confirm/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = req.params.id;
-
-        try {
-            const data = await ShopInfoEdit.findByPk(shopEditId, {
-                include: [
-                    {
-                        model: Address,
-                        include: [
-                            {
-                                model: TodouhukenOption,
-                                as: "AddressTodouhuken",
-                            },
-                        ],
-                    },
-                    { model: Name },
-                    {
-                        model: BankAccount,
-                        include: [{ model: AccountTypeOption }],
-                    },
-                    { model: ComOrFreeOption },
-                    {
-                        model: ShopInfo,
-                        attributes: [
-                            "id",
-                            "company_name",
-                            "email",
-                            "phone_number",
-                            "homepage_url",
-                            "open_date_time",
-                            "company_number",
-                            "capital",
-                            "member_count",
-                        ],
-                        include: [
-                            {
-                                model: Address,
-                                include: [
-                                    {
-                                        model: TodouhukenOption,
-                                        as: "AddressTodouhuken",
-                                    },
-                                ],
-                            },
-                            {
-                                model: Name,
-                                as: "RepresentativeName",
-                            },
-                            {
-                                model: Name,
-                                as: "ContactName",
-                            },
-                            {
-                                model: BankAccount,
-                                include: [{ model: AccountTypeOption }],
-                            },
-                            { model: ComOrFreeOption },
-                        ],
-                    },
-                ],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
             next(err);
         }
     },

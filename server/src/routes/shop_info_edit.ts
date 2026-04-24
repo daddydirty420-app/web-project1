@@ -2,23 +2,16 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import {
-    Address,
-    ComOrFreeOption,
-    Name,
-    Notification,
-    ShopInfo,
-    ShopInfoEdit,
-    TodouhukenOption,
-} from "../models/index.js";
+import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
+import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
 import { createRepNameUseCase } from "../usecases/shopInfoEdit/create/createRepName.js";
 import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/get/getAddress.js";
 import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/get/getBankAccount.js";
+import { getShopComFreeConfirmUseCase } from "../usecases/shopInfoEdit/get/getComFreeConfirm.js";
 import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
-import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
 
 const router = Router();
 
@@ -215,6 +208,24 @@ router.get(
             const name = await getConNameEditUseCase({ shopEditId, userId });
 
             res.status(200).json({ name });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info-edit/com-free-confirm/:id
+router.get(
+    "/com-free-confirm/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const shopEdit = await getShopComFreeConfirmUseCase({ shopEditId, userId });
+
+            res.status(200).json({ shopEdit });
         } catch (err) {
             next(err);
         }

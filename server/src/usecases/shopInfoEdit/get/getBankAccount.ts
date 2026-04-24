@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopEditHasBankAccount } from "../../../services/shopInfoEdit.js";
+import { getShopEditHasBankAccount } from "../../../services/shopInfoEdit/query.js";
 
 type Params = {
     shopEditId: number;
