@@ -1,5 +1,6 @@
 import {
     UpdateCompanyNameParams,
+    UpdateOptionParams,
     UpdateShopEmailParams,
     UpdateShopIdCardParams,
     UpdateShopNameParams,
@@ -23,5 +24,9 @@ export const updateShopName = async ({ shopInfo, data, transaction }: UpdateShop
 };
 
 export const updateShopCompanyName = async ({ shopInfo, data, transaction }: UpdateCompanyNameParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopOption = async ({ shopInfo, data, transaction }: UpdateOptionParams) => {
     await shopInfo.update(data, { transaction });
 };

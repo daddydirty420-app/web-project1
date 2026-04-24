@@ -115,9 +115,7 @@ router.post(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
-
         const body = req.body;
 
         try {
@@ -136,7 +134,6 @@ router.post(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         const companyName = String(req.body.companyName);
@@ -152,41 +149,12 @@ router.post(
     },
 );
 
-router.patch(
-    "/option-edit/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = req.params.id;
-        const autoTrans = req.body.autoTrans === "はい";
-        const openInfo = req.body.openInfo === "はい";
-
-        try {
-            const shop = await ShopInfo.findByPk(shopId);
-
-            if (!shop) {
-                res.status(404).json({ message: "ショップデータが見つかりません。" });
-                return;
-            }
-
-            await shop.update({
-                auto_trans: autoTrans,
-                open_info: openInfo,
-            });
-
-            res.status(200).json({ message: "オプションを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
 // GET /shop-info-edit/address/:id
 router.get(
     "/address/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -205,7 +173,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -224,7 +191,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -243,7 +209,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {

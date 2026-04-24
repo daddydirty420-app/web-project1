@@ -45,3 +45,12 @@ export type UpdateCompanyNameParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateOptionParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        auto_trans: boolean;
+        open_info: boolean;
+    };
+    transaction?: Transaction;
+};

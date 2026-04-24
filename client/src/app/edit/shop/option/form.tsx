@@ -30,7 +30,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/option-edit/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/option/${shopId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

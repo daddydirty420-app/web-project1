@@ -19,7 +19,6 @@ const router = Router();
 // PATCH /user/profile?imageEdit=boolean
 router.patch("/profile", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
-
     const body = req.body;
     const imageEdit = req.query.imageEdit === "true";
 
@@ -41,7 +40,6 @@ router.patch(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
-
         const phoneNumber = req.body.phoneNumber?.trim();
 
         if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
@@ -61,7 +59,6 @@ router.patch(
 // PATCH /user/honnin
 router.patch("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
-
     const body = req.body;
 
     try {

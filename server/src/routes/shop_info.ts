@@ -3,15 +3,16 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
+import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
-import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
-import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
-import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
+import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
+import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
+import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
 
 const router = Router();
 
@@ -51,6 +52,27 @@ router.patch(
             await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
 
             res.status(200).json({ message: "電話番号を更新しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/option/:id
+router.patch(
+    "/option/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const autoTrans = req.body.autoTrans === "はい";
+        const openInfo = req.body.openInfo === "はい";
+
+        try {
+            await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
+
+            res.status(200).json({ message: "オプションを更新しました。" });
         } catch (err) {
             next(err);
         }

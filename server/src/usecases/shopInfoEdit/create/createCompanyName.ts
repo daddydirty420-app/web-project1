@@ -15,6 +15,7 @@ export const createCompanyNameUseCase = async ({ shopId, userId, companyName }: 
     const shop = await getShop({ shopId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     const comFreeId = shop.com_or_free_id;
 
