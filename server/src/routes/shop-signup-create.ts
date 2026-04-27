@@ -2,78 +2,13 @@ import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { literal, Op } from "sequelize";
+import { Op } from "sequelize";
 import sequelize from "../db.js";
 import { bucket, s3, s3Domain } from "../infra/aws/s3.js";
 import { authenticateToken } from "../middleware/index.js";
-import { AccountTypeOption, Address, BankAccount, Banks, Branches, Name, ShopInfo } from "../models/index.js";
+import { Address, BankAccount, Name, ShopInfo } from "../models/index.js";
 
 const router = Router();
-
-router.post("/2/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = req.params.id;
-    const { bankName, branch, accountType, accountNumber, meigi } = req.body;
-    if (!bankName || !branch || !accountType || !accountNumber || !meigi) {
-        res.status(400).json({ message: "入力されていない項目があります。" });
-        return;
-    }
-
-    try {
-        const matchedBank = await Banks.findOne({
-            where: {
-                [Op.or]: [
-                    { name: bankName },
-                    sequelize.where(literal(`LOWER(normalize->>'name')`), bankName.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'kana')`), bankName.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'hira')`), bankName.toLowerCase()),
-                ],
-            },
-        });
-        if (!matchedBank) {
-            res.status(400).json({ message: "指定された銀行名が存在しません。" });
-            return;
-        }
-
-        const matchedBranch = await Branches.findOne({
-            where: {
-                bank_code: matchedBank.code,
-                [Op.or]: [
-                    { name: branch },
-                    sequelize.where(literal(`LOWER(normalize->>'name')`), branch.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'kana')`), branch.toLowerCase()),
-                    sequelize.where(literal(`LOWER(normalize->>'hira')`), branch.toLowerCase()),
-                ],
-            },
-        });
-        if (!matchedBranch) {
-            res.status(400).json({ message: "指定された支店名が存在しません。" });
-            return;
-        }
-
-        const accountTypeData = await AccountTypeOption.findOne({
-            where: { name: accountType },
-        });
-        if (!accountTypeData) {
-            res.status(400).json({ message: "口座種別が無効な値です。" });
-            return;
-        }
-
-        await BankAccount.upsert({
-            shop_info_id: shopId,
-            bank_code: matchedBank.code,
-            bank_name: matchedBank.normalize?.name || matchedBank.name,
-            branch_code: matchedBranch.code,
-            branch: matchedBranch.normalize?.name || matchedBranch.name,
-            account_type_id: accountTypeData.id,
-            account_number: accountNumber,
-            meigi: meigi,
-        });
-
-        res.status(200).json({ message: "口座情報を登録しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
 
 router.patch("/3/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;

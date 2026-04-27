@@ -173,7 +173,7 @@ export const Form = ({ shopId, account }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/2/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/shop/${shopId}`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -188,6 +188,8 @@ export const Form = ({ shopId, account }: Props) => {
                 toast.error("口座情報の登録に失敗しました");
                 return;
             }
+
+            toast.success("口座情報を登録しました");
             await sleep(1500);
 
             router.push(`/shop-signup/step3/${shopId}`);

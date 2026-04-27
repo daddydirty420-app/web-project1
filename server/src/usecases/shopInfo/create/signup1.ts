@@ -68,6 +68,7 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
         capital,
     } = body;
 
+    // 空チェック
     const requiredBody = [
         selectOption,
         companyName,
@@ -96,49 +97,73 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
         throw new AppError("INVALID_BODY", 404);
     }
 
+    // トリム
+    const trimFields = {
+        phoneNumber,
+        email,
+        openDateTime,
+        repSei,
+        repMei,
+        repSeiKana,
+        repMeiKana,
+        conSei,
+        conMei,
+        conSeiKana,
+        conMeiKana,
+        postNumber,
+        todouhuken,
+        shikutyouson,
+        banchi,
+    };
+
+    const trimmed = Object.fromEntries(Object.entries(trimFields).map(([key, value]) => [key, value?.trim() ?? value]));
+
     // 住所バリデーションチェック
-    const fromZip = await fetchAddressFromZipUseCase({ zipcode: postNumber });
+    const fromZip = await fetchAddressFromZipUseCase({ zipcode: trimmed.postNumber });
 
     if (!fromZip) throw new AppError("INVALID_POSTNUMBER", 400);
-    if (fromZip.todouhuken_name !== todouhuken) {
+    if (fromZip.todouhuken_name !== trimmed.todouhuken) {
         throw new AppError("NOT_SAME_POSTNUMBER_TODOUHUKEN", 400);
     }
-    if (fromZip.shikutyouson !== shikutyouson) {
+    if (fromZip.shikutyouson !== trimmed.shikutyouson) {
         throw new AppError("NOT_SAME_POSTNUMBER_SHIKUTYOUSON", 400);
     }
 
     // db作成
     const shopId = await sequelize.transaction(async (t) => {
+        // 代表者氏名
         const repName = await createNameShop({
             data: {
-                sei: repSei,
-                mei: repMei,
-                sei_kana: repSeiKana,
-                mei_kana: repMeiKana,
+                sei: trimmed.repSei,
+                mei: trimmed.repMei,
+                sei_kana: trimmed.repSeiKana,
+                mei_kana: trimmed.repMeiKana,
                 shop_type: "representative",
             },
             transaction: t,
         });
 
+        // 担当者氏名
         const conName = await createNameShop({
             data: {
-                sei: conSei,
-                mei: conMei,
-                sei_kana: conSeiKana,
-                mei_kana: conMeiKana,
+                sei: trimmed.conSei,
+                mei: trimmed.conMei,
+                sei_kana: trimmed.conSeiKana,
+                mei_kana: trimmed.conMeiKana,
                 shop_type: "contact",
             },
             transaction: t,
         });
 
+        // ショップ
         const shop = await createShop({
             data: {
                 company_name: companyName,
                 shop_name: shopName,
-                phone_number: phoneNumber,
-                email: email,
+                phone_number: trimmed.phoneNumber,
+                email: trimmed.email,
                 homepage_url: homepage ?? null,
-                open_date_time: openDateTime,
+                open_date_time: trimmed.openDateTime,
                 company_number: companyNumber ?? null,
                 capital: capital ?? 0,
                 member_count: memberCount,
@@ -153,12 +178,13 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
 
         const shopId = shop.id;
 
+        // 住所
         await createAddressShop({
             data: {
-                post_number: postNumber,
+                post_number: trimmed.postNumber,
                 todouhuken_id: fromZip.todouhuken_id,
-                shikutyouson,
-                banchi,
+                shikutyouson: trimmed.shikutyouson,
+                banchi: trimmed.banchi,
                 building,
                 shop_info_id: shopId,
             },

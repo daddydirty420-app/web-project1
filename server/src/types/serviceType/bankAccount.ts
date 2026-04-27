@@ -64,3 +64,17 @@ export type updateBankParams = {
         meigi: string;
     };
 };
+
+export type UpsertBankShopParams = {
+    data: {
+        bank_code: string;
+        bank_name: string;
+        branch_code: string;
+        branch: string;
+        account_type_id: number;
+        account_number: string;
+        meigi: string;
+        shop_info_id: number;
+    };
+    transaction?: Transaction;
+};

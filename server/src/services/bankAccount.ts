@@ -6,6 +6,7 @@ import {
     CreateBankShopEditParams,
     ShopIdParams,
     updateBankParams,
+    UpsertBankShopParams,
     UserIdParams,
 } from "../types/serviceType/bankAccount.js";
 
@@ -61,4 +62,8 @@ export const createBankAccountShopEditAllowNull = async ({ data, transaction }: 
 
 export const updateBankAccount = async ({ account, data }: updateBankParams) => {
     await account.update(data);
+};
+
+export const upsertBankAccountShop = async ({ data, transaction }: UpsertBankShopParams) => {
+    await BankAccount.upsert(data, { transaction });
 };

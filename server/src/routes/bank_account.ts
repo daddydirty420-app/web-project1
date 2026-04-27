@@ -4,8 +4,26 @@ import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
+import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 
 const router = Router();
+
+// POST /bank-account/shop/:id
+// summary: ショップ口座情報作成
+// page: /shop-signup/step2
+router.post("/shop/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+    const body = req.body;
+
+    try {
+        await createShopAccount({ shopId, userId, body });
+
+        res.status(200).json({ message: "口座情報を登録しました。" });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // PATCH /bank-account/:id
 router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
