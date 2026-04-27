@@ -1,6 +1,6 @@
-import { destroyItemLike, getItemLikeOne } from "../../services/itemLike.js";
 import { AppError } from "../../errors.js";
-import { patchSortNumberDecreaseUseCase } from "../item/sortNumber/sortNumber.js";
+import { destroyItemLike, getItemLikeOne } from "../../services/itemLike.js";
+import { patchSortNumberDecreaseUseCase } from "../items/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;

@@ -1,7 +1,7 @@
 import { AppError } from "../../errors.js";
 import { createComment } from "../../services/comment.js";
 import { getItem } from "../../services/items/index.js";
-import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
+import { patchSortNumberAddUseCase } from "../items/sortNumber/sortNumber.js";
 import { patchCommentSortNumberAddUseCase } from "./patchSortNumber.js";
 
 type Params = {

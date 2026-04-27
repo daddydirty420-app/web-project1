@@ -2,7 +2,7 @@ import { Comment } from "../../models/index.js";
 import { countReply, getAllCommentsItemPage } from "../../services/comment.js";
 import { countCommentLike, getCommentLikeOne } from "../../services/commentLike.js";
 import { countCommentReport } from "../../services/commentReport.js";
-import { patchSortNumberAddUseCase } from "../item/sortNumber/sortNumber.js";
+import { patchSortNumberAddUseCase } from "../items/sortNumber/sortNumber.js";
 
 type Params = {
     itemId: number;

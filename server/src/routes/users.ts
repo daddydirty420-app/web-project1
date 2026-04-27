@@ -4,15 +4,15 @@ import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
-import { editHonninUserUseCase } from "../usecases/user/edit/honnin.js";
-import { editPhoneNumber } from "../usecases/user/edit/phoneNumber.js";
-import { editProfileUseCase } from "../usecases/user/edit/profile.js";
-import { getHonninEditUseCase } from "../usecases/user/get/getHonnin.js";
-import { getInquiryUserUseCase } from "../usecases/user/get/getInquiryUser.js";
-import { getMyPageUseCase } from "../usecases/user/get/getMyPage.js";
-import { getPhoneNumberUseCase } from "../usecases/user/get/getPhoneNumber.js";
-import { getProfileUseCase } from "../usecases/user/get/getProfile.js";
-import { getProfileEditDataUseCase } from "../usecases/user/get/getProfileEditData.js";
+import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
+import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
+import { editProfileUseCase } from "../usecases/users/edit/profile.js";
+import { getHonninEditUseCase } from "../usecases/users/get/getHonnin.js";
+import { getInquiryUserUseCase } from "../usecases/users/get/getInquiryUser.js";
+import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
+import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
+import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
+import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 
 const router = Router();
 

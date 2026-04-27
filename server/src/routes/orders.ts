@@ -21,8 +21,8 @@ import {
     Categories,
 } from "../models/index.js";
 import { AppError } from "../errors.js";
-import { getPurchasedListUseCase } from "../usecases/order/getPurchasedList.js";
-import { getSoldListUseCase } from "../usecases/order/getSoldList.js";
+import { getPurchasedListUseCase } from "../usecases/orders/getPurchasedList.js";
+import { getSoldListUseCase } from "../usecases/orders/getSoldList.js";
 
 const router = Router();
 
@@ -158,7 +158,7 @@ router.get(
                                 model: Categories,
                                 as: "children",
                                 required: false,
-                                innclude: [
+                                include: [
                                     {
                                         model: Categories,
                                         as: "parent",
