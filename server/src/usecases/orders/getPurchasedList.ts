@@ -7,6 +7,9 @@ type Params = {
     status?: string;
 };
 
+// /orders?type="purchased"&page=number&status=""
+// summary: 購入履歴取得
+// page: /order/list/purchased
 export const getPurchasedListUseCase = async ({ page, userId, status }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

@@ -27,6 +27,9 @@ import { getSoldListUseCase } from "../usecases/orders/getSoldList.js";
 const router = Router();
 
 // /orders?type="purchased"&page=number&status=""
+// summary: 購入・販売履歴取得
+// page: type=purchased: /order/list/purchased
+// page: type=sold: /order/list/sold
 router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
