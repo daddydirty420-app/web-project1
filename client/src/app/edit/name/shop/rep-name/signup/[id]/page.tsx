@@ -48,5 +48,13 @@ export default async function Page({ params }: Props) {
 
     const name: Name = data.name;
 
-    return <NameEditForm name={name} page="rep-shop-signup" shopId={id} />;
+    return (
+        <NameEditForm
+            name={name}
+            page="rep-shop-signup"
+            shopId={id}
+            idFrontUrl={data.shop.id_card_front}
+            idRearUrl={data.shop.id_card_rear}
+        />
+    );
 }

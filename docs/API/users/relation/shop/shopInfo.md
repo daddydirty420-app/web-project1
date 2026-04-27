@@ -80,3 +80,34 @@
 
 - ショップデータ取得
 - DB更新
+
+## PATCH /shop-info/signup/3/:id — ショップ登録身分証・許認可証追加
+
+### リクエスト
+
+- params:
+    - shopId
+- body:
+    - frontFileName
+    - frontFileType
+    - rearFileName
+    - rearFileType
+    - idFrontUpload
+    - idRearUpload
+    - permitFiles
+
+### ビジネスロジック
+
+- 空チェック
+- ショップデータ取得
+- 身分証アップロード
+- 旧身分証削除
+- 許認可証アップロード
+- 旧許認可証削除
+- ショップデータ更新
+
+### レスポンス
+
+- frontSignedUrl
+- rearSignedUrl
+- permitSignedUrls

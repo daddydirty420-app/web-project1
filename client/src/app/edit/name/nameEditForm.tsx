@@ -26,20 +26,22 @@ type Props = {
     deliveryId?: string;
     shopId?: string;
     shopEditId?: string;
+    idFrontUrl?: string;
+    idRearUrl?: string;
 };
 
-export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Props) => {
+export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFrontUrl, idRearUrl }: Props) => {
     const [seiValue, setSeiValue] = useState(name?.sei ?? "");
     const [meiValue, setMeiValue] = useState(name?.mei ?? "");
     const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? "");
     const [meiKanaValue, setMeiKanaValue] = useState(name?.mei_kana ?? "");
 
-    const [idCardFront, setIdCardFront] = useState<File | string | undefined>("");
-    const [idFrontPreview, setIdFrontPreview] = useState("");
+    const [idCardFront, setIdCardFront] = useState<File | string | undefined>(idFrontUrl ?? "");
+    const [idFrontPreview, setIdFrontPreview] = useState(idFrontUrl ?? "");
     const [idFrontUpload, setIdFrontUpload] = useState<boolean>(false);
 
-    const [idCardRear, setIdCardRear] = useState<File | string | undefined>("");
-    const [idRearPreview, setIdRearPreview] = useState("");
+    const [idCardRear, setIdCardRear] = useState<File | string | undefined>(idRearUrl ?? "");
+    const [idRearPreview, setIdRearPreview] = useState(idRearUrl ?? "");
     const [idRearUpload, setIdRearUpload] = useState<boolean>(false);
 
     const idFrontRef = useRef<HTMLInputElement | null>(null);
@@ -167,6 +169,8 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
             }
 
             if (page === "rep-shop") {
+                // signedUrlをバックから返す
+                // 署名付きurlを使ってs3にアップロード
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/rep-name/${shopId}`, {
                     method: "POST",
                     headers: {
@@ -188,6 +192,9 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId }: Pro
 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
+                // signedUrlをバックから返す
+                // バックではrepNameをshopから取得・createではなくupdate
+                // 署名付きurlを使ってs3にアップロード
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/rep-name/${shopId}`, {
                     method: "PATCH",
                     headers: {
