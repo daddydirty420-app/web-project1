@@ -14,58 +14,6 @@ import {
 const router = Router();
 
 router.get(
-    "/signup2/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = req.params.id;
-
-        try {
-            let data = await BankAccount.findOne({
-                attributes: [
-                    "id",
-                    "bank_name",
-                    "branch",
-                    "account_type_id",
-                    "account_number",
-                    "meigi",
-                    "bank_code",
-                    "branch_code",
-                ],
-                where: { shop_info_id: shopId },
-                include: [{ model: AccountTypeOption }],
-            });
-
-            if (!data) {
-                data = await BankAccount.findOne({
-                    attributes: [
-                        "id",
-                        "bank_name",
-                        "branch",
-                        "account_type_id",
-                        "account_number",
-                        "meigi",
-                        "bank_code",
-                        "branch_code",
-                    ],
-                    where: { user_id: userId },
-                    include: [{ model: AccountTypeOption }],
-                });
-            }
-
-            if (!data) {
-                res.status(404).json({ message: "口座情報が見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/signup3/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

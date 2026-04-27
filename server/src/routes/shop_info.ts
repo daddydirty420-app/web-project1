@@ -15,6 +15,7 @@ import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
 import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
+import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 
 const router = Router();
 
@@ -385,5 +386,25 @@ router.get("/signup/1", authenticateToken, async (req: Request, res: Response, n
         next(err);
     }
 });
+
+// GET /shop-info/signup/2
+// summary: ショップ口座登録ページ　インプット表示データ取得
+// page: /shop-signup/step2/[id]
+router.get(
+    "/signup/2/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const shopId = Number(req.params.id);
+
+        try {
+            const data = await getShopSignup2UseCase({ userId, shopId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

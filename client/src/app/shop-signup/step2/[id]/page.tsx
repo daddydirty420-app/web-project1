@@ -31,7 +31,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-signup/signup2/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info/signup/2/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
