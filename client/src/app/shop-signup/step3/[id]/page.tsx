@@ -31,7 +31,7 @@ export default async function Page({ params }: Props) {
 
     if (!session || !accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.API_URL}/shop-signup/signup3/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/shop-info/signup/3/${id}`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -46,5 +46,5 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    return <Form shopId={id} shopInfo={data.data} />;
+    return <Form shopId={id} shopInfo={data.shop} />;
 }

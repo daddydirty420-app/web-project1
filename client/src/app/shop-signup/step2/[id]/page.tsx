@@ -46,5 +46,5 @@ export default async function Page({ params }: Props) {
         notFound();
     }
 
-    return <Form shopId={id} account={data.data} />;
+    return <Form shopId={id} account={data.account} />;
 }

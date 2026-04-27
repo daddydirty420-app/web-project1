@@ -115,6 +115,12 @@ export const getShopHasAddressNameBank = ({ shopId }: ShopIdParams) => {
     });
 };
 
+export const getShopIdCard = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: ["id", "id_card_front", "id_card_rear", "permit_url", "user_id"],
+    });
+};
+
 export const getShopSignup1One = ({ userId }: UserIdParams) => {
     return ShopInfo.findOne({
         attributes: [

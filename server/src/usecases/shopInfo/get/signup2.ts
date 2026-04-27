@@ -7,7 +7,7 @@ type Params = {
     shopId: number;
 };
 
-// GET /shop-info/signup/2
+// GET /shop-info/signup/2/:id
 // summary: ショップ口座登録ページ　インプット表示データ取得
 // page: /shop-signup/step2/[id]
 export const getShopSignup2UseCase = async ({ userId, shopId }: Params) => {
@@ -18,13 +18,13 @@ export const getShopSignup2UseCase = async ({ userId, shopId }: Params) => {
     if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // shopのbankAccount取得
-    let data = await getShopAccountOne({ shopId });
+    let account = await getShopAccountOne({ shopId });
 
-    if (!data) {
-        data = await getMyAccountOne({ userId });
+    if (!account) {
+        account = await getMyAccountOne({ userId });
     }
 
-    if (!data) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
+    if (!account) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
 
-    return data;
+    return account;
 };

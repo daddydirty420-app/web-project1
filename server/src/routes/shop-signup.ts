@@ -14,27 +14,6 @@ import {
 const router = Router();
 
 router.get(
-    "/signup3/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const data = await ShopInfo.findByPk(req.params.id, {
-                attributes: ["id", "id_card_front", "id_card_rear", "permit_url"],
-            });
-
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
     "/signup5/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
