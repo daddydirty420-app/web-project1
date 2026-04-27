@@ -1,6 +1,6 @@
-import { AppError } from '../../../errors.js';
-import { addViewsCount, getItem, updateSortNumber } from '../../../services/items/index.js';
-import { createWatchHistory, getWatchHistoryOne, updateUpdateAt } from '../../../services/watchHistory.js';
+import { AppError } from "../../../errors.js";
+import { addViewsCount, getItem, updateSortNumber } from "../../../services/items/index.js";
+import { createWatchHistory, getWatchHistoryOne, updateUpdateAt } from "../../../services/watchHistory.js";
 
 type Params = {
     itemId: number;
@@ -11,7 +11,7 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
     // Item取得
     const item = await getItem({ itemId });
     if (!item) {
-        throw new AppError('ITEM_NOT_FOUND', 404);
+        throw new AppError("ITEM_NOT_FOUND", 404);
     }
 
     // WatchHistory作成・更新
@@ -20,11 +20,11 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
 
         if (history) {
             updateUpdateAt({ history }).catch((err) => {
-                console.error('service WatchHistory updateUpdateAt error:', err);
+                console.error("service WatchHistory updateUpdateAt error:", err);
             });
         } else {
             createWatchHistory({ itemId, userId }).catch((err) => {
-                console.error('service WatchHistory createWatchHistory error:', err);
+                console.error("service WatchHistory createWatchHistory error:", err);
             });
         }
     }
@@ -34,7 +34,7 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
         const newViewsCount = item.views_count + 1;
 
         addViewsCount({ item, data: { views_count: newViewsCount } }).catch((err) => {
-            console.error('item service addViewsCount error:', err);
+            console.error("item service addViewsCount error:", err);
         });
 
         const addSort = item.recommend ? 10 : 5;
@@ -50,7 +50,7 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
                 sort_buzz_number: newSortBuzz,
             },
         }).catch((err) => {
-            console.error('item service updateSortNumber error:', err);
+            console.error("item service updateSortNumber error:", err);
         });
     }
 };
