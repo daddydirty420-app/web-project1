@@ -1,5 +1,26 @@
 # user/relation/shop/shopInfo.md
 
+## POST /shop-info — ショップ作成
+
+### リクエスト
+
+- body
+
+### ビジネスロジック
+
+- 空チェック
+- トリム
+- 住所バリデーションチェック
+- 代表者・担当者氏名作成
+- ショップデータ作成
+- 住所作成
+
+### レスポンス
+
+- shopId
+
+---
+
 ## PATCH /shop-info/rep-name/:id — 代表者氏名変更
 
 ### リクエスト
