@@ -17,6 +17,7 @@ import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
 import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
+import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
 
 const router = Router();
 
@@ -420,6 +421,26 @@ router.get(
 
         try {
             const shop = await getShopSignup3UseCase({ shopId, userId });
+
+            res.status(200).json({ shop });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/signup/5/:id
+// summary: ショップ登録確認ページデータ取得
+// page: /shop-signup/step5/[id]
+router.get(
+    "/signup/5/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const shopId = Number(req.params.id);
+
+        try {
+            const shop = await getShopSignup5UseCase({ shopId, userId });
 
             res.status(200).json({ shop });
         } catch (err) {

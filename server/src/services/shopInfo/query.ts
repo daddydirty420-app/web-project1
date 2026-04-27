@@ -121,6 +121,57 @@ export const getShopIdCard = ({ shopId }: ShopIdParams) => {
     });
 };
 
+export const getShopSignup5 = ({ shopId }: ShopIdParams) => {
+    return ShopInfo.findByPk(shopId, {
+        attributes: [
+            "id",
+            "company_name",
+            "shop_name",
+            "phone_number",
+            "email",
+            "open_date_time",
+            "founded_date",
+            "member_count",
+            "homepage_url",
+            "company_number",
+            "capital",
+            "auto_trans",
+            "open_info",
+            "user_id",
+        ],
+        include: [
+            {
+                model: ComOrFreeOption,
+            },
+            {
+                model: Name,
+                as: "RepresentativeName",
+                attributes: ["sei", "mei", "sei_kana", "mei_kana"],
+            },
+            {
+                model: Name,
+                as: "ContactName",
+                attributes: ["sei", "mei", "sei_kana", "mei_kana"],
+            },
+            {
+                model: Address,
+                attributes: ["post_number", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+            {
+                model: BankAccount,
+                attributes: ["bank_name", "branch_code", "account_number", "meigi"],
+                include: [{ model: AccountTypeOption }],
+            },
+        ],
+    });
+};
+
 export const getShopSignup1One = ({ userId }: UserIdParams) => {
     return ShopInfo.findOne({
         attributes: [
