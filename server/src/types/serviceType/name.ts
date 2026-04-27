@@ -31,7 +31,7 @@ export type CreateDeliveryNameParams = {
     transaction?: Transaction;
 };
 
-export type CreateNameShopEditParams = {
+export type CreateNameShopParams = {
     data: {
         sei: string;
         mei: string;
@@ -42,7 +42,7 @@ export type CreateNameShopEditParams = {
     transaction?: Transaction;
 };
 
-export type CreateNameShopEditAllowNullParams = {
+export type CreateNameShopAllowNullParams = {
     data: {
         sei: string | null;
         mei: string | null;

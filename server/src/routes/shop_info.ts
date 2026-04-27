@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
+import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
@@ -20,6 +21,22 @@ import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
 
 const router = Router();
+
+// POST /shop-info
+// summary: ShopInfo作成　事業者登録
+// page: /shop-signup/step1
+router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+    const body = req.body;
+
+    try {
+        const shopId = await createShopSignup1({ userId, body });
+
+        res.status(200).json({ shopId });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // PATCH /shop-info/rep-name/:id
 router.patch(

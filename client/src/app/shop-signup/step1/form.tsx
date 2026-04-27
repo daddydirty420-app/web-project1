@@ -26,37 +26,35 @@ type Props = {
 
 export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
     const [selectOption, setSelectOption] = useState<number | null>(null);
-    const [companyName, setCompanyName] = useState(shopInfo?.company_name ?? "");
-    const [shopName, setShopName] = useState(shopInfo?.shop_name ?? user.user_name);
-    const [phoneNumber, setPhoneNumber] = useState(shopInfo?.phone_number ?? user.phone_number);
+    const [companyName, setCompanyName] = useState(shopInfo?.company_name);
+    const [shopName, setShopName] = useState(shopInfo?.shop_name ?? user.user_name ?? "");
+    const [phoneNumber, setPhoneNumber] = useState(shopInfo?.phone_number ?? user.phone_number ?? "");
     const [email, setEmail] = useState(shopInfo?.email ?? user.email ?? "");
-    const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time ?? "");
-    const [foundedDate, setFoundedDate] = useState<Date | null>(shopInfo?.founded_date ?? null);
+    const [openDateTime, setOpenDateTime] = useState(shopInfo?.open_date_time);
+    const [foundedDate, setFoundedDate] = useState(shopInfo?.founded_date);
     const [memberCount, setMemberCount] = useState(shopInfo?.member_count ?? 0);
-    const [homepage, setHomepage] = useState<string | null>(shopInfo?.homepage_url ?? "");
+    const [homepage, setHomepage] = useState(shopInfo?.homepage_url);
 
-    const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number ?? "");
-    const [capital, setCapital] = useState<number | null>(shopInfo?.capital ?? null);
+    const [companyNumber, setCompanyNumber] = useState(shopInfo?.company_number);
+    const [capital, setCapital] = useState(shopInfo?.capital);
 
-    const [repSei, setRepSei] = useState(shopInfo?.RepresentativeName?.sei ?? user.Name?.sei ?? "");
-    const [repMei, setRepMei] = useState(shopInfo?.RepresentativeName?.mei ?? user.Name?.mei ?? "");
-    const [repSeiKana, setRepSeiKana] = useState(shopInfo?.RepresentativeName?.sei_kana ?? user.Name?.sei_kana ?? "");
-    const [repMeiKana, setRepMeiKana] = useState(shopInfo?.RepresentativeName?.mei_kana ?? user.Name?.mei_kana ?? "");
+    const [repSei, setRepSei] = useState(shopInfo?.RepresentativeName?.sei ?? user.Name?.sei);
+    const [repMei, setRepMei] = useState(shopInfo?.RepresentativeName?.mei ?? user.Name?.mei);
+    const [repSeiKana, setRepSeiKana] = useState(shopInfo?.RepresentativeName?.sei_kana ?? user.Name?.sei_kana);
+    const [repMeiKana, setRepMeiKana] = useState(shopInfo?.RepresentativeName?.mei_kana ?? user.Name?.mei_kana);
 
-    const [conSei, setConSei] = useState(shopInfo?.ContactName?.sei ?? user.Name?.sei ?? "");
-    const [conMei, setConMei] = useState(shopInfo?.ContactName?.mei ?? user.Name?.mei ?? "");
-    const [conSeiKana, setConSeiKana] = useState(shopInfo?.ContactName?.sei_kana ?? user.Name?.sei_kana ?? "");
-    const [conMeiKana, setConMeiKana] = useState(shopInfo?.ContactName?.mei_kana ?? user.Name?.mei_kana ?? "");
+    const [conSei, setConSei] = useState(shopInfo?.ContactName?.sei ?? user.Name?.sei);
+    const [conMei, setConMei] = useState(shopInfo?.ContactName?.mei ?? user.Name?.mei);
+    const [conSeiKana, setConSeiKana] = useState(shopInfo?.ContactName?.sei_kana ?? user.Name?.sei_kana);
+    const [conMeiKana, setConMeiKana] = useState(shopInfo?.ContactName?.mei_kana ?? user.Name?.mei_kana);
 
-    const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number ?? "");
+    const [postNumber, setPostNumber] = useState(shopInfo?.Address?.post_number ?? user.Address?.post_number);
     const [todouhuken, setTodouhuken] = useState(
-        shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name ?? "",
+        shopInfo?.Address?.AddressTodouhuken?.name ?? user.Address?.AddressTodouhuken?.name,
     );
-    const [shikutyouson, setShikutyouson] = useState(
-        shopInfo?.Address?.shikutyouson ?? user.Address?.shikutyouson ?? "",
-    );
-    const [banchi, setBanchi] = useState(shopInfo?.Address?.banchi ?? user.Address?.banchi ?? "");
-    const [building, setBuilding] = useState(shopInfo?.Address?.building ?? user.Address?.building ?? "");
+    const [shikutyouson, setShikutyouson] = useState(shopInfo?.Address?.shikutyouson ?? user.Address?.shikutyouson);
+    const [banchi, setBanchi] = useState(shopInfo?.Address?.banchi ?? user.Address?.banchi);
+    const [building, setBuilding] = useState(shopInfo?.Address?.building ?? user.Address?.building);
 
     const [check, setCheck] = useState(false);
 
@@ -116,7 +114,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             return;
         }
 
-        if ((!/^\d+$/.test(companyNumber) || companyNumber.length !== 13) && selectOption === 1) {
+        if (companyNumber && (!/^\d+$/.test(companyNumber) || companyNumber.length !== 13) && selectOption === 1) {
             toast.error("法人番号が正しくありません");
             return;
         }
@@ -187,7 +185,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/1`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",
@@ -202,11 +200,11 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 toast.error("データ登録に失敗しました");
                 return;
             }
-            
+
             toast.success("ショップデータを登録しました");
             await sleep(1500);
 
-            router.push(`/shop-signup/step2/${data.id}`);
+            router.push(`/shop-signup/step2/${data.shopId}`);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
@@ -243,7 +241,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStrAndSmall
                 title="会社名/屋号"
                 type="text"
-                value={companyName}
+                value={companyName ?? ""}
                 onChange={setCompanyName}
                 placeholder="株式会社〇〇"
                 hissu
@@ -282,7 +280,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             <InputStr
                 title="営業日（定休日）、営業時間"
                 type="text"
-                value={openDateTime}
+                value={openDateTime ?? ""}
                 onChange={setOpenDateTime}
                 placeholder="平日9時～17時（土日祝は定休日）"
                 hissu
@@ -293,7 +291,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
                 <DatePicker
                     selected={foundedDate}
-                    onChange={(date) => setFoundedDate(date)}
+                    onChange={(date) => setFoundedDate(date || undefined)}
                     dateFormat="yyyy年MM月dd日"
                     locale={ja}
                     placeholderText="創業日を選択"
@@ -333,7 +331,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                     <InputStr
                         title="法人番号"
                         type="text"
-                        value={companyNumber}
+                        value={companyNumber ?? ""}
                         onChange={setCompanyNumber}
                         placeholder="1122334455667"
                         hissu

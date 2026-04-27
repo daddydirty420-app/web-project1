@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { createAddressShopEditAllowNull } from "../../../services/address.js";
 import { createBankAccountShopEditAllowNull } from "../../../services/bankAccount.js";
-import { createNameShopEditAllowNull } from "../../../services/name.js";
+import { createNameShopAllowNull } from "../../../services/name.js";
 import { getShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
 import { createShopEditComFree } from "../../../services/shopInfoEdit/command.js";
 
@@ -29,7 +29,7 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
 
     // db作成
     const editId = await sequelize.transaction(async (t) => {
-        const newRepName = await createNameShopEditAllowNull({
+        const newRepName = await createNameShopAllowNull({
             data: {
                 sei: repName?.sei ?? null,
                 mei: repName?.mei ?? null,
@@ -40,7 +40,7 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
             transaction: t,
         });
 
-        const newConName = await createNameShopEditAllowNull({
+        const newConName = await createNameShopAllowNull({
             data: {
                 sei: conName?.sei ?? null,
                 mei: conName?.mei ?? null,

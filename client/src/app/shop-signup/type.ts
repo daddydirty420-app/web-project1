@@ -30,7 +30,7 @@ export type Address = {
     post_number: string;
     shikutyouson: string;
     banchi: string;
-    building: string;
+    building?: string;
     AddressTodouhuken?: TodouhukenOption | null;
 };
 
@@ -44,18 +44,18 @@ export type Name = {
 
 export type ShopInfo = {
     id: string;
-    company_name: string;
-    shop_name: string;
-    email: string;
-    phone_number: string;
-    homepage_url: string;
-    open_date_time: string;
-    company_number: string;
-    capital: number;
-    member_count: number;
-    founded_date: Date;
-    id_card_front: string;
-    id_card_rear: string;
+    company_name?: string;
+    shop_name?: string;
+    email?: string;
+    phone_number?: string;
+    homepage_url?: string | null;
+    open_date_time?: string;
+    company_number?: string;
+    capital?: number;
+    member_count?: number;
+    founded_date?: Date;
+    id_card_front?: string;
+    id_card_rear?: string;
     permit_url: string[];
     auto_trans: boolean;
     open_info: boolean;

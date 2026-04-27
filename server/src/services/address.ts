@@ -4,6 +4,7 @@ import {
     CreateAddressParams,
     CreateAddressShopEditAllowNullParams,
     CreateAddressShopEditParams,
+    CreateAddressShopParams,
     CreateDeliveryAddressParams,
     DeliveryIdParams,
     UpdateAddressParams,
@@ -64,6 +65,10 @@ export const createAddress = async ({ data, transaction }: CreateAddressParams) 
 };
 
 export const createDeliveryAddress = async ({ data, transaction }: CreateDeliveryAddressParams) => {
+    await Address.create(data, { transaction });
+};
+
+export const createAddressShop = async ({ data, transaction }: CreateAddressShopParams) => {
     await Address.create(data, { transaction });
 };
 

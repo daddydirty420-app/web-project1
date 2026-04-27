@@ -206,7 +206,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                             input
                             value={capital}
                             onChange={(v) => setCapital(v)}
-                            onSubmit={() => updateField("capital", capital)}
+                            onSubmit={() => updateField("capital", capital ?? 0)}
                         />
                     </>
                 )}
