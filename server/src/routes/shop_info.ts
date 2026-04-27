@@ -102,11 +102,11 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/signup3/:id
+// PATCH /shop-info/signup/3/:id
 // summary: ショップ登録身分証・許認可証追加
 // page: /shop-signup/step3/[id]
 router.patch(
-    "/signup3/:id",
+    "/signup/3/:id",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);

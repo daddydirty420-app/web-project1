@@ -12,7 +12,7 @@ type Params = {
     body: ShopIdBody;
 };
 
-// PATCH /shop-info/signup3/:id
+// PATCH /shop-info/signup/3/:id
 // summary: ショップ登録身分証・許認可証追加
 // page: /shop-signup/step3/[id]
 export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params) => {
