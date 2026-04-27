@@ -7,6 +7,9 @@ type Props = {
     userId: number;
 };
 
+// GET /shop-info/signup/1
+// summary: 事業者情報登録ページ　インプット表示データ取得
+// page: /shop-signup/step1
 export const getShopSignup1UseCase = async ({ userId }: Props) => {
     // shopInfo取得（無くても可）
     const shop = await getShopSignup1One({ userId });

@@ -7,12 +7,15 @@ type Params = {
     shopId: number;
 };
 
+// GET /shop-info/signup/2
+// summary: ショップ口座登録ページ　インプット表示データ取得
+// page: /shop-signup/step2/[id]
 export const getShopSignup2UseCase = async ({ userId, shopId }: Params) => {
     // shop取得（確認用）
     const shop = await getShop({ shopId });
-    
-        if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-        if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
+
+    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // shopのbankAccount取得
     let data = await getShopAccountOne({ shopId });
