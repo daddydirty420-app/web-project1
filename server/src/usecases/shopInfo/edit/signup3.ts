@@ -1,21 +1,21 @@
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
-import { createNotification } from "../../../services/notification.js";
-import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
-import { getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
+import { updateShopIdPermit } from "../../../services/shopInfo/command.js";
+import { getShop } from "../../../services/shopInfo/query.js";
 import { ShopIdBody } from "../../../types/shopIdBody.js";
+import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
 
 type Params = {
-    shopEditId: number;
+    shopId: number;
     userId: number;
     body: ShopIdBody;
 };
 
-// PATCH /shop-info-edit/id-image-upload/:id
-// summary: 事業者登録　代表者身分証アップロード
-// page: edit/shop/com-free/upload/[id]
-export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }: Params) => {
+// PATCH /shop-info/signup3/:id
+// summary: ショップ登録身分証・許認可証追加
+// page: /shop-signup/step3/[id]
+export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params) => {
     const now = Date.now();
 
     const { frontFileName, frontFileType, rearFileName, rearFileType, idFrontUpload, idRearUpload, permitFiles } = body;
@@ -25,19 +25,19 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
         throw new AppError("INVALID_BODY", 400);
     }
 
-    // shopEdit取得
-    const shopEdit = await getShopEditHasShop({ shopEditId });
+    // shopInfo取得
+    const shop = await getShop({ shopId });
 
-    if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
-    if (shopEdit.user_id !== userId) throw new AppError("FORBIDDEN", 403);
-
-    const shopId = shopEdit.ShopInfo.id;
+    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;
     let rearSignedUrl: string | null = null;
     let frontUrl: string | null = null;
     let rearUrl: string | null = null;
+    const oldFrontUrl = shop.id_card_front || null;
+    const oldRearUrl = shop.id_card_rear || null;
 
     if (frontFileName && idFrontUpload) {
         const key = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
@@ -55,9 +55,27 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
         rearUrl = `${s3Domain}/${key}`;
     }
 
+    // 古い身分証削除
+    if (idFrontUpload && oldFrontUrl && frontUrl && oldFrontUrl !== frontUrl) {
+        const oldFrontKey = oldFrontUrl.split(".com/")[1];
+
+        deleteCmdS3({ key: oldFrontKey }).catch((err) => {
+            console.error("s3 deleteCmdS3 error:", err);
+        });
+    }
+
+    if (idRearUpload && oldRearUrl && rearUrl && oldRearUrl !== rearUrl) {
+        const oldRearKey = oldRearUrl.split(".com/")[1];
+
+        deleteCmdS3({ key: oldRearKey }).catch((err) => {
+            console.error("s3 deleteCmdS3 error:", err);
+        });
+    }
+
     // 許認可証アップロード
     let permitSignedUrls: string[] = [];
     let permitUrls: string[] = [];
+    const oldPermitUrls: string[] = Array.isArray(shop.permit_url) ? shop.permit_url : [];
 
     if (Array.isArray(permitFiles) && permitFiles.length > 0) {
         for (const file of permitFiles) {
@@ -74,27 +92,24 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
         }
     }
 
-    // shopInfoEdit更新
-    await UpdateShopEditIdPermit({
-        shopEdit,
+    const filesToDelete = oldPermitUrls.filter((oldUrl) => !permitUrls.includes(oldUrl));
+
+    for (const oldUrl of filesToDelete) {
+        const oldKey = oldUrl.split(".com/")[1];
+
+        deleteCmdS3({ key: oldKey }).catch((err) => {
+            console.error("s3 deleteCmdS3 error:", err);
+        });
+    }
+
+    // db更新
+    await updateShopIdPermit({
+        shopInfo: shop,
         data: {
             id_card_front: frontUrl,
             id_card_rear: rearUrl,
             permit_url: permitUrls,
         },
-    });
-
-    // メール送信機能
-
-    // お知らせ作成
-    createNotification({
-        data: {
-            read_user_id: userId,
-            message:
-                "事業形態の変更が完了しました。審査完了まで1~2週間ほどお時間を頂戴しておりますため、しばらくお待ちください。",
-        },
-    }).catch((err) => {
-        console.error("service createNotification error:", err);
     });
 
     return { frontSignedUrl, rearSignedUrl, permitSignedUrls };

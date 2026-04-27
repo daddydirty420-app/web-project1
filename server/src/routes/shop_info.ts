@@ -7,6 +7,7 @@ import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
+import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
@@ -95,6 +96,36 @@ router.patch(
             await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
 
             res.status(200).json({ message: "オプションを更新しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/signup3/:id
+// summary: ショップ登録身分証・許認可証追加
+// page: /shop-signup/step3/[id]
+router.patch(
+    "/signup3/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const body = req.body;
+
+        try {
+            const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
+                shopId,
+                userId,
+                body,
+            });
+
+            res.status(200).json({
+                message: "身分証・許認可証のDB登録が完了しました。",
+                frontSignedUrl,
+                rearSignedUrl,
+                permitSignedUrls,
+            });
         } catch (err) {
             next(err);
         }

@@ -69,6 +69,8 @@
         "roomwear",
         "NEXTAUTH",
         "smastrom",
-        "logomark"
+        "logomark",
+        "vercel",
+        "adminsdk"
     ]
 }

@@ -18,7 +18,7 @@ import { getIndexRecommendUseCase } from "../usecases/items/itemList/recommend/i
 import { getItemPageRecommendUseCase } from "../usecases/items/itemList/recommend/itemPageRecommend.js";
 import { getItemPageUseCase } from "../usecases/items/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/items/itemPage/metadata.js";
-import { patchItemLogsAccessUseCase } from "../usecases/items/logs/accessLogs.js";
+import { patchItemLogsAccessUseCase } from "../usecases/items/log/accessLogs.js";
 import { restoreItemUseCase } from "../usecases/items/restore/restore.js";
 import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/items/sortNumber/sortNumber.js";
 import { itemCopyUploadUseCase } from "../usecases/items/upload/copyUpload/copyUpload.js";

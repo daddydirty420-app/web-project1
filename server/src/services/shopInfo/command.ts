@@ -5,6 +5,7 @@ import {
     UpdateOptionParams,
     UpdateShopEmailParams,
     UpdateShopIdCardParams,
+    UpdateShopIdPermitParams,
     UpdateShopNameParams,
     UpdateShopPhoneNumberParams,
 } from "../../types/serviceType/shopInfo.js";
@@ -18,6 +19,10 @@ export const updateShopEmail = async ({ shopInfo, data, transaction }: UpdateSho
 };
 
 export const updateShopIdCard = async ({ shopInfo, data, transaction }: UpdateShopIdCardParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopIdPermit = async ({ shopInfo, data, transaction }: UpdateShopIdPermitParams) => {
     await shopInfo.update(data, { transaction });
 };
 

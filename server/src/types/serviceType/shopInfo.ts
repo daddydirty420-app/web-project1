@@ -46,6 +46,16 @@ export type UpdateShopIdCardParams = {
     transaction?: Transaction;
 };
 
+export type UpdateShopIdPermitParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        id_card_front: string | null;
+        id_card_rear: string | null;
+        permit_url: string[];
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateShopPhoneNumberParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: {
