@@ -7,7 +7,7 @@ import {
     ShopInfo,
     TodouhukenOption,
 } from "../../models/index.js";
-import { ShopIdParams } from "../../types/serviceType/shopInfo.js";
+import { ShopIdParams, UserIdParams } from "../../types/serviceType/shopInfo.js";
 
 export const getShop = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId);
@@ -112,5 +112,60 @@ export const getShopHasAddressNameBank = ({ shopId }: ShopIdParams) => {
             },
             { model: BankAccount },
         ],
+    });
+};
+
+export const getShopSignup1One = ({ userId }: UserIdParams) => {
+    return ShopInfo.findOne({
+        attributes: [
+            "id",
+            "company_name",
+            "shop_name",
+            "email",
+            "phone_number",
+            "homepage_url",
+            "open_date_time",
+            "company_number",
+            "capital",
+            "member_count",
+            "founded_date",
+            "user_id",
+        ],
+        where: {
+            user_id: userId,
+            request_all: false,
+        },
+        order: [["createdAt", "DESC"]],
+        include: [
+            {
+                model: ComOrFreeOption,
+                required: false,
+            },
+            {
+                model: Address,
+                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                        required: false,
+                    },
+                ],
+                required: false,
+            },
+            {
+                model: Name,
+                as: "RepresentativeName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                required: false,
+            },
+            {
+                model: Name,
+                as: "ContactName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+                required: false,
+            },
+        ],
+        require: false,
     });
 };

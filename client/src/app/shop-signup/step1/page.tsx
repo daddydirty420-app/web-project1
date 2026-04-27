@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+export default async function Page() {
     const session = await getServerSession(authOptions);
 
     const cookieStore = await cookies();
@@ -25,21 +25,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     if (!session || !accessToken) redirect("/login");
 
-    const queryString = new URLSearchParams(
-        Object.entries(searchParams).reduce(
-            (acc, [key, value]) => {
-                if (typeof value === "string") {
-                    acc[key] = value;
-                }
-                return acc;
-            },
-            {} as Record<string, string>,
-        ),
-    ).toString();
-
-    const apiUrl = `${process.env.API_URL}/shop-signup/signup1` + (queryString ? `?${queryString}` : "");
-
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${process.env.API_URL}/shop-info/signup/1`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -54,5 +40,5 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         notFound();
     }
 
-    return <Form user={data.userData} shopInfo={data.shopData || null} ComOrFreeOption={data.comOrFree} />;
+    return <Form user={data.user} shopInfo={data.shop || null} ComOrFreeOption={data.comFree} />;
 }

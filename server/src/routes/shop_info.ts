@@ -14,6 +14,7 @@ import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
+import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 
 const router = Router();
 
@@ -369,5 +370,20 @@ router.get(
         }
     },
 );
+
+// GET /shop-info/signup/1
+// summary: 事業者情報登録ページ　インプット表示データ取得
+// page: /shop-signup/step1
+router.get("/signup/1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
+
+        res.status(200).json({ shop, user, comFree });
+    } catch (err) {
+        next(err);
+    }
+});
 
 export default router;

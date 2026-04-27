@@ -2,105 +2,16 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import {
-    ShopInfo,
-    ComOrFreeOption,
-    Address,
-    Name,
-    TodouhukenOption,
-    BankAccount,
     AccountTypeOption,
-    User,
+    Address,
+    BankAccount,
+    ComOrFreeOption,
+    Name,
+    ShopInfo,
+    TodouhukenOption,
 } from "../models/index.js";
 
 const router = Router();
-
-router.get("/signup1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    try {
-        const shopData = await ShopInfo.findOne({
-            where: {
-                user_id: userId,
-                request_all: false,
-            },
-            order: [["createdAt", "DESC"]],
-            attributes: [
-                "id",
-                "company_name",
-                "shop_name",
-                "email",
-                "phone_number",
-                "homepage_url",
-                "open_date_time",
-                "company_number",
-                "capital",
-                "member_count",
-                "founded_date",
-            ],
-            include: [
-                {
-                    model: ComOrFreeOption,
-                    required: false,
-                },
-                {
-                    model: Address,
-                    attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
-                    include: [
-                        {
-                            model: TodouhukenOption,
-                            as: "AddressTodouhuken",
-                            required: false,
-                        },
-                    ],
-                    required: false,
-                },
-                {
-                    model: Name,
-                    as: "RepresentativeName",
-                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    required: false,
-                },
-                {
-                    model: Name,
-                    as: "ContactName",
-                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    required: false,
-                },
-            ],
-            require: false,
-        });
-
-        const userData = await User.findByPk(userId, {
-            attributes: ["id", "user_name", "email", "phone_number"],
-            include: [
-                {
-                    model: Address,
-                    attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
-                    include: [
-                        {
-                            model: TodouhukenOption,
-                            as: "AddressTodouhuken",
-                        },
-                    ],
-                },
-                {
-                    model: Name,
-                    attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                },
-            ],
-        });
-
-        if (!userData) {
-            res.status(404).json({ message: "ユーザーが見つかりません。" });
-            return;
-        }
-
-        const comOrFree = await ComOrFreeOption.findAll();
-
-        res.status(200).json({ shopData, userData, comOrFree });
-    } catch (err) {
-        next(err);
-    }
-});
 
 router.get(
     "/signup2/:id",

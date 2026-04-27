@@ -10,13 +10,13 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
 import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUIBack from "../ssUiBack";
 import { StepBar } from "../stepBar";
 import { ComOrFreeOption, ShopInfo, User } from "../type";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -202,6 +202,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 toast.error("データ登録に失敗しました");
                 return;
             }
+            
             toast.success("ショップデータを登録しました");
             await sleep(1500);
 

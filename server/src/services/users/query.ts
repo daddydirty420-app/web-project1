@@ -135,6 +135,28 @@ export const getHonninEditUser = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserShopSignup1 = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "user_name", "email", "phone_number"],
+        include: [
+            {
+                model: Address,
+                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+            {
+                model: Name,
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+        ],
+    });
+};
+
 export const getUserEmailOne = ({ email }: EmailParams) => {
     return User.findOne({
         where: { email },

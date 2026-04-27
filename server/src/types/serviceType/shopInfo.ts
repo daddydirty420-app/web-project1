@@ -5,6 +5,10 @@ export type ShopIdParams = {
     shopId: number;
 };
 
+export type UserIdParams = {
+    userId: number;
+};
+
 export type UpdateShopEmailParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: {
