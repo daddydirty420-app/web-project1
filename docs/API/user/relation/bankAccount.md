@@ -1,5 +1,28 @@
 # user/relation/bankAccount.md
 
+## POST /bank-account/shop/:id — ショップ口座情報作成
+
+### リクエスト
+
+- params:
+    - shopId
+- body:
+    - bankName
+    - branch
+    - accountType
+    - accountNumber
+    - meigi
+
+### ビジネスロジック
+
+- ショップ情報取得
+- body空チェック
+- 銀行名照合
+- 支店名照合
+- 口座種別マスター照合
+- DB作成
+
+
 ## PATCH /bank-account/:id — 口座情報変更
 
 ### リクエスト
