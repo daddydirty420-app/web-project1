@@ -327,9 +327,9 @@ router.get(
         const userId = req.user!.id;
 
         try {
-            const name = await getRepNameUseCase({ shopId, userId });
+            const { shop, name } = await getRepNameUseCase({ shopId, userId });
 
-            res.status(200).json({ name });
+            res.status(200).json({ shop, name });
         } catch (err) {
             next(err);
         }

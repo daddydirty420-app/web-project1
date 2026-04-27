@@ -55,7 +55,7 @@ export const getShopHasAddress = ({ shopId }: ShopIdParams) => {
 
 export const getShopHasRepName = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId, {
-        attributes: ["id", "user_id"],
+        attributes: ["id", "id_card_front", "id_card_rear", "user_id"],
         include: [
             {
                 model: Name,

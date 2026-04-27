@@ -92,6 +92,7 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
         }
     }
 
+    // 古い許認可証削除
     const filesToDelete = oldPermitUrls.filter((oldUrl) => !permitUrls.includes(oldUrl));
 
     for (const oldUrl of filesToDelete) {

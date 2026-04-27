@@ -105,7 +105,7 @@ router.post(
     },
 );
 
-// POST /shop-info/rep-name/:id
+// POST /shop-info-edit/rep-name/:id
 router.post(
     "/rep-name/:id",
     authenticateToken,

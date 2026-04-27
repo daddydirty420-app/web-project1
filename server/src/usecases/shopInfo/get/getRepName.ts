@@ -13,5 +13,5 @@ export const getRepNameUseCase = async ({ shopId, userId }: Params) => {
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
     if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
-    return name;
+    return { shop, name };
 };
