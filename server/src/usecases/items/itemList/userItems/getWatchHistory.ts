@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="watchHistory"(&page=number&status=""&keyword="search")
+// summary: 閲覧履歴取得
+// page: /item-list/watchHistory
 export const getUserItemsWatchUseCase = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

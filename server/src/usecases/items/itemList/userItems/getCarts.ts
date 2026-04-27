@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="cart"(&page=number&status=""&keyword="search")
+// summary: カートリスト取得
+// page: /item-list/cart
 export const getUserItemsCartsUseCase = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

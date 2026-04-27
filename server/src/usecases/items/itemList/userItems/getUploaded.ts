@@ -8,6 +8,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="uploaded"(&page=number&status=""&keyword="search")
+// summary: 出品した商品リスト取得
+// page: /item-list/uploaded
 export const getUploadedItemsUseCase = async ({ page, userId, status, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

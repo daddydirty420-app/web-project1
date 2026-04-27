@@ -15,6 +15,8 @@ import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 const router = Router();
 
 // /users/me/items?type="typename"(&page=number&status=""&keyword="search")
+// summary: ユーザー関連各種商品リスト取得
+// page: /item-list/...
 router.get("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 

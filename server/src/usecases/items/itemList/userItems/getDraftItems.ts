@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="draft"(&page=number&status=""&keyword="search")
+// summary: 下書き商品リスト取得
+// page: /item-list/draft
 export const getDraftItemsUseCase = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

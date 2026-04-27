@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="stock"(&page=number&status=""&keyword="search")
+// summary: 在庫リスト取得
+// page: /item-list/stock
 export const getStockItemsUseCase = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;

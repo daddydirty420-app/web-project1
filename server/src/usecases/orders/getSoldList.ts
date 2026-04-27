@@ -7,7 +7,7 @@ type Params = {
     status?: string;
 };
 
-// /orders?type="purchased"&page=number&status=""
+// /orders?type="sold"&page=number&status=""
 // summary: 販売履歴取得
 // page: /order/list/sold
 export const getSoldListUseCase = async ({ page, userId, status }: Params) => {

@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// /users/me/items?type="like"(&page=number&status=""&keyword="search")
+// summary: いいねした商品リスト取得
+// page: /item-list/like
 export const getUserItemsLikesUseCase = async ({ page, userId, keyword }: Params) => {
     const limit = 20;
     const offset = (page - 1) * limit;
