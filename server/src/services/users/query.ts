@@ -7,6 +7,7 @@ import {
     Name,
     ShopInfo,
     TodouhukenOption,
+    UriagekinHistory,
     User,
 } from "../../models/index.js";
 import { EmailParams, UserIdParams } from "../../types/serviceType/users.js";
@@ -42,6 +43,12 @@ export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
             { model: Name },
             { model: IdCard },
         ],
+    });
+};
+
+export const getUserHasUriagekin = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [{ model: UriagekinHistory }],
     });
 };
 

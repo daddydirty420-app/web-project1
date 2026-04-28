@@ -5,10 +5,10 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import styles from "../transfer.module.css";
 import TransferUI from "../transferUI";
 import { User } from "../types";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -41,7 +41,7 @@ export const Form = ({ user }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/points-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/points`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

@@ -71,3 +71,12 @@ export type UpdateHonninParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateUserPointsUriageParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        points: number;
+        uriagekin: number;
+    };
+    transaction?: Transaction;
+};
