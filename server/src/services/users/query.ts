@@ -157,6 +157,12 @@ export const getUserShopSignup1 = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMePointsUriage = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "points", "uriagekin"],
+    });
+};
+
 export const getUserEmailOne = ({ email }: EmailParams) => {
     return User.findOne({
         where: { email },

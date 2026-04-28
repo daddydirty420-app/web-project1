@@ -13,6 +13,7 @@ import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
+import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransfarPoints.js";
 
 const router = Router();
 
@@ -221,6 +222,25 @@ router.get("/honnin", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
+// GET /user/transfer-points
+// summary: ポイント変換ページ　表示データ取得
+// page: /transfer/points
+router.get(
+    "/transfer-points",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const user = await getUserTransferPointsUseCase({ userId });
+
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
 router.get(
     "/transfer-request",
     authenticateToken,
@@ -237,29 +257,6 @@ router.get(
                         include: [{ model: AccountTypeOption }],
                     },
                 ],
-            });
-
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            res.json({ user });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/transfer-points",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const user = await User.findByPk(userId, {
-                attributes: ["id", "points", "uriagekin"],
             });
 
             if (!user) {
