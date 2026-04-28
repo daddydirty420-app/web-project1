@@ -87,6 +87,8 @@
 - ショップデータ取得
 - DB更新
 
+---
+
 ## PATCH /shop-info/signup/3/:id — ショップ登録身分証・許認可証追加
 
 ### リクエスト
@@ -117,3 +119,31 @@
 - frontSignedUrl
 - rearSignedUrl
 - permitSignedUrls
+
+---
+
+## PATCH /shop-info/signup/4/:id — ショップ登録オプション設定
+
+### リクエスト
+
+- body:
+    - authTrans
+    - openInfo
+
+### ビジネスロジック
+
+- ショップデータ取得
+- DB更新
+
+---
+
+## PATCH /shop-info/signup/edit/:id — ショップ登録確認ページ編集
+
+### リクエスト
+
+- body（any）
+
+### ビジネスロジック
+
+- ショップデータ取得
+- DB更新
