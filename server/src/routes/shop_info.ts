@@ -8,6 +8,7 @@ import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
+import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
@@ -128,6 +129,28 @@ router.patch(
                 rearSignedUrl,
                 permitSignedUrls,
             });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/signup/4/:id
+// summary: ショップ登録身分証・許認可証追加
+// page: /shop-signup/step4/[id]
+router.patch(
+    "/signup/4/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const autoTrans = req.body.autoTrans === "はい";
+        const openInfo = req.body.openInfo === "はい";
+
+        try {
+            await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
+
+            res.status(200).json({ message: "データ更新完了" });
         } catch (err) {
             next(err);
         }

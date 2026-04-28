@@ -29,7 +29,7 @@ export const Form = ({ shopId }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/4/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/signup/4/${shopId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

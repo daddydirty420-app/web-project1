@@ -7,30 +7,6 @@ import { Address, BankAccount, Name, ShopInfo } from "../models/index.js";
 
 const router = Router();
 
-router.patch("/4/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = req.params.id;
-    const autoTrans = req.body.autoTrans === "はい";
-    const openInfo = req.body.openInfo === "はい";
-
-    try {
-        const shop = await ShopInfo.findByPk(shopId);
-
-        if (!shop) {
-            res.status(404).json({ message: "ショップデータが見つかりません。" });
-            return;
-        }
-
-        await shop.update({
-            auto_trans: autoTrans,
-            open_info: openInfo,
-        });
-
-        res.status(200).json({ message: "データ更新完了" });
-    } catch (err) {
-        next(err);
-    }
-});
-
 router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const updateData = req.body;
