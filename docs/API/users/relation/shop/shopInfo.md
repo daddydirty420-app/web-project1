@@ -126,6 +126,8 @@
 
 ### リクエスト
 
+- params:
+    - shopId
 - body:
     - authTrans
     - openInfo
@@ -141,9 +143,28 @@
 
 ### リクエスト
 
+- params:
+    - shopId
 - body（any）
 
 ### ビジネスロジック
 
 - ショップデータ取得
 - DB更新
+
+---
+
+## PATCH /shop-info/signup/5/:id — ショップ登録確定
+
+### リクエスト
+
+- params:
+    - shopId
+
+### ビジネスロジック
+
+- ショップデータ取得
+- 既存未承認ショップデータ取得
+- 未承認ショップデータ・関連データ削除
+- DB更新
+- メール送信
