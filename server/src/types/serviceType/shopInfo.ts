@@ -88,3 +88,9 @@ export type UpdateOptionParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateShopAnyParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: any;
+    transaction?: Transaction;
+};

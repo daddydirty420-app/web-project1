@@ -7,23 +7,6 @@ import { Address, BankAccount, Name, ShopInfo } from "../models/index.js";
 
 const router = Router();
 
-router.patch("/edit/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = req.params.id;
-    const updateData = req.body;
-
-    try {
-        await ShopInfo.update(updateData, {
-            where: {
-                id: shopId,
-            },
-        });
-
-        res.status(200).json({ message: "更新しました。", updated: updateData });
-    } catch (err) {
-        next(err);
-    }
-});
-
 router.patch("/5/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = req.params.id;
     const userId = req.user!.id;

@@ -9,6 +9,7 @@ import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumbe
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
 import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
+import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
@@ -136,7 +137,7 @@ router.patch(
 );
 
 // PATCH /shop-info/signup/4/:id
-// summary: ショップ登録身分証・許認可証追加
+// summary: ショップ登録オプション選択
 // page: /shop-signup/step4/[id]
 router.patch(
     "/signup/4/:id",
@@ -151,6 +152,27 @@ router.patch(
             await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
 
             res.status(200).json({ message: "データ更新完了" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/signup/edit/:id
+// summary: ショップ登録確認ページ　インプット編集
+// page: /shop-signup/step5/[id]
+router.patch(
+    "/signup/edit/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const updateData = req.body;
+
+        try {
+            await updateShopSignupEditUseCase({ shopId, userId, updateData });
+
+            res.status(200).json({ message: "更新しました。", updated: updateData });
         } catch (err) {
             next(err);
         }

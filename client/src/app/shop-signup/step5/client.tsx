@@ -44,7 +44,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/edit/${shopId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/signup/edit/${shopId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",

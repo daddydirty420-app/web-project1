@@ -10,7 +10,7 @@ type Params = {
 };
 
 // PATCH /shop-info/signup/4/:id
-// summary: ショップ登録身分証・許認可証追加
+// summary: ショップ登録オプション選択
 // page: /shop-signup/step4/[id]
 export const updateShopSignup4UseCase = async ({ shopId, userId, autoTrans, openInfo }: Params) => {
     // shop取得

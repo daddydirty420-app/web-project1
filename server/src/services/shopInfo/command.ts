@@ -3,6 +3,7 @@ import {
     CreateShopParams,
     UpdateCompanyNameParams,
     UpdateOptionParams,
+    UpdateShopAnyParams,
     UpdateShopEmailParams,
     UpdateShopIdCardParams,
     UpdateShopIdPermitParams,
@@ -39,5 +40,9 @@ export const updateShopCompanyName = async ({ shopInfo, data, transaction }: Upd
 };
 
 export const updateShopOption = async ({ shopInfo, data, transaction }: UpdateOptionParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopAny = async ({ shopInfo, data, transaction }: UpdateShopAnyParams) => {
     await shopInfo.update(data, { transaction });
 };
