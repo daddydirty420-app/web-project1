@@ -20,7 +20,7 @@ export const updateShopSignupEditUseCase = async ({ shopId, userId, updateData }
 
     // db更新
     await updateShopAny({
-        shopInfo: shop, 
+        shopInfo: shop,
         data: updateData,
     });
 };

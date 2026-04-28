@@ -111,4 +111,4 @@ export type UpdateShopAnyParams = {
 export type ShopTransactionParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     transaction?: Transaction;
-}
+};

@@ -91,4 +91,4 @@ export type UpdateAddressParams = {
 export type AddressTransactionParams = {
     address: InstanceType<typeof Address>;
     transaction?: Transaction;
-}
+};
