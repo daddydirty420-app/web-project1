@@ -49,9 +49,9 @@ router.patch(
         const body = req.body;
 
         try {
-            await updateRepNameUseCase({ shopId, userId, body });
+            const { frontSignedUrl, rearSignedUrl } = await updateRepNameUseCase({ shopId, userId, body });
 
-            res.status(200).json({ message: "代表者氏名を変更しました。" });
+            res.status(200).json({ frontSignedUrl, rearSignedUrl });
         } catch (err) {
             next(err);
         }

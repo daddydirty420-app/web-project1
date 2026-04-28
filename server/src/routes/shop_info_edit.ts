@@ -115,9 +115,9 @@ router.post(
         const body = req.body;
 
         try {
-            await createRepNameUseCase({ shopId, userId, body });
+            const { frontSignedUrl, rearSignedUrl } = await createRepNameUseCase({ shopId, userId, body });
 
-            res.status(200).json({ message: "代表者氏名の変更を受け付けました。" });
+            res.status(200).json({ frontSignedUrl, rearSignedUrl });
         } catch (err) {
             next(err);
         }

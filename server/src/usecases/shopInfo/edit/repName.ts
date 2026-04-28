@@ -5,6 +5,7 @@ import { updateName } from "../../../services/name.js";
 import { updateShopIdCard } from "../../../services/shopInfo/command.js";
 import { getShopHasRepName } from "../../../services/shopInfo/query.js";
 import { RepNameBody } from "../../../types/repNameBody.js";
+import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
 
 type Params = {
@@ -35,15 +36,11 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
         meiValue,
         seiKanaValue,
         meiKanaValue,
-        frontFileName,
-        frontFileType,
-        rearFileName,
-        rearFileType,
     };
 
     const hasEmpty = Object.values(fields).some((v) => !v?.trim());
 
-    if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
+    if (hasEmpty) throw new AppError("INVALID_BODY", 400);
 
     const sei = seiValue.trim();
     const mei = meiValue.trim();
@@ -59,8 +56,8 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;
     let rearSignedUrl: string | null = null;
-    let frontUrl: string | null = null;
-    let rearUrl: string | null = null;
+    let frontUrl: string | null = shop.id_card_front ?? null;
+    let rearUrl: string | null = shop.id_card_rear ?? null;
 
     if (frontFileType && idFrontUpload) {
         const key = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
@@ -70,12 +67,33 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
         frontUrl = `${s3Domain}/${key}`;
     }
 
+    if (!frontUrl) throw new AppError("FRONT_URL_EMPTY", 400);
+
     if (rearFileType && idRearUpload) {
         const key = `idcard/shop/rear/${shopId}/${now}_${rearFileName}`;
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 
         rearUrl = `${s3Domain}/${key}`;
+    }
+
+    if (!rearUrl) throw new AppError("REAR_URL_EMPTY", 400);
+
+    // 旧身分証削除
+    if (shop.id_card_front && idFrontUpload) {
+        const oldFrontKey = shop.id_card_front.split(".com/")[1];
+
+        deleteCmdS3({ key: oldFrontKey }).catch((err) => {
+            console.error("s3 deleteCmdS3 error:", err);
+        });
+    }
+
+    if (shop.id_card_rear && idRearUpload) {
+        const oldRearKey = shop.id_card_rear.split(".com/")[1];
+
+        deleteCmdS3({ key: oldRearKey }).catch((err) => {
+            console.error("s3 deleteCmdS3 error:", err);
+        });
     }
 
     // データ更新
@@ -100,4 +118,6 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
             transaction: t,
         });
     });
+
+    return { frontSignedUrl, rearSignedUrl };
 };
