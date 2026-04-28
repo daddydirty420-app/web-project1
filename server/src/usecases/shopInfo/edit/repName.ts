@@ -14,6 +14,9 @@ type Params = {
     userId: number;
 };
 
+// PATCH /shop-info/rep-name/:id
+// summary 代表者氏名変更
+// page: /edit/name/shop/rep-name/signup/[id]
 export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => {
     const now = Date.now();
 

@@ -15,6 +15,9 @@ type Params = {
     body: RepNameBody;
 };
 
+// POST /shop-info-edit/rep-name/:id
+// summary 代表者氏名データ作成
+// page: /edit/name/shop/rep-name/[id]
 export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => {
     const now = Date.now();
 

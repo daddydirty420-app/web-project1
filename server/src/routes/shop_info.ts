@@ -40,6 +40,8 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
 });
 
 // PATCH /shop-info/rep-name/:id
+// summary 代表者氏名変更
+// page: /edit/name/shop/rep-name/signup/[id]
 router.patch(
     "/rep-name/:id",
     authenticateToken,

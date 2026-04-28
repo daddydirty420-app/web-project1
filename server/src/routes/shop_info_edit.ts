@@ -106,6 +106,8 @@ router.post(
 );
 
 // POST /shop-info-edit/rep-name/:id
+// summary 代表者氏名データ作成
+// page: /edit/name/shop/rep-name/[id]
 router.post(
     "/rep-name/:id",
     authenticateToken,
