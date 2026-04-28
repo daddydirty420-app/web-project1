@@ -9,6 +9,7 @@ import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumbe
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
 import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
+import { updateShopSignup5UseCase } from "../usecases/shopInfo/edit/signup5.js";
 import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
@@ -173,6 +174,26 @@ router.patch(
             await updateShopSignupEditUseCase({ shopId, userId, updateData });
 
             res.status(200).json({ message: "更新しました。", updated: updateData });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// PATCH /shop-info/signup/5/:id
+// summary: ショップ登録　確定
+// page: /shop-signup/step5/[id]
+router.patch(
+    "/signup/5/:id",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            await updateShopSignup5UseCase({ shopId, userId });
+
+            res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
         } catch (err) {
             next(err);
         }

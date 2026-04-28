@@ -9,6 +9,11 @@ export type UserIdParams = {
     userId: number;
 };
 
+export type UserShopIdParams = {
+    userId: number;
+    shopId: number;
+};
+
 export type CreateShopParams = {
     data: {
         company_name: string;
@@ -89,8 +94,21 @@ export type UpdateOptionParams = {
     transaction?: Transaction;
 };
 
+export type UpdateShopRequestAllParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        request_all: boolean;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateShopAnyParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: any;
     transaction?: Transaction;
 };
+
+export type ShopTransactionParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    transaction?: Transaction;
+}

@@ -6,6 +6,7 @@ import {
     CreateNameShopParams,
     DeliveryIdParams,
     NameIdParams,
+    NameTransactionParams,
     UpdateNameParams,
     UserIdParams,
 } from "../types/serviceType/name.js";
@@ -52,4 +53,8 @@ export const createNameShopAllowNull = async ({ data, transaction }: CreateNameS
 
 export const updateName = async ({ name, data, transaction }: UpdateNameParams) => {
     await name.update(data, { transaction });
+};
+
+export const deleteName = async ({ name, transaction }: NameTransactionParams) => {
+    await name.destroy({ transaction });
 };

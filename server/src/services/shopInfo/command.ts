@@ -1,6 +1,7 @@
 import { ShopInfo } from "../../models/index.js";
 import {
     CreateShopParams,
+    ShopTransactionParams,
     UpdateCompanyNameParams,
     UpdateOptionParams,
     UpdateShopAnyParams,
@@ -9,6 +10,7 @@ import {
     UpdateShopIdPermitParams,
     UpdateShopNameParams,
     UpdateShopPhoneNumberParams,
+    UpdateShopRequestAllParams,
 } from "../../types/serviceType/shopInfo.js";
 
 export const createShop = ({ data, transaction }: CreateShopParams) => {
@@ -43,6 +45,14 @@ export const updateShopOption = async ({ shopInfo, data, transaction }: UpdateOp
     await shopInfo.update(data, { transaction });
 };
 
+export const updateShopRequestAll = async ({ shopInfo, data, transaction }: UpdateShopRequestAllParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
 export const updateShopAny = async ({ shopInfo, data, transaction }: UpdateShopAnyParams) => {
     await shopInfo.update(data, { transaction });
+};
+
+export const deleteShop = async ({ shopInfo, transaction }: ShopTransactionParams) => {
+    await shopInfo.update({ transaction });
 };

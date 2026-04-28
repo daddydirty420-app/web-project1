@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import { Op } from "sequelize";
-import { Comment, Item, User } from "../models/index.js";
 import sequelize from "../db.js";
+import { Comment, Item, User } from "../models/index.js";
 
 export const startTrustScoreCron = () => {
     // report_trust_score 0.3 → 1.0 ユーザー信頼度
@@ -26,10 +26,10 @@ export const startTrustScoreCron = () => {
 
             try {
                 await Promise.all(
-                    users.map(async (user: typeof User) => {
+                    users.map(async (user: InstanceType<typeof User>) => {
                         await user.update(
                             {
-                                report_trusy_score: 1,
+                                report_trust_score: 1,
                             },
                             { transaction: t },
                         );
@@ -68,7 +68,7 @@ export const startTrustScoreCron = () => {
 
             try {
                 await Promise.all(
-                    items.map(async (item: typeof Item) => {
+                    items.map(async (item: InstanceType<typeof Item>) => {
                         await item.update(
                             {
                                 report_score: item.report_score * 0.9,
@@ -110,7 +110,7 @@ export const startTrustScoreCron = () => {
 
             try {
                 await Promise.all(
-                    comments.map(async (comment: typeof Comment) => {
+                    comments.map(async (comment: InstanceType<typeof Comment>) => {
                         await comment.update(
                             {
                                 report_score: comment.report_score * 0.9,

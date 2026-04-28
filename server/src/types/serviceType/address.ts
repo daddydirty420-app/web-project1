@@ -87,3 +87,8 @@ export type UpdateAddressParams = {
     };
     transaction?: Transaction;
 };
+
+export type AddressTransactionParams = {
+    address: InstanceType<typeof Address>;
+    transaction?: Transaction;
+}

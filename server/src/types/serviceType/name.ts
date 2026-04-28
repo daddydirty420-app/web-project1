@@ -63,3 +63,8 @@ export type UpdateNameParams = {
     };
     transaction?: Transaction;
 };
+
+export type NameTransactionParams = {
+    name: InstanceType<typeof Name>;
+    transaction?: Transaction;
+};

@@ -66,7 +66,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-signup-create/5/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/signup/5/${shopId}`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

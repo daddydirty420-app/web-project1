@@ -63,6 +63,7 @@ export type updateBankParams = {
         account_number: string;
         meigi: string;
     };
+    transaction?: Transaction;
 };
 
 export type UpsertBankShopParams = {
@@ -76,5 +77,10 @@ export type UpsertBankShopParams = {
         meigi: string;
         shop_info_id: number;
     };
+    transaction?: Transaction;
+};
+
+export type BankTransactionParams = {
+    account: InstanceType<typeof BankAccount>;
     transaction?: Transaction;
 };

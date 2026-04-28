@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import {
     AccountTypeOption,
     Address,
@@ -7,7 +8,7 @@ import {
     ShopInfo,
     TodouhukenOption,
 } from "../../models/index.js";
-import { ShopIdParams, UserIdParams } from "../../types/serviceType/shopInfo.js";
+import { ShopIdParams, UserIdParams, UserShopIdParams } from "../../types/serviceType/shopInfo.js";
 
 export const getShop = ({ shopId }: ShopIdParams) => {
     return ShopInfo.findByPk(shopId);
@@ -224,5 +225,31 @@ export const getShopSignup1One = ({ userId }: UserIdParams) => {
             },
         ],
         require: false,
+    });
+};
+
+export const getOldShopAll = ({ userId, shopId }: UserShopIdParams) => {
+    return ShopInfo.findAll({
+        where: {
+            id: { [Op.ne]: shopId },
+            verified: false,
+            user_id: userId,
+        },
+        include: [
+            {
+                model: Address,
+            },
+            {
+                model: Name,
+                as: "RepresentativeName",
+            },
+            {
+                model: Name,
+                as: "ContactName",
+            },
+            {
+                model: BankAccount,
+            },
+        ],
     });
 };
