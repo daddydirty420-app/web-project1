@@ -1,4 +1,14 @@
-import { Address, GenderOption, IdCard, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
+import {
+    AccountTypeOption,
+    Address,
+    BankAccount,
+    GenderOption,
+    IdCard,
+    Name,
+    ShopInfo,
+    TodouhukenOption,
+    User,
+} from "../../models/index.js";
 import { EmailParams, UserIdParams } from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
@@ -160,6 +170,19 @@ export const getUserShopSignup1 = ({ userId }: UserIdParams) => {
 export const getMePointsUriage = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "points", "uriagekin"],
+    });
+};
+
+export const getUserTransferRequest = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "uriagekin"],
+        include: [
+            {
+                model: BankAccount,
+                attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
+                include: [{ model: AccountTypeOption }],
+            },
+        ],
     });
 };
 

@@ -2,7 +2,6 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { AccountTypeOption, BankAccount, User } from "../models/index.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
@@ -14,6 +13,7 @@ import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransfarPoints.js";
+import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
 
 const router = Router();
 
@@ -241,6 +241,9 @@ router.get(
     },
 );
 
+// GET /user/transfer-request
+// summary: 振込申請ページ　表示データ取得
+// page: /transfer/request
 router.get(
     "/transfer-request",
     authenticateToken,
@@ -248,23 +251,9 @@ router.get(
         const userId = req.user!.id;
 
         try {
-            const user = await User.findByPk(userId, {
-                attributes: ["id", "uriagekin"],
-                include: [
-                    {
-                        model: BankAccount,
-                        attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
-                        include: [{ model: AccountTypeOption }],
-                    },
-                ],
-            });
+            const user = await getUserTransferRequestUseCase({ userId });
 
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            res.json({ user });
+            res.status(200).json({ user });
         } catch (err) {
             next(err);
         }
