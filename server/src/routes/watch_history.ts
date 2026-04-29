@@ -6,6 +6,8 @@ import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.js";
 const router = Router();
 
 // DELETE /watch-history/:id
+// summary: 閲覧履歴削除
+// page: /item-list/watch-history
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 

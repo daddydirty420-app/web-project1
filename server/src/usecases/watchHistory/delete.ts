@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// DELETE /watch-history/:id
+// summary: 閲覧履歴削除
+// page: /item-list/watch-history
 export const deleteWatchHistoryUseCase = async ({ itemId, userId }: Params) => {
     // watchHistory取得
     const history = await getWatchHistoryOne({ itemId, userId });
