@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// DELETE /cart/:id
+// summary: カート削除
+// page: /item
 export const deleteCartUseCase = async ({ itemId, userId }: Params) => {
     // cart取得
     const cart = await getCartOne({ itemId, userId });

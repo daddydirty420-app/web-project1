@@ -5,6 +5,9 @@ type Params = {
     userId: number;
 };
 
+// GET /cart/:id/status
+// summary: カートステータス取得
+// page: /item
 export const cartStatusUseCase = async ({ itemId, userId }: Params) => {
     const status = await getCartOne({ itemId, userId });
 

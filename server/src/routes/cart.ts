@@ -1,13 +1,15 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { deleteCartUseCase } from "../usecases/cart/delete.js";
 import { addCartUseCase } from "../usecases/cart/add.js";
+import { deleteCartUseCase } from "../usecases/cart/delete.js";
 import { cartStatusUseCase } from "../usecases/cart/status.js";
 
 const router = Router();
 
 // POST /cart/:id
+// summary: カート追加
+// page: /item
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -23,6 +25,8 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // DELETE /cart/:id
+// summary: カート削除
+// page: /item
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -38,6 +42,8 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
 });
 
 // GET /cart/:id/status
+// summary: カートステータス取得
+// page: /item
 router.get("/:id/status", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 

@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// POST /cart/:id
+// summary: カート追加
+// page: /item
 export const addCartUseCase = async ({ itemId, userId }: Params) => {
     // cart取得
     const cart = await getCartOne({ itemId, userId });
