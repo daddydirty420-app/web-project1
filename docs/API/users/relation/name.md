@@ -33,7 +33,7 @@
 
 ---
 
-## GET /name/delivery-name/:id — 配送用氏名データ取得
+## GET /name/:id/delivery-name — 配送用氏名データ取得
 
 ### リクエスト
 

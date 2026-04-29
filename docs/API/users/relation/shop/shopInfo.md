@@ -21,7 +21,7 @@
 
 ---
 
-## PATCH /shop-info/rep-name/:id — 代表者氏名変更
+## PATCH /shop-info/:id/rep-name — 代表者氏名変更
 
 ### リクエスト
 
@@ -74,7 +74,7 @@
 
 ---
 
-## PATCH /shop-info/option/:id — オプション更新
+## PATCH /shop-info/:id/option — オプション更新
 
 ### リクエスト
 
@@ -89,7 +89,7 @@
 
 ---
 
-## PATCH /shop-info/signup/3/:id — ショップ登録身分証・許認可証追加
+## PATCH /shop-info/:id/signup/3 — ショップ登録身分証・許認可証追加
 
 ### リクエスト
 
@@ -122,7 +122,7 @@
 
 ---
 
-## PATCH /shop-info/signup/4/:id — ショップ登録オプション設定
+## PATCH /shop-info/:id/signup/4 — ショップ登録オプション設定
 
 ### リクエスト
 
@@ -139,7 +139,7 @@
 
 ---
 
-## PATCH /shop-info/signup/edit/:id — ショップ登録確認ページ編集
+## PATCH /shop-info/:id/signup/edit — ショップ登録確認ページ編集
 
 ### リクエスト
 
@@ -154,7 +154,7 @@
 
 ---
 
-## PATCH /shop-info/signup/5/:id — ショップ登録確定
+## PATCH /shop-info/:id/signup/5 — ショップ登録確定
 
 ### リクエスト
 

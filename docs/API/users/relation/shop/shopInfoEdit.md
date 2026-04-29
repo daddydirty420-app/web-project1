@@ -1,6 +1,6 @@
 # user/relation/shop/shopInfoEdit.md
 
-## POST /shop-info-edit/address/:id — 会社所在地変更受付
+## POST /shop-info-edit/:id/address — 会社所在地変更受付
 
 ### リクエスト
 
@@ -24,7 +24,7 @@
 
 ---
 
-## POST /shop-info-edit/bank-account/:id — 口座情報変更受付
+## POST /shop-info-edit/:id/bank-account — 口座情報変更受付
 
 ### リクエスト
 
@@ -48,7 +48,7 @@
 
 ---
 
-## POST /shop-info-edit/rep-name/:id — 代表者氏名変更受付
+## POST /shop-info-edit/:id/rep-name — 代表者氏名変更受付
 
 ### リクエスト
 
@@ -84,7 +84,7 @@
 
 ---
 
-## POST /shop-info-edit/company-name/:id — 会社名変更受付
+## POST /shop-info-edit/:id/company-name — 会社名変更受付
 
 ### リクエスト
 
@@ -104,7 +104,7 @@
 
 ---
 
-## POST /shop-info-edit/com-free/:id — 事業形態変更受付
+## POST /shop-info-edit/:id/com-free — 事業形態変更受付
 
 ### リクエスト
 
@@ -143,7 +143,7 @@
 
 ---
 
-## PATCH /shop-info-edit/id-image-upload/:id — 事業者登録　代表者身分証アップロード
+## PATCH /shop-info-edit/:id/id-image-upload — 事業者登録　代表者身分証アップロード
 
 ### リクエスト
 
