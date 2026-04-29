@@ -1,10 +1,13 @@
-import { getLevel2 } from "../../services/categories.js";
 import { AppError } from "../../errors.js";
+import { getLevel2 } from "../../services/categories.js";
 
 type Params = {
     parentId: number;
 };
 
+// GET /categories/:id/level2
+// summary: カテゴリーlevel2取得
+// page: /upload
 export const getLevel2UseCase = async ({ parentId }: Params) => {
     const category2 = await getLevel2({ parentId });
 

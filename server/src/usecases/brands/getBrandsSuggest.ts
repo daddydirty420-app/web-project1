@@ -1,10 +1,13 @@
-import { BrandsInstance, getAllBrands } from "../../services/brands.js";
 import { getAllAliases } from "../../services/brandAliases.js";
+import { BrandsInstance, getAllBrands } from "../../services/brands.js";
 
 type Params = {
     keyword: string;
 };
 
+// GET /brands/suggest?keyword=""
+// summary: ブランドサジェスト検索リスト取得
+// page: /upload
 export const getBrandsSuggestUseCase = async ({ keyword }: Params) => {
     // Brands取得
     const direct = await getAllBrands({ keyword });
