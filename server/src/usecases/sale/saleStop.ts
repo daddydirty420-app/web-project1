@@ -21,7 +21,7 @@ export const saleStopUseCase = async ({ saleId }: Params) => {
     if (!beforePrice || isNaN(beforePrice)) {
         throw new AppError("BEFORE_PRICE_INVALID", 400);
     }
-    
+
     // item取得
     const item = await getItem({ itemId: sale.item_id });
 
