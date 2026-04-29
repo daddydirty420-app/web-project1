@@ -7,15 +7,21 @@ type Params = {
     userId: number;
 };
 
+// POST /item-like/:id
+// summary: いいね作成
+// page: /item
 export const addItemLikeUseCase = async ({ itemId, userId }: Params) => {
+    // itemLike取得
     const data = await getItemLikeOne({ itemId, userId });
 
     if (data) {
         throw new AppError("ALREADY_LIKE_ITEM", 409, "すでにいいね済みです");
     }
 
+    // itemLike作成
     await createItemLike({ itemId, userId });
 
+    // sort_number非同期
     const number = 50;
     const buzzNumber = 200;
 

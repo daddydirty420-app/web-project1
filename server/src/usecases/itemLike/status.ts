@@ -5,6 +5,9 @@ type Params = {
     userId: number;
 };
 
+// GET /item-like/:id/status
+// summary: いいねステータス取得
+// page: /item
 export const itemLikeStatusUseCase = async ({ itemId, userId }: Params) => {
     const isGood = await getItemLikeOne({ itemId, userId });
 

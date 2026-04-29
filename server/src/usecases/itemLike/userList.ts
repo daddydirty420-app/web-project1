@@ -7,6 +7,9 @@ type Params = {
     keyword?: string;
 };
 
+// GET /item-like/:id/user(?keyword="")
+// summary: いいねしたユーザーリスト取得
+// page: /user-list/item-like/[id]
 export const getItemLikeUserListUseCase = async ({ itemId, userId, keyword }: Params) => {
     // いいねリスト取得
     const itemLikeList = await getItemLikeList({ itemId, keyword });

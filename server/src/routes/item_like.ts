@@ -10,6 +10,8 @@ import { getItemLikeUserListUseCase } from "../usecases/itemLike/userList.js";
 const router = Router();
 
 // POST /item-like/:id
+// summary: いいね作成
+// page: /item
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -25,6 +27,8 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // DELETE /item-like/:id
+// summary: いいね削除
+// page: /item
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -40,6 +44,8 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
 });
 
 // GET /item-like/:id/status
+// summary: いいねステータス取得
+// page: /item
 router.get("/:id/status", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -55,6 +61,8 @@ router.get("/:id/status", authenticateToken, async (req: Request, res: Response,
 });
 
 // GET /item-like/:id/count
+// summary: いいね数取得
+// page: /item
 router.get("/:id/count", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
@@ -68,6 +76,8 @@ router.get("/:id/count", async (req: Request, res: Response, next: NextFunction)
 });
 
 // GET /item-like/:id/user(?keyword="")
+// summary: いいねしたユーザーリスト取得
+// page: /user-list/item-like/[id]
 router.get("/:id/user", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
 
