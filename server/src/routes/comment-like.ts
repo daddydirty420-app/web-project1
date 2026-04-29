@@ -1,16 +1,17 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { CommentLike } from "../models/index.js";
-import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
+import { countCommentLike } from "../services/commentLike.js";
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
-import { countCommentLike } from "../services/commentLike.js";
+import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
 
 const router = Router();
 
 // POST /comment-like/:id
+// summary: いいね作成
+// page: /item
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
@@ -26,6 +27,8 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // DELETE /comment-like/:id
+// summary: いいね削除
+// page: /item
 router.delete("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
@@ -41,6 +44,8 @@ router.delete("/:id", authenticateToken, async (req: Request, res: Response, nex
 });
 
 // GET /comment-like/:id/status
+// summary: いいねステータス取得
+// page: /item
 router.get("/:id/status", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
@@ -56,6 +61,8 @@ router.get("/:id/status", authenticateToken, async (req: Request, res: Response,
 });
 
 // GET /comment-like/:id/count
+// summary: いいね数取得
+// page: /item
 router.get("/:id/count", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 
@@ -69,6 +76,8 @@ router.get("/:id/count", async (req: Request, res: Response, next: NextFunction)
 });
 
 // GET /comment-like/:id/user(?keyword="")
+// summary: いいねしたユーザーリスト取得
+// page: /user-list/comment-like/[id]
 router.get("/:id/user", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
 

@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// DELETE /comment-like/:id
+// summary: いいね削除
+// page: /item
 export const deleteCommentLikeUseCase = async ({ commentId, userId }: Params) => {
     // CommentLike取得
     const data = await getCommentLikeOne({ commentId, userId });

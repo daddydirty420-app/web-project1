@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// POST /comment-like/:id
+// summary: いいね作成
+// page: /item
 export const addCommentLikeUseCase = async ({ commentId, userId }: Params) => {
     // CommentLike取得
     const data = await getCommentLikeOne({ commentId, userId });

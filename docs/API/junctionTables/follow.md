@@ -4,7 +4,7 @@
 
 ### リクエスト
 
-- params
+- params:
     - targetUserId
 
 ### ビジネスロジック
@@ -19,7 +19,7 @@
 
 ### リクエスト
 
-- params
+- params:
     - targetUserId
 
 ### ビジネスロジック
@@ -30,20 +30,21 @@
 
 ---
 
-## GET /follow/:id — フォロー・フォロワーリスト取得
+## GET /follow/:id/user — フォロー・フォロワーリスト取得
 
 ### リクエスト
 
-- params
+- params:
     - pageUserId
-- query
+- query:
     - type
     - keyword
 
 ### ビジネスロジック
 
 - フォロー・フォロワーリスト取得
-- 自分がフォローしているかどうか（is_following）を追加
+- フォロー状態の付与
+- ユーザー情報マップ化
 
 ### レスポンス
 
