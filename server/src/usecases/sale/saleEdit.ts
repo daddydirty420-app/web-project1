@@ -3,23 +3,44 @@ import { AppError } from "../../errors.js";
 import { getItem, updatePrice } from "../../services/items/index.js";
 import { getSale, updateSaleEdit } from "../../services/sale.js";
 
-type Params = {
-    saleId: number;
+type Body = {
     discountRate: number;
     discountAmount: number;
     finalPrice: number;
 };
 
-export const saleEditUseCase = async ({ saleId, discountRate, discountAmount, finalPrice }: Params) => {
+type Params = {
+    saleId: number;
+    body: Body;
+};
+
+// PATCH /sale/:id/edit
+// summary: セール開始
+// page: /item
+export const saleEditUseCase = async ({ saleId, body }: Params) => {
+    const { discountRate, discountAmount, finalPrice } = body;
+
+    // bodyバリデーション
+    if (discountRate > 0 && discountAmount > 0) {
+        throw new AppError("INVALID_BODY_DISCOUNT_BOTH", 400);
+    }
+    if ((!discountRate || discountRate === 0) && (!discountAmount || discountAmount === 0)) {
+        throw new AppError("INVALID_BODY_DISCOUNT_EMPTY", 400);
+    }
+
+    // sale取得
     const sale = await getSale({ saleId });
 
     if (!sale) throw new AppError("SALE_NOT_FOUND", 404);
 
+    // item取得
     const item = await getItem({ itemId: sale.item_id });
 
     if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
+    // db更新
     await sequelize.transaction(async (t) => {
+        // sale更新
         await updateSaleEdit({
             sale,
             data: {
@@ -30,6 +51,7 @@ export const saleEditUseCase = async ({ saleId, discountRate, discountAmount, fi
             transaction: t,
         });
 
+        // item更新
         await updatePrice({
             item,
             data: {

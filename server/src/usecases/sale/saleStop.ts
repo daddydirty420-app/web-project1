@@ -7,7 +7,11 @@ type Params = {
     saleId: number;
 };
 
+// PATCH /sale/:id/stop
+// summary: セール終了
+// page: /item
 export const saleStopUseCase = async ({ saleId }: Params) => {
+    // sale取得
     const sale = await getSale({ saleId });
 
     if (!sale) throw new AppError("SALE_NOT_FOUND", 404);
@@ -17,12 +21,15 @@ export const saleStopUseCase = async ({ saleId }: Params) => {
     if (!beforePrice || isNaN(beforePrice)) {
         throw new AppError("BEFORE_PRICE_INVALID", 400);
     }
-
+    
+    // item取得
     const item = await getItem({ itemId: sale.item_id });
 
     if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
+    // db更新
     await sequelize.transaction(async (t) => {
+        // sale更新
         await updateSaleEdit({
             sale,
             data: {
@@ -33,6 +40,7 @@ export const saleStopUseCase = async ({ saleId }: Params) => {
             transaction: t,
         });
 
+        // item更新
         await updatePrice({
             item,
             data: {
