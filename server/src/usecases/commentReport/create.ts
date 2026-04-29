@@ -9,7 +9,15 @@ type Params = {
     optionId: number;
 };
 
+// POST /comment-report/:id
+// summary: comment報告作成
+// page: /report/comment/[id]
 export const createCommentReportUseCase = async ({ commentId, userId, optionId }: Params) => {
+    // idバリデーション
+    if (isNaN(commentId) || isNaN(optionId)) {
+        throw new AppError("INVALID_ID", 400);
+    }
+
     // option取得
     const reportOption = await getCommentReportOption({ optionId });
 

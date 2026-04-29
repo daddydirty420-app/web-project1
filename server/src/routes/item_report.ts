@@ -7,15 +7,12 @@ import { createItemReportUseCase } from "../usecases/itemReport/create.js";
 const router = Router();
 
 // POST /item-report/:id
+// summary: item報告作成
+// page: /report/item/[id]
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user!.id;
     const optionId = Number(req.body.selected);
-
-    if (isNaN(itemId) || isNaN(optionId)) {
-        res.status(400).json({ message: "不正なidです" });
-        return;
-    }
 
     try {
         await createItemReportUseCase({ itemId, userId, optionId });
@@ -27,6 +24,8 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // GET /item-report/all-options
+// summary: ItemReportOptions取得
+// page: /report/item/[id]
 router.get("/all-options", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await getAllItemReportOptions();

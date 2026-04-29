@@ -7,15 +7,12 @@ import { createCommentReportUseCase } from "../usecases/commentReport/create.js"
 const router = Router();
 
 // POST /comment-report/:id
+// summary: comment報告作成
+// page: /report/comment/[id]
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const commentId = Number(req.params.id);
     const userId = req.user!.id;
     const optionId = Number(req.body.selected);
-
-    if (Number.isNaN(commentId) || Number.isNaN(optionId)) {
-        res.status(400).json({ message: "不正なidです" });
-        return;
-    }
 
     try {
         await createCommentReportUseCase({ commentId, userId, optionId });
@@ -27,6 +24,8 @@ router.post("/:id", authenticateToken, async (req: Request, res: Response, next:
 });
 
 // GET /comment-report/all-options
+// summary: CommentReportOptions取得
+// page: /report/comment/[id]
 router.get("/all-options", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const options = await getAllCommentReportOptions();

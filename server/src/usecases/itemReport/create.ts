@@ -9,7 +9,15 @@ type Params = {
     optionId: number;
 };
 
+// POST /item-report/:id
+// summary: item報告作成
+// page: /report/item/[id]
 export const createItemReportUseCase = async ({ itemId, userId, optionId }: Params) => {
+    // idバリデーション
+    if (isNaN(itemId) || isNaN(optionId)) {
+        throw new AppError("INVALID_ID", 400);
+    }
+
     // option取得
     const reportOption = await getItemReportOption({ optionId });
 
