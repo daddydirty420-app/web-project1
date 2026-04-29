@@ -1,18 +1,20 @@
-import { addPlayCount, getVideo } from "../../services/video.js";
 import { AppError } from "../../errors.js";
 import { getItem, updateSortNumber } from "../../services/items/index.js";
+import { addPlayCount, getVideo } from "../../services/video.js";
 
 type Params = {
     videoId: number;
     userId: number | null;
 };
 
+// PATCH /video/:id/onplay
+// summary: 動画再生ログ更新
+// page: /item
 export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
     // video取得
     const video = await getVideo({ videoId });
-    if (!video) {
-        throw new AppError("VIDEO_NOT_FOUND", 404);
-    }
+
+    if (!video) throw new AppError("VIDEO_NOT_FOUND", 404);
 
     // 再生回数 +1
     const newPlayCount = (video.play_count += 1);
@@ -22,12 +24,9 @@ export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
     });
 
     // item取得
-    const itemId = video.item_id;
+    const item = await getItem({ itemId: video.item_id });
 
-    const item = await getItem({ itemId });
-    if (!item) {
-        throw new AppError("ITEM_NOT_FOUND", 404);
-    }
+    if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
     // sort_number更新
     if (userId && item.status === "active") {

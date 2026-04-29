@@ -12,7 +12,7 @@ import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
 import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
-import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransfarPoints.js";
+import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
 
 const router = Router();

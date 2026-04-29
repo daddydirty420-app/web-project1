@@ -1,12 +1,14 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
 import { convertVideoUseCase } from "../usecases/video/convert.js";
+import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
 
 const router = Router();
 
 // PATCH /video/:id/onplay
+// summary: 動画再生ログ更新
+// page: /item
 router.patch(
     "/:id/onplay",
     authenticateOptional,
@@ -24,6 +26,8 @@ router.patch(
 );
 
 // PATCH /video/:id/convert
+// summary: 動画HLS変換
+// page: /upload
 router.patch(
     "/:id/convert",
     authenticateToken,

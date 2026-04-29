@@ -1,4 +1,4 @@
-# user/relation/address.md
+# users/relation/address.md
 
 ## PATCH /address/:id — 住所変更
 

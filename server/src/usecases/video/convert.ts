@@ -1,16 +1,19 @@
-import { s3Domain } from "../../infra/aws/s3.js";
-import { AppError } from "../../errors.js";
-import fs from "fs";
 import { spawn } from "child_process";
+import fs from "fs";
+import { AppError } from "../../errors.js";
+import { s3Domain } from "../../infra/aws/s3.js";
 import { getVideo, updateStatus } from "../../services/video.js";
-import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 import { getDuration } from "../../utils/ffmpeg.js";
+import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 
 type Params = {
     videoId: number;
     userId: number;
 };
 
+// PATCH /video/:id/convert
+// summary: 動画HLS変換
+// page: /upload
 export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
 
@@ -74,16 +77,13 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         `${convertedDir}/${now}_index.m3u8`,
     ]);
 
-    const timeout = setTimeout(
-        async () => {
-            console.error("ffmpeg timeout");
-            ffmpeg.kill("SIGKILL");
-            updateStatus({ video, data: { status: "failed" } }).catch((err) => {
-                console.error("service video updateStatus error:", err);
-            });
-        },
-        5 * 60 * 1000,
-    ); // 5分
+    const timeout = setTimeout(async () => {
+        console.error("ffmpeg timeout");
+        ffmpeg.kill("SIGKILL");
+        updateStatus({ video, data: { status: "failed" } }).catch((err) => {
+            console.error("service video updateStatus error:", err);
+        });
+    }, 5 * 60 * 1000); // 5分
 
     // 再生時間
     const seconds = await getDuration({ filePath: originalFilePath });
@@ -101,12 +101,14 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
             }
 
             try {
+                // HLSファイル生成
                 const files = fs.readdirSync(convertedDir);
 
                 if (files.length === 0) {
                     throw new Error("HLSファイルが生成されていません");
                 }
 
+                // HLSファイルS3アップロード
                 for (const f of files) {
                     const filePath = `${convertedDir}/${f}`;
                     const key = `video/converted/${userId}/${videoId}/${f}`;
@@ -114,14 +116,15 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     const contentType = f.endsWith(".ts")
                         ? "video/mp2t"
                         : f.endsWith(".m3u8")
-                          ? "application/vnd.apple.mpegurl"
-                          : "application/octet-stream";
+                        ? "application/vnd.apple.mpegurl"
+                        : "application/octet-stream";
 
                     await uploadVideoToS3({ filePath, key, contentType });
                 }
 
                 const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;
 
+                // video更新
                 updateStatus({
                     video,
                     data: {

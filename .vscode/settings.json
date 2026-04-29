@@ -76,6 +76,7 @@
         "kanjyo",
         "kashi",
         "bankcode",
-        "Itemsview"
+        "Itemsview",
+        "mpegurl"
     ]
 }
