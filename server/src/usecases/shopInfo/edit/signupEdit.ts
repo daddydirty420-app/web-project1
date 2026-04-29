@@ -8,7 +8,7 @@ type Params = {
     updateData: any;
 };
 
-// PATCH /shop-info/signup/edit/:id
+// PATCH /shop-info/:id/signup/edit
 // summary: ショップ登録確認ページ　インプット編集
 // page: /shop-signup/step5/[id]
 export const updateShopSignupEditUseCase = async ({ shopId, userId, updateData }: Params) => {

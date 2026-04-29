@@ -18,9 +18,9 @@ import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/up
 
 const router = Router();
 
-// POST /shop-info-edit/address/:id
+// POST /shop-info-edit/:id/address
 router.post(
-    "/address/:id",
+    "/:id/address",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -68,9 +68,9 @@ router.post(
     },
 );
 
-// POST /shop-info-edit/bank-account/:id
+// POST /shop-info-edit/:id/bank-account
 router.post(
-    "/bank-account/:id",
+    "/:id/bank-account",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -105,11 +105,11 @@ router.post(
     },
 );
 
-// POST /shop-info-edit/rep-name/:id
+// POST /shop-info-edit/:id/rep-name
 // summary 代表者氏名データ作成
 // page: /edit/name/shop/rep-name/[id]
 router.post(
-    "/rep-name/:id",
+    "/:id/rep-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -126,9 +126,9 @@ router.post(
     },
 );
 
-// POST /shop-info-edit/company-name/:id
+// POST /shop-info-edit/:id/company-name
 router.post(
-    "/company-name/:id",
+    "/:id/company-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -147,9 +147,9 @@ router.post(
     },
 );
 
-// POST /shop-info-edit/com-free/:id
+// POST /shop-info-edit/:id/com-free
 router.post(
-    "/com-free/:id",
+    "/:id/com-free",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -181,11 +181,11 @@ router.patch("/:id", authenticateToken, async (req: Request, res: Response, next
     }
 });
 
-// PATCH /shop-info-edit/id-image-upload/:id
+// PATCH /shop-info-edit/:id/id-image-upload
 // summary: 事業者登録　代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 router.patch(
-    "/id-image-upload/:id",
+    "/:id/id-image-upload",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -211,9 +211,9 @@ router.patch(
     },
 );
 
-// GET /shop-info-edit/address/:id
+// GET /shop-info-edit/:id/address
 router.get(
-    "/address/:id",
+    "/:id/address",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -229,9 +229,9 @@ router.get(
     },
 );
 
-// GET /shop-info-edit/bank-account/:id
+// GET /shop-info-edit/:id/bank-account
 router.get(
-    "/bank-account/:id",
+    "/:id/bank-account",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -247,9 +247,9 @@ router.get(
     },
 );
 
-// GET /shop-info-edit/rep-name/:id
+// GET /shop-info-edit/:id/rep-name
 router.get(
-    "/rep-name/:id",
+    "/:id/rep-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -265,9 +265,9 @@ router.get(
     },
 );
 
-// GET /shop-info-edit/con-name/:id
+// GET /shop-info-edit/:id/con-name
 router.get(
-    "/con-name/:id",
+    "/:id/con-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -283,9 +283,9 @@ router.get(
     },
 );
 
-// GET /shop-info-edit/com-free-confirm/:id
+// GET /shop-info-edit/:id/com-free-confirm
 router.get(
-    "/com-free-confirm/:id",
+    "/:id/com-free-confirm",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);

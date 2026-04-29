@@ -42,11 +42,11 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
     }
 });
 
-// PATCH /shop-info/rep-name/:id
+// PATCH /shop-info/:id/rep-name
 // summary 代表者氏名変更
 // page: /edit/name/shop/rep-name/signup/[id]
 router.patch(
-    "/rep-name/:id",
+    "/:id/rep-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -63,9 +63,9 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/phone-number/:id
+// PATCH /shop-info/:id/phone-number
 router.patch(
-    "/phone-number/:id",
+    "/:id/phone-number",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -86,9 +86,9 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/option/:id
+// PATCH /shop-info/:id/option
 router.patch(
-    "/option/:id",
+    "/:id/option",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -107,11 +107,11 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/signup/3/:id
+// PATCH /shop-info/:id/signup/3
 // summary: ショップ登録身分証・許認可証追加
 // page: /shop-signup/step3/[id]
 router.patch(
-    "/signup/3/:id",
+    "/:id/signup/3",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -137,11 +137,11 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/signup/4/:id
+// PATCH /shop-info/:id/signup/4
 // summary: ショップ登録オプション選択
 // page: /shop-signup/step4/[id]
 router.patch(
-    "/signup/4/:id",
+    "/:id/signup/4",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -159,11 +159,11 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/signup/edit/:id
+// PATCH /shop-info/:id/signup/edit
 // summary: ショップ登録確認ページ　インプット編集
 // page: /shop-signup/step5/[id]
 router.patch(
-    "/signup/edit/:id",
+    "/:id/signup/edit",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -180,11 +180,11 @@ router.patch(
     },
 );
 
-// PATCH /shop-info/signup/5/:id
+// PATCH /shop-info/:id/signup/5
 // summary: ショップ登録　確定
 // page: /shop-signup/step5/[id]
 router.patch(
-    "/signup/5/:id",
+    "/:id/signup/5",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -194,6 +194,221 @@ router.patch(
             await updateShopSignup5UseCase({ shopId, userId });
 
             res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/address
+router.get(
+    "/:id/address",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const data = await getAddressShopUseCase({ shopId, userId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/bank-account
+router.get(
+    "/:id/bank-account",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const data = await getBankAccountUseCase({ shopId, userId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/rep-name
+router.get(
+    "/:id/rep-name",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const { shop, name } = await getRepNameUseCase({ shopId, userId });
+
+            res.status(200).json({ shop, name });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/con-name
+router.get(
+    "/:id/con-name",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const name = await getConNameUseCase({ shopId, userId });
+
+            res.status(200).json({ name });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/phone-number
+router.get(
+    "/:id/phone-number",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const shop = await getShopPhoneNumberUseCase({ shopId, userId });
+
+            res.status(200).json({ shop });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/company-name
+router.get(
+    "/:id/company-name",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const shop = await getCompanyNameUseCase({ shopId, userId });
+
+            res.status(200).json({ shop });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/option
+router.get("/:id/option", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+
+    try {
+        const shop = await getShopOptionUseCase({ shopId, userId });
+
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GET /shop-info/:id/com-free
+router.get(
+    "/:id/com-free",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
+
+            res.status(200).json({ shop, comFree });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/signup/1
+// summary: 事業者情報登録ページ　インプット表示データ取得
+// page: /shop-signup/step1
+router.get("/signup/1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
+
+        res.status(200).json({ shop, user, comFree });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// GET /shop-info/:id/signup/2
+// summary: ショップ口座登録ページ　インプット表示データ取得
+// page: /shop-signup/step2/[id]
+router.get(
+    "/:id/signup/2",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const shopId = Number(req.params.id);
+
+        try {
+            const account = await getShopSignup2UseCase({ userId, shopId });
+
+            res.status(200).json({ account });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/signup/3
+// summary: ショップ身分証登録ページ　インプット表示データ取得
+// page: /shop-signup/step3/[id]
+router.get(
+    "/:id/signup/3",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const shopId = Number(req.params.id);
+
+        try {
+            const shop = await getShopSignup3UseCase({ shopId, userId });
+
+            res.status(200).json({ shop });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/:id/signup/5
+// summary: ショップ登録確認ページデータ取得
+// page: /shop-signup/step5/[id]
+router.get(
+    "/:id/signup/5",
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const shopId = Number(req.params.id);
+
+        try {
+            const shop = await getShopSignup5UseCase({ shopId, userId });
+
+            res.status(200).json({ shop });
         } catch (err) {
             next(err);
         }
@@ -349,220 +564,5 @@ router.get("/open-info-request/:id", async (req: Request, res: Response, next: N
         next(err);
     }
 });
-
-// GET /shop-info/address/:id
-router.get(
-    "/address/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getAddressShopUseCase({ shopId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/bank-account/:id
-router.get(
-    "/bank-account/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getBankAccountUseCase({ shopId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/rep-name/:id
-router.get(
-    "/rep-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const { shop, name } = await getRepNameUseCase({ shopId, userId });
-
-            res.status(200).json({ shop, name });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/con-name/:id
-router.get(
-    "/con-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const name = await getConNameUseCase({ shopId, userId });
-
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/phone-number
-router.get(
-    "/phone-number/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getShopPhoneNumberUseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/company-name/:id
-router.get(
-    "/company-name/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getCompanyNameUseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/option/:id
-router.get("/option/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    try {
-        const shop = await getShopOptionUseCase({ shopId, userId });
-
-        res.status(200).json({ shop });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// GET /shop-info/com-free/:id
-router.get(
-    "/com-free/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
-
-            res.status(200).json({ shop, comFree });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/signup/1
-// summary: 事業者情報登録ページ　インプット表示データ取得
-// page: /shop-signup/step1
-router.get("/signup/1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    try {
-        const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
-
-        res.status(200).json({ shop, user, comFree });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// GET /shop-info/signup/2/:id
-// summary: ショップ口座登録ページ　インプット表示データ取得
-// page: /shop-signup/step2/[id]
-router.get(
-    "/signup/2/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const account = await getShopSignup2UseCase({ userId, shopId });
-
-            res.status(200).json({ account });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/signup/3/:id
-// summary: ショップ身分証登録ページ　インプット表示データ取得
-// page: /shop-signup/step3/[id]
-router.get(
-    "/signup/3/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const shop = await getShopSignup3UseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /shop-info/signup/5/:id
-// summary: ショップ登録確認ページデータ取得
-// page: /shop-signup/step5/[id]
-router.get(
-    "/signup/5/:id",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const shop = await getShopSignup5UseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
 
 export default router;

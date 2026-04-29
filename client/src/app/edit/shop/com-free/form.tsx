@@ -41,7 +41,7 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/com-free/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/com-free`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

@@ -173,7 +173,7 @@ export const Form = ({ shopId, account }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/shop/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/${shopId}/shop`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

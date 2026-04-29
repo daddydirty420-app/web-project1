@@ -1,15 +1,15 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, authenticateOptional } from "../middleware/index.js";
 import { AppError } from "../errors.js";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { deleteCommentUseCase } from "../usecases/comment/delete.js";
+import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
+import { getAllRepliesUseCase } from "../usecases/comment/getReply.js";
 import {
     patchCommentSortNumberAddUseCase,
     patchCommentSortNumberDecreaseUseCase,
 } from "../usecases/comment/patchSortNumber.js";
-import { deleteCommentUseCase } from "../usecases/comment/delete.js";
 import { uploadCommentUseCase } from "../usecases/comment/upload.js";
-import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
-import { getAllReplysUseCase } from "../usecases/comment/getReply.js";
 
 const router = Router();
 
@@ -132,7 +132,7 @@ router.get(
         const admin = req.query.admin === "true";
 
         try {
-            const commentList = await getAllReplysUseCase({
+            const commentList = await getAllRepliesUseCase({
                 parentCommentId,
                 userId,
                 sellerMe,

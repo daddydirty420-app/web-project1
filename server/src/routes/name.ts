@@ -51,9 +51,9 @@ router.get("/myname", authenticateToken, async (req: Request, res: Response, nex
     }
 });
 
-// GET /name/delivery-name/:id
+// GET /name/:id/delivery-name
 router.get(
-    "/delivery-name/:id",
+    "/:id/delivery-name",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const deliveryId = Number(req.params.id);

@@ -1,6 +1,6 @@
 # user/relation/bankAccount.md
 
-## POST /bank-account/shop/:id — ショップ口座情報作成
+## POST /bank-account/:id/shop — ショップ口座情報作成
 
 ### リクエスト
 

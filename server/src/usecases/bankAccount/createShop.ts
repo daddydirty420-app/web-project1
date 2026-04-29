@@ -19,7 +19,7 @@ type Params = {
     body: Body;
 };
 
-// POST /bank-account/shop/:id
+// POST /bank-account/:id/shop
 // summary: ショップ口座情報作成
 // page: /shop-signup/step2
 export const createShopAccount = async ({ shopId, userId, body }: Params) => {

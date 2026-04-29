@@ -21,7 +21,7 @@ type Params = {
     userId: number;
 };
 
-// PATCH /shop-info/signup/5/:id
+// PATCH /shop-info/:id/signup/5
 // summary: ショップ登録　確定
 // page: /shop-signup/step5/[id]
 export const updateShopSignup5UseCase = async ({ shopId, userId }: Params) => {

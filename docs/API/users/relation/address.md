@@ -35,7 +35,7 @@
 
 ---
 
-## GET /address/delivery-address/:id — 配送用住所データ取得
+## GET /address/:id/delivery-address — 配送用住所データ取得
 
 ### リクエスト
 

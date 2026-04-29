@@ -2,16 +2,16 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
-import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 
 const router = Router();
 
-// POST /bank-account/shop/:id
+// POST /bank-account/:id/shop
 // summary: ショップ口座情報作成
 // page: /shop-signup/step2
-router.post("/shop/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post("/:id/shop", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const shopId = Number(req.params.id);
     const userId = req.user!.id;
     const body = req.body;

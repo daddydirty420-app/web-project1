@@ -169,7 +169,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
             }
 
             if (page === "rep-shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/rep-name/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/rep-name`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -220,7 +220,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/rep-name/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/rep-name`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",

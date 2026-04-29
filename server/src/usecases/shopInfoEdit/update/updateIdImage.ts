@@ -12,7 +12,7 @@ type Params = {
     body: ShopIdBody;
 };
 
-// PATCH /shop-info-edit/id-image-upload/:id
+// PATCH /shop-info-edit/:id/id-image-upload
 // summary: 事業者登録　代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }: Params) => {

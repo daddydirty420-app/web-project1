@@ -180,7 +180,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             }
 
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/bank-account/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/bank-account`, {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

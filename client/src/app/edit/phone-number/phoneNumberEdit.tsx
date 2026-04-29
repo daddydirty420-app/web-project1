@@ -39,7 +39,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
             }
 
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/phone-number/${shopId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/phone-number`, {
                     method: "PATCH",
                     headers: {
                         "Content-type": "application/json",

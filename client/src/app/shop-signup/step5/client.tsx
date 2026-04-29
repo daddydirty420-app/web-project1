@@ -44,7 +44,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/signup/edit/${shopId}`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/signup/edit`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
@@ -66,7 +66,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/signup/5/${shopId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/signup/5`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

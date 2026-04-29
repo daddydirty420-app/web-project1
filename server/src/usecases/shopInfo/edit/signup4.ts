@@ -9,7 +9,7 @@ type Params = {
     openInfo: boolean;
 };
 
-// PATCH /shop-info/signup/4/:id
+// PATCH /shop-info/:id/signup/4
 // summary: ショップ登録オプション選択
 // page: /shop-signup/step4/[id]
 export const updateShopSignup4UseCase = async ({ shopId, userId, autoTrans, openInfo }: Params) => {

@@ -11,7 +11,7 @@ type Params = {
     admin: boolean;
 };
 
-export const getAllReplysUseCase = async ({ parentCommentId, userId, sellerMe, admin }: Params) => {
+export const getAllRepliesUseCase = async ({ parentCommentId, userId, sellerMe, admin }: Params) => {
     if (!sellerMe && !admin) {
         patchCommentSortNumberAddUseCase({ commentId: parentCommentId, number: 10 }).catch((err) => {
             console.error("patchCommentSortNumberAdd error:", err);
