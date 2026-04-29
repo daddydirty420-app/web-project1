@@ -6,6 +6,8 @@ import { outputReferenceCodeUseCase } from "../usecases/referenceCode/output.js"
 const router = Router();
 
 // POST /reference-code/output
+// summary: 紹介コード生成
+// page: /my-page
 router.post("/output", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
