@@ -1,10 +1,13 @@
-import { countFollowBoth } from "../../services/follow.js";
 import { AppError } from "../../errors.js";
+import { countFollowBoth } from "../../services/follow.js";
 
 type Params = {
     userId: number;
 };
 
+// GET /follow/:id/count
+// summary: フォロー・フォロワー数カウント取得
+// page: フォロー・フォロワー数表示
 export const countFollowUseCase = async ({ userId }: Params) => {
     const { followCount, followerCount } = await countFollowBoth({ userId });
 

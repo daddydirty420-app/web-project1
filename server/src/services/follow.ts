@@ -18,7 +18,7 @@ export const getFollowings = async ({ currentUserId, targetUserIds }: Followings
     })) as unknown as InstanceType<typeof Follow>[];
 };
 
-export const findFollow = async ({ currentUserId, targetUserId }: UserParams) => {
+export const getFollowOne = async ({ currentUserId, targetUserId }: UserParams) => {
     return Follow.findOne({
         where: {
             follow_user_id: currentUserId,

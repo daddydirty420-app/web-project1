@@ -1,5 +1,5 @@
-import { FollowType } from "../../types/serviceType/follow.js";
 import { getFollowings, getFollowList } from "../../services/follow.js";
+import { FollowType } from "../../types/serviceType/follow.js";
 
 type Params = {
     currentUserId: number | null;
@@ -8,6 +8,9 @@ type Params = {
     keyword?: string;
 };
 
+// GET /follow/:id/user?type=""(&keyword="")
+// summary: フォロー・フォロワーリスト取得
+// page: /user-list/follow/[id]
 export const getFollowUserListUseCase = async ({ currentUserId, pageUserId, type, keyword }: Params) => {
     const myFollow = currentUserId === pageUserId && type === "follow";
 
