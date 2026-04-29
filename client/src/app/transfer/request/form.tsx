@@ -50,7 +50,7 @@ export const Form = ({ user }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/request-create`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/request`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json",

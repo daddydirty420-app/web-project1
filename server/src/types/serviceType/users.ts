@@ -80,3 +80,11 @@ export type UpdateUserPointsUriageParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateUserUriageParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        uriagekin: number;
+    };
+    transaction?: Transaction;
+};

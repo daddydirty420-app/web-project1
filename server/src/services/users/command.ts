@@ -8,6 +8,7 @@ import {
     UpdatePhoneNumberParams,
     UpdateProfileParams,
     UpdateUserPointsUriageParams,
+    UpdateUserUriageParams,
 } from "../../types/serviceType/users.js";
 
 export const createUser = ({ data, transaction }: CreateUserParams) => {
@@ -39,5 +40,9 @@ export const updateHonninUser = async ({ user, data, transaction }: UpdateHonnin
 };
 
 export const updatePointsUriageUser = async ({ user, data, transaction }: UpdateUserPointsUriageParams) => {
+    await user.update(data, { transaction });
+};
+
+export const updateUriageUser = async ({ user, data, transaction }: UpdateUserUriageParams) => {
     await user.update(data, { transaction });
 };

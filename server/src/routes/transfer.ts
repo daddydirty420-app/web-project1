@@ -1,135 +1,31 @@
-import crypto from "crypto";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import sequelize from "../db.js";
 import { authenticateToken } from "../middleware/index.js";
-import { AccountTypeOption, BankAccount, Notification, Transfer, UriagekinHistory, User } from "../models/index.js";
+import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
+import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
 
 const router = Router();
 
-router.post(
-    "/request-create",
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const requestValue = Number(req.body.transValue);
-        const transValue = requestValue - 200;
-        const limit = Number(req.body.limit);
+// POST /transfer/request
+// summary: 振込申請データ作成
+// page: /transfer/request
+router.post("/request", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+    const requestValue = Number(req.body.transValue);
+    const limit = Number(req.body.limit);
 
-        if (requestValue < 1000) {
-            res.status(400).json({ message: "申請金額は1,000円以上にしてください。" });
-            return;
-        }
-        if (requestValue > limit) {
-            res.status(400).json({ message: `申請金額は売上金${limit.toLocaleString()}円以下にしてください。` });
-            return;
-        }
+    try {
+        const transId = await createTransferRequestUseCase({ userId, requestValue, limit });
 
-        const today = new Date();
-
-        const dayOfWeek = today.getDay();
-
-        const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
-
-        const thisFriday = new Date(today);
-        thisFriday.setDate(today.getDate() + daysUntilFriday);
-
-        const nextNextFriday = new Date(thisFriday);
-        nextNextFriday.setDate(thisFriday.getDate() + 14);
-
-        const t = await sequelize.transaction();
-
-        try {
-            const user = await User.findByPk(userId, {
-                include: [{ model: UriagekinHistory }],
-            });
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            const oldUriagekin = user.uriagekin;
-
-            let deleteValue = requestValue;
-            const histories = (user.UriagekinHistories || []).sort(
-                (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-            );
-
-            for (const history of histories) {
-                if (deleteValue <= 0) break;
-
-                const available = Number(history.uriagekin);
-                const usedUriagekin = Number(history.used_uriagekin) || 0;
-                const remain = available - usedUriagekin;
-
-                if (remain <= 0) continue;
-
-                const used = Math.min(remain, deleteValue);
-
-                await history.update(
-                    {
-                        used_uriagekin: usedUriagekin + used,
-                    },
-                    { transaction: t },
-                );
-
-                deleteValue -= used;
-            }
-
-            await user.update(
-                {
-                    uriagekin: oldUriagekin - requestValue,
-                },
-                { transaction: t },
-            );
-
-            const generateTransferId = async (): Promise<string> => {
-                for (let i = 0; i < 5; i++) {
-                    const id = crypto.randomBytes(11).toString("hex");
-                    const existing = await Transfer.findOne({ where: { transfer_id: id } });
-                    if (!existing) return id;
-                }
-                throw new Error("Failed to generate unique transfer_id after 5 attempts.");
-            };
-
-            const transferId = await generateTransferId();
-
-            const transfer = await Transfer.create(
-                {
-                    all_money: requestValue,
-                    handling_charge: 200,
-                    trans_money: transValue,
-                    trans_reason_id: 1,
-                    user_id: userId,
-                    trans_schedule_date: nextNextFriday,
-                    transfer_id: transferId,
-                },
-                { transaction: t },
-            );
-
-            await Notification.create(
-                {
-                    read_user_id: userId,
-                    url: `/transfer/detail/${transfer.id}`,
-                    message: `${transValue.toLocaleString()}円を振込申請しました。翌々週の金曜日以降に指定された口座までお振込みいたします。詳細はこちらをクリックしてご確認ください。`,
-                },
-                { transaction: t },
-            );
-
-            // メール送信
-
-            await t.commit();
-            res.status(200).json({
-                message: "振込申請が完了しました。",
-                transId: transfer.id,
-            });
-        } catch (err) {
-            await t.rollback();
-            next(err);
-        }
-    },
-);
+        res.status(200).json({
+            message: "振込申請が完了しました。",
+            transId,
+        });
+    } catch (err) {
+        next(err);
+    }
+});
 
 // POST /transfer/points
 // summary: 売上金ポイント変換
