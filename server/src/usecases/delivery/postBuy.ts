@@ -11,6 +11,9 @@ type Params = {
     userId: number;
 };
 
+// POST /delivery/:id
+// summary: 配送データ作成
+// page: /item
 export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     // 自ユーザー情報取得
     const user = await getUser({ userId });

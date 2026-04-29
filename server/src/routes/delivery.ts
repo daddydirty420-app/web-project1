@@ -17,6 +17,8 @@ import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 const router = Router();
 
 // POST /delivery/:id
+// summary: 配送データ作成
+// page: /item
 router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
