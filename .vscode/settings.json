@@ -78,5 +78,6 @@
         "bankcode",
         "Itemsview",
         "mpegurl"
-    ]
+    ],
+    "remote.autoForwardPortsFallback": 0
 }

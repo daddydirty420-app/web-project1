@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import { Notification } from "../models/index.js";
+import { countUnread } from "../services/notification.js";
 
 const router = Router();
 
@@ -34,19 +35,19 @@ router.get(
     },
 );
 
+// GET /notification/unread-count
+// summary: 未読通知カウント
+// page: footer, /my-page
 router.get(
     "/unread-count",
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const unreadCount = await Notification.count({
-                where: {
-                    read_user_id: req.user!.id,
-                    read_flag: false,
-                },
-            });
+        const userId = req.user!.id;
 
-            res.json({ unreadCount });
+        try {
+            const unreadCount = await countUnread({ userId });
+
+            res.status(200).json({ unreadCount });
         } catch (err) {
             next(err);
         }
