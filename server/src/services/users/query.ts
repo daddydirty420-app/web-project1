@@ -193,6 +193,12 @@ export const getUserTransferRequest = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserPenaltyUriage = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["penalty_points", "uriagekin"],
+    });
+};
+
 export const getUserEmailOne = ({ email }: EmailParams) => {
     return User.findOne({
         where: { email },

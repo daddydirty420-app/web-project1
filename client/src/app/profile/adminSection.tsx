@@ -38,7 +38,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                     return;
                 }
 
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/profile/${userId}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/profile`, {
                     method: "GET",
                     cache: "no-store",
                     headers: {
@@ -53,7 +53,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
                 if (res.ok) {
                     const data = await res.json();
-                    setData(data);
+                    setData(data.user);
                 }
             } catch (err) {}
         };

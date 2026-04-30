@@ -17,6 +17,7 @@ import {
     User,
 } from "../../models/index.js";
 import deleteUser from "../../services/old/deleteUser.js";
+import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
 
 const router = Router();
 
@@ -335,23 +336,18 @@ router.get(
     },
 );
 
+// GET /admin/user/:id/profile
+// summary: 管理者用プロフィールページ データ取得
+// page: /profile/admin/[id]
 router.get(
     "/:id/profile",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const pageUserId = req.params.id;
-        const userId = req.user!.id;
+        const pageUserId = Number(req.params.id);
 
         try {
-            const user = await User.findByPk(req.params.id, {
-                attributes: ["penalty_points", "uriagekin"],
-            });
-
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
+            const user = await getAdminProfileUseCase({ pageUserId });
 
             res.status(200).json({ user });
         } catch (err) {
