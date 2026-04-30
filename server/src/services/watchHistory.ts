@@ -1,5 +1,10 @@
 import { Item, Sale, Video, WatchHistory } from "../models/index.js";
-import { ItemUserParams, UserWatchListParams, WatchHistoryParams } from "../types/serviceType/watchHistory.js";
+import {
+    DeleteWatchHistoryUserIdTransactionParams,
+    ItemUserParams,
+    UserWatchListParams,
+    WatchHistoryParams,
+} from "../types/serviceType/watchHistory.js";
 
 export const getWatchHistoryOne = async ({ itemId, userId }: ItemUserParams) => {
     return WatchHistory.findOne({
@@ -79,4 +84,16 @@ export const updateUpdateAt = async ({ history }: WatchHistoryParams) => {
 
 export const destroyWatchHistory = async ({ history }: WatchHistoryParams) => {
     await history.destroy();
+};
+
+export const deleteWatchHistoryUserLogical = async ({
+    userId,
+    transaction,
+}: DeleteWatchHistoryUserIdTransactionParams) => {
+    await WatchHistory.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
+    );
 };

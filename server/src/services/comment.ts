@@ -2,6 +2,7 @@ import { Comment, User } from "../models/index.js";
 import {
     CommentIdParams,
     CreateCommentParams,
+    DeleteCommentUserIdTransactionParams,
     DestroyAllParams,
     DestroyParams,
     ItemIdParams,
@@ -76,6 +77,15 @@ export const destroyAllComments = async ({ comments, transaction }: DestroyAllPa
         comments.map(async (comment: InstanceType<typeof Comment>) => {
             await comment.destroy({ transaction });
         }),
+    );
+};
+
+export const deleteCommentUserLogical = async ({ userId, transaction }: DeleteCommentUserIdTransactionParams) => {
+    await Comment.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
     );
 };
 

@@ -11,6 +11,7 @@ import {
     UpdateShopNameParams,
     UpdateShopPhoneNumberParams,
     UpdateShopRequestAllParams,
+    UpdateShopUserLogicalDeleteParams,
 } from "../../types/serviceType/shopInfo.js";
 
 export const createShop = ({ data, transaction }: CreateShopParams) => {
@@ -46,6 +47,14 @@ export const updateShopOption = async ({ shopInfo, data, transaction }: UpdateOp
 };
 
 export const updateShopRequestAll = async ({ shopInfo, data, transaction }: UpdateShopRequestAllParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopUserLogicalDelete = async ({
+    shopInfo,
+    data,
+    transaction,
+}: UpdateShopUserLogicalDeleteParams) => {
     await shopInfo.update(data, { transaction });
 };
 

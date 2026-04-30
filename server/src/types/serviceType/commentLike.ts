@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { CommentLike, ShopInfo, User } from "../../models/index.js";
 
 export type CommentIdParams = {
@@ -16,6 +17,11 @@ export type ListParams = {
 
 export type DestroyParams = {
     data: InstanceType<typeof CommentLike>;
+};
+
+export type DeleteCommentLikeUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
 };
 
 export type CommentLikeWithUser = InstanceType<typeof CommentLike> & {

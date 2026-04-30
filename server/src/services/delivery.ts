@@ -1,16 +1,6 @@
-import { Op, Transaction } from "sequelize";
-import { Delivery, Item, Orders, User } from "../models/index.js";
-
-type ItemIdParams = {
-    itemId: number;
-};
-
-type CreateParams = {
-    itemId: number;
-    user: InstanceType<typeof User>;
-    item: InstanceType<typeof Item>;
-    transaction: Transaction;
-};
+import { Op } from "sequelize";
+import { Delivery, Orders } from "../models/index.js";
+import { CreateDeliveryParams, ItemIdParams, UpdateDeliveryCancelParams } from "../types/serviceType/delivery.js";
 
 export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
     return Delivery.findAll({
@@ -29,7 +19,7 @@ export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
     });
 };
 
-export const createDelivery = async ({ itemId, user, item, transaction }: CreateParams) => {
+export const createDelivery = async ({ itemId, user, item, transaction }: CreateDeliveryParams) => {
     return Delivery.create(
         {
             buyer_phone_number: user.phone_number ?? "",
@@ -47,4 +37,8 @@ export const createDelivery = async ({ itemId, user, item, transaction }: Create
         },
         { transaction },
     );
+};
+
+export const updateDeliveryCancel = async ({ delivery, data, transaction }: UpdateDeliveryCancelParams) => {
+    await delivery.update(data, { transaction });
 };

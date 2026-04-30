@@ -7,6 +7,7 @@ import {
     UpdatePasswordParams,
     UpdatePhoneNumberParams,
     UpdateProfileParams,
+    UpdateUserLogicalDeleteParams,
     UpdateUserPenaltyParams,
     UpdateUserPointsUriageParams,
     UpdateUserUriageParams,
@@ -49,5 +50,9 @@ export const updateUriageUser = async ({ user, data, transaction }: UpdateUserUr
 };
 
 export const updatePenaltyUser = async ({ user, data, transaction }: UpdateUserPenaltyParams) => {
+    await user.update(data, { transaction });
+};
+
+export const updateUserLogicalDelete = async ({ user, data, transaction }: UpdateUserLogicalDeleteParams) => {
     await user.update(data, { transaction });
 };

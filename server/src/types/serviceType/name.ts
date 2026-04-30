@@ -64,6 +64,14 @@ export type UpdateNameParams = {
     transaction?: Transaction;
 };
 
+export type UpdateNameUserLogicalDeleteParams = {
+    name: InstanceType<typeof Name>;
+    data: {
+        user_id: null;
+    };
+    transaction?: Transaction;
+};
+
 export type NameTransactionParams = {
     name: InstanceType<typeof Name>;
     transaction?: Transaction;

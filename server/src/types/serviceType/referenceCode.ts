@@ -1,3 +1,5 @@
+import { Transaction } from "sequelize";
+
 export type UserIdParams = {
     userId: number;
 };
@@ -14,4 +16,9 @@ export type CreateInputParams = {
         input: string;
         input_user_id: number;
     };
+};
+
+export type DeleteReferenceCodeUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
 };

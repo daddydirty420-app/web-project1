@@ -1,6 +1,7 @@
 import { Cart, Item, Sale, Video } from "../models/index.js";
 import {
     CartListParams,
+    DeleteCartUserTransactionParams,
     DestroyAllParams,
     DestroyParams,
     ItemIdParams,
@@ -91,5 +92,14 @@ export const destroyAllCarts = async ({ carts, transaction }: DestroyAllParams) 
         carts.map(async (cart: InstanceType<typeof Cart>) => {
             await cart.destroy({ transaction });
         }),
+    );
+};
+
+export const deleteCartUserLogical = async ({ userId, transaction }: DeleteCartUserTransactionParams) => {
+    await Cart.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
     );
 };

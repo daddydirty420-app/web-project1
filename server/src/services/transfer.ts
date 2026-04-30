@@ -1,22 +1,10 @@
-import { Transaction } from "sequelize";
 import { Transfer } from "../models/index.js";
-
-type TransferIdParams = {
-    id: string;
-};
-
-type CreateTransferParams = {
-    data: {
-        all_money: number;
-        handling_charge: number;
-        trans_money: number;
-        trans_reason_id: number;
-        user_id: number;
-        trans_schedule_date: Date;
-        transfer_id: string;
-    };
-    transaction?: Transaction;
-};
+import {
+    CreateTransferParams,
+    DeleteTransferUserIdTransactionParams,
+    TransferIdParams,
+    UserIdParams,
+} from "../types/serviceType/transfer.js";
 
 export const getTransferIdExistingOne = ({ id }: TransferIdParams) => {
     return Transfer.findOne({
@@ -26,4 +14,22 @@ export const getTransferIdExistingOne = ({ id }: TransferIdParams) => {
 
 export const createTransfer = ({ data, transaction }: CreateTransferParams) => {
     return Transfer.create(data, { transaction });
+};
+
+export const deleteTransferUserLogical = async ({ userId, transaction }: DeleteTransferUserIdTransactionParams) => {
+    await Transfer.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
+    );
+};
+
+export const sumTransferNotFinishUser = ({ userId }: UserIdParams) => {
+    return Transfer.sum("trans_money", {
+        where: {
+            user_id: userId,
+            trans_finish: false,
+        },
+    });
 };

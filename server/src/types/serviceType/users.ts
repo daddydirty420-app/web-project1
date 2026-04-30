@@ -96,3 +96,29 @@ export type UpdateUserPenaltyParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateUserLogicalDeleteParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        user_name: string;
+        user_introduction: null;
+        profile_image: null;
+        penalty_points: number;
+        early_seller: boolean;
+        honnin_verified: boolean;
+        email: string;
+        campaign_points: number;
+        campaign_points_sum: number;
+        password: string;
+        points: number;
+        uriagekin: number;
+        star_amount: number;
+        star_average: number;
+        gender_id: null;
+        birthday: null;
+        phone_number: null;
+        honnin_verify_request: boolean;
+        email_verified: boolean;
+    };
+    transaction?: Transaction;
+};

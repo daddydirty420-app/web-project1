@@ -4,30 +4,29 @@ import { Op, col, fn, literal } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
-import deleteUser from "../../services/old/deleteUser.js";
 import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
 import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js";
+import { deleteUserAdminUseCase } from "../../usecases/admin/users/deleteUser.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
 
 const router = Router();
 
+// DELETE /admin/user/:id
+// summary: ユーザー強制削除
+// page: /profile/admin/[id]
 router.delete(
-    "/delete-user/:id",
+    "/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const currentUserId = req.params.id;
-        const numUserId = Number(currentUserId);
+        const pageUserId = Number(req.params.id);
         const adminId = req.user!.id;
 
-        const { deleteReason } = req.body;
-        if (!deleteReason) {
-            res.status(400).json({ message: "削除理由を入力してください。" });
-            return;
-        }
+        const deleteReason = req.body.deleteReason;
+        if (!deleteReason.trim()) throw new AppError("INVALID_BODY_EMPTY", 400);
 
         try {
-            await deleteUser(numUserId, adminId, deleteReason);
+            await deleteUserAdminUseCase({ pageUserId, adminId, deleteReason });
 
             res.status(200).json({ message: "ユーザーを削除しました。" });
         } catch (err) {

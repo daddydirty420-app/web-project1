@@ -43,3 +43,8 @@ export type DestroyAllParams = {
     comments: InstanceType<typeof Comment>[];
     transaction: Transaction;
 };
+
+export type DeleteCommentUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
+};

@@ -5,6 +5,7 @@ import {
     GenderOption,
     IdCard,
     Name,
+    PointsHistory,
     ShopInfo,
     TodouhukenOption,
     UriagekinHistory,
@@ -28,6 +29,12 @@ export const getUserHasShop = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserHasBankAccount = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [{ model: BankAccount }],
+    });
+};
+
 export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [
@@ -42,6 +49,26 @@ export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
             },
             { model: Name },
             { model: IdCard },
+        ],
+    });
+};
+
+export const getUserHasUriagekinPointsHistory = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [{ model: UriagekinHistory }, { model: PointsHistory }],
+    });
+};
+
+export const getUserHasLogicalDeleteSet = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            { model: UriagekinHistory },
+            { model: PointsHistory },
+            { model: ShopInfo },
+            { model: Name },
+            { model: Address },
+            { model: IdCard },
+            { model: BankAccount },
         ],
     });
 };

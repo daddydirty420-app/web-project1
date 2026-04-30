@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import { Item, ItemLike, Sale, ShopInfo, User, Video } from "../models/index.js";
 import {
+    DeleteItemLikeUserIdTransactionParams,
     DestroyParams,
     DestroyTransactionParams,
     ItemIdParams,
@@ -120,6 +121,15 @@ export const destroyItemLikeTransaction = async ({ itemLikes, transaction }: Des
         itemLikes.map(async (itemLike: InstanceType<typeof ItemLike>) => {
             await itemLike.destroy({ transaction });
         }),
+    );
+};
+
+export const deleteItemLikeUserLogical = async ({ userId, transaction }: DeleteItemLikeUserIdTransactionParams) => {
+    await ItemLike.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
     );
 };
 

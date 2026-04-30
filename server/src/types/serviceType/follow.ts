@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { Follow, User } from "../../models/index.js";
 
 export type FollowType = "follow" | "follower";
@@ -24,6 +25,11 @@ export type ListParams = {
 
 export type DestroyParams = {
     follow: InstanceType<typeof Follow>;
+};
+
+export type DeleteFollowUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
 };
 
 export type FollowWithUser = InstanceType<typeof Follow> & {

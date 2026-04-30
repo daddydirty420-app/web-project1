@@ -4,6 +4,7 @@ import {
     CommentIdParams,
     CommentLikeWithUser,
     CommentUserParams,
+    DeleteCommentLikeUserIdTransactionParams,
     DestroyParams,
     ListParams,
 } from "../types/serviceType/commentLike.js";
@@ -52,6 +53,18 @@ export const createCommentLike = async ({ commentId, userId }: CommentUserParams
 
 export const destroyCommentLike = async ({ data }: DestroyParams) => {
     await data.destroy();
+};
+
+export const deleteCommentLikeUserLogical = async ({
+    userId,
+    transaction,
+}: DeleteCommentLikeUserIdTransactionParams) => {
+    await CommentLike.destroy(
+        {
+            where: { user_id: userId },
+        },
+        { transaction },
+    );
 };
 
 export const countCommentLike = async ({ commentId }: CommentIdParams) => {

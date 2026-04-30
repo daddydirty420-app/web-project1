@@ -31,6 +31,11 @@ export type DestroyTransactionParams = {
     transaction: Transaction;
 };
 
+export type DeleteItemLikeUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
+};
+
 export type ItemLikeWithUser = InstanceType<typeof ItemLike> & {
     User: InstanceType<typeof User> & {
         ShopInfo: InstanceType<typeof ShopInfo> | null;

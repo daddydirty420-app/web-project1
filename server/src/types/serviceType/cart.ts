@@ -23,5 +23,10 @@ export type DestroyParams = {
 
 export type DestroyAllParams = {
     carts: InstanceType<typeof Cart>[];
-    transaction: Transaction;
+    transaction?: Transaction;
+};
+
+export type DeleteCartUserTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
 };

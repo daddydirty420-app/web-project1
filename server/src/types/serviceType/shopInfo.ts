@@ -102,6 +102,14 @@ export type UpdateShopRequestAllParams = {
     transaction?: Transaction;
 };
 
+export type UpdateShopUserLogicalDeleteParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        user_id: null;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateShopAnyParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: any;

@@ -1,5 +1,6 @@
+import { Op } from "sequelize";
 import { Delivery, DeliveryStatusOption, Orders } from "../models/index.js";
-import { OrderListParams } from "../types/serviceType/orders.js";
+import { ItemIdParams, OrderListParams, UpdateOrderStatusParams } from "../types/serviceType/orders.js";
 
 export const getPurchasedOrders = async ({ where, limit, offset }: OrderListParams) => {
     const ordersList = await Orders.findAll({
@@ -65,4 +66,27 @@ export const getSoldOrders = async ({ where, limit, offset }: OrderListParams) =
         ordersList,
         totalPages: Math.ceil(totalCount / limit),
     };
+};
+
+export const getTradingOrdersAll = ({ itemId }: ItemIdParams) => {
+    return Orders.findAll({
+        where: {
+            item_id: itemId,
+            status: { [Op.notIn]: ["cancelled", "returned"] },
+        },
+        include: [
+            {
+                model: Delivery,
+                where: {
+                    cancel: false,
+                    delivery_status_id: 1,
+                },
+                required: false,
+            },
+        ],
+    });
+};
+
+export const updateOrdersStatus = async ({ order, data, transaction }: UpdateOrderStatusParams) => {
+    await order.update(data, { transaction });
 };

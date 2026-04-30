@@ -10,6 +10,11 @@ export type UserIdParams = {
     userId: number;
 };
 
+export type UserItemIdParams = {
+    userId: number;
+    itemId: number;
+};
+
 export type ItemListParams = {
     where: any;
     limit: number;

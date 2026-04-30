@@ -160,7 +160,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-user/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json",
@@ -169,16 +169,22 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 body: JSON.stringify({ deleteReason }),
             });
 
-            const data = await res.json();
+            await res.json();
 
-            if (res.ok) {
-                setDeleteReason("");
-                setPopup(false);
-                toast.success("ユーザーを削除しました");
+            if (!res.ok) {
+                toast.error("ユーザーの削除に失敗しました");
                 await sleep(2000);
 
-                router.refresh();
+                setDeleteReason("");
+                setPopup(false);
+                return;
             }
+
+            toast.success("ユーザーを削除しました");
+            await sleep(2000);
+
+            setDeleteReason("");
+            setPopup(false);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }

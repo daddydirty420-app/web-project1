@@ -1,5 +1,9 @@
 import { Notification } from "../models/index.js";
-import { CreateNotificationParams, UserIdParams } from "../types/serviceType/notification.js";
+import {
+    CreateNotificationParams,
+    DeleteNotificationUserIdTransactionParams,
+    UserIdParams,
+} from "../types/serviceType/notification.js";
 
 export const createNotification = async ({ data, transaction }: CreateNotificationParams) => {
     await Notification.create(data, { transaction });
@@ -12,4 +16,16 @@ export const countUnread = ({ userId }: UserIdParams) => {
             read_flag: false,
         },
     });
+};
+
+export const deleteNotificationUserLogical = async ({
+    userId,
+    transaction,
+}: DeleteNotificationUserIdTransactionParams) => {
+    await Notification.destroy(
+        {
+            where: { read_user_id: userId },
+        },
+        { transaction },
+    );
 };

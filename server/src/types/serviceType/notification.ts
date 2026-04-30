@@ -13,3 +13,8 @@ export type CreateNotificationParams = {
     };
     transaction?: Transaction;
 };
+
+export type DeleteNotificationUserIdTransactionParams = {
+    userId: number;
+    transaction?: Transaction;
+};

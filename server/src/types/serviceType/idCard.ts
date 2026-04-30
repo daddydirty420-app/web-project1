@@ -25,3 +25,8 @@ export type UpdateIdParams = {
     };
     transaction?: Transaction;
 };
+
+export type IdCardTransactionParams = {
+    idCard: InstanceType<typeof IdCard>;
+    transaction?: Transaction;
+};

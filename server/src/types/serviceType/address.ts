@@ -88,6 +88,14 @@ export type UpdateAddressParams = {
     transaction?: Transaction;
 };
 
+export type UpdateAddressUserLogicalDeleteParams = {
+    address: InstanceType<typeof Address>;
+    data: {
+        user_id: null;
+    };
+    transaction?: Transaction;
+};
+
 export type AddressTransactionParams = {
     address: InstanceType<typeof Address>;
     transaction?: Transaction;

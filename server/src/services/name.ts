@@ -8,6 +8,7 @@ import {
     NameIdParams,
     NameTransactionParams,
     UpdateNameParams,
+    UpdateNameUserLogicalDeleteParams,
     UserIdParams,
 } from "../types/serviceType/name.js";
 
@@ -52,6 +53,10 @@ export const createNameShopAllowNull = async ({ data, transaction }: CreateNameS
 };
 
 export const updateName = async ({ name, data, transaction }: UpdateNameParams) => {
+    await name.update(data, { transaction });
+};
+
+export const updateNameUserLogicalDelete = async ({ name, data, transaction }: UpdateNameUserLogicalDeleteParams) => {
     await name.update(data, { transaction });
 };
 

@@ -1,13 +1,14 @@
+import { Op } from "sequelize";
+import { Follow, ShopInfo, User } from "../models/index.js";
 import {
     CountParams,
+    DeleteFollowUserIdTransactionParams,
     DestroyParams,
     FollowingsParams,
     FollowWithUser,
     ListParams,
     UserParams,
 } from "../types/serviceType/follow.js";
-import { Follow, ShopInfo, User } from "../models/index.js";
-import { Op } from "sequelize";
 
 export const getFollowings = async ({ currentUserId, targetUserIds }: FollowingsParams) => {
     return (await Follow.findAll({
@@ -24,32 +25,6 @@ export const getFollowOne = async ({ currentUserId, targetUserId }: UserParams) 
             follow_user_id: currentUserId,
             follower_user_id: targetUserId,
         },
-    });
-};
-
-export const createFollow = async ({ currentUserId, targetUserId }: UserParams) => {
-    return Follow.create({
-        follow_user_id: currentUserId,
-        follower_user_id: targetUserId,
-    });
-};
-
-export const destroyFollow = async ({ follow }: DestroyParams) => {
-    await follow.destroy();
-};
-
-export const countFollowBoth = async ({ userId }: CountParams) => {
-    const [followCount, followerCount] = await Promise.all([
-        Follow.count({ where: { follow_user_id: userId } }),
-        Follow.count({ where: { follower_user_id: userId } }),
-    ]);
-
-    return { followCount, followerCount };
-};
-
-export const countFollower = async ({ userId }: CountParams) => {
-    return Follow.count({
-        where: { follower_user_id: userId },
     });
 };
 
@@ -82,4 +57,48 @@ export const getFollowList = async ({ pageUserId, type, keyword }: ListParams): 
             },
         ],
     }) as unknown as FollowWithUser[];
+};
+
+export const createFollow = async ({ currentUserId, targetUserId }: UserParams) => {
+    return Follow.create({
+        follow_user_id: currentUserId,
+        follower_user_id: targetUserId,
+    });
+};
+
+export const destroyFollow = async ({ follow }: DestroyParams) => {
+    await follow.destroy();
+};
+
+export const deleteFollowUserLogical = async ({ userId, transaction }: DeleteFollowUserIdTransactionParams) => {
+    await Follow.destroy(
+        {
+            where: { follow_user_id: userId },
+        },
+        { transaction },
+    );
+};
+
+export const deleteFollowerUserLogical = async ({ userId, transaction }: DeleteFollowUserIdTransactionParams) => {
+    await Follow.destroy(
+        {
+            where: { follower_user_id: userId },
+        },
+        { transaction },
+    );
+};
+
+export const countFollowBoth = async ({ userId }: CountParams) => {
+    const [followCount, followerCount] = await Promise.all([
+        Follow.count({ where: { follow_user_id: userId } }),
+        Follow.count({ where: { follower_user_id: userId } }),
+    ]);
+
+    return { followCount, followerCount };
+};
+
+export const countFollower = async ({ userId }: CountParams) => {
+    return Follow.count({
+        where: { follower_user_id: userId },
+    });
 };
