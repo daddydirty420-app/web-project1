@@ -77,7 +77,8 @@
         "kashi",
         "bankcode",
         "Itemsview",
-        "mpegurl"
+        "mpegurl",
+        "ILIKE"
     ],
     "remote.autoForwardPortsFallback": 0
 }

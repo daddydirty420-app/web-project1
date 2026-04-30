@@ -1,32 +1,22 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Search, SuggestWords } from "../models/index.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
-import { Sequelize } from "sequelize";
 import { Op } from "sequelize";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 import sequelize from "../db.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
+import { SuggestWords } from "../models/index.js";
+import { getSearchHistoryUseCase } from "../usecases/search/getSearchHistory.js";
+import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
 
+// GET /search/history
+// summary: 検索履歴取得
+// page: header
 router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user!.id;
 
     try {
-        const searchHistory = await Search.findAll({
-            attributes: [[Sequelize.fn("MAX", Sequelize.col("createdAt")), "createdAt"], "search_text"],
-            where: {
-                user_id: userId,
-                search_text: {
-                    [Op.ne]: "",
-                    [Op.not]: null,
-                },
-            },
-            group: ["search_text"],
-            order: [[Sequelize.literal('MAX("createdAt")'), "DESC"]],
-        });
-
-        const sortedData = searchHistory.sort((a: any, b: any) => b.createdAt - a.createdAt);
+        const sortedData = await getSearchHistoryUseCase({ userId });
 
         res.status(200).json({ sortedData });
     } catch (err) {
