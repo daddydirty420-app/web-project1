@@ -62,6 +62,11 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
     }, [userId, adminPage, router]);
 
     const submitPenalty = async (addPenalty: number) => {
+        if (addPenalty === 0) {
+            toast.error("ペナルティポイントを入力してください");
+            return;
+        }
+
         try {
             const accessToken = await getAccessToken();
 
@@ -70,7 +75,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/add-penalty/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/add-penalty`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,17 +84,23 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 body: JSON.stringify({ addPenalty }),
             });
 
-            const data = await res.json();
+            await res.json();
 
-            if (res.ok) {
+            if (!res.ok) {
+                toast.error("ペナルティポイントの追加に失敗しました");
+                await sleep(1000);
+
                 setAddPenalty(0);
                 setPopup(false);
-                setData((prev) => (prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty } : prev));
-                toast.success("ペナルティポイントを付与しました");
-                await sleep(1500);
-
-                router.refresh();
+                return;
             }
+
+            setData((prev) => (prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty } : prev));
+            toast.success("ペナルティポイントを付与しました");
+            await sleep(1000);
+
+            setAddPenalty(0);
+            setPopup(false);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }

@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, col, fn, literal } from "sequelize";
 import sequelize from "../../db.js";
+import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
     Address,
@@ -17,6 +18,7 @@ import {
     User,
 } from "../../models/index.js";
 import deleteUser from "../../services/old/deleteUser.js";
+import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
 
 const router = Router();
@@ -46,37 +48,21 @@ router.delete(
     },
 );
 
+// PATCH /admin/user/:id/add-penalty
+// summary: ペナルティポイント追加
+// page: /profile/admin/[id]
 router.patch(
-    "/add-penalty/:id",
+    "/:id/add-penalty",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const { addPenalty } = req.body;
-        if (!addPenalty) {
-            res.status(400).json({ message: "ペナルティポイントを入力してください。" });
-            return;
-        }
-
-        const addPenaltyNum = Number(addPenalty);
-        if (isNaN(addPenaltyNum)) {
-            res.status(400).json({ message: "ペナルティポイントは数値で入力してください。" });
-            return;
-        }
-        if (addPenaltyNum <= 0) {
-            res.status(400).json({ message: "マイナスまたは0は無効です。" });
-            return;
-        }
+        const pageUserId = Number(req.params.id);
+        const addPenalty = Number(req.body.addPenalty);
+        
+        if (!addPenalty) throw new AppError("INVALID_BODY_EMPTY", 400);
 
         try {
-            const user = await User.findByPk(req.params.id);
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            user.penalty_points += addPenaltyNum;
-
-            await user.save();
+            await addPenaltyUseCase({ pageUserId, addPenalty });
 
             res.status(200).json({ message: "ペナルティポイントを追加しました。" });
         } catch (err) {
@@ -181,6 +167,26 @@ router.patch(
             });
         } catch (err) {
             await t.rollback();
+            next(err);
+        }
+    },
+);
+
+// GET /admin/user/:id/profile
+// summary: 管理者用プロフィールページ データ取得
+// page: /profile/admin/[id]
+router.get(
+    "/:id/profile",
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const pageUserId = Number(req.params.id);
+
+        try {
+            const user = await getAdminProfileUseCase({ pageUserId });
+
+            res.status(200).json({ user });
+        } catch (err) {
             next(err);
         }
     },
@@ -330,26 +336,6 @@ router.get(
                 userList,
                 campaignPointsSum,
             });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /admin/user/:id/profile
-// summary: 管理者用プロフィールページ データ取得
-// page: /profile/admin/[id]
-router.get(
-    "/:id/profile",
-    authenticateToken,
-    isAdmin,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const pageUserId = Number(req.params.id);
-
-        try {
-            const user = await getAdminProfileUseCase({ pageUserId });
-
-            res.status(200).json({ user });
         } catch (err) {
             next(err);
         }

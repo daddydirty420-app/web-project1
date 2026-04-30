@@ -88,3 +88,11 @@ export type UpdateUserUriageParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateUserPenaltyParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        penalty_points: number;
+    };
+    transaction?: Transaction;
+};
