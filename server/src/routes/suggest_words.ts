@@ -1,9 +1,31 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
+import { getSuggestUseCase } from "../usecases/suggestWords/getSuggest.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 
 const router = Router();
+
+// GET /suggest-words?keyword
+// summary: 検索サジェスト一覧取得
+// page: header
+router.get("/", async (req: Request, res: Response): Promise<void> => {
+    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
+
+    if (!keyword) {
+        res.status(200).json({ suggest: [] });
+        return;
+    }
+
+    try {
+        const suggest = await getSuggestUseCase({ keyword });
+
+        res.status(200).json({ suggest });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ suggest: [] });
+    }
+});
 
 function generateNgrams(text: string): string[] {
     if (!text) return [];

@@ -1,5 +1,6 @@
-import { Op, Sequelize } from "sequelize";
+import { Op } from "sequelize";
 import { Search } from "../models/index.js";
+import sequelize from "../db.js";
 
 type UserIdParams = {
     userId: number;
@@ -7,7 +8,7 @@ type UserIdParams = {
 
 export const getSearchHistoryAll = ({ userId }: UserIdParams) => {
     return Search.findAll({
-        attributes: [[Sequelize.fn("MAX", Sequelize.col("createdAt")), "createdAt"], "search_text"],
+        attributes: [[sequelize.fn("MAX", sequelize.col("createdAt")), "createdAt"], "search_text"],
         where: {
             user_id: userId,
             search_text: {
@@ -16,6 +17,6 @@ export const getSearchHistoryAll = ({ userId }: UserIdParams) => {
             },
         },
         group: ["search_text"],
-        order: [[Sequelize.literal('MAX("createdAt")'), "DESC"]],
+        order: [[sequelize.literal('MAX("createdAt")'), "DESC"]],
     });
 };

@@ -78,7 +78,8 @@
         "bankcode",
         "Itemsview",
         "mpegurl",
-        "ILIKE"
+        "ILIKE",
+        "Ngrams"
     ],
     "remote.autoForwardPortsFallback": 0
 }

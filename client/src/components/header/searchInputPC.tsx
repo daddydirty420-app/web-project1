@@ -76,7 +76,7 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/suggest?keyword=${word}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/suggest-words?keyword=${word}`, {
                 method: "GET",
                 cache: "no-store",
             });
