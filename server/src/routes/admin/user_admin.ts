@@ -1,22 +1,22 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op, fn, col, literal } from "sequelize";
+import { Op, col, fn, literal } from "sequelize";
+import sequelize from "../../db.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
-    User,
-    Item,
-    ShopInfo,
-    GenderOption,
     Address,
-    Name,
-    TodouhukenOption,
+    GenderOption,
     IdCard,
-    UriagekinHistory,
+    Item,
     Journal,
+    Name,
     Notification,
+    ShopInfo,
+    TodouhukenOption,
+    UriagekinHistory,
+    User,
 } from "../../models/index.js";
 import deleteUser from "../../services/old/deleteUser.js";
-import sequelize from "../../db.js";
 
 const router = Router();
 
@@ -336,10 +336,13 @@ router.get(
 );
 
 router.get(
-    "/profile/:id",
+    "/:id/profile",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const pageUserId = req.params.id;
+        const userId = req.user!.id;
+
         try {
             const user = await User.findByPk(req.params.id, {
                 attributes: ["penalty_points", "uriagekin"],
@@ -350,7 +353,7 @@ router.get(
                 return;
             }
 
-            res.json({ user });
+            res.status(200).json({ user });
         } catch (err) {
             next(err);
         }

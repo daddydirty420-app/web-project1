@@ -1,6 +1,6 @@
-import type { Request, Response, NextFunction } from "express-serve-static-core";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 

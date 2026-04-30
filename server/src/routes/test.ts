@@ -1,5 +1,8 @@
+import crypto from "crypto";
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
+import { Op } from "sequelize";
+import sequelize from "../db.js";
 import {
     Address,
     Brands,
@@ -13,9 +16,6 @@ import {
     Sale,
     User,
 } from "../models/index.js";
-import sequelize from "../db.js";
-import { Op } from "sequelize";
-import crypto from "crypto";
 
 const router = Router();
 

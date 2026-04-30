@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from "express-serve-static-core";
-import User from "../models/user.js";
+import { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
+import { getUser } from "../services/users/query.js";
 import { AuthUser } from "./authMiddleware.js";
 
 declare module "express-serve-static-core" {
@@ -10,25 +11,18 @@ declare module "express-serve-static-core" {
 
 export async function isAdmin(req: Request, res: Response, next: NextFunction) {
     try {
-        if (!req.user) {
-            res.status(401).json({ message: "認証が必要です。" });
-            return;
-        }
+        if (!req.user) throw new AppError("INVALID_USER", 401);
 
-        const user = await User.findByPk(req.user.id);
+        const userId = req.user.id;
 
-        if (!user) {
-            return res.status(404).json({ message: "ユーザーが存在しません。" });
-        }
+        const user = await getUser({ userId });
 
-        if (!user.admin) {
-            res.status(403).json({ message: "管理者権限がありません。" });
-            return;
-        }
+        if (!user) throw new AppError("USER_NOT_FOUND", 404);
+
+        if (!user.admin) throw new AppError("INVALID_ADMIN_USER", 403);
 
         return next();
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラーが発生しました。" });
+        next(err);
     }
 }

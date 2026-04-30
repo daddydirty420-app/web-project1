@@ -168,7 +168,7 @@ app.use("/api/reference-code-admin", ReferenceCodeAdminRouter);
 app.use("/api/report-admin", ReportAdminRouter);
 app.use("/api/shop-info-admin", ShopInfoAdminRouter);
 app.use("/api/transfer-admin", TransferAdminRouter);
-app.use("/api/user-admin", UserAdminRouter);
+app.use("/api/admin/user", UserAdminRouter);
 app.use("/api/test", TestRouter);
 
 // catch 404 and forward to error handler
