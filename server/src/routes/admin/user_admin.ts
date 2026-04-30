@@ -1,24 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, col, fn, literal } from "sequelize";
-import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import {
-    Address,
-    GenderOption,
-    IdCard,
-    Item,
-    Journal,
-    Name,
-    Notification,
-    ShopInfo,
-    TodouhukenOption,
-    UriagekinHistory,
-    User,
-} from "../../models/index.js";
+import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
 import deleteUser from "../../services/old/deleteUser.js";
 import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
+import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
 
 const router = Router();
@@ -58,7 +46,7 @@ router.patch(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
         const addPenalty = Number(req.body.addPenalty);
-        
+
         if (!addPenalty) throw new AppError("INVALID_BODY_EMPTY", 400);
 
         try {
@@ -71,102 +59,27 @@ router.patch(
     },
 );
 
+// PATCH /admin/user/:id/delete-uriage
+// summary: 売上金没収
+// page: /profile/admin/[id]
 router.patch(
-    "/delete-uriage/:id",
+    "/:id/delete-uriage",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const currentUserId = req.params.id;
+        const pageUserId = Number(req.params.id);
 
-        const { deleteUriage } = req.body;
-        if (!deleteUriage) {
-            res.status(400).json({ message: "没収金額を入力してください。" });
-            return;
-        }
-
-        const deleteUriageNum = Number(deleteUriage);
-        if (isNaN(deleteUriageNum)) {
-            res.status(400).json({ message: "没収金額は数値で入力してください。" });
-            return;
-        }
-        if (deleteUriageNum <= 0) {
-            res.status(400).json({ message: "マイナスまたは0は無効です。" });
-            return;
-        }
-
-        const t = await sequelize.transaction();
+        const deleteUriage = Number(req.body.deleteUriage);
+        if (!deleteUriage) throw new AppError("INVALID_BODY_EMPTY", 400);
 
         try {
-            const user = await User.findByPk(currentUserId);
-            if (!user) {
-                res.status(404).json({ message: "ユーザーが見つかりません。" });
-                return;
-            }
-
-            if (user.uriagekin < deleteUriageNum) {
-                res.status(400).json({ message: "没収額が売上金残高を超えています。" });
-                return;
-            }
-
-            const cutoffDate = new Date();
-
-            cutoffDate.setDate(cutoffDate.getDate() - 180);
-
-            let remaining = deleteUriageNum;
-
-            const histories = await UriagekinHistory.findAll({
-                where: {
-                    user_id: currentUserId,
-                    createdAt: { [Op.gte]: cutoffDate },
-                },
-                order: [["createdAt", "ASC"]],
-            });
-
-            for (const history of histories) {
-                if (remaining <= 0) break;
-
-                const available = history.uriagekin - (history.used_uriagekin || 0);
-                if (available > 0) {
-                    const deduction = Math.min(available, remaining);
-                    history.used_uriagekin = (history.used_uriagekin || 0) + deduction;
-                    remaining -= deduction;
-                    await history.save({ transaction: t });
-                }
-            }
-
-            user.uriagekin -= deleteUriageNum;
-
-            await user.save({ transaction: t });
-
-            await Notification.create(
-                {
-                    read_user_id: currentUserId,
-                    message: `重大な規約違反が確認されたため、売上金${deleteUriageNum.toLocaleString()}円を回収いたしました。利用規約に沿ったご利用をお願いします。`,
-                },
-                { transaction: t },
-            );
-
-            await Journal.create(
-                {
-                    kanjyo_kari1: 3,
-                    kanjyo_kashi1: 6,
-                    price_kari1: deleteUriageNum,
-                    price_kashi1: deleteUriageNum,
-                    reason_id: 8,
-                },
-                { transaction: t },
-            );
-
-            // メール送信処理
-
-            await t.commit();
+            await deleteUriageUseCase({ pageUserId, deleteUriage });
 
             res.status(200).json({
                 message: "売上金没収処理が完了しました",
-                deleteUriageNum,
+                deleteUriage,
             });
         } catch (err) {
-            await t.rollback();
             next(err);
         }
     },

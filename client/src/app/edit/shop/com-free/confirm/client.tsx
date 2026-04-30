@@ -127,7 +127,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
 
                 <ConfirmSection
                     title="従業員数"
-                    content={String(memberCount)}
+                    content={memberCount.toLocaleString()}
                     input
                     value={memberCount}
                     onChange={(v) => setMemberCount(v)}
@@ -156,7 +156,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
 
                         <ConfirmSection
                             title="資本金"
-                            content={String(capital)}
+                            content={`￥${capital?.toLocaleString() ?? ""}`}
                             input
                             value={capital}
                             onChange={(v) => setCapital(v)}

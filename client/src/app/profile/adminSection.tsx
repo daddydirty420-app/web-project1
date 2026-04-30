@@ -107,6 +107,11 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
     };
 
     const uriageDecrease = async (deleteUriage: number) => {
+        if (deleteUriage === 0) {
+            toast.error("数値を入力してください");
+            return;
+        }
+
         try {
             const accessToken = await getAccessToken();
 
@@ -115,7 +120,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-admin/delete-uriage/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/delete-uriage`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
@@ -124,17 +129,23 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 body: JSON.stringify({ deleteUriage }),
             });
 
-            const data = await res.json();
+            await res.json();
 
-            if (res.ok) {
+            if (!res.ok) {
+                toast.error("売上金の削除に失敗しました");
+                await sleep(1000);
+
                 setDeleteUriage(0);
                 setPopup(false);
-                setData((prev) => (prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage } : prev));
-                toast.success("売上金を没収しました");
-                await sleep(1500);
-
-                router.refresh();
+                return;
             }
+
+            setData((prev) => (prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage } : prev));
+            toast.success("売上金を没収しました");
+            await sleep(1000);
+
+            setDeleteUriage(0);
+            setPopup(false);
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
@@ -204,6 +215,10 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                                 required
                             />
 
+                            <p className={styles.currentNumber}>
+                                現在のペナルティポイント： <strong>{data?.penalty_points}</strong>
+                            </p>
+
                             <button
                                 type="button"
                                 className={styles.popupButton}
@@ -233,6 +248,10 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                                 required
                                 max={data?.uriagekin}
                             />
+
+                            <p className={styles.currentNumber}>
+                                現在の売上金： <strong>{data?.uriagekin}</strong>
+                            </p>
 
                             <button
                                 type="button"

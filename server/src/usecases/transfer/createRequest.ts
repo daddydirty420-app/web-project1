@@ -57,6 +57,7 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
     );
 
     const transId = await sequelize.transaction(async (t) => {
+        // UriagekinHistory古い順に削除
         for (const history of histories) {
             if (deleteValue <= 0) break;
 
