@@ -8,7 +8,7 @@ export {
 export { getCartRecommendItems, getIndexRecommendItems, getItemPageRecommendItems } from "./list/recommendList.js";
 export { getUserItemsStatusList, getUserItemsStockList, getUserItemsUploadedList } from "./list/userItems.js";
 export { getMetadata } from "./meta.js";
-export { getItemPageData } from "./page.js";
+export { getAdminItemPage, getItemPageData } from "./page.js";
 export {
     getItem,
     getItemHighlight,

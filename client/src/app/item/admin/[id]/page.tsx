@@ -39,7 +39,7 @@ export default async function Page({ params }: Props) {
 
     if (!accessToken || !session) redirect(`/item/${id}`);
 
-    const res = await fetch(`${process.env.API_URL}/item-page-admin/${id}`, {
+    const res = await fetch(`${process.env.API_URL}/admin/items/${id}/item-page`, {
         method: "GET",
         cache: "no-store",
         headers: {
@@ -54,7 +54,7 @@ export default async function Page({ params }: Props) {
     const data = await res.json();
     const item: Item = data.item;
     const commentCount: number = data.commentCount;
-    const likeCount: number = data.goodCount;
+    const likeCount: number = data.likeCount;
     const reportCount: number = data.reportCount;
 
     const userId = session?.user.id;

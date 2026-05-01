@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Item, Video } from "../../models/index.js";
 import adminDeleteItem from "../../services/old/adminDeleteItem.js";
+import { getAdminItemPageUseCase } from "../../usecases/admin/items/getItemPage.js";
 
 const router = Router();
 
@@ -31,6 +32,36 @@ router.delete(
             await adminDeleteItem(itemId, adminId, deleteReason);
 
             res.status(200).json({ message: "商品を削除しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /admin/items/:id/item-page
+// summary: 管理者用商品ページデータ取得
+// page: /item/admin/[id]
+router.get(
+    "/:id/item-page",
+    authenticateToken,
+    isAdmin,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        try {
+            const { item, likeCount, commentCount, reportCount, me } = await getAdminItemPageUseCase({
+                itemId,
+                userId,
+            });
+
+            res.status(200).json({
+                item,
+                likeCount,
+                commentCount,
+                reportCount,
+                me,
+            });
         } catch (err) {
             next(err);
         }
