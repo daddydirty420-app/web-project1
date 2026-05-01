@@ -1,6 +1,6 @@
 # admin/items.md
 
-## DELETE /admin/user/:id — ユーザー強制削除
+## DELETE /admin/items/:id — 商品強制削除
 
 ### リクエスト
 
@@ -27,3 +27,26 @@
 - メール送信
 
 ---
+
+## GET /admin/items/:id/item-page — 管理者用商品ページ情報取得
+
+### リクエスト
+
+- params:
+    - itemId
+
+### ビジネスロジック
+
+- 商品情報を取得
+- いいね数カウント
+- コメント数カウント
+- 報告数カウント
+- ユーザー情報（自分）を取得
+
+### レスポンス
+
+- items
+- likeCount
+- commentCount
+- reportCount
+- me
