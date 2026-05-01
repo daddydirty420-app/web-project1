@@ -7,6 +7,16 @@ type PerfectDeleteParams = {
     transaction?: Transaction;
 };
 
+type CreateAdminDeleteLogParams = {
+    data: {
+        item_id: number;
+        delete_user_id: number;
+        delete_by_admin: boolean;
+        delete_reason: string;
+    };
+    transaction?: Transaction;
+};
+
 type BulkCreateDeleteLogParams = {
     data: {
         item_id: number;
@@ -27,6 +37,10 @@ export const createPerfectDelete = async ({ itemId, userId, transaction }: Perfe
         },
         { transaction },
     );
+};
+
+export const createAdminItemDeleteLogs = async ({ data, transaction }: CreateAdminDeleteLogParams) => {
+    await ItemDeleteLogs.create(data, { transaction });
 };
 
 export const bulkCreateItemDeleteLogs = async ({ data, transaction }: BulkCreateDeleteLogParams) => {

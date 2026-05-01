@@ -16,7 +16,7 @@ export class ItemDeleted extends Model {
     declare thumbnail_url: string | null;
     declare video_title: string | null;
     declare video_summary: string | null;
-    declare deleted_reason: string;
+    declare delete_reason: string;
     declare deleted_by: number;
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -78,7 +78,7 @@ ItemDeleted.init(
         thumbnail_url: DataTypes.TEXT,
         video_title: DataTypes.STRING(255),
         video_summary: DataTypes.TEXT,
-        deleted_reason: {
+        delete_reason: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

@@ -1,35 +1,33 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { Item, Video } from "../../models/index.js";
-import adminDeleteItem from "../../services/old/adminDeleteItem.js";
+import { deleteAdminItemUseCase } from "../../usecases/admin/items/deleteItem.js";
 import { getAdminItemPageUseCase } from "../../usecases/admin/items/getItemPage.js";
 
 const router = Router();
 
+// DELETE /admin/items/:id
+// summary: 商品強制削除
+// page: /item/admin/[id]
 router.delete(
-    "/delete-item/:id",
+    "/:id",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
-
-        if (isNaN(itemId)) {
-            res.status(400).json({ message: "itemIdが不正な値です。" });
-            return;
-        }
 
         const adminId = req.user!.id;
 
         const deleteReason = req.body.deleteReason;
 
         if (!deleteReason || deleteReason === "") {
-            res.status(400).json({ message: "deleteReasonが不正な値です。" });
-            return;
+            throw new AppError("INVALID_BODY_EMPTY", 400);
         }
 
         try {
-            await adminDeleteItem(itemId, adminId, deleteReason);
+            await deleteAdminItemUseCase({ itemId, adminId, deleteReason });
 
             res.status(200).json({ message: "商品を削除しました。" });
         } catch (err) {

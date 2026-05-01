@@ -4,8 +4,10 @@ import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
+import { useRouter } from "next/navigation";
 
 type Props = {
     id: string;
@@ -15,6 +17,8 @@ type Props = {
 export const DeleteButton = ({ id, item }: Props) => {
     const [popup, setPopup] = useState(false);
     const [deleteReason, setDeleteReason] = useState("");
+
+    const router = useRouter();
 
     const deleteItem = async () => {
         if (!deleteReason || deleteReason === "") {
@@ -30,7 +34,7 @@ export const DeleteButton = ({ id, item }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-admin/delete-item/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/items/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,11 +43,22 @@ export const DeleteButton = ({ id, item }: Props) => {
                 body: JSON.stringify({ deleteReason }),
             });
 
-            if (res.ok) {
-                const data = await res.json();
-                alert(data.message);
+            await res.json();
+
+            if (!res.ok) {
+                toast.error("商品の削除に失敗しました");
+                await sleep(2000);
+
+                setDeleteReason("");
                 setPopup(false);
+                return;
             }
+            toast.success("商品を削除しました");
+            await sleep(2000);
+
+            setDeleteReason("");
+            setPopup(false);
+            router.refresh();
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }

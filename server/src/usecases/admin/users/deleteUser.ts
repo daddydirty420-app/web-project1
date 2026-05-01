@@ -31,22 +31,13 @@ import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
 import { updateUserLogicalDelete } from "../../../services/users/command.js";
 import { getUserHasBankAccount, getUserHasUriagekin } from "../../../services/users/query.js";
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
-import moveToGlacier from "../../../utils/moveToGlacier.js";
+import { DeleteOrderType } from "../../../types/deleteOrderType.js";
+import { moveToGlacier } from "../../../utils/moveToGlacier.js";
 
 type Params = {
     pageUserId: number;
     adminId: number;
     deleteReason: string;
-};
-
-type DeleteOrderType = {
-    orders_id: number;
-    delivery_id: number;
-    cancel_reason: string;
-    refund_status: string;
-    refund_method: string;
-    refund_amount: number;
-    deleted_by: number;
 };
 
 type DeleteItemDataType = {
@@ -364,13 +355,17 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                 let newVideoUrl = null;
                 let newThumbnailUrl = null;
                 if (item.Video) {
-                    const videoUrl = item.Video.converted_url || item.Video.original_url;
+                    const videoUrl = item.Video.converted_url || item.Video.original_url || undefined;
+
                     if (videoUrl) {
                         newVideoUrl = await moveToGlacier({ userId: pageUserId, url: videoUrl });
                     }
 
                     if (item.Video.thumbnail_url) {
-                        newThumbnailUrl = await moveToGlacier({ userId: pageUserId, url: item.Video.thumbnail_url });
+                        newThumbnailUrl = await moveToGlacier({
+                            userId: pageUserId,
+                            url: item.Video.thumbnail_url,
+                        });
                     }
                 }
 
