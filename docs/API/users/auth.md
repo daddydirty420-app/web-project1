@@ -1,4 +1,4 @@
-# user/auth.md
+# users/auth.md
 
 ## POST /auth/login — ログイン
 
