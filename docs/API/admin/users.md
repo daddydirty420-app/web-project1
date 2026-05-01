@@ -34,3 +34,20 @@
 - メール送信
 
 ---
+
+## PATCH /admin/user/:id/add-penalty — ペナルティポイント追加
+
+### リクエスト
+
+- params:
+    - pageUserId
+- body:
+    - addPenalty
+
+### ビジネスロジック
+
+- bodyバリデーションチェック
+- pageUser取得
+- ペナルティポイント追加
+
+---
