@@ -51,3 +51,22 @@
 - ペナルティポイント追加
 
 ---
+
+## PATCH /admin/user/:id/delete-uriage — 売上金没収
+
+### リクエスト
+
+- params:
+    - pageUserId
+- body:
+    - deleteUriage
+
+### ビジネスロジック
+
+- bodyバリデーションチェック
+- pageUser取得
+- 売上金履歴古い順に削除
+- user売上金更新
+- 帳簿作成
+- メール送信
+- お知らせ作成（非同期）
