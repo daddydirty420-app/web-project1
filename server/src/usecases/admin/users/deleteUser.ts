@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
+import { Item } from "../../../models/index.js";
 import { updateAddressUserLogicalDelete } from "../../../services/address.js";
 import { deleteBankAccount } from "../../../services/bankAccount.js";
 import { upsertCancel } from "../../../services/cancel.js";
@@ -11,6 +12,8 @@ import { deleteCommentLikeUserLogical } from "../../../services/commentLike.js";
 import { updateDeliveryCancel } from "../../../services/delivery.js";
 import { deleteFollowerUserLogical, deleteFollowUserLogical } from "../../../services/follow.js";
 import { deleteIdCard } from "../../../services/idCard.js";
+import { bulkCreateItemDeleted } from "../../../services/itemDeleted.js";
+import { bulkCreateItemDeleteLogs } from "../../../services/itemDeleteLogs.js";
 import { deleteItemLikeUserLogical } from "../../../services/itemLike.js";
 import { destroyPerfectItem, getMyItemsWithVideoAll } from "../../../services/items/index.js";
 import { createJournal } from "../../../services/journal.js";
@@ -25,14 +28,10 @@ import { updateShopUserLogicalDelete } from "../../../services/shopInfo/command.
 import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } from "../../../services/transfer.js";
 import { updateUsedUriagekin } from "../../../services/uriagekinHistory.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
+import { updateUserLogicalDelete } from "../../../services/users/command.js";
 import { getUserHasBankAccount, getUserHasUriagekin } from "../../../services/users/query.js";
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
-// usecase移行
-import { Item } from "../../../models/index.js";
-import { bulkCreateItemDeleted } from "../../../services/itemDeleted.js";
-import { bulkCreateItemDeleteLogs } from "../../../services/itemDeleteLogs.js";
-import moveToGlacier from "../../../services/old/moveToGlacier.js";
-import { updateUserLogicalDelete } from "../../../services/users/command.js";
+import moveToGlacier from "../../../utils/moveToGlacier.js";
 
 type Params = {
     pageUserId: number;
@@ -357,7 +356,9 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
 
                 let newImages = [];
                 if (item.image_url && item.image_url.length > 0) {
-                    newImages = await Promise.all(item.image_url.map((url: string) => moveToGlacier(url, pageUserId)));
+                    newImages = await Promise.all(
+                        item.image_url.map((url: string) => moveToGlacier({ userId: pageUserId, url })),
+                    );
                 }
 
                 let newVideoUrl = null;
@@ -365,11 +366,11 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                 if (item.Video) {
                     const videoUrl = item.Video.converted_url || item.Video.original_url;
                     if (videoUrl) {
-                        newVideoUrl = await moveToGlacier(videoUrl, pageUserId);
+                        newVideoUrl = await moveToGlacier({ userId: pageUserId, url: videoUrl });
                     }
 
                     if (item.Video.thumbnail_url) {
-                        newThumbnailUrl = await moveToGlacier(item.Video.thumbnail_url, pageUserId);
+                        newThumbnailUrl = await moveToGlacier({ userId: pageUserId, url: item.Video.thumbnail_url });
                     }
                 }
 

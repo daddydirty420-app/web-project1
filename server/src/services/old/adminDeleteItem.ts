@@ -1,24 +1,23 @@
-import { Op } from "sequelize";
-import {
-    Item,
-    Video,
-    Delivery,
-    ItemDeleteLogs,
-    Sale,
-    Notification,
-    ItemDeleted,
-    Orders,
-    PaymentMethodOption,
-    Cancel,
-    OrderDeleted,
-    ItemShippingProfile,
-    User,
-    BankAccount,
-    Transfer,
-} from "../../models/index.js";
-import sequelize from "../../db.js";
-import moveToGlacier from "./moveToGlacier.js";
 import crypto from "crypto";
+import { Op } from "sequelize";
+import sequelize from "../../db.js";
+import {
+    BankAccount,
+    Cancel,
+    Delivery,
+    Item,
+    ItemDeleted,
+    ItemDeleteLogs,
+    ItemShippingProfile,
+    Notification,
+    OrderDeleted,
+    Orders,
+    Sale,
+    Transfer,
+    User,
+    Video,
+} from "../../models/index.js";
+import moveToGlacier from "../../utils/moveToGlacier.js";
 
 async function adminDeleteItem(itemId: number, adminId: number, deleteReason: string) {
     const today = new Date();
@@ -150,7 +149,9 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
 
         let newImages = [];
         if (item.image_url && item.image_url.length > 0) {
-            newImages = await Promise.all(item.image_url.map((url: string) => moveToGlacier(url, sellerId)));
+            newImages = await Promise.all(
+                item.image_url.map((url: string) => moveToGlacier({ userId: sellerId, url })),
+            );
         }
 
         let newVideoUrl = null;
@@ -158,11 +159,11 @@ async function adminDeleteItem(itemId: number, adminId: number, deleteReason: st
         if (item.Video) {
             const videoUrl = item.Video.converted_url || item.Video.original_url;
             if (videoUrl) {
-                newVideoUrl = await moveToGlacier(videoUrl, sellerId);
+                newVideoUrl = await moveToGlacier({ userId: sellerId, url: videoUrl });
             }
 
             if (item.Video.thumbnail_url) {
-                newThumbnailUrl = await moveToGlacier(item.Video.thumbnail_url, sellerId);
+                newThumbnailUrl = await moveToGlacier({ userId: sellerId, url: item.Video.thumbnail_url });
             }
         }
 
