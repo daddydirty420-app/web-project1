@@ -3,7 +3,7 @@ import { countItemPageComment } from "../../../services/comment.js";
 import { countItemLike, getItemLikeOne } from "../../../services/itemLike.js";
 import { getItemPageData } from "../../../services/items/index.js";
 import { getMeHighlight } from "../../../services/users/query.js";
-import { ItemPageMode } from "../../../types/usecaseType.js";
+import { ItemPageMode } from "../../../validators/query/items.js";
 
 type Params = {
     itemId: number;
@@ -11,6 +11,9 @@ type Params = {
     mode: ItemPageMode;
 };
 
+// GET /items/:id?mode=""
+// summary: 商品ページ データ取得
+// page: /item
 export const getItemPageUseCase = async ({ itemId, userId, mode }: Params) => {
     // itemデータ取得
     const item = await getItemPageData({ itemId });

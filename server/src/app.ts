@@ -5,6 +5,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import session from "express-session";
 import logger from "morgan";
 import path from "path";
+import helmet from "helmet";
 import { fileURLToPath } from "url";
 
 import { startAllCrons } from "./cron/index.js";
@@ -92,6 +93,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(helmet());
 app.use(
     cors({
         origin: (origin, callback) => {

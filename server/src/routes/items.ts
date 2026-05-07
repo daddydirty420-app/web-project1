@@ -2,8 +2,9 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { Body } from "../types/serviceType/items/uploadBody.js";
-import { ItemListType, ItemListView, ItemPageMode, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
+import { ItemListType, ItemListView, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
 import { deleteDraftItemUseCase } from "../usecases/items/delete/draftDelete.js";
 import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
@@ -26,6 +27,7 @@ import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
 import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
 import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
 import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
+import { getItemPageQuerySchema, ItemPageMode } from "../validators/query/items.js";
 
 const router = Router();
 
@@ -316,31 +318,38 @@ router.get(
 );
 
 // GET /items/:id?mode=""
-router.get("/:id", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user?.id ?? null;
+// summary: 商品ページ データ取得
+// page: /item
+router.get(
+    "/:id",
+    authenticateOptional,
+    validateQuery(getItemPageQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
+        const userId = req.user?.id ?? null;
 
-    const mode = req.query.mode as ItemPageMode;
+        const mode = req.query.mode as ItemPageMode;
 
-    try {
-        const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
-            itemId,
-            userId,
-            mode,
-        });
+        try {
+            const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
+                itemId,
+                userId,
+                mode,
+            });
 
-        res.status(200).json({
-            item,
-            sellerMe,
-            likeCount,
-            isLikeByMe,
-            commentCount,
-            me,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                item,
+                sellerMe,
+                likeCount,
+                isLikeByMe,
+                commentCount,
+                me,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /items/:id/metadata
 router.get("/:id/metadata", async (req: Request, res: Response, next: NextFunction): Promise<void> => {

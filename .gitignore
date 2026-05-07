@@ -125,3 +125,8 @@ serviceAccountKey.json
 # ツール
 # =====================
 .VSCodeCounter/
+
+# =====================
+# 開発用markdown
+# =====================
+*dev.md
