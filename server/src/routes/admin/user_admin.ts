@@ -3,13 +3,16 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op, col, fn, literal } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateBody } from "../../middleware/validateBody.js";
 import { validateParams } from "../../middleware/validateParams.js";
 import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
 import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
 import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js";
 import { deleteUserAdminUseCase } from "../../usecases/admin/users/deleteUser.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
+import { DeleteReasonBody, deleteReasonBodySchema } from "../../validators/body/admin/admin.js";
 import { idParamSchema } from "../../validators/params/id.js";
+import { AddPenaltyBody, addPenaltyBodySchema, DeleteUriageBody, deleteUriageBodySchema } from "../../validators/body/admin/users.js";
 
 const router = Router();
 
@@ -19,14 +22,19 @@ const router = Router();
 router.delete(
     "/:id",
     validateParams(idParamSchema),
+    validateBody(deleteReasonBodySchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
         const adminId = req.user!.id;
 
-        const deleteReason = req.body.deleteReason;
-        if (!deleteReason.trim()) throw new AppError("INVALID_BODY_EMPTY", 400);
+        const body = req.validatedBody as DeleteReasonBody;
+
+        const deleteReason = body.deleteReason;
+        if (!deleteReason.trim()) {
+            throw new AppError("INVALID_BODY_EMPTY", 400);
+        }
 
         try {
             await deleteUserAdminUseCase({ pageUserId, adminId, deleteReason });
@@ -44,13 +52,14 @@ router.delete(
 router.patch(
     "/:id/add-penalty",
     validateParams(idParamSchema),
+    validateBody(addPenaltyBodySchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
-        const addPenalty = Number(req.body.addPenalty);
 
-        if (!addPenalty) throw new AppError("INVALID_BODY_EMPTY", 400);
+        const body = req.validatedBody as AddPenaltyBody;
+        const addPenalty = body.addPenalty;
 
         try {
             await addPenaltyUseCase({ pageUserId, addPenalty });
@@ -68,13 +77,15 @@ router.patch(
 router.patch(
     "/:id/delete-uriage",
     validateParams(idParamSchema),
+    validateBody(deleteUriageBodySchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
 
-        const deleteUriage = Number(req.body.deleteUriage);
-        if (!deleteUriage) throw new AppError("INVALID_BODY_EMPTY", 400);
+        const body = req.validatedBody as DeleteUriageBody;
+
+        const deleteUriage = body.deleteUriage;
 
         try {
             await deleteUriageUseCase({ pageUserId, deleteUriage });

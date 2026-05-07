@@ -2,10 +2,12 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateBody } from "../../middleware/validateBody.js";
 import { validateParams } from "../../middleware/validateParams.js";
 import { Item, Video } from "../../models/index.js";
 import { deleteAdminItemUseCase } from "../../usecases/admin/items/deleteItem.js";
 import { getAdminItemPageUseCase } from "../../usecases/admin/items/getItemPage.js";
+import { DeleteReasonBody, deleteReasonBodySchema } from "../../validators/body/admin/admin.js";
 import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
@@ -16,6 +18,7 @@ const router = Router();
 router.delete(
     "/:id",
     validateParams(idParamSchema),
+    validateBody(deleteReasonBodySchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -23,9 +26,11 @@ router.delete(
 
         const adminId = req.user!.id;
 
-        const deleteReason = req.body.deleteReason;
+        const body = req.validatedBody as DeleteReasonBody;
 
-        if (!deleteReason || deleteReason === "") {
+        const deleteReason = body.deleteReason;
+
+        if (!deleteReason.trim()) {
             throw new AppError("INVALID_BODY_EMPTY", 400);
         }
 
