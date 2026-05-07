@@ -37,5 +37,8 @@ export const recommendItemsQuerySchema = z.object({
     itemId: z.coerce.number().int().positive().optional(),
 });
 
+export type ItemPageQuery = z.infer<typeof getItemPageQuerySchema>;
+export type ItemUploadQuery = z.infer<typeof putItemUploadQuerySchema>;
+export type ItemSortNumberQuery = z.infer<typeof itemSortNumberQuerySchema>;
 export type ItemListQuery = z.infer<typeof itemListQuerySchema>;
 export type RecommendItemsQuery = z.infer<typeof recommendItemsQuerySchema>;

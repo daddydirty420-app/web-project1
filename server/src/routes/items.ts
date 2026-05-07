@@ -36,7 +36,10 @@ import {
     ItemListType,
     ItemListView,
     ItemPageMode,
+    ItemPageQuery,
+    ItemSortNumberQuery,
     itemSortNumberQuerySchema,
+    ItemUploadQuery,
     putItemUploadQuerySchema,
     RecommendItemsQuery,
     recommendItemsQuerySchema,
@@ -90,7 +93,9 @@ router.put(
         const itemId = parseInt(req.params.id);
         const userId = req.user!.id;
 
-        const mode = req.query.mode as UploadMode;
+        const query = req.validatedQuery as ItemUploadQuery;
+
+        const mode = query.mode;
 
         const body = req.body as Body;
 
@@ -145,11 +150,9 @@ router.patch(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
-        const number = Number(req.query.number);
+        const query = req.validatedQuery as ItemSortNumberQuery;
 
-        if (!number || isNaN(number)) {
-            throw new AppError("INVALID_NUMBER", 400);
-        }
+        const number = query.number;
 
         patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
             console.error(err);
@@ -169,11 +172,9 @@ router.patch(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
-        const number = Number(req.query.number);
+        const query = req.validatedQuery as ItemSortNumberQuery;
 
-        if (!number || isNaN(number)) {
-            throw new AppError("INVALID_NUMBER", 400);
-        }
+        const number = query.number;
 
         patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
             console.error(err);
@@ -388,7 +389,9 @@ router.get(
         const itemId = Number(req.params.id);
         const userId = req.user?.id ?? null;
 
-        const mode = req.query.mode as ItemPageMode;
+        const query = req.validatedQuery as ItemPageQuery;
+
+        const mode = query.mode;
 
         try {
             const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
