@@ -1,5 +1,5 @@
 import { Item, Video } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items.js";
 
 export const getMetadata = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {

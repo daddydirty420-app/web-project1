@@ -1,6 +1,6 @@
 // 複数関連モデル取得
 import { Categories, Item, ItemShippingProfile, Sale, User, Video } from "../../../models/index.js";
-import { ItemIdParams, UserIdParams } from "../../../types/serviceType/items/items.js";
+import { ItemIdParams, UserIdParams } from "../../../types/serviceType/items.js";
 
 export const getItem = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId);

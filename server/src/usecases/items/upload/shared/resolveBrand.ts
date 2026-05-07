@@ -1,12 +1,12 @@
 import { createAliases, getAliasOne } from "../../../../services/brandAliases.js";
 import { getBrand, getBrandOne } from "../../../../services/brands.js";
 import { BrandResult } from "../../../../types/serviceType/brands.js";
-import { Body } from "../../../../types/serviceType/items/uploadBody.js";
 import { normalizeJapanese } from "../../../../utils/normalizeJapanese.js";
+import { ItemUploadBody } from "../../../../validators/body/items.js";
 
 type Params = {
     brandId: number | null;
-    body: Body;
+    body: ItemUploadBody;
 };
 
 // ブランドチェック

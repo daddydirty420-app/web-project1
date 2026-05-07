@@ -1,6 +1,6 @@
 import { Transaction } from "sequelize";
-import { Item } from "../../../models/index.js";
-import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../../itemAttributes.js";
+import { Item } from "../../models/index.js";
+import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../itemAttributes.js";
 
 export type ItemIdParams = {
     itemId: number;

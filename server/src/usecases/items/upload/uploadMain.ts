@@ -6,7 +6,7 @@ import { getItemWithVideoSaleShipping } from "../../../services/items/index.js";
 import { createNotification } from "../../../services/notification.js";
 import { updateSale } from "../../../services/sale.js";
 import { updateVideo } from "../../../services/video.js";
-import { Body } from "../../../types/serviceType/items/uploadBody.js";
+import { ItemUploadBody } from "../../../validators/body/items.js";
 import { buildSignedUrls } from "./shared/buildSignedUrls.js";
 import { resolveBrand } from "./shared/resolveBrand.js";
 import { validateMaster } from "./shared/validateMaster.js";
@@ -15,7 +15,7 @@ import { validateNumber } from "./shared/validateNumber.js";
 type Params = {
     itemId: number;
     userId: number;
-    body: Body;
+    body: ItemUploadBody;
 };
 
 // PUT /items/:id?mode="main"
@@ -52,7 +52,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
     if (!finalImageUrls) throw new AppError("ITEM_IMAGE_NULL", 400);
 
     // 数値チェック
-    const { categoryId, conditionId, dayId, serviceId, placeId, brandId, priceNum } = await validateNumber({ body });
+    const { categoryId, conditionId, dayId, serviceId, placeId, brandId } = await validateNumber({ body });
 
     // マスターテーブルチェック
     const categoryOption = await validateMaster({
@@ -72,7 +72,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
             video: item.Video,
             data: {
                 title: videoMeta.title,
-                summary: videoMeta.summary,
+                summary: videoMeta.summary ?? "",
                 original_url: videoUrl,
                 thumbnail_url: thumbnailUrl,
             },
@@ -81,7 +81,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
 
         await updateSale({
             sale: item.Sale,
-            data: { before_price: priceNum },
+            data: { before_price: body.price },
             transaction: t,
         });
 
@@ -100,7 +100,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
             item,
             data: {
                 name: itemMeta.name,
-                detail: itemMeta.detail,
+                detail: itemMeta.detail ?? "",
 
                 category_id: categoryId,
                 gender_type: genderAge.gender,
@@ -148,7 +148,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
                     layer: categoryOption?.layer ?? undefined,
                 },
 
-                price: priceNum,
+                price: body.price,
                 first_image_url: finalImageUrls[0],
                 status: "draft",
             },

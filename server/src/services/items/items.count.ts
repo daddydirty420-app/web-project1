@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { Item } from "../../models/index.js";
-import { UserIdParams } from "../../types/serviceType/items/items.js";
+import { UserIdParams } from "../../types/serviceType/items.js";
 
 export const countSellItem = ({ userId }: UserIdParams) => {
     return Item.count({

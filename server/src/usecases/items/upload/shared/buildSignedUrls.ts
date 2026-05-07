@@ -1,14 +1,14 @@
 import { s3Domain } from "../../../../infra/aws/s3.js";
 import { SignedUrlWithIndex } from "../../../../infra/aws/type.js";
 import { Item } from "../../../../models/index.js";
-import { Body } from "../../../../types/serviceType/items/uploadBody.js";
 import { generateSignedUrl } from "../../../../utils/s3/index.js";
+import { ItemUploadBody } from "../../../../validators/body/items.js";
 
 type Params = {
     itemId: number;
     userId: number;
     item: InstanceType<typeof Item>;
-    body: Body;
+    body: ItemUploadBody;
 };
 
 export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) => {

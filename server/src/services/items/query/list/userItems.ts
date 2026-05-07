@@ -1,5 +1,5 @@
 import { Item, Sale, Video } from "../../../../models/index.js";
-import { ItemListParams } from "../../../../types/serviceType/items/items.js";
+import { ItemListParams } from "../../../../types/serviceType/items.js";
 
 export const getUserItemsStatusList = async ({ where, limit, offset }: ItemListParams) => {
     const itemList = await Item.findAll({

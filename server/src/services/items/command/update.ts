@@ -7,7 +7,7 @@ import {
     UpdateItemParams,
     UpdatePriceParams,
     UpdateReportScoreParams,
-} from "../../../types/serviceType/items/items.js";
+} from "../../../types/serviceType/items.js";
 
 export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
     await item.update(data);

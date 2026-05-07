@@ -1,9 +1,8 @@
-import { AppError } from "../../../../errors.js";
-import { Body } from "../../../../types/serviceType/items/uploadBody.js";
 import { toNullableNumber } from "../../../../utils/toNullableNumber.js";
+import { ItemUploadBody } from "../../../../validators/body/items.js";
 
 type Params = {
-    body: Body;
+    body: ItemUploadBody;
 };
 
 export const validateNumber = async ({ body }: Params) => {
@@ -22,11 +21,6 @@ export const validateNumber = async ({ body }: Params) => {
 
     const brandId = toNullableNumber(brand.id);
 
-    const priceNum = price === "" ? 0 : Number(price);
-    if (priceNum !== 0 && Number.isNaN(priceNum)) {
-        throw new AppError("INVALID_PRICE", 400);
-    }
-
     return {
         categoryId,
         conditionId,
@@ -34,6 +28,5 @@ export const validateNumber = async ({ body }: Params) => {
         serviceId,
         placeId,
         brandId,
-        priceNum,
     };
 };

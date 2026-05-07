@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import { Categories, Item, Sale } from "../../../../models/index.js";
-import { ItemPageRecommendParams, RecommendParams } from "../../../../types/serviceType/items/items.js";
+import { ItemPageRecommendParams, RecommendParams } from "../../../../types/serviceType/items.js";
 
 export const getIndexRecommendItems = ({ where }: RecommendParams) => {
     return Item.findAll({

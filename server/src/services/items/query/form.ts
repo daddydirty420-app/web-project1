@@ -11,7 +11,7 @@ import {
     TodouhukenOption,
     Video,
 } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items.js";
 
 export const getItemFormData = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {

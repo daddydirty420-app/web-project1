@@ -1,5 +1,5 @@
 import { Item, Sale, User, Video } from "../../../../models/index.js";
-import { ItemListParams } from "../../../../types/serviceType/items/items.js";
+import { ItemListParams } from "../../../../types/serviceType/items.js";
 
 export const getIndexItemsWithCount = async ({ where, limit, offset }: ItemListParams) => {
     const items = await Item.findAll({

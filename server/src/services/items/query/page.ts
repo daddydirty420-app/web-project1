@@ -13,7 +13,7 @@ import {
     User,
     Video,
 } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items/items.js";
+import { ItemIdParams } from "../../../types/serviceType/items.js";
 
 export const getItemPageData = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId, {

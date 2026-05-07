@@ -262,7 +262,7 @@ export const useUpload = () => {
                 place: shippingValue.place_id,
                 freeText: shippingValue.free_text,
             },
-            price: priceValue.price,
+            price: Number(priceValue.price),
         };
     };
 
