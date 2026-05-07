@@ -7,6 +7,9 @@ type Params = {
     pageUserId?: number;
 };
 
+// GET /items?type=""&page=number&view="profile"&limit=number(&pageUserId=${id})
+// summary: 商品リスト取得
+// page: /profile
 export const getProfileItemsUseCase = async ({ page, limit, pageUserId }: Params) => {
     const where: any = {
         status: { [Op.in]: ["active", "soldout"] },

@@ -18,6 +18,9 @@ type Params = {
     body: Body;
 };
 
+// PUT /items/:id?mode="draft"
+// summary: 下書き商品アップロード
+// page: /upload/[id]
 export const uploadDraftUseCase = async ({ itemId, userId, body }: Params) => {
     const { attributes, shipping, videoMeta, itemMeta, genderAge } = body;
 

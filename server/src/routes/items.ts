@@ -5,7 +5,7 @@ import { authenticateOptional, authenticateToken } from "../middleware/index.js"
 import { validateParams } from "../middleware/validateParams.js";
 import { validateQuery } from "../middleware/validateQuery.js";
 import { Body } from "../types/serviceType/items/uploadBody.js";
-import { ItemListType, ItemListView, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
+import { RecommendItemsview } from "../types/usecaseType.js";
 import { deleteDraftItemUseCase } from "../usecases/items/delete/draftDelete.js";
 import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
@@ -29,7 +29,19 @@ import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
 import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
 import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { getItemPageQuerySchema, ItemPageMode } from "../validators/query/items.js";
+import {
+    getItemPageQuerySchema,
+    ItemListQuery,
+    itemListQuerySchema,
+    ItemListType,
+    ItemListView,
+    ItemPageMode,
+    itemSortNumberQuerySchema,
+    putItemUploadQuerySchema,
+    RecommendItemsQuery,
+    recommendItemsQuerySchema,
+    UploadMode,
+} from "../validators/query/items.js";
 
 const router = Router();
 
@@ -67,18 +79,18 @@ router.post(
 );
 
 // PUT /items/:id?mode=""
+// summary: 商品アップロード
+// page: /upload/[id]
 router.put(
     "/:id",
     authenticateToken,
     validateParams(idParamSchema),
+    validateQuery(putItemUploadQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = parseInt(req.params.id);
         const userId = req.user!.id;
 
         const mode = req.query.mode as UploadMode;
-        if (mode !== "main" && mode !== "draft") {
-            throw new AppError("INVALID_TYPE", 400);
-        }
 
         const body = req.body as Body;
 
@@ -124,9 +136,12 @@ router.patch(
 );
 
 // PATCH /items/:id/sort-number/add?number=number
+// summary: sortNumber追加
+// page: /itemなど
 router.patch(
     "/:id/sort-number/add",
     validateParams(idParamSchema),
+    validateQuery(itemSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -145,9 +160,12 @@ router.patch(
 );
 
 // PATCH /items/:id/sort-number/decrease?number=number
+// summary: sortNumber減少
+// page: /itemなど
 router.patch(
     "/:id/sort-number/decrease",
     validateParams(idParamSchema),
+    validateQuery(itemSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -264,66 +282,76 @@ router.delete(
 );
 
 // GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
-router.get("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-
-    const type = req.query.type as ItemListType;
-
-    if (type !== "video" && type !== "item") {
-        throw new AppError("INVALID_TYPE", 400);
-    }
-
-    const page = parseInt(req.query.page as string) || 1;
-
-    const view = req.query.view as ItemListView;
-
-    const limit = parseInt(req.query.limit as string) || 6;
-
-    const pageUserId = parseInt(req.query.pageUserId as string) || undefined;
-
-    if (view === "profile" && !pageUserId) {
-        throw new AppError("PAGE_USER_NOT_FOUND", 404);
-    }
-
-    const baseParams = { page, limit };
-
-    // usecaseマップ（アロー関数で包む）
-    const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
-        index: {
-            video: () => getIndexVideosUseCase({ ...baseParams, userId }),
-            item: () => getIndexItemsUseCase({ ...baseParams, userId }),
-        },
-        profile: {
-            video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
-            item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
-        },
-    };
-
-    const usecase = usecaseMap[view]?.[type];
-
-    if (!usecase) {
-        throw new AppError("INVALID_VIEW_OR_TYPE", 400);
-    }
-
-    try {
-        const { items, totalPages } = await usecase();
-
-        res.status(200).json({ items, totalPages });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// GET /items/recommend?view=""(&itemId=number)
+// summary: 商品リスト取得
+// page: /lp・/profile
 router.get(
-    "/recommend",
+    "/",
     authenticateOptional,
+    validateQuery(itemListQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user?.id ?? null;
 
-        const view = req.query.view as RecommendItemsview;
+        const query = req.validatedQuery as ItemListQuery;
 
-        const itemId = parseInt(req.query.itemId as string) || undefined;
+        const type = query.type;
+        const page = query.page ?? 1;
+        const view = query.view;
+        const limit = query.limit ?? 6;
+        const pageUserId = query.pageUserId ?? undefined;
+
+        if (view === "profile" && !pageUserId) {
+            throw new AppError("PAGE_USER_NOT_FOUND", 404);
+        }
+
+        const baseParams = { page, limit };
+
+        // usecaseマップ（アロー関数で包む）
+        const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
+            index: {
+                video: () => getIndexVideosUseCase({ ...baseParams, userId }),
+                item: () => getIndexItemsUseCase({ ...baseParams, userId }),
+            },
+            profile: {
+                video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
+                item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
+            },
+        };
+
+        const usecase = usecaseMap[view]?.[type];
+
+        if (!usecase) {
+            throw new AppError("INVALID_VIEW_OR_TYPE", 400);
+        }
+
+        try {
+            const { items, totalPages } = await usecase();
+
+            res.status(200).json({ items, totalPages });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /items/recommend?view=""(&itemId=number)
+// summary: レコメンドリスト取得
+// page: /item・/item-list/cart・/など
+router.get(
+    "/recommend",
+    authenticateOptional,
+    validateQuery(recommendItemsQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user?.id ?? null;
+
+        const query = req.validatedQuery as RecommendItemsQuery;
+
+        const view = query.view;
+
+        const itemId = query.itemId ?? undefined;
+
+        if (view === "itemPage" && !itemId) {
+            throw new AppError("INVALID_QUERY", 400);
+        }
 
         // 関数そのものを保存（実行しない）
         const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {

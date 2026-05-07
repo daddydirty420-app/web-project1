@@ -5,6 +5,9 @@ type Params = {
     userId: number | null;
 };
 
+// GET /items/recommend?view="recommend"(&itemId=number)
+// summary: レコメンドリスト取得
+// page: /・/lp
 export const getIndexRecommendUseCase = async ({ userId }: Params) => {
     const where: any = {
         status: "active",

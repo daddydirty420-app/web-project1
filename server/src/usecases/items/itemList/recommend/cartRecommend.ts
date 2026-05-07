@@ -6,6 +6,9 @@ type Params = {
     userId: number | null;
 };
 
+// GET /items/recommend?view="cart"(&itemId=number)
+// summary: レコメンドリスト取得
+// page: /item-list/cart
 export const getCartRecommendUseCase = async ({ userId }: Params) => {
     if (!userId) throw new AppError("INVALID_USER_ID", 401);
 

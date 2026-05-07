@@ -7,6 +7,9 @@ type Params = {
     limit: number;
 };
 
+// GET /items?type=""&page=number&view="index"&limit=number(&pageUserId=${id})
+// summary: 商品リスト取得
+// page: /lp・/など
 export const getIndexItemsUseCase = async ({ userId, page, limit }: Params) => {
     const where: any = { status: "active" };
     if (userId) {

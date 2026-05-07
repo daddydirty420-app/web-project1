@@ -7,6 +7,9 @@ type Params = {
     buzzNumber?: number;
 };
 
+// PATCH /items/:id/sort-number/add?number=number
+// summary: sortNumber追加
+// page: /itemなど
 export const patchSortNumberAddUseCase = async ({ itemId, number, buzzNumber }: Params) => {
     const item = await getItem({ itemId });
 
@@ -32,6 +35,9 @@ export const patchSortNumberAddUseCase = async ({ itemId, number, buzzNumber }: 
     }
 };
 
+// PATCH /items/:id/sort-number/decrease?number=number
+// summary: sortNumber減少
+// page: /itemなど
 export const patchSortNumberDecreaseUseCase = async ({ itemId, number, buzzNumber }: Params) => {
     const item = await getItem({ itemId });
 

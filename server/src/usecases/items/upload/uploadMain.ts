@@ -18,6 +18,9 @@ type Params = {
     body: Body;
 };
 
+// PUT /items/:id?mode="main"
+// summary: 商品アップロード
+// page: /upload/[id]
 export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
     const { attributes, shipping, videoMeta, itemMeta, genderAge } = body;
 
@@ -44,9 +47,9 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
         finalAttributesImageUrls,
     } = await buildSignedUrls({ itemId, userId, item, body });
 
-    if (!videoUrl) throw new AppError("VIDEOURL_NULL", 400);
+    if (!videoUrl) throw new AppError("VIDEO_URL_NULL", 400);
     if (!thumbnailUrl) throw new AppError("THUMBNAIL_URL_NULL", 400);
-    if (!finalImageUrls) throw new AppError("ITEMIMAGE_NULL", 400);
+    if (!finalImageUrls) throw new AppError("ITEM_IMAGE_NULL", 400);
 
     // 数値チェック
     const { categoryId, conditionId, dayId, serviceId, placeId, brandId, priceNum } = await validateNumber({ body });

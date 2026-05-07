@@ -7,6 +7,9 @@ type Params = {
     userId: number | null;
 };
 
+// GET /items/recommend?view="itemPage"(&itemId=number)
+// summary: レコメンドリスト取得
+// page: /item
 export const getItemPageRecommendUseCase = async ({ itemId, userId }: Params) => {
     if (!itemId) throw new AppError("ITEMID_INVALID", 400);
 
