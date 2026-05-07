@@ -1,11 +1,14 @@
-import { getComment, updateSortNumber } from "../../services/comment.js";
 import { AppError } from "../../errors.js";
+import { getComment, updateSortNumber } from "../../services/comment.js";
 
 type Params = {
     commentId: number;
     number: number;
 };
 
+// PATCH /comment/:id/sort-number/add?number=number
+// summary: sort_number追加
+// page: /item
 export const patchCommentSortNumberAddUseCase = async ({ commentId, number }: Params) => {
     const comment = await getComment({ commentId });
 
@@ -20,6 +23,9 @@ export const patchCommentSortNumberAddUseCase = async ({ commentId, number }: Pa
     });
 };
 
+// PATCH /comment/:id/sort-number/decrease?number=number
+// summary: sort_number減少
+// page: /item
 export const patchCommentSortNumberDecreaseUseCase = async ({ commentId, number }: Params) => {
     const comment = await getComment({ commentId });
 

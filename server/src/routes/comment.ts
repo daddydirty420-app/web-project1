@@ -16,6 +16,8 @@ import { idParamSchema } from "../validators/params/id.js";
 const router = Router();
 
 // POST /comment/:id?sellerMe=boolean(&parentId=number)
+// summary: コメント作成
+// page: /item
 router.post(
     "/:id",
     validateParams(idParamSchema),
@@ -49,6 +51,8 @@ router.post(
 );
 
 // PATCH /comment/:id/sort-number/add?number=number
+// summary: sort_number追加
+// page: /item
 router.patch(
     "/:id/sort-number/add",
     validateParams(idParamSchema),
@@ -70,6 +74,8 @@ router.patch(
 );
 
 // PATCH /comment/:id/sort-number/decrease?number=number
+// summary: sort_number減少
+// page: /item
 router.patch(
     "/:id/sort-number/decrease",
     validateParams(idParamSchema),
@@ -91,6 +97,8 @@ router.patch(
 );
 
 // DELETE /comment/:id?page=""
+// summary: コメント削除
+// page: /item・/item/admin
 router.delete(
     "/:id",
     validateParams(idParamSchema),
@@ -117,6 +125,8 @@ router.delete(
 );
 
 // GET /comment/:id?sellerMe=boolean(&admin=boolean)
+// summary: コメント一覧取得
+// page: /item
 router.get(
     "/:id",
     validateParams(idParamSchema),
@@ -145,6 +155,8 @@ router.get(
 );
 
 // GET /comment/:id/reply?sellerMe=boolean(&admin=boolean)
+// summary: 返信リスト取得
+// page: /item
 router.get(
     "/:id/reply",
     validateParams(idParamSchema),

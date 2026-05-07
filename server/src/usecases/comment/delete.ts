@@ -9,6 +9,9 @@ type Params = {
     page: "normal" | "admin";
 };
 
+// DELETE /comment/:id?page=""
+// summary: コメント削除
+// page: /item/[id]・/item/admin/[id]
 export const deleteCommentUseCase = async ({ userId, commentId, page }: Params) => {
     // commentデータ取得
     const comment = await getComment({ commentId });

@@ -11,6 +11,9 @@ type Params = {
     admin: boolean;
 };
 
+// GET /comment/:id?sellerMe=boolean(&admin=boolean)
+// summary: コメント一覧取得
+// page: /item
 export const getAllCommentsUseCase = async ({ itemId, userId, sellerMe, admin }: Params) => {
     if (!sellerMe && !admin) {
         patchSortNumberAddUseCase({ itemId, number: 8, buzzNumber: 50 }).catch((err) => {

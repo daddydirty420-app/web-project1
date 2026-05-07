@@ -11,6 +11,9 @@ type Params = {
     admin: boolean;
 };
 
+// GET /comment/:id/reply?sellerMe=boolean(&admin=boolean)
+// summary: 返信リスト取得
+// page: /item
 export const getAllRepliesUseCase = async ({ parentCommentId, userId, sellerMe, admin }: Params) => {
     if (!sellerMe && !admin) {
         patchCommentSortNumberAddUseCase({ commentId: parentCommentId, number: 10 }).catch((err) => {

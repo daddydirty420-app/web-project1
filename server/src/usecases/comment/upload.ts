@@ -13,6 +13,9 @@ type Params = {
     parentId: number | null;
 };
 
+// POST /comment/:id?sellerMe=boolean(&parentId=number)
+// summary: コメント作成
+// page: /item
 export const uploadCommentUseCase = async ({
     userId,
     itemId,
