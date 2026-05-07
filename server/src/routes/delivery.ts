@@ -2,36 +2,43 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import {
+    Address,
     Delivery,
+    Item,
+    Name,
+    Orders,
     ShippingDayOption,
     ShippingServiceOption,
     TodouhukenOption,
-    Orders,
-    Item,
-    Address,
-    Name,
 } from "../models/index.js";
 import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
 // POST /delivery/:id
 // summary: 配送データ作成
 // page: /item
-router.post("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+router.post(
+    "/:id",
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    const itemId = Number(req.params.id);
+        const itemId = Number(req.params.id);
 
-    try {
-        const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
+        try {
+            const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
 
-        res.status(200).json({ deliveryId });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ deliveryId });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 router.get(
     "/index-wait-item-list",
@@ -65,6 +72,7 @@ router.get(
 
 router.get(
     "/buy-trans/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {

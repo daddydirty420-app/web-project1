@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
 import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
@@ -23,6 +24,7 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -47,6 +49,7 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
 // page: /edit/name/shop/rep-name/signup/[id]
 router.patch(
     "/:id/rep-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -66,6 +69,7 @@ router.patch(
 // PATCH /shop-info/:id/phone-number
 router.patch(
     "/:id/phone-number",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -89,6 +93,7 @@ router.patch(
 // PATCH /shop-info/:id/option
 router.patch(
     "/:id/option",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -112,6 +117,7 @@ router.patch(
 // page: /shop-signup/step3/[id]
 router.patch(
     "/:id/signup/3",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -142,6 +148,7 @@ router.patch(
 // page: /shop-signup/step4/[id]
 router.patch(
     "/:id/signup/4",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -164,6 +171,7 @@ router.patch(
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/edit",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -185,6 +193,7 @@ router.patch(
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/5",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -203,6 +212,7 @@ router.patch(
 // GET /shop-info/:id/address
 router.get(
     "/:id/address",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -221,6 +231,7 @@ router.get(
 // GET /shop-info/:id/bank-account
 router.get(
     "/:id/bank-account",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -239,6 +250,7 @@ router.get(
 // GET /shop-info/:id/rep-name
 router.get(
     "/:id/rep-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -257,6 +269,7 @@ router.get(
 // GET /shop-info/:id/con-name
 router.get(
     "/:id/con-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -275,6 +288,7 @@ router.get(
 // GET /shop-info/:id/phone-number
 router.get(
     "/:id/phone-number",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -293,6 +307,7 @@ router.get(
 // GET /shop-info/:id/company-name
 router.get(
     "/:id/company-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -309,22 +324,28 @@ router.get(
 );
 
 // GET /shop-info/:id/option
-router.get("/:id/option", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
+router.get(
+    "/:id/option",
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
 
-    try {
-        const shop = await getShopOptionUseCase({ shopId, userId });
+        try {
+            const shop = await getShopOptionUseCase({ shopId, userId });
 
-        res.status(200).json({ shop });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ shop });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /shop-info/:id/com-free
 router.get(
     "/:id/com-free",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -360,6 +381,7 @@ router.get("/signup/1", authenticateToken, async (req: Request, res: Response, n
 // page: /shop-signup/step2/[id]
 router.get(
     "/:id/signup/2",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -380,6 +402,7 @@ router.get(
 // page: /shop-signup/step3/[id]
 router.get(
     "/:id/signup/3",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -400,6 +423,7 @@ router.get(
 // page: /shop-signup/step5/[id]
 router.get(
     "/:id/signup/5",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -452,6 +476,7 @@ router.get(
 
 router.get(
     "/edit-form/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -479,6 +504,7 @@ router.get(
 
 router.get(
     "/edit-other/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -506,63 +532,71 @@ router.get(
     },
 );
 
-router.get("/infopage/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: [
-                "id",
-                "company_name",
-                "shop_name",
-                "email",
-                "phone_number",
-                "homepage_url",
-                "open_date_time",
-                "open_info",
-            ],
-            include: [
-                {
-                    model: Address,
-                    attributes: ["post_number", "shikutyouson", "banchi", "building"],
-                    include: [
-                        {
-                            model: TodouhukenOption,
-                            as: "AddressTodouhuken",
-                        },
-                    ],
-                },
-                {
-                    model: Name,
-                    attributes: ["sei", "mei", "sei_kana", "mei_kana"],
-                },
-            ],
-        });
+router.get(
+    "/infopage/:id",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const data = await ShopInfo.findByPk(req.params.id, {
+                attributes: [
+                    "id",
+                    "company_name",
+                    "shop_name",
+                    "email",
+                    "phone_number",
+                    "homepage_url",
+                    "open_date_time",
+                    "open_info",
+                ],
+                include: [
+                    {
+                        model: Address,
+                        attributes: ["post_number", "shikutyouson", "banchi", "building"],
+                        include: [
+                            {
+                                model: TodouhukenOption,
+                                as: "AddressTodouhuken",
+                            },
+                        ],
+                    },
+                    {
+                        model: Name,
+                        attributes: ["sei", "mei", "sei_kana", "mei_kana"],
+                    },
+                ],
+            });
 
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
+            if (!data) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.json({ data });
+        } catch (err) {
+            next(err);
         }
+    },
+);
 
-        res.json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+router.get(
+    "/open-info-request/:id",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const data = await ShopInfo.findByPk(req.params.id, {
+                attributes: ["id", "shop_name"],
+            });
 
-router.get("/open-info-request/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await ShopInfo.findByPk(req.params.id, {
-            attributes: ["id", "shop_name"],
-        });
+            if (!data) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
 
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
+            res.json({ data });
+        } catch (err) {
+            next(err);
         }
-
-        res.json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+    },
+);
 
 export default router;

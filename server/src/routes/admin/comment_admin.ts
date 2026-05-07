@@ -1,13 +1,16 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Comment, Item, Notification } from "../../models/index.js";
 import sequelize from "../../db.js";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateParams } from "../../middleware/validateParams.js";
+import { Comment, Item, Notification } from "../../models/index.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 
 router.post(
     "/delete/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

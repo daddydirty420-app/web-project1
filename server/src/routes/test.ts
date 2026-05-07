@@ -3,6 +3,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import sequelize from "../db.js";
+import { validateParams } from "../middleware/validateParams.js";
 import {
     Address,
     Brands,
@@ -16,10 +17,11 @@ import {
     Sale,
     User,
 } from "../models/index.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
-router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/item-date/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
     const nowDate = new Date();
@@ -47,7 +49,7 @@ router.patch("/item-date/:id", async (req: Request, res: Response): Promise<void
     }
 });
 
-router.post("/item-copy/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/item-copy/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const itemId = req.params.id;
 
     try {
@@ -114,7 +116,7 @@ router.patch("/status-sold", async (req: Request, res: Response): Promise<void> 
     }
 });
 
-router.post("/cart-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/cart-create/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();
@@ -192,7 +194,7 @@ router.post("/sale-create", async (req: Request, res: Response): Promise<void> =
     }
 });
 
-router.post("/name-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/name-create/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     try {
@@ -228,48 +230,52 @@ router.post("/name-create/:id", async (req: Request, res: Response): Promise<voi
     }
 });
 
-router.post("/address-create/:id", async (req: Request, res: Response): Promise<void> => {
-    const userId = Number(req.params.id);
+router.post(
+    "/address-create/:id",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response): Promise<void> => {
+        const userId = Number(req.params.id);
 
-    try {
-        if (!Number.isInteger(userId) || userId <= 0) {
-            throw new Error("INVALID_USER_ID");
+        try {
+            if (!Number.isInteger(userId) || userId <= 0) {
+                throw new Error("INVALID_USER_ID");
+            }
+
+            const user = await User.findByPk(userId, {
+                include: [
+                    {
+                        model: Address,
+                        required: false,
+                    },
+                ],
+            });
+
+            if (!user) {
+                throw new Error("USER_NOT_FOUND");
+            }
+
+            await user.Address.upsert({
+                post_number: "2100007",
+                todouhuken_id: 14,
+                shikutyouson: "川崎市川崎区",
+                banchi: "駅前本町11-2",
+                building: "川崎フロンティアビル4F",
+                user_id: user.id,
+            });
+
+            res.status(201).json({ message: "ok" });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "サーバーエラー" });
         }
-
-        const user = await User.findByPk(userId, {
-            include: [
-                {
-                    model: Address,
-                    required: false,
-                },
-            ],
-        });
-
-        if (!user) {
-            throw new Error("USER_NOT_FOUND");
-        }
-
-        await user.Address.upsert({
-            post_number: "2100007",
-            todouhuken_id: 14,
-            shikutyouson: "川崎市川崎区",
-            banchi: "駅前本町11-2",
-            building: "川崎フロンティアビル4F",
-            user_id: user.id,
-        });
-
-        res.status(201).json({ message: "ok" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "サーバーエラー" });
-    }
-});
+    },
+);
 
 function generatePayId(): string {
     return crypto.randomBytes(16).toString("base64url");
 }
 
-router.post("/orders-create/:id", async (req: Request, res: Response): Promise<void> => {
+router.post("/orders-create/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const now = Date.now();
@@ -402,7 +408,7 @@ router.post("/orders-create/:id", async (req: Request, res: Response): Promise<v
     }
 });
 
-router.patch("/orders-patch/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/orders-patch/:id", validateParams(idParamSchema), async (req: Request, res: Response): Promise<void> => {
     const userId = Number(req.params.id);
 
     const t = await sequelize.transaction();

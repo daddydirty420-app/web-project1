@@ -1,19 +1,21 @@
+import { endOfMonth, startOfMonth, subDays, subMonths } from "date-fns";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { Op, WhereOptions, fn, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { Op, fn, WhereOptions, literal } from "sequelize";
+import { validateParams } from "../../middleware/validateParams.js";
 import {
-    ShopInfo,
-    User,
-    ComOrFreeOption,
-    Address,
-    Name,
-    TodouhukenOption,
-    BankAccount,
     AccountTypeOption,
+    Address,
+    BankAccount,
+    ComOrFreeOption,
+    Name,
+    ShopInfo,
+    TodouhukenOption,
     UriagekinHistory,
+    User,
 } from "../../models/index.js";
-import { subDays, subMonths, startOfMonth, endOfMonth } from "date-fns";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 
@@ -200,6 +202,7 @@ router.get(
 
 router.get(
     "/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

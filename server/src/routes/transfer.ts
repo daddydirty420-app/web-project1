@@ -1,9 +1,11 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -44,29 +46,34 @@ router.post("/points", authenticateToken, async (req: Request, res: Response, ne
     }
 });
 
-router.get("/detail/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await Transfer.findByPk(req.params.id, {
-            attributes: ["id", "trans_money", "transfer_id", "createdAt"],
-            include: [
-                {
-                    model: BankAccount,
-                    attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                    include: [{ model: AccountTypeOption }],
-                },
-            ],
-        });
+router.get(
+    "/detail/:id",
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const data = await Transfer.findByPk(req.params.id, {
+                attributes: ["id", "trans_money", "transfer_id", "createdAt"],
+                include: [
+                    {
+                        model: BankAccount,
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
+                        include: [{ model: AccountTypeOption }],
+                    },
+                ],
+            });
 
-        if (!data) {
-            res.status(404).json({ message: "データが見つかりません。" });
-            return;
+            if (!data) {
+                res.status(404).json({ message: "データが見つかりません。" });
+                return;
+            }
+
+            res.json({ data });
+        } catch (err) {
+            next(err);
         }
-
-        res.json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+    },
+);
 
 router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

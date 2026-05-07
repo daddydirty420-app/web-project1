@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
@@ -14,6 +15,7 @@ import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -86,54 +88,66 @@ router.get("/me-admin", authenticateToken, async (req: Request, res: Response): 
 });
 
 // GET /:id/profile
-router.get("/:id/profile", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = Number(req.params.id);
+router.get(
+    "/:id/profile",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = Number(req.params.id);
 
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = Number(req.query.limit) || 6;
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = Number(req.query.limit) || 6;
 
-    try {
-        const { user, hasShop, items, hasItemCount, totalPages } = await getProfileUseCase({ userId, page, limit });
+        try {
+            const { user, hasShop, items, hasItemCount, totalPages } = await getProfileUseCase({ userId, page, limit });
 
-        res.status(200).json({
-            user,
-            hasShop,
-            itemList: {
-                items,
-                hasItemCount,
-                totalPages,
-            },
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                user,
+                hasShop,
+                itemList: {
+                    items,
+                    hasItemCount,
+                    totalPages,
+                },
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/:id/star
-router.get("/:id/star", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = Number(req.params.id);
+router.get(
+    "/:id/star",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = Number(req.params.id);
 
-    try {
-        const user = await getStar({ userId });
+        try {
+            const user = await getStar({ userId });
 
-        res.status(200).json({ user });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/:id/profile/metadata
-router.get("/:id/profile/metadata", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = Number(req.params.id);
+router.get(
+    "/:id/profile/metadata",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = Number(req.params.id);
 
-    try {
-        const user = await getProfileMetadata({ userId });
+        try {
+            const user = await getProfileMetadata({ userId });
 
-        res.status(200).json({ user });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/my-page
 router.get("/my-page", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {

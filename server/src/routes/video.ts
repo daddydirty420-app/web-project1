@@ -1,8 +1,10 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { convertVideoUseCase } from "../usecases/video/convert.js";
 import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -11,6 +13,7 @@ const router = Router();
 // page: /item
 router.patch(
     "/:id/onplay",
+    validateParams(idParamSchema),
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const videoId = Number(req.params.id);
@@ -30,6 +33,7 @@ router.patch(
 // page: /upload
 router.patch(
     "/:id/convert",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const videoId = Number(req.params.id);

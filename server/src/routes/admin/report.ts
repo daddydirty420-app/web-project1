@@ -1,20 +1,22 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { col, fn, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateParams } from "../../middleware/validateParams.js";
 import {
-    ItemReport,
-    Item,
-    ItemReportOption,
+    Comment,
     CommentReport,
     CommentReportOption,
-    Comment,
+    Item,
     ItemBuyerReport,
-    User,
     ItemBuyerReportOption,
+    ItemReport,
+    ItemReportOption,
     Orders,
+    User,
     Video,
 } from "../../models/index.js";
-import { col, fn, literal } from "sequelize";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 
@@ -86,6 +88,7 @@ router.get(
 
 router.get(
     "/item/report-list/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -113,6 +116,7 @@ router.get(
 
 router.get(
     "/comment/report-list/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

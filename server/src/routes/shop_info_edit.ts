@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
@@ -15,12 +16,14 @@ import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.j
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
 import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
 import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
 // POST /shop-info-edit/:id/address
 router.post(
     "/:id/address",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -71,6 +74,7 @@ router.post(
 // POST /shop-info-edit/:id/bank-account
 router.post(
     "/:id/bank-account",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -110,6 +114,7 @@ router.post(
 // page: /edit/name/shop/rep-name/[id]
 router.post(
     "/:id/rep-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -129,6 +134,7 @@ router.post(
 // POST /shop-info-edit/:id/company-name
 router.post(
     "/:id/company-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -150,6 +156,7 @@ router.post(
 // POST /shop-info-edit/:id/com-free
 router.post(
     "/:id/com-free",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -167,25 +174,31 @@ router.post(
 );
 
 // PATCH /shop-info-edit/:id
-router.patch("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-    const updateData = req.body;
+router.patch(
+    "/:id",
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+        const updateData = req.body;
 
-    try {
-        await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
+        try {
+            await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
 
-        res.status(200).json({ message: "更新しました" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "更新しました" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PATCH /shop-info-edit/:id/id-image-upload
 // summary: 事業者登録　代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 router.patch(
     "/:id/id-image-upload",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -214,6 +227,7 @@ router.patch(
 // GET /shop-info-edit/:id/address
 router.get(
     "/:id/address",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -232,6 +246,7 @@ router.get(
 // GET /shop-info-edit/:id/bank-account
 router.get(
     "/:id/bank-account",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -250,6 +265,7 @@ router.get(
 // GET /shop-info-edit/:id/rep-name
 router.get(
     "/:id/rep-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -268,6 +284,7 @@ router.get(
 // GET /shop-info-edit/:id/con-name
 router.get(
     "/:id/con-name",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -286,6 +303,7 @@ router.get(
 // GET /shop-info-edit/:id/com-free-confirm
 router.get(
     "/:id/com-free-confirm",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);

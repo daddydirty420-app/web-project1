@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op } from "sequelize";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import {
     Address,
     Cancel,
@@ -23,6 +24,7 @@ import {
 } from "../models/index.js";
 import { getPurchasedListUseCase } from "../usecases/orders/getPurchasedList.js";
 import { getSoldListUseCase } from "../usecases/orders/getSoldList.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -56,67 +58,73 @@ router.get("/", authenticateToken, async (req: Request, res: Response, next: Nex
     }
 });
 
-router.get("/buy/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await Orders.findByPk(req.params.id, {
-            attributes: ["id", "price", "total_amount", "item_count", "purchase_snapshot"],
-            include: [
-                {
-                    model: Item,
-                    attributes: ["id", "name", "first_image_url"],
-                },
-                {
-                    model: Delivery,
-                    attributes: ["id", "buyer_phone_number", "arrive_specified_date"],
-                    include: [
-                        { model: ShippingDayOption },
-                        { model: ShippingServiceOption },
-                        {
-                            model: TodouhukenOption,
-                            as: "DeliveryTodouhuken",
-                        },
-                        {
-                            model: Address,
-                            attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
-                            include: [
-                                {
-                                    model: TodouhukenOption,
-                                    as: "AddressTodouhuken",
-                                },
-                            ],
-                        },
-                        {
-                            model: Name,
-                            attributes: ["sei", "mei"],
-                        },
-                    ],
-                },
-                {
-                    model: User,
-                    as: "Seller",
-                    attributes: ["id", "user_name"],
-                },
-                {
-                    model: User,
-                    as: "Buyer",
-                    attributes: ["id", "points"],
-                },
-            ],
-        });
+router.get(
+    "/buy/:id",
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const data = await Orders.findByPk(req.params.id, {
+                attributes: ["id", "price", "total_amount", "item_count", "purchase_snapshot"],
+                include: [
+                    {
+                        model: Item,
+                        attributes: ["id", "name", "first_image_url"],
+                    },
+                    {
+                        model: Delivery,
+                        attributes: ["id", "buyer_phone_number", "arrive_specified_date"],
+                        include: [
+                            { model: ShippingDayOption },
+                            { model: ShippingServiceOption },
+                            {
+                                model: TodouhukenOption,
+                                as: "DeliveryTodouhuken",
+                            },
+                            {
+                                model: Address,
+                                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
+                                include: [
+                                    {
+                                        model: TodouhukenOption,
+                                        as: "AddressTodouhuken",
+                                    },
+                                ],
+                            },
+                            {
+                                model: Name,
+                                attributes: ["sei", "mei"],
+                            },
+                        ],
+                    },
+                    {
+                        model: User,
+                        as: "Seller",
+                        attributes: ["id", "user_name"],
+                    },
+                    {
+                        model: User,
+                        as: "Buyer",
+                        attributes: ["id", "points"],
+                    },
+                ],
+            });
 
-        if (!data) {
-            res.status(404).json({ message: "データを取得できません。" });
-            return;
+            if (!data) {
+                res.status(404).json({ message: "データを取得できません。" });
+                return;
+            }
+
+            res.json({ data });
+        } catch (err) {
+            next(err);
         }
-
-        res.json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+    },
+);
 
 router.get(
     "/buy-item-after/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -260,6 +268,7 @@ router.get(
 
 router.get(
     "/cancel-page/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -298,6 +307,7 @@ router.get(
 
 router.get(
     "/item-transport/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {

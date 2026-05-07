@@ -50,6 +50,7 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
 router.post(
     "/:id/copy-upload",
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -66,41 +67,48 @@ router.post(
 );
 
 // PUT /items/:id?mode=""
-router.put("/:id", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = parseInt(req.params.id);
-    const userId = req.user!.id;
+router.put(
+    "/:id",
+    authenticateToken,
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = parseInt(req.params.id);
+        const userId = req.user!.id;
 
-    const mode = req.query.mode as UploadMode;
-    if (mode !== "main" && mode !== "draft") {
-        throw new AppError("INVALID_TYPE", 400);
-    }
+        const mode = req.query.mode as UploadMode;
+        if (mode !== "main" && mode !== "draft") {
+            throw new AppError("INVALID_TYPE", 400);
+        }
 
-    const body = req.body as Body;
+        const body = req.body as Body;
 
-    const usecase = mode === "main" ? uploadMainUseCase : uploadDraftUseCase;
+        const usecase = mode === "main" ? uploadMainUseCase : uploadDraftUseCase;
 
-    try {
-        const { videoSignedUrl, thumbnailSignedUrl, itemImageSignedUrls, attributesImageSignedUrls } = await usecase({
-            itemId,
-            userId,
-            body,
-        });
+        try {
+            const { videoSignedUrl, thumbnailSignedUrl, itemImageSignedUrls, attributesImageSignedUrls } =
+                await usecase({
+                    itemId,
+                    userId,
+                    body,
+                });
 
-        res.status(200).json({
-            videoSignedUrl,
-            thumbnailSignedUrl,
-            itemImageSignedUrls,
-            attributesImageSignedUrls,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                videoSignedUrl,
+                thumbnailSignedUrl,
+                itemImageSignedUrls,
+                attributesImageSignedUrls,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PATCH /items/:id/publish
 router.patch(
     "/:id/publish",
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
         const userId = req.user!.id;
@@ -116,43 +124,52 @@ router.patch(
 );
 
 // PATCH /items/:id/sort-number/add?number=number
-router.patch("/:id/sort-number/add", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.patch(
+    "/:id/sort-number/add",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    const number = Number(req.query.number);
+        const number = Number(req.query.number);
 
-    if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
-    }
+        if (!number || isNaN(number)) {
+            throw new AppError("INVALID_NUMBER", 400);
+        }
 
-    patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
-    });
+        patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
+            console.error(err);
+        });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
-});
+        res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    },
+);
 
 // PATCH /items/:id/sort-number/decrease?number=number
-router.patch("/:id/sort-number/decrease", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.patch(
+    "/:id/sort-number/decrease",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    const number = Number(req.query.number);
+        const number = Number(req.query.number);
 
-    if (!number || isNaN(number)) {
-        throw new AppError("INVALID_NUMBER", 400);
-    }
+        if (!number || isNaN(number)) {
+            throw new AppError("INVALID_NUMBER", 400);
+        }
 
-    patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
-    });
+        patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
+            console.error(err);
+        });
 
-    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
-});
+        res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+    },
+);
 
 // PATCH /items/:id/logs/access
 router.patch(
     "/:id/logs/access",
     authenticateOptional,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -167,39 +184,50 @@ router.patch(
 );
 
 // PATCH /items/:id/restore
-router.patch("/:id/restore", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
-    const itemId = Number(req.params.id);
+router.patch(
+    "/:id/restore",
+    authenticateToken,
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction) => {
+        const itemId = Number(req.params.id);
 
-    const userId = req.user!.id;
+        const userId = req.user!.id;
 
-    try {
-        await restoreItemUseCase({ userId, itemId });
+        try {
+            await restoreItemUseCase({ userId, itemId });
 
-        res.status(200).json({ message: "商品を復元しました" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "商品を復元しました" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // DELETE /items/:id/logical
-router.delete("/:id/logical", authenticateToken, async (req: Request, res: Response, next: NextFunction) => {
-    const itemId = Number(req.params.id);
+router.delete(
+    "/:id/logical",
+    authenticateToken,
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction) => {
+        const itemId = Number(req.params.id);
 
-    const userId = req.user!.id;
+        const userId = req.user!.id;
 
-    try {
-        await deleteItemLogicallyUseCase({ itemId, userId });
+        try {
+            await deleteItemLogicallyUseCase({ itemId, userId });
 
-        res.status(200).json({ message: "商品を削除しました" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "商品を削除しました" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // DELETE /items/:id/perfect
 router.delete(
     "/:id/perfect",
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -219,6 +247,7 @@ router.delete(
 router.delete(
     "/:id/draft",
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -355,22 +384,27 @@ router.get(
 );
 
 // GET /items/:id/metadata
-router.get("/:id/metadata", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.get(
+    "/:id/metadata",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    try {
-        const item = await getMetadataUseCase({ itemId });
+        try {
+            const item = await getMetadataUseCase({ itemId });
 
-        res.status(200).json({ item });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ item });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /items/:id/form-data
 router.get(
     "/:id/form-data",
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = parseInt(req.params.id);
 
@@ -395,16 +429,20 @@ router.get(
 );
 
 // GET /items/:id/highlight
-router.get("/:id/highlight", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
+router.get(
+    "/:id/highlight",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const itemId = Number(req.params.id);
 
-    try {
-        const item = await getItemHighlightUseCase({ itemId });
+        try {
+            const item = await getItemHighlightUseCase({ itemId });
 
-        res.status(200).json({ item });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ item });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

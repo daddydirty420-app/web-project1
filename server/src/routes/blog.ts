@@ -1,7 +1,9 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
+import { validateParams } from "../middleware/validateParams.js";
 import { Blog, BlogCategoryOption } from "../models/index.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
@@ -98,39 +100,43 @@ router.get("/search-category", async (req: Request, res: Response, next: NextFun
     }
 });
 
-router.get("/:id", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const data = await Blog.findByPk(req.params.id, {
-            include: [{ model: BlogCategoryOption }],
-        });
+router.get(
+    "/:id",
+    validateParams(idParamSchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const data = await Blog.findByPk(req.params.id, {
+                include: [{ model: BlogCategoryOption }],
+            });
 
-        if (!data) {
-            res.status(404).json({ message: "ブログが見つかりません。" });
-            return;
+            if (!data) {
+                res.status(404).json({ message: "ブログが見つかりません。" });
+                return;
+            }
+
+            const blogViewsRanking = await Blog.findAll({
+                attributes: ["id", "title"],
+                where: { public: true },
+                order: [["views_count", "DESC"]],
+                limit: 5,
+            });
+
+            const latestBlogList = await Blog.findAll({
+                attributes: ["id", "title"],
+                where: { public: true },
+                order: [["createdAt", "DESC"]],
+                limit: 5,
+            });
+
+            res.json({
+                data,
+                blogViewsRanking,
+                latestBlogList,
+            });
+        } catch (err) {
+            next(err);
         }
-
-        const blogViewsRanking = await Blog.findAll({
-            attributes: ["id", "title"],
-            where: { public: true },
-            order: [["views_count", "DESC"]],
-            limit: 5,
-        });
-
-        const latestBlogList = await Blog.findAll({
-            attributes: ["id", "title"],
-            where: { public: true },
-            order: [["createdAt", "DESC"]],
-            limit: 5,
-        });
-
-        res.json({
-            data,
-            blogViewsRanking,
-            latestBlogList,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+    },
+);
 
 export default router;

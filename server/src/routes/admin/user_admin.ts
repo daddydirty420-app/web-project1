@@ -3,11 +3,13 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { Op, col, fn, literal } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateParams } from "../../middleware/validateParams.js";
 import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
 import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
 import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js";
 import { deleteUserAdminUseCase } from "../../usecases/admin/users/deleteUser.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 
@@ -16,6 +18,7 @@ const router = Router();
 // page: /profile/admin/[id]
 router.delete(
     "/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -40,6 +43,7 @@ router.delete(
 // page: /profile/admin/[id]
 router.patch(
     "/:id/add-penalty",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -63,6 +67,7 @@ router.patch(
 // page: /profile/admin/[id]
 router.patch(
     "/:id/delete-uriage",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -89,6 +94,7 @@ router.patch(
 // page: /profile/admin/[id]
 router.get(
     "/:id/profile",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

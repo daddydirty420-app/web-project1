@@ -2,9 +2,11 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { validateParams } from "../../middleware/validateParams.js";
 import { Item, Video } from "../../models/index.js";
 import { deleteAdminItemUseCase } from "../../usecases/admin/items/deleteItem.js";
 import { getAdminItemPageUseCase } from "../../usecases/admin/items/getItemPage.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 
@@ -13,6 +15,7 @@ const router = Router();
 // page: /item/admin/[id]
 router.delete(
     "/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -41,6 +44,7 @@ router.delete(
 // page: /item/admin/[id]
 router.get(
     "/:id/item-page",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -68,6 +72,7 @@ router.get(
 
 router.get(
     "/file-edit-page/:id",
+    validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
