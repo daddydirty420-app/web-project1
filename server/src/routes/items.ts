@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { validateParams } from "../middleware/validateParams.js";
 import { validateQuery } from "../middleware/validateQuery.js";
 import { Body } from "../types/serviceType/items/uploadBody.js";
 import { ItemListType, ItemListView, RecommendItemsview, UploadMode } from "../types/usecaseType.js";
@@ -27,6 +28,7 @@ import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
 import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
 import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
 import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
+import { idParamSchema } from "../validators/params/id.js";
 import { getItemPageQuerySchema, ItemPageMode } from "../validators/query/items.js";
 
 const router = Router();
@@ -323,6 +325,7 @@ router.get(
 router.get(
     "/:id",
     authenticateOptional,
+    validateParams(idParamSchema),
     validateQuery(getItemPageQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
