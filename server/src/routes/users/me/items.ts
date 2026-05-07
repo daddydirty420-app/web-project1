@@ -3,7 +3,6 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { AppError } from "../../../errors.js";
 import { authenticateToken } from "../../../middleware/index.js";
 import { validateQuery } from "../../../middleware/validateQuery.js";
-import { UserItemsListType } from "../../../types/usecaseType.js";
 import { getUserItemsCartsUseCase } from "../../../usecases/items/itemList/userItems/getCarts.js";
 import { getDeletedItemsUseCase } from "../../../usecases/items/itemList/userItems/getDeletedItems.js";
 import { getDraftItemsUseCase } from "../../../usecases/items/itemList/userItems/getDraftItems.js";
@@ -12,7 +11,7 @@ import { getStockItemsUseCase } from "../../../usecases/items/itemList/userItems
 import { getUploadedItemsUseCase } from "../../../usecases/items/itemList/userItems/getUploaded.js";
 import { getUserItemsWatchUseCase } from "../../../usecases/items/itemList/userItems/getWatchHistory.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
-import { UserItemsListQuery, userItemsListQuerySchema } from "../../../validators/query/userItems.js";
+import { UserItemsListQuery, userItemsListQuerySchema, UserItemsListType } from "../../../validators/query/userItems.js";
 
 const router = Router();
 
