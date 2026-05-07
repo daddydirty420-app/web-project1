@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { Op, col, fn, literal } from "sequelize";
+import { col, fn, literal, Op } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { validateBody } from "../../middleware/validateBody.js";
@@ -11,8 +11,13 @@ import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js"
 import { deleteUserAdminUseCase } from "../../usecases/admin/users/deleteUser.js";
 import { getAdminProfileUseCase } from "../../usecases/admin/users/getProfile.js";
 import { DeleteReasonBody, deleteReasonBodySchema } from "../../validators/body/admin/admin.js";
+import {
+    AddPenaltyBody,
+    addPenaltyBodySchema,
+    DeleteUriageBody,
+    deleteUriageBodySchema,
+} from "../../validators/body/admin/users.js";
 import { idParamSchema } from "../../validators/params/id.js";
-import { AddPenaltyBody, addPenaltyBodySchema, DeleteUriageBody, deleteUriageBodySchema } from "../../validators/body/admin/users.js";
 
 const router = Router();
 
