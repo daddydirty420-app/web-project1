@@ -14,7 +14,7 @@ type Params = {
 
 // POST /auth/signup
 // summary: サインアップ
-// page: /signup 
+// page: /signup
 export const signupUseCase = async ({ email, password }: Params) => {
     // メールアドレス被りチェック
     const emailUser = await getAllEmail({ email });

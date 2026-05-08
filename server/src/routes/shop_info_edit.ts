@@ -19,7 +19,12 @@ import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/up
 import { AddressBody, addressBodySchema } from "../validators/body/address.js";
 import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { ComFreeIdBody, comFreeIdBodySchema, CreateCompanyNameBody, createCompanyNameBodySchema } from "../validators/body/shopInfoEdit.js";
+import {
+    ComFreeIdBody,
+    comFreeIdBodySchema,
+    CreateCompanyNameBody,
+    createCompanyNameBodySchema,
+} from "../validators/body/shopInfoEdit.js";
 import { RepNameBody, repNameBodySchema, ShopIdCardBody, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
 
 const router = Router();

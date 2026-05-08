@@ -21,7 +21,7 @@ type Params = {
 export const createBankAccountUseCase = async ({ shopId, userId, body }: Params) => {
     // body
     const { bankName, branch, accountType, accountNumber, meigi } = body;
-    
+
     // shopInfo取得
     const shop = await getShop({ shopId });
 
