@@ -8,6 +8,8 @@ import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
 import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { validateQuery } from "../middleware/validateQuery.js";
+import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
@@ -102,13 +104,14 @@ router.get(
 router.get(
     "/:id/user",
     validateParams(idParamSchema),
+    validateQuery(keywordOptionalQuerySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
-
         const userId = req.user!.id;
 
-        const keyword = req.query.keyword as string | undefined;
+        const query = req.validatedQuery as KeywordOptionalQuery;
+        const keyword = query.keyword;
 
         try {
             const userList = await getCommentLikeUserListUseCase({ commentId, userId, keyword });
