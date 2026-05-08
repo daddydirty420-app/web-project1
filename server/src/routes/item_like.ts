@@ -8,6 +8,8 @@ import { deleteItemLikeUseCase } from "../usecases/itemLike/delete.js";
 import { itemLikeStatusUseCase } from "../usecases/itemLike/status.js";
 import { getItemLikeUserListUseCase } from "../usecases/itemLike/userList.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { validateQuery } from "../middleware/validateQuery.js";
+import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
@@ -20,7 +22,6 @@ router.post(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -42,7 +43,6 @@ router.delete(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -64,7 +64,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
-
         const userId = req.user!.id;
 
         try {
@@ -102,13 +101,14 @@ router.get(
 router.get(
     "/:id/user",
     validateParams(idParamSchema),
+    validateQuery(keywordOptionalQuerySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
-
         const userId = req.user!.id;
 
-        const keyword = req.query.keyword as string | undefined;
+        const query = req.validatedQuery as KeywordOptionalQuery;
+        const keyword = query.keyword;
 
         try {
             const userList = await getItemLikeUserListUseCase({ itemId, userId, keyword });
