@@ -5,6 +5,8 @@ import { validateParams } from "../middleware/validateParams.js";
 import { saleEditUseCase } from "../usecases/sale/saleEdit.js";
 import { saleStopUseCase } from "../usecases/sale/saleStop.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { validateBody } from "../middleware/validateBody.js";
+import { SaleEditBody, saleEditBodySchema } from "../validators/body/sale.js";
 
 const router = Router();
 
@@ -14,10 +16,11 @@ const router = Router();
 router.patch(
     "/:id/edit",
     validateParams(idParamSchema),
+    validateBody(saleEditBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const saleId = Number(req.params.id);
-        const body = req.body;
+        const body = req.validatedBody as SaleEditBody;
 
         try {
             await saleEditUseCase({ saleId, body });
