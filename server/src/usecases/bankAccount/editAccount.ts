@@ -3,24 +3,20 @@ import { getAccountTypeOne } from "../../services/accountTypeOption.js";
 import { getBankAccount, updateBankAccount } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
+import { BankBody } from "../../validators/body/bankAccount.js";
 
 type Params = {
     accountId: number;
-    bankName: string;
-    branch: string;
-    accountType: string;
-    accountNumber: string;
-    meigi: string;
+    body: BankBody;
 };
 
-export const editAccountUseCase = async ({
-    accountId,
-    bankName,
-    branch,
-    accountType,
-    accountNumber,
-    meigi,
-}: Params) => {
+// PATCH /bank-account/:id
+// summary: 口座情報変更
+// page: /edit/account
+export const editAccountUseCase = async ({ accountId, body }: Params) => {
+    // body
+    const { bankName, branch, accountType, accountNumber, meigi } = body;
+
     // 銀行名照合
     const matchedBank = await getBankOne({ bankName });
 

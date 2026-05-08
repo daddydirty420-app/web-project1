@@ -1,11 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
 import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
+import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -16,11 +17,12 @@ const router = Router();
 router.post(
     "/:id/shop",
     validateParams(idParamSchema),
+    validateBody(bankBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.body;
+        const body = req.validatedBody as BankBody;
 
         try {
             await createShopAccount({ shopId, userId, body });
@@ -33,32 +35,22 @@ router.post(
 );
 
 // PATCH /bank-account/:id
+// summary: 口座情報変更
+// page: /edit/account
 router.patch(
     "/:id",
     validateParams(idParamSchema),
+    validateBody(bankBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const accountId = Number(req.params.id);
 
-        const { bankName, branch, accountType, accountNumber, meigi } = req.body;
-
-        // 空チェック
-        const fields = { bankName, branch, accountType, accountNumber, meigi };
-        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-        if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-        const bankNameTrim = bankName.trim();
-        const branchTrim = branch.trim();
-        const accountNumberTrim = accountNumber.trim();
+        const body = req.validatedBody as BankBody;
 
         try {
             await editAccountUseCase({
                 accountId,
-                bankName: bankNameTrim,
-                branch: branchTrim,
-                accountType,
-                accountNumber: accountNumberTrim,
-                meigi,
+                body,
             });
 
             res.status(200).json({ message: "口座情報を更新しました。" });
@@ -69,6 +61,8 @@ router.patch(
 );
 
 // GET /bank-account/myaccount
+// summary: 口座情報取得
+// page: /edit/account
 router.get("/myaccount", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 

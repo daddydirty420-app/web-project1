@@ -5,6 +5,9 @@ type Params = {
     userId: number;
 };
 
+// GET /bank-account/myaccount
+// summary: 口座情報取得
+// page: /edit/account
 export const getMyAccountUseCase = async ({ userId }: Params) => {
     const data = await getMyAccountOne({ userId });
 

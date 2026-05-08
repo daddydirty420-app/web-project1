@@ -26,12 +26,12 @@ export const emailPasswordBodySchema = z.object({
 });
 
 export const setCookieBodySchema = z.object({
-    refreshToken: z.string(),
+    refreshToken: z.string().min(1),
     rememberMe: z.boolean(),
 });
 
 export const verifyTokenBodySchema = z.object({
-    token: z.string(),
+    token: z.string().min(1),
 });
 
 export const signupVerifyBodySchema = z.object({

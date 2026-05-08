@@ -4,19 +4,12 @@ import { upsertBankAccountShop } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
 import { getShop } from "../../services/shopInfo/query.js";
-
-type Body = {
-    bankName: string;
-    branch: string;
-    accountType: string;
-    accountNumber: string;
-    meigi: string;
-};
+import { BankBody } from "../../validators/body/bankAccount.js";
 
 type Params = {
     shopId: number;
     userId: number;
-    body: Body;
+    body: BankBody;
 };
 
 // POST /bank-account/:id/shop
@@ -32,15 +25,8 @@ export const createShopAccount = async ({ shopId, userId, body }: Params) => {
     // body
     const { bankName, branch, accountType, accountNumber, meigi } = body;
 
-    // 空チェック
-    const fields = { bankName, branch, accountType, accountNumber, meigi };
-    const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-    if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-    const bankNameTrim = bankName.trim();
-
     // 銀行名照合
-    const matchedBank = await getBankOne({ bankName: bankNameTrim });
+    const matchedBank = await getBankOne({ bankName });
 
     if (!matchedBank) throw new AppError("INVALID_BANK", 400);
 
