@@ -1,11 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
 import { editNameUseCase } from "../usecases/name/editName.js";
 import { getDeliveryNameUseCase } from "../usecases/name/getDeliveryName.js";
 import { getMyNameUseCase } from "../usecases/name/getMyName.js";
+import { NameBody, nameBodySchema } from "../validators/body/name.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -14,26 +15,13 @@ const router = Router();
 router.patch(
     "/:id",
     validateParams(idParamSchema),
+    validateBody(nameBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const nameId = Number(req.params.id);
 
-        // 空チェック
-        const fields = {
-            sei: req.body.sei,
-            mei: req.body.mei,
-            seiKana: req.body.seiKana,
-            meiKana: req.body.meiKana,
-        };
-
-        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-
-        if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-        const sei = req.body.sei.trim();
-        const mei = req.body.mei.trim();
-        const seiKana = req.body.seiKana.trim();
-        const meiKana = req.body.meiKana.trim();
+        const body = req.validatedBody as NameBody;
+        const { sei, mei, seiKana, meiKana } = body;
 
         try {
             await editNameUseCase({ nameId, sei, mei, seiKana, meiKana });
