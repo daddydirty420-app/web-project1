@@ -2,13 +2,14 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { validateParams } from "../middleware/validateParams.js";
-import { FollowType } from "../types/serviceType/follow.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { addFollowUseCase } from "../usecases/follow/add.js";
 import { countFollowUseCase } from "../usecases/follow/count.js";
 import { deleteFollowUseCase } from "../usecases/follow/delete.js";
 import { getFollowStatusUseCase } from "../usecases/follow/status.js";
 import { getFollowUserListUseCase } from "../usecases/follow/userList.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { FollowUserListQuery, followUserListQuerySchema } from "../validators/query/follow.js";
 
 const router = Router();
 
@@ -21,7 +22,6 @@ router.post(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const currentUserId = req.user!.id;
-
         const targetUserId = Number(req.params.id);
 
         try {
@@ -43,7 +43,6 @@ router.delete(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const currentUserId = req.user!.id;
-
         const targetUserId = Number(req.params.id);
 
         try {
@@ -65,7 +64,6 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const currentUserId = req.user!.id;
-
         const targetUserId = Number(req.params.id);
 
         if (currentUserId === targetUserId) {
@@ -108,14 +106,14 @@ router.get(
 router.get(
     "/:id/user",
     validateParams(idParamSchema),
+    validateQuery(followUserListQuerySchema),
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const currentUserId = req.user?.id ?? null;
         const pageUserId = Number(req.params.id);
 
-        const type = req.query.type as FollowType;
-
-        const keyword = req.query.keyword as string | undefined;
+        const query = req.validatedQuery as FollowUserListQuery;
+        const { type, keyword } = query;
 
         try {
             const userList = await getFollowUserListUseCase({ currentUserId, pageUserId, type, keyword });

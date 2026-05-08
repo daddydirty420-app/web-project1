@@ -1,5 +1,5 @@
 import { getFollowings, getFollowList } from "../../services/follow.js";
-import { FollowType } from "../../types/serviceType/follow.js";
+import { FollowType } from "../../validators/query/follow.js";
 
 type Params = {
     currentUserId: number | null;

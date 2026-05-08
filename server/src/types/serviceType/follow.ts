@@ -1,7 +1,6 @@
 import { Transaction } from "sequelize";
 import { Follow, User } from "../../models/index.js";
-
-export type FollowType = "follow" | "follower";
+import { FollowType } from "../../validators/query/follow.js";
 
 export type FollowingsParams = {
     currentUserId: number;
