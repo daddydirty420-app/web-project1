@@ -10,7 +10,7 @@ type Params = {
     commentText: string;
     commentLength: number;
     sellerMe: boolean;
-    parentId: number | null;
+    parentId?: number;
 };
 
 // POST /comment/:id?sellerMe=boolean(&parentId=number)

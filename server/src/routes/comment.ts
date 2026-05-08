@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { validateParams } from "../middleware/validateParams.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
 import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
 import { getAllRepliesUseCase } from "../usecases/comment/getReply.js";
@@ -11,7 +11,17 @@ import {
     patchCommentSortNumberDecreaseUseCase,
 } from "../usecases/comment/patchSortNumber.js";
 import { uploadCommentUseCase } from "../usecases/comment/upload.js";
+import { CreateCommentBody } from "../validators/body/comment.js";
 import { idParamSchema } from "../validators/params/id.js";
+import {
+    CommentPageQuery,
+    CommentSellerMeAdminQuery,
+    commentSellerMeAdminQuerySchema,
+    CommentSortNumberQuery,
+    commentSortNumberQuerySchema,
+    CreateCommentQuery,
+    createCommentQuerySchema,
+} from "../validators/query/comment.js";
 
 const router = Router();
 
@@ -21,17 +31,18 @@ const router = Router();
 router.post(
     "/:id",
     validateParams(idParamSchema),
+    validateQuery(createCommentQuerySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const itemId = Number(req.params.id);
 
-        const commentText: string = req.body.inputComment;
-        const commentLength: number = commentText.length;
+        const query = req.validatedQuery as CreateCommentQuery;
+        const { sellerMe, parentId } = query;
 
-        const sellerMe = req.query.sellerMe === "true";
-
-        const parentId = Number(req.query?.parentId) ?? null;
+        const body = req.validatedBody as CreateCommentBody;
+        const commentText = body.inputComment;
+        const commentLength = commentText.length;
 
         try {
             const comment = await uploadCommentUseCase({
@@ -56,14 +67,12 @@ router.post(
 router.patch(
     "/:id/sort-number/add",
     validateParams(idParamSchema),
+    validateQuery(commentSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
 
-        const number = Number(req.query.number);
-
-        if (!number || isNaN(number)) {
-            throw new AppError("INVALID_NUMBER", 400);
-        }
+        const query = req.validatedQuery as CommentSortNumberQuery;
+        const number = query.number;
 
         patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
             console.error(err);
@@ -79,14 +88,12 @@ router.patch(
 router.patch(
     "/:id/sort-number/decrease",
     validateParams(idParamSchema),
+    validateQuery(commentSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
 
-        const number = Number(req.query.number);
-
-        if (!number || isNaN(number)) {
-            throw new AppError("INVALID_NUMBER", 400);
-        }
+        const query = req.validatedQuery as CommentSortNumberQuery;
+        const number = query.number;
 
         patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
             console.error(err);
@@ -105,14 +112,10 @@ router.delete(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
-
         const userId = req.user!.id;
 
-        const page = req.query.page as "normal" | "admin";
-
-        if (!page || (page !== "normal" && page !== "admin")) {
-            throw new AppError("QUERY_PAGE_INVALID", 400);
-        }
+        const query = req.validatedQuery as CommentPageQuery;
+        const page = query.page;
 
         try {
             await deleteCommentUseCase({ userId, commentId, page });
@@ -130,14 +133,14 @@ router.delete(
 router.get(
     "/:id",
     validateParams(idParamSchema),
+    validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user?.id ?? null;
-
         const itemId = Number(req.params.id);
 
-        const sellerMe = req.query.sellerMe === "true";
-        const admin = req.query.admin === "true";
+        const query = req.validatedQuery as CommentSellerMeAdminQuery;
+        const { sellerMe, admin } = query;
 
         try {
             const commentList = await getAllCommentsUseCase({
@@ -160,14 +163,14 @@ router.get(
 router.get(
     "/:id/reply",
     validateParams(idParamSchema),
+    validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user?.id ?? null;
-
         const parentCommentId = Number(req.params.id);
 
-        const sellerMe = req.query.sellerMe === "true";
-        const admin = req.query.admin === "true";
+        const query = req.validatedQuery as CommentSellerMeAdminQuery;
+        const { sellerMe, admin } = query;
 
         try {
             const commentList = await getAllRepliesUseCase({

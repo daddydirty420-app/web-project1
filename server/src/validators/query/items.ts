@@ -21,7 +21,7 @@ export const putItemUploadQuerySchema = z.object({
 });
 
 export const itemSortNumberQuerySchema = z.object({
-    number: z.coerce.number().int().positive(),
+    number: z.coerce.number(),
 });
 
 export const itemListQuerySchema = z.object({
