@@ -1,25 +1,28 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { searchBanksUseCase } from "../usecases/banks/search.js";
+import { KeywordQuery, keywordQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
 // GET /banks/search?keyword=""
-router.get("/search", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const keyword = (req.query.keyword as string)?.trim() ?? undefined;
+// summary: 銀行検索
+// page: /edit/accountなど
+router.get(
+    "/search",
+    validateQuery(keywordQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const query = req.validatedQuery as KeywordQuery;
 
-    const kw = keyword.toLowerCase();
+        try {
+            const matchedBanks = await searchBanksUseCase({ kw: query.keyword });
 
-    if (!kw) throw new AppError("INVALID_KEYWORD", 400);
-
-    try {
-        const matchedBanks = await searchBanksUseCase({ kw });
-
-        res.status(200).json({ banks: matchedBanks });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ banks: matchedBanks });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

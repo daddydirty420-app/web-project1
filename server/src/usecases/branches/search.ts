@@ -6,6 +6,9 @@ type Params = {
     bankCode: string;
 };
 
+// GET /branches/search?keyword=""&bankcode=""
+// summary: 支店名検索
+// page: /edit/accountなど
 export const searchBranchesUseCase = async ({ kw, bankCode }: Params) => {
     //　支店名全件取得
     const branches = await getBranchesAll({ bankCode });

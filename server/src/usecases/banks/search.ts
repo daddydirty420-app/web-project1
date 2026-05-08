@@ -5,6 +5,9 @@ type Params = {
     kw: string;
 };
 
+// GET /banks/search?keyword=""
+// summary: 銀行検索
+// page: /edit/accountなど
 export const searchBanksUseCase = async ({ kw }: Params) => {
     // 銀行全件取得
     const banks = await getBanksAll();
