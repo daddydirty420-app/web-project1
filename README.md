@@ -252,6 +252,6 @@ GitHub: https://github.com/daddydirty420-app
 
 ### AI 利用方針
 
-ChatGPT・Claude・GitHub Copilot などの生成AIと設計や実装について壁打ちしながら開発を進める。
+ChatGPT・Claude などのLLMと設計や実装について壁打ちしながら開発を進める。
 ただし Claude Code・Codex・Cursor などのコーディングエージェントは使用しない方針。
 基本的な設計・実装の技術的理解を、手を動かすことで深めることを重視しているため。
