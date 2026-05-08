@@ -94,7 +94,7 @@ export const itemUploadBodySchema = z.object({
         freeText: z.string().nullable(),
     }),
 
-    price: z.number().int().positive().min(300),
+    price: z.number().int().positive().min(300).max(1000000),
 });
 
 export type ItemUploadBody = z.infer<typeof itemUploadBodySchema>;

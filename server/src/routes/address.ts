@@ -2,12 +2,16 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { editAddressUseCase } from "../usecases/address/editAddress.js";
 import { getDeliveryAddressUseCase } from "../usecases/address/getDeliveryAddress.js";
 import { getMyAddressUseCase } from "../usecases/address/getMyAddress.js";
 import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
+import { AddressBody, addressBodySchema } from "../validators/body/address.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { ZipcodeQuery, zipcodeQuerySchema } from "../validators/query/address.js";
 
 const router = Router();
 
@@ -15,33 +19,14 @@ const router = Router();
 router.patch(
     "/:id",
     validateParams(idParamSchema),
+    validateBody(addressBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const addressId = Number(req.params.id);
 
-        // 空チェック
-        const fields = {
-            postNumber: req.body.postNumber,
-            todouhuken: req.body.todouhuken,
-            shikutyouson: req.body.shikutyouson,
-            banchi: req.body.banchi,
-        };
+        const body = req.validatedBody as AddressBody;
 
-        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-
-        if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-        const postNumber = req.body.postNumber.trim();
-        const todouhuken = req.body.todouhuken.trim();
-        const shikutyouson = req.body.shikutyouson.trim();
-        const banchi = req.body.banchi.trim();
-        const building = req.body.building?.trim();
-
-        // 郵便番号正規化バリデーションチェック
-        const normalizedPostNumber = postNumber.replace(/-/g, "");
-        if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
-            throw new AppError("INVALID_POST_NUMBER", 400);
-        }
+        const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
 
         try {
             await editAddressUseCase({ addressId, postNumber, todouhuken, shikutyouson, banchi, building });
@@ -85,18 +70,24 @@ router.get(
 );
 
 // GET /address/search
-router.get("/search", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const zipcode = req.query.zipcode as string;
+router.get(
+    "/search",
+    validateQuery(zipcodeQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const query = req.validatedQuery as ZipcodeQuery;
 
-    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
+        const zipcode = query.zipcode;
 
-    try {
-        const address = await fetchAddressFromZipUseCase({ zipcode });
+        if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
 
-        res.status(200).json({ address });
-    } catch (err) {
-        next(err);
-    }
-});
+        try {
+            const address = await fetchAddressFromZipUseCase({ zipcode });
+
+            res.status(200).json({ address });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
