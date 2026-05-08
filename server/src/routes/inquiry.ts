@@ -2,26 +2,33 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional } from "../middleware/authOptional.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { createInquiryUseCase } from "../usecases/inquiry/create.js";
+import { CreateInquiryBody, createInquiryBodySchema } from "../validators/body/inquiry.js";
 
 const router = Router();
 
-router.post("/", authenticateOptional, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-    const { name, email, title, body } = req.body;
-    const emailTrim = email?.trim();
+// POST /inquiry
+// summary: お問い合わせ作成
+// page: /inquiry
+router.post(
+    "/",
+    authenticateOptional,
+    validateBody(createInquiryBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user?.id ?? null;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const validatedBody = req.validatedBody as CreateInquiryBody;
+        const { name, email, title, body } = validatedBody;
 
-    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
+        try {
+            await createInquiryUseCase({ userId, name, email, title, body });
 
-    try {
-        await createInquiryUseCase({ userId, name, email, title, body });
-
-        res.status(200).json({ message: "お問い合わせを送信しました！" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "お問い合わせを送信しました！" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;

@@ -8,6 +8,9 @@ type Params = {
     body: string;
 };
 
+// POST /inquiry
+// summary: お問い合わせ作成
+// page: /inquiry
 export const createInquiryUseCase = async ({ userId, name, email, title, body }: Params) => {
     // お知らせ作成
     await createInquiry({
