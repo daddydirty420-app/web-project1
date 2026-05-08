@@ -14,9 +14,12 @@ import { generateAccessToken, generateRefreshToken } from "../../utils/jwtHelper
 type Params = {
     verificationCode: string;
     rememberMe: boolean;
-    referenceCode: string | null;
+    referenceCode?: string;
 };
 
+// POST /auth/signup-verify
+// summary: サインアップコード認証
+// page: /signup/verify
 export const signupVerifyUseCase = async ({ verificationCode, rememberMe, referenceCode }: Params) => {
     // 認証コード照合
     const tokenRecord = await getTokenVerificationOne({ verificationCode });
@@ -31,7 +34,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
 
     if (!user) {
         destroyToken({ tokenRecord }).catch((err) => {
-            console.error("service tokenSignuVerificationCode destroyToken error:", err);
+            console.error("service tokenSignupVerificationCode destroyToken error:", err);
         });
 
         throw new AppError("USER_NOT_FOUND", 404);
@@ -96,7 +99,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
     });
 
     destroyToken({ tokenRecord }).catch((err) => {
-        console.error("service tokenSignuVerificationCode destroyToken error:", err);
+        console.error("service tokenSignupVerificationCode destroyToken error:", err);
     });
 
     // 紹介コード入力DB登録

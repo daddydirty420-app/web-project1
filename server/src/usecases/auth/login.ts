@@ -10,6 +10,9 @@ type Params = {
     rememberMe: boolean;
 };
 
+// POST /auth/login
+// summary: ログイン
+// page: /login
 export const loginUseCase = async ({ email, password, rememberMe }: Params) => {
     // User取得
     const user = await getUserEmailOne({ email });

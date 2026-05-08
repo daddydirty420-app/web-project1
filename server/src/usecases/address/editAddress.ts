@@ -11,6 +11,9 @@ type Params = {
     building?: string;
 };
 
+// PATCH /address/:id
+// summary: 住所変更
+// page: /edit/addressなど
 export const editAddressUseCase = async ({
     addressId,
     postNumber,

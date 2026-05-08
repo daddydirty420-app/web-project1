@@ -7,6 +7,9 @@ type Params = {
     zipcode: string;
 };
 
+// GET /address/search
+// summary: 住所検索
+// page: /edit/addressなど
 export const fetchAddressFromZipUseCase = async ({ zipcode }: Params): Promise<AddressResult> => {
     // zipCloudフェッチ
     const data = await fetchZipCloud({ zipcode });

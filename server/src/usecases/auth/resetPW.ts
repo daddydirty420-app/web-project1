@@ -9,6 +9,9 @@ type Params = {
     password: string;
 };
 
+// POST /auth/reset-pw
+// summary: パスワードリセット
+// page: /login/new-pw
 export const resetPWUseCase = async ({ token, password }: Params) => {
     // トークン照合
     const resetRecord = await getTokenOne({ token });

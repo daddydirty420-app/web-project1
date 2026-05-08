@@ -6,6 +6,9 @@ type Params = {
     token: string;
 };
 
+// POST /auth/resend-verification-code
+// summary: 認証コード再送信
+// page: /signup/verify
 export const resendVerificationCodeUseCase = async ({ token }: Params) => {
     // トークン照合
     const tokenRecord = await getTokenReissueOne({ token });
@@ -17,7 +20,7 @@ export const resendVerificationCodeUseCase = async ({ token }: Params) => {
     }
 
     // 新しいトークン発行
-    const newVereficationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const newVerificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const newExpiresAt = new Date(Date.now() + 30 * 60 * 1000);
 
     const newReissueToken = crypto.randomBytes(20).toString("hex");
@@ -27,7 +30,7 @@ export const resendVerificationCodeUseCase = async ({ token }: Params) => {
     await updateReissueToken({
         tokenRecord,
         data: {
-            verification_code: newVereficationCode,
+            verification_code: newVerificationCode,
             verification_code_expires: newExpiresAt,
             reissue_token: newReissueToken,
             reissue_token_expires: newReissueTokenExpires,

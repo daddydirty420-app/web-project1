@@ -8,6 +8,9 @@ type Params = {
     plainPassword: string;
 };
 
+// POST /auth/rehash-password
+// summary: パスワード再ハッシュ
+// page:
 export const rehashPasswordUseCase = async ({ email, plainPassword }: Params) => {
     // user取得
     const user = await getUserEmailOne({ email });

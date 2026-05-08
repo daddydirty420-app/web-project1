@@ -16,6 +16,8 @@ import { ZipcodeQuery, zipcodeQuerySchema } from "../validators/query/address.js
 const router = Router();
 
 // PATCH /address/:id
+// summary: 住所変更
+// page: /edit/addressなど
 router.patch(
     "/:id",
     validateParams(idParamSchema),
@@ -39,6 +41,8 @@ router.patch(
 );
 
 // GET /address/myaddress
+// summary: 住所取得
+// page: /edit/address
 router.get("/myaddress", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const userId = req.user!.id;
 
@@ -52,6 +56,8 @@ router.get("/myaddress", authenticateToken, async (req: Request, res: Response, 
 });
 
 // GET /address/:id/delivery-address
+// summary: 配送用住所取得
+// page: /edit/address/delivery/[id]
 router.get(
     "/:id/delivery-address",
     validateParams(idParamSchema),
@@ -70,6 +76,8 @@ router.get(
 );
 
 // GET /address/search
+// summary: 住所検索
+// page: /edit/addressなど
 router.get(
     "/search",
     validateQuery(zipcodeQuerySchema),

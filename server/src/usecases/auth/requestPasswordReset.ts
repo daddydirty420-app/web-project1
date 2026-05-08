@@ -7,6 +7,9 @@ type Params = {
     email: string;
 };
 
+// POST /auth/request-password-reset
+// summary: パスワードリセットリクエスト
+// page: /login/reset-pw-mail
 export const requestPasswordResetUseCase = async ({ email }: Params) => {
     // ユーザー取得
     const user = await getUserEmailOne({ email });

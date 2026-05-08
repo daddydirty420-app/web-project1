@@ -16,6 +16,9 @@ type DecodedAccessToken = {
     exp?: number;
 };
 
+// POST /auth/refresh-token
+// summary: トークンリフレッシュ
+// page: middleware
 export const refreshTokenUseCase = async ({ refreshToken }: Params) => {
     // トークン取得
     const storedToken = await getRefreshTokenOne({ refreshToken });

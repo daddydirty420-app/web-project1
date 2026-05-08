@@ -2,6 +2,8 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
@@ -17,56 +19,81 @@ import {
     getClearRefreshTokenCookieOptions,
     getRefreshTokenCookieOptions,
 } from "../utils/getRefreshCookies.js";
+import {
+    EmailBody,
+    emailBodySchema,
+    EmailPasswordBody,
+    emailPasswordBodySchema,
+    LoginBody,
+    loginBodySchema,
+    ResetPWBody,
+    resetPWBodySchema,
+    SetCookieBody,
+    setCookieBodySchema,
+    SignupVerifyBody,
+    signupVerifyBodySchema,
+    VerifyTokenBody,
+    verifyTokenBodySchema,
+} from "../validators/body/auth.js";
+import { NewEmailTokenQuery, newEmailTokenQuerySchema } from "../validators/query/auth.js";
 
 const router = Router();
 
 // POST /auth/login
-router.post("/login", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { email, password, rememberMe } = req.body;
-    const emailTrim = email?.trim();
+// summary: ログイン
+// page: /login
+router.post(
+    "/login",
+    validateBody(loginBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as LoginBody;
 
-    if (!password) {
-        throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
-    }
+        const { email, password, rememberMe } = body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        try {
+            const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
+                email,
+                password,
+                rememberMe,
+            });
 
-    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
+            res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
-    try {
-        const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
-            email: emailTrim,
-            password,
-            rememberMe,
-        });
+            res.status(200).json({
+                id,
+                email,
+                user_name: userName,
+                admin,
+                rememberMe,
+                accessToken,
+                refreshToken,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// POST /auth/set-cookie
+// summary: クッキーセット
+// page: /my-page
+router.post(
+    "/set-cookie",
+    validateBody(setCookieBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as SetCookieBody;
+
+        const { refreshToken, rememberMe } = body;
 
         res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
-        res.status(200).json({
-            id,
-            email,
-            user_name: userName,
-            admin,
-            rememberMe,
-            accessToken,
-            refreshToken,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
-// POST /auth/set-cookie
-router.post("/set-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { refreshToken, rememberMe } = req.body;
-    if (!refreshToken) throw new AppError("REFRESH_TOKEN_INVALID", 400);
-
-    res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
-
-    res.status(200).json({ message: "Cookieをセットしました" });
-});
+        res.status(200).json({ message: "Cookieをセットしました" });
+    },
+);
 
 // POST /auth/clear-cookie
+// summary: クッキー削除
+// page: /my-page
 router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     res.clearCookie("access-token", getClearAccessTokenCookieOptions());
     res.clearCookie("refreshToken", getClearRefreshTokenCookieOptions());
@@ -75,113 +102,134 @@ router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunct
 });
 
 // POST /auth/signup
-router.post("/signup", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { email, password } = req.body;
-    const emailTrim = email?.trim();
+// summary: サインアップ
+// page: /signup
+router.post(
+    "/signup",
+    validateBody(emailPasswordBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as EmailPasswordBody;
 
-    if (!password) {
-        throw new AppError("INVALID_PASSWORD", 400, "パスワードがありません。");
-    }
+        const { email, password } = body;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        try {
+            const { expiresAt, reissueUrl } = await signupUseCase({
+                email,
+                password,
+            });
 
-    if (!emailRegex.test(emailTrim)) throw new AppError("INVALID_EMAIL", 400);
-
-    try {
-        const { expiresAt, reissueUrl } = await signupUseCase({
-            email: emailTrim,
-            password,
-        });
-
-        res.status(201).json({
-            message: "サインアップ成功！認証コードを送信しました！",
-            expiresAt,
-            reissueUrl,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(201).json({
+                message: "サインアップ成功！認証コードを送信しました！",
+                expiresAt,
+                reissueUrl,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/resend-verification-code
-router.post("/resend-verification-code", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { token } = req.body;
+// summary: 認証コード再送信
+// page: /signup/verify
+router.post(
+    "/resend-verification-code",
+    validateBody(verifyTokenBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as VerifyTokenBody;
 
-    if (!token) throw new AppError("TOKEN_INVALID", 400);
+        try {
+            const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
+                token: body.token,
+            });
 
-    try {
-        const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
-            token,
-        });
-
-        res.status(200).json({
-            message: "新しい認証コードを発行しました。",
-            expiresAt,
-            reissueUrl,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                message: "新しい認証コードを発行しました。",
+                expiresAt,
+                reissueUrl,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/signup-verify
-router.post("/signup-verify", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { verificationCode, rememberMe, referenceCode } = req.body;
+// summary: サインアップコード認証
+// page: /signup/verify
+router.post(
+    "/signup-verify",
+    validateBody(signupVerifyBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as SignupVerifyBody;
 
-    if (!verificationCode) throw new AppError("INVALID_CODE", 400);
+        const { verificationCode, rememberMe, referenceCode } = body;
 
-    try {
-        const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
-            verificationCode,
-            rememberMe,
-            referenceCode,
-        });
+        try {
+            const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
+                verificationCode,
+                rememberMe,
+                referenceCode,
+            });
 
-        res.status(200).json({
-            id,
-            email,
-            user_name: userName,
-            admin,
-            rememberMe,
-            accessToken,
-            refreshToken,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                id,
+                email,
+                user_name: userName,
+                admin,
+                rememberMe,
+                accessToken,
+                refreshToken,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/request-password-reset
-router.post("/request-password-reset", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const email = req.body.email?.trim();
+// summary: パスワードリセットリクエスト
+// page: /login/reset-pw-mail
+router.post(
+    "/request-password-reset",
+    validateBody(emailBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as EmailBody;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        try {
+            await requestPasswordResetUseCase({ email: body.email });
 
-    if (!emailRegex.test(email)) throw new AppError("INVALID_EMAIL", 400);
-
-    try {
-        await requestPasswordResetUseCase({ email });
-
-        res.status(200).json({ message: "メールを送信しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "メールを送信しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/reset-pw
-router.post("/reset-pw", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { token, password } = req.body;
+// summary: パスワードリセット
+// page: /login/new-pw
+router.post(
+    "/reset-pw",
+    validateBody(resetPWBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const body = req.validatedBody as ResetPWBody;
 
-    try {
-        await resetPWUseCase({ token, password });
+        const { token, password } = body;
 
-        res.status(200).json({ message: "パスワードを更新しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
+        try {
+            await resetPWUseCase({ token, password });
+
+            res.status(200).json({ message: "パスワードを更新しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/refresh-token
+// summary: トークンリフレッシュ
+// page: middleware
 router.post("/refresh-token", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
 
@@ -201,13 +249,13 @@ router.post("/refresh-token", async (req: Request, res: Response, next: NextFunc
 });
 
 // POST /auth/rehash-password
+// summary: パスワード再ハッシュ
+// page:
 router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const email = req.body.email?.trim();
-    const plainPassword = req.body.password?.trim();
+    const body = req.validatedBody as EmailPasswordBody;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) throw new AppError("INVALID_EMAIL", 400);
+    const email = body.email;
+    const plainPassword = body.password;
 
     try {
         await rehashPasswordUseCase({ email, plainPassword });
@@ -219,39 +267,51 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 });
 
 // PATCH /auth/email
-router.patch("/email", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const newEmail = req.body.email?.trim();
+// summary: メールアドレス変更リクエスト
+// page: /edit/email
+router.patch(
+    "/email",
+    validateBody(emailBodySchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const body = req.validatedBody as EmailBody;
 
-    if (!emailRegex.test(newEmail)) throw new AppError("INVALID_EMAIL", 400);
+        try {
+            await changeEmailUseCase({ userId, newEmail: body.email });
 
-    try {
-        await changeEmailUseCase({ userId, newEmail });
+            res.status(200).json({
+                message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
-        res.status(200).json({
-            message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+// PATCH /auth/new-email?token=""
+// summary: メールアドレス更新
+// page: /edit/email/new-email
+router.patch(
+    "/new-email",
+    validateQuery(newEmailTokenQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const query = req.validatedQuery as NewEmailTokenQuery;
 
-// PATCH /auth/new-email
-router.patch("/new-email", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const token = String(req.query.token);
+        try {
+            await changeNewEmailUseCase({ token: query.token });
 
-    try {
-        await changeNewEmailUseCase({ token });
-
-        res.status(200).json({ message: "メールアドレスを更新しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ message: "メールアドレスを更新しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /auth/status
+// summary: ログインステータス取得
+// page:
 router.get("/status", authenticateToken, (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({ message: "トークン有効", loggedIn: true, user: req.user });
 });

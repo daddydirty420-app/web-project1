@@ -8,6 +8,9 @@ type Params = {
     newEmail: string;
 };
 
+// PATCH /auth/email
+// summary: メールアドレス変更リクエスト
+// page: /edit/email
 export const changeEmailUseCase = async ({ userId, newEmail }: Params) => {
     // user取得
     const user = await getUser({ userId });

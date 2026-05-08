@@ -8,6 +8,9 @@ type Params = {
     token: string;
 };
 
+// PATCH /auth/new-email?token=""
+// summary: メールアドレス更新
+// page: /edit/email/new-email
 export const changeNewEmailUseCase = async ({ token }: Params) => {
     // トークンDB取得
     const emailTokenData = await getTokenEmailChangeOne({ token });

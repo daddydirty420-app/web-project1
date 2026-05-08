@@ -12,16 +12,14 @@ type Params = {
     password: string;
 };
 
+// POST /auth/signup
+// summary: サインアップ
+// page: /signup 
 export const signupUseCase = async ({ email, password }: Params) => {
     // メールアドレス被りチェック
     const emailUser = await getAllEmail({ email });
 
     if (emailUser.length > 0) throw new AppError("ALREADY_USED_EMAIL", 400);
-
-    // パスワード　バリデーションチェック
-    const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
-    if (!regex.test(password)) throw new AppError("INVALID_PASSWORD", 400);
 
     // パスワード　ハッシュ化
     const hashedPassword = await bcrypt.hash(password, 10);
