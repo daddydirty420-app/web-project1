@@ -7,26 +7,21 @@ import { getBranchOne } from "../../../services/branches.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEdit } from "../../../services/shopInfoEdit/command.js";
+import { BankBody } from "../../../validators/body/bankAccount.js";
 
 type Params = {
     shopId: number;
     userId: number;
-    bankName: string;
-    branch: string;
-    accountType: string;
-    accountNumber: string;
-    meigi: string;
+    body: BankBody;
 };
 
-export const createBankAccountUseCase = async ({
-    shopId,
-    userId,
-    bankName,
-    branch,
-    accountType,
-    accountNumber,
-    meigi,
-}: Params) => {
+// POST /shop-info-edit/:id/bank-account
+// summary: 口座情報変更リクエスト
+// page: /edit/account/shop/[id]
+export const createBankAccountUseCase = async ({ shopId, userId, body }: Params) => {
+    // body
+    const { bankName, branch, accountType, accountNumber, meigi } = body;
+    
     // shopInfo取得
     const shop = await getShop({ shopId });
 

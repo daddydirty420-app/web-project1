@@ -12,6 +12,9 @@ type Params = {
     comFreeId: number;
 };
 
+// POST /shop-info-edit/:id/com-free
+// summary: 事業形態変更リクエスト
+// page: /edit/shop/com-free/[id]
 export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }: Params) => {
     // shopInfo取得
     const shop = await getShopHasAddressNameBank({ shopId });

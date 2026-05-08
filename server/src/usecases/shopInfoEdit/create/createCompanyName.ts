@@ -10,6 +10,9 @@ type Params = {
     companyName: string;
 };
 
+// POST /shop-info-edit/:id/company-name
+// summary: 会社名変更リクエスト
+// page: /edit/shop/company-name/[id]
 export const createCompanyNameUseCase = async ({ shopId, userId, companyName }: Params) => {
     // ショップ取得
     const shop = await getShop({ shopId });

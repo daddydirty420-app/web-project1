@@ -4,27 +4,22 @@ import { createAddressShopEdit } from "../../../services/address.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEdit } from "../../../services/shopInfoEdit/command.js";
+import { AddressBody } from "../../../validators/body/address.js";
 import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
 
 type Params = {
     shopId: number;
     userId: number;
-    postNumber: string;
-    todouhuken: string;
-    shikutyouson: string;
-    banchi: string;
-    building?: string;
+    body: AddressBody;
 };
 
-export const createAddressShopEditUseCase = async ({
-    shopId,
-    userId,
-    postNumber,
-    todouhuken,
-    shikutyouson,
-    banchi,
-    building,
-}: Params) => {
+// POST /shop-info-edit/:id/address
+// summary: 会社所在地変更リクエスト
+// page: /edit/address/shop/[id]
+export const createAddressShopEditUseCase = async ({ shopId, userId, body }: Params) => {
+    // body
+    const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
+
     // shopInfo取得
     const shop = await getShop({ shopId });
 

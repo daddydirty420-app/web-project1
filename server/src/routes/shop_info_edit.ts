@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
@@ -16,52 +17,32 @@ import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.j
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
 import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
 import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
+import { AddressBody, addressBodySchema } from "../validators/body/address.js";
+import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { ComFreeIdBody, comFreeIdBodySchema, CreateCompanyNameBody, createCompanyNameBodySchema, CreateRepNameBody, createRepNameBodySchema, UpdateShopEditIdCardBody, updateShopEditIdCardBodySchema } from "../validators/body/shopInfoEdit.js";
 
 const router = Router();
 
 // POST /shop-info-edit/:id/address
+// summary: 会社所在地変更リクエスト
+// page: /edit/address/shop/[id]
 router.post(
     "/:id/address",
     validateParams(idParamSchema),
+    validateBody(addressBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
 
-        // 空チェック
-        const fields = {
-            postNumber: req.body.postNumber,
-            todouhuken: req.body.todouhuken,
-            shikutyouson: req.body.shikutyouson,
-            banchi: req.body.banchi,
-        };
-
-        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-
-        if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-        const postNumber = req.body.postNumber.trim();
-        const todouhuken = req.body.todouhuken.trim();
-        const shikutyouson = req.body.shikutyouson.trim();
-        const banchi = req.body.banchi.trim();
-        const building = req.body.building?.trim();
-
-        // 郵便番号正規化バリデーションチェック
-        const normalizedPostNumber = postNumber.replace(/-/g, "");
-        if (!/^[0-9]{7}$/.test(normalizedPostNumber)) {
-            throw new AppError("INVALID_POST_NUMBER", 400);
-        }
+        const body = req.validatedBody as AddressBody;
 
         try {
             await createAddressShopEditUseCase({
                 shopId,
                 userId,
-                postNumber,
-                todouhuken,
-                shikutyouson,
-                banchi,
-                building,
+                body,
             });
 
             res.status(200).json({ message: "住所の変更を受け付けました。" });
@@ -72,34 +53,24 @@ router.post(
 );
 
 // POST /shop-info-edit/:id/bank-account
+// summary: 口座情報変更リクエスト
+// page: /edit/account/shop/[id]
 router.post(
     "/:id/bank-account",
     validateParams(idParamSchema),
+    validateBody(bankBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
 
-        const { bankName, branch, accountType, accountNumber, meigi } = req.body;
-
-        // 空チェック
-        const fields = { bankName, branch, accountType, accountNumber, meigi };
-        const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-        if (hasEmpty) throw new AppError("INVALID_QUERY", 400);
-
-        const bankNameTrim = bankName.trim();
-        const branchTrim = branch.trim();
-        const accountNumberTrim = accountNumber.trim();
+        const body = req.validatedBody as BankBody;
 
         try {
             await createBankAccountUseCase({
                 userId,
                 shopId,
-                bankName: bankNameTrim,
-                branch: branchTrim,
-                accountType,
-                accountNumber: accountNumberTrim,
-                meigi,
+                body,
             });
 
             res.status(200).json({ message: "口座情報の変更を受け付けました。" });
@@ -110,16 +81,17 @@ router.post(
 );
 
 // POST /shop-info-edit/:id/rep-name
-// summary 代表者氏名データ作成
+// summary: 代表者氏名データ作成
 // page: /edit/name/shop/rep-name/[id]
 router.post(
     "/:id/rep-name",
     validateParams(idParamSchema),
+    validateBody(createRepNameBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.body;
+        const body = req.validatedBody as CreateRepNameBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl } = await createRepNameUseCase({ shopId, userId, body });
@@ -132,16 +104,19 @@ router.post(
 );
 
 // POST /shop-info-edit/:id/company-name
+// summary: 会社名変更リクエスト
+// page: /edit/shop/company-name/[id]
 router.post(
     "/:id/company-name",
     validateParams(idParamSchema),
+    validateBody(createCompanyNameBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
 
-        const companyName = String(req.body.companyName);
-        if (!companyName) throw new AppError("INVALID_COMPANY_NAME", 400);
+        const body = req.validatedBody as CreateCompanyNameBody;
+        const companyName = body.companyName;
 
         try {
             await createCompanyNameUseCase({ shopId, userId, companyName });
@@ -154,14 +129,19 @@ router.post(
 );
 
 // POST /shop-info-edit/:id/com-free
+// summary: 事業形態変更リクエスト
+// page: /edit/shop/com-free/[id]
 router.post(
     "/:id/com-free",
     validateParams(idParamSchema),
+    validateBody(comFreeIdBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const comFreeId = Number(req.body.selectOption);
+
+        const body = req.validatedBody as ComFreeIdBody;
+        const comFreeId = body.selectOption;
 
         try {
             const editId = await createShopEditComFreeUseCase({ shopId, userId, comFreeId });
@@ -174,6 +154,8 @@ router.post(
 );
 
 // PATCH /shop-info-edit/:id
+// summary: 事業形態変更確認ページ　データ更新
+// page: /edit/shop/com-free/confirm/[id]
 router.patch(
     "/:id",
     validateParams(idParamSchema),
@@ -199,11 +181,12 @@ router.patch(
 router.patch(
     "/:id/id-image-upload",
     validateParams(idParamSchema),
+    validateBody(updateShopEditIdCardBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.body;
+        const body = req.validatedBody as UpdateShopEditIdCardBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({

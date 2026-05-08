@@ -3,13 +3,13 @@ import { s3Domain } from "../../../infra/aws/s3.js";
 import { createNotification } from "../../../services/notification.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
 import { getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
-import { ShopIdBody } from "../../../types/shopIdBody.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
+import { UpdateShopEditIdCardBody } from "../../../validators/body/shopInfoEdit.js";
 
 type Params = {
     shopEditId: number;
     userId: number;
-    body: ShopIdBody;
+    body: UpdateShopEditIdCardBody;
 };
 
 // PATCH /shop-info-edit/:id/id-image-upload

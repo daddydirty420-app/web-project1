@@ -5,18 +5,18 @@ import { createNameShop } from "../../../services/name.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditWithIdCard } from "../../../services/shopInfoEdit/command.js";
-import { RepNameBody } from "../../../types/repNameBody.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
+import { CreateRepNameBody } from "../../../validators/body/shopInfoEdit.js";
 
 type Params = {
     shopId: number;
     userId: number;
-    body: RepNameBody;
+    body: CreateRepNameBody;
 };
 
 // POST /shop-info-edit/:id/rep-name
-// summary 代表者氏名データ作成
+// summary: 代表者氏名データ作成
 // page: /edit/name/shop/rep-name/[id]
 export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => {
     const now = Date.now();
@@ -33,23 +33,6 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
         idFrontUpload,
         idRearUpload,
     } = body;
-
-    // 空チェック
-    const fields = {
-        seiValue,
-        meiValue,
-        seiKanaValue,
-        meiKanaValue,
-    };
-
-    const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-
-    if (hasEmpty) throw new AppError("INVALID_BODY", 400);
-
-    const sei = seiValue.trim();
-    const mei = meiValue.trim();
-    const seiKana = seiKanaValue.trim();
-    const meiKana = meiKanaValue.trim();
 
     // ショップ取得
     const shop = await getShop({ shopId });
@@ -104,10 +87,10 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
     await sequelize.transaction(async (t) => {
         const newRepName = await createNameShop({
             data: {
-                sei: sei,
-                mei: mei,
-                sei_kana: seiKana,
-                mei_kana: meiKana,
+                sei: seiValue,
+                mei: meiValue,
+                sei_kana: seiKanaValue,
+                mei_kana: meiKanaValue,
                 shop_type: "representative",
             },
             transaction: t,
