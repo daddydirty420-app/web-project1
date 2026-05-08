@@ -7,12 +7,12 @@ import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditWithIdCard } from "../../../services/shopInfoEdit/command.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
-import { CreateRepNameBody } from "../../../validators/body/shopInfoEdit.js";
+import { RepNameBody } from "../../../validators/body/shopInfo.js";
 
 type Params = {
     shopId: number;
     userId: number;
-    body: CreateRepNameBody;
+    body: RepNameBody;
 };
 
 // POST /shop-info-edit/:id/rep-name

@@ -1,6 +1,5 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
 import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
@@ -20,7 +19,8 @@ import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/up
 import { AddressBody, addressBodySchema } from "../validators/body/address.js";
 import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { ComFreeIdBody, comFreeIdBodySchema, CreateCompanyNameBody, createCompanyNameBodySchema, CreateRepNameBody, createRepNameBodySchema, UpdateShopEditIdCardBody, updateShopEditIdCardBodySchema } from "../validators/body/shopInfoEdit.js";
+import { ComFreeIdBody, comFreeIdBodySchema, CreateCompanyNameBody, createCompanyNameBodySchema } from "../validators/body/shopInfoEdit.js";
+import { RepNameBody, repNameBodySchema, ShopIdCardBody, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
 
 const router = Router();
 
@@ -86,12 +86,12 @@ router.post(
 router.post(
     "/:id/rep-name",
     validateParams(idParamSchema),
-    validateBody(createRepNameBodySchema),
+    validateBody(repNameBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.validatedBody as CreateRepNameBody;
+        const body = req.validatedBody as RepNameBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl } = await createRepNameUseCase({ shopId, userId, body });
@@ -181,12 +181,12 @@ router.patch(
 router.patch(
     "/:id/id-image-upload",
     validateParams(idParamSchema),
-    validateBody(updateShopEditIdCardBodySchema),
+    validateBody(shopIdCardBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.validatedBody as UpdateShopEditIdCardBody;
+        const body = req.validatedBody as ShopIdCardBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({

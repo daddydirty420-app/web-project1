@@ -4,12 +4,12 @@ import { createNotification } from "../../../services/notification.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
 import { getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
-import { UpdateShopEditIdCardBody } from "../../../validators/body/shopInfoEdit.js";
+import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
 
 type Params = {
     shopEditId: number;
     userId: number;
-    body: UpdateShopEditIdCardBody;
+    body: ShopIdCardBody;
 };
 
 // PATCH /shop-info-edit/:id/id-image-upload
