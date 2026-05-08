@@ -23,7 +23,7 @@ router.post(
         const userId = req.user!.id;
 
         const body = req.validatedBody as OptionIdBody;
-        const optionId = body.optionId;
+        const optionId = body.selected;
 
         try {
             await createCommentReportUseCase({ commentId, userId, optionId });
