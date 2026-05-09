@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
 import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
@@ -24,6 +24,17 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
+import {
+    createSignup1BBodySchema,
+    CreateSignup1Body,
+    RepNameBody,
+    repNameBodySchema,
+    ShopIdCardBody,
+    shopIdCardBodySchema,
+    ShopOptionBody,
+    shopOptionBodySchema,
+} from "../validators/body/shopInfo.js";
+import { PhoneNumberBody, phoneNumberBodySchema } from "../validators/body/user.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -31,18 +42,23 @@ const router = Router();
 // POST /shop-info
 // summary: ShopInfo作成　事業者登録
 // page: /shop-signup/step1
-router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const body = req.body;
+router.post(
+    "/",
+    authenticateToken,
+    validateBody(createSignup1BBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const body = req.validatedBody as CreateSignup1Body;
 
-    try {
-        const shopId = await createShopSignup1({ userId, body });
+        try {
+            const shopId = await createShopSignup1({ userId, body });
 
-        res.status(200).json({ shopId });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ shopId });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PATCH /shop-info/:id/rep-name
 // summary 代表者氏名変更
@@ -50,11 +66,12 @@ router.post("/", authenticateToken, async (req: Request, res: Response, next: Ne
 router.patch(
     "/:id/rep-name",
     validateParams(idParamSchema),
+    validateBody(repNameBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.body;
+        const body = req.validatedBody as RepNameBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl } = await updateRepNameUseCase({ shopId, userId, body });
@@ -67,18 +84,19 @@ router.patch(
 );
 
 // PATCH /shop-info/:id/phone-number
+// summary: 電話番号変更
+// page: /edit/phone-number/shop/[id]
 router.patch(
     "/:id/phone-number",
     validateParams(idParamSchema),
+    validateBody(phoneNumberBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const phoneNumber = req.body.phoneNumber?.trim();
 
-        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
-            throw new AppError("INVALID_PHONE_NUMBER", 400);
-        }
+        const body = req.validatedBody as PhoneNumberBody;
+        const phoneNumber = body.phoneNumber;
 
         try {
             await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
@@ -91,16 +109,19 @@ router.patch(
 );
 
 // PATCH /shop-info/:id/option
+// summary: オプション変更
+// page: /edit/shop/option/[id]
 router.patch(
     "/:id/option",
     validateParams(idParamSchema),
+    validateBody(shopOptionBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
 
-        const autoTrans = req.body.autoTrans === "はい";
-        const openInfo = req.body.openInfo === "はい";
+        const body = req.validatedBody as ShopOptionBody;
+        const { autoTrans, openInfo } = body;
 
         try {
             await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
@@ -118,11 +139,12 @@ router.patch(
 router.patch(
     "/:id/signup/3",
     validateParams(idParamSchema),
+    validateBody(shopIdCardBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.body;
+        const body = req.validatedBody as ShopIdCardBody;
 
         try {
             const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
@@ -149,12 +171,14 @@ router.patch(
 router.patch(
     "/:id/signup/4",
     validateParams(idParamSchema),
+    validateBody(shopOptionBodySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const autoTrans = req.body.autoTrans === "はい";
-        const openInfo = req.body.openInfo === "はい";
+
+        const body = req.validatedBody as ShopOptionBody;
+        const { autoTrans, openInfo } = body;
 
         try {
             await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });

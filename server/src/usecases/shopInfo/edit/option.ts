@@ -9,6 +9,9 @@ type Params = {
     openInfo: boolean;
 };
 
+// PATCH /shop-info/:id/option
+// summary: オプション変更
+// page: /edit/shop/option/[id]
 export const editShopOptionUseCase = async ({ shopId, userId, autoTrans, openInfo }: Params) => {
     // ショップ取得
     const shop = await getShop({ shopId });

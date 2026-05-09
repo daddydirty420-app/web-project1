@@ -6,7 +6,7 @@ import { createShop } from "../../../services/shopInfo/command.js";
 import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
 
 type Body = {
-    selectOption: number | null;
+    selectOption: number;
     companyName: string;
     shopName: string;
     phoneNumber: string;
@@ -14,7 +14,7 @@ type Body = {
     openDateTime: string;
     foundedDate: Date;
     memberCount: number;
-    homepage?: string | null;
+    homepage?: string;
     repSei: string;
     repMei: string;
     repSeiKana: string;
@@ -69,32 +69,8 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
     } = body;
 
     // 空チェック
-    const requiredBody = [
-        selectOption,
-        companyName,
-        shopName,
-        phoneNumber,
-        email,
-        openDateTime,
-        foundedDate,
-        memberCount,
-        repSei,
-        repMei,
-        repSeiKana,
-        repMeiKana,
-        conSei,
-        conMei,
-        conSeiKana,
-        conMeiKana,
-        postNumber,
-        todouhuken,
-        shikutyouson,
-        banchi,
-        ...(selectOption === 1 ? [companyNumber, capital] : []),
-    ];
-
-    if (requiredBody.some((v) => v === "" || v === undefined || v === null)) {
-        throw new AppError("INVALID_BODY", 404);
+    if (selectOption === 1 && (!companyNumber || !capital)) {
+        throw new AppError("INVALID_BODY", 400);
     }
 
     // トリム

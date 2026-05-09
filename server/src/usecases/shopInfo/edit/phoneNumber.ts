@@ -11,6 +11,9 @@ type Params = {
     phoneNumber: string;
 };
 
+// PATCH /shop-info/:id/phone-number
+// summary: 電話番号変更
+// page: /edit/phone-number/shop/[id]
 export const editShopPhoneNumberUseCase = async ({ shopId, userId, phoneNumber }: Params) => {
     // shopInfo取得
     const shop = await getShop({ shopId });

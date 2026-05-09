@@ -33,23 +33,6 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
         idRearUpload,
     } = body;
 
-    // 空チェック
-    const fields = {
-        seiValue,
-        meiValue,
-        seiKanaValue,
-        meiKanaValue,
-    };
-
-    const hasEmpty = Object.values(fields).some((v) => !v?.trim());
-
-    if (hasEmpty) throw new AppError("INVALID_BODY", 400);
-
-    const sei = seiValue.trim();
-    const mei = meiValue.trim();
-    const seiKana = seiKanaValue.trim();
-    const meiKana = meiKanaValue.trim();
-
     // ショップ取得
     const shop = await getShopHasRepName({ shopId });
 
@@ -113,10 +96,10 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
         await updateName({
             name: shop.RepresentativeName,
             data: {
-                sei: sei,
-                mei: mei,
-                sei_kana: seiKana,
-                mei_kana: meiKana,
+                sei: seiValue,
+                mei: meiValue,
+                sei_kana: seiKanaValue,
+                mei_kana: meiKanaValue,
             },
             transaction: t,
         });
