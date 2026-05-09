@@ -1,18 +1,21 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
 import { getSuggestUseCase } from "../usecases/suggestWords/getSuggest.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
+import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
 // GET /suggest-words?keyword
 // summary: 検索サジェスト一覧取得
 // page: header
-router.get("/", async (req: Request, res: Response): Promise<void> => {
-    const keyword = normalizeJapanese((req.query.keyword ?? "") as string);
+router.get("/", validateQuery(keywordOptionalQuerySchema), async (req: Request, res: Response): Promise<void> => {
+    const query = req.validatedQuery as KeywordOptionalQuery;
+    const keyword = normalizeJapanese(query.keyword ?? "");
 
-    if (!keyword) {
+    if (!keyword.trim()) {
         res.status(200).json({ suggest: [] });
         return;
     }
