@@ -57,7 +57,7 @@ export const Form = ({ user }: Props) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
-                    transValue: value,
+                    value,
                     limit,
                 }),
             });

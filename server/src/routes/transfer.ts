@@ -1,10 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
+import { TransferBody, transferBodySchema } from "../validators/body/transfer.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -12,39 +14,51 @@ const router = Router();
 // POST /transfer/request
 // summary: 振込申請データ作成
 // page: /transfer/request
-router.post("/request", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const requestValue = Number(req.body.transValue);
-    const limit = Number(req.body.limit);
+router.post(
+    "/request",
+    authenticateToken,
+    validateBody(transferBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const transId = await createTransferRequestUseCase({ userId, requestValue, limit });
+        const body = req.validatedBody as TransferBody;
+        const { value, limit } = body;
 
-        res.status(200).json({
-            message: "振込申請が完了しました。",
-            transId,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+        try {
+            const transId = await createTransferRequestUseCase({ userId, requestValue: value, limit });
+
+            res.status(200).json({
+                message: "振込申請が完了しました。",
+                transId,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /transfer/points
 // summary: 売上金ポイント変換
 // page: /transfer/points
-router.post("/points", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const value = Number(req.body.value);
-    const limit = Number(req.body.limit);
+router.post(
+    "/points",
+    authenticateToken,
+    validateBody(transferBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        await createTransferPointsUseCase({ userId, value, limit });
+        const body = req.validatedBody as TransferBody;
+        const { value, limit } = body;
 
-        res.status(200).json({ message: "売上金をポイント変換しました。" });
-    } catch (err) {
-        next(err);
-    }
-});
+        try {
+            await createTransferPointsUseCase({ userId, value, limit });
+
+            res.status(200).json({ message: "売上金をポイント変換しました。" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 router.get(
     "/detail/:id",
