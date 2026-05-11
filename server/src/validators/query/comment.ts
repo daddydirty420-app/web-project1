@@ -5,7 +5,7 @@ const commentPage = ["normal", "admin"] as const;
 export type CommentPage = (typeof commentPage)[number];
 
 export const createCommentQuerySchema = z.object({
-    sellerMe: z.boolean(),
+    sellerMe: z.enum(["true", "false"]).transform((val) => val === "true"),
     parentId: z.coerce.number().int().positive().min(1).optional(),
 });
 
@@ -18,8 +18,8 @@ export const commentPageQuerySchema = z.object({
 });
 
 export const commentSellerMeAdminQuerySchema = z.object({
-    sellerMe: z.boolean(),
-    admin: z.boolean().default(false),
+    sellerMe: z.enum(["true", "false"]).transform((val) => val === "true"),
+    admin: z.enum(["true", "false"]).transform((val) => val === "true").default(false),
 });
 
 export type CreateCommentQuery = z.infer<typeof createCommentQuerySchema>;

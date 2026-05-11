@@ -34,7 +34,7 @@ import {
     ShopOptionBody,
     shopOptionBodySchema,
 } from "../validators/body/shopInfo.js";
-import { PhoneNumberBody, phoneNumberBodySchema } from "../validators/body/user.js";
+import { PhoneNumberBody, phoneNumberBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();

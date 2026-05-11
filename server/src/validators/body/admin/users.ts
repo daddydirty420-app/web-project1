@@ -1,11 +1,11 @@
 import z from "zod";
 
 export const addPenaltyBodySchema = z.object({
-    addPenalty: z.coerce.number().int().positive(),
+    addPenalty: z.number().int().positive(),
 });
 
 export const deleteUriageBodySchema = z.object({
-    deleteUriage: z.coerce.number().int().positive(),
+    deleteUriage: z.number().int().positive(),
 });
 
 export type AddPenaltyBody = z.infer<typeof addPenaltyBodySchema>;

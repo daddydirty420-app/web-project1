@@ -5,20 +5,17 @@ import { updateProfileUser } from "../../../services/users/command.js";
 import { getUserHasShop } from "../../../services/users/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
-
-type Body = {
-    userName: string;
-    introduction: string | null;
-    fileName?: string;
-    contentType?: string;
-};
+import { ProfileEditBody } from "../../../validators/body/users.js";
 
 type Params = {
     userId: number;
-    body: Body;
+    body: ProfileEditBody;
     imageEdit: boolean;
 };
 
+// PATCH /user/profile?imageEdit=boolean
+// summary: プロフィール編集
+// page: /edit/profile/[id]
 export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) => {
     const now = Date.now();
 

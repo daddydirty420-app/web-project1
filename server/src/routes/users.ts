@@ -2,7 +2,9 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
+import { validateQuery } from "../middleware/validateQuery.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
@@ -15,27 +17,40 @@ import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
+import { ProfileEditBody, profileEditBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { ProfileEditQuery, profileEditQuerySchema } from "../validators/query/users.js";
 
 const router = Router();
 
 // PATCH /user/profile?imageEdit=boolean
-router.patch("/profile", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const body = req.body;
-    const imageEdit = req.query.imageEdit === "true";
+// summary: プロフィール編集
+// page: /edit/profile/[id]
+router.patch(
+    "/profile",
+    validateQuery(profileEditQuerySchema),
+    validateBody(profileEditBodySchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const signedUrl = await editProfileUseCase({ userId, body, imageEdit });
+        const query = req.validatedQuery as ProfileEditQuery;
+        const imageEdit = query.imageEdit;
 
-        res.status(200).json({
-            message: "プロフィール更新完了！",
-            signedUrl,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+        const body = req.validatedBody as ProfileEditBody;
+
+        try {
+            const signedUrl = await editProfileUseCase({ userId, body, imageEdit });
+
+            res.status(200).json({
+                message: "プロフィール更新完了！",
+                signedUrl,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // PATCH /user/phone-number
 router.patch(

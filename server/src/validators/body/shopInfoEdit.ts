@@ -5,7 +5,7 @@ export const createCompanyNameBodySchema = z.object({
 });
 
 export const comFreeIdBodySchema = z.object({
-    selectOption: z.coerce.number().int().positive().min(1).max(2),
+    selectOption: z.number().int().positive().min(1).max(2),
 });
 
 export type CreateCompanyNameBody = z.infer<typeof createCompanyNameBodySchema>;

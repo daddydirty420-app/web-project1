@@ -48,7 +48,7 @@ export const shopIdCardBodySchema = z.object({
 });
 
 export const createSignup1BBodySchema = z.object({
-    selectOption: z.coerce.number().int().positive().min(1).max(2),
+    selectOption: z.number().int().positive().min(1).max(2),
     companyName: z.string().min(1),
     shopName: z.string().min(1),
     phoneNumber: z
@@ -61,8 +61,8 @@ export const createSignup1BBodySchema = z.object({
         .trim()
         .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
     openDateTime: z.string().min(1),
-    foundedDate: z.coerce.date().max(new Date()),
-    memberCount: z.coerce.number().int().positive().min(1).max(1000000),
+    foundedDate: z.date().max(new Date()),
+    memberCount: z.number().int().positive().min(1).max(1000000),
     homepage: z.string().optional(),
     repSei: z.string().trim().min(1),
     repMei: z.string().trim().min(1),
@@ -87,7 +87,7 @@ export const createSignup1BBodySchema = z.object({
         .trim()
         .optional()
         .refine((val) => val === undefined || val === "" || isValidCompanyNumber(val)),
-    capital: z.coerce.number().int().optional(),
+    capital: z.number().int().optional(),
 });
 
 export const shopOptionBodySchema = z.object({
