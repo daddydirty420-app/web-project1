@@ -19,7 +19,10 @@ export const commentPageQuerySchema = z.object({
 
 export const commentSellerMeAdminQuerySchema = z.object({
     sellerMe: z.enum(["true", "false"]).transform((val) => val === "true"),
-    admin: z.enum(["true", "false"]).transform((val) => val === "true").default(false),
+    admin: z
+        .enum(["true", "false"])
+        .transform((val) => val === "true")
+        .default(false),
 });
 
 export type CreateCommentQuery = z.infer<typeof createCommentQuerySchema>;
