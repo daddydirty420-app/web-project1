@@ -51,5 +51,17 @@ services:
             - /app/node_modules
             - /app/.next
 
+    redis:
+        image: redis:7
+        container_name: redis
+        restart: always
+        ports:
+            - "6379:6379"
+        environment:
+            REDIS_URL: redis://redis:6379
+        volumes:
+            - redis_data:/data
+
 volumes:
     db_data:
+    redis_data:
