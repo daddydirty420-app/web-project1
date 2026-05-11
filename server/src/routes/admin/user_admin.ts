@@ -3,8 +3,8 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { col, fn, literal, Op } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { validateBody } from "../../middleware/validateBody.js";
-import { validateParams } from "../../middleware/validateParams.js";
+import { validateBody } from "../../middleware/validate/validateBody.js";
+import { validateParams } from "../../middleware/validate/validateParams.js";
 import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
 import { addPenaltyUseCase } from "../../usecases/admin/users/addPenalty.js";
 import { deleteUriageUseCase } from "../../usecases/admin/users/deleteUriage.js";

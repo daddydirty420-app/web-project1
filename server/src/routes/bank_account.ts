@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";

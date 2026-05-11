@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import {
     Address,
     Delivery,

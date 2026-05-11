@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { validateQuery } from "../middleware/validateQuery.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { Item, SuggestWords, User, Video } from "../models/index.js";
 import { getSuggestUseCase } from "../usecases/suggestWords/getSuggest.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { getAllCommentReportOptions } from "../services/commentReport.js";
 import { createCommentReportUseCase } from "../usecases/commentReport/create.js";
 import { OptionIdBody, optionIdBodySchema } from "../validators/body/report.js";

@@ -3,7 +3,7 @@ import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import sequelize from "../db.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import {
     Address,
     Brands,

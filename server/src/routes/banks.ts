@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { validateQuery } from "../middleware/validateQuery.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { searchBanksUseCase } from "../usecases/banks/search.js";
 import { KeywordQuery, keywordQuerySchema } from "../validators/query/keyword.js";
 

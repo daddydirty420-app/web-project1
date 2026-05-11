@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
@@ -18,14 +18,14 @@ import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/update
 import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
 import { AddressBody, addressBodySchema } from "../validators/body/address.js";
 import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
-import { idParamSchema } from "../validators/params/id.js";
+import { RepNameBody, repNameBodySchema, ShopIdCardBody, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
 import {
     ComFreeIdBody,
     comFreeIdBodySchema,
     CreateCompanyNameBody,
     createCompanyNameBodySchema,
 } from "../validators/body/shopInfoEdit.js";
-import { RepNameBody, repNameBodySchema, ShopIdCardBody, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 

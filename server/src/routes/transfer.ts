@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";

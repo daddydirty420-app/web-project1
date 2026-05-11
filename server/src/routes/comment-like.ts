@@ -1,14 +1,14 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { countCommentLike } from "../services/commentLike.js";
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
 import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { validateQuery } from "../middleware/validateQuery.js";
 import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();

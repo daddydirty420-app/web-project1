@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { getLevel2UseCase } from "../usecases/categories/getLevel2.js";
 import { idParamSchema } from "../validators/params/id.js";
 

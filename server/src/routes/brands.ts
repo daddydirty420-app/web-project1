@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
-import { validateQuery } from "../middleware/validateQuery.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { getBrandsSuggestUseCase } from "../usecases/brands/getBrandsSuggest.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
 import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";

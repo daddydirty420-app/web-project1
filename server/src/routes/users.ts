@@ -1,9 +1,9 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
-import { validateQuery } from "../middleware/validateQuery.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
@@ -25,7 +25,12 @@ import {
     profileEditBodySchema,
 } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { GetProfileQuery, getProfileQuerySchema, ProfileEditQuery, profileEditQuerySchema } from "../validators/query/users.js";
+import {
+    GetProfileQuery,
+    getProfileQuerySchema,
+    ProfileEditQuery,
+    profileEditQuerySchema,
+} from "../validators/query/users.js";
 
 const router = Router();
 

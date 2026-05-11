@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateBody } from "../middleware/validateBody.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { editNameUseCase } from "../usecases/name/editName.js";
 import { getDeliveryNameUseCase } from "../usecases/name/getDeliveryName.js";
 import { getMyNameUseCase } from "../usecases/name/getMyName.js";

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { z } from "zod";
-import { AppError } from "../errors.js";
+import { AppError } from "../../errors.js";
 
 declare module "express-serve-static-core" {
     interface Request {

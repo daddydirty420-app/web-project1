@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../../../errors.js";
 import { authenticateToken } from "../../../middleware/index.js";
-import { validateQuery } from "../../../middleware/validateQuery.js";
+import { validateQuery } from "../../../middleware/validate/validateQuery.js";
 import { getUserItemsCartsUseCase } from "../../../usecases/items/itemList/userItems/getCarts.js";
 import { getDeletedItemsUseCase } from "../../../usecases/items/itemList/userItems/getDeletedItems.js";
 import { getDraftItemsUseCase } from "../../../usecases/items/itemList/userItems/getDraftItems.js";

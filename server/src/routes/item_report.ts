@@ -1,12 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { getAllItemReportOptions } from "../services/itemReport.js";
 import { createItemReportUseCase } from "../usecases/itemReport/create.js";
-import { idParamSchema } from "../validators/params/id.js";
-import { validateBody } from "../middleware/validateBody.js";
 import { OptionIdBody, optionIdBodySchema } from "../validators/body/report.js";
+import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 

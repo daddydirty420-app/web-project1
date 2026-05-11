@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validateParams.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
 import { addCartUseCase } from "../usecases/cart/add.js";
 import { deleteCartUseCase } from "../usecases/cart/delete.js";
 import { cartStatusUseCase } from "../usecases/cart/status.js";

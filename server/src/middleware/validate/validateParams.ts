@@ -1,22 +1,22 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { z } from "zod";
-import { AppError } from "../errors.js";
+import { AppError } from "../../errors.js";
 
 declare module "express-serve-static-core" {
     interface Request {
-        validatedQuery?: unknown;
+        validatedParams?: unknown;
     }
 }
 
-export function validateQuery<T extends z.ZodType>(schema: T) {
+export function validateParams<T extends z.ZodType>(schema: T) {
     return (req: Request, res: Response, next: NextFunction): void => {
-        const result = schema.safeParse(req.query);
+        const result = schema.safeParse(req.params);
 
         if (!result.success) {
-            throw new AppError("INVALID_QUERY", 400);
+            throw new AppError("INVALID_PARAMS", 400);
         }
 
-        req.validatedQuery = result.data;
+        req.validatedParams = result.data;
 
         next();
     };

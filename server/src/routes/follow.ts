@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validateParams.js";
-import { validateQuery } from "../middleware/validateQuery.js";
+import { validateParams } from "../middleware/validate/validateParams.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { addFollowUseCase } from "../usecases/follow/add.js";
 import { countFollowUseCase } from "../usecases/follow/count.js";
 import { deleteFollowUseCase } from "../usecases/follow/delete.js";
