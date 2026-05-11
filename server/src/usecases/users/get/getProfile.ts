@@ -9,6 +9,9 @@ type Params = {
     limit: number;
 };
 
+// GET /:id/profile?page=number&limit=number
+// summary: プロフィール表示データ取得
+// page: /profile/[id]
 export const getProfileUseCase = async ({ userId, page, limit }: Params) => {
     // user取得
     const user = await getProfileUser({ userId });

@@ -1,6 +1,5 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { validateBody } from "../middleware/validateBody.js";
 import { validateParams } from "../middleware/validateParams.js";
@@ -17,15 +16,22 @@ import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
-import { ProfileEditBody, profileEditBodySchema } from "../validators/body/users.js";
+import {
+    HonninBody,
+    honninBodySchema,
+    PhoneNumberBody,
+    phoneNumberBodySchema,
+    ProfileEditBody,
+    profileEditBodySchema,
+} from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { ProfileEditQuery, profileEditQuerySchema } from "../validators/query/users.js";
+import { GetProfileQuery, getProfileQuerySchema, ProfileEditQuery, profileEditQuerySchema } from "../validators/query/users.js";
 
 const router = Router();
 
 // PATCH /user/profile?imageEdit=boolean
 // summary: プロフィール編集
-// page: /edit/profile/[id]
+// page: /edit/profile
 router.patch(
     "/profile",
     validateQuery(profileEditQuerySchema),
@@ -53,16 +59,17 @@ router.patch(
 );
 
 // PATCH /user/phone-number
+// summary: 電話番号変更
+// page: /edit/phone-number
 router.patch(
     "/phone-number",
     authenticateToken,
+    validateBody(phoneNumberBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
-        const phoneNumber = req.body.phoneNumber?.trim();
 
-        if (!phoneNumber || !/^[0-9]+$/.test(phoneNumber)) {
-            throw new AppError("INVALID_PHONE_NUMBER", 400);
-        }
+        const body = req.validatedBody as PhoneNumberBody;
+        const phoneNumber = body.phoneNumber;
 
         try {
             await editPhoneNumber({ userId, phoneNumber });
@@ -75,22 +82,29 @@ router.patch(
 );
 
 // PATCH /user/honnin
-router.patch("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const body = req.body;
+// summary: 本人確認リクエスト
+// page: /edit/honnin
+router.patch(
+    "/honnin",
+    authenticateToken,
+    validateBody(honninBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+        const body = req.validatedBody as HonninBody;
 
-    try {
-        const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
+        try {
+            const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
 
-        res.status(200).json({
-            message: "本人確認のリクエストが完了しました。",
-            frontSignedUrl,
-            rearSignedUrl,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                message: "本人確認のリクエストが完了しました。",
+                frontSignedUrl,
+                rearSignedUrl,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
@@ -102,15 +116,18 @@ router.get("/me-admin", authenticateToken, async (req: Request, res: Response): 
     res.status(200).json({ admin: !!req.user!.admin });
 });
 
-// GET /:id/profile
+// GET /:id/profile?page=number&limit=number
+// summary: プロフィール表示データ取得
+// page: /profile/[id]
 router.get(
     "/:id/profile",
     validateParams(idParamSchema),
+    validateQuery(getProfileQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = Number(req.params.id);
 
-        const page = parseInt(req.query.page as string) || 1;
-        const limit = Number(req.query.limit) || 6;
+        const query = req.validatedQuery as GetProfileQuery;
+        const { page, limit } = query;
 
         try {
             const { user, hasShop, items, hasItemCount, totalPages } = await getProfileUseCase({ userId, page, limit });

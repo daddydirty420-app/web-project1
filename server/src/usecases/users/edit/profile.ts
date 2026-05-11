@@ -15,7 +15,7 @@ type Params = {
 
 // PATCH /user/profile?imageEdit=boolean
 // summary: プロフィール編集
-// page: /edit/profile/[id]
+// page: /edit/profile
 export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) => {
     const now = Date.now();
 

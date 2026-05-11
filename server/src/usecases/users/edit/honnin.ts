@@ -10,33 +10,16 @@ import { updateHonninUser } from "../../../services/users/command.js";
 import { getUserWithAddressNameId } from "../../../services/users/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
-
-type Body = {
-    sei: string;
-    mei: string;
-    seiKana: string;
-    meiKana: string;
-    birthday: Date;
-    postNumber: string;
-    todouhuken: string;
-    shikutyouson: string;
-    banchi: string;
-    building?: string;
-    phoneNumber: string;
-    selectedGender: string | number;
-    frontFileName?: string;
-    frontFileType?: string;
-    rearFileName?: string;
-    rearFileType?: string;
-    idFrontUpload: boolean;
-    idRearUpload: boolean;
-};
+import { HonninBody } from "../../../validators/body/users.js";
 
 type Params = {
     userId: number;
-    body: Body;
+    body: HonninBody;
 };
 
+// PATCH /user/honnin
+// summary: 本人確認リクエスト
+// page: /edit/honnin
 export const editHonninUserUseCase = async ({ userId, body }: Params) => {
     const now = Date.now();
 

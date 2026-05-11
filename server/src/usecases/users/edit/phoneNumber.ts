@@ -7,6 +7,9 @@ type Params = {
     phoneNumber: string;
 };
 
+// PATCH /user/phone-number
+// summary: 電話番号変更
+// page: /edit/phone-number
 export const editPhoneNumber = async ({ userId, phoneNumber }: Params) => {
     // user取得
     const user = await getUser({ userId });

@@ -1,5 +1,5 @@
 export type AccountTypeOption = {
-    id: string;
+    id: number;
     name: string;
 };
 
@@ -16,7 +16,7 @@ export type BankAccount = {
 };
 
 export type TodouhukenOption = {
-    id: string;
+    id: number;
     name: string;
 };
 
@@ -96,7 +96,7 @@ export type ShopInfo = {
 };
 
 export type GenderOption = {
-    id: string;
+    id: number;
     name: string;
 };
 
