@@ -1,6 +1,4 @@
 import rateLimit from "express-rate-limit";
-import { RedisStore } from "rate-limit-redis";
-import { redisClient } from "../../../infra/redis/redis.js";
 import { AuthUser } from "../../authMiddleware.js";
 
 export const adminDeleteUserRateLimit = rateLimit({
@@ -16,10 +14,6 @@ export const adminDeleteUserRateLimit = rateLimit({
 
         return `admin:${authReq.user.id}`;
     },
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const adminAddPenaltyRateLimit = rateLimit({
@@ -35,10 +29,6 @@ export const adminAddPenaltyRateLimit = rateLimit({
 
         return `admin:${authReq.user.id}`;
     },
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const adminDeleteUriageRateLimit = rateLimit({
@@ -54,10 +44,6 @@ export const adminDeleteUriageRateLimit = rateLimit({
 
         return `admin:${authReq.user.id}`;
     },
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const adminProfileRateLimit = rateLimit({
@@ -73,8 +59,4 @@ export const adminProfileRateLimit = rateLimit({
 
         return `admin:${authReq.user.id}`;
     },
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });

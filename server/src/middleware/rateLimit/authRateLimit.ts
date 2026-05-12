@@ -1,6 +1,4 @@
 import rateLimit from "express-rate-limit";
-import { RedisStore } from "rate-limit-redis";
-import { redisClient } from "../../infra/redis/redis.js";
 
 export const loginRateLimit = rateLimit({
     windowMs: 1000 * 60 * 15,
@@ -9,10 +7,6 @@ export const loginRateLimit = rateLimit({
     legacyHeaders: false,
 
     skipSuccessfulRequests: true,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const signupRateLimit = rateLimit({
@@ -20,10 +14,6 @@ export const signupRateLimit = rateLimit({
     limit: 7,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const resendVerifyCodeRateLimit = rateLimit({
@@ -31,10 +21,6 @@ export const resendVerifyCodeRateLimit = rateLimit({
     limit: 5,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const signupVerifyRateLimit = rateLimit({
@@ -42,10 +28,6 @@ export const signupVerifyRateLimit = rateLimit({
     limit: 10,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const pwResetRequestRateLimit = rateLimit({
@@ -53,10 +35,6 @@ export const pwResetRequestRateLimit = rateLimit({
     limit: 3,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const pwResetRateLimit = rateLimit({
@@ -64,10 +42,6 @@ export const pwResetRateLimit = rateLimit({
     limit: 5,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const emailChangeRequestRateLimit = rateLimit({
@@ -75,10 +49,6 @@ export const emailChangeRequestRateLimit = rateLimit({
     limit: 3,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
 
 export const emailChangeRateLimit = rateLimit({
@@ -86,8 +56,4 @@ export const emailChangeRateLimit = rateLimit({
     limit: 5,
     standardHeaders: true,
     legacyHeaders: false,
-
-    store: new RedisStore({
-        sendCommand: (...args: string[]) => redisClient.sendCommand(args),
-    }),
 });
