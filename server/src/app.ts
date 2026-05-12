@@ -70,7 +70,10 @@ import WatchHistoryRouter from "./routes/watch_history.js";
 
 import { AppError } from "./errors.js";
 import db from "./models/index.js";
+import { connectRedis } from "./infra/redis/redis.js";
+
 db.sequelize.sync();
+await connectRedis();
 
 // view engine setup
 const __filename = fileURLToPath(import.meta.url);
