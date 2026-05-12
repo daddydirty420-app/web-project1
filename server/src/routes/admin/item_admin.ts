@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import { adminDeleteItemRateLimit, adminItemPageRateLimit } from "../../middleware/rateLimit/admin/items.js";
 import { validateBody } from "../../middleware/validate/validateBody.js";
 import { validateParams } from "../../middleware/validate/validateParams.js";
 import { Item, Video } from "../../models/index.js";
@@ -21,6 +22,7 @@ router.delete(
     validateBody(deleteReasonBodySchema),
     authenticateToken,
     isAdmin,
+    adminDeleteItemRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
@@ -52,6 +54,7 @@ router.get(
     validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
+    adminItemPageRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
         const userId = req.user!.id;
