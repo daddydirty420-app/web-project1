@@ -7,8 +7,6 @@ import helmet from "helmet";
 import logger from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { connectRedis } from "./infra/redis/redis.js";
-await connectRedis();
 
 import { startAllCrons } from "./cron/index.js";
 startAllCrons();
