@@ -3,10 +3,12 @@ import cors from "cors";
 import express from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import session from "express-session";
+import helmet from "helmet";
 import logger from "morgan";
 import path from "path";
-import helmet from "helmet";
 import { fileURLToPath } from "url";
+import { connectRedis } from "./infra/redis/redis.js";
+await connectRedis();
 
 import { startAllCrons } from "./cron/index.js";
 startAllCrons();
@@ -70,10 +72,8 @@ import WatchHistoryRouter from "./routes/watch_history.js";
 
 import { AppError } from "./errors.js";
 import db from "./models/index.js";
-import { connectRedis } from "./infra/redis/redis.js";
 
 db.sequelize.sync();
-await connectRedis();
 
 // view engine setup
 const __filename = fileURLToPath(import.meta.url);
@@ -81,6 +81,7 @@ const __dirname = path.dirname(__filename);
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.set("trust proxy", 1);
 
 var session_opt = {
     secret: "keyboard cat",

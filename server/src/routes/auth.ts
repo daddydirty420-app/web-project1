@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import { authRateLimit } from "../middleware/rateLimit/authRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
@@ -44,6 +45,7 @@ const router = Router();
 // page: /login
 router.post(
     "/login",
+    authRateLimit,
     validateBody(loginBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as LoginBody;
@@ -106,6 +108,7 @@ router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunct
 // page: /signup
 router.post(
     "/signup",
+    authRateLimit,
     validateBody(emailPasswordBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as EmailPasswordBody;
@@ -159,6 +162,7 @@ router.post(
 // page: /signup/verify
 router.post(
     "/signup-verify",
+    authRateLimit,
     validateBody(signupVerifyBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as SignupVerifyBody;
