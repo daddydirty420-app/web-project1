@@ -3,6 +3,12 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { col, fn, literal, Op } from "sequelize";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
+import {
+    adminAddPenaltyRateLimit,
+    adminDeleteUriageRateLimit,
+    adminDeleteUserRateLimit,
+    adminProfileRateLimit,
+} from "../../middleware/rateLimit/admin/userRateLimit.js";
 import { validateBody } from "../../middleware/validate/validateBody.js";
 import { validateParams } from "../../middleware/validate/validateParams.js";
 import { Address, GenderOption, IdCard, Item, Name, ShopInfo, TodouhukenOption, User } from "../../models/index.js";
@@ -30,6 +36,7 @@ router.delete(
     validateBody(deleteReasonBodySchema),
     authenticateToken,
     isAdmin,
+    adminDeleteUserRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
         const adminId = req.user!.id;
@@ -60,6 +67,7 @@ router.patch(
     validateBody(addPenaltyBodySchema),
     authenticateToken,
     isAdmin,
+    adminAddPenaltyRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
 
@@ -85,6 +93,7 @@ router.patch(
     validateBody(deleteUriageBodySchema),
     authenticateToken,
     isAdmin,
+    adminDeleteUriageRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
 
@@ -113,6 +122,7 @@ router.get(
     validateParams(idParamSchema),
     authenticateToken,
     isAdmin,
+    adminProfileRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const pageUserId = Number(req.params.id);
 

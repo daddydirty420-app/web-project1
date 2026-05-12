@@ -2,7 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../../errors.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { adminDeleteItemRateLimit, adminItemPageRateLimit } from "../../middleware/rateLimit/admin/items.js";
+import { adminDeleteItemRateLimit, adminItemPageRateLimit } from "../../middleware/rateLimit/admin/itemRateLimit.js";
 import { validateBody } from "../../middleware/validate/validateBody.js";
 import { validateParams } from "../../middleware/validate/validateParams.js";
 import { Item, Video } from "../../models/index.js";
