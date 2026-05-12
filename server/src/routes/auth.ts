@@ -2,7 +2,16 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
-import { authRateLimit } from "../middleware/rateLimit/authRateLimit.js";
+import {
+    emailChangeRateLimit,
+    emailChangeRequestRateLimit,
+    loginRateLimit,
+    pwResetRateLimit,
+    pwResetRequestRateLimit,
+    resendVerifyCodeRateLimit,
+    signupRateLimit,
+    signupVerifyRateLimit,
+} from "../middleware/rateLimit/authRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
@@ -45,7 +54,7 @@ const router = Router();
 // page: /login
 router.post(
     "/login",
-    authRateLimit,
+    loginRateLimit,
     validateBody(loginBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as LoginBody;
@@ -108,7 +117,7 @@ router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunct
 // page: /signup
 router.post(
     "/signup",
-    authRateLimit,
+    signupRateLimit,
     validateBody(emailPasswordBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as EmailPasswordBody;
@@ -137,6 +146,7 @@ router.post(
 // page: /signup/verify
 router.post(
     "/resend-verification-code",
+    resendVerifyCodeRateLimit,
     validateBody(verifyTokenBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as VerifyTokenBody;
@@ -162,7 +172,7 @@ router.post(
 // page: /signup/verify
 router.post(
     "/signup-verify",
-    authRateLimit,
+    signupVerifyRateLimit,
     validateBody(signupVerifyBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as SignupVerifyBody;
@@ -196,6 +206,7 @@ router.post(
 // page: /login/reset-pw-mail
 router.post(
     "/request-password-reset",
+    pwResetRequestRateLimit,
     validateBody(emailBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as EmailBody;
@@ -215,6 +226,7 @@ router.post(
 // page: /login/new-pw
 router.post(
     "/reset-pw",
+    pwResetRateLimit,
     validateBody(resetPWBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const body = req.validatedBody as ResetPWBody;
@@ -275,8 +287,9 @@ router.post("/rehash-password", async (req: Request, res: Response, next: NextFu
 // page: /edit/email
 router.patch(
     "/email",
-    validateBody(emailBodySchema),
     authenticateToken,
+    emailChangeRequestRateLimit,
+    validateBody(emailBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
@@ -299,6 +312,7 @@ router.patch(
 // page: /edit/email/new-email
 router.patch(
     "/new-email",
+    emailChangeRateLimit,
     validateQuery(newEmailTokenQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const query = req.validatedQuery as NewEmailTokenQuery;
