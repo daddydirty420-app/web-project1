@@ -1,6 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import {
+    addFollowRateLimit,
+    deleteFollowRateLimit,
+    followCountRateLimit,
+    followStatusRateLimit,
+    followUserListRateLimit,
+} from "../middleware/rateLimit/followRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { addFollowUseCase } from "../usecases/follow/add.js";
@@ -18,6 +25,7 @@ const router = Router();
 // page: フォローボタンがあるページ
 router.post(
     "/:id",
+    addFollowRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -39,6 +47,7 @@ router.post(
 // page: フォローボタンがあるページ
 router.delete(
     "/:id",
+    deleteFollowRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -60,6 +69,7 @@ router.delete(
 // page: フォローボタンがあるページ
 router.get(
     "/:id/status",
+    followStatusRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -86,6 +96,7 @@ router.get(
 // page: フォロー・フォロワー数表示
 router.get(
     "/:id/count",
+    followCountRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = Number(req.params.id);
@@ -105,6 +116,7 @@ router.get(
 // page: /user-list/follow/[id]
 router.get(
     "/:id/user",
+    followUserListRateLimit,
     validateParams(idParamSchema),
     validateQuery(followUserListQuerySchema),
     authenticateOptional,
