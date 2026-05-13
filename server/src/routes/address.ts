@@ -2,6 +2,11 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateToken } from "../middleware/index.js";
+import {
+    addressEditRateLimit,
+    addressSearchRateLimit,
+    getAddressRateLimit,
+} from "../middleware/rateLimit/addressRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
@@ -23,6 +28,7 @@ router.patch(
     validateParams(idParamSchema),
     validateBody(addressBodySchema),
     authenticateToken,
+    addressEditRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const addressId = Number(req.params.id);
 
@@ -43,23 +49,29 @@ router.patch(
 // GET /address/myaddress
 // summary: 住所取得
 // page: /edit/address
-router.get("/myaddress", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+router.get(
+    "/myaddress",
+    getAddressRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const data = await getMyAddressUseCase({ userId });
+        try {
+            const data = await getMyAddressUseCase({ userId });
 
-        res.status(200).json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /address/:id/delivery-address
 // summary: 配送用住所取得
 // page: /edit/address/delivery/[id]
 router.get(
     "/:id/delivery-address",
+    getAddressRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -80,6 +92,7 @@ router.get(
 // page: /edit/addressなど
 router.get(
     "/search",
+    addressSearchRateLimit,
     validateQuery(zipcodeQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const query = req.validatedQuery as ZipcodeQuery;
