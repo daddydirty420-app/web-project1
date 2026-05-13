@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { commentReportRateLimit, getCommentReportRateLimit } from "../middleware/rateLimit/commentReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { getAllCommentReportOptions } from "../services/commentReport.js";
@@ -18,6 +19,7 @@ router.post(
     validateParams(idParamSchema),
     validateBody(optionIdBodySchema),
     authenticateToken,
+    commentReportRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
         const userId = req.user!.id;
@@ -38,14 +40,18 @@ router.post(
 // GET /comment-report/all-options
 // summary: CommentReportOptions取得
 // page: /report/comment/[id]
-router.get("/all-options", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const options = await getAllCommentReportOptions();
+router.get(
+    "/all-options",
+    getCommentReportRateLimit,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const options = await getAllCommentReportOptions();
 
-        res.status(200).json({ options });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ options });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
