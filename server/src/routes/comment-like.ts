@@ -1,6 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import {
+    addCommentLikeRateLimit,
+    commentLikeCountRateLimit,
+    commentLikeStatusRateLimit,
+    commentLikeUserListRateLimit,
+    deleteCommentLikeRateLimit,
+} from "../middleware/rateLimit/commentLikeRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { countCommentLike } from "../services/commentLike.js";
@@ -18,6 +25,7 @@ const router = Router();
 // page: /item
 router.post(
     "/:id",
+    addCommentLikeRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -40,6 +48,7 @@ router.post(
 // page: /item
 router.delete(
     "/:id",
+    deleteCommentLikeRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -62,6 +71,7 @@ router.delete(
 // page: /item
 router.get(
     "/:id/status",
+    commentLikeStatusRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -84,6 +94,7 @@ router.get(
 // page: /item
 router.get(
     "/:id/count",
+    commentLikeCountRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
@@ -103,6 +114,7 @@ router.get(
 // page: /user-list/comment-like/[id]
 router.get(
     "/:id/user",
+    commentLikeUserListRateLimit,
     validateParams(idParamSchema),
     validateQuery(keywordOptionalQuerySchema),
     authenticateToken,
