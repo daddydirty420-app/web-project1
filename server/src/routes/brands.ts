@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
+import { brandSuggestRateLimit } from "../middleware/rateLimit/brandRateLimit.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { getBrandsSuggestUseCase } from "../usecases/brands/getBrandsSuggest.js";
 import { normalizeJapanese } from "../utils/normalizeJapanese.js";
@@ -12,6 +13,7 @@ const router = Router();
 // page: /upload
 router.get(
     "/suggest",
+    brandSuggestRateLimit,
     validateQuery(keywordOptionalQuerySchema),
     async (req: Request, res: Response): Promise<void> => {
         const query = req.validatedQuery as KeywordOptionalQuery;
