@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
+import { createDeliveryRateLimit } from "../middleware/rateLimit/deliveryRateLiimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import {
     Address,
@@ -25,6 +26,7 @@ router.post(
     "/:id",
     validateParams(idParamSchema),
     authenticateToken,
+    createDeliveryRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const itemId = Number(req.params.id);
