@@ -22,7 +22,6 @@ services:
             - "5000:5000"
         depends_on:
             - db
-            - redis
         environment:
             DOCKER: "true"
             DATABASE_URL: ${DATABASE_URL}
