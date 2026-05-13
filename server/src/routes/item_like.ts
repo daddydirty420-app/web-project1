@@ -1,6 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import {
+    addItemLikeRateLimit,
+    deleteItemLikeRateLimit,
+    itemLikeCountRateLimit,
+    itemLikeStatusRateLimit,
+    itemLikeUserListRateLimit,
+} from "../middleware/rateLimit/itemLikeRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { addItemLikeUseCase } from "../usecases/itemLike/add.js";
@@ -18,6 +25,7 @@ const router = Router();
 // page: /item
 router.post(
     "/:id",
+    addItemLikeRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -39,6 +47,7 @@ router.post(
 // page: /item
 router.delete(
     "/:id",
+    deleteItemLikeRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -60,6 +69,7 @@ router.delete(
 // page: /item
 router.get(
     "/:id/status",
+    itemLikeStatusRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -81,6 +91,7 @@ router.get(
 // page: /item
 router.get(
     "/:id/count",
+    itemLikeCountRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
@@ -100,6 +111,7 @@ router.get(
 // page: /user-list/item-like/[id]
 router.get(
     "/:id/user",
+    itemLikeUserListRateLimit,
     validateParams(idParamSchema),
     validateQuery(keywordOptionalQuerySchema),
     authenticateToken,
