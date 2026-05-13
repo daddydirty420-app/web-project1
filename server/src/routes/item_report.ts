@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { getItemReportRateLimit, itemReportRateLimit } from "../middleware/rateLimit/itemReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { getAllItemReportOptions } from "../services/itemReport.js";
@@ -18,6 +19,7 @@ router.post(
     validateParams(idParamSchema),
     validateBody(optionIdBodySchema),
     authenticateToken,
+    itemReportRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
         const userId = req.user!.id;
@@ -38,14 +40,18 @@ router.post(
 // GET /item-report/all-options
 // summary: ItemReportOptions取得
 // page: /report/item/[id]
-router.get("/all-options", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const options = await getAllItemReportOptions();
+router.get(
+    "/all-options",
+    getItemReportRateLimit,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const options = await getAllItemReportOptions();
 
-        res.status(200).json({ options });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ options });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
