@@ -1,6 +1,13 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import {
+    createCommentRateLimit,
+    deleteCommentRateLimit,
+    editSortCommentRateLimit,
+    getCommentListRateLimit,
+    getReplyListRateLimit,
+} from "../middleware/rateLimit/commentRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { deleteCommentUseCase } from "../usecases/comment/delete.js";
@@ -33,6 +40,7 @@ router.post(
     validateParams(idParamSchema),
     validateQuery(createCommentQuerySchema),
     authenticateToken,
+    createCommentRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const itemId = Number(req.params.id);
@@ -66,6 +74,7 @@ router.post(
 // page: /item
 router.patch(
     "/:id/sort-number/add",
+    editSortCommentRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -87,6 +96,7 @@ router.patch(
 // page: /item
 router.patch(
     "/:id/sort-number/decrease",
+    editSortCommentRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -110,6 +120,7 @@ router.delete(
     "/:id",
     validateParams(idParamSchema),
     authenticateToken,
+    deleteCommentRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const commentId = Number(req.params.id);
         const userId = req.user!.id;
@@ -132,6 +143,7 @@ router.delete(
 // page: /item
 router.get(
     "/:id",
+    getCommentListRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
@@ -162,6 +174,7 @@ router.get(
 // page: /item
 router.get(
     "/:id/reply",
+    getReplyListRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
