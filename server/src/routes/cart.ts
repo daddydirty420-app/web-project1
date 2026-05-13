@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { cartAddRateLimit, cartDeleteRateLimit, cartStatusRateLimit } from "../middleware/rateLimit/cartRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { addCartUseCase } from "../usecases/cart/add.js";
 import { deleteCartUseCase } from "../usecases/cart/delete.js";
@@ -14,6 +15,7 @@ const router = Router();
 // page: /item
 router.post(
     "/:id",
+    cartAddRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -36,6 +38,7 @@ router.post(
 // page: /item
 router.delete(
     "/:id",
+    cartDeleteRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -58,6 +61,7 @@ router.delete(
 // page: /item
 router.get(
     "/:id/status",
+    cartStatusRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
