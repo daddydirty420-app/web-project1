@@ -22,3 +22,10 @@ export const getAccountRateLimit = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+export const bankSearchRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 60,
+    standardHeaders: true,
+    legacyHeaders: false,
+});

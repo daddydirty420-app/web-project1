@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { searchBanksUseCase } from "../usecases/banks/search.js";
 import { KeywordQuery, keywordQuerySchema } from "../validators/query/keyword.js";
+import { bankSearchRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
 
 const router = Router();
 
@@ -12,6 +13,7 @@ const router = Router();
 router.get(
     "/search",
     validateQuery(keywordQuerySchema),
+    bankSearchRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const query = req.validatedQuery as KeywordQuery;
 
