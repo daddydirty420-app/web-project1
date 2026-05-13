@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional } from "../middleware/authOptional.js";
+import { createInquiryRateLimit } from "../middleware/rateLimit/inquiryRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { createInquiryUseCase } from "../usecases/inquiry/create.js";
 import { CreateInquiryBody, createInquiryBodySchema } from "../validators/body/inquiry.js";
@@ -14,6 +15,7 @@ router.post(
     "/",
     authenticateOptional,
     validateBody(createInquiryBodySchema),
+    createInquiryRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user?.id ?? null;
 

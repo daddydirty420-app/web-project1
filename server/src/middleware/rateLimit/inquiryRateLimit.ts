@@ -1,9 +1,9 @@
 import rateLimit from "express-rate-limit";
 import { AuthUser } from "../authMiddleware.js";
 
-export const createDeliveryRateLimit = rateLimit({
-    windowMs: 1000 * 60 * 10,
-    limit: 10,
+export const createInquiryRateLimit = rateLimit({
+    windowMs: 1000 * 60 * 60,
+    limit: 5,
     standardHeaders: true,
     legacyHeaders: false,
 
