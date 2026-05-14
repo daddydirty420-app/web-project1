@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info-edit/:id/address
+// summary: shopEdit住所取得
+// page: /edit/address/shop/com-free/[id]
 export const getAddressShopEditUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getShopEditHasAddress({ shopEditId });
 

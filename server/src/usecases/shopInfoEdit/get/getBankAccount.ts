@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info-edit/:id/bank-account
+// summary: shopEdit口座情報取得
+// page: /edit/account/shop/com-free/[id]
 export const getBankAccountShopEditUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getShopEditHasBankAccount({ shopEditId });
 

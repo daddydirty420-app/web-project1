@@ -1,6 +1,19 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../middleware/index.js";
+import {
+    getShopEditAddressRateLimit,
+    getShopEditComFreeConfirmRateLimit,
+    getShopEditConNameRateLimit,
+    getShopEditRepNameRateLimit,
+    patchShopEditRateLimit,
+    shopEditAddressEditRateLimit,
+    shopEditBankEditRateLimit,
+    shopEditComFreeRateLimit,
+    shopEditCompanyNameRateLimit,
+    shopEditIdUploadRateLimit,
+    shopEditRepNameEditRateLimit,
+} from "../middleware/rateLimit/shopInfoEditRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
@@ -34,9 +47,10 @@ const router = Router();
 // page: /edit/address/shop/[id]
 router.post(
     "/:id/address",
+    authenticateToken,
+    shopEditAddressEditRateLimit,
     validateParams(idParamSchema),
     validateBody(addressBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -62,9 +76,10 @@ router.post(
 // page: /edit/account/shop/[id]
 router.post(
     "/:id/bank-account",
+    authenticateToken,
+    shopEditBankEditRateLimit,
     validateParams(idParamSchema),
     validateBody(bankBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -90,9 +105,10 @@ router.post(
 // page: /edit/name/shop/rep-name/[id]
 router.post(
     "/:id/rep-name",
+    authenticateToken,
+    shopEditRepNameEditRateLimit,
     validateParams(idParamSchema),
     validateBody(repNameBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -113,9 +129,10 @@ router.post(
 // page: /edit/shop/company-name/[id]
 router.post(
     "/:id/company-name",
+    authenticateToken,
+    shopEditCompanyNameRateLimit,
     validateParams(idParamSchema),
     validateBody(createCompanyNameBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -138,9 +155,10 @@ router.post(
 // page: /edit/shop/com-free/[id]
 router.post(
     "/:id/com-free",
+    authenticateToken,
+    shopEditComFreeRateLimit,
     validateParams(idParamSchema),
     validateBody(comFreeIdBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -163,8 +181,9 @@ router.post(
 // page: /edit/shop/com-free/confirm/[id]
 router.patch(
     "/:id",
-    validateParams(idParamSchema),
     authenticateToken,
+    patchShopEditRateLimit,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -185,9 +204,10 @@ router.patch(
 // page: edit/shop/com-free/upload/[id]
 router.patch(
     "/:id/id-image-upload",
+    authenticateToken,
+    shopEditIdUploadRateLimit,
     validateParams(idParamSchema),
     validateBody(shopIdCardBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -213,10 +233,13 @@ router.patch(
 );
 
 // GET /shop-info-edit/:id/address
+// summary: shopEdit住所取得
+// page: /edit/address/shop/com-free/[id]
 router.get(
     "/:id/address",
-    validateParams(idParamSchema),
+    getShopEditAddressRateLimit,
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -232,10 +255,12 @@ router.get(
 );
 
 // GET /shop-info-edit/:id/bank-account
+// summary: shopEdit口座情報取得
+// page: /edit/account/shop/com-free/[id]
 router.get(
     "/:id/bank-account",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -251,10 +276,13 @@ router.get(
 );
 
 // GET /shop-info-edit/:id/rep-name
+// summary: shopEdit代表者氏名取得
+// page: /edit/name/shop/rep-name/com-free/[id]
 router.get(
     "/:id/rep-name",
-    validateParams(idParamSchema),
+    getShopEditRepNameRateLimit,
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -270,10 +298,13 @@ router.get(
 );
 
 // GET /shop-info-edit/:id/con-name
+// summary: shopEdit担当者氏名取得
+// page: /edit/name/shop/con-name/com-free/[id]
 router.get(
     "/:id/con-name",
-    validateParams(idParamSchema),
+    getShopEditConNameRateLimit,
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
@@ -289,10 +320,13 @@ router.get(
 );
 
 // GET /shop-info-edit/:id/com-free-confirm
+// summary: 事業形態変更確認ページデータ取得
+// page: /edit/shop/com-free/confirm/[id]
 router.get(
     "/:id/com-free-confirm",
-    validateParams(idParamSchema),
+    getShopEditComFreeConfirmRateLimit,
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;

@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info-edit/:id/com-free-confirm
+// summary: 事業形態変更確認ページデータ取得
+// page: /edit/shop/com-free/confirm/[id]
 export const getShopComFreeConfirmUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getShopEditComFreeConfirm({ shopEditId });
 
