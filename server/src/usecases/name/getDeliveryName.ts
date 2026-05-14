@@ -5,6 +5,9 @@ type Params = {
     deliveryId: number;
 };
 
+// GET /name/:id/delivery-name
+// summary: 配送用氏名取得
+// page: /edit/name/delivery/[id]
 export const getDeliveryNameUseCase = async ({ deliveryId }: Params) => {
     const data = await getDeliveryNameOne({ deliveryId });
 

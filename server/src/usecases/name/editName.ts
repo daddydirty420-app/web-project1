@@ -9,6 +9,9 @@ type Params = {
     meiKana: string;
 };
 
+// PATCH /name/:id
+// summary: 氏名変更
+// page: /edit/name
 export const editNameUseCase = async ({ nameId, sei, mei, seiKana, meiKana }: Params) => {
     // name取得
     const name = await getName({ nameId });

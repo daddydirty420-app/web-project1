@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { getNameRateLimit, nameEditRateLimit } from "../middleware/rateLimit/nameRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { editNameUseCase } from "../usecases/name/editName.js";
@@ -12,11 +13,14 @@ import { idParamSchema } from "../validators/params/id.js";
 const router = Router();
 
 // PATCH /name/:id
+// summary: 氏名変更
+// page: /edit/name
 router.patch(
     "/:id",
+    authenticateToken,
+    nameEditRateLimit,
     validateParams(idParamSchema),
     validateBody(nameBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const nameId = Number(req.params.id);
 
@@ -34,21 +38,31 @@ router.patch(
 );
 
 // GET /name/myname
-router.get("/myname", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+// summary: 自分の氏名取得
+// page: /edit/nameなど
+router.get(
+    "/myname",
+    getNameRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const data = await getMyNameUseCase({ userId });
+        try {
+            const data = await getMyNameUseCase({ userId });
 
-        res.status(200).json({ data });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /name/:id/delivery-name
+// summary: 配送用氏名取得
+// page: /edit/name/delivery/[id]
 router.get(
     "/:id/delivery-name",
+    getNameRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
