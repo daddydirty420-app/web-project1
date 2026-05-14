@@ -13,6 +13,9 @@ type Params = {
     userId: number;
 };
 
+// DELETE /items/:id/logical
+// summary: 商品論理削除
+// page: /item/[id]
 export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => {
     // 配送中Delivery取得
     const deliveryNow = await findDeliveryNow({ itemId });

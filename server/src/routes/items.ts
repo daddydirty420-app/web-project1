@@ -2,6 +2,22 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import {
+    createItemCopyRateLimit,
+    createItemRateLimit,
+    draftDeleteItemRateLimit,
+    editSortItemRateLimit,
+    getItemHighlightRateLimit,
+    getItemListRateLimit,
+    getItemPageRateLimit,
+    getItemRecommendRateLimit,
+    getItemUploadFormDataRateLimit,
+    logicalDeleteItemRateLimit,
+    perfectDeleteItemRateLimit,
+    restoreItemRateLimit,
+    uploadItemRateLimit,
+    uploadPublishItemRateLimit,
+} from "../middleware/rateLimit/itemsRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
@@ -48,22 +64,32 @@ import {
 const router = Router();
 
 // POST /items
-router.post("/", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+// summary: 商品データ作成
+// page: /upload/before
+router.post(
+    "/",
+    authenticateToken,
+    createItemRateLimit,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const itemId = await createItemsUseCase({ userId });
+        try {
+            const itemId = await createItemsUseCase({ userId });
 
-        res.status(200).json({ itemId });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ itemId });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /items/:id/copy-upload
+// summary: 商品コピーアップロード
+// page: /item/[id]
 router.post(
     "/:id/copy-upload",
     authenticateToken,
+    createItemCopyRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
@@ -86,6 +112,7 @@ router.post(
 router.put(
     "/:id",
     authenticateToken,
+    uploadItemRateLimit,
     validateParams(idParamSchema),
     validateQuery(putItemUploadQuerySchema),
     validateBody(itemUploadBodySchema),
@@ -122,9 +149,12 @@ router.put(
 );
 
 // PATCH /items/:id/publish
+// summary: 商品公開
+// page: /item/confirm/[id]
 router.patch(
     "/:id/publish",
     authenticateToken,
+    uploadPublishItemRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
@@ -145,6 +175,7 @@ router.patch(
 // page: /itemなど
 router.patch(
     "/:id/sort-number/add",
+    editSortItemRateLimit,
     validateParams(idParamSchema),
     validateQuery(itemSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -167,6 +198,7 @@ router.patch(
 // page: /itemなど
 router.patch(
     "/:id/sort-number/decrease",
+    editSortItemRateLimit,
     validateParams(idParamSchema),
     validateQuery(itemSortNumberQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -185,6 +217,8 @@ router.patch(
 );
 
 // PATCH /items/:id/logs/access
+// summary: アクセスログ記録
+// page: /item/[id]
 router.patch(
     "/:id/logs/access",
     authenticateOptional,
@@ -203,9 +237,12 @@ router.patch(
 );
 
 // PATCH /items/:id/restore
+// summary: 商品データ復元
+// page: /item/deleted/[id]
 router.patch(
     "/:id/restore",
     authenticateToken,
+    restoreItemRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction) => {
         const itemId = Number(req.params.id);
@@ -223,9 +260,12 @@ router.patch(
 );
 
 // DELETE /items/:id/logical
+// summary: 商品論理削除
+// page: /item/[id]
 router.delete(
     "/:id/logical",
     authenticateToken,
+    logicalDeleteItemRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction) => {
         const itemId = Number(req.params.id);
@@ -243,8 +283,11 @@ router.delete(
 );
 
 // DELETE /items/:id/perfect
+// summary: 商品完全削除
+// page: /item/deleted/[id]
 router.delete(
     "/:id/perfect",
+    perfectDeleteItemRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -263,9 +306,12 @@ router.delete(
 );
 
 // DELETE /items/:id/draft
+// summary: 下書き商品削除
+// page: /item/draft/[id]
 router.delete(
     "/:id/draft",
     authenticateToken,
+    draftDeleteItemRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
@@ -287,6 +333,7 @@ router.delete(
 // page: /lp・/profile
 router.get(
     "/",
+    getItemListRateLimit,
     authenticateOptional,
     validateQuery(itemListQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -339,6 +386,7 @@ router.get(
 // page: /item・/item-list/cart・/など
 router.get(
     "/recommend",
+    getItemRecommendRateLimit,
     authenticateOptional,
     validateQuery(recommendItemsQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -382,6 +430,7 @@ router.get(
 // page: /item
 router.get(
     "/:id",
+    getItemPageRateLimit,
     authenticateOptional,
     validateParams(idParamSchema),
     validateQuery(getItemPageQuerySchema),
@@ -415,6 +464,8 @@ router.get(
 );
 
 // GET /items/:id/metadata
+// summary: 商品ページメタデータ
+// page: /item
 router.get(
     "/:id/metadata",
     validateParams(idParamSchema),
@@ -432,8 +483,11 @@ router.get(
 );
 
 // GET /items/:id/form-data
+// summary: アップロードフォーム表示データ取得
+// page: /upload
 router.get(
     "/:id/form-data",
+    getItemUploadFormDataRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -460,8 +514,11 @@ router.get(
 );
 
 // GET /items/:id/highlight
+// summary: 商品データ簡易表示
+// page: /upload/ok
 router.get(
     "/:id/highlight",
+    getItemHighlightRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);

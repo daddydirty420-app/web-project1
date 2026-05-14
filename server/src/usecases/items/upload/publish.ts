@@ -9,6 +9,9 @@ type Params = {
     userId: number;
 };
 
+// PATCH /items/:id/publish
+// summary: 商品公開
+// page: /item/confirm/[id]
 export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
     // getData
     const item = await getItemWithVideoCategoriesUser({ itemId });

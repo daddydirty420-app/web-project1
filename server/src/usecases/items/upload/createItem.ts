@@ -8,6 +8,9 @@ type Params = {
     userId: number;
 };
 
+// POST /items
+// summary: 商品データ作成
+// page: /upload/before
 export const createItemsUseCase = async ({ userId }: Params) => {
     return await sequelize.transaction(async (t) => {
         const itemId = await createItem({ userId, transaction: t });

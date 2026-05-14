@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// PATCH /items/:id/restore
+// summary: 商品データ復元
+// page: /item/deleted/[id]
 export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
     const item = await getItem({ itemId });

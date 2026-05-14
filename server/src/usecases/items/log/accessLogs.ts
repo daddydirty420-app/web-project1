@@ -7,6 +7,9 @@ type Params = {
     userId: number | null;
 };
 
+// PATCH /items/:id/logs/access
+// summary: アクセスログ記録
+// page: /item/[id]
 export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
     const item = await getItem({ itemId });

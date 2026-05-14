@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// DELETE /items/:id/draft
+// summary: 下書き商品削除
+// page: /item/draft/[id]
 export const deleteDraftItemUseCase = async ({ itemId, userId }: Params) => {
     // item取得
     const item = await getItem({ itemId });

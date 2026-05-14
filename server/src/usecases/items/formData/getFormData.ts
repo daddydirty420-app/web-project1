@@ -11,6 +11,9 @@ type Params = {
     itemId: number;
 };
 
+// GET /items/:id/form-data
+// summary: アップロードフォーム表示データ取得
+// page: /upload
 export const getFormDataUseCase = async ({ itemId }: Params) => {
     // Item取得
     const item = await getItemFormData({ itemId });

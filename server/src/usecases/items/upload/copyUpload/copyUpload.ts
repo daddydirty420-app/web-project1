@@ -16,6 +16,9 @@ type Params = {
 type ColorVariant = NonNullable<ItemAttributes["colorVariants"]>[number];
 type ColorVariantSize = NonNullable<ColorVariant["sizes"]>[number];
 
+// POST /items/:id/copy-upload
+// summary: 商品コピーアップロード
+// page: /item/[id]
 export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
     // item取得
     const item = await getItemWithVideoSaleShipping({ itemId });

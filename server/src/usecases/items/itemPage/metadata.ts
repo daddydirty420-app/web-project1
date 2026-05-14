@@ -5,6 +5,9 @@ type Params = {
     itemId: number;
 };
 
+// GET /items/:id/metadata
+// summary: 商品ページメタデータ
+// page: /item
 export const getMetadataUseCase = async ({ itemId }: Params) => {
     const item = await getMetadata({ itemId });
 
