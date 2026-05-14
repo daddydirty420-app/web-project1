@@ -3,7 +3,7 @@ import { AuthUser } from "../authMiddleware.js";
 
 export const outputReferenceCodeRateLimit = rateLimit({
     windowMs: 1000 * 60,
-    limit: 20,
+    limit: 10,
     standardHeaders: true,
     legacyHeaders: false,
 

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { saleRateLimit, saleStopRateLimit } from "../middleware/rateLimit/saleRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { saleEditUseCase } from "../usecases/sale/saleEdit.js";
@@ -15,9 +16,10 @@ const router = Router();
 // page: /item
 router.patch(
     "/:id/edit",
+    authenticateToken,
+    saleRateLimit,
     validateParams(idParamSchema),
     validateBody(saleEditBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const saleId = Number(req.params.id);
         const body = req.validatedBody as SaleEditBody;
@@ -37,8 +39,9 @@ router.patch(
 // page: /item
 router.patch(
     "/:id/stop",
-    validateParams(idParamSchema),
     authenticateToken,
+    saleStopRateLimit,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const saleId = Number(req.params.id);
 
