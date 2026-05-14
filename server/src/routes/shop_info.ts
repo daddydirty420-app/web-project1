@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { createShopStep1RateLimit } from "../middleware/rateLimit/shopInfoRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
@@ -45,6 +46,7 @@ const router = Router();
 router.post(
     "/",
     authenticateToken,
+    createShopStep1RateLimit,
     validateBody(createSignup1BBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -65,9 +67,9 @@ router.post(
 // page: /edit/name/shop/rep-name/signup/[id]
 router.patch(
     "/:id/rep-name",
+    authenticateToken,
     validateParams(idParamSchema),
     validateBody(repNameBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -88,9 +90,9 @@ router.patch(
 // page: /edit/phone-number/shop/[id]
 router.patch(
     "/:id/phone-number",
+    authenticateToken,
     validateParams(idParamSchema),
     validateBody(phoneNumberBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -113,9 +115,9 @@ router.patch(
 // page: /edit/shop/option/[id]
 router.patch(
     "/:id/option",
+    authenticateToken,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -138,9 +140,9 @@ router.patch(
 // page: /shop-signup/step3/[id]
 router.patch(
     "/:id/signup/3",
+    authenticateToken,
     validateParams(idParamSchema),
     validateBody(shopIdCardBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -170,9 +172,9 @@ router.patch(
 // page: /shop-signup/step4/[id]
 router.patch(
     "/:id/signup/4",
+    authenticateToken,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -195,8 +197,8 @@ router.patch(
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/edit",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -217,8 +219,8 @@ router.patch(
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/5",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -236,8 +238,8 @@ router.patch(
 // GET /shop-info/:id/address
 router.get(
     "/:id/address",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -255,8 +257,8 @@ router.get(
 // GET /shop-info/:id/bank-account
 router.get(
     "/:id/bank-account",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -274,8 +276,8 @@ router.get(
 // GET /shop-info/:id/rep-name
 router.get(
     "/:id/rep-name",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -293,8 +295,8 @@ router.get(
 // GET /shop-info/:id/con-name
 router.get(
     "/:id/con-name",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -312,8 +314,8 @@ router.get(
 // GET /shop-info/:id/phone-number
 router.get(
     "/:id/phone-number",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -331,8 +333,8 @@ router.get(
 // GET /shop-info/:id/company-name
 router.get(
     "/:id/company-name",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -350,8 +352,8 @@ router.get(
 // GET /shop-info/:id/option
 router.get(
     "/:id/option",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -369,8 +371,8 @@ router.get(
 // GET /shop-info/:id/com-free
 router.get(
     "/:id/com-free",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
@@ -405,8 +407,8 @@ router.get("/signup/1", authenticateToken, async (req: Request, res: Response, n
 // page: /shop-signup/step2/[id]
 router.get(
     "/:id/signup/2",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const shopId = Number(req.params.id);
@@ -426,8 +428,8 @@ router.get(
 // page: /shop-signup/step3/[id]
 router.get(
     "/:id/signup/3",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const shopId = Number(req.params.id);
@@ -447,8 +449,8 @@ router.get(
 // page: /shop-signup/step5/[id]
 router.get(
     "/:id/signup/5",
-    validateParams(idParamSchema),
     authenticateToken,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
         const shopId = Number(req.params.id);
