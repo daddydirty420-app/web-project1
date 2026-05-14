@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { transferPointsRateLimit, transferRequestRateLimit } from "../middleware/rateLimit/transferRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
@@ -17,6 +18,7 @@ const router = Router();
 router.post(
     "/request",
     authenticateToken,
+    transferRequestRateLimit,
     validateBody(transferBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -43,6 +45,7 @@ router.post(
 router.post(
     "/points",
     authenticateToken,
+    transferPointsRateLimit,
     validateBody(transferBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
