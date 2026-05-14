@@ -7,6 +7,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info/:id/com-free
+// summary: 事業形態取得
+// page: /edit/shop/com-free/[id]
 export const getShopComFreeUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getShopHasComFree({ shopId });
 

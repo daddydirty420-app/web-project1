@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info/:id/phone-number
+// summary: 電話番号取得
+// page: /edit/phone-number/shop/[id]
 export const getShopPhoneNumberUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getShopPhoneNumber({ shopId });
 

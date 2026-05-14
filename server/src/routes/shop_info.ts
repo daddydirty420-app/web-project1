@@ -1,7 +1,28 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { createShopStep1RateLimit } from "../middleware/rateLimit/shopInfoRateLimit.js";
+import {
+    createShopStep1RateLimit,
+    getShopAddressRateLimit,
+    getShopBankAccountRateLimit,
+    getShopComFreeRateLimit,
+    getShopCompanyNameRateLimit,
+    getShopConNameRateLimit,
+    getShopOptionRateLimit,
+    getShopPhoneNumberRateLimit,
+    getShopRepNameRateLimit,
+    getShopSignup1RateLimit,
+    getShopSignup2RateLimit,
+    getShopSignup3RateLimit,
+    getShopSignup5RateLimit,
+    shopOptionEditRateLimit,
+    shopPhoneNumberEditRateLimit,
+    shopRepNameEditRateLimit,
+    shopSignup3RateLimit,
+    shopSignup4RateLimit,
+    shopSignup5EditRateLimit,
+    shopSignup5RateLimit,
+} from "../middleware/rateLimit/shopInfoRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
@@ -68,6 +89,7 @@ router.post(
 router.patch(
     "/:id/rep-name",
     authenticateToken,
+    shopRepNameEditRateLimit,
     validateParams(idParamSchema),
     validateBody(repNameBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -91,6 +113,7 @@ router.patch(
 router.patch(
     "/:id/phone-number",
     authenticateToken,
+    shopPhoneNumberEditRateLimit,
     validateParams(idParamSchema),
     validateBody(phoneNumberBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -116,6 +139,7 @@ router.patch(
 router.patch(
     "/:id/option",
     authenticateToken,
+    shopOptionEditRateLimit,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -141,6 +165,7 @@ router.patch(
 router.patch(
     "/:id/signup/3",
     authenticateToken,
+    shopSignup3RateLimit,
     validateParams(idParamSchema),
     validateBody(shopIdCardBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -173,6 +198,7 @@ router.patch(
 router.patch(
     "/:id/signup/4",
     authenticateToken,
+    shopSignup4RateLimit,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -198,6 +224,7 @@ router.patch(
 router.patch(
     "/:id/signup/edit",
     authenticateToken,
+    shopSignup5EditRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -220,6 +247,7 @@ router.patch(
 router.patch(
     "/:id/signup/5",
     authenticateToken,
+    shopSignup5RateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -236,8 +264,11 @@ router.patch(
 );
 
 // GET /shop-info/:id/address
+// summary: 会社所在地取得
+// page: /edit/address/shop/[id]・/edit/address/shop/signup/[id]
 router.get(
     "/:id/address",
+    getShopAddressRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -255,8 +286,11 @@ router.get(
 );
 
 // GET /shop-info/:id/bank-account
+// summary: ショップ口座情報取得
+// page: /edit/account/shop/[id]・/edit/account/shop/signup/[id]
 router.get(
     "/:id/bank-account",
+    getShopBankAccountRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -274,8 +308,11 @@ router.get(
 );
 
 // GET /shop-info/:id/rep-name
+// summary: 代表者氏名取得
+// page: /edit/name/shop/rep-name/[id]・/edit/name/shop/rep-name/signup/[id]
 router.get(
     "/:id/rep-name",
+    getShopRepNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -293,8 +330,11 @@ router.get(
 );
 
 // GET /shop-info/:id/con-name
+// summary: 担当者氏名取得
+// page: /edit/name/shop/con-name/[id]・/edit/name/shop/con-name/signup/[id]
 router.get(
     "/:id/con-name",
+    getShopConNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -312,8 +352,11 @@ router.get(
 );
 
 // GET /shop-info/:id/phone-number
+// summary: 電話番号取得
+// page: /edit/phone-number/shop/[id]
 router.get(
     "/:id/phone-number",
+    getShopPhoneNumberRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -331,8 +374,11 @@ router.get(
 );
 
 // GET /shop-info/:id/company-name
+// summary: 会社名取得
+// page: /edit/shop/company-name/[id]
 router.get(
     "/:id/company-name",
+    getShopCompanyNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -350,8 +396,11 @@ router.get(
 );
 
 // GET /shop-info/:id/option
+// summary: オプション取得
+// page: /edit/shop/option/[id]
 router.get(
     "/:id/option",
+    getShopOptionRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -369,8 +418,11 @@ router.get(
 );
 
 // GET /shop-info/:id/com-free
+// summary: 事業形態取得
+// page: /edit/shop/com-free/[id]
 router.get(
     "/:id/com-free",
+    getShopComFreeRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -390,23 +442,29 @@ router.get(
 // GET /shop-info/signup/1
 // summary: 事業者情報登録ページ　インプット表示データ取得
 // page: /shop-signup/step1
-router.get("/signup/1", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+router.get(
+    "/signup/1",
+    getShopSignup1RateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
+        try {
+            const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
 
-        res.status(200).json({ shop, user, comFree });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ shop, user, comFree });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /shop-info/:id/signup/2
 // summary: ショップ口座登録ページ　インプット表示データ取得
 // page: /shop-signup/step2/[id]
 router.get(
     "/:id/signup/2",
+    getShopSignup2RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -428,6 +486,7 @@ router.get(
 // page: /shop-signup/step3/[id]
 router.get(
     "/:id/signup/3",
+    getShopSignup3RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -449,6 +508,7 @@ router.get(
 // page: /shop-signup/step5/[id]
 router.get(
     "/:id/signup/5",
+    getShopSignup5RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

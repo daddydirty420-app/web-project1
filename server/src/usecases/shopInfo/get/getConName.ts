@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info/:id/con-name
+// summary: 担当者氏名取得
+// page: /edit/name/shop/con-name/[id]・/edit/name/shop/con-name/signup/[id]
 export const getConNameUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getShopHasConName({ shopId });
 

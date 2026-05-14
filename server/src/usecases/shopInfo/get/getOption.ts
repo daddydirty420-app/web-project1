@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /shop-info/:id/option
+// summary: オプション取得
+// page: /edit/shop/option/[id]
 export const getShopOptionUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getShopOption({ shopId });
 
