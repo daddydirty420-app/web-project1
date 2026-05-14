@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken } from "../middleware/index.js";
 import { Notification } from "../models/index.js";
 import { countUnread } from "../services/notification.js";
+import { getUnreadCountRateLimit } from "../middleware/rateLimit/notificationRateLimit.js";
 
 const router = Router();
 
@@ -40,6 +41,7 @@ router.get(
 // page: footer, /my-page
 router.get(
     "/unread-count",
+    getUnreadCountRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
