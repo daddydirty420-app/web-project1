@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { deleteWatchHistoryRateLimit } from "../middleware/rateLimit/watchHistoryRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.js";
 import { idParamSchema } from "../validators/params/id.js";
@@ -12,8 +13,9 @@ const router = Router();
 // page: /item-list/watch-history
 router.delete(
     "/:id",
-    validateParams(idParamSchema),
     authenticateToken,
+    deleteWatchHistoryRateLimit,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = Number(req.params.id);
 
