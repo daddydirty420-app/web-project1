@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
+import { outputReferenceCodeRateLimit } from "../middleware/rateLimit/referenceCodeRateLimit.js";
 import { outputReferenceCodeUseCase } from "../usecases/referenceCode/output.js";
 
 const router = Router();
@@ -8,19 +9,24 @@ const router = Router();
 // POST /reference-code/output
 // summary: 紹介コード生成
 // page: /my-page
-router.post("/output", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+router.post(
+    "/output",
+    authenticateToken,
+    outputReferenceCodeRateLimit,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const output = await outputReferenceCodeUseCase({ userId });
+        try {
+            const output = await outputReferenceCodeUseCase({ userId });
 
-        res.status(200).json({
-            message: "紹介コードを生成しました。",
-            output,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                message: "紹介コードを生成しました。",
+                output,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 export default router;
