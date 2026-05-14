@@ -1,6 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { convertVideoRateLimit, playVideoLogRateLimit } from "../middleware/rateLimit/videoRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { convertVideoUseCase } from "../usecases/video/convert.js";
 import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
@@ -13,8 +14,9 @@ const router = Router();
 // page: /item
 router.patch(
     "/:id/onplay",
-    validateParams(idParamSchema),
     authenticateOptional,
+    playVideoLogRateLimit,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const videoId = Number(req.params.id);
 
@@ -33,8 +35,9 @@ router.patch(
 // page: /upload
 router.patch(
     "/:id/convert",
-    validateParams(idParamSchema),
     authenticateToken,
+    convertVideoRateLimit,
+    validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const videoId = Number(req.params.id);
 
