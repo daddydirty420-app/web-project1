@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
+import { getOrderListRateLimit } from "../middleware/rateLimit/ordersRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import {
@@ -35,6 +36,7 @@ const router = Router();
 // page: type=sold: /order/list/sold
 router.get(
     "/",
+    getOrderListRateLimit,
     authenticateToken,
     validateQuery(getOrderListQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {

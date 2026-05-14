@@ -7,6 +7,26 @@ import { getUnreadCountRateLimit } from "../middleware/rateLimit/notificationRat
 
 const router = Router();
 
+// GET /notification/unread-count
+// summary: 未読通知カウント
+// page: footer, /my-page
+router.get(
+    "/unread-count",
+    getUnreadCountRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const unreadCount = await countUnread({ userId });
+
+            res.status(200).json({ unreadCount });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
 router.get(
     "/my-notification",
     authenticateToken,
@@ -30,26 +50,6 @@ router.get(
                 notificationList: notificationList,
                 unreadCount: unreadCount,
             });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /notification/unread-count
-// summary: 未読通知カウント
-// page: footer, /my-page
-router.get(
-    "/unread-count",
-    getUnreadCountRateLimit,
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const unreadCount = await countUnread({ userId });
-
-            res.status(200).json({ unreadCount });
         } catch (err) {
             next(err);
         }
