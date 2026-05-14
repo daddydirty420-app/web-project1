@@ -5,6 +5,9 @@ type Params = {
     userId: number;
 };
 
+// GET /user/phone-number
+// summary: 電話番号取得
+// page: /edit/phone-number
 export const getPhoneNumberUseCase = async ({ userId }: Params) => {
     const user = await getMePhoneNumber({ userId });
 

@@ -6,6 +6,9 @@ type Params = {
     userId: number;
 };
 
+// GET /user/honnin
+// summary: 本人確認フォーム表示データ取得
+// page: /edit/honnin
 export const getHonninEditUseCase = async ({ userId }: Params) => {
     // user取得
     const user = await getHonninEditUser({ userId });

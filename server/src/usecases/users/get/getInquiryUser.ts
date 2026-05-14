@@ -5,6 +5,9 @@ type Params = {
     userId: number;
 };
 
+// GET /user/inquiry
+// summary: お問い合わせフォーム表示データ取得
+// page: /inquiry
 export const getInquiryUserUseCase = async ({ userId }: Params) => {
     // user取得
     const user = await getInquiryUser({ userId });

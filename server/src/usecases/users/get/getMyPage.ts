@@ -8,6 +8,9 @@ type Params = {
     userId: number;
 };
 
+// GET /user/my-page
+// summary: マイページ表示データ取得
+// page: /my-page
 export const getMyPageUseCase = async ({ userId }: Params) => {
     const user = await getMeMypage({ userId });
 

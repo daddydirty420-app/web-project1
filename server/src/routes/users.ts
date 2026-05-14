@@ -1,6 +1,21 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import {
+    editPhoneNumberRateLimit,
+    getHonninRateLimit,
+    getInquiryRateLimit,
+    getMyPageRateLimit,
+    getPhoneNumberRateLimit,
+    getProfileEditRateLimit,
+    getProfileMetadataRateLimit,
+    getProfileRateLimit,
+    getStarRateLimit,
+    getTransferPointsRateLimit,
+    getTransferRequestRateLimit,
+    profileEditRateLimit,
+    requestHonninRateLimit,
+} from "../middleware/rateLimit/usersRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
@@ -39,9 +54,10 @@ const router = Router();
 // page: /edit/profile
 router.patch(
     "/profile",
+    authenticateToken,
+    profileEditRateLimit,
     validateQuery(profileEditQuerySchema),
     validateBody(profileEditBodySchema),
-    authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
@@ -69,6 +85,7 @@ router.patch(
 router.patch(
     "/phone-number",
     authenticateToken,
+    editPhoneNumberRateLimit,
     validateBody(phoneNumberBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -92,6 +109,7 @@ router.patch(
 router.patch(
     "/honnin",
     authenticateToken,
+    requestHonninRateLimit,
     validateBody(honninBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -111,21 +129,12 @@ router.patch(
     },
 );
 
-// GET /user/me
-router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ currentUserId: req.user?.id ?? null });
-});
-
-// GET /user/me-admin
-router.get("/me-admin", authenticateToken, async (req: Request, res: Response): Promise<void> => {
-    res.status(200).json({ admin: !!req.user!.admin });
-});
-
 // GET /:id/profile?page=number&limit=number
 // summary: プロフィール表示データ取得
 // page: /profile/[id]
 router.get(
     "/:id/profile",
+    getProfileRateLimit,
     validateParams(idParamSchema),
     validateQuery(getProfileQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -153,8 +162,11 @@ router.get(
 );
 
 // GET /user/:id/star
+// summary: スター数取得
+// page: /profileなど
 router.get(
     "/:id/star",
+    getStarRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = Number(req.params.id);
@@ -170,8 +182,11 @@ router.get(
 );
 
 // GET /user/:id/profile/metadata
+// summary: プロフィールページ　メタデータ
+// page: /profile/[id]
 router.get(
     "/:id/profile/metadata",
+    getProfileMetadataRateLimit,
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = Number(req.params.id);
@@ -187,45 +202,62 @@ router.get(
 );
 
 // GET /user/my-page
-router.get("/my-page", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+// summary: マイページ表示データ取得
+// page: /my-page
+router.get(
+    "/my-page",
+    getMyPageRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const { user, hasShop, itemCount, soldItemCount, unreadCount, referenceCount } = await getMyPageUseCase({
-            userId,
-        });
+        try {
+            const { user, hasShop, itemCount, soldItemCount, unreadCount, referenceCount } = await getMyPageUseCase({
+                userId,
+            });
 
-        res.status(200).json({
-            userData: {
-                user,
-                hasShop,
-            },
-            itemCount,
-            soldItemCount,
-            unreadCount,
-            referenceCount,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                userData: {
+                    user,
+                    hasShop,
+                },
+                itemCount,
+                soldItemCount,
+                unreadCount,
+                referenceCount,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/inquiry
-router.get("/inquiry", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+// summary: お問い合わせフォーム表示データ取得
+// page: /inquiry
+router.get(
+    "/inquiry",
+    getInquiryRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const user = await getInquiryUserUseCase({ userId });
+        try {
+            const user = await getInquiryUserUseCase({ userId });
 
-        res.status(200).json({ user });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/phone-number
+// summary: 電話番号取得
+// page: /edit/phone-number
 router.get(
     "/phone-number",
+    getPhoneNumberRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -241,8 +273,11 @@ router.get(
 );
 
 // GET /user/profile-edit-data
+// summary: プロフィール編集ページ表示データ取得
+// page: /edit/profile
 router.get(
     "/profile-edit-data",
+    getProfileEditRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -258,26 +293,34 @@ router.get(
 );
 
 // GET /user/honnin
-router.get("/honnin", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
+// summary: 本人確認フォーム表示データ取得
+// page: /edit/honnin
+router.get(
+    "/honnin",
+    getHonninRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
 
-    try {
-        const { user, genderAllOptions } = await getHonninEditUseCase({ userId });
+        try {
+            const { user, genderAllOptions } = await getHonninEditUseCase({ userId });
 
-        res.status(200).json({
-            user,
-            genderAllOptions,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+            res.status(200).json({
+                user,
+                genderAllOptions,
+            });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/transfer-points
 // summary: ポイント変換ページ　表示データ取得
 // page: /transfer/points
 router.get(
     "/transfer-points",
+    getTransferPointsRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -297,6 +340,7 @@ router.get(
 // page: /transfer/request
 router.get(
     "/transfer-request",
+    getTransferRequestRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -310,5 +354,15 @@ router.get(
         }
     },
 );
+
+// GET /user/me
+router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {
+    res.status(200).json({ currentUserId: req.user?.id ?? null });
+});
+
+// GET /user/me-admin
+router.get("/me-admin", authenticateToken, async (req: Request, res: Response): Promise<void> => {
+    res.status(200).json({ admin: !!req.user!.admin });
+});
 
 export default router;
