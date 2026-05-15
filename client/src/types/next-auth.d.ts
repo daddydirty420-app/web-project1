@@ -9,10 +9,11 @@ declare module "next-auth" {
             admin?: boolean;
             accessToken?: string;
             refreshToken?: string;
+            rememberMe: boolean;
         } & DefaultSession["user"];
         accessToken?: string;
         refreshToken?: string;
-        rememberMe?: boolean;
+        rememberMe: boolean;
         error?: string;
     }
 

@@ -68,7 +68,7 @@ export default async function Page() {
 
     return (
         <>
-            <CookieSet refreshToken={session?.refreshToken} rememberMe={session?.rememberMe} />
+            <CookieSet refreshToken={session?.user.refreshToken} rememberMe={session?.user.rememberMe} />
 
             <MypageElement data={data} user={data.userData.user} profileLink={profileLink} />
         </>

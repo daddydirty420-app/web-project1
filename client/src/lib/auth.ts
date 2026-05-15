@@ -6,7 +6,7 @@ interface AuthUser {
     email: string;
     user_name?: string;
     admin?: boolean;
-    rememberMe?: boolean;
+    rememberMe: boolean;
     accessToken: string;
     refreshToken?: string;
 }
@@ -77,7 +77,6 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 const data = await res.json();
-                if (!res.ok) return null;
 
                 return {
                     id: data.id,
@@ -134,8 +133,9 @@ export const authOptions: NextAuthOptions = {
             session.user.email = token.email as string;
             session.user.user_name = token.user_name as string;
             session.user.admin = token.admin as boolean;
-            session.accessToken = token.accessToken as string;
-            session.refreshToken = token.refreshToken as string;
+            session.user.accessToken = token.accessToken as string;
+            session.user.refreshToken = token.refreshToken as string;
+            session.user.rememberMe = token.rememberMe as boolean;
 
             if (token.error) {
                 session.error = token.error;
