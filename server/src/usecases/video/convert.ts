@@ -78,7 +78,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     ]);
 
     ffmpeg.stderr.on("data", (data) => {
-        console.error(data.toString());
+        console.log(data.toString());
     });
 
     const timeout = setTimeout(async () => {
