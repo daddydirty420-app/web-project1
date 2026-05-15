@@ -18,6 +18,7 @@ type Params = {
 export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
     const tempId = crypto.randomUUID();
+    let isTimedOut = false;
 
     // video取得
     const video = await getVideo({ videoId });
@@ -82,6 +83,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     });
 
     const timeout = setTimeout(async () => {
+        isTimedOut = true;
         console.error("ffmpeg timeout");
         ffmpeg.kill("SIGKILL");
 
@@ -99,6 +101,10 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     await new Promise<void>((resolve, reject) => {
         ffmpeg.on("close", async (code) => {
             clearTimeout(timeout);
+
+            if (isTimedOut) {
+                return reject(new AppError("ffmpeg timeout", 408));
+            }
 
             if (code !== 0) {
                 console.error(`ffmpeg exited with code ${code}`);
@@ -145,7 +151,12 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
             } catch (e) {
                 console.error(e);
                 await updateStatus({ video, data: { status: "failed" } });
-                reject(new AppError("server error", 500));
+                
+                if (e instanceof AppError) {
+                    reject(e);
+                } else {
+                    reject(new AppError("server error", 500));
+                }
             } finally {
                 fs.rmSync(originalFilePath, { force: true });
                 fs.rmSync(convertedDir, { recursive: true, force: true });
