@@ -44,9 +44,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
 
     await downloadVideoFromS3({ key: originalKey, filePath: originalFilePath });
 
-    updateStatus({ video, data: { status: "processing" } }).catch((err) => {
-        console.error("service video updateStatus error:", err);
-    });
+    await updateStatus({ video, data: { status: "processing" } });
 
     // 変換ディレクトリ作成
     fs.mkdirSync(convertedDir, { recursive: true });
@@ -80,7 +78,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const timeout = setTimeout(async () => {
         console.error("ffmpeg timeout");
         ffmpeg.kill("SIGKILL");
-        
+
         await updateStatus({ video, data: { status: "failed" } });
     }, 5 * 60 * 1000); // 5分
 
@@ -93,9 +91,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
 
             if (code !== 0) {
                 console.error(`ffmpeg exited with code ${code}`);
-                updateStatus({ video, data: { status: "failed" } }).catch((err) => {
-                    console.error("service video updateStatus error:", err);
-                });
+                await updateStatus({ video, data: { status: "failed" } });
                 return;
             }
 
@@ -138,9 +134,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 fs.rmSync(convertedDir, { recursive: true, force: true });
             } catch (e) {
                 console.error(e);
-                updateStatus({ video, data: { status: "failed" } }).catch((err) => {
-                    console.error("service video updateStatus error:", err);
-                });
+                await updateStatus({ video, data: { status: "failed" } });
             }
         });
     });
