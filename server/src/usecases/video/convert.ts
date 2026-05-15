@@ -56,6 +56,12 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         "0:a:0?", // ← 追加（音声はあれば使う）
         "-profile:v",
         "baseline",
+        "-c:v",
+        "libx264",
+        "-c:a",
+        "aac",
+        "-vf",
+        "scale='min(1280,iw)':-2",
         "-level",
         "3.0",
         "-start_number",

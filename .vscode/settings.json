@@ -80,7 +80,8 @@
         "mpegurl",
         "ILIKE",
         "Ngrams",
-        "ffprobe"
+        "ffprobe",
+        "libx264"
     ],
     "remote.autoForwardPortsFallback": 0
 }
