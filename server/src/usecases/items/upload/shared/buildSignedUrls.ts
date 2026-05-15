@@ -1,7 +1,7 @@
 import { s3Domain } from "../../../../infra/aws/s3.js";
 import { SignedUrlWithIndex } from "../../../../infra/aws/type.js";
 import { Item } from "../../../../models/index.js";
-import { generateSignedUrl } from "../../../../utils/s3/index.js";
+import { createVideoPresignedPost, generateSignedUrl } from "../../../../utils/s3/index.js";
 import { ItemUploadBody } from "../../../../validators/body/items.js";
 
 type Params = {
@@ -17,14 +17,19 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
     const now = Date.now();
 
     // 動画署名付きURL生成
-    let videoSignedUrl: string | null = null;
+    let videoSignedUrl: Awaited<ReturnType<typeof createVideoPresignedPost>> | null = null;
     let videoUrl: string | null = item.Video?.converted_url ?? item.Video?.original_url ?? null;
 
     if (video?.name && !video.uploaded && video.type) {
         const ext = video.name.split(".").pop();
         const originalKey = `video/original/${userId}/${itemId}_${now}_${ext}`;
 
-        videoSignedUrl = await generateSignedUrl({ key: originalKey, contentType: video.type });
+        videoSignedUrl =
+            (await createVideoPresignedPost({
+                key: originalKey,
+                contentType: video.type,
+                contentLengthRange: 500 * 1024 * 1024,
+            })) ?? null;
 
         videoUrl = `${s3Domain}/${originalKey}`;
     }
