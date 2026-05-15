@@ -87,7 +87,12 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     }, 5 * 60 * 1000); // 5分
 
     // 再生時間
-    const seconds = await getDuration({ filePath: originalFilePath });
+    let seconds: number = 0;
+    try {
+        seconds = await getDuration({ filePath: originalFilePath });
+    } catch (err) {
+        console.error(err);
+    }
 
     await new Promise<void>((resolve, reject) => {
         ffmpeg.on("close", async (code) => {
@@ -143,7 +148,14 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 console.error(e);
                 await updateStatus({ video, data: { status: "failed" } });
                 reject(new AppError("server error", 500));
+            } finally {
+                fs.rmSync(originalFilePath, { force: true });
+                fs.rmSync(convertedDir, { recursive: true, force: true });
             }
+        });
+
+        ffmpeg.on("error", (err) => {
+            reject(err);
         });
     });
 };
