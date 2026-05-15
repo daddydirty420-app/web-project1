@@ -92,15 +92,16 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
             if (code !== 0) {
                 console.error(`ffmpeg exited with code ${code}`);
                 await updateStatus({ video, data: { status: "failed" } });
-                return;
+                return reject(new AppError(`ffmpeg exited with code ${code}`, 422));
             }
 
             try {
                 // HLSファイル生成
                 const files = fs.readdirSync(convertedDir);
 
-                if (files.length === 0) {
-                    throw new Error("HLSファイルが生成されていません");
+                const hasPlaylist = files.some((f) => f.endsWith(".m3u8"));
+                if (!hasPlaylist) {
+                    return reject(new AppError("playlist not generated", 422));
                 }
 
                 // HLSファイルS3アップロード
@@ -132,9 +133,12 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 // 後処理
                 fs.rmSync(originalFilePath, { force: true });
                 fs.rmSync(convertedDir, { recursive: true, force: true });
+
+                resolve();
             } catch (e) {
                 console.error(e);
                 await updateStatus({ video, data: { status: "failed" } });
+                reject(new AppError("server error", 500));
             }
         });
     });
