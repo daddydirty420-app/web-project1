@@ -5,6 +5,13 @@ import {
     UserIdParams,
 } from "../types/serviceType/notification.js";
 
+export const getMyNotificationList = ({ userId }: UserIdParams) => {
+    return Notification.findAll({
+        where: { read_user_id: userId },
+        order: [["createdAt", "DESC"]],
+    });
+};
+
 export const createNotification = async ({ data, transaction }: CreateNotificationParams) => {
     await Notification.create(data, { transaction });
 };
