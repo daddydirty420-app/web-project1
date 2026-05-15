@@ -75,6 +75,10 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         `${convertedDir}/${now}_index.m3u8`,
     ]);
 
+    ffmpeg.stderr.on("data", (data) => {
+        console.error(data.toString());
+    });
+
     const timeout = setTimeout(async () => {
         console.error("ffmpeg timeout");
         ffmpeg.kill("SIGKILL");
