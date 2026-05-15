@@ -143,10 +143,6 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     });
                 }
 
-                // 後処理
-                fs.rmSync(originalFilePath, { force: true });
-                fs.rmSync(convertedDir, { recursive: true, force: true });
-
                 resolve();
             } catch (e) {
                 console.error(e);
