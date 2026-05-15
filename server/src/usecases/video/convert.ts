@@ -82,13 +82,16 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         console.log(data.toString());
     });
 
-    const timeout = setTimeout(async () => {
-        isTimedOut = true;
-        console.error("ffmpeg timeout");
-        ffmpeg.kill("SIGKILL");
+    const timeout = setTimeout(
+        async () => {
+            isTimedOut = true;
+            console.error("ffmpeg timeout");
+            ffmpeg.kill("SIGKILL");
 
-        await updateStatus({ video, data: { status: "failed" } });
-    }, 5 * 60 * 1000); // 5分
+            await updateStatus({ video, data: { status: "failed" } });
+        },
+        5 * 60 * 1000,
+    ); // 5分
 
     // 再生時間
     let seconds: number = 0;
@@ -129,8 +132,8 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     const contentType = f.endsWith(".ts")
                         ? "video/mp2t"
                         : f.endsWith(".m3u8")
-                        ? "application/vnd.apple.mpegurl"
-                        : "application/octet-stream";
+                          ? "application/vnd.apple.mpegurl"
+                          : "application/octet-stream";
 
                     await uploadVideoToS3({ filePath, key, contentType });
                 }
@@ -151,7 +154,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
             } catch (e) {
                 console.error(e);
                 await updateStatus({ video, data: { status: "failed" } });
-                
+
                 if (e instanceof AppError) {
                     reject(e);
                 } else {
