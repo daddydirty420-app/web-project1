@@ -128,15 +128,13 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                 const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;
 
                 // video更新
-                updateStatus({
+                await updateStatus({
                     video,
                     data: {
                         status: "done",
                         converted_url: convertedUrl,
                         duration: seconds,
                     },
-                }).catch((err) => {
-                    console.error("service video updateStatus error:", err);
                 });
 
                 // 後処理
