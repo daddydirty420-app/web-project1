@@ -112,7 +112,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
 
                 const hasPlaylist = files.some((f) => f.endsWith(".m3u8"));
                 if (!hasPlaylist) {
-                    return reject(new AppError("playlist not generated", 422));
+                    throw new AppError("playlist not generated", 422);
                 }
 
                 // HLSファイルS3アップロード
