@@ -1,4 +1,5 @@
 import { spawn } from "child_process";
+import crypto from "crypto";
 import fs from "fs";
 import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
@@ -16,6 +17,7 @@ type Params = {
 // page: /upload
 export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
+    const tempId = crypto.randomUUID();
 
     // video取得
     const video = await getVideo({ videoId });
@@ -30,15 +32,9 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
 
     const originalKey = originalUrl.replace(`${s3Domain}/`, "");
 
-    // 拡張子を抽出
-    let ext = originalKey.split(".").pop();
-    if (!["mp4", "mov", "webm", "mkv"].includes(ext)) {
-        ext = "mp4"; // 最終フォールバック
-    }
-
     // 一時保存先
-    const originalFilePath = `tmp/original_${videoId}_${now}.${ext}`;
-    const convertedDir = `tmp/converted_${videoId}_${now}`;
+    const originalFilePath = `tmp/original_${videoId}_${now}_${tempId}`;
+    const convertedDir = `tmp/converted_${videoId}_${now}_${tempId}`;
 
     fs.mkdirSync("tmp", { recursive: true });
 
@@ -69,10 +65,10 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         "-hls_playlist_type",
         "vod",
         "-hls_segment_filename",
-        `${convertedDir}/${now}_seg_%03d.ts`, // ← 追加（名前が綺麗）
+        `${convertedDir}/${now}_${tempId}_seg_%03d.ts`, // ← 追加（名前が綺麗）
         "-f",
         "hls",
-        `${convertedDir}/${now}_index.m3u8`,
+        `${convertedDir}/${now}_${tempId}_index.m3u8`,
     ]);
 
     ffmpeg.stderr.on("data", (data) => {
@@ -127,7 +123,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     await uploadVideoToS3({ filePath, key, contentType });
                 }
 
-                const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_index.m3u8`;
+                const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_${tempId}_index.m3u8`;
 
                 // video更新
                 await updateStatus({
