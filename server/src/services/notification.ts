@@ -7,6 +7,7 @@ import {
 
 export const getMyNotificationList = ({ userId }: UserIdParams) => {
     return Notification.findAll({
+        attributes: ["id", "message", "message_image", "read_flag", "createdAt", "url"],
         where: { read_user_id: userId },
         order: [["createdAt", "DESC"]],
     });
