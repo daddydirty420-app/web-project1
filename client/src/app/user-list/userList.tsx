@@ -1,7 +1,6 @@
 "use client";
 
 import { fetcher } from "@/lib/fetcher";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
+import { removeFollow } from "./follow/api/follow";
 import { FollowButton } from "./followButton";
 import { User } from "./type";
 import styles from "./userList.module.css";
@@ -69,29 +69,11 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         }, false);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                mutate();
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${userId}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (!res.ok) {
-                mutate();
-                const data = await res.json();
-                toast.error("フォロー解除に失敗しました");
-                return;
-            }
+            await removeFollow(userId);
 
             mutate();
+
+            toast.success("フォロー解除しました");
         } catch (err) {
             mutate();
             alert("システムエラーが発生しました。時間をおいて再試行してください");
