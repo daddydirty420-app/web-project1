@@ -8,13 +8,14 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { getSearchHistory } from "./api/search";
 import styles from "./header.module.css";
 
 type Props = {
     loggedIn: boolean;
 };
 
-type SearchHistoryItem = {
+export type SearchHistoryItem = {
     search_text: string;
     createdAt: string;
 };
@@ -41,24 +42,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
     const searchHistory = async () => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) return;
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/history`, {
-                method: "GET",
-                cache: "no-store",
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) return;
-
-            const dataList: string[] = (data.sortedData as SearchHistoryItem[]).map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (item: any) => item.search_text,
-            );
+            const dataList = await getSearchHistory();
 
             setSearchHis(dataList);
         } catch (err) {}
