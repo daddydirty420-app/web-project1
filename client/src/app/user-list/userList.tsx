@@ -73,8 +73,6 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             await removeFollow(userId);
 
             mutate();
-
-            toast.success("フォロー解除しました");
         } catch (err) {
             mutate();
 

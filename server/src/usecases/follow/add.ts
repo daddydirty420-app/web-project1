@@ -19,7 +19,7 @@ export const addFollowUseCase = async ({ currentUserId, targetUserId }: Params) 
     const follow = await getFollowOne({ currentUserId, targetUserId });
 
     if (follow) {
-        throw new AppError("NOT_LIKE_ITEM", 409, "すでにフォローしています");
+        throw new AppError("NOT_LIKE_ITEM", 409);
     }
 
     // follow作成
