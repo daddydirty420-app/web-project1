@@ -3,8 +3,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../lib/api/apiError";
+import { addFollow, removeFollow } from "./api/follow";
 import styles from "./button.module.css";
-import { addFollow, removeFollow } from "./follow/api/follow";
 import { User } from "./type";
 
 type Props = {
@@ -33,7 +33,7 @@ export const FollowButton = ({ user }: Props) => {
 
                 return;
             }
-            
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
