@@ -1,6 +1,5 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { normalizeJapanese } from "@/lib/normalizeJapanese";
 import { faAngleLeft, faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { getSearchHistory } from "./api/search";
+import { getSuggestWords } from "./api/suggestWords";
 import styles from "./header.module.css";
 
 type Props = {
@@ -55,14 +55,9 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/suggest-words?keyword=${word}`, {
-                method: "GET",
-                cache: "no-store",
-            });
+            const suggest = await getSuggestWords(word);
 
-            const data: { suggest: string[] } = await res.json();
-
-            setSuggestList(data.suggest);
+            setSuggestList(suggest);
         } catch (err) {
             setSuggestList([]);
         }
