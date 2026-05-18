@@ -1,8 +1,10 @@
 "use client";
 
 import { updateFollowCache, useFollowStatus } from "@/hooks/useFollow";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
+import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
+import { addFollow, removeFollow } from "./api/api";
 import styles from "./followButton.module.css";
 
 type Props = {
@@ -19,22 +21,21 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, true);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await addFollow(targetUserId);
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
+
+            if (err instanceof ApiError) {
+                if (err.statusCode === 409) {
+                    toast.error("すでにフォローしています");
+                } else {
+                    toast.error("フォロー失敗しました");
+                }
+
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
@@ -43,21 +44,20 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, false);
 
         try {
-            const accessToken = await getAccessToken();
+            await removeFollow(targetUserId);
+        } catch (err) {
+            updateFollowCache(targetUserId, currentUserId, true);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            if (err instanceof ApiError) {
+                if (err.statusCode === 409) {
+                    toast.error("フォローしていません");
+                } else {
+                    toast.error("フォロー解除に失敗しました");
+                }
+
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${targetUserId}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-        } catch (err) {
-            updateFollowCache(targetUserId, currentUserId, true);
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
