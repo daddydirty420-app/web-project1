@@ -2,7 +2,10 @@
 
 import { getAccessToken } from "@/lib/getAccessToken";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
 import styles from "./button.module.css";
+import { removeFollow } from "./follow/api/follow";
 import { User } from "./type";
 
 type Props = {
@@ -43,21 +46,20 @@ export const FollowButton = ({ user }: Props) => {
         setIsFollowing(next);
 
         try {
-            const accessToken = await getAccessToken();
+            await removeFollow(user.id);
+        } catch (err) {
+            setIsFollowing(!next);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            if (err instanceof ApiError) {
+                if (err.statusCode === 409) {
+                    toast.error("フォローしていません");
+                } else {
+                    toast.error("フォロー解除に失敗しました");
+                }
+
                 return;
             }
 
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/follow/${user.id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-        } catch (err) {
-            setIsFollowing(!next);
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
