@@ -1,5 +1,9 @@
 import { apiFetch } from "../../../lib/api/client";
-import { SearchHistoryItem } from "../searchInputMobile";
+
+type SearchHistoryItem = {
+    search_text: string;
+    createdAt: string;
+};
 
 type SearchHistoryResponse = {
     sortedData: SearchHistoryItem[];

@@ -1,21 +1,17 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { normalizeJapanese } from "@/lib/normalizeJapanese";
 import { faClock, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { getSuggestWords } from "./api/suggestWords";
 import styles from "./header.module.css";
+import { getSearchHistory } from "./api/search";
 
 type Props = {
     loggedIn: boolean;
-};
-
-type SearchHistoryItem = {
-    search_text: string;
-    createdAt: string;
 };
 
 export const SearchInputPC = ({ loggedIn }: Props) => {
@@ -46,24 +42,7 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
 
     const searchHistory = async () => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) return;
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/search/history`, {
-                method: "GET",
-                cache: "no-store",
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) return;
-
-            const dataList: string[] = (data.sortedData as SearchHistoryItem[]).map(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (item: any) => item.search_text,
-            );
+            const dataList = await getSearchHistory();
 
             setSearchHis(dataList);
         } catch (err) {}
@@ -76,14 +55,9 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/suggest-words?keyword=${word}`, {
-                method: "GET",
-                cache: "no-store",
-            });
+            const suggest = await getSuggestWords(word);
 
-            const data: { suggest: string[] } = await res.json();
-
-            setSuggestList(data.suggest);
+            setSuggestList(suggest);
         } catch (err) {
             setSuggestList([]);
         }

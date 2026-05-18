@@ -15,11 +15,6 @@ type Props = {
     loggedIn: boolean;
 };
 
-export type SearchHistoryItem = {
-    search_text: string;
-    createdAt: string;
-};
-
 export const SearchInputMobile = ({ loggedIn }: Props) => {
     const [value, setValue] = useState("");
     const [isMobile, setIsMobile] = useState(true);
