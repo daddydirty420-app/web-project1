@@ -19,7 +19,7 @@ export const deleteFollowUseCase = async ({ currentUserId, targetUserId }: Param
     const follow = await getFollowOne({ currentUserId, targetUserId });
 
     if (!follow) {
-        throw new AppError("NOT_LIKE_ITEM", 409, "フォローしていません");
+        throw new AppError("NOT_LIKE_ITEM", 409);
     }
 
     // follow削除

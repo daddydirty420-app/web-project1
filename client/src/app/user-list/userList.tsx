@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
+import { ApiError } from "../../lib/api/apiError";
 import { removeFollow } from "./follow/api/follow";
 import { FollowButton } from "./followButton";
 import { User } from "./type";
@@ -76,6 +77,17 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             toast.success("フォロー解除しました");
         } catch (err) {
             mutate();
+
+            if (err instanceof ApiError) {
+                if (err.statusCode === 409) {
+                    toast.error("フォローしていません");
+                } else {
+                    toast.error("フォロー解除に失敗しました");
+                }
+
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
