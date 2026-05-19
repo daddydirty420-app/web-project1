@@ -1,11 +1,12 @@
 "use client";
 
 import { Button, InputStr, Textarea } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { profileEdit } from "../api/profile";
 import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
@@ -29,34 +30,15 @@ export const ProfileEditForm = ({ user }: Props) => {
 
         const query = file || defaultImage ? "?imageEdit=true" : "";
 
+        const body = {
+            fileName: file?.name,
+            contentType: file?.type,
+            userName: userNameValue,
+            introduction: introductionValue,
+        };
+
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile${query}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                    fileName: file?.name,
-                    contentType: file?.type,
-                    userName: userNameValue,
-                    introduction: introductionValue ?? null,
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("プロフィールの変更に失敗しました");
-                return;
-            }
+            const data = await profileEdit(query, body);
 
             if (file && data.signedUrl) {
                 const uploadRes = await fetch(data.signedUrl, {
@@ -78,6 +60,11 @@ export const ProfileEditForm = ({ user }: Props) => {
 
             router.push(`/profile/${user.id}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("プロフィールの変更に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
