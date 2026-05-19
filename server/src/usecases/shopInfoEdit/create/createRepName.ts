@@ -22,10 +22,10 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
     const now = Date.now();
 
     const {
-        seiValue,
-        meiValue,
-        seiKanaValue,
-        meiKanaValue,
+        sei,
+        mei,
+        seiKana,
+        meiKana,
         frontFileName,
         frontFileType,
         rearFileName,
@@ -87,10 +87,10 @@ export const createRepNameUseCase = async ({ shopId, userId, body }: Params) => 
     await sequelize.transaction(async (t) => {
         const newRepName = await createNameShop({
             data: {
-                sei: seiValue,
-                mei: meiValue,
-                sei_kana: seiKanaValue,
-                mei_kana: meiKanaValue,
+                sei,
+                mei,
+                sei_kana: seiKana,
+                mei_kana: meiKana,
                 shop_type: "representative",
             },
             transaction: t,

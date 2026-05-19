@@ -21,10 +21,10 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
     const now = Date.now();
 
     const {
-        seiValue,
-        meiValue,
-        seiKanaValue,
-        meiKanaValue,
+        sei,
+        mei,
+        seiKana,
+        meiKana,
         frontFileName,
         frontFileType,
         rearFileName,
@@ -96,10 +96,10 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
         await updateName({
             name: shop.RepresentativeName,
             data: {
-                sei: seiValue,
-                mei: meiValue,
-                sei_kana: seiKanaValue,
-                mei_kana: meiKanaValue,
+                sei,
+                mei,
+                sei_kana: seiKana,
+                mei_kana: meiKana,
             },
             transaction: t,
         });

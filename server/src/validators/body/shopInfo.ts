@@ -25,10 +25,10 @@ const isValidCompanyNumber = (value: string): boolean => {
 };
 
 export const repNameBodySchema = z.object({
-    seiValue: z.string().trim().min(1),
-    meiValue: z.string().trim().min(1),
-    seiKanaValue: z.string().trim().min(1),
-    meiKanaValue: z.string().trim().min(1),
+    sei: z.string().trim().min(1),
+    mei: z.string().trim().min(1),
+    seiKana: z.string().trim().min(1),
+    meiKana: z.string().trim().min(1),
     frontFileName: z.string().optional(),
     frontFileType: z.string().optional(),
     rearFileName: z.string().optional(),

@@ -7,7 +7,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { nameEdit, shopEditRepNameCreate, shopRepNamePatch } from "../api/name";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Name } from "../type";
@@ -73,34 +75,15 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
             return;
         }
 
+        const body = {
+            sei: seiValue.trim(),
+            mei: meiValue.trim(),
+            seiKana: seiKanaValue.trim(),
+            meiKana: meiKanaValue.trim(),
+        };
+
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/name/${name.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                    sei: seiValue.trim(),
-                    mei: meiValue.trim(),
-                    seiKana: seiKanaValue.trim(),
-                    meiKana: meiKanaValue.trim(),
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("氏名の変更に失敗しました");
-                return;
-            }
+            await nameEdit(name.id, body);
 
             toast.success("氏名を更新しました");
             await sleep(1500);
@@ -117,11 +100,16 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
                 router.push("/my-page");
             }
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("氏名の変更に失敗しました");
+            }
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
     const repSubmit = async () => {
+        if (!shopId) return;
+
         if (!seiValue || !meiValue || !seiKanaValue || !meiKanaValue) {
             toast.error("空の項目があります");
             return;
@@ -148,10 +136,10 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
         }
 
         const body = {
-            seiValue,
-            meiValue,
-            seiKanaValue,
-            meiKanaValue,
+            sei: seiValue.trim(),
+            mei: meiValue.trim(),
+            seiKana: seiKanaValue.trim(),
+            meiKana: meiKanaValue.trim(),
             frontFileName,
             frontFileType,
             rearFileName,
@@ -169,21 +157,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
             }
 
             if (page === "rep-shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/rep-name`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify(body),
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    toast.error("氏名の変更に失敗しました");
-                    return;
-                }
+                const data = await shopEditRepNameCreate(shopId, body);
 
                 if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                     const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -220,21 +194,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/rep-name`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify(body),
-                });
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    toast.error("氏名の変更に失敗しました");
-                    return;
-                }
+                const data = await shopRepNamePatch(shopId, body);
 
                 if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                     const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -272,6 +232,20 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
                 router.push(`/shop-signup/step5/${shopId}`);
             }
         } catch (err) {
+            if (err instanceof ApiError) {
+                switch (err.code) {
+                    case "FRONT_URL_EMPTY":
+                        toast.error("身分証表面がありません");
+                        break;
+                    case "REAR_URL_EMPTY":
+                        toast.error("身分証裏面がありません");
+                        break;
+                    default:
+                        toast.error("氏名の変更に失敗しました");
+                }
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
