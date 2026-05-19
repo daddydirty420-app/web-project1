@@ -5,7 +5,9 @@ import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { phoneNumberEdit, shopPhoneNumberEdit } from "../api/phoneNumber";
 import EditUI from "../editUI";
 import { User } from "../type";
 
@@ -39,23 +41,9 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
             }
 
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/phone-number`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify({
-                        phoneNumber: value,
-                    }),
-                });
+                if (!shopId) throw new Error();
 
-                const data = await res.json();
-
-                if (!res.ok) {
-                    toast.error("電話番号の更新に失敗しました");
-                    return;
-                }
+                await shopPhoneNumberEdit(shopId, value);
 
                 toast.success("電話番号を更新しました");
                 await sleep(1500);
@@ -64,23 +52,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/phone-number`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                    phoneNumber: value,
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("電話番号の更新に失敗しました");
-                return;
-            }
+            await phoneNumberEdit(value);
 
             toast.success("電話番号を更新しました");
             await sleep(1500);
@@ -91,6 +63,11 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
                 router.push("/my-page");
             }
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("電話番号の更新に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
