@@ -2,12 +2,13 @@
 "use client";
 
 import { Button, InputStr, InputTitle } from "@/components/inputForm/index";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { accountEdit, shopAccountEdit } from "../api/account";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { BankAccount } from "../type";
@@ -172,29 +173,10 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
         };
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/bank-account`, {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify(body),
-                });
+                if (!shopId) throw new Error();
 
-                const data = await res.json();
-
-                if (!res.ok) {
-                    showBankErrorToast(data.code);
-                    return;
-                }
+                await shopAccountEdit(shopId, body);
 
                 toast.success("口座情報の変更を受け付けました。審査完了までしばらくお待ちください");
                 await sleep(1500);
@@ -203,21 +185,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/${account.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                showBankErrorToast(data.code);
-                return;
-            }
+            await accountEdit(account.id, body);
 
             toast.success("口座情報を更新しました");
             await sleep(1500);
@@ -232,6 +200,11 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 router.push(`/edit/shop/com-free/confirm/${shopEditId}`);
             }
         } catch (err) {
+            if (err instanceof ApiError) {
+                showBankErrorToast(err.code);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
