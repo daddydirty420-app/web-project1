@@ -209,7 +209,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
                 showHonninErrorToast(err.code);
                 return;
             }
-            
+
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };

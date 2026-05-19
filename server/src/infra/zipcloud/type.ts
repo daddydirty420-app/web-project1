@@ -6,7 +6,7 @@ export type ZipCloudResponse = {
               prefcode: string;
               address1: string;
               address2: string;
-              address3: string
+              address3: string;
               kana1: string;
               kana2: string;
               kana3: string;
