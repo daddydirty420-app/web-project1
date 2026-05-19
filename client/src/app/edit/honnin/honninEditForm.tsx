@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, InputStr, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { ja } from "date-fns/locale";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,9 +12,11 @@ import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
 import { getAddress } from "../api/address";
+import { honninSubmit } from "../api/honnin";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { GenderOption, User } from "../type";
+import { showHonninErrorToast } from "./honninErrorMessage";
 
 type Props = {
     user: User;
@@ -167,28 +168,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/honnin`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("本人確認情報の送信に失敗しました");
-                return;
-            }
+            const data = await honninSubmit(body);
 
             if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -225,6 +205,11 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
 
             router.push("/my-page");
         } catch (err) {
+            if (err instanceof ApiError) {
+                showHonninErrorToast(err.code);
+                return;
+            }
+            
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };

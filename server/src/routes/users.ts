@@ -69,10 +69,7 @@ router.patch(
         try {
             const signedUrl = await editProfileUseCase({ userId, body, imageEdit });
 
-            res.status(200).json({
-                message: "プロフィール更新完了！",
-                signedUrl,
-            });
+            res.status(200).json({ signedUrl });
         } catch (err) {
             next(err);
         }
@@ -119,7 +116,6 @@ router.patch(
             const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
 
             res.status(200).json({
-                message: "本人確認のリクエストが完了しました。",
                 frontSignedUrl,
                 rearSignedUrl,
             });
