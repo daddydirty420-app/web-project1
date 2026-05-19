@@ -54,6 +54,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
 
             setTodouhuken(address.todouhuken_name);
             setShikutyouson(address.shikutyouson);
+            setBanchi(address.banchi);
         } catch (err) {
             if (err instanceof ApiError) {
                 showAddressErrorToast(err.code);

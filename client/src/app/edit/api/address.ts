@@ -5,6 +5,7 @@ type AddressResponse = {
         todouhuken_id: number;
         todouhuken_name: string;
         shikutyouson: string;
+        banchi: string;
     };
 };
 

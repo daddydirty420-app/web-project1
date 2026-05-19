@@ -9,8 +9,10 @@ import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
+import { getAddress } from "../api/address";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { GenderOption, User } from "../type";
@@ -64,22 +66,17 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
-                method: "GET",
-                cache: "no-store",
-            });
+            const address = await getAddress(postNumber);
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                showAddressErrorToast(data.code);
-                toast.error("サーバーエラーが発生しました。通信環境を確認し、もう一度ボタンをクリックしてください");
+            setTodouhuken(address.todouhuken_name);
+            setShikutyouson(address.shikutyouson);
+            setBanchi(address.banchi);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                showAddressErrorToast(err.code);
+                return;
             }
 
-            setTodouhuken(data.address.todouhuken_name);
-            setShikutyouson(data.address.shikutyouson);
-            setBanchi(data.address.banchi);
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

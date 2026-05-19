@@ -29,6 +29,7 @@ export const fetchAddressFromZipUseCase = async ({ zipcode }: Params): Promise<A
             todouhuken_id: todouhuken.id,
             todouhuken_name: todouhuken.name,
             shikutyouson: result.address2,
+            banchi: result.address3,
         };
     } else {
         throw new AppError("ADDRESS_NOT_FOUND", 404);
