@@ -1,14 +1,13 @@
 "use client";
 
 import { Button, InputStr } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { getAddress } from "../api/address";
+import { addressEdit, getAddress, shopAddressEdit } from "../api/address";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Address } from "../type";
@@ -77,36 +76,19 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             return;
         }
 
+        const body = {
+            postNumber: normalizedPostNumber,
+            todouhuken,
+            shikutyouson,
+            banchi,
+            building,
+        };
+
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
             if (page === "shop") {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/address`, {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify({
-                        postNumber: normalizedPostNumber,
-                        todouhuken,
-                        shikutyouson,
-                        banchi,
-                        building,
-                    }),
-                });
+                if (!shopId) throw new Error();
 
-                const data = await res.json();
-
-                if (!res.ok) {
-                    showAddressErrorToast(data.code);
-                    return;
-                }
+                await shopAddressEdit(shopId, body);
 
                 toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください");
                 await sleep(1500);
@@ -115,27 +97,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/${address.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                    postNumber,
-                    todouhuken,
-                    shikutyouson,
-                    banchi,
-                    building,
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                showAddressErrorToast(data.code);
-                return;
-            }
+            await addressEdit(address.id, body);
 
             toast.success("住所を更新しました");
             await sleep(1500);
@@ -150,6 +112,11 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 router.push("/my-page");
             }
         } catch (err) {
+            if (err instanceof ApiError) {
+                showAddressErrorToast(err.code);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

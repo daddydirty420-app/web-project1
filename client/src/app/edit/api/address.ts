@@ -8,6 +8,14 @@ type AddressResponse = {
     };
 };
 
+type AddressEditBody = {
+    postNumber: string;
+    todouhuken: string;
+    shikutyouson: string;
+    banchi: string;
+    building: string;
+};
+
 export const getAddress = async (postNumber: string) => {
     const data: AddressResponse = await apiFetch(`/address/search?zipcode=${postNumber}`, {
         method: "GET",
@@ -15,4 +23,18 @@ export const getAddress = async (postNumber: string) => {
     });
 
     return data.address;
+};
+
+export const addressEdit = async (addressId: string, body: AddressEditBody) => {
+    return apiFetch(`/address/${addressId}`, {
+        method: "PATCH",
+        body: JSON.stringify(body),
+    });
+};
+
+export const shopAddressEdit = async (shopId: string, body: AddressEditBody) => {
+    return apiFetch(`/shop-info-edit/${shopId}/address`, {
+        method: "POST",
+        body: JSON.stringify(body),
+    });
 };
