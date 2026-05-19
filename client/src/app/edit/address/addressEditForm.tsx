@@ -6,7 +6,9 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { getAddress } from "../api/address";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Address } from "../type";
@@ -49,21 +51,16 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
-                method: "GET",
-                cache: "no-store",
-            });
+            const address = await getAddress(postNumber);
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                showAddressErrorToast(data.code);
+            setTodouhuken(address.todouhuken_name);
+            setShikutyouson(address.shikutyouson);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                showAddressErrorToast(err.code);
                 return;
             }
 
-            setTodouhuken(data.address.todouhuken_name);
-            setShikutyouson(data.address.shikutyouson);
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
