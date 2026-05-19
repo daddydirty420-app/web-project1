@@ -27,7 +27,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             updateFollowCache(targetUserId, currentUserId, false);
 
             if (err instanceof ApiError) {
-                if (err.statusCode === 409) {
+                if (err.code === "ALREADY_FOLLOWING") {
                     toast.error("すでにフォローしています");
                 } else {
                     toast.error("フォロー失敗しました");
@@ -49,7 +49,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
             updateFollowCache(targetUserId, currentUserId, true);
 
             if (err instanceof ApiError) {
-                if (err.statusCode === 409) {
+                if (err.code === "NOT_FOLLOWING") {
                     toast.error("フォローしていません");
                 } else {
                     toast.error("フォロー解除に失敗しました");

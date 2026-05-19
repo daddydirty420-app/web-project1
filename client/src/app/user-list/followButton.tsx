@@ -25,7 +25,7 @@ export const FollowButton = ({ user }: Props) => {
             setIsFollowing(!next);
 
             if (err instanceof ApiError) {
-                if (err.statusCode === 409) {
+                if (err.code === "ALREADY_FOLLOWING") {
                     toast.error("すでにフォローしています");
                 } else {
                     toast.error("フォロー失敗しました");
@@ -49,7 +49,7 @@ export const FollowButton = ({ user }: Props) => {
             setIsFollowing(!next);
 
             if (err instanceof ApiError) {
-                if (err.statusCode === 409) {
+                if (err.code === "NOT_FOLLOWING") {
                     toast.error("フォローしていません");
                 } else {
                     toast.error("フォロー解除に失敗しました");

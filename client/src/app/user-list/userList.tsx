@@ -77,7 +77,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
             mutate();
 
             if (err instanceof ApiError) {
-                if (err.statusCode === 409) {
+                if (err.code === "NOT_FOLLOWING") {
                     toast.error("フォローしていません");
                 } else {
                     toast.error("フォロー解除に失敗しました");
