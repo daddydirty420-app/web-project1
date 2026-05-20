@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { fetchGetCartStatus } from "../../api/cart";
 import styles from "./buy.module.css";
 
 type Props = {
@@ -22,26 +23,9 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         if (loggedIn) {
             const fetchData = async () => {
                 try {
-                    const accessToken = await getAccessToken();
+                    const data = await fetchGetCartStatus(id);
 
-                    if (!accessToken) {
-                        alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                        return;
-                    }
-
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}/status`, {
-                        method: "GET",
-                        cache: "no-store",
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    });
-
-                    const data = await res.json();
-
-                    if (res.ok) {
-                        setCartIn(data.status);
-                    }
+                    setCartIn(data.status);
                 } catch (err) {}
             };
 

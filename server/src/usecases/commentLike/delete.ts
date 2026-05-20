@@ -15,7 +15,7 @@ export const deleteCommentLikeUseCase = async ({ commentId, userId }: Params) =>
     const data = await getCommentLikeOne({ commentId, userId });
 
     if (!data) {
-        throw new AppError("NOT_LIKE_COMMENT", 409, "いいねしていません");
+        throw new AppError("NOT_LIKE_COMMENT", 409);
     }
 
     // CommentLike削除
