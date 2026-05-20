@@ -1,12 +1,13 @@
 "use client";
 
 import { Button, InputStr } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
+import { companyNameEdit } from "../../api/shopEdit";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ShopInfo } from "../../type";
@@ -29,28 +30,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/company-name`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ companyName }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("更新に失敗しました");
-                return;
-            }
+            await companyNameEdit(shopId, companyName);
 
             const alertText =
                 comFree === 1 ? "会社名の変更を受け付けました。審査完了までお待ちください" : "屋号を変更しました";
@@ -60,6 +40,11 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("更新に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
