@@ -1,9 +1,10 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchCommentCreate } from "../api/comment";
 import { Comment, Item, User } from "../itemPageTypes";
 import styles from "./comment.module.css";
 
@@ -62,27 +63,7 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
         setInputComment("");
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                throw new Error("AUTH_ERROR");
-            }
-
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/comment/${id}?sellerMe=${sellerMe}&parentId=${parentId}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    body: JSON.stringify({ inputComment }),
-                },
-            );
-
-            if (!res.ok) {
-                throw new Error("UPLOAD_ERROR");
-            }
+            await fetchCommentCreate({ itemId: id, sellerMe, parentId, inputComment });
 
             mutate();
 
@@ -90,15 +71,12 @@ export const CommentForm = ({ id, sellerMe, parentId, loggedIn, item, me, mutate
         } catch (err) {
             mutate();
 
-            if (err instanceof Error) {
-                if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                } else if (err.message === "UPLOAD_ERROR") {
-                    toast.error("コメントの投稿に失敗しました");
-                } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください");
-                }
+            if (err instanceof ApiError) {
+                toast.error("コメントの投稿に失敗しました");
+                return;
             }
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
