@@ -2,14 +2,15 @@
 
 import EditUI from "@/app/edit/editUI";
 import { Button, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../../../lib/api/apiError";
 import { sleep } from "../../../../../lib/sleep";
+import { fetchShopEditIdUpload } from "../../../api/shopEdit";
 import styles from "../../../edit.module.css";
 
 type Props = {
@@ -140,28 +141,7 @@ export default function Client({ shopEditId }: Props) {
         };
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopEditId}/id-image-upload`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("画像データの送信に失敗しました");
-                return;
-            }
+            const data = await fetchShopEditIdUpload(shopEditId, body);
 
             if (data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -220,6 +200,11 @@ export default function Client({ shopEditId }: Props) {
 
             router.replace("/edit/shop/com-free/complete");
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("画像データの送信に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
