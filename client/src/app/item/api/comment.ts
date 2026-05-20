@@ -25,8 +25,8 @@ export const fetchCommentCreate = async ({ itemId, sellerMe, parentId, inputComm
     });
 };
 
-export const fetchCommentSort = async (commentId: string) => {
-    return apiFetchNoToken(`/comment/${commentId}/sort-number/add?number=2`, {
+export const fetchCommentSort = async (commentId: string, sortNumber: number) => {
+    return apiFetchNoToken(`/comment/${commentId}/sort-number/add?number=${sortNumber}`, {
         method: "PATCH",
     });
 };

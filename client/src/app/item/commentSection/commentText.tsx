@@ -27,7 +27,7 @@ export const CommentText = ({ comment, page }: Props) => {
         setExpanded(!expanded);
         if (comment.pin || expanded || page === "admin") return;
 
-        fetchCommentSort(comment.id);
+        fetchCommentSort(comment.id, 2);
     };
 
     return (

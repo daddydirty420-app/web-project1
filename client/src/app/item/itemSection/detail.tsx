@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../itemCommon.module.css";
 import { Item } from "../itemPageTypes";
+import { fetchItemSort } from "../api/itemSection";
 
 type Props = {
     id: string;
@@ -28,10 +29,7 @@ export const Detail = ({ id, item, sellerMe, page }: Props) => {
         setExpanded(!expanded);
         if (item.status === "soldout" || expanded || sellerMe || page !== "normal") return;
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/sort-number/add?number=5`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-        });
+        fetchItemSort(id, 5);
     };
 
     return (
