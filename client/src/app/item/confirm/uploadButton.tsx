@@ -6,9 +6,11 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import styles from "./confirm.module.css";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchPublishItem } from "../api/confirm";
+import styles from "./confirm.module.css";
 
 type Props = {
     id: string;
@@ -26,31 +28,18 @@ export const UploadButton = ({ id }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/publish`, {
-                method: "PATCH",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (!res.ok) {
-                alert("サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください");
-                return;
-            }
-
-            const data = await res.json();
+            await fetchPublishItem(id);
+            
             toast.success("商品を出品しました");
             await sleep(1500);
 
             router.push(`/upload/ok/${id}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("サーバーエラーが発生しました。通信状況を確認し、もう一度ボタンをクリックしてください");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
