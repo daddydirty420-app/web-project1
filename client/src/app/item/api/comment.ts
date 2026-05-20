@@ -1,4 +1,4 @@
-import { apiFetch } from "../../../lib/api/client";
+import { apiFetch, apiFetchNoToken } from "../../../lib/api/client";
 
 type CommentCreateParams = {
     itemId: string;
@@ -11,5 +11,11 @@ export const fetchCommentCreate = async ({ itemId, sellerMe, parentId, inputComm
     return apiFetch(`/comment/${itemId}?sellerMe=${sellerMe}&parentId=${parentId}`, {
         method: "POST",
         body: JSON.stringify({ inputComment }),
+    });
+};
+
+export const fetchCommentSort = async (commentId: string) => {
+    return apiFetchNoToken(`/comment/${commentId}/sort-number/add?number=2`, {
+        method: "PATCH",
     });
 };

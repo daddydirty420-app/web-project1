@@ -28,3 +28,21 @@ export const apiFetch = async <T>(path: string, options: FetchOptions = {}): Pro
 
     return data;
 };
+
+export const apiFetchNoToken = async <T>(path: string, options: FetchOptions = {}): Promise<T> => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
+        ...options,
+        headers: {
+            "Content-Type": "application/json",
+            ...options.headers,
+        },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.code ?? "API Error");
+    }
+
+    return data;
+};
