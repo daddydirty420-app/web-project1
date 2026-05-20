@@ -22,7 +22,7 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
     if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
     if (comFreeId === Number(shop.com_or_free_id)) {
-        throw new AppError("INVALID_COM_FREE_ID", 400, "事業形態が変更されていません");
+        throw new AppError("INVALID_COM_FREE_ID", 400);
     }
 
     const address = shop.Address;

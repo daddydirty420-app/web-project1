@@ -6,10 +6,12 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../../lib/api/apiError";
+import { sleep } from "../../../../lib/sleep";
+import { fetchComFreeEdit } from "../../api/shopEdit";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ComOrFreeOption, ShopInfo } from "../../type";
-import { sleep } from "../../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -18,7 +20,7 @@ type Props = {
 };
 
 export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
-    const [selectOption, setSelectOption] = useState(shopInfo.ComOrFreeOption?.id ?? "");
+    const [selectOption, setSelectOption] = useState(shopInfo.ComOrFreeOption?.id);
 
     const router = useRouter();
 
@@ -34,34 +36,23 @@ export const Form = ({ shopId, shopInfo, ComOrFreeOption }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopId}/com-free`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ selectOption }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("事業形態の更新に失敗しました");
-                return;
-            }
+            const data = await fetchComFreeEdit(shopId, selectOption);
 
             toast.success("事業形態を更新しました");
             await sleep(1500);
 
-            router.push(`/edit/shop/com-free/confirm/${data.editId}`);
+            router.push(`/edit/shop/com-free/confirm/${String(data.editId)}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                if (err.code === "INVALID_COM_FREE_ID") {
+                    toast.error("事業形態が変更されていません");
+                } else {
+                    toast.error("事業形態の更新に失敗しました");
+                }
+
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
