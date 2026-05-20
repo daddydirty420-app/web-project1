@@ -14,7 +14,7 @@ export const apiFetch = async <T>(path: string, options: FetchOptions = {}): Pro
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
         ...options,
         headers: {
-            ...(accessToken && {Authorization: `Bearer ${accessToken}`}),
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             "Content-Type": "application/json",
             ...options.headers,
         },

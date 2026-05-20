@@ -52,5 +52,5 @@ export const fetchUpdateField = async (shopEditId: string, field: string, value:
     return apiFetch(`/shop-info-edit/${shopEditId}`, {
         method: "PATCH",
         body: JSON.stringify({ [field]: value }),
-    })
+    });
 };

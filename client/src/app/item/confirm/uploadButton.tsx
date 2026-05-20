@@ -29,7 +29,7 @@ export const UploadButton = ({ id }: Props) => {
 
         try {
             await fetchPublishItem(id);
-            
+
             toast.success("商品を出品しました");
             await sleep(1500);
 
