@@ -1,11 +1,12 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchRestoreItem } from "../api/deleteItem";
 import { Item } from "../itemPageTypes";
 import styles from "./deleted.module.css";
 
@@ -20,33 +21,18 @@ export const Restore = ({ id, item }: Props) => {
 
     const restore = async () => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/restore`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください");
-                return;
-            }
+            await fetchRestoreItem(id);
 
             toast.success("この商品を復元しました！");
             await sleep(1500);
 
             router.push(`/item/${id}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("商品の復元に失敗しました。通信環境を確認し、もう一度ボタンをクリックしてください");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

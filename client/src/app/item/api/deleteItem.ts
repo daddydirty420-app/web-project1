@@ -12,3 +12,9 @@ export const fetchPerfectDeleteItem = async (itemId: string) => {
         method: "DELETE",
     });
 };
+
+export const fetchRestoreItem = async (itemId: string) => {
+    return apiFetch(`/items/${itemId}/restore`, {
+        method: "PATCH",
+    });
+};
