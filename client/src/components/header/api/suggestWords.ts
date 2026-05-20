@@ -4,7 +4,7 @@ type SuggestWordsResponse = {
     suggest: string[];
 };
 
-export const getSuggestWords = async (keyword: string) => {
+export const fetchGetSuggestWords = async (keyword: string) => {
     const data = await apiFetch<SuggestWordsResponse>(`/suggest-words?keyword=${keyword}`, {
         method: "GET",
         cache: "no-store",

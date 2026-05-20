@@ -7,8 +7,8 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { getSearchHistory } from "./api/search";
-import { getSuggestWords } from "./api/suggestWords";
+import { fetchGetSearchHistory } from "./api/search";
+import { fetchGetSuggestWords } from "./api/suggestWords";
 import styles from "./header.module.css";
 
 type Props = {
@@ -37,7 +37,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
 
     const searchHistory = async () => {
         try {
-            const dataList = await getSearchHistory();
+            const dataList = await fetchGetSearchHistory();
 
             setSearchHis(dataList);
         } catch (err) {}
@@ -50,7 +50,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
         }
 
         try {
-            const suggest = await getSuggestWords(word);
+            const suggest = await fetchGetSuggestWords(word);
 
             setSuggestList(suggest);
         } catch (err) {

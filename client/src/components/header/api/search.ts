@@ -9,7 +9,7 @@ type SearchHistoryResponse = {
     sortedData: SearchHistoryItem[];
 };
 
-export const getSearchHistory = async () => {
+export const fetchGetSearchHistory = async () => {
     const data = await apiFetch<SearchHistoryResponse>("/search/history", {
         method: "GET",
         cache: "no-store",
