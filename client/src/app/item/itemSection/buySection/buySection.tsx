@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../lib/api/apiError";
+import { fetchBuy } from "../../api/buy";
 import { fetchAddCart, fetchGetCartStatus, fetchRemoveCart } from "../../api/cart";
 import styles from "./buy.module.css";
 
@@ -72,31 +73,21 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
+            const data = await fetchBuy(id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            // 配送ページとカラー選択ページをできれば1つにまとめる
+            router.push(`/buy/trans/${String(data.deliveryId)}`);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                if (err.code === "INVALID_ITEM") {
+                    toast.error("この商品は販売中ではないため購入できません");
+                } else {
+                    toast.error("サーバーエラーが発生しました。時間を置いて、再度クリックをお試しください");
+                }
+
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery/${id}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                const deliveryId = data.deliveryId;
-
-                // 配送ページとカラー選択ページをできれば1つにまとめる
-                router.push(`/buy/trans/${deliveryId}`);
-            } else if (data.message) {
-                toast.error(data.message);
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

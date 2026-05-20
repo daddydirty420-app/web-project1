@@ -28,7 +28,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     }
 
     if (item.status !== "active") {
-        throw new AppError("INVALID_ITEM", 400, "この商品は販売中ではないため購入できません");
+        throw new AppError("INVALID_ITEM", 400);
     }
 
     // 住所・氏名取得
