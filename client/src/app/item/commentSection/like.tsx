@@ -1,17 +1,15 @@
 "use client";
 
 import { updateCommentLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useCommentLike";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchCommentLikeAdd, fetchCommentLikeRemove } from "../api/commentLike";
 import { Comment } from "../itemPageTypes";
 import styles from "./comment.module.css";
-import { ApiError } from "../../../lib/api/apiError";
-import toast from "react-hot-toast";
-import { fetchCommentLikeAdd } from "../api/commentLike";
 
 type Props = {
     comment: Comment;
@@ -47,21 +45,12 @@ export const Like = ({ comment, loggedIn }: Props) => {
         updateCommentLikeCache(id, false);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await fetchCommentLikeRemove(id);
         } catch (err) {
             updateCommentLikeCache(id, true);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

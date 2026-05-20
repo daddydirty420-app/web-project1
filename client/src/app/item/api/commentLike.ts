@@ -5,3 +5,9 @@ export const fetchCommentLikeAdd = async (commentId: string) => {
         method: "POST",
     });
 };
+
+export const fetchCommentLikeRemove = async (commentId: string) => {
+    return apiFetch(`/comment-like/${commentId}`, {
+        method: "DELETE",
+    });
+};
