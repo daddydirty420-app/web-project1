@@ -1,13 +1,14 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchAdminDeleteItem } from "../api/deleteItem";
 import { Item } from "../itemPageTypes";
 import styles from "./admin.module.css";
-import { useRouter } from "next/navigation";
 
 type Props = {
     id: string;
@@ -27,32 +28,8 @@ export const DeleteButton = ({ id, item }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
+            await fetchAdminDeleteItem(id, deleteReason);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/items/${id}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ deleteReason }),
-            });
-
-            await res.json();
-
-            if (!res.ok) {
-                toast.error("商品の削除に失敗しました");
-                await sleep(2000);
-
-                setDeleteReason("");
-                setPopup(false);
-                return;
-            }
             toast.success("商品を削除しました");
             await sleep(2000);
 
@@ -60,6 +37,15 @@ export const DeleteButton = ({ id, item }: Props) => {
             setPopup(false);
             router.refresh();
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("商品の削除に失敗しました");
+                await sleep(2000);
+
+                setDeleteReason("");
+                setPopup(false);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
