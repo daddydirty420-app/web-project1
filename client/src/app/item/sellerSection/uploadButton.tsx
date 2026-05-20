@@ -1,9 +1,11 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchCopyUpload } from "../api/copyUpload";
 import styles from "./seller.module.css";
 
 type Props = {
@@ -15,32 +17,17 @@ export const UploadButton = ({ id }: Props) => {
 
     const copy = async () => {
         try {
-            const accessToken = await getAccessToken();
+            const data = await fetchCopyUpload(id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
+            const url = `/upload/copy/${String(data.newItemId)}`;
+            router.push(url);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("サーバーエラーが発生しました。時間を置いて再試行してください");
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/copy-upload`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                const newItemId = data.newItemId;
-                const url = `/upload/copy/${newItemId}`;
-                router.push(url);
-            } else {
-                const errorData = await res.json();
-                console.error(errorData.message);
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
-            console.error(err);
         }
     };
 
