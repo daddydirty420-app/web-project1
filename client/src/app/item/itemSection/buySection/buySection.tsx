@@ -7,7 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { fetchGetCartStatus } from "../../api/cart";
+import { ApiError } from "../../../../lib/api/apiError";
+import { fetchAddCart, fetchGetCartStatus, fetchRemoveCart } from "../../api/cart";
 import styles from "./buy.module.css";
 
 type Props = {
@@ -37,25 +38,14 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         setCartIn(true);
 
         try {
-            const accessToken = await getAccessToken();
+            await fetchAddCart(id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (res.ok) {
-                toast.success("カートに追加しました");
-            }
+            toast.success("カートに追加しました");
         } catch (err) {
             setCartIn(false);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
@@ -64,25 +54,14 @@ export const BuySection = ({ id, loggedIn }: Props) => {
         setCartIn(false);
 
         try {
-            const accessToken = await getAccessToken();
+            await fetchRemoveCart(id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (res.ok) {
-                toast.success("カートから削除しました");
-            }
+            toast.success("カートから削除しました");
         } catch (err) {
             setCartIn(true);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

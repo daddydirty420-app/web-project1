@@ -10,3 +10,15 @@ export const fetchGetCartStatus = async (itemId: string): Promise<StatusResponse
         cache: "no-store",
     });
 };
+
+export const fetchAddCart = async (itemId: string) => {
+    return apiFetch(`/cart/${itemId}`, {
+        method: "POST",
+    });
+};
+
+export const fetchRemoveCart = async (itemId: string) => {
+    return apiFetch(`/cart/${itemId}`, {
+        method: "DELETE",
+    });
+};
