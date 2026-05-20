@@ -15,7 +15,7 @@ export const addCommentLikeUseCase = async ({ commentId, userId }: Params) => {
     const data = await getCommentLikeOne({ commentId, userId });
 
     if (data) {
-        throw new AppError("ALREADY_LIKE_COMMENT", 409, "すでにいいね済みです");
+        throw new AppError("ALREADY_LIKE_COMMENT", 409);
     }
 
     // CommentLike作成

@@ -9,6 +9,9 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { Comment } from "../itemPageTypes";
 import styles from "./comment.module.css";
+import { ApiError } from "../../../lib/api/apiError";
+import toast from "react-hot-toast";
+import { fetchCommentLikeAdd } from "../api/commentLike";
 
 type Props = {
     comment: Comment;
@@ -30,21 +33,12 @@ export const Like = ({ comment, loggedIn }: Props) => {
         updateCommentLikeCache(id, true);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment-like/${id}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await fetchCommentLikeAdd(id);
         } catch (err) {
             updateCommentLikeCache(id, false);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
