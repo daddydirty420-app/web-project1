@@ -5,9 +5,10 @@ import { ShopInfo, ShopInfoEdit } from "@/app/edit/type";
 import { ConfirmSection } from "@/components";
 import styles from "@/components/confirm-card/confirmcard.module.css";
 import { Button } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ApiError } from "../../../../../lib/api/apiError";
+import { fetchUpdateField } from "../../../api/shopEdit";
 
 type Props = {
     shopId: string;
@@ -32,22 +33,10 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
 
     const updateField = async (field: string, value: string | number | Date) => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopEditId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ [field]: value }),
-            });
+            await fetchUpdateField(shopEditId, field, value);
         } catch (err) {
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

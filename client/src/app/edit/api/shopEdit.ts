@@ -47,3 +47,10 @@ export const fetchShopEditIdUpload = async (shopEditId: string, body: IdUploadBo
         body: JSON.stringify(body),
     });
 };
+
+export const fetchUpdateField = async (shopEditId: string, field: string, value: string | number | Date) => {
+    return apiFetch(`/shop-info-edit/${shopEditId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ [field]: value }),
+    })
+};
