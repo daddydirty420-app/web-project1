@@ -1,7 +1,7 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useEffect, useState } from "react";
+import { fetchGetReplyList } from "../api/comment";
 import { Comment } from "../itemPageTypes";
 import styles from "./comment.module.css";
 import { CommentDataDiv } from "./commentDataDiv";
@@ -27,26 +27,9 @@ export const ReplyList = ({ parentId, page, loggedIn, sellerMe, optimisticCommen
     useEffect(() => {
         const fetchComment = async () => {
             try {
-                const accessToken = await getAccessToken();
+                const data: any = await fetchGetReplyList({ parentId, sellerMe, page });
 
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/comment/${parentId}/reply?sellerMe=${sellerMe}${page === "admin" ? "?admin=true" : ""}`,
-                    {
-                        method: "GET",
-                        headers: {
-                            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-                        },
-                        cache: "no-store",
-                    },
-                );
-
-                if (!res.ok) {
-                    console.error("APIフェッチエラー：", res.status);
-                    return;
-                }
-
-                const data = await res.json();
-                setComments(data.commentList);
+                setComments(data.commentList as Comment[]);
             } catch (err) {}
         };
 
