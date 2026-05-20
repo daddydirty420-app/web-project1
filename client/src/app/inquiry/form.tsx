@@ -4,8 +4,9 @@ import { Button, InputStr, Textarea } from "@/components/inputForm";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getAccessToken } from "../../lib/getAccessToken";
+import { ApiError } from "../../lib/api/apiError";
 import { sleep } from "../../lib/sleep";
+import { fetchInquirySubmit } from "./api/inquiry";
 import { User } from "./type";
 
 type Props = {
@@ -55,32 +56,17 @@ export const Form = ({ user }: Props) => {
             return;
         }
 
+        const submitBody = {
+            name,
+            email: emailTrim,
+            title,
+            body,
+        };
+
         try {
             setLoading(true);
 
-            const accessToken = await getAccessToken();
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiry`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-                },
-                body: JSON.stringify({
-                    name,
-                    email: emailTrim,
-                    title,
-                    body,
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                setLoading(false);
-                toast.error("お問い合わせ内容の送信に失敗しました");
-                return;
-            }
+            await fetchInquirySubmit(submitBody);
 
             toast.success("お問い合わせ内容を送信しました！");
 
@@ -90,6 +76,12 @@ export const Form = ({ user }: Props) => {
             router.back();
         } catch (err) {
             setLoading(false);
+
+            if (err instanceof ApiError) {
+                toast.error("お問い合わせ内容の送信に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
