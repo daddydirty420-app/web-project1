@@ -5,7 +5,9 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchDeleteDraftItem, fetchDeleteLogicalItem } from "../api/deleteItem";
 import styles from "./seller.module.css";
 
 type Props = {
@@ -18,41 +20,28 @@ export const DeleteItem = ({ id, page }: Props) => {
     const router = useRouter();
 
     const deleteItem = async () => {
-        const apiUrl =
-            page === "draft"
-                ? `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/draft`
-                : `${process.env.NEXT_PUBLIC_API_URL}/items/${id}/logical`;
-
         const routerPage = page === "draft" ? "/my-page" : `/item/deleted/${id}`;
 
         try {
-            const accessToken = await getAccessToken();
+            if (page === "draft") {
+                await fetchDeleteDraftItem(id);
+            } else {
+                await fetchDeleteLogicalItem(id);
+            }
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            toast.success("商品を削除しました");
+            setPopup(false);
+            await sleep(1500);
+
+            router.push(routerPage);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("商品の削除に失敗しました");
+                setPopup(false);
+
                 return;
             }
 
-            const res = await fetch(apiUrl, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                toast.success("商品を削除しました");
-                setPopup(false);
-                await sleep(1500);
-
-                router.push(routerPage);
-            } else if (data.message) {
-                toast.error("商品の削除に失敗しました");
-                setPopup(false);
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
             setPopup(false);
         }
