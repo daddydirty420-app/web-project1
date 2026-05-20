@@ -2,6 +2,9 @@
 
 ## API Fetch
 
+- API Fetch層の関数の命名は必ずfetch~から始める
+- バックエンドからレスポンスがある場合、必ずAPI Fetch層で型を明示
+
 ### Client
 
 #### Error Handling
