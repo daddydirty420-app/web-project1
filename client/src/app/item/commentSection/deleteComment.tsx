@@ -1,13 +1,14 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchCommentDelete } from "../api/comment";
 import { Comment } from "../itemPageTypes";
 import Portial from "../portial";
 import styles from "./comment.module.css";
@@ -23,32 +24,18 @@ export const DeleteComment = ({ comment, page }: Props) => {
 
     const deleteComment = async () => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comment/${comment.id}?page=${page}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("コメント削除エラー");
-                return;
-            }
+            await fetchCommentDelete({ commentId: comment.id, page });
 
             toast.success("コメントを削除しました");
             await sleep(1500);
 
             router.refresh();
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("コメント削除エラー");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
