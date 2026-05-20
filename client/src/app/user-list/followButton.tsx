@@ -3,7 +3,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../lib/api/apiError";
-import { addFollow, removeFollow } from "./api/follow";
+import { fetchAddFollow, fetchRemoveFollow } from "./api/follow";
 import styles from "./button.module.css";
 import { User } from "./type";
 
@@ -20,7 +20,7 @@ export const FollowButton = ({ user }: Props) => {
         setIsFollowing(next);
 
         try {
-            await addFollow(user.id);
+            await fetchAddFollow(user.id);
         } catch (err) {
             setIsFollowing(!next);
 
@@ -44,7 +44,7 @@ export const FollowButton = ({ user }: Props) => {
         setIsFollowing(next);
 
         try {
-            await removeFollow(user.id);
+            await fetchRemoveFollow(user.id);
         } catch (err) {
             setIsFollowing(!next);
 

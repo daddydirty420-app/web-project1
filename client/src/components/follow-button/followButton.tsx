@@ -4,7 +4,7 @@ import { updateFollowCache, useFollowStatus } from "@/hooks/useFollow";
 import clsx from "clsx";
 import toast from "react-hot-toast";
 import { ApiError } from "../../lib/api/apiError";
-import { addFollow, removeFollow } from "./api/api";
+import { fetchAddFollow, fetchRemoveFollow } from "./api/api";
 import styles from "./followButton.module.css";
 
 type Props = {
@@ -21,7 +21,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, true);
 
         try {
-            await addFollow(targetUserId);
+            await fetchAddFollow(targetUserId);
         } catch (err) {
             // ロールバック
             updateFollowCache(targetUserId, currentUserId, false);
@@ -44,7 +44,7 @@ export const FollowButton = ({ targetUserId, currentUserId }: Props) => {
         updateFollowCache(targetUserId, currentUserId, false);
 
         try {
-            await removeFollow(targetUserId);
+            await fetchRemoveFollow(targetUserId);
         } catch (err) {
             updateFollowCache(targetUserId, currentUserId, true);
 

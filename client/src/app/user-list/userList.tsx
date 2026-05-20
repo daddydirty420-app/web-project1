@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { ApiError } from "../../lib/api/apiError";
-import { removeFollow } from "./api/follow";
+import { fetchRemoveFollow } from "./api/follow";
 import { FollowButton } from "./followButton";
 import { User } from "./type";
 import styles from "./userList.module.css";
@@ -70,7 +70,7 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
         }, false);
 
         try {
-            await removeFollow(userId);
+            await fetchRemoveFollow(userId);
 
             mutate();
         } catch (err) {
