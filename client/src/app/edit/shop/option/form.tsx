@@ -5,7 +5,9 @@ import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
+import { optionEdit } from "../../api/shopInfo";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ShopInfo } from "../../type";
@@ -22,34 +24,27 @@ export const Form = ({ shopId, shopInfo }: Props) => {
     const router = useRouter();
 
     const submit = async () => {
+        const autoTransBoolean = autoTrans === "はい";
+        const openInfoBoolean = openInfo === "はい";
+
+        const body = {
+            autoTrans: autoTransBoolean,
+            openInfo: openInfoBoolean,
+        };
+
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/option`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ autoTrans, openInfo }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("オプション設定変更に失敗しました");
-            }
+            await optionEdit(shopId, body);
 
             toast.success("オプション設定を変更しました");
             await sleep(1500);
 
             router.push(`/shop-info/${shopId}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("オプション設定変更に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
