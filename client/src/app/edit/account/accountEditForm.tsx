@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { accountEdit, shopAccountEdit } from "../api/account";
+import { fetchAccountEdit, fetchShopAccountEdit } from "../api/account";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { BankAccount } from "../type";
@@ -176,7 +176,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
             if (page === "shop") {
                 if (!shopId) throw new Error();
 
-                await shopAccountEdit(shopId, body);
+                await fetchShopAccountEdit(shopId, body);
 
                 toast.success("口座情報の変更を受け付けました。審査完了までしばらくお待ちください");
                 await sleep(1500);
@@ -185,7 +185,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 return;
             }
 
-            await accountEdit(account.id, body);
+            await fetchAccountEdit(account.id, body);
 
             toast.success("口座情報を更新しました");
             await sleep(1500);

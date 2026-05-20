@@ -7,7 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
-import { companyNameEdit } from "../../api/shopEdit";
+import { fetchCompanyNameEdit } from "../../api/shopEdit";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ShopInfo } from "../../type";
@@ -30,7 +30,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
         }
 
         try {
-            await companyNameEdit(shopId, companyName);
+            await fetchCompanyNameEdit(shopId, companyName);
 
             const alertText =
                 comFree === 1 ? "会社名の変更を受け付けました。審査完了までお待ちください" : "屋号を変更しました";

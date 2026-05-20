@@ -5,7 +5,7 @@ type OptionBody = {
     openInfo: boolean;
 };
 
-export const optionEdit = async (shopId: string, body: OptionBody) => {
+export const fetchOptionEdit = async (shopId: string, body: OptionBody) => {
     return apiFetch(`/shop-info/${shopId}/option`, {
         method: "PATCH",
         body: JSON.stringify(body),

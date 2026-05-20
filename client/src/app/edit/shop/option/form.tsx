@@ -1,13 +1,12 @@
 "use client";
 
 import { Button, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
-import { optionEdit } from "../../api/shopInfo";
+import { fetchOptionEdit } from "../../api/shopInfo";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ShopInfo } from "../../type";
@@ -33,7 +32,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
         };
 
         try {
-            await optionEdit(shopId, body);
+            await fetchOptionEdit(shopId, body);
 
             toast.success("オプション設定を変更しました");
             await sleep(1500);

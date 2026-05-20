@@ -7,7 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { phoneNumberEdit, shopPhoneNumberEdit } from "../api/phoneNumber";
+import { fetchPhoneNumberEdit, fetchShopPhoneNumberEdit } from "../api/phoneNumber";
 import EditUI from "../editUI";
 import { User } from "../type";
 
@@ -43,7 +43,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
             if (page === "shop") {
                 if (!shopId) throw new Error();
 
-                await shopPhoneNumberEdit(shopId, value);
+                await fetchShopPhoneNumberEdit(shopId, value);
 
                 toast.success("電話番号を更新しました");
                 await sleep(1500);
@@ -52,7 +52,7 @@ export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
                 return;
             }
 
-            await phoneNumberEdit(value);
+            await fetchPhoneNumberEdit(value);
 
             toast.success("電話番号を更新しました");
             await sleep(1500);

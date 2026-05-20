@@ -12,7 +12,7 @@ import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
 import { getAddress } from "../api/address";
-import { honninSubmit } from "../api/honnin";
+import { fetchHonninSubmit } from "../api/honnin";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { GenderOption, User } from "../type";
@@ -168,7 +168,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         }
 
         try {
-            const data = await honninSubmit(body);
+            const data = await fetchHonninSubmit(body);
 
             if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {

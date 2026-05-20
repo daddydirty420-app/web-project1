@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { profileEdit } from "../api/profile";
+import { fetchProfileEdit } from "../api/profile";
 import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
@@ -38,7 +38,7 @@ export const ProfileEditForm = ({ user }: Props) => {
         };
 
         try {
-            const data = await profileEdit(query, body);
+            const data = await fetchProfileEdit(query, body);
 
             if (file && data.signedUrl) {
                 const uploadRes = await fetch(data.signedUrl, {

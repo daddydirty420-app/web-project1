@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { nameEdit, shopEditRepNameCreate, shopRepNamePatch } from "../api/name";
+import { fetchNameEdit, fetchShopEditRepNameCreate, fetchShopRepNamePatch } from "../api/name";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Name } from "../type";
@@ -83,7 +83,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
         };
 
         try {
-            await nameEdit(name.id, body);
+            await fetchNameEdit(name.id, body);
 
             toast.success("氏名を更新しました");
             await sleep(1500);
@@ -157,7 +157,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
             }
 
             if (page === "rep-shop") {
-                const data = await shopEditRepNameCreate(shopId, body);
+                const data = await fetchShopEditRepNameCreate(shopId, body);
 
                 if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                     const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -194,7 +194,7 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
 
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "rep-shop-signup") {
-                const data = await shopRepNamePatch(shopId, body);
+                const data = await fetchShopRepNamePatch(shopId, body);
 
                 if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                     const uploadFrontRes = await fetch(data.frontSignedUrl, {

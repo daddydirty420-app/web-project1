@@ -26,7 +26,7 @@ type HonninResponse = {
     rearSignedUrl: string | null;
 };
 
-export const honninSubmit = async (body: HonninBody): Promise<HonninResponse> => {
+export const fetchHonninSubmit = async (body: HonninBody): Promise<HonninResponse> => {
     return apiFetch("/user/honnin", {
         method: "PATCH",
         body: JSON.stringify(body),

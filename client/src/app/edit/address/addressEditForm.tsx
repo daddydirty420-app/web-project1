@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { addressEdit, getAddress, shopAddressEdit } from "../api/address";
+import { fetchAddressEdit, fetchGetAddress, fetchShopAddressEdit } from "../api/address";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Address } from "../type";
@@ -50,7 +50,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
         }
 
         try {
-            const address = await getAddress(postNumber);
+            const address = await fetchGetAddress(postNumber);
 
             setTodouhuken(address.todouhuken_name);
             setShikutyouson(address.shikutyouson);
@@ -89,7 +89,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             if (page === "shop") {
                 if (!shopId) throw new Error();
 
-                await shopAddressEdit(shopId, body);
+                await fetchShopAddressEdit(shopId, body);
 
                 toast.success("住所変更の受付が完了しました。審査完了までしばらくお待ちください");
                 await sleep(1500);
@@ -98,7 +98,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 return;
             }
 
-            await addressEdit(address.id, body);
+            await fetchAddressEdit(address.id, body);
 
             toast.success("住所を更新しました");
             await sleep(1500);

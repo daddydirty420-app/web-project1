@@ -17,7 +17,7 @@ type AddressEditBody = {
     building: string;
 };
 
-export const getAddress = async (postNumber: string) => {
+export const fetchGetAddress = async (postNumber: string) => {
     const data: AddressResponse = await apiFetch(`/address/search?zipcode=${postNumber}`, {
         method: "GET",
         cache: "no-store",
@@ -26,14 +26,14 @@ export const getAddress = async (postNumber: string) => {
     return data.address;
 };
 
-export const addressEdit = async (addressId: string, body: AddressEditBody) => {
+export const fetchAddressEdit = async (addressId: string, body: AddressEditBody) => {
     return apiFetch(`/address/${addressId}`, {
         method: "PATCH",
         body: JSON.stringify(body),
     });
 };
 
-export const shopAddressEdit = async (shopId: string, body: AddressEditBody) => {
+export const fetchShopAddressEdit = async (shopId: string, body: AddressEditBody) => {
     return apiFetch(`/shop-info-edit/${shopId}/address`, {
         method: "POST",
         body: JSON.stringify(body),

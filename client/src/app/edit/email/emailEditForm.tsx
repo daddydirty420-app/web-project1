@@ -5,7 +5,7 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
-import { emailEdit } from "../api/email";
+import { fetchEmailEdit } from "../api/email";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 
@@ -31,7 +31,7 @@ export const EmailEditForm = ({ session }: Props) => {
         }
 
         try {
-            await emailEdit(trimEmail);
+            await fetchEmailEdit(trimEmail);
 
             toast.success("新しいメールアドレスにメールを送信しました");
             setValue("");
