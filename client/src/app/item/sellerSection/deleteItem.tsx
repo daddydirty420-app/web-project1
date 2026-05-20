@@ -1,6 +1,5 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

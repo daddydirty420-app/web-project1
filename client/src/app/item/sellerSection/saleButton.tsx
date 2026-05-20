@@ -1,12 +1,13 @@
 "use client";
 
 import { InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchSaleEdit, fetchSaleStop } from "../api/sale";
 import { Item } from "../itemPageTypes";
 import styles from "./seller.module.css";
 
@@ -59,36 +60,34 @@ export const SaleButton = ({ item }: Props) => {
             }
         }
 
-        try {
-            const accessToken = await getAccessToken();
+        const body = { discountRate, discountAmount, finalPrice };
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+        try {
+            await fetchSaleEdit({ saleId: sale?.id, body });
+
+            toast.success("値引きしました！");
+            setSalePopup(false);
+            await sleep(1500);
+
+            router.refresh();
+        } catch (err) {
+            if (err instanceof ApiError) {
+                switch (err.code) {
+                    case "INVALID_BODY_DISCOUNT_BOTH":
+                        toast.error("値引き率及び値引き額どちらか一方のみ入力してください");
+                        break;
+                    case "INVALID_BODY_DISCOUNT_EMPTY":
+                        toast.error("値引き率及び値引き額が入力されていません");
+                        break;
+                    default:
+                        toast.error("値引きに失敗しました");
+                }
+
+                setSalePopup(false);
+
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/${sale?.id}/edit`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ discountRate, discountAmount, finalPrice }),
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                toast.success("値引きしました！");
-                setSalePopup(false);
-                await sleep(1500);
-
-                router.refresh();
-            } else {
-                toast.error("値引きに失敗しました");
-                setSalePopup(false);
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
             setSalePopup(false);
         }
@@ -96,33 +95,21 @@ export const SaleButton = ({ item }: Props) => {
 
     const end = async () => {
         try {
-            const accessToken = await getAccessToken();
+            await fetchSaleStop(sale?.id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            toast.success("値引きを終了しました");
+            setSaleStopPopup(false);
+            await sleep(1500);
+
+            router.refresh();
+        } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("値引きの終了に失敗しました");
+                setSaleStopPopup(false);
+
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sale/${sale?.id}/stop`, {
-                method: "PATCH",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                toast.success("値引きを終了しました");
-                setSaleStopPopup(false);
-                await sleep(1500);
-
-                router.refresh();
-            } else {
-                toast.error("値引きの終了に失敗しました");
-                setSaleStopPopup(false);
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
             setSaleStopPopup(false);
         }
