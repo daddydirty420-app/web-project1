@@ -1,11 +1,12 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
+import { fetchPerfectDeleteItem } from "../api/deleteItem";
 import styles from "./deleted.module.css";
 
 type Props = {
@@ -18,31 +19,18 @@ export const PerfectDelete = ({ id }: Props) => {
 
     const deleteItem = async () => {
         try {
-            const accessToken = await getAccessToken();
+            await fetchPerfectDeleteItem(id);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
+            toast.success("商品を削除しました");
+            await sleep(1500);
+
+            router.push("/my-page");
+        } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("商品の削除に失敗しました");
                 return;
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${id}/perfect`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                toast.success("商品を削除しました");
-                await sleep(1500);
-
-                router.push("/my-page");
-            } else {
-                toast.error("商品の削除に失敗しました");
-            }
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };

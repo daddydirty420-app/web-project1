@@ -6,3 +6,9 @@ export const fetchAdminDeleteItem = async (itemId: string, deleteReason: string)
         body: JSON.stringify({ deleteReason }),
     });
 };
+
+export const fetchPerfectDeleteItem = async (itemId: string) => {
+    return apiFetch(`/items/${itemId}/perfect`, {
+        method: "DELETE",
+    });
+};
