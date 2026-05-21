@@ -17,6 +17,8 @@ import styles from "../ss.module.css";
 import SSUIBack from "../ssUiBack";
 import { StepBar } from "../stepBar";
 import { ComOrFreeOption, ShopInfo, User } from "../type";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchGetAddress } from "../api/step1";
 
 type Props = {
     user: User;
@@ -80,21 +82,16 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         }
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address/search?zipcode=${postNumber}`, {
-                method: "GET",
-                cache: "no-store",
-            });
+            const address = await fetchGetAddress(postNumber);
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                showAddressErrorToast(data.code);
+            setTodouhuken(address.todouhuken_name);
+            setShikutyouson(address.shikutyouson);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                showAddressErrorToast(err.code);
                 return;
             }
-
-            setTodouhuken(data.address.todouhuken_name);
-            setShikutyouson(data.address.shikutyouson);
-        } catch (err) {}
+        }
     };
 
     const submit = async () => {
