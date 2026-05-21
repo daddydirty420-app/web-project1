@@ -13,6 +13,7 @@ import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { BankAccount } from "../type";
 import { showBankErrorToast } from "./bankErrorMessage";
+import { fetchSuggestBanks, fetchSuggestBranches } from "../../shop-signup/api/step2";
 
 type Props = {
     account: BankAccount;
@@ -70,15 +71,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
 
         suggestTimeout.current = setTimeout(async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/banks/search?keyword=${bankQuery}`);
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    setBankSuggestions([]);
-                    setShowBankSuggest(false);
-                    return;
-                }
+                const data = await fetchSuggestBanks(bankQuery);
 
                 const suggestions =
                     data?.banks?.map((b: any) => ({
@@ -113,17 +106,9 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
         const controller = new AbortController();
         const timeoutId = setTimeout(async () => {
             try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/branches/search?keyword=${branchQuery}&bankCode=${bankCode || account.bank_code}`,
-                );
+                const queryBankCode = bankCode || account.bank_code;
 
-                const data = await res.json();
-
-                if (!res.ok) {
-                    setBranchSuggestions([]);
-                    setShowBranchSuggest(false);
-                    return;
-                }
+                const data = await fetchSuggestBranches(branchQuery, queryBankCode);
 
                 const suggestions =
                     data?.branches?.map((b: any) => ({
