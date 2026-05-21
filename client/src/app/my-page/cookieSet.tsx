@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { fetchCookieSet } from "./api/auth";
 
 type Props = {
     refreshToken?: string;
@@ -11,12 +12,7 @@ export const CookieSet = ({ refreshToken, rememberMe }: Props) => {
     useEffect(() => {
         if (!refreshToken) return;
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/set-cookie`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refreshToken, rememberMe }),
-        });
+        fetchCookieSet({ refreshToken, rememberMe });
     }, [refreshToken, rememberMe]);
 
     return null;
