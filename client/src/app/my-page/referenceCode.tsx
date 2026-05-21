@@ -1,14 +1,11 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
+import { fetchCodeOutput } from "./api/referenceCode";
 import styles from "./mypage.module.css";
-
-type ReferenceCode = {
-    output: string;
-};
 
 type Props = {
     itemCount: number;
@@ -17,30 +14,17 @@ type Props = {
 
 export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const [referenceCodeOutput, setReferenceCodeOutput] = useState<ReferenceCode | null>(null);
+    const [referenceCodeOutput, setReferenceCodeOutput] = useState<string | null>(null);
 
     const outputReferenceCode = async () => {
         try {
-            const accessToken = await getAccessToken();
+            const data = await fetchCodeOutput();
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reference-code/output`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                setReferenceCodeOutput(data);
-                setVisiblePopup(true);
-            }
+            setReferenceCodeOutput(data.output);
+            setVisiblePopup(true);
         } catch (err) {
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
@@ -64,14 +48,14 @@ export const ReferenceCode = ({ itemCount, referenceCount }: Props) => {
                             className={styles.output}
                             onClick={async () => {
                                 try {
-                                    await navigator.clipboard.writeText(referenceCodeOutput.output);
+                                    await navigator.clipboard.writeText(referenceCodeOutput);
                                     toast.success("コピーしました");
                                 } catch (err) {
                                     toast.error("コピー失敗しました。");
                                 }
                             }}
                         >
-                            {referenceCodeOutput.output}
+                            {referenceCodeOutput}
                         </p>
                         <p className={styles.popupText}>コードをクリックするとコピーできます。</p>
                         <small className={styles.popupSmall}>

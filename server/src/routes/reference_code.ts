@@ -19,10 +19,7 @@ router.post(
         try {
             const output = await outputReferenceCodeUseCase({ userId });
 
-            res.status(200).json({
-                message: "紹介コードを生成しました。",
-                output,
-            });
+            res.status(200).json({ output });
         } catch (err) {
             next(err);
         }
