@@ -1,7 +1,6 @@
 "use client";
 
 import { formatDuration } from "@/lib/formatDuration";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { Items } from "@/types/itemListTypes";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +8,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { fetchIL, fetchVL } from "../api/itemList";
 import styles from "./lpItemList.module.css";
 
 type Res = {
@@ -44,51 +44,23 @@ export const LpItemList = ({ defaultVideoList }: Props) => {
 
     const setVL = async (page: number, limit: number) => {
         try {
-            const accessToken = await getAccessToken();
+            const data = await fetchVL(page, limit);
 
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=index&limit=${limit}`,
-                {
-                    method: "GET",
-                    headers: {
-                        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-                    },
-                    cache: "no-store",
-                },
-            );
-
-            if (res.ok) {
-                const data: Res = await res.json();
-                setVideoList(data.items);
-                setVisibleIL(false);
-                setTotalPagesVL(data.totalPages);
-                setPageVL(page);
-            }
+            setVideoList(data.items);
+            setVisibleIL(false);
+            setTotalPagesVL(data.totalPages);
+            setPageVL(page);
         } catch (err) {}
     };
 
     const setIL = async (page: number, limit: number) => {
         try {
-            const accessToken = await getAccessToken();
+            const data = await fetchIL(page, limit);
 
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=index&limit=${limit}`,
-                {
-                    method: "GET",
-                    headers: {
-                        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-                    },
-                    cache: "no-store",
-                },
-            );
-
-            if (res.ok) {
-                const data: Res = await res.json();
-                setItemList(data.items);
-                setVisibleIL(true);
-                setTotalPagesIL(data.totalPages);
-                setPageIL(page);
-            }
+            setItemList(data.items);
+            setVisibleIL(true);
+            setTotalPagesIL(data.totalPages);
+            setPageIL(page);
         } catch (err) {}
     };
 
