@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "@/styles/login.module.css";
 import toast from "react-hot-toast";
+import { fetchRequestResetPw } from "../api/auth";
 
 export const ResetForm = () => {
     const [email, setEmail] = useState("");
@@ -17,11 +18,7 @@ export const ResetForm = () => {
         }
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/request-password-reset`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: trimEmail }),
-            });
+            await fetchRequestResetPw(trimEmail);
 
             toast.success("メールを送信しました");
         } catch (err) {
