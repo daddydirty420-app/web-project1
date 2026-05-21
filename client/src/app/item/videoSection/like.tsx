@@ -1,12 +1,13 @@
 "use client";
 
 import { updateItemLikeCache, useLikeCount, useLikeStatus } from "@/hooks/useItemLike";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faThumbsUp as faThumbUpRegular } from "@fortawesome/free-regular-svg-icons";
 import { faThumbsUp as faThumbsUpSolid } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchItemLikeAdd, fetchItemLikeRemove } from "../api/itemLike";
 import styles from "./video.module.css";
 
 type Props = {
@@ -30,21 +31,12 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
         updateItemLikeCache(id, true);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/${id}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await fetchItemLikeAdd(id);
         } catch (err) {
             updateItemLikeCache(id, false);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
@@ -53,21 +45,12 @@ export const Like = ({ id, sellerMe, initialLike, initialCount, page, loggedIn }
         updateItemLikeCache(id, false);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/item-like/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await fetchItemLikeRemove(id);
         } catch (err) {
             updateItemLikeCache(id, true);
+
+            if (err instanceof ApiError) return;
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
