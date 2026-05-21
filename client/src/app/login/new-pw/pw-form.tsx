@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
+import { fetchResetPw } from "../api/auth";
 
 export const PwForm = () => {
     const [visible, setVisible] = useState(false);
@@ -41,23 +43,18 @@ export const PwForm = () => {
         setErrorMsg("");
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-pw`, {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({ token, password }),
-            });
+            await fetchResetPw(token, password);
 
-            const data = await res.json();
+            toast.success("パスワードを更新しました。もう一度ログインしてください");
+            await sleep(1500);
 
-            if (res.ok) {
-                toast.success("パスワードを更新しました。もう一度ログインしてください");
-                await sleep(1500);
-
-                router.push("/login");
-            } else {
-                toast.error("新しいパスワードの設定に失敗しました");
-            }
+            router.push("/login");
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("新しいパスワードの設定に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
