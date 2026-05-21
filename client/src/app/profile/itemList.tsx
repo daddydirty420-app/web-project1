@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import pageStyle from "./profile.module.css";
+import { fetchIL, fetchVL } from "./api/itemList";
 
 type Res = {
     items: Items[] | null;
@@ -47,41 +48,23 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
 
     const setVL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/items?type=video&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
-                {
-                    method: "GET",
-                    cache: "no-store",
-                },
-            );
+            const data = await fetchVL({ page, limit, userId });
 
-            if (res.ok) {
-                const data: Res = await res.json();
-                setVideoList(data.items);
-                setVisibleIL(false);
-                setTotalPagesVL(data.totalPages);
-                setPageVL(page);
-            }
+            setVideoList(data.items);
+            setVisibleIL(false);
+            setTotalPagesVL(data.totalPages);
+            setPageVL(page);
         } catch (err) {}
     };
 
     const setIL = async (page: number, limit: number) => {
         try {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/items?type=item&page=${page}&view=profile&limit=${limit}&pageUserId=${userId}`,
-                {
-                    method: "GET",
-                    cache: "no-store",
-                },
-            );
+            const data = await fetchIL({ page, limit, userId });
 
-            if (res.ok) {
-                const data: Res = await res.json();
-                setItemList(data.items);
-                setVisibleIL(true);
-                setTotalPagesIL(data.totalPages);
-                setPageIL(page);
-            }
+            setItemList(data.items);
+            setVisibleIL(true);
+            setTotalPagesIL(data.totalPages);
+            setPageIL(page);
         } catch (err) {}
     };
 
