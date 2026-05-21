@@ -1,11 +1,12 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
+import { ApiError } from "../../lib/api/apiError";
+import { fetchRemoveItem } from "./api/remove";
 import styles from "./removeFloat.module.css";
 import { Item } from "./type";
 
@@ -34,9 +35,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
 
         const removeBasePath = getRemoveBasePath();
 
-        const apiUrl = removeBasePath ? `${process.env.NEXT_PUBLIC_API_URL}/${removeBasePath}` : null;
-
-        if (!apiUrl?.trim()) {
+        if (!removeBasePath) {
             console.error("削除URLが見つかりません");
             toast.error("削除に失敗しました");
             return;
@@ -63,22 +62,7 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                throw new Error("AUTH_ERROR");
-            }
-
-            const res = await fetch(apiUrl, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (!res.ok) {
-                throw new Error("DELETE_ERROR");
-            }
+            await fetchRemoveItem(removeBasePath);
 
             mutate();
 
@@ -86,15 +70,12 @@ export const RemoveFloat = ({ item, page, mutate }: Props) => {
         } catch (err) {
             mutate(); // ロールバック
 
-            if (err instanceof Error) {
-                if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                } else if (err.message === "DELETE_ERROR") {
-                    toast.error(`${toastBaseText}の削除に失敗しました`);
-                } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください");
-                }
+            if (err instanceof ApiError) {
+                toast.error(`${toastBaseText}の削除に失敗しました`);
+                return;
             }
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
