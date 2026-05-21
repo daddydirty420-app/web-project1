@@ -8,12 +8,11 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { fetchAccountEdit, fetchShopAccountEdit } from "../api/account";
+import { fetchAccountEdit, fetchShopAccountEdit, fetchSuggestBanks, fetchSuggestBranches } from "../api/account";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { BankAccount } from "../type";
 import { showBankErrorToast } from "./bankErrorMessage";
-import { fetchSuggestBanks, fetchSuggestBranches } from "../../shop-signup/api/step2";
 
 type Props = {
     account: BankAccount;

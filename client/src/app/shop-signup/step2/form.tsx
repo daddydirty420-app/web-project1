@@ -6,12 +6,13 @@ import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { sleep } from "../../../lib/sleep";
+import { fetchSuggestBanks, fetchSuggestBranches } from "../api/step2";
 import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
 import { BankAccount } from "../type";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -67,15 +68,7 @@ export const Form = ({ shopId, account }: Props) => {
 
         suggestTimeout.current = setTimeout(async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/banks/search?keyword=${bankQuery}`);
-
-                const data = await res.json();
-
-                if (!res.ok) {
-                    setBankSuggestions([]);
-                    setShowBankSuggest(false);
-                    return;
-                }
+                const data = await fetchSuggestBanks(bankQuery);
 
                 const suggestions =
                     data?.banks?.map((b: any) => ({
@@ -110,17 +103,9 @@ export const Form = ({ shopId, account }: Props) => {
         const controller = new AbortController();
         const timeoutId = setTimeout(async () => {
             try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/branches/search?keyword=${branchQuery}&bankCode=${bankCode || account.bank_code}`,
-                );
+                const queryBankCode = bankCode || account.bank_code;
 
-                const data = await res.json();
-
-                if (!res.ok) {
-                    setBranchSuggestions([]);
-                    setShowBranchSuggest(false);
-                    return;
-                }
+                const data = await fetchSuggestBranches(branchQuery, queryBankCode);
 
                 const suggestions =
                     data?.branches?.map((b: any) => ({
