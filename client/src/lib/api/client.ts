@@ -9,7 +9,7 @@ export const apiFetch = async <T>(path: string, options: FetchOptions = {}): Pro
     const accessToken = await getAccessToken();
 
     if (!accessToken) {
-        throw new Error("UNAUTHORIZED");
+        throw new ApiError("UNAUTHORIZED");
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${path}`, {
@@ -24,7 +24,7 @@ export const apiFetch = async <T>(path: string, options: FetchOptions = {}): Pro
     const data = await res.json();
 
     if (!res.ok) {
-        throw new Error(data.code ?? "API Error");
+        throw new ApiError(data.code ?? "API Error");
     }
 
     return data;
@@ -45,7 +45,7 @@ export const apiFetchNoAuth = async <T>(path: string, options: FetchOptions = {}
     const data = await res.json();
 
     if (!res.ok) {
-        throw new Error(data.code ?? "API Error");
+        throw new ApiError(data.code ?? "API Error");
     }
 
     return data;

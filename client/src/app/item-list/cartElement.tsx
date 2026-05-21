@@ -1,9 +1,11 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { KeyedMutator } from "swr";
+import { ApiError } from "../../lib/api/apiError";
+import { fetchBuy } from "./api/buy";
+import { fetchRemoveCart } from "./api/cart";
 import styles from "./cart.module.css";
 import { Item } from "./type";
 
@@ -20,40 +22,24 @@ type Props = {
 export const CartElement = ({ item, mutate }: Props) => {
     const router = useRouter();
 
-    const buy = async () => {
+    const buy = async (itemId: string) => {
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                throw new Error("AUTH_ERROR");
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery/${item.id}`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (!res.ok) {
-                throw new Error("FETCH_ERROR");
-            }
-
-            const data = await res.json();
-            const deliveryId = data.deliveryId;
+            const data = await fetchBuy(itemId);
 
             // 配送ページとカラー選択ページをできれば1つにまとめる
-            router.push(`/buy/trans/${deliveryId}`);
+            router.push(`/buy/trans/${String(data.deliveryId)}`);
         } catch (err) {
-            if (err instanceof Error) {
-                if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                } else if (err.message === "FETCH_ERROR") {
-                    toast.error("購入手続きの開始に失敗しました。時間を置いてもう一度お試しください");
+            if (err instanceof ApiError) {
+                if (err.code === "INVALID_ITEM") {
+                    toast.error("この商品は販売中ではないため購入できません");
                 } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください");
+                    toast.error("サーバーエラーが発生しました。時間を置いて、再度クリックをお試しください");
                 }
+
+                return;
             }
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -69,22 +55,7 @@ export const CartElement = ({ item, mutate }: Props) => {
         }, false);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                throw new Error("AUTH_ERROR");
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${itemId}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            if (!res.ok) {
-                throw new Error("DELETE_ERROR");
-            }
+            await fetchRemoveCart(itemId);
 
             mutate();
 
@@ -92,15 +63,9 @@ export const CartElement = ({ item, mutate }: Props) => {
         } catch (err) {
             mutate(); // ロールバック
 
-            if (err instanceof Error) {
-                if (err.message === "AUTH_ERROR") {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                } else if (err.message === "DELETE_ERROR") {
-                    toast.error("カート削除に失敗しました");
-                } else {
-                    alert("システムエラーが発生しました。時間をおいて再試行してください");
-                }
-            }
+            if (err instanceof ApiError) return;
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
@@ -110,7 +75,7 @@ export const CartElement = ({ item, mutate }: Props) => {
                 カートから削除
             </button>
 
-            <button type="button" name="buy" className={styles.buy} onClick={buy}>
+            <button type="button" name="buy" className={styles.buy} onClick={() => buy(item.id)}>
                 購入手続きへ
             </button>
         </section>
