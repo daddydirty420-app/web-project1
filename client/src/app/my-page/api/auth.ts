@@ -12,3 +12,10 @@ export const fetchCookieSet = async ({ refreshToken, rememberMe }: Params) => {
         body: JSON.stringify({ refreshToken, rememberMe }),
     });
 };
+
+export const fetchCookieClear = async () => {
+    return apiFetchNoToken("/auth/clear-cookie", {
+        method: "POST",
+        credentials: "include",
+    });
+};
