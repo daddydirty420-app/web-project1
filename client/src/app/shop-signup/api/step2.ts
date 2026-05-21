@@ -1,6 +1,16 @@
-import { apiFetchNoToken } from "../../../lib/api/client";
+import { apiFetch, apiFetchNoToken } from "../../../lib/api/client";
 
-export type BankSuggestion = {
+type AccountBody = {
+    bankName: string;
+    bankCode: string;
+    branch: string;
+    branchCode: string;
+    accountType: string;
+    accountNumber: string;
+    meigi: string;
+};
+
+type BankSuggestion = {
     name: string;
     code: string;
     kana: string;
@@ -8,18 +18,18 @@ export type BankSuggestion = {
     normalize: string;
 };
 
-export type BranchSuggestion = {
+type BranchSuggestion = {
     name: string;
     code: string;
     kana: string;
     hira: string;
 };
 
-export type SuggestBanksResponse = {
+type SuggestBanksResponse = {
     banks: BankSuggestion[];
 };
 
-export type SuggestBranchesResponse = {
+type SuggestBranchesResponse = {
     branches: BranchSuggestion[];
 };
 
@@ -32,5 +42,12 @@ export const fetchSuggestBanks = async (bankQuery: string): Promise<SuggestBanks
 export const fetchSuggestBranches = async (branchQuery: string, bankCode: string): Promise<SuggestBranchesResponse> => {
     return apiFetchNoToken(`/branches/search?keyword=${branchQuery}&bankCode=${bankCode}`, {
         method: "GET",
+    });
+};
+
+export const fetchStep2 = async (shopId: string, body: AccountBody) => {
+    return apiFetch(`/bank-account/${shopId}/shop`, {
+        method: "POST",
+        body: JSON.stringify(body),
     });
 };

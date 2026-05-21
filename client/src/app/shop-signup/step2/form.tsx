@@ -2,17 +2,18 @@
 "use client";
 
 import { InputStr, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { fetchSuggestBanks, fetchSuggestBranches } from "../api/step2";
+import { fetchStep2, fetchSuggestBanks, fetchSuggestBranches } from "../api/step2";
 import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
 import { BankAccount } from "../type";
+import { showStep2ErrorToast } from "./errorToast";
 
 type Props = {
     shopId: string;
@@ -151,34 +152,18 @@ export const Form = ({ shopId, account }: Props) => {
         };
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bank-account/${shopId}/shop`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("口座情報の登録に失敗しました");
-                return;
-            }
+            await fetchStep2(shopId, body);
 
             toast.success("口座情報を登録しました");
             await sleep(1500);
 
             router.push(`/shop-signup/step3/${shopId}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                showStep2ErrorToast(err.code);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
