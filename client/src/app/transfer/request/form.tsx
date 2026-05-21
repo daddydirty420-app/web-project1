@@ -1,14 +1,15 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
+import { sleep } from "../../../lib/sleep";
+import { fetchTransferRequest } from "../api/request";
 import styles from "../transfer.module.css";
 import TransferUI from "../transferUI";
 import { User } from "../types";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     user: User;
@@ -43,37 +44,18 @@ export const Form = ({ user }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transfer/request`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({
-                    value,
-                    limit,
-                }),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("振込申請データの登録に失敗しました");
-                return;
-            }
+            const data = await fetchTransferRequest(value, limit);
 
             toast.success("振込申請が完了しました。翌々週金曜日以降に指定の口座にお振込みされます。");
             await sleep(1500);
 
-            router.push(`/transfer/detail/${data.transId}`);
+            router.push(`/transfer/detail/${String(data.transId)}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("振込申請データの登録に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
