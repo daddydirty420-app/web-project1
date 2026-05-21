@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
+import { fetchSignup } from "./api/auth";
 
 export const SignupForm = () => {
     const [visible, setVisible] = useState(false);
@@ -39,19 +41,15 @@ export const SignupForm = () => {
         setErrorMsg("");
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: trimEmail,
-                    password,
-                }),
-            });
+            const data = await fetchSignup(trimEmail, password);
 
-            const data = await res.json();
+            toast.success("認証コードを発行しました");
+            await sleep(1500);
 
-            if (!res.ok) {
-                switch (data.code) {
+            router.push(data.reissueUrl);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                switch (err.code) {
                     case "ALREADY_USED_EMAIL":
                         toast.error("このメールアドレスは既に使用されています");
                         break;
@@ -64,11 +62,6 @@ export const SignupForm = () => {
                 return;
             }
 
-            toast.success("認証コードを発行しました");
-            await sleep(1500);
-
-            router.push(data.reissueUrl);
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
