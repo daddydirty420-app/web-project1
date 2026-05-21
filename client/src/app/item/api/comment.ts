@@ -1,4 +1,4 @@
-import { apiFetch, apiFetchNoToken } from "../../../lib/api/client";
+import { apiFetch, apiFetchNoAuth, apiFetchNoToken } from "../../../lib/api/client";
 
 type CommentCreateParams = {
     itemId: string;
@@ -38,7 +38,7 @@ export const fetchCommentDelete = async ({ commentId, page }: CommentDeleteParam
 };
 
 export const fetchGetReplyList = async ({ parentId, sellerMe, page }: GetReplyListParams) => {
-    return apiFetch(`/comment/${parentId}/reply?sellerMe=${sellerMe}${page === "admin" ? "?admin=true" : ""}`, {
+    return apiFetchNoAuth(`/comment/${parentId}/reply?sellerMe=${sellerMe}${page === "admin" ? "?admin=true" : ""}`, {
         method: "GET",
         cache: "no-store",
     });
