@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { fetchCommentSortAdd } from "../api/comment";
 import { Comment } from "../itemPageTypes";
 import styles from "./comment.module.css";
-import { fetchCommentSort } from "../api/comment";
 
 type Props = {
     comment: Comment;
@@ -27,7 +27,7 @@ export const CommentText = ({ comment, page }: Props) => {
         setExpanded(!expanded);
         if (comment.pin || expanded || page === "admin") return;
 
-        fetchCommentSort(comment.id, 2);
+        fetchCommentSortAdd(comment.id, 2);
     };
 
     return (
