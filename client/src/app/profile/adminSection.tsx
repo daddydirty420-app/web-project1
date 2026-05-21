@@ -6,8 +6,9 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
 import { sleep } from "../../lib/sleep";
-import { fetchGetAdminProfile } from "./api/admin";
+import { fetchAddPenalty, fetchDeleteUser, fetchGetAdminProfile, fetchUriageDecrease } from "./api/admin";
 import styles from "./profile-admin.module.css";
 import { User } from "./profileTypes";
 
@@ -51,32 +52,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/add-penalty`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ addPenalty }),
-            });
-
-            await res.json();
-
-            if (!res.ok) {
-                toast.error("ペナルティポイントの追加に失敗しました");
-                await sleep(1000);
-
-                setAddPenalty(0);
-                setPopup(false);
-                return;
-            }
+            await fetchAddPenalty(userId, addPenalty);
 
             setData((prev) => (prev ? { ...prev, penalty_points: prev.penalty_points + addPenalty } : prev));
             toast.success("ペナルティポイントを付与しました");
@@ -85,6 +61,15 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             setAddPenalty(0);
             setPopup(false);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("ペナルティポイントの追加に失敗しました");
+                await sleep(1000);
+
+                setAddPenalty(0);
+                setPopup(false);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
@@ -96,32 +81,7 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/delete-uriage`, {
-                method: "PATCH",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ deleteUriage }),
-            });
-
-            await res.json();
-
-            if (!res.ok) {
-                toast.error("売上金の削除に失敗しました");
-                await sleep(1000);
-
-                setDeleteUriage(0);
-                setPopup(false);
-                return;
-            }
+            await fetchUriageDecrease(userId, deleteUriage);
 
             setData((prev) => (prev ? { ...prev, uriagekin: prev.uriagekin - deleteUriage } : prev));
             toast.success("売上金を没収しました");
@@ -130,31 +90,30 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
             setDeleteUriage(0);
             setPopup(false);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("売上金の削除に失敗しました");
+                await sleep(1000);
+
+                setDeleteUriage(0);
+                setPopup(false);
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
 
     const deleteUser = async (deleteReason: string) => {
         try {
-            const accessToken = await getAccessToken();
+            await fetchDeleteUser(userId, deleteReason);
 
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
+            toast.success("ユーザーを削除しました");
+            await sleep(2000);
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ deleteReason }),
-            });
-
-            await res.json();
-
-            if (!res.ok) {
+            setDeleteReason("");
+            setPopup(false);
+        } catch (err) {
+            if (err instanceof ApiError) {
                 toast.error("ユーザーの削除に失敗しました");
                 await sleep(2000);
 
@@ -163,12 +122,6 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
                 return;
             }
 
-            toast.success("ユーザーを削除しました");
-            await sleep(2000);
-
-            setDeleteReason("");
-            setPopup(false);
-        } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
