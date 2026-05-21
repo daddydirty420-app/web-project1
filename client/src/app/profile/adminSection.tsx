@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { sleep } from "../../lib/sleep";
+import { fetchGetAdminProfile } from "./api/admin";
 import styles from "./profile-admin.module.css";
 import { User } from "./profileTypes";
 
@@ -31,31 +32,13 @@ export const AdminSection = ({ userId, adminPage }: Props) => {
 
         const fetchData = async () => {
             try {
-                const accessToken = await getAccessToken();
+                const data = await fetchGetAdminProfile(userId);
 
-                if (!accessToken) {
-                    alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください。");
-                    return;
-                }
-
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/user/${userId}/profile`, {
-                    method: "GET",
-                    cache: "no-store",
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-
-                if (res.status === 403) {
-                    router.push(`/profile/${userId}`);
-                    return;
-                }
-
-                if (res.ok) {
-                    const data = await res.json();
-                    setData(data.user);
-                }
-            } catch (err) {}
+                setData(data.user);
+            } catch (err) {
+                router.push(`/profile/${userId}`);
+                return;
+            }
         };
 
         fetchData();
