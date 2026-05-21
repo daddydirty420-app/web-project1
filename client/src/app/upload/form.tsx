@@ -234,7 +234,10 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             return;
         }
 
-        const body = createBody(params);
+        const body = {
+            ...createBody(params),
+            price: priceValue.price.replace(/,/g, ""),
+        };
 
         try {
             const accessToken = await getAccessToken();
