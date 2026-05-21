@@ -1,19 +1,20 @@
 "use client";
 
 import { InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
+import { sleep } from "../../../lib/sleep";
+import { fetchStep3 } from "../api/step3";
 import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
 import { ShopInfo } from "../type";
-import { sleep } from "../../../lib/sleep";
 
 type Props = {
     shopId: string;
@@ -144,28 +145,7 @@ export const Form = ({ shopId, shopInfo }: Props) => {
         };
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info/${shopId}/signup/3`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("画像データの送信に失敗しました");
-                return;
-            }
+            const data = await fetchStep3(shopId, body);
 
             if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
                 const uploadFrontRes = await fetch(data.frontSignedUrl, {
@@ -224,6 +204,11 @@ export const Form = ({ shopId, shopInfo }: Props) => {
 
             router.push(`/shop-signup/step4/${shopId}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("画像データの送信に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
