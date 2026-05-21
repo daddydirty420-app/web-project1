@@ -1,5 +1,32 @@
 import { apiFetch } from "../../../lib/api/client";
 
+type Body = {
+    selectOption: number | null;
+    companyName?: string;
+    shopName: string;
+    phoneNumber: string;
+    email: string;
+    openDateTime?: string;
+    foundedDate?: Date;
+    memberCount: number;
+    homepage?: string | null;
+    repSei?: string;
+    repMei?: string;
+    repSeiKana?: string;
+    repMeiKana?: string;
+    conSei?: string;
+    conMei?: string;
+    conSeiKana?: string;
+    conMeiKana?: string;
+    postNumber?: string;
+    todouhuken?: string;
+    shikutyouson?: string;
+    banchi?: string;
+    building?: string;
+    companyNumber?: string;
+    capital?: number;
+};
+
 type AddressResponse = {
     address: {
         todouhuken_id: number;
@@ -9,6 +36,10 @@ type AddressResponse = {
     };
 };
 
+type ShopIdResponse = {
+    shopId: number;
+};
+
 export const fetchGetAddress = async (postNumber: string) => {
     const data: AddressResponse = await apiFetch(`/address/search?zipcode=${postNumber}`, {
         method: "GET",
@@ -16,4 +47,11 @@ export const fetchGetAddress = async (postNumber: string) => {
     });
 
     return data.address;
+};
+
+export const fetchStep1 = async (body: Body): Promise<ShopIdResponse> => {
+    return apiFetch("/shop-info", {
+        method: "POST",
+        body: JSON.stringify(body),
+    });
 };

@@ -1,7 +1,6 @@
 "use client";
 
 import { InputStr, InputStrAndSmall, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import { ja } from "date-fns/locale";
 import Link from "next/link";
@@ -10,15 +9,15 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
+import { fetchGetAddress, fetchStep1 } from "../api/step1";
 import { ButtonDiv } from "../buttonDiv";
 import styles from "../ss.module.css";
 import SSUIBack from "../ssUiBack";
 import { StepBar } from "../stepBar";
 import { ComOrFreeOption, ShopInfo, User } from "../type";
-import { ApiError } from "../../../lib/api/apiError";
-import { fetchGetAddress } from "../api/step1";
 
 type Props = {
     user: User;
@@ -175,34 +174,18 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         }
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                return;
-            }
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(body),
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                toast.error("データ登録に失敗しました");
-                return;
-            }
+            const data = await fetchStep1(body);
 
             toast.success("ショップデータを登録しました");
             await sleep(1500);
 
             router.push(`/shop-signup/step2/${data.shopId}`);
         } catch (err) {
+            if (err instanceof ApiError) {
+                toast.error("データ登録に失敗しました");
+                return;
+            }
+
             alert("システムエラーが発生しました。時間をおいて再試行してください");
         }
     };
