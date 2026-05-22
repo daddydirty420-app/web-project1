@@ -20,14 +20,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "テスト用サイト（仮）",
+    title: "Web App Test",
     description: "テストテストテスト",
-    applicationName: "テスト用サイト（仮）",
+    applicationName: "Web App Test",
     generator: "Next.js",
     keywords: ["テスト"],
     openGraph: {
         type: "website",
-        siteName: "テスト用サイト（仮）",
+        siteName: "Web App Test",
         locale: "ja_JP",
     },
     robots: {
