@@ -1,7 +1,4 @@
-import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { ItemList } from "../itemList";
 import ItemListUI from "../itemListUI";
 
@@ -17,10 +14,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-
-    if (!session) redirect("/login");
-
     return (
         <ItemListUI title="いいねした商品">
             <ItemList page="like" />

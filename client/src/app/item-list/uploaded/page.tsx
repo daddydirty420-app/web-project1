@@ -1,7 +1,4 @@
-import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { ItemList } from "../itemList";
 import ItemListHeaderUI from "../itemListHeaderUI";
 import { TabHeader } from "../tabHeader";
@@ -24,10 +21,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page({ searchParams }: Props) {
-    const session = await getServerSession(authOptions);
-
-    if (!session) redirect("/login");
-
     const tab = (await searchParams)?.tab ?? "all";
 
     return (

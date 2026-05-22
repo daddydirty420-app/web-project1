@@ -1,7 +1,4 @@
-import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { Client } from "./client";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,9 +13,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-
-    if (!session) redirect("/login");
-
     return <Client />;
 }

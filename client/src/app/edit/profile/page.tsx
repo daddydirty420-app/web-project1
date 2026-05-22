@@ -21,12 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access-token")?.value;
 
-    if (!session || !accessToken) redirect("/login");
+    if (!accessToken) redirect("/login");
 
     const res = await fetch(`${process.env.API_URL}/user/profile-edit-data`, {
         method: "GET",
