@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
-import { getAddress } from "../api/address";
+import { fetchGetAddress } from "../api/address";
 import { fetchHonninSubmit } from "../api/honnin";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
@@ -67,7 +67,7 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
         }
 
         try {
-            const address = await getAddress(postNumber);
+            const address = await fetchGetAddress(postNumber);
 
             setTodouhuken(address.todouhuken_name);
             setShikutyouson(address.shikutyouson);
