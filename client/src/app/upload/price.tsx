@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styles from "./upload.module.css";
 
 export type PriceValue = {
-    price: string;
+    price: number;
 };
 
 type Props = {
@@ -18,28 +18,20 @@ export const PriceInput = ({ value, onChange }: Props) => {
     const [commission, setCommission] = useState(0);
 
     useEffect(() => {
-        const num = Number(value.price.replace(/,/g, ""));
-
-        if (!Number.isNaN(num) && num > 0) {
-            setGain(num * 0.9);
-            setCommission(num * 0.1);
+        if (value.price > 0) {
+            setGain(value.price * 0.9);
+            setCommission(value.price * 0.1);
         }
     }, [value.price]);
 
-    const handleChangePrice = (raw: string) => {
-        if (!/^[0-9,]*$/.test(raw)) return;
-
+    const handleChangePrice = (num: number) => {
         onChange({
             ...value,
-            price: raw,
+            price: num,
         });
 
-        const num = Number(raw.replace(/,/g, ""));
-
-        if (!Number.isNaN(num)) {
-            setGain(num * 0.9);
-            setCommission(num * 0.1);
-        }
+        setGain(num * 0.9);
+        setCommission(num * 0.1);
     };
 
     return (
@@ -51,8 +43,11 @@ export const PriceInput = ({ value, onChange }: Props) => {
                     <p className={styles.text15}>￥</p>
                     <input
                         type="text"
-                        value={value.price}
-                        onChange={(e) => handleChangePrice(e.target.value)}
+                        value={value.price === 0 ? "" : value.price.toLocaleString()}
+                        onChange={(e) => {
+                            const num = Number(e.target.value.replace(/,/g, ""));
+                            handleChangePrice(num);
+                        }}
                         placeholder="例：30,000"
                         className={styles.input}
                         inputMode="numeric"

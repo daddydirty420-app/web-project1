@@ -121,11 +121,7 @@ export const useUpload = () => {
                 message: "発送元地域を選択してください",
             },
             price: {
-                ok:
-                    params.priceValue.price.trim().length > 0 &&
-                    !Number.isNaN(Number(params.priceValue.price)) &&
-                    Number(params.priceValue.price) >= 300 &&
-                    Number(params.priceValue.price) <= 1000000,
+                ok: params.priceValue.price >= 300 && params.priceValue.price <= 1000000,
                 message: "価格を300~1,000,000円の間で設定してください",
             },
         };

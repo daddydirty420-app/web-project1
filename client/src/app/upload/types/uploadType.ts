@@ -32,5 +32,5 @@ export type Body = {
         place: string | null;
         freeText: string | null;
     };
-    price: string;
+    price: number;
 };

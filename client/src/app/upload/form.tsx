@@ -149,7 +149,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
     });
 
     const [priceValue, setPriceValue] = useState<PriceValue>({
-        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price) ? String(item.Sale?.before_price) : "",
+        price: item.Sale?.before_price && !Number.isNaN(item.Sale?.before_price) ? item.Sale?.before_price : item.price,
     });
 
     const initialItemImage = (item.image_url ?? []).map((url) => ({
@@ -234,10 +234,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
             return;
         }
 
-        const body = {
-            ...createBody(params),
-            price: priceValue.price.replace(/,/g, ""),
-        };
+        const body = createBody(params);
 
         try {
             const accessToken = await getAccessToken();
