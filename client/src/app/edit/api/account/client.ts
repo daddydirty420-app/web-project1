@@ -1,4 +1,4 @@
-import { apiFetch, apiFetchNoToken } from "../../../lib/api/client";
+import { apiFetch, apiFetchNoToken } from "../../../../lib/api/client";
 
 type AccountBody = {
     bankName: string;
