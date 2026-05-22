@@ -262,49 +262,9 @@ export const useUpload = () => {
         };
     };
 
-    const submitDraft = async ({ itemId, body, accessToken }: SubmitType) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}?mode=draft`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(body),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            return { ok: false, data };
-        }
-
-        return { ok: true, data };
-    };
-
-    const submitMain = async ({ itemId, body, accessToken }: SubmitType) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/${itemId}?mode=main`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(body),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            return { ok: false, data };
-        }
-
-        return { ok: true, data };
-    };
-
     return {
         validateUpload,
         validateForDraft,
         createBody,
-        submitDraft,
-        submitMain,
     };
 };

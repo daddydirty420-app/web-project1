@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import toast from "react-hot-toast";
+import { fetchVideoConvert } from "../api/video";
 import { AttributesValue } from "../attributes";
 import { ItemImageValue } from "../itemImage";
 
@@ -9,7 +10,6 @@ type SignedUrlItem = {
 };
 
 type VideoArgs = {
-    accessToken: string;
     videoId?: string | number;
     videoFile: File | null;
     videoSignedUrl?: string;
@@ -17,7 +17,7 @@ type VideoArgs = {
 
 type ThumbnailArgs = {
     thumbnailFile: File | null;
-    thumbnailSignedUrl?: string;
+    thumbnailSignedUrl: string | null;
 };
 
 type ItemImageArgs = {
@@ -33,7 +33,7 @@ type AttributesImageArgs = {
 export const useFileUpload = () => {
     // 動画
     const videoUploadAndConvert = useCallback(
-        async ({ accessToken, videoFile, videoSignedUrl, videoId }: VideoArgs): Promise<boolean> => {
+        async ({ videoFile, videoSignedUrl, videoId }: VideoArgs): Promise<boolean> => {
             if (!videoSignedUrl || !(videoFile instanceof File) || !videoId) {
                 return true;
             }
@@ -53,19 +53,7 @@ export const useFileUpload = () => {
             }
 
             // ffmpeg変換
-            const convertRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/video/${videoId}/convert`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            const data = await convertRes.json();
-
-            if (!convertRes.ok) {
-                return true;
-            }
+            await fetchVideoConvert(String(videoId));
 
             return true;
         },

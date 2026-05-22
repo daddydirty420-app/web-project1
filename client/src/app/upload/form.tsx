@@ -1,9 +1,11 @@
 "use client";
 
 import { TopLoader } from "@/components";
-import { getAccessToken } from "@/lib/getAccessToken";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ApiError } from "../../lib/api/apiError";
+import { sleep } from "../../lib/sleep";
+import { fetchDraft, fetchMain } from "./api/item";
 import { AttributesInput, AttributesValue } from "./attributes";
 import { BrandInput, BrandValue } from "./brandInput";
 import { Category, CategoryValue } from "./category";
@@ -27,7 +29,6 @@ import {
 import styles from "./upload.module.css";
 import UploadUI from "./uploadUI";
 import { VideoInput, VideoInputValue } from "./videoInput";
-import { sleep } from "../../lib/sleep";
 
 type Props = {
     itemId: string;
@@ -167,7 +168,7 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
     const videoRef = useRef<HTMLInputElement | null>(null);
     const thumbnailRef = useRef<HTMLInputElement | null>(null);
 
-    const { validateUpload, validateForDraft, createBody, submitDraft, submitMain } = useUpload();
+    const { validateUpload, validateForDraft, createBody } = useUpload();
 
     const { videoUploadAndConvert, thumbnailUpload, itemImageUpload, attributesImageUpload } = useFileUpload();
 
@@ -237,29 +238,12 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
         const body = createBody(params);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                setLoading(false);
-                return;
-            }
-
-            const result = await submitMain({ itemId, body, accessToken });
-
-            if (!result.ok) {
-                toast.error("データ作成に失敗しました");
-                setLoading(false);
-                return;
-            }
-
-            const data = result.data;
+            const data = await fetchMain(itemId, body);
 
             // 動画アップロード
             const videoOk = await videoUploadAndConvert({
-                accessToken,
                 videoFile: videoInput.videoFile,
-                videoSignedUrl: data.videoSignedUrl,
+                videoSignedUrl: data.videoSignedUrl?.url,
                 videoId: item.Video?.id,
             });
 
@@ -315,7 +299,12 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
                 window.location.assign(`/item/confirm/${itemId}`);
             }
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            if (err instanceof ApiError) {
+                toast.error("データ作成に失敗しました");
+            } else {
+                alert("システムエラーが発生しました。時間をおいて再試行してください");
+            }
+
             setLoading(false);
         }
     };
@@ -371,29 +360,12 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
         const body = createBody(params);
 
         try {
-            const accessToken = await getAccessToken();
-
-            if (!accessToken) {
-                alert("認証に失敗しました。時間を置いて再試行するか、再度ログインしてください");
-                setDraftLoading(false);
-                return;
-            }
-
-            const result = await submitDraft({ itemId, body, accessToken });
-
-            if (!result.ok) {
-                toast.error("下書き保存に失敗しました");
-                setDraftLoading(false);
-                return;
-            }
-
-            const data = result.data;
+            const data = await fetchDraft(itemId, body);
 
             // 動画アップロード
             const videoOk = await videoUploadAndConvert({
-                accessToken,
                 videoFile: videoInput.videoFile,
-                videoSignedUrl: data.videoSignedUrl,
+                videoSignedUrl: data.videoSignedUrl?.url,
                 videoId: item.Video?.id,
             });
 
@@ -441,7 +413,12 @@ export const Form = ({ itemId, item, category, allCondition, allDay, allService,
 
             window.location.assign("/item-list/draft");
         } catch (err) {
-            alert("システムエラーが発生しました。時間をおいて再試行してください");
+            if (err instanceof ApiError) {
+                toast.error("下書き保存に失敗しました");
+            } else {
+                alert("システムエラーが発生しました。時間をおいて再試行してください");
+            }
+
             setDraftLoading(false);
         }
     };
