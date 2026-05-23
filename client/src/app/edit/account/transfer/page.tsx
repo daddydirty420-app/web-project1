@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { fetchAccountPage } from "../../api/account/server";
 import { AccountEditForm } from "../accountEditForm";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,27 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const data = await fetchAccountPage();
 
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/bank-account/myaccount`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
-    }
-
-    const account = data.data;
-
-    return <AccountEditForm account={account} page="transfer" />;
+    return <AccountEditForm account={data.data} page="transfer" />;
 }

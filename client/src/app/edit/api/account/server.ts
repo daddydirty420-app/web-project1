@@ -10,3 +10,15 @@ export const fetchAccountPage = async (): Promise<AccountPageResponse> => {
         cache: "no-store",
     });
 };
+
+export const fetchShopAccountPage = async (shopId: string): Promise<AccountPageResponse> => {
+    return apiFetchServer(`/shop-info/${shopId}/bank-account`, {
+        cache: "no-store",
+    });
+};
+
+export const fetchShopEditAccountPage = async (shopEditId: string): Promise<AccountPageResponse> => {
+    return apiFetchServer(`/shop-info-edit/${shopEditId}/bank-account`, {
+        cache: "no-store",
+    });
+};
