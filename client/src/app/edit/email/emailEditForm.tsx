@@ -5,7 +5,7 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
-import { fetchEmailEdit } from "../api/email";
+import { fetchEmailEdit } from "../api/email/client";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 
