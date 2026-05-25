@@ -7,7 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
-import { fetchCompanyNameEdit } from "../../api/shopEdit";
+import { fetchCompanyNameEdit } from "../../api/shop/shopEdit/client";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ShopInfo } from "../../type";

@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../../lib/api/apiError";
 import { sleep } from "../../../../../lib/sleep";
-import { fetchShopEditIdUpload } from "../../../api/shopEdit";
+import { fetchShopEditIdUpload } from "../../../api/shop/shopEdit/client";
 import styles from "../../../edit.module.css";
 
 type Props = {

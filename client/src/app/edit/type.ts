@@ -69,6 +69,7 @@ export type ShopInfoEdit = {
     BankAccount?: BankAccount | null;
     RepresentativeNameEdit?: Name | null;
     ContactNameEdit?: Name | null;
+    ShopInfo: ShopInfo;
 };
 
 export type ShopInfo = {

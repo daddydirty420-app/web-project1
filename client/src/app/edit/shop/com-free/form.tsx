@@ -1,14 +1,13 @@
 "use client";
 
 import { Button, InputTitle } from "@/components/inputForm";
-import { getAccessToken } from "@/lib/getAccessToken";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../../lib/api/apiError";
 import { sleep } from "../../../../lib/sleep";
-import { fetchComFreeEdit } from "../../api/shopEdit";
+import { fetchComFreeEdit } from "../../api/shop/shopEdit/client";
 import styles from "../../edit.module.css";
 import EditUI from "../../editUI";
 import { ComOrFreeOption, ShopInfo } from "../../type";

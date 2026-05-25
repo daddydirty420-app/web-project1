@@ -8,7 +8,7 @@ import { Button } from "@/components/inputForm";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ApiError } from "../../../../../lib/api/apiError";
-import { fetchUpdateField } from "../../../api/shopEdit";
+import { fetchUpdateField } from "../../../api/shop/shopEdit/client";
 
 type Props = {
     shopId: string;
