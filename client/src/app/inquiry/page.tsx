@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { cookies } from "next/headers";
+import { fetchInquiryPage } from "./api/server";
 import { Form } from "./form";
 import InquiryUI from "./inquiryUI";
 import { LinkElement } from "./linkElement";
@@ -24,22 +25,14 @@ export default async function Page() {
     let user: User | undefined = undefined;
 
     if (accessToken) {
-        const res = await fetch(`${process.env.API_URL}/user/inquiry`, {
-            method: "GET",
-            cache: "no-store",
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-
-        const data = await res.json();
+        const data = await fetchInquiryPage();
         user = data.user;
     }
 
     return (
         <InquiryUI title="お問い合わせ">
             <LinkElement />
-            <Form user={user ?? undefined} />
+            <Form user={user} />
         </InquiryUI>
     );
 }

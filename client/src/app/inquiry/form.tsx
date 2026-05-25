@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../lib/api/apiError";
 import { sleep } from "../../lib/sleep";
-import { fetchInquirySubmit } from "./api/inquiry";
+import { fetchInquirySubmit } from "./api/client";
 import { User } from "./type";
 
 type Props = {
