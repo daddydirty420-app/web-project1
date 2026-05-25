@@ -1,7 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
-import { Name } from "../../../../type";
+import { fetchShopConNamePage } from "../../../../api/name/server";
 import { NameEditForm } from "../../../nameEditForm";
 
 type Props = {
@@ -22,27 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page({ params }: Props) {
     const { id } = await params;
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const data = await fetchShopConNamePage(id);
 
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/shop-info/${id}/con-name`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
-    }
-
-    const name: Name = data.name;
-
-    return <NameEditForm name={name} page="con-shop" shopId={id} />;
+    return <NameEditForm name={data.name} page="con-shop" shopId={id} />;
 }

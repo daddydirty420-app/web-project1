@@ -9,9 +9,9 @@ type Params = {
 // summary: 配送用氏名取得
 // page: /edit/name/delivery/[id]
 export const getDeliveryNameUseCase = async ({ deliveryId }: Params) => {
-    const data = await getDeliveryNameOne({ deliveryId });
+    const name = await getDeliveryNameOne({ deliveryId });
 
-    if (!data) throw new AppError("NAME_NOT_FOUND", 404);
+    if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 
-    return data;
+    return name;
 };

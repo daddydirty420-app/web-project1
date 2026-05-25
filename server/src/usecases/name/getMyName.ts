@@ -9,9 +9,9 @@ type Params = {
 // summary: 自分の氏名取得
 // page: /edit/nameなど
 export const getMyNameUseCase = async ({ userId }: Params) => {
-    const data = await getMyNameOne({ userId });
+    const name = await getMyNameOne({ userId });
 
-    if (!data) throw new AppError("NAME_NOT_FOUND", 404);
+    if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 
-    return data;
+    return name;
 };

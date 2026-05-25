@@ -48,9 +48,9 @@ router.get(
         const userId = req.user!.id;
 
         try {
-            const data = await getMyNameUseCase({ userId });
+            const name = await getMyNameUseCase({ userId });
 
-            res.status(200).json({ data });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }
@@ -69,9 +69,9 @@ router.get(
         const deliveryId = Number(req.params.id);
 
         try {
-            const data = await getDeliveryNameUseCase({ deliveryId });
+            const name = await getDeliveryNameUseCase({ deliveryId });
 
-            res.status(200).json({ data });
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }

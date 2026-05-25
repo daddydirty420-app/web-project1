@@ -16,5 +16,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
     const data = await fetchNamePage();
 
-    return <NameEditForm name={data.data} page="normal" />;
+    return <NameEditForm name={data.name} page="normal" />;
 }
