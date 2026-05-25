@@ -6,7 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { fetchProfileEdit } from "../api/profile";
+import { fetchProfileEdit } from "../api/profile/client";
 import EditUI from "../editUI";
 import { User } from "../type";
 import { ProfileImage } from "./profileImage";
