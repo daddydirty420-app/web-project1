@@ -1,4 +1,4 @@
-import { apiFetch } from "../../../lib/api/client";
+import { apiFetch } from "../../../../lib/api/client";
 
 export const fetchPhoneNumberEdit = async (phoneNumber: string) => {
     return apiFetch("/user/phone-number", {

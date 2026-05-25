@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { fetchPhoneNumberPage } from "../../../api/phoneNumber/server";
 import { PhoneNumberEdit } from "../../phoneNumberEdit";
 
 type Props = {
@@ -21,27 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page({ params }: Props) {
     const { id } = await params;
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const data = await fetchPhoneNumberPage();
 
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/user/phone-number`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
-    }
-
-    const phoneNumber = data.user;
-
-    return <PhoneNumberEdit user={phoneNumber} page="normal" deliveryId={id} />;
+    return <PhoneNumberEdit defaultPhoneNumber={data.user.phone_number} page="normal" deliveryId={id} />;
 }

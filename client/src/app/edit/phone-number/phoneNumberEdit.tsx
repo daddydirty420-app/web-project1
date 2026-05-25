@@ -7,19 +7,18 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
-import { fetchPhoneNumberEdit, fetchShopPhoneNumberEdit } from "../api/phoneNumber";
+import { fetchPhoneNumberEdit, fetchShopPhoneNumberEdit } from "../api/phoneNumber/client";
 import EditUI from "../editUI";
-import { User } from "../type";
 
 type Props = {
-    user: User;
+    defaultPhoneNumber: string;
     page: "normal" | "delivery" | "shop";
     deliveryId?: string;
     shopId?: string;
 };
 
-export const PhoneNumberEdit = ({ user, page, deliveryId, shopId }: Props) => {
-    const [value, setValue] = useState(user.phone_number);
+export const PhoneNumberEdit = ({ defaultPhoneNumber, page, deliveryId, shopId }: Props) => {
+    const [value, setValue] = useState(defaultPhoneNumber);
     const router = useRouter();
 
     const submit = async () => {
