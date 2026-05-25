@@ -12,7 +12,7 @@ import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../address/addressErrorMessage";
 import { fetchGetAddress } from "../api/address/client";
-import { fetchHonninSubmit } from "../api/honnin";
+import { fetchHonninSubmit } from "../api/honnin/client";
 import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { GenderOption, User } from "../type";

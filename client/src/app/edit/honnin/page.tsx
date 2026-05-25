@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { fetchHonninPage } from "../api/honnin/server";
 import { HonninEditForm } from "./honninEditForm";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,25 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/user/honnin`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.code);
-        notFound();
-    }
+    const data = await fetchHonninPage();
 
     return <HonninEditForm user={data.user} genderOptions={data.genderAllOptions} campaign />;
 }
