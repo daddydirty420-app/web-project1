@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
+import { fetchRecommend } from "../api/server";
 import { ItemList } from "../itemList";
 import ItemListUI from "../itemListUI";
 
@@ -15,17 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
-    const res = await fetch(`${process.env.API_URL}/items/recommend?view=cart`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
+    const data = await fetchRecommend();
 
     return (
         <ItemListUI title="カート">
