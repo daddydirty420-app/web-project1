@@ -1,10 +1,9 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { fetchProfileMetadata, fetchProfilePage } from "../../api/server";
 import { ProfilePage } from "../../profilePage";
-import type { Res } from "../../profileTypes";
 
 type Props = {
     params: { id: string };
@@ -12,12 +11,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.API_URL}/user/${id}/profile/metadata`, {
-        method: "GET",
-        cache: "no-store",
-    });
 
-    const data = await res.json();
+    const data = await fetchProfileMetadata(id);
     const user = data.user;
 
     return {
@@ -34,21 +29,9 @@ export default async function Profile({ params }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect(`/profile/${userId}`);
 
-    if (!accessToken || !session) redirect(`/profile/${userId}`);
+    const data = await fetchProfilePage(userId);
 
-    const defaultLimit = 15;
-
-    const res = await fetch(`${process.env.API_URL}/user/${userId}/profile?limit=${defaultLimit}`, {
-        method: "GET",
-        cache: "no-store",
-    });
-
-    const data: Res = await res.json();
-
-    const currentUserId = session?.user.id;
-
-    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId ?? ""} adminPage loggedIn />;
+    return <ProfilePage data={data} userId={userId} currentUserId={session?.user.id ?? null} adminPage loggedIn />;
 }

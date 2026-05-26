@@ -1,11 +1,10 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { fetchMyPage } from "./api/server";
 import { CookieSet } from "./cookieSet";
 import { MypageElement } from "./mypageElement";
-import { fetchMyPage } from "./api/server";
 
 export const metadata: Metadata = {
     title: "マイページ",

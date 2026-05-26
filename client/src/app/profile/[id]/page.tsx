@@ -1,8 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { fetchProfileMetadata, fetchProfilePage } from "../api/server";
 import { ProfilePage } from "../profilePage";
-import { Res } from "../profileTypes";
 
 type Props = {
     params: { id: string };
@@ -10,12 +10,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.API_URL}/user/${id}/profile/metadata`, {
-        method: "GET",
-        cache: "no-store",
-    });
 
-    const data = await res.json();
+    const data = await fetchProfileMetadata(id);
     const user = data.user;
 
     return {
@@ -35,14 +31,8 @@ export default async function Profile({ params }: Props) {
     const currentUserId = session?.user.id;
 
     const { id: userId } = await params;
-    const defaultLimit = 15;
 
-    const res = await fetch(`${process.env.API_URL}/user/${userId}/profile?limit=${defaultLimit}`, {
-        method: "GET",
-        cache: "no-store",
-    });
+    const data = await fetchProfilePage(userId);
 
-    const data: Res = await res.json();
-
-    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId || ""} loggedIn={loggedIn} />;
+    return <ProfilePage data={data} userId={userId} currentUserId={currentUserId || null} loggedIn={loggedIn} />;
 }
