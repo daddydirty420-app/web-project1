@@ -41,7 +41,7 @@ export const apiFetchServerNoAuth = async <T>(path: string, options: FetchOption
         ...options,
         method: "GET",
         headers: {
-             ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             "Content-Type": "application/json",
             ...options.headers,
         },
@@ -87,7 +87,7 @@ export const apiFetchServerNoAuthPatch = async <T>(path: string, options: FetchO
         ...options,
         method: "PATCH",
         headers: {
-             ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+            ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
             "Content-Type": "application/json",
             ...options.headers,
         },
