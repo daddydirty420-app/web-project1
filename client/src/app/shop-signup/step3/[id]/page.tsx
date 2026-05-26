@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { fetchSignup3Page } from "../../api/server";
 import { Form } from "../form";
 
 type Props = {
@@ -22,25 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page({ params }: Props) {
     const { id } = await params;
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/shop-info/${id}/signup/3`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-        console.error(data.message);
-        notFound();
-    }
+    const data = await fetchSignup3Page(id);
 
     return <Form shopId={id} shopInfo={data.shop} />;
 }
