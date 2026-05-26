@@ -3,15 +3,10 @@
 import { Rating, Star as RatingStar } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { useEffect, useState } from "react";
+import { fetchStar } from "./api/star";
 
 type Props = {
     userId: string;
-};
-
-type StarResponse = {
-    user: {
-        star_average: string;
-    };
 };
 
 export const Star = ({ userId }: Props) => {
@@ -20,18 +15,9 @@ export const Star = ({ userId }: Props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${userId}/star`, {
-                    method: "GET",
-                    cache: "no-store",
-                });
-
-                if (res.ok) {
-                    const data: StarResponse = await res.json();
-                    setStar(Number(data.user.star_average) || 0);
-                }
-            } catch (err) {
-                console.error(err);
-            }
+                const data = await fetchStar(userId);
+                setStar(data.user.star_average || 0);
+            } catch (err) {}
         };
 
         fetchData();
