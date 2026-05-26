@@ -5,27 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { CookieSet } from "./cookieSet";
 import { MypageElement } from "./mypageElement";
-
-type User = {
-    id: number;
-    user_name: string;
-    profile_image: string;
-    early_seller: boolean;
-    honnin_verified: boolean;
-    points: number;
-    uriagekin: number;
-};
-
-type Res = {
-    userData: {
-        user: User;
-        hasShop: boolean;
-    };
-    itemCount: number;
-    soldItemCount: number;
-    unreadCount: number;
-    referenceCount: number;
-};
+import { fetchMyPage } from "./api/server";
 
 export const metadata: Metadata = {
     title: "マイページ",
@@ -39,30 +19,9 @@ export const metadata: Metadata = {
 export default async function Page() {
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect("/login");
 
-    if (!accessToken || !session) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/user/my-page`, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-        cache: "no-store",
-    });
-
-    if (!res.ok) {
-        console.error("認証に失敗しました。", await res.text());
-        redirect("/login");
-    }
-
-    const data: Res = await res.json();
-
-    if (!data.userData || !data.userData.user) {
-        console.error("ユーザーが見つかりません。");
-        redirect("/login");
-    }
+    const data = await fetchMyPage();
 
     const profileLink = `/profile/${session?.user?.id ?? ""}`;
 
