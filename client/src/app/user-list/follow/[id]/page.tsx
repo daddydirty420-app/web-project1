@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { UserList } from "../../userList";
 import { FollowHeader } from "../followHeader";
 import FollowUI from "../followUI";
+import { fetchFollowCount } from "../../api/server";
 
 type Props = {
     params: { id: string };
@@ -31,16 +32,7 @@ export default async function Page({ params, searchParams }: Props) {
 
     const tab = (await searchParams)?.tab ?? "follow";
 
-    const res = await fetch(`${process.env.API_URL}/follow/${id}/count`, {
-        method: "GET",
-        cache: "no-store",
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
+    const data = await fetchFollowCount(id);
 
     const myId = session?.user.id ?? "";
 
