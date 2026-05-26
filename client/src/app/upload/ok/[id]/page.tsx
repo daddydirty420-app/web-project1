@@ -1,8 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import { fetchItemHighlight } from "../../api/server";
 import { OkPage } from "../okPage";
 
 type Props = {
@@ -25,24 +25,10 @@ export default async function Page({ params }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect("/login");
 
-    if (!session || !accessToken) redirect("/login");
+    const data = await fetchItemHighlight(id);
 
-    const res = await fetch(`${process.env.API_URL}/items/${id}/highlight`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
     const item = data.item;
 
     const userId = String(session?.user.id).trim();

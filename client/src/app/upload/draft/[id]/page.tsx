@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { Form } from "../../form";
+import { fetchUploadPage } from "../../api/server";
 
 type Props = {
     params: { id: string };
@@ -25,31 +26,11 @@ export default async function Page({ params }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect("/login");
 
-    if (!session || !accessToken) redirect("/login");
+    const data = await fetchUploadPage(id);
 
-    const res = await fetch(`${process.env.API_URL}/items/${id}/form-data`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
     const item = data.item;
-    const category = data.category;
-    const allCondition = data.allCondition;
-    const allDay = data.allDay;
-    const allService = data.allService;
-    const allPlace = data.allPlace;
-    const hasShop = data.hasShop;
 
     const userId = String(session?.user.id).trim();
     const sellerId = String(item.seller_id).trim();
@@ -66,12 +47,12 @@ export default async function Page({ params }: Props) {
         <Form
             itemId={id}
             item={item}
-            category={category}
-            allCondition={allCondition}
-            allDay={allDay}
-            allService={allService}
-            allPlace={allPlace}
-            hasShop={hasShop}
+            category={data.category}
+            allCondition={data.allCondition}
+            allDay={data.allDay}
+            allService={data.allService}
+            allPlace={data.allPlace}
+            hasShop={data.hasShop}
             page="draft"
         />
     );
