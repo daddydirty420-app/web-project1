@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { fetchItemReportPage } from "../../api/server";
 import { Form } from "../../form";
 import ReportUI from "../../reportUI";
 
@@ -22,18 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page({ params }: Props) {
     const { id } = await params;
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
-    if (!accessToken) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/item-report/all-options`);
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
+    const data = await fetchItemReportPage();
 
     return (
         <ReportUI title="報告">
