@@ -1,10 +1,9 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import { fetchItemMetadata, fetchItemPageSeller } from "../../api/server";
 import { ItemPage } from "../../itemPage";
-import { Item } from "../../itemPageTypes";
 
 type Props = {
     params: { id: string };
@@ -12,12 +11,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
-        method: "GET",
-        cache: "no-store",
-    });
 
-    const data = await res.json();
+    const data = await fetchItemMetadata(id);
     const item = data.item;
 
     return {
@@ -35,25 +30,10 @@ export default async function Page({ params }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect("/login");
 
-    if (!accessToken || !session) redirect("/login");
-
-    const res = await fetch(`${process.env.API_URL}/items/${id}?mode=confirm`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
-    const item: Item = data.item;
+    const data = await fetchItemPageSeller(id, "confirm");
+    const item = data.item;
 
     const userId = String(session?.user?.id).trim();
     const sellerId = String(item.seller_id).trim();

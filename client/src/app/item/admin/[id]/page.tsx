@@ -1,10 +1,9 @@
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
+import { fetchAdminItemPage, fetchItemMetadata } from "../../api/server";
 import { ItemPage } from "../../itemPage";
-import { Item } from "../../itemPageTypes";
 
 type Props = {
     params: { id: string };
@@ -12,12 +11,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
-    const res = await fetch(`${process.env.API_URL}/items/${id}/metadata`, {
-        method: "GET",
-        cache: "no-store",
-    });
 
-    const data = await res.json();
+    const data = await fetchItemMetadata(id);
     const item = data.item;
 
     return {
@@ -34,40 +29,19 @@ export default async function Page({ params }: Props) {
 
     const session = await getServerSession(authOptions);
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    if (!session) redirect(`/item/${id}`);
 
-    if (!accessToken || !session) redirect(`/item/${id}`);
-
-    const res = await fetch(`${process.env.API_URL}/admin/items/${id}/item-page`, {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!res.ok) {
-        notFound();
-    }
-
-    const data = await res.json();
-    const item: Item = data.item;
-    const commentCount: number = data.commentCount;
-    const likeCount: number = data.likeCount;
-    const reportCount: number = data.reportCount;
-
-    const userId = session?.user.id;
+    const data = await fetchAdminItemPage(id);
 
     return (
         <ItemPage
             id={id}
-            item={item}
+            item={data.item}
             page="admin"
-            commentCount={commentCount}
-            likeCount={likeCount}
-            reportCount={reportCount}
-            userId={userId || ""}
+            commentCount={data.commentCount}
+            likeCount={data.likeCount}
+            reportCount={data.reportCount}
+            userId={session?.user.id ?? null}
             loggedIn
         />
     );
