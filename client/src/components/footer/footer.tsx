@@ -3,8 +3,8 @@ import { faCircleUser, faSquarePlus } from "@fortawesome/free-regular-svg-icons"
 import { faBell, faHome, faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
 import Link from "next/link";
+import { fetchUnreadCount } from "./api/server";
 import styles from "./footer.module.css";
 
 export default async function Footer() {
@@ -12,20 +12,10 @@ export default async function Footer() {
 
     const loggedIn = !!session?.user;
 
-    const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
-
     let unreadCount = 0;
 
     if (loggedIn) {
-        const res = await fetch(`${process.env.API_URL}/notification/unread-count`, {
-            headers: {
-                ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-            },
-            cache: "no-store",
-        });
-
-        const data = await res.json();
+        const data = await fetchUnreadCount();
         unreadCount = data.unreadCount;
     }
 

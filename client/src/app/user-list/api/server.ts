@@ -1,4 +1,4 @@
-import { apiFetchServerNoAuth } from "../../../lib/api/server";
+import { apiFetchServerNoToken } from "../../../lib/api/server";
 
 type FollowCountResponse = {
     followCount: number;
@@ -6,7 +6,7 @@ type FollowCountResponse = {
 };
 
 export const fetchFollowCount = async (userId: string): Promise<FollowCountResponse> => {
-    return apiFetchServerNoAuth(`/follow/${userId}/count`, {
+    return apiFetchServerNoToken(`/follow/${userId}/count`, {
         cache: "no-store",
     });
 };
