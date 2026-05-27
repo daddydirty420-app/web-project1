@@ -3,7 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
+import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
+import { fetchReadTrue } from "./api/client";
 import styles from "./styles.module.css";
 import { Notification } from "./type";
 
@@ -26,7 +28,7 @@ export const NotificationList = () => {
     const unreadCount = data?.unreadCount;
 
     // 既読
-    const read = async (id: number) => {
+    const read = async (id: string) => {
         mutate(
             (current) =>
                 current
@@ -39,6 +41,18 @@ export const NotificationList = () => {
                     : undefined,
             false,
         );
+
+        try {
+            await fetchReadTrue(id);
+
+            mutate();
+        } catch (err) {
+            mutate();
+
+            if (err instanceof ApiError) return;
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください");
+        }
     };
 
     return (
