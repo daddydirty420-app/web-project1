@@ -15,7 +15,7 @@ type NotificationResponse = {
 };
 
 export const NotificationList = () => {
-    const [popup, setPopup] = useState(false);
+    const [modalId, setModalId] = useState<string | null>(null);
 
     const router = useRouter();
 
@@ -55,6 +55,9 @@ export const NotificationList = () => {
         }
     };
 
+    // モーダル表示
+    const modalNotification = notificationList?.find((n) => n.id === modalId);
+
     return (
         <>
             <section className={styles.unreadCountSection}>
@@ -67,10 +70,24 @@ export const NotificationList = () => {
             {notificationList && notificationList.length > 0 && (
                 <section className={styles.notificationListSection}>
                     {notificationList.map((notification) => (
-                        <section key={notification.id} className={styles.notificationSection}></section>
+                        <section
+                            key={notification.id}
+                            className={styles.notificationSection}
+                            onClick={() => {
+                                read(notification.id);
+                                if (notification.url) {
+                                    router.push(notification.url);
+                                    return;
+                                }
+                                // urlが無いときだけモーダルを開く
+                                setModalId(notification.id);
+                            }}
+                        ></section>
                     ))}
                 </section>
             )}
+
+            {modalNotification}
         </>
     );
 };
