@@ -14,11 +14,11 @@ import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
 
-// PATCH /notification/read-flag/:id
+// PATCH /notification/:id/read-flag
 // summary: 既読
 // page: /notification
 router.patch(
-    "/read-flag/:id",
+    "/:id/read-flag",
     patchReadFlagRateLimit,
     authenticateToken,
     validateParams(idParamSchema),

@@ -5,7 +5,7 @@ type Params = {
     notificationId: number;
 };
 
-// PATCH /notification/read-flag/:id
+// PATCH /notification/:id/read-flag
 // summary: 既読
 // page: /notification
 export const patchReadFlagTrueUseCase = async ({ notificationId }: Params) => {

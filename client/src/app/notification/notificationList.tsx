@@ -7,7 +7,7 @@ import { fetcher } from "../../lib/fetcher";
 import styles from "./styles.module.css";
 import { Notification } from "./type";
 
-type Response = {
+type NotificationResponse = {
     notificationList: Notification[];
     unreadCount: number;
 };
@@ -20,10 +20,26 @@ export const NotificationList = () => {
     // APIフェッチ
     const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/notification`;
 
-    const { data, mutate } = useSWR<Response>(apiUrl, fetcher);
+    const { data, mutate } = useSWR<NotificationResponse>(apiUrl, fetcher);
 
     const notificationList = data?.notificationList;
     const unreadCount = data?.unreadCount;
+
+    // 既読
+    const read = async (id: number) => {
+        mutate(
+            (current) =>
+                current
+                    ? {
+                          ...current,
+                          notificationList: current.notificationList.map((n) =>
+                              n.id === id ? { ...n, read_flag: true } : n,
+                          ),
+                      }
+                    : undefined,
+            false,
+        );
+    };
 
     return (
         <>
