@@ -1,7 +1,12 @@
 import { Transaction } from "sequelize";
+import { Notification } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
+};
+
+export type NotificationIdParams = {
+    notificationId: number;
 };
 
 export type CreateNotificationParams = {
@@ -10,6 +15,14 @@ export type CreateNotificationParams = {
         url?: string | null;
         message_image?: string | null;
         message: string;
+    };
+    transaction?: Transaction;
+};
+
+export type UpdateReadFlagParams = {
+    notification: InstanceType<typeof Notification>;
+    data: {
+        read_flag: boolean;
     };
     transaction?: Transaction;
 };

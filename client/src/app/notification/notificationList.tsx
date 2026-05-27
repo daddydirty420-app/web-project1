@@ -33,6 +33,14 @@ export const NotificationList = () => {
                     <span className={styles.countSpan}>{unreadCount?.toLocaleString()}</span>件
                 </small>
             </section>
+
+            {notificationList && notificationList.length > 0 && (
+                <section className={styles.notificationListSection}>
+                    {notificationList.map((notification) => (
+                        <section key={notification.id} className={styles.notificationSection}></section>
+                    ))}
+                </section>
+            )}
         </>
     );
 };
