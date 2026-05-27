@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useSWR from "swr";
@@ -82,7 +83,17 @@ export const NotificationList = () => {
                                 // urlが無いときだけモーダルを開く
                                 setModalId(notification.id);
                             }}
-                        ></section>
+                        >
+                            <Image
+                                src={notification.message_image ?? "no-image(1x1).png"}
+                                alt="お知らせ画像"
+                                width={45}
+                                height={45}
+                                className={styles.messageImage}
+                            />
+
+                            <div className={styles.textBlock}></div>
+                        </section>
                     ))}
                 </section>
             )}
