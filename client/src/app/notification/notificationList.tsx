@@ -18,6 +18,7 @@ type NotificationResponse = {
 
 export const NotificationList = () => {
     const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const router = useRouter();
 

@@ -1,4 +1,4 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 import User from "./user.js";
@@ -12,6 +12,7 @@ export class Notification extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
     declare url: string | null;
+    declare expires_at: Date | null;
 
     static associate() {
         Notification.belongsTo(User, {
@@ -47,6 +48,7 @@ Notification.init(
             allowNull: false,
         },
         url: DataTypes.TEXT,
+        expires_at: DataTypes.DATE,
     },
     {
         sequelize,
