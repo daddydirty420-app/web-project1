@@ -125,10 +125,7 @@ export const NotificationList = () => {
 
             {selectedNotification && (
                 <>
-                    <div
-                        className={styles.overlay}
-                        onClick={closeSheet}
-                    />
+                    <div className={styles.overlay} onClick={closeSheet} />
 
                     <section className={styles.sheet} ref={sheetRef}>
                         <div className={styles.handle} onClick={closeSheet} />

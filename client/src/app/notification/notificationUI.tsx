@@ -15,7 +15,7 @@ export default function NotificationUI({ children }: Props) {
             <Container header>
                 <Back />
                 {children}
-                </Container>
+            </Container>
 
             <Footer />
         </>

@@ -112,7 +112,7 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
             read_user_id: userId,
             url: `/transfer/detail/${transId}`,
             message: `${transValue.toLocaleString()}円を振込申請しました。翌々週の金曜日以降に指定された口座までお振込みいたします。詳細はこちらをクリックしてご確認ください。`,
-            type: "TRANSFER"
+            type: "TRANSFER",
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);
