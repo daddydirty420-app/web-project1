@@ -6,6 +6,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
+import { formatRelativeTime } from "../../lib/formatRelativeTime";
 import { fetchReadTrue } from "./api/client";
 import styles from "./styles.module.css";
 import { Notification } from "./type";
@@ -16,7 +17,7 @@ type NotificationResponse = {
 };
 
 export const NotificationList = () => {
-    const [modalId, setModalId] = useState<string | null>(null);
+    const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
 
     const router = useRouter();
 
@@ -56,9 +57,6 @@ export const NotificationList = () => {
         }
     };
 
-    // モーダル表示
-    const modalNotification = notificationList?.find((n) => n.id === modalId);
-
     return (
         <>
             <section className={styles.unreadCountSection}>
@@ -80,25 +78,51 @@ export const NotificationList = () => {
                                     router.push(notification.url);
                                     return;
                                 }
-                                // urlが無いときだけモーダルを開く
-                                setModalId(notification.id);
+                                // urlが無いときだけボトムシートを開く
+                                setSelectedNotification(notification);
                             }}
                         >
                             <Image
-                                src={notification.message_image ?? "no-image(1x1).png"}
+                                src={notification.message_image ?? "logo.png"}
                                 alt="お知らせ画像"
                                 width={45}
                                 height={45}
                                 className={styles.messageImage}
                             />
 
-                            <div className={styles.textBlock}></div>
+                            <div className={styles.textBlock}>
+                                <p className={styles.message}>{notification.message}</p>
+                                <p className={styles.date}>{formatRelativeTime(notification.createdAt)}</p>
+                            </div>
                         </section>
                     ))}
                 </section>
             )}
 
-            {modalNotification}
+            {selectedNotification && (
+                <>
+                    <div className={styles.overlay} onClick={() => setSelectedNotification(null)} />
+
+                    <section className={styles.sheet}>
+                        <div className={styles.handle} />
+
+                        <div className={styles.sheetFlex}>
+                            <Image
+                                src={selectedNotification.message_image ?? "logo.png"}
+                                alt="お知らせ画像"
+                                width={45}
+                                height={45}
+                                className={styles.messageImage}
+                            />
+
+                            <div className={styles.sheetTextBlock}>
+                                <p className={styles.sheetText}>{selectedNotification.message}</p>
+                                <p className={styles.sheetDate}>{formatRelativeTime(selectedNotification.createdAt)}</p>
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )}
         </>
     );
 };
