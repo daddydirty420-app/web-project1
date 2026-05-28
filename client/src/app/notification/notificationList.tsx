@@ -68,34 +68,40 @@ export const NotificationList = () => {
 
             {notificationList && notificationList.length > 0 && (
                 <section className={styles.notificationListSection}>
-                    {notificationList.map((notification) => (
-                        <section
-                            key={notification.id}
-                            className={styles.notificationSection}
-                            onClick={() => {
-                                read(notification.id);
-                                if (notification.url) {
-                                    router.push(notification.url);
-                                    return;
-                                }
-                                // urlが無いときだけボトムシートを開く
-                                setSelectedNotification(notification);
-                            }}
-                        >
-                            <Image
-                                src={notification.message_image ?? "/logo.png"}
-                                alt="お知らせ画像"
-                                width={45}
-                                height={45}
-                                className={styles.messageImage}
-                            />
+                    {notificationList.map((notification) => {
+                        const messageStyle = notification.read_flag
+                        ? styles.message
+                        : `${styles.message} ${styles.unreadMessage}`;
 
-                            <div className={styles.textBlock}>
-                                <p className={styles.message}>{notification.message}</p>
-                                <p className={styles.date}>{formatRelativeTime(notification.createdAt)}</p>
-                            </div>
-                        </section>
-                    ))}
+                        return (
+                            <section
+                                key={notification.id}
+                                className={styles.notificationSection}
+                                onClick={() => {
+                                    read(notification.id);
+                                    if (notification.url) {
+                                        router.push(notification.url);
+                                        return;
+                                    }
+                                    // urlが無いときだけボトムシートを開く
+                                    setSelectedNotification(notification);
+                                }}
+                            >
+                                <Image
+                                    src={notification.message_image ?? "/logo.png"}
+                                    alt="お知らせ画像"
+                                    width={45}
+                                    height={45}
+                                    className={styles.messageImage}
+                                />
+
+                                <div className={styles.textBlock}>
+                                    <p className={messageStyle}>{notification.message}</p>
+                                    <p className={styles.date}>{formatRelativeTime(notification.createdAt)}</p>
+                                </div>
+                            </section>
+                        );
+                    })}
                 </section>
             )}
 
