@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import { Op } from "sequelize";
-import { Search, WatchHistory } from "../models/index.js";
+import { Notification, Search, WatchHistory } from "../models/index.js";
 
 export const DataDeleteCron = () => {
     const now = Date.now();
@@ -42,7 +42,30 @@ export const DataDeleteCron = () => {
                 });
 
                 console.log(`[cron] ${deleteSearchItems}件の180日経過searchデータを削除しました。`);
-            } catch (err) {}
+            } catch (err) {
+                console.error("search削除エラー：", err);
+            }
+        },
+        {
+            timezone: "Asia/Tokyo",
+        },
+    );
+
+    // expires_at切れnotification削除
+    cron.schedule(
+        "0 12 * * *",
+        async () => {
+            try {
+                const deleteNotification = await Notification.destroy({
+                    where: {
+                        expires_at: { [Op.lt]: now },
+                    },
+                });
+
+                console.log(`[cron] ${deleteNotification}件の表示期限切れnotificationデータを削除しました。`);
+            } catch (err) {
+                console.error("notification削除エラー：", err);
+            }
         },
         {
             timezone: "Asia/Tokyo",
