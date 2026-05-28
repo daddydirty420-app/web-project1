@@ -13,6 +13,7 @@ export class Notification extends Model {
     declare updatedAt: Date;
     declare url: string | null;
     declare expires_at: Date | null;
+    declare type: string;
 
     static associate() {
         Notification.belongsTo(User, {
@@ -49,6 +50,7 @@ Notification.init(
         },
         url: DataTypes.TEXT,
         expires_at: DataTypes.DATE,
+        type: DataTypes.STRING,
     },
     {
         sequelize,
