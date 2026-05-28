@@ -83,7 +83,7 @@ export const NotificationList = () => {
                             }}
                         >
                             <Image
-                                src={notification.message_image ?? "logo.png"}
+                                src={notification.message_image ?? "/logo.png"}
                                 alt="お知らせ画像"
                                 width={45}
                                 height={45}
@@ -104,11 +104,11 @@ export const NotificationList = () => {
                     <div className={styles.overlay} onClick={() => setSelectedNotification(null)} />
 
                     <section className={styles.sheet}>
-                        <div className={styles.handle} />
+                        <div className={styles.handle} onClick={() => setSelectedNotification(null)} />
 
                         <div className={styles.sheetFlex}>
                             <Image
-                                src={selectedNotification.message_image ?? "logo.png"}
+                                src={selectedNotification.message_image ?? "/logo.png"}
                                 alt="お知らせ画像"
                                 width={45}
                                 height={45}
