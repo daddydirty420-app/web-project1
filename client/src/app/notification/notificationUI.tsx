@@ -1,4 +1,4 @@
-import { Container } from "@/components";
+import { Back, Container } from "@/components";
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { ReactNode } from "react";
@@ -12,7 +12,10 @@ export default function NotificationUI({ children }: Props) {
         <>
             <Header />
 
-            <Container header>{children}</Container>
+            <Container header>
+                <Back />
+                {children}
+                </Container>
 
             <Footer />
         </>
