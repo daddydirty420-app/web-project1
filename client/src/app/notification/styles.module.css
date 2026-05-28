@@ -14,9 +14,57 @@
     color: var(--gray-75);
 }
 
+.notificationListSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.25rem;
+}
+
 .notificationSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.25rem;
     cursor: pointer;
     touch-action: manipulation;
+}
+
+.messageImage {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.textBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.message {
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+.date {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
 }
 
 .sheet {
