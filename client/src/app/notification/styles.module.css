@@ -86,7 +86,11 @@
 
     overflow-y: auto;
 
-    animation: slideUp 0.2s ease;
+    animation: slideUp 0.4s ease;
+}
+
+.sheet.closing {
+    animation: slideDown 0.4s ease forwards;
 }
 
 .overlay {
@@ -134,4 +138,23 @@
     color: var(--text-muted);
     line-height: 1.4;
     letter-spacing: 0.02em;
+}
+
+/* シートのアニメーション */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
 }

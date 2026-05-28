@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useSWR from "swr";
 import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
@@ -57,6 +57,23 @@ export const NotificationList = () => {
         }
     };
 
+    // シートアニメーション
+    const sheetRef = useRef<HTMLDivElement>(null);
+
+    const closeSheet = () => {
+        const sheet = sheetRef.current;
+        if (!sheet) return;
+
+        sheet.classList.add(`${styles.closing}`);
+        sheet.addEventListener(
+            "animationend",
+            () => {
+                setSelectedNotification(null);
+            },
+            { once: true },
+        );
+    };
+
     return (
         <>
             <section className={styles.unreadCountSection}>
@@ -70,8 +87,8 @@ export const NotificationList = () => {
                 <section className={styles.notificationListSection}>
                     {notificationList.map((notification) => {
                         const messageStyle = notification.read_flag
-                        ? styles.message
-                        : `${styles.message} ${styles.unreadMessage}`;
+                            ? styles.message
+                            : `${styles.message} ${styles.unreadMessage}`;
 
                         return (
                             <section
@@ -107,10 +124,13 @@ export const NotificationList = () => {
 
             {selectedNotification && (
                 <>
-                    <div className={styles.overlay} onClick={() => setSelectedNotification(null)} />
+                    <div
+                        className={styles.overlay}
+                        onClick={closeSheet}
+                    />
 
-                    <section className={styles.sheet}>
-                        <div className={styles.handle} onClick={() => setSelectedNotification(null)} />
+                    <section className={styles.sheet} ref={sheetRef}>
+                        <div className={styles.handle} onClick={closeSheet} />
 
                         <div className={styles.sheetFlex}>
                             <Image
