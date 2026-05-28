@@ -5,27 +5,38 @@ export const NOTIFICATION_RETENTION_DAYS = {
     PERMANENT: null,
 } as const;
 
-export const NOTIFICATION_TYPES = {
-    LIKE: "LIKE",
-    FOLLOW: "FOLLOW",
-    ITEM: "ITEM",
-    COMMENT: "COMMENT",
-    COMMENT_REPLY: "COMMENT_REPLY",
-    ORDER_CREATED: "ORDER_CREATED",
-    ITEM_DELETED_BY_ADMIN: "ITEM_DELETED_BY_ADMIN",
-    COMMENT_DELETED_BY_ADMIN: "COMMENT_DELETED_BY_ADMIN",
-} as const;
-
-export const NOTIFICATION_RETENTION_LEVEL = {
-    [NOTIFICATION_TYPES.LIKE]: "SHORT",
-    [NOTIFICATION_TYPES.FOLLOW]: "SHORT",
-    [NOTIFICATION_TYPES.ITEM]: "NORMAL",
-    [NOTIFICATION_TYPES.COMMENT]: "SHORT",
-    [NOTIFICATION_TYPES.COMMENT_REPLY]: "SHORT",
-    [NOTIFICATION_TYPES.ORDER_CREATED]: "IMPORTANT",
-    [NOTIFICATION_TYPES.ITEM_DELETED_BY_ADMIN]: "PERMANENT",
-    [NOTIFICATION_TYPES.COMMENT_DELETED_BY_ADMIN]: "IMPORTANT",
-} as const;
-
 export type NotificationRetentionLevel = keyof typeof NOTIFICATION_RETENTION_DAYS;
-export type NotificationType = (typeof NOTIFICATION_TYPES)[keyof typeof NOTIFICATION_TYPES];
+
+export const NOTIFICATION_CONFIG = {
+    LIKE: {
+        retention: "SHORT",
+    },
+    FOLLOW: {
+        retention: "SHORT",
+    },
+    ITEM: {
+        retention: "NORMAL",
+    },
+    COMMENT: {
+        retention: "SHORT",
+    },
+    COMMENT_REPLY: {
+        retention: "SHORT",
+    },
+    ORDER_CREATED: {
+        retention: "IMPORTANT",
+    },
+    ITEM_DELETED_BY_ADMIN: {
+        retention: "PERMANENT",
+    },
+    COMMENT_DELETED_BY_ADMIN: {
+        retention: "IMPORTANT",
+    },
+} as const satisfies Record<
+    string,
+    {
+        retention: NotificationRetentionLevel;
+    }
+>;
+
+export type NotificationType = keyof typeof NOTIFICATION_CONFIG;
