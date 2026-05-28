@@ -116,7 +116,7 @@ export const NotificationList = () => {
                             />
 
                             <div className={styles.sheetTextBlock}>
-                                <p className={styles.sheetText}>{selectedNotification.message}</p>
+                                <p className={styles.sheetMessage}>{selectedNotification.message}</p>
                                 <p className={styles.sheetDate}>{formatRelativeTime(selectedNotification.createdAt)}</p>
                             </div>
                         </div>

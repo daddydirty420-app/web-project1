@@ -46,6 +46,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
 }
 
 .message {
@@ -95,4 +96,33 @@
     border-radius: 999px;
 
     margin: 10px auto;
+}
+
+.sheetFlex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.25rem 2rem;
+}
+
+.sheetTextBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.sheetMessage {
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+.sheetDate {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
 }
