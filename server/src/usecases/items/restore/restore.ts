@@ -26,6 +26,7 @@ export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
             url: `/item/${itemId}`,
             message_image: item.first_image_url,
             message: `「${item.name}」を復元しました。こちらから復元した商品を確認できます。`,
+            type: "ITEM",
         },
     }).catch((err) => {
         console.error("service createNotification error", err);

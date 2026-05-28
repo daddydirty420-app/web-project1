@@ -66,6 +66,7 @@ export const createAddressShopEditUseCase = async ({ shopId, userId, body }: Par
             read_user_id: userId,
             message:
                 "会社所在地の変更を受け付けました。審査には1~2週間程度お時間を要する場合がございます。審査完了までしばらくお待ちください。",
+            type: "SHOP_EDIT"
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);

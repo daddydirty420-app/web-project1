@@ -193,6 +193,7 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
             read_user_id: userId,
             message:
                 "本人確認を開始しました。本人確認の完了には1~2週間程度お時間を要する場合がございます。完了までしばらくお待ちください。",
+            type: "USER_EDIT",
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);

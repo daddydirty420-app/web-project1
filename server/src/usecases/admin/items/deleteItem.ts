@@ -48,6 +48,7 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
         // お知らせ作成
         await createNotification({
             data: {
+                type: "ITEM_DELETED_BY_ADMIN",
                 read_user_id: sellerId,
                 url: `/profile/${sellerId}`,
                 message: `平素より〇〇をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
@@ -103,6 +104,7 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
                         read_user_id: buyer.id,
                         message_image: item.first_image_url,
                         message,
+                        type: "ORDER_DELETE",
                     },
                     transaction: t,
                 });

@@ -88,6 +88,7 @@ export const deleteUriageUseCase = async ({ pageUserId, deleteUriage }: Params) 
         data: {
             read_user_id: pageUserId,
             message: `重大な規約違反が確認されたため、売上金${deleteUriage.toLocaleString()}円を回収いたしました。利用規約に沿ったご利用をお願いします。`,
+            type: "URIAGE_DELETED_BY_ADMIN",
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);

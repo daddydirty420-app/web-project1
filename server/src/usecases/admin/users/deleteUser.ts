@@ -307,6 +307,7 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                                 read_user_id: buyer.id,
                                 message_image: item.first_image_url,
                                 message,
+                                type: "ORDER_DELETE",
                             },
                             transaction: t,
                         });

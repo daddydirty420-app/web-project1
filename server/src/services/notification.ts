@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import { NOTIFICATION_CONFIG, NOTIFICATION_RETENTION_DAYS } from "../config/notification.js";
 import { Notification } from "../models/index.js";
 import {
     CreateNotificationParams,
@@ -20,7 +22,19 @@ export const getNotification = ({ notificationId }: NotificationIdParams) => {
 };
 
 export const createNotification = async ({ data, transaction }: CreateNotificationParams) => {
-    await Notification.create(data, { transaction });
+    const retentionLevel = NOTIFICATION_CONFIG[data.type].retention;
+
+    const retentionDays = NOTIFICATION_RETENTION_DAYS[retentionLevel];
+
+    const expires_at = retentionDays === null ? null : dayjs().add(retentionDays, "day").toDate();
+
+    await Notification.create(
+        {
+            ...data,
+            expires_at,
+        },
+        { transaction },
+    );
 };
 
 export const updateReadFlag = async ({ notification, data, transaction }: UpdateReadFlagParams) => {

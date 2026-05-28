@@ -92,6 +92,7 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
             read_user_id: userId,
             message:
                 "事業形態の変更が完了しました。審査完了まで1~2週間ほどお時間を頂戴しておりますため、しばらくお待ちください。",
+            type: "SHOP_EDIT",
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);

@@ -1,5 +1,6 @@
 import { Transaction } from "sequelize";
 import { Notification } from "../../models/index.js";
+import { NotificationType } from "../../config/notification.js";
 
 export type UserIdParams = {
     userId: number;
@@ -15,6 +16,7 @@ export type CreateNotificationParams = {
         url?: string | null;
         message_image?: string | null;
         message: string;
+        type: NotificationType;
     };
     transaction?: Transaction;
 };

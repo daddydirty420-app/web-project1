@@ -23,8 +23,23 @@ export const NOTIFICATION_CONFIG = {
     COMMENT_REPLY: {
         retention: "SHORT",
     },
+    USER_EDIT: {
+        retention: "NORMAL",
+    },
+    SHOP_EDIT: {
+        retention: "NORMAL",
+    },
+    TRANSFER: {
+        retention: "IMPORTANT",
+    },
     ORDER_CREATED: {
         retention: "IMPORTANT",
+    },
+    ORDER_DELETE: {
+        retention: "PERMANENT",
+    },
+    URIAGE_DELETED_BY_ADMIN: {
+        retention: "PERMANENT",
     },
     ITEM_DELETED_BY_ADMIN: {
         retention: "PERMANENT",

@@ -37,6 +37,7 @@ export const deleteCommentUseCase = async ({ userId, commentId, page }: Params) 
             url: `/item/${item.id}`,
             message_image: item.first_image_url,
             message,
+            type: page === "admin" ? "COMMENT_DELETED_BY_ADMIN" : "COMMENT",
         },
     }).catch((err) => {
         console.error("service createNotification error", err);

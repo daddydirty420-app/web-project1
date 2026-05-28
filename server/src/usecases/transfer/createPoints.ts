@@ -109,6 +109,7 @@ export const createTransferPointsUseCase = async ({ userId, value, limit }: Para
         data: {
             read_user_id: userId,
             message: `売上金${value.toLocaleString()}円をポイントに変換しました。ポイントは当サイト内のお買い物にご利用いただけます。ポイントの有効期限は本日から180日後です。`,
+            type: "TRANSFER",
         },
     }).catch((err) => {
         console.error("service createNotification error:", err);

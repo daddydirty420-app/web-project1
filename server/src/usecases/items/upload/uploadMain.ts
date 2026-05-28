@@ -165,6 +165,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
             url: `/item/draft/${itemId}`,
             message_image: item.first_image_url,
             message: `${item.name}の下書きを作成しました。下書きの閲覧・編集・出品はこちらから！`,
+            type: "ITEM",
         },
     }).catch((err) => {
         console.error("service createNotification error", err);

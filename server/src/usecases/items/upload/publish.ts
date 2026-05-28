@@ -63,6 +63,7 @@ export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
             url: `/item/${itemId}`,
             message_image: item.first_image_url,
             message: `商品「${item.name}」を出品いただき誠にありがとうございます。商品の詳細はこちらの商品ページからご確認ください。`,
+            type: "ITEM",
         },
     }).catch((err) => {
         console.error("service createNotification error", err);

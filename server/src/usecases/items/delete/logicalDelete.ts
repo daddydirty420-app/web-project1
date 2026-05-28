@@ -63,6 +63,7 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
             url: `/item/deleted/${itemId}`,
             message_image: item.first_image_url,
             message: `${item.name}を削除しました。削除から1か月間はマイページの「削除した商品」、もしくはこのお知らせからアーカイブを確認・復元することができます。削除から1か月以上経過すると、アーカイブの確認・復元ができなくなりますのでご注意ください。`,
+            type: "ITEM",
         },
     }).catch((err) => {
         console.error("service createNotification error", err);
