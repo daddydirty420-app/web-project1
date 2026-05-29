@@ -1,15 +1,14 @@
 import cron from "node-cron";
 import { Op } from "sequelize";
 import { Delivery } from "../models/index.js";
-import sequelize from "../db.js";
 
 export const startBuyDeleteCron = () => {
-    const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
-
     // 未購入1週間放置Delivery削除
     cron.schedule(
         "0 12 * * *",
         async () => {
+            const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
+            
             try {
                 const deletedCount = await Delivery.destroy({
                     where: {

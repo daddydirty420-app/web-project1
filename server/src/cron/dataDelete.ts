@@ -3,12 +3,12 @@ import { Op } from "sequelize";
 import { Notification, Search, WatchHistory } from "../models/index.js";
 
 export const DataDeleteCron = () => {
-    const now = Date.now();
-
     // 90日経過WatchHistory削除
     cron.schedule(
         "0 12 * * *",
         async () => {
+            const now = Date.now();
+
             const ninetyDaysAgo = new Date(now - 1000 * 60 * 60 * 24 * 90);
 
             try {
@@ -32,6 +32,7 @@ export const DataDeleteCron = () => {
     cron.schedule(
         "0 12 * * *",
         async () => {
+            const now = Date.now();
             const halfYearsAgo = new Date(now - 1000 * 60 * 60 * 24 * 180);
 
             try {
@@ -53,12 +54,14 @@ export const DataDeleteCron = () => {
 
     // expires_at切れnotification削除
     cron.schedule(
-        "0 13 * * *",
+        "15 13 * * *",
         async () => {
+            const nowDate = new Date();
+
             try {
                 const deleteNotification = await Notification.destroy({
                     where: {
-                        expires_at: { [Op.lt]: now },
+                        expires_at: { [Op.lt]: nowDate },
                     },
                 });
 
