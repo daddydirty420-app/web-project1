@@ -5,7 +5,7 @@ import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { ApiError } from "../../lib/api/apiError";
@@ -25,20 +25,24 @@ type Props = {
 
 type Response = {
     userList: User[];
+    nextCursor: string | null;
+    hasMore: boolean;
 };
 
 export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
     const [searchValue, setSearchValue] = useState("");
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+    // limit 15 → 30
     const getBasePath = () => {
-        if (page === "item-like") return `item-like/${id}/user`;
-        if (page === "comment-like") return `comment-like/${id}/user`;
+        if (page === "item-like") return `item-like/${id}/user?limit=15`;
+        if (page === "comment-like") return `comment-like/${id}/user?limit=15`;
 
         if (page === "follow") {
-            if (followTab === "follow") return `follow/${id}/user?type=follow`;
-            if (followTab === "follower") return `follow/${id}/user?type=follower`;
+            if (followTab === "follow") return `follow/${id}/user?type=follow&limit=15`;
+            if (followTab === "follower") return `follow/${id}/user?type=follower&limit=15`;
 
-            return `follow/${id}?type=follow`; // デフォルト
+            return `follow/${id}?type=follow&limit=15`; // デフォルト
         }
 
         return null;
@@ -58,6 +62,11 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const { data, mutate } = useSWR<Response>(apiUrl, fetcher);
 
     const userList = data?.userList;
+
+    // 追加フェッチ
+
+    // 最下部検知
+    const loadMoreRef = useRef<HTMLDivElement>(null);
 
     const followRemove = async (userId: string) => {
         mutate((prev) => {
@@ -182,6 +191,8 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
                     )}
                 </>
             )}
+
+            <div ref={loadMoreRef} />
         </>
     );
 };
