@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const getNotificationListQuerySchema = z.object({
-    limit: z.coerce.number().int().positive().min(1).max(1000).default(50),
+    limit: z.coerce.number().int().positive().min(1).max(1000).default(30),
     cursor: z.string().optional(),
 });
 
