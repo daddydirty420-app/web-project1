@@ -54,7 +54,7 @@ export const DataDeleteCron = () => {
 
     // expires_at切れnotification削除
     cron.schedule(
-        "15 13 * * *",
+        "0 12 * * *",
         async () => {
             const nowDate = new Date();
 
