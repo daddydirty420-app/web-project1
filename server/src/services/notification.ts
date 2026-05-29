@@ -6,6 +6,7 @@ import {
     DeleteNotificationUserIdTransactionParams,
     NotificationIdParams,
     UpdateReadFlagParams,
+    UpdateTypeParams,
     UserIdParams,
 } from "../types/serviceType/notification.js";
 
@@ -15,6 +16,10 @@ export const getMyNotificationList = ({ userId }: UserIdParams) => {
         where: { read_user_id: userId },
         order: [["createdAt", "DESC"]],
     });
+};
+
+export const getMyNotificationAll = () => {
+    return Notification.findAll();
 };
 
 export const getNotification = ({ notificationId }: NotificationIdParams) => {
@@ -29,6 +34,22 @@ export const createNotification = async ({ data, transaction }: CreateNotificati
     const expires_at = retentionDays === null ? null : dayjs().add(retentionDays, "day").toDate();
 
     await Notification.create(
+        {
+            ...data,
+            expires_at,
+        },
+        { transaction },
+    );
+};
+
+export const updateNotificationType = async ({ notification, data, transaction }: UpdateTypeParams) => {
+    const retentionLevel = NOTIFICATION_CONFIG[data.type].retention;
+
+    const retentionDays = NOTIFICATION_RETENTION_DAYS[retentionLevel];
+
+    const expires_at = retentionDays === null ? null : dayjs().add(retentionDays, "day").toDate();
+
+    await notification.update(
         {
             ...data,
             expires_at,

@@ -47,6 +47,9 @@ export const NOTIFICATION_CONFIG = {
     COMMENT_DELETED_BY_ADMIN: {
         retention: "IMPORTANT",
     },
+    UNKNOWN: {
+        retention: "NORMAL",
+    },
 } as const satisfies Record<
     string,
     {

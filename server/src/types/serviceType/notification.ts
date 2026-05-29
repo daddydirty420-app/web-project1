@@ -29,6 +29,14 @@ export type UpdateReadFlagParams = {
     transaction?: Transaction;
 };
 
+export type UpdateTypeParams = {
+    notification: InstanceType<typeof Notification>;
+    data: {
+        type: NotificationType;
+    };
+    transaction?: Transaction;
+};
+
 export type DeleteNotificationUserIdTransactionParams = {
     userId: number;
     transaction?: Transaction;
