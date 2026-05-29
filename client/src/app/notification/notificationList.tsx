@@ -28,6 +28,7 @@ export const NotificationList = () => {
     const notificationList = data?.flatMap((page) => page.notificationList) ?? [];
     const unreadCount = data?.[0]?.unreadCount;
 
+    // 追加フェッチ
     const loadMore = useCallback(async () => {
         setIsLoadingMore(true);
 

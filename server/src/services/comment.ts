@@ -17,6 +17,7 @@ export const getComment = ({ commentId }: CommentIdParams) => {
 export const getAllComments = ({ itemId }: ItemIdParams) => {
     return Comment.findAll({
         where: { item_id: itemId },
+        limit: 100,
     });
 };
 
