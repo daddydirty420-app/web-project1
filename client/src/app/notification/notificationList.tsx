@@ -8,15 +8,9 @@ import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
 import { formatRelativeTime } from "../../lib/formatRelativeTime";
 import { fetchReadTrue } from "./api/client";
+import { getKey } from "./getApiKey";
 import styles from "./styles.module.css";
-import { Notification } from "./type";
-
-type NotificationResponse = {
-    notificationList: Notification[];
-    unreadCount: number;
-    nextCursor: string | null;
-    hasMore: boolean;
-};
+import { Notification, NotificationResponse } from "./type";
 
 export const NotificationList = () => {
     const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
@@ -24,18 +18,12 @@ export const NotificationList = () => {
 
     const router = useRouter();
 
-    // APIフェッチ
-    const getKey = (pageIndex: number, previousPageData: NotificationResponse | null) => {
-        if (previousPageData && !previousPageData.hasMore) return null;
-
-        if (pageIndex === 0) {
-            return `/notification?limit=12`;
-        }
-
-        return `/notification?cursor=${previousPageData?.nextCursor}&limit=12`;
-    };
-
-    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<NotificationResponse>(getKey, fetcher);
+    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<NotificationResponse>(
+        getKey,
+        async (url: string) => {
+            return fetcher<NotificationResponse>(url);
+        },
+    );
 
     const notificationList = data?.flatMap((page) => page.notificationList) ?? [];
     const unreadCount = data?.[0]?.unreadCount;

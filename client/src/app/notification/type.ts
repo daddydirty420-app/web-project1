@@ -6,3 +6,10 @@ export type Notification = {
     url: string;
     createdAt: Date;
 };
+
+export type NotificationResponse = {
+    notificationList: Notification[];
+    unreadCount: number;
+    nextCursor: string | null;
+    hasMore: boolean;
+};
