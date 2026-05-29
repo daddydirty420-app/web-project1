@@ -47,7 +47,7 @@ export const updateNotificationType = async ({ notification, data, transaction }
 
     const retentionDays = NOTIFICATION_RETENTION_DAYS[retentionLevel];
 
-    const expires_at = retentionDays === null ? null : dayjs().add(retentionDays, "day").toDate();
+    const expires_at = retentionDays === null ? null : dayjs(notification.createdAt).add(retentionDays, "day").toDate();
 
     await notification.update(
         {

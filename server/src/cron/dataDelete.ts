@@ -53,7 +53,7 @@ export const DataDeleteCron = () => {
 
     // expires_at切れnotification削除
     cron.schedule(
-        "0 12 * * *",
+        "0 13 * * *",
         async () => {
             try {
                 const deleteNotification = await Notification.destroy({
