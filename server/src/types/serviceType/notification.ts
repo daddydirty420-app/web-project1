@@ -1,6 +1,6 @@
-import { Transaction } from "sequelize";
-import { Notification } from "../../models/index.js";
+import { Op, Transaction } from "sequelize";
 import { NotificationType } from "../../config/notification.js";
+import { Notification } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
@@ -8,6 +8,20 @@ export type UserIdParams = {
 
 export type NotificationIdParams = {
     notificationId: number;
+};
+
+export type NotificationListParams = {
+    where:
+        | {
+              read_user_id: number;
+              createdAt: {
+                  [Op.lt]: Date;
+              };
+          }
+        | {
+              read_user_id: number;
+          };
+    limit: number;
 };
 
 export type CreateNotificationParams = {

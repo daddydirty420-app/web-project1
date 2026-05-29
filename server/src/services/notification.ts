@@ -5,16 +5,18 @@ import {
     CreateNotificationParams,
     DeleteNotificationUserIdTransactionParams,
     NotificationIdParams,
+    NotificationListParams,
     UpdateReadFlagParams,
     UpdateTypeParams,
     UserIdParams,
 } from "../types/serviceType/notification.js";
 
-export const getMyNotificationList = ({ userId }: UserIdParams) => {
+export const getMyNotificationList = ({ limit, where }: NotificationListParams) => {
     return Notification.findAll({
         attributes: ["id", "message", "message_image", "read_flag", "createdAt", "url"],
-        where: { read_user_id: userId },
+        where,
         order: [["createdAt", "DESC"]],
+        limit,
     });
 };
 

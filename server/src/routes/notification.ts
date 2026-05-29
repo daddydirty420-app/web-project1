@@ -7,11 +7,13 @@ import {
     patchReadFlagRateLimit,
 } from "../middleware/rateLimit/notificationRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { countUnread } from "../services/notification.js";
 import { getNotificationListUseCase } from "../usecases/notification/getList.js";
 import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
 import { editTypeUseCase } from "../usecases/notification/test/editType.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { GetNotificationListQuery, getNotificationListQuerySchema } from "../validators/query/notification.js";
 
 const router = Router();
 
@@ -56,20 +58,28 @@ router.get(
     },
 );
 
-// GET /notification
+// GET /notification?limit=00(&cursor="")
 // summary: お知らせ一覧取得
 // page: /notification
 router.get(
     "/",
     getNotificationListRateLimit,
+    validateQuery(getNotificationListQuerySchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
-        try {
-            const { notificationList, unreadCount } = await getNotificationListUseCase({ userId });
+        const query = req.validatedQuery as GetNotificationListQuery;
+        const { limit, cursor } = query;
 
-            res.status(200).json({ notificationList, unreadCount });
+        try {
+            const { notificationList, unreadCount, nextCursor, hasMore } = await getNotificationListUseCase({
+                userId,
+                limit,
+                cursor,
+            });
+
+            res.status(200).json({ notificationList, unreadCount, nextCursor, hasMore });
         } catch (err) {
             next(err);
         }

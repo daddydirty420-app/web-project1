@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import useSWR from "swr";
+import { useEffect, useRef, useState } from "react";
+import useSWRInfinite from "swr/infinite";
 import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
 import { formatRelativeTime } from "../../lib/formatRelativeTime";
@@ -14,6 +14,8 @@ import { Notification } from "./type";
 type NotificationResponse = {
     notificationList: Notification[];
     unreadCount: number;
+    nextCursor: string | null;
+    hasMore: boolean;
 };
 
 export const NotificationList = () => {
@@ -23,24 +25,70 @@ export const NotificationList = () => {
     const router = useRouter();
 
     // APIフェッチ
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/notification`;
+    const getKey = (pageIndex: number, previousPageData: NotificationResponse | null) => {
+        if (previousPageData && !previousPageData.hasMore) return null;
 
-    const { data, mutate } = useSWR<NotificationResponse>(apiUrl, fetcher);
+        if (pageIndex === 0) {
+            return `/notification?limit=12`;
+        }
 
-    const notificationList = data?.notificationList;
-    const unreadCount = data?.unreadCount;
+        return `/notification?cursor=${previousPageData?.nextCursor}&limit=12`;
+    };
+
+    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<NotificationResponse>(getKey, fetcher);
+
+    const notificationList = data?.flatMap((page) => page.notificationList) ?? [];
+    const unreadCount = data?.[0]?.unreadCount;
+
+    const loadMore = async () => {
+        setIsLoadingMore(true);
+
+        await setSize((prev) => prev + 1);
+
+        setIsLoadingMore(false);
+    };
+
+    const isReachingEnd = data && !data[data.length - 1]?.hasMore;
+
+    // 最下部検知
+    const loadMoreRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const target = loadMoreRef.current;
+        if (!target) return;
+
+        if (isReachingEnd || isValidating) return;
+
+        const observer = new IntersectionObserver(
+            async ([entry]) => {
+                if (!entry.isIntersecting) return;
+
+                if (isLoadingMore) return;
+
+                await loadMore();
+            },
+            {
+                threshold: 0.1,
+                rootMargin: "200px",
+            },
+        );
+
+        observer.observe(target);
+
+        return () => observer.disconnect();
+    }, [isLoadingMore, isReachingEnd]);
 
     // 既読
     const read = async (id: string) => {
         mutate(
             (current) =>
                 current
-                    ? {
-                          ...current,
-                          notificationList: current.notificationList.map((n) =>
+                    ? current.map((page) => ({
+                          ...page,
+                          notificationList: page.notificationList.map((n) =>
                               n.id === id ? { ...n, read_flag: true } : n,
                           ),
-                      }
+                      }))
                     : undefined,
             false,
         );
@@ -84,7 +132,7 @@ export const NotificationList = () => {
                 </small>
             </section>
 
-            {notificationList && notificationList.length > 0 && (
+            {notificationList.length > 0 && (
                 <section className={styles.notificationListSection}>
                     {notificationList.map((notification) => {
                         const messageStyle = notification.read_flag
@@ -147,6 +195,8 @@ export const NotificationList = () => {
                     </section>
                 </>
             )}
+
+            <div ref={loadMoreRef} />
         </>
     );
 };
