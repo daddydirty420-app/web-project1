@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { ApiError } from "../../lib/api/apiError";
 import { fetcher } from "../../lib/fetcher";
@@ -28,13 +28,13 @@ export const NotificationList = () => {
     const notificationList = data?.flatMap((page) => page.notificationList) ?? [];
     const unreadCount = data?.[0]?.unreadCount;
 
-    const loadMore = async () => {
+    const loadMore = useCallback(async () => {
         setIsLoadingMore(true);
 
         await setSize((prev) => prev + 1);
 
         setIsLoadingMore(false);
-    };
+    }, [setSize]);
 
     const isReachingEnd = data && !data[data.length - 1]?.hasMore;
 
@@ -64,7 +64,7 @@ export const NotificationList = () => {
         observer.observe(target);
 
         return () => observer.disconnect();
-    }, [isLoadingMore, isReachingEnd]);
+    }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
 
     // 既読
     const read = async (id: string) => {
