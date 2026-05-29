@@ -8,7 +8,7 @@ export const startBuyDeleteCron = () => {
         "0 12 * * *",
         async () => {
             const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
-            
+
             try {
                 const deletedCount = await Delivery.destroy({
                     where: {
