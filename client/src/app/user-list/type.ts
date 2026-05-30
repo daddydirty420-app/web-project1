@@ -1,3 +1,9 @@
+export type UserListResponse = {
+    userList: User[];
+    nextCursor: string | null;
+    hasMore: boolean;
+};
+
 export type Follow = {
     id: string;
     follow_user_id: string | number;
