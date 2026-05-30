@@ -2,8 +2,8 @@ import crypto from "crypto";
 import { Router } from "express";
 import type { Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
-import sequelize from "../db.js";
-import { validateParams } from "../middleware/validate/validateParams.js";
+import sequelize from "../../db.js";
+import { validateParams } from "../../middleware/validate/validateParams.js";
 import {
     Address,
     Brands,
@@ -16,8 +16,8 @@ import {
     Orders,
     Sale,
     User,
-} from "../models/index.js";
-import { idParamSchema } from "../validators/params/id.js";
+} from "../../models/index.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 

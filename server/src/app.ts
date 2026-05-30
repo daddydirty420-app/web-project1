@@ -38,6 +38,8 @@ import CommentLikeRouter from "./routes/comment-like.js";
 import CommentRouter from "./routes/comment.js";
 import CommentReportRouter from "./routes/comment_report.js";
 import DeliveryRouter from "./routes/delivery.js";
+import TestRouter from "./routes/dev/test.js";
+import DevUsersRouter from "./routes/dev/users.js";
 import FollowRouter from "./routes/follow.js";
 import IdCardRouter from "./routes/id_card.js";
 import InquiryRouter from "./routes/inquiry.js";
@@ -60,7 +62,6 @@ import ShopInfoRouter from "./routes/shop_info.js";
 import ShopInfoEditRouter from "./routes/shop_info_edit.js";
 import StarHistoryRouter from "./routes/star_history.js";
 import SuggestWordsRouter from "./routes/suggest_words.js";
-import TestRouter from "./routes/test.js";
 import TransferRouter from "./routes/transfer.js";
 import UriagekinHistoryRouter from "./routes/uriagekin_history.js";
 import usersRouter from "./routes/users.js";
@@ -171,7 +172,8 @@ app.use("/api/report-admin", ReportAdminRouter);
 app.use("/api/shop-info-admin", ShopInfoAdminRouter);
 app.use("/api/transfer-admin", TransferAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
-app.use("/api/test", TestRouter);
+app.use("/api/dev/test", TestRouter);
+app.use("/api/dev/users", DevUsersRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

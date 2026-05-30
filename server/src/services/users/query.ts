@@ -11,10 +11,17 @@ import {
     UriagekinHistory,
     User,
 } from "../../models/index.js";
-import { EmailParams, UserIdParams } from "../../types/serviceType/users.js";
+import { EmailParams, GetUserAllParams, UserIdParams } from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
+};
+
+export const getUserAll = ({ where, limit }: GetUserAllParams) => {
+    return User.findAll({
+        where,
+        limit,
+    });
 };
 
 export const getUserHasShop = async ({ userId }: UserIdParams) => {

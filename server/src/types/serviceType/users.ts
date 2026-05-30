@@ -1,8 +1,17 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { User } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
+};
+
+export type GetUserAllParams = {
+    where?:
+        | {
+              id: { [Op.gt]: number };
+          }
+        | {};
+    limit?: number;
 };
 
 export type EmailParams = {

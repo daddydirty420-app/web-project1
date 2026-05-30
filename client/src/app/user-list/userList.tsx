@@ -16,9 +16,9 @@ import styles from "./userList.module.css";
 
 type Props = {
     loggedIn: boolean;
-    id: string;
+    id?: string;
     currentUserId: string;
-    page: "follow" | "item-like" | "comment-like";
+    page: "follow" | "item-like" | "comment-like" | "dev";
     followTab?: "follow" | "follower" | null;
     myFollow?: boolean;
 };
