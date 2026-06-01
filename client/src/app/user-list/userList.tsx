@@ -5,7 +5,7 @@ import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import useSWRInfinite from "swr/infinite";
 import { ApiError } from "../../lib/api/apiError";
@@ -46,9 +46,43 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
     const userList = data?.flatMap((page) => page.userList) ?? [];
 
     // 追加フェッチ
+    const loadMore = useCallback(async () => {
+        setIsLoadingMore(true);
+
+        await setSize((prev) => prev + 1);
+
+        setIsLoadingMore(false);
+    }, [setSize]);
+
+    const isReachingEnd = data && !data[data.length - 1]?.hasMore;
 
     // 最下部検知
     const loadMoreRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const target = loadMoreRef.current;
+        if (!target) return;
+
+        if (isReachingEnd || isValidating) return;
+
+        const observer = new IntersectionObserver(
+            async ([entry]) => {
+                if (!entry.isIntersecting) return;
+
+                if (isLoadingMore) return;
+
+                await loadMore();
+            },
+            {
+                threshold: 0.1,
+                rootMargin: "200px",
+            },
+        );
+
+        observer.observe(target);
+
+        return () => observer.disconnect();
+    }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
 
     // フォロー解除
     const followRemove = async (userId: string) => {
