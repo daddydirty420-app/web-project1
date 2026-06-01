@@ -20,6 +20,7 @@ export const getUser = ({ userId }: UserIdParams) => {
 export const getUserAll = ({ where, limit }: GetUserAllParams) => {
     return User.findAll({
         where,
+        order: [["id", "ASC"]],
         limit,
     });
 };

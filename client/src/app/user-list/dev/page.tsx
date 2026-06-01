@@ -7,7 +7,7 @@ export default async function Page() {
     const session = await getServerSession(authOptions);
 
     return (
-        <GoodUI title="いいねしたユーザー">
+        <GoodUI title="ユーザー">
             <UserList loggedIn={!!session} currentUserId={session?.user.id ?? ""} page="dev" />
         </GoodUI>
     );
