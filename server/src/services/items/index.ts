@@ -16,6 +16,7 @@ export {
 export { countSellItem, countSoldItem } from "./items.count.js";
 export {
     getAdminItemPage,
+    getAllItems,
     getCartRecommendItems,
     getIndexItemsWithCount,
     getIndexRecommendItems,

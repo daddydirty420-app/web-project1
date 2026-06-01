@@ -38,6 +38,7 @@ import CommentLikeRouter from "./routes/comment-like.js";
 import CommentRouter from "./routes/comment.js";
 import CommentReportRouter from "./routes/comment_report.js";
 import DeliveryRouter from "./routes/delivery.js";
+import DevItemsRouter from "./routes/dev/items.js";
 import TestRouter from "./routes/dev/test.js";
 import DevUsersRouter from "./routes/dev/users.js";
 import FollowRouter from "./routes/follow.js";
@@ -174,6 +175,7 @@ app.use("/api/transfer-admin", TransferAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
 app.use("/api/dev/test", TestRouter);
 app.use("/api/dev/users", DevUsersRouter);
+app.use("/api/dev/items", DevItemsRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

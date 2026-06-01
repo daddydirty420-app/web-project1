@@ -9,24 +9,23 @@ type Params = {
     searchValue?: string;
 };
 
-// limit 10 → 20
 export const getUserListApiKey = ({ id, page, followTab, pageIndex, previousPageData, searchValue }: Params) => {
     let basePath: string | null = null;
 
-    if (page === "item-like") basePath = `item-like/${id}/user?limit=10`;
-    if (page === "comment-like") basePath = `comment-like/${id}/user?limit=10`;
+    if (page === "item-like") basePath = `item-like/${id}/user?limit=20`;
+    if (page === "comment-like") basePath = `comment-like/${id}/user?limit=20`;
 
     if (page === "follow") {
-        if (followTab === "follow") basePath = `follow/${id}/user?type=follow&limit=10`;
-        else if (followTab === "follower") basePath = `follow/${id}/user?type=follower&limit=10`;
-        else basePath = `follow/${id}?type=follow&limit=10`; // デフォルト
+        if (followTab === "follow") basePath = `follow/${id}/user?type=follow&limit=20`;
+        else if (followTab === "follower") basePath = `follow/${id}/user?type=follower&limit=20`;
+        else basePath = `follow/${id}?type=follow&limit=20`; // デフォルト
     }
 
     if (page === "dev") {
         if (pageIndex === 0) {
-            basePath = "dev/users?limit=10";
+            basePath = "dev/users?limit=20";
         } else {
-            basePath = `dev/users?limit=10&cursor=${previousPageData?.nextCursor}`;
+            basePath = `dev/users?limit=20&cursor=${previousPageData?.nextCursor}`;
         }
     }
 

@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { Item } from "../../models/index.js";
 import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../itemAttributes.js";
 
@@ -8,6 +8,15 @@ export type ItemIdParams = {
 
 export type UserIdParams = {
     userId: number;
+};
+
+export type GetAllItemParams = {
+    where?:
+        | {
+              id: { [Op.gt]: number };
+          }
+        | {};
+    limit?: number;
 };
 
 export type UserItemIdParams = {
