@@ -1,5 +1,11 @@
 import { ItemAttributes } from "@/types/itemAttributes";
 
+export type SearchResponse = {
+    itemList: Item[];
+    nextCursor: string | null;
+    hasMore: boolean;
+};
+
 export type Brand = {
     id: string;
     name: string;
@@ -30,6 +36,8 @@ export type Sale = {
 export type Video = {
     id: string;
     title: string;
+    thumbnail_url: string;
+    duration: number;
 };
 
 export type Item = {

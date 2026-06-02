@@ -7,8 +7,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../lib/fetcher";
-import { SearchResponse } from "../item-list/type";
+import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
+import { SearchResponse } from "./type";
 
 export const SearchItemList = async () => {
     const [viewMode, setViewMode] = useState<"item" | "video">("item");
@@ -125,7 +126,66 @@ export const SearchItemList = async () => {
                         </>
                     )}
 
-                    {viewMode === "video" && <></>}
+                    {viewMode === "video" && (
+                        <>
+                            <section className={styles.videoListWrapper}>
+                                {items.map((item) => {
+                                    if (!item) return;
+                                    const itemLink = `/item/${item.id}`;
+
+                                    return (
+                                        <section className={styles.videoListSection} key={item.id}>
+                                            <Link href={itemLink} className={styles.thumbnail}>
+                                                <Image
+                                                    src={
+                                                        item.Video?.thumbnail_url
+                                                            ? encodeURI(item.Video.thumbnail_url.trim())
+                                                            : "/no-image(16x9).png"
+                                                    }
+                                                    alt={item.Video?.title ?? "動画サムネイル"}
+                                                    fill
+                                                    priority={false}
+                                                />
+                                                <div className={styles.duration}>
+                                                    {formatDuration(item.Video?.duration)}
+                                                </div>
+                                            </Link>
+
+                                            <div className={styles.itemData}>
+                                                <Link href={itemLink} className={styles.videoUser}>
+                                                    <h4 className={styles.title}>{item.Video?.title}</h4>
+                                                </Link>
+                                                <Link href={itemLink} className={styles.itemNamePrice}>
+                                                    <p className={styles.syohin}>商品</p>
+                                                    <div className={styles.itemNameDiv}>
+                                                        <h2 className={styles.itemName}>{item.name}</h2>
+                                                    </div>
+                                                    <div className={styles.itemPriceSale}>
+                                                        {item.Sale?.sale_flag && (
+                                                            <p className={styles.beforePrice}>
+                                                                ￥{item.Sale.before_price.toLocaleString()}
+                                                            </p>
+                                                        )}
+                                                        {item.status === "soldout" && (
+                                                            <p className={styles.saleSold}>SOLD OUT</p>
+                                                        )}
+                                                        <h3
+                                                            className={clsx(
+                                                                styles.price,
+                                                                item.Sale?.sale_flag ? styles.sale : "",
+                                                            )}
+                                                        >
+                                                            ￥{item.price.toLocaleString()}
+                                                        </h3>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </section>
+                                    );
+                                })}
+                            </section>
+                        </>
+                    )}
                 </>
             )}
 

@@ -1,4 +1,4 @@
-import { SearchResponse } from "../item-list/type";
+import { SearchResponse } from "./type";
 
 // limit 9 → state
 export const getSearchItemListApiKey = (pageIndex: number, previousPageData: SearchResponse) => {
