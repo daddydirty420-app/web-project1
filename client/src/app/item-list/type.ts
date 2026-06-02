@@ -1,5 +1,11 @@
 import { ItemAttributes } from "@/types/itemAttributes";
 
+export type SearchResponse = {
+    itemList: Item[];
+    nextCursor: string | null;
+    hasMore: boolean;
+};
+
 export type Sale = {
     id: string;
     discount_rate: number;
