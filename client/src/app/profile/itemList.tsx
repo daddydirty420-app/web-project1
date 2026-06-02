@@ -9,8 +9,8 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import pageStyle from "./profile.module.css";
 import { fetchIL, fetchVL } from "./api/itemList";
+import pageStyle from "./profile.module.css";
 
 type Res = {
     items: Items[] | null;
