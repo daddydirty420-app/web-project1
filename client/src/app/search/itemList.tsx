@@ -1,5 +1,9 @@
 "use client";
 
+import styles from "@/styles/components-style/itemList.module.css";
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../lib/fetcher";
@@ -61,5 +65,71 @@ export const SearchItemList = async () => {
         return () => observer.disconnect();
     }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
 
-    
+    return (
+        <>
+            {items.length > 0 && (
+                <>
+                    {viewMode === "item" && (
+                        <>
+                            <section className={styles.itemListWrapper}>
+                                {items.map((item) => {
+                                    if (!item) return;
+                                    const itemLink = `/item/${item.id}`;
+
+                                    return (
+                                        <section className={styles.itemListSection} key={item.id}>
+                                            <Link href={itemLink}>
+                                                <div className={styles.ILImageDiv}>
+                                                    <Image
+                                                        src={
+                                                            item.first_image_url
+                                                                ? encodeURI(item.first_image_url.trim())
+                                                                : "/no-image(1x1).png"
+                                                        }
+                                                        alt={item.name}
+                                                        fill
+                                                        sizes="(max-width: 768px) 33vw, 16.66vw"
+                                                        priority={false}
+                                                        className={styles.itemImage}
+                                                    />
+                                                    {item.status === "soldout" && (
+                                                        <div className={styles.ILSold}>
+                                                            <p className={styles.ILSoldP}>SOLD</p>
+                                                        </div>
+                                                    )}
+                                                    {item.Sale?.sale_flag && (
+                                                        <div className={styles.ILSaleDiv}>
+                                                            {item.Sale?.discount_rate > 0 && (
+                                                                <p className={styles.ILSaleText}>
+                                                                    {item.Sale.discount_rate}% OFF
+                                                                </p>
+                                                            )}
+                                                            {item.Sale?.discount_amount > 0 && (
+                                                                <p className={styles.ILSaleText}>
+                                                                    {item.Sale.discount_amount.toLocaleString()}円引き
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                    <div className={styles.ILPrice}>
+                                                        ￥{item.price.toLocaleString()}
+                                                    </div>
+                                                </div>
+
+                                                <p className={clsx(styles.ILItemName, styles.line2)}>{item.name}</p>
+                                            </Link>
+                                        </section>
+                                    );
+                                })}
+                            </section>
+                        </>
+                    )}
+
+                    {viewMode === "video" && <></>}
+                </>
+            )}
+
+            <div ref={loadMoreRef} />
+        </>
+    );
 };
