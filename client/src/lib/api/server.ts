@@ -1,5 +1,7 @@
-import { cookies } from "next/headers";
+import { getToken } from "next-auth/jwt";
+import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
+import { getValidAccessToken } from "../refreshToken";
 
 type FetchOptions = RequestInit & {
     token?: string;
@@ -7,7 +9,21 @@ type FetchOptions = RequestInit & {
 
 export const apiFetchServer = async <T>(path: string, options: FetchOptions = {}): Promise<T> => {
     const cookieStore = await cookies();
-    const accessToken = cookieStore.get("access-token")?.value;
+    const headerStore = await headers();
+
+    const token = await getToken({
+        req: {
+            headers: Object.fromEntries(headerStore.entries()),
+            cookies: Object.fromEntries(cookieStore.getAll().map((c) => [c.name, c.value])),
+        } as any,
+        secret: process.env.NEXTAUTH_SECRET!,
+    });
+
+    if (!token) {
+        redirect("/login");
+    }
+
+    const accessToken = await getValidAccessToken(token);
 
     if (!accessToken) redirect("/login");
 
