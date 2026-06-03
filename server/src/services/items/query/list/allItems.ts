@@ -9,7 +9,7 @@ export const getAllItems = ({ where, limit }: GetAllItemParams) => {
         include: [
             {
                 model: Video,
-                attributes: ["title"],
+                attributes: ["title", "thumbnail_url", "duration"],
             },
             {
                 model: Sale,

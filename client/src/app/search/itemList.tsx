@@ -12,7 +12,7 @@ import { getSearchItemListApiKey } from "./apiKey";
 import { SearchResponse } from "./type";
 
 export const SearchItemList = () => {
-    const [viewMode, setViewMode] = useState<"item" | "video">("item");
+    const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
