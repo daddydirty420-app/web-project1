@@ -11,7 +11,7 @@ import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
 import { SearchResponse } from "./type";
 
-export const SearchItemList = async () => {
+export const SearchItemList = () => {
     const [viewMode, setViewMode] = useState<"item" | "video">("item");
     const [limitVL, setLimitVL] = useState(15);
     const [limitIL, setLimitIL] = useState(36);
