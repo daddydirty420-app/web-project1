@@ -13,13 +13,26 @@ import { SearchResponse } from "./type";
 
 export const SearchItemList = () => {
     const [viewMode, setViewMode] = useState<"item" | "video">("item");
-    const [limitVL, setLimitVL] = useState(15);
-    const [limitIL, setLimitIL] = useState(36);
+    const [limit, setLimit] = useState(36);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+    useEffect(() => {
+        const isDesktop = window.innerWidth >= 768;
+
+        if (!isDesktop && viewMode === "item") {
+            setLimit(18);
+        } else if (viewMode === "video") {
+            if (!isDesktop) {
+                setLimit(6);
+            } else {
+                setLimit(18);
+            }
+        }
+    }, []);
 
     // SWRInfinite
     const { data, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
-        getSearchItemListApiKey,
+        getSearchItemListApiKey(limit),
         async (url: string) => {
             return fetcher<SearchResponse>(url);
         },

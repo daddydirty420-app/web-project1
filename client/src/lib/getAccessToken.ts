@@ -16,7 +16,6 @@ export async function getAccessToken() {
         const currentTime = Math.floor(Date.now() / 1000);
 
         if (decoded.exp <= currentTime) {
-            console.log("Token expired, refreshing...");
             return await refreshAccessToken();
         }
 
