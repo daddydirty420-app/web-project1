@@ -4,7 +4,7 @@ import SearchUI from "../searchUI";
 export default async function Page() {
     return (
         <SearchUI>
-            <SearchItemList />
+            <SearchItemList keyword="" />
         </SearchUI>
     );
 }

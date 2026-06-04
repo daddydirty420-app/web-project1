@@ -2,7 +2,8 @@ import { ItemAttributes } from "@/types/itemAttributes";
 
 export type SearchResponse = {
     itemList: Item[];
-    nextCursor: string | null;
+    nextCursorScore: string | null;
+    nextCursorId: string | null;
     hasMore: boolean;
 };
 

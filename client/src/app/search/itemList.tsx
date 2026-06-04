@@ -11,7 +11,11 @@ import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
 import { SearchResponse } from "./type";
 
-export const SearchItemList = () => {
+type Props = {
+    keyword: string;
+};
+
+export const SearchItemList = ({ keyword }: Props) => {
     const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -32,7 +36,7 @@ export const SearchItemList = () => {
 
     // SWRInfinite
     const { data, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
-        getSearchItemListApiKey(limit),
+        getSearchItemListApiKey(keyword, limit),
         async (url: string) => {
             return fetcher<SearchResponse>(url);
         },
@@ -180,7 +184,7 @@ export const SearchItemList = () => {
                                                         <p className={styles.userName}>{item.User?.user_name}</p>
                                                     </div>
                                                 </Link>
-                                                
+
                                                 <Link href={itemLink} className={styles.itemNamePrice}>
                                                     <p className={styles.syohin}>商品</p>
                                                     <div className={styles.itemNameDiv}>
