@@ -46,7 +46,8 @@ export const getSearchItemsUseCase = async ({ keyword, limit, cursorScore, curso
 
     const lastItem = slicedItems[slicedItems.length - 1];
 
-    const nextCursor = lastItem?.id ?? null;
+    const nextCursorScore = lastItem?.sort_number ?? null;
+    const nextCursorId = lastItem?.id ?? null;
 
-    return { itemList: slicedItems, nextCursor, hasMore };
+    return { itemList: slicedItems, nextCursorScore, nextCursorId, hasMore };
 };

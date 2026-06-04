@@ -445,7 +445,7 @@ router.get(
         const { keyword, limit, cursorScore, cursorId } = query;
 
         try {
-            const { itemList, nextCursor, hasMore } = await getSearchItemsUseCase({
+            const { itemList, nextCursorScore, nextCursorId, hasMore } = await getSearchItemsUseCase({
                 keyword,
                 limit,
                 cursorId,
@@ -453,7 +453,7 @@ router.get(
                 userId,
             });
 
-            res.status(200).json({ itemList, nextCursor, hasMore });
+            res.status(200).json({ itemList, nextCursorScore, nextCursorId, hasMore });
         } catch (err) {
             next(err);
         }
