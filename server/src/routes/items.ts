@@ -11,6 +11,7 @@ import {
     getItemListRateLimit,
     getItemPageRateLimit,
     getItemRecommendRateLimit,
+    getItemSearchRateLimit,
     getItemUploadFormDataRateLimit,
     logicalDeleteItemRateLimit,
     perfectDeleteItemRateLimit,
@@ -37,6 +38,7 @@ import { getItemPageUseCase } from "../usecases/items/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/items/itemPage/metadata.js";
 import { patchItemLogsAccessUseCase } from "../usecases/items/log/accessLogs.js";
 import { restoreItemUseCase } from "../usecases/items/restore/restore.js";
+import { getSearchItemsUseCase } from "../usecases/items/search/getSearchItems.js";
 import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/items/sortNumber/sortNumber.js";
 import { itemCopyUploadUseCase } from "../usecases/items/upload/copyUpload/copyUpload.js";
 import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
@@ -59,6 +61,8 @@ import {
     RecommendItemsQuery,
     recommendItemsQuerySchema,
     RecommendItemsview,
+    SearchItemsQuery,
+    searchItemsQuerySchema,
 } from "../validators/query/items.js";
 
 const router = Router();
@@ -419,6 +423,37 @@ router.get(
             const items = await usecase();
 
             res.status(200).json({ items });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /item/search?keyword=""&limit=number(&cursorScore=number&cursorId=number)
+// summary: キーワード検索
+// page: /search?keyword=""
+router.get(
+    "/search",
+    getItemSearchRateLimit,
+    authenticateOptional,
+    validateQuery(searchItemsQuerySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user?.id ?? undefined;
+
+        const query = req.validatedQuery as SearchItemsQuery;
+
+        const { keyword, limit, cursorScore, cursorId } = query;
+
+        try {
+            const { itemList, nextCursor, hasMore } = await getSearchItemsUseCase({
+                keyword,
+                limit,
+                cursorId,
+                cursorScore,
+                userId,
+            });
+
+            res.status(200).json({ itemList, nextCursor, hasMore });
         } catch (err) {
             next(err);
         }

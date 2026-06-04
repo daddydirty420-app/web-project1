@@ -34,6 +34,7 @@ export {
     getMyItemsWithVideoAll,
     getProfileItemsWithCount,
     getProfileVideosWithCount,
+    getSearchItems,
     getUserItemsStatusList,
     getUserItemsStockList,
     getUserItemsUploadedList,

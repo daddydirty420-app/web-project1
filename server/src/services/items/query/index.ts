@@ -7,6 +7,7 @@ export {
     getProfileVideosWithCount,
 } from "./list/openList.js";
 export { getCartRecommendItems, getIndexRecommendItems, getItemPageRecommendItems } from "./list/recommendList.js";
+export { getSearchItems } from "./list/search.js";
 export { getUserItemsStatusList, getUserItemsStockList, getUserItemsUploadedList } from "./list/userItems.js";
 export { getMetadata } from "./meta.js";
 export { getAdminItemPage, getItemPageData } from "./page.js";

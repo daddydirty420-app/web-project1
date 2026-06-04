@@ -1,4 +1,4 @@
-import { Op, Transaction } from "sequelize";
+import { InferAttributes, Op, Order, Transaction, WhereOptions } from "sequelize";
 import { Item } from "../../models/index.js";
 import { BodyCategory, ItemAttributes, Layer, LifeStyleCategory } from "../itemAttributes.js";
 
@@ -38,6 +38,12 @@ export type ItemPageRecommendParams = {
     where: any;
     targetParentId: number;
     categoryRequired: boolean;
+};
+
+export type SearchItemParams = {
+    limit: number;
+    where: WhereOptions<InferAttributes<typeof Item>>;
+    order: Order;
 };
 
 export type UserIdTransactionParams = {

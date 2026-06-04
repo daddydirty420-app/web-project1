@@ -166,8 +166,21 @@ export const SearchItemList = () => {
 
                                             <div className={styles.itemData}>
                                                 <Link href={itemLink} className={styles.videoUser}>
-                                                    <h4 className={styles.title}>{item.Video?.title}</h4>
+                                                    <Image
+                                                        src={item.User?.profile_image || "/default-profile.png"}
+                                                        alt="プロフィール画像"
+                                                        width={36}
+                                                        height={36}
+                                                        className={styles.profileImage}
+                                                    />
+                                                    <div className="flex-1">
+                                                        <p className={clsx(styles.title, styles.line2)}>
+                                                            {item.Video?.title}
+                                                        </p>
+                                                        <p className={styles.userName}>{item.User?.user_name}</p>
+                                                    </div>
                                                 </Link>
+                                                
                                                 <Link href={itemLink} className={styles.itemNamePrice}>
                                                     <p className={styles.syohin}>商品</p>
                                                     <div className={styles.itemNameDiv}>

@@ -149,6 +149,13 @@ export const getItemRecommendRateLimit = rateLimit({
     legacyHeaders: false,
 });
 
+export const getItemSearchRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 export const getItemPageRateLimit = rateLimit({
     windowMs: 1000 * 60,
     limit: 60,

@@ -21,6 +21,7 @@ export type Categories = {
 };
 
 export type User = {
+    id: string;
     user_name: string;
     profile_image: string;
 };
@@ -47,7 +48,6 @@ export type Item = {
     status: "editing" | "draft" | "active" | "hidden" | "soldout" | "deleted";
     gender_type: "men" | "women" | "unisex";
     age_type: "adult" | "kids" | "both";
-    save_at: Date;
     first_image_url: string;
     attributes: ItemAttributes;
     Video?: Video | null;
