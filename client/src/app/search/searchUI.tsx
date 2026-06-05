@@ -1,4 +1,4 @@
-import { Back, Container } from "@/components";
+import { Container } from "@/components";
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { ReactNode } from "react";
@@ -12,10 +12,7 @@ export default function SearchUI({ children }: Props) {
         <>
             <Header />
 
-            <Container header>
-                <Back />
-                {children}
-            </Container>
+            <Container header>{children}</Container>
 
             <Footer />
         </>
