@@ -11,6 +11,7 @@ type Params = {
 };
 
 export const getSearchItemsUseCase = async ({ keyword, limit, cursorScore, cursorId, userId }: Params) => {
+    // 検索
     const where: WhereOptions<InferAttributes<Item>> =
         cursorScore !== undefined && cursorId !== undefined
             ? {

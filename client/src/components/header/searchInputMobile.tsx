@@ -18,6 +18,7 @@ type Props = {
 export const SearchInputMobile = ({ loggedIn }: Props) => {
     const [value, setValue] = useState("");
     const [isMobile, setIsMobile] = useState(true);
+    const [isFocused, setIsFocused] = useState(false);
     const [searchMode, setSearchMode] = useState(false);
     const [searchHis, setSearchHis] = useState<string[]>([]);
     const [suggestList, setSuggestList] = useState<string[]>([]);
@@ -38,6 +39,7 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
     const searchHistory = async () => {
         try {
             const dataList = await fetchGetSearchHistory();
+            console.log("dataList", dataList)
 
             setSearchHis(dataList);
         } catch (err) {}
@@ -146,7 +148,16 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
             {searchMode && (
                 <>
                     <div className={styles.searchOverlayMobile}>
-                        <div className={styles.searchArea}>
+                        <form
+                            className={styles.searchArea}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                if (!value.trim()) return;
+                                setSearchMode(false);
+                                router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                                setValue("");
+                            }}
+                        >
                             <input
                                 type="text"
                                 name="検索"
@@ -154,6 +165,8 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                                 className={styles.searchInputMobile}
                                 value={value}
                                 onChange={onChange}
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
                                 autoComplete="off"
                             />
                             <FontAwesomeIcon
@@ -166,10 +179,12 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                                 className={`${styles.searchIconMobile} ${value.trim() ? styles.activeIcon : ""}`}
                                 onClick={() => {
                                     if (!value.trim()) return;
+                                    setSearchMode(false);
                                     router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                                    setValue("");
                                 }}
                             />
-                        </div>
+                        </form>
 
                         <div className={styles.suggestArea}>
                             <div className={styles.suggestInner}>

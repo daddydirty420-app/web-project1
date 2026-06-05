@@ -136,7 +136,16 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
     return (
         <>
             <div className={styles.searchDivPC}>
-                <form className={styles.searchInputDivPC}>
+                <form
+                    className={styles.searchInputDivPC}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        if (!value.trim()) return;
+                        setSuggestList([]);
+                        router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                        setValue("");
+                    }}
+                >
                     <input
                         type="text"
                         name="検索"
@@ -153,7 +162,9 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
                         className={`${styles.searchIcon} ${value ? styles.activeIcon : ""}`}
                         onClick={() => {
                             if (!value.trim()) return;
+                            setSuggestList([]);
                             router.push(`/search?keyword=${encodeURIComponent(value)}`);
+                            setValue("");
                         }}
                     />
                 </form>
@@ -172,8 +183,10 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
                                             className={styles.suggestItemPC}
                                             onMouseDown={() => {
                                                 setValue(v);
+                                                setSuggestList([]);
                                                 router.push(`/search?keyword=${encodeURIComponent(v)}`);
                                                 setIsFocused(false);
+                                                setValue("");
                                             }}
                                         >
                                             <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
@@ -188,8 +201,10 @@ export const SearchInputPC = ({ loggedIn }: Props) => {
                                             className={styles.suggestItemPC}
                                             onMouseDown={() => {
                                                 setValue(v);
+                                                setSuggestList([]);
                                                 router.push(`/search?keyword=${encodeURIComponent(v)}`);
                                                 setIsFocused(false);
+                                                setValue("");
                                             }}
                                         >
                                             <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
