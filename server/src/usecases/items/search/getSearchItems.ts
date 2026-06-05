@@ -1,6 +1,7 @@
 import { InferAttributes, Op, Order, WhereOptions } from "sequelize";
 import Item from "../../../models/item.js";
 import { getSearchItems } from "../../../services/items/index.js";
+import { createSearchKeyword } from "../../../services/search.js";
 
 type Params = {
     keyword: string;
@@ -11,6 +12,16 @@ type Params = {
 };
 
 export const getSearchItemsUseCase = async ({ keyword, limit, cursorScore, cursorId, userId }: Params) => {
+    // 検索データ登録
+    createSearchKeyword({
+        data: {
+            search_text: keyword,
+            user_id: userId ?? null,
+        },
+    }).catch((err) => {
+        console.log("service createSearchKeyword error:", err);
+    });
+
     // 検索
     const where: WhereOptions<InferAttributes<Item>> =
         cursorScore !== undefined && cursorId !== undefined
