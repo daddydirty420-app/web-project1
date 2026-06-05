@@ -2,6 +2,7 @@ import { InferAttributes, Op, Order, WhereOptions } from "sequelize";
 import Item from "../../../models/item.js";
 import { getSearchItems } from "../../../services/items/index.js";
 import { createSearchKeyword } from "../../../services/search.js";
+import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 
 type Params = {
     keyword: string;
@@ -23,6 +24,8 @@ export const getSearchItemsUseCase = async ({ keyword, limit, cursorScore, curso
     });
 
     // 検索
+    const normalizedKeyword = normalizeJapanese(keyword);
+
     const where: WhereOptions<InferAttributes<Item>> =
         cursorScore !== undefined && cursorId !== undefined
             ? {
@@ -35,13 +38,13 @@ export const getSearchItemsUseCase = async ({ keyword, limit, cursorScore, curso
                   ],
                   sort_number: { [Op.gte]: 0 },
                   status: ["active", "soldout"],
-                  search_text: { [Op.iLike]: `%${keyword}%` },
+                  search_text: { [Op.iLike]: `%${normalizedKeyword}%` },
                   ...(userId ? { seller_id: { [Op.ne]: userId } } : {}),
               }
             : {
                   sort_number: { [Op.gte]: 0 },
                   status: ["active", "soldout"],
-                  search_text: { [Op.iLike]: `%${keyword}%` },
+                  search_text: { [Op.iLike]: `%${normalizedKeyword}%` },
                   ...(userId ? { seller_id: { [Op.ne]: userId } } : {}),
               };
 

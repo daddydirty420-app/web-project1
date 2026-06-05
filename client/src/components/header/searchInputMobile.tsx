@@ -39,7 +39,6 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
     const searchHistory = async () => {
         try {
             const dataList = await fetchGetSearchHistory();
-            console.log("dataList", dataList)
 
             setSearchHis(dataList);
         } catch (err) {}
@@ -197,7 +196,9 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                                             key={i}
                                             className={styles.suggestItem}
                                             onClick={() => {
+                                                setSearchMode(false);
                                                 router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                                                setValue("");
                                             }}
                                         >
                                             <FontAwesomeIcon icon={faClock} className={styles.hisIcon} />
@@ -211,7 +212,9 @@ export const SearchInputMobile = ({ loggedIn }: Props) => {
                                             key={i}
                                             className={styles.suggestItem}
                                             onClick={() => {
+                                                setSearchMode(false);
                                                 router.push(`/search?keyword=${encodeURIComponent(v)}`);
+                                                setValue("");
                                             }}
                                         >
                                             <FontAwesomeIcon icon={faSearch} className={styles.suggestSearchIcon} />
