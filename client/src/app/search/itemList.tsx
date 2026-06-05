@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/styles/components-style/itemList.module.css";
+import styles from "./searchItemList.module.css";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";

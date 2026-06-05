@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchIL, fetchVL } from "../api/itemList";
-import styles from "./lpItemList.module.css";
+import styles from "../../../styles/components-style/lpItemList.module.css";
 
 type Res = {
     items: Items[];

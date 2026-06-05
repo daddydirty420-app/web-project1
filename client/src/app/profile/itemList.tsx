@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDuration } from "@/lib/formatDuration";
-import styles from "@/styles/components-style/itemList.module.css";
+import styles from "../../styles/components-style/profileItemList.module.css";
 import { Items } from "@/types/itemListTypes";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

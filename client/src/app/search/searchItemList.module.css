@@ -1,0 +1,340 @@
+.line2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+.stateButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 90px;
+    height: 30px;
+    margin-left: auto;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--theme-str);
+    background-color: var(--button-gray);
+    cursor: pointer;
+    transition:
+        color 0.15s ease,
+        background-color 0.15s ease;
+}
+.stateButton:hover {
+    background-color: var(--button-gray-hover);
+}
+
+.stateIcon {
+    color: inherit;
+    width: 14px;
+    height: 14px;
+}
+
+.videoListWrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.videoListSection {
+    width: 100%;
+    padding: 8px 0 6px;
+    border-top: solid 0.5px var(--gray-line);
+}
+
+.thumbnail {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+.duration {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+    padding: 4px 6px;
+    border-radius: 6px;
+}
+
+.itemData {
+    margin: 8px auto 0;
+    width: 100%;
+}
+
+.videoUser {
+    display: flex;
+    height: 64px;
+}
+
+.profileImage {
+    width: 36px;
+    height: 36px;
+    margin: 4px 8px 0 0;
+    border-radius: 100%;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--theme);
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+}
+
+.userName {
+    font-size: 11px;
+    color: var(--gray-50);
+    margin-top: 4px;
+}
+
+.itemNamePrice {
+    display: block;
+    border-top: dotted 1px #b3b3b3;
+}
+
+.syohin {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+}
+
+.itemNameDiv {
+    display: block;
+    margin-top: 4px;
+}
+
+.itemName {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+}
+
+.itemPriceSale {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.beforePrice {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+    line-height: 1;
+}
+
+.saleSold {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--alert);
+    margin-right: 4px;
+    letter-spacing: 0.08em;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+}
+.sale {
+    color: var(--alert);
+}
+
+.itemListWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.itemListSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ILImageDiv {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+}
+
+.itemImage {
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.ILSold {
+    display: flex;
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    background-color: var(--alert);
+    width: 48px;
+    height: 48px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-top-left-radius: 10px;
+}
+
+.ILSoldP {
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    margin: 10px 0 0 3px;
+    transform: rotate(-45deg);
+}
+
+.ILSaleDiv {
+    position: absolute;
+    right: 3px;
+    bottom: 28px; /* 価格ラベルのちょい上 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.ILSaleText {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    background-color: var(--alert);
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.ILPrice {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+    padding: 5px 8px;
+    border-radius: 10px 0 10px 0;
+}
+
+.ILItemName {
+    font-size: 11.5px;
+    font-weight: 550;
+    line-height: 1.35;
+    max-height: calc(1.35em * 2);
+    margin: 4px 2px 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+}
+
+.pageButtonIcon {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+.pageButtonIcon:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.pageIcon {
+    color: var(--theme);
+}
+
+.pageButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    color: var(--theme);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.pageButton.active {
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--theme);
+}
+.pageButton:not(.active):hover {
+    background-color: var(--button-gray);
+}
+
+.ellipsis {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+@media (max-width: 350px) {
+    .itemListWrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 700px) {
+    .videoListWrapper {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px;
+        column-gap: 32px;
+    }
+
+    .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .itemName {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+
+        min-height: calc(1.45em * 2);
+    }
+}
+
+@media (min-width: 768px) {
+    .itemListWrapper {
+        grid-template-columns: repeat(6, 1fr);
+        max-width: 1000px;
+    }
+}
+
+@media (min-width: 1050px) {
+    .videoListWrapper {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1152px;
+    }
+}
