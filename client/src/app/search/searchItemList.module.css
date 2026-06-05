@@ -6,6 +6,13 @@
     overflow: hidden;
 }
 
+.headerButtonFlex {
+    display: flex;
+    justify-content: space-between;
+    justify-content: center;
+    width: 100%;
+}
+
 .stateButton {
     display: flex;
     align-items: center;

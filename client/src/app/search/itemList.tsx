@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "./searchItemList.module.css";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +8,10 @@ import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../lib/fetcher";
 import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
+import styles from "./searchItemList.module.css";
 import { SearchResponse } from "./type";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
     keyword: string;
@@ -87,6 +89,20 @@ export const SearchItemList = ({ keyword }: Props) => {
         <>
             {items.length > 0 && (
                 <>
+                    <div className={styles.headerButtonFlex}>
+                        {viewMode === "video" && (
+                            <button type="button" className={styles.stateButton} onClick={() => setViewMode("item")}>
+                                <FontAwesomeIcon icon={faList} className={styles.stateIcon} />
+                                商品一覧
+                            </button>
+                        )}
+                        {viewMode === "item" && (
+                            <button type="button" className={styles.stateButton} onClick={() => setViewMode("video")}>
+                                <FontAwesomeIcon icon={faPlay} className={styles.stateIcon} />
+                                動画一覧
+                            </button>
+                        )}
+                    </div>
                     {viewMode === "item" && (
                         <>
                             <section className={styles.itemListWrapper}>
