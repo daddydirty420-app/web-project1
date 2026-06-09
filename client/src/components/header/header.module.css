@@ -10,7 +10,7 @@
     align-items: center;
     border-bottom: solid 1px var(--gray-line-mid-str);
     background-color: var(--gray-background);
-    z-index: 1000;
+    z-index: 100;
     box-shadow: var(--shadow-mini);
 }
 
