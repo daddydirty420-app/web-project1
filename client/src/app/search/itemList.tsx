@@ -21,9 +21,10 @@ export const SearchItemList = ({ keyword }: Props) => {
     const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
 
     useEffect(() => {
-        const isDesktop = window.innerWidth >= 768;
+        if (window.innerWidth >= 768) setIsDesktop(true);
 
         if (!isDesktop && viewMode === "item") {
             setLimit(18);
