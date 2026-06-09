@@ -1,3 +1,5 @@
 "use client";
 
-export const FilterContent = () => {}
+export const FilterContent = () => {
+    return <></>;
+};

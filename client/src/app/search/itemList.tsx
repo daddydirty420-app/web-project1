@@ -1,5 +1,7 @@
 "use client";
 
+import { faList, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,10 +10,9 @@ import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../lib/fetcher";
 import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
+import { FilterMenu } from "./filter/filterMenu";
 import styles from "./searchItemList.module.css";
 import { SearchResponse } from "./type";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
     keyword: string;
@@ -90,6 +91,8 @@ export const SearchItemList = ({ keyword }: Props) => {
         <>
             {items.length > 0 && (
                 <>
+                    <FilterMenu isDesktop={isDesktop} />
+
                     <div className={styles.headerButtonFlex}>
                         {viewMode === "video" && (
                             <button type="button" className={styles.stateButton} onClick={() => setViewMode("item")}>
