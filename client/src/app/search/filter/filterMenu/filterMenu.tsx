@@ -3,9 +3,9 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { BottomSheet } from "./bottomSheet";
-import { FilterContent } from "./filterContent";
-import { Popover } from "./popover";
+import { BottomSheet } from "../bottomSheet/bottomSheet";
+import { FilterContent } from "../filterContent/filterContent";
+import { Popover } from "../popover/popover";
 import styles from "./styles.module.css";
 
 type Props = {

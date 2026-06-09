@@ -11,7 +11,12 @@ export const BottomSheet = ({ children }: Props) => {
     return (
         <>
             <div className={styles.sheetOverlay} />
-            {children}
+
+            <section className={styles.bottomSheet}>
+                <div className={styles.handle} />
+
+                {children}
+            </section>
         </>
     );
 };

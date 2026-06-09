@@ -10,7 +10,7 @@ import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../lib/fetcher";
 import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
-import { FilterMenu } from "./filter/filterMenu";
+import { FilterMenu } from "./filter/filterMenu/filterMenu";
 import styles from "./searchItemList.module.css";
 import { SearchResponse } from "./type";
 
