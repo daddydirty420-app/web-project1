@@ -27,9 +27,9 @@ export const BottomSheet = ({ children, onClose }: Props) => {
 
     return (
         <>
-            <div className={styles.sheetOverlay} onClick={closeSheet} />
+            <div className={styles.overlay} onClick={closeSheet} />
 
-            <section className={styles.bottomSheet} ref={sheetRef}>
+            <section className={styles.sheet} ref={sheetRef}>
                 <div className={styles.handle} onClick={closeSheet} />
 
                 {children}

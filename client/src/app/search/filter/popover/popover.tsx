@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
+import styles from "./styles.module.css";
 
 type Props = {
     children: ReactNode;
@@ -8,5 +9,11 @@ type Props = {
 };
 
 export const Popover = ({ children, onClose }: Props) => {
-    return <>{children}</>;
+    return (
+        <>
+            <div className={styles.overlay} onClick={onClose} />
+
+            <section className={styles.popover}>{children}</section>
+        </>
+    );
 };
