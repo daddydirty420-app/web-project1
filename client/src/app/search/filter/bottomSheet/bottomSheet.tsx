@@ -32,7 +32,7 @@ export const BottomSheet = ({ children, onClose }: Props) => {
             <section className={styles.sheet} ref={sheetRef}>
                 <div className={styles.handle} onClick={closeSheet} />
 
-                {children}
+                <div className={styles.filterContainer}>{children}</div>
             </section>
         </>
     );

@@ -13,7 +13,9 @@ export const Popover = ({ children, onClose }: Props) => {
         <>
             <div className={styles.overlay} onClick={onClose} />
 
-            <section className={styles.popover}>{children}</section>
+            <section className={styles.popover}>
+                <div className={styles.filterContainer}>{children}</div>
+            </section>
         </>
     );
 };
