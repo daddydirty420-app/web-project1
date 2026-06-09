@@ -11,7 +11,7 @@ type Props = {
 export const Popover = ({ children, onClose }: Props) => {
     return (
         <>
-            <div className={styles.overlay} onClick={onClose} />
+            <div className={styles.backdrop} onClick={onClose} />
 
             <section className={styles.popover}>
                 <div className={styles.filterContainer}>{children}</div>

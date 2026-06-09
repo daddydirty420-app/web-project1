@@ -1,0 +1,44 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    z-index: 199;
+}
+
+.popover {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    right: 0;
+
+    width: 280px;
+
+    background: var(--background);
+    border: 1px solid var(--gray-line);
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 12px rgb(0 0 0 / 10%),
+        0 12px 32px rgb(0 0 0 / 12%);
+
+    z-index: 200;
+
+    opacity: 0;
+    transform: scale(0.96);
+
+    transform-origin: top right;
+
+    transition:
+        opacity 150ms ease,
+        transform 150ms ease;
+}
+
+.open {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.filterContainer {
+    width: 90%;
+    margin: 1rem auto;
+}
