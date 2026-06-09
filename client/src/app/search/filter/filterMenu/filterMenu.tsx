@@ -17,15 +17,15 @@ export const FilterMenu = ({ isDesktop }: Props) => {
 
     return (
         <>
-            <FontAwesomeIcon icon={faBars} className={styles.icon} onClick={() => setIsDisplay(!!isDisplay)} />
+            <FontAwesomeIcon icon={faBars} className={styles.icon} onClick={() => setIsDisplay(!isDisplay)} />
 
-            {isDesktop && (
+            {isDesktop && isDisplay && (
                 <Popover onClose={() => setIsDisplay(false)}>
                     <FilterContent />
                 </Popover>
             )}
 
-            {!isDesktop && (
+            {!isDesktop && isDisplay && (
                 <BottomSheet onClose={() => setIsDisplay(false)}>
                     <FilterContent />
                 </BottomSheet>

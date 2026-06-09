@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import styles from "./styles.module.css";
 
 type Props = {
@@ -9,12 +9,28 @@ type Props = {
 };
 
 export const BottomSheet = ({ children, onClose }: Props) => {
+    const sheetRef = useRef<HTMLDivElement>(null);
+
+    const closeSheet = () => {
+        const sheet = sheetRef.current;
+        if (!sheet) return;
+
+        sheet.classList.add(`${styles.closing}`);
+        sheet.addEventListener(
+            "animationend",
+            () => {
+                onClose();
+            },
+            { once: true },
+        );
+    };
+
     return (
         <>
-            <div className={styles.sheetOverlay} />
+            <div className={styles.sheetOverlay} onClick={closeSheet} />
 
-            <section className={styles.bottomSheet}>
-                <div className={styles.handle} />
+            <section className={styles.bottomSheet} ref={sheetRef}>
+                <div className={styles.handle} onClick={closeSheet} />
 
                 {children}
             </section>
