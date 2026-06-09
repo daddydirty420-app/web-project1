@@ -91,9 +91,9 @@ export const SearchItemList = ({ keyword }: Props) => {
         <>
             {items.length > 0 && (
                 <>
-                    <FilterMenu isDesktop={isDesktop} />
-
                     <div className={styles.headerButtonFlex}>
+                        <FilterMenu isDesktop={isDesktop} />
+                        
                         {viewMode === "video" && (
                             <button type="button" className={styles.stateButton} onClick={() => setViewMode("item")}>
                                 <FontAwesomeIcon icon={faList} className={styles.stateIcon} />
