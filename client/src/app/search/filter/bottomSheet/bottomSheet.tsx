@@ -5,9 +5,10 @@ import styles from "./styles.module.css";
 
 type Props = {
     children: ReactNode;
+    onClose: () => void;
 };
 
-export const BottomSheet = ({ children }: Props) => {
+export const BottomSheet = ({ children, onClose }: Props) => {
     return (
         <>
             <div className={styles.sheetOverlay} />
