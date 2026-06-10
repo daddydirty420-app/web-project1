@@ -18,7 +18,7 @@
     min-height: 56px;
     padding: 0 0.5rem;
 
-    border-bottom: 1px solid var(--gray-10);
+    border-bottom: 1px solid var(--gray-line-mid);
 
     cursor: pointer;
 
@@ -26,11 +26,11 @@
 }
 
 .sortLi:hover {
-    background-color: var(--gray-5);
+    background-color: var(--gray-line);
 }
 
 .sortLi:first-child {
-    border-top: 1px solid var(--gray-10);
+    border-top: 1px solid var(--gray-line-mid);
 }
 
 .radio {
@@ -39,7 +39,7 @@
     width: 20px;
     height: 20px;
 
-    border: 2px solid var(--gray-15);
+    border: 2px solid var(--gray-line-str);
     border-radius: 50%;
 
     flex-shrink: 0;
