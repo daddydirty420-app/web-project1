@@ -5,6 +5,7 @@ import SearchUI from "./searchUI";
 type Props = {
     searchParams: Promise<{
         keyword?: string;
+        sort?: "popular" | "new" | "priceAsc" | "priceDesc";
     }>;
 };
 
@@ -22,7 +23,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 export default async function Page({ searchParams }: Props) {
     return (
         <SearchUI>
-            <SearchItemList keyword={(await searchParams).keyword ?? ""} />
+            <SearchItemList keyword={(await searchParams).keyword ?? ""} sort={(await searchParams).sort ?? "popular"} />
         </SearchUI>
     );
 }

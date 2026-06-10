@@ -429,7 +429,7 @@ router.get(
     },
 );
 
-// GET /item/search?keyword=""&limit=number(&cursorScore=number&cursorId=number)
+// GET /item/search?keyword=""&limit=number&sort=""(&cursorScore=number&cursorId=number)
 // summary: キーワード検索
 // page: /search?keyword=""
 router.get(
@@ -442,12 +442,13 @@ router.get(
 
         const query = req.validatedQuery as SearchItemsQuery;
 
-        const { keyword, limit, cursorScore, cursorId } = query;
+        const { keyword, limit, sort, cursorScore, cursorId } = query;
 
         try {
             const { itemList, nextCursorScore, nextCursorId, hasMore } = await getSearchItemsUseCase({
                 keyword,
                 limit,
+                sort,
                 cursorId,
                 cursorScore,
                 userId,

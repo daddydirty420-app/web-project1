@@ -16,9 +16,10 @@ import { SearchResponse } from "./type";
 
 type Props = {
     keyword: string;
+    sort: "popular" | "new" | "priceAsc" | "priceDesc";
 };
 
-export const SearchItemList = ({ keyword }: Props) => {
+export const SearchItemList = ({ keyword, sort }: Props) => {
     const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -40,7 +41,7 @@ export const SearchItemList = ({ keyword }: Props) => {
 
     // SWRInfinite
     const { data, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
-        getSearchItemListApiKey(keyword, limit),
+        getSearchItemListApiKey({ keyword, limit, sort }),
         async (url: string) => {
             return fetcher<SearchResponse>(url);
         },
