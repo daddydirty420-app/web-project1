@@ -4,13 +4,13 @@
     margin-bottom: 1rem;
 }
 
-.sortUl {
+.sortDiv {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.sortLi {
+.sortLabel {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,12 +25,19 @@
     transition: background-color 0.2s;
 }
 
-.sortLi:hover {
+.sortLabel:hover {
     background-color: var(--gray-line);
 }
 
-.sortLi:first-child {
+.sortLabel:first-child {
     border-top: 1px solid var(--gray-line-mid);
+}
+
+.input {
+    position: absolute;
+
+    opacity: 0;
+    pointer-events: none;
 }
 
 .radio {
@@ -47,11 +54,33 @@
     transition: border-color 0.2s;
 }
 
-.sortLi.active .radio {
+.input:checked + span + .radio {
     border-color: var(--theme);
 }
 
-.sortLi.active .radio::after {
+.input:checked + span + .radio::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: var(--theme);
+
+    transform: translate(-50%, -50%);
+}
+
+.sortLabel.active .radio {
+    border-color: var(--theme);
+}
+
+.sortLabel.active .radio::after {
     content: "";
 
     position: absolute;

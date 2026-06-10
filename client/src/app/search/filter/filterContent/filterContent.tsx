@@ -7,34 +7,40 @@ type Props = {
 };
 
 export const FilterContent = ({ onClose }: Props) => {
+    const handleSort = async () => {};
+    
     return (
-        <>
-            <p className={styles.filterTitle}>並び替え</p>
+        <fieldset>
+            <legend className={styles.filterTitle}>並び替え</legend>
 
-            <ul className={styles.sortUl}>
-                <li className={styles.sortLi}>
+            <div className={styles.sortDiv}>
+                <label className={styles.sortLabel}>
+                    <input type="radio" name="sort" value="popular" className={styles.input} />
                     <span>人気順（デフォルト）</span>
 
                     <span className={styles.radio} />
-                </li>
+                </label>
 
-                <li className={styles.sortLi}>
+                <label className={styles.sortLabel}>
+                    <input type="radio" name="sort" value="new" className={styles.input} />
                     <span>新着順</span>
 
                     <span className={styles.radio} />
-                </li>
+                </label>
 
-                <li className={styles.sortLi}>
+                <label className={styles.sortLabel}>
+                    <input type="radio" name="sort" value="priceAsc" className={styles.input} />
                     <span>価格が安い順</span>
 
                     <span className={styles.radio} />
-                </li>
-                <li className={styles.sortLi}>
+                </label>
+                <label className={styles.sortLabel}>
+                    <input type="radio" name="sort" value="priceDesc" className={styles.input} />
                     <span>価格が高い順</span>
 
                     <span className={styles.radio} />
-                </li>
-            </ul>
-        </>
+                </label>
+            </div>
+        </fieldset>
     );
 };
