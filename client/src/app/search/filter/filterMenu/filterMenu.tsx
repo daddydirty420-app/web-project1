@@ -21,13 +21,13 @@ export const FilterMenu = ({ isDesktop }: Props) => {
 
             {isDesktop && isDisplay && (
                 <Popover onClose={() => setIsDisplay(false)} isOpen={isDisplay}>
-                    <FilterContent />
+                    <FilterContent onClose={() => setIsDisplay(false)} />
                 </Popover>
             )}
 
             {!isDesktop && isDisplay && (
                 <BottomSheet onClose={() => setIsDisplay(false)}>
-                    <FilterContent />
+                    <FilterContent onClose={() => setIsDisplay(false)} />
                 </BottomSheet>
             )}
         </>
