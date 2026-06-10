@@ -8,7 +8,7 @@ type Props = {
 
 export const FilterContent = ({ onClose }: Props) => {
     const handleSort = async () => {};
-    
+
     return (
         <fieldset>
             <legend className={styles.filterTitle}>並び替え</legend>

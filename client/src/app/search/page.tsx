@@ -23,7 +23,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 export default async function Page({ searchParams }: Props) {
     return (
         <SearchUI>
-            <SearchItemList keyword={(await searchParams).keyword ?? ""} sort={(await searchParams).sort ?? "popular"} />
+            <SearchItemList
+                keyword={(await searchParams).keyword ?? ""}
+                sort={(await searchParams).sort ?? "popular"}
+            />
         </SearchUI>
     );
 }
