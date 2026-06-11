@@ -116,7 +116,7 @@ export const getSearchItemsUseCase = async ({ keyword, limit, sort, cursorScore,
         ];
     }
 
-    const items = await getSearchItems({ limit, where, order });
+    const items = await getSearchItems({ limit: limit + 1, where, order });
 
     const hasMore = items.length > limit;
 
@@ -124,12 +124,18 @@ export const getSearchItemsUseCase = async ({ keyword, limit, sort, cursorScore,
 
     const lastItem = slicedItems[slicedItems.length - 1];
 
+    console.log("slicedItems.length:", slicedItems.length);
+    console.log("sort_number:", Number(lastItem?.sort_number));
+    console.log("price:", lastItem?.price);
+
     const nextCursorScore = (() => {
-        if (sort === "popular") return lastItem.sort_number;
+        if (sort === "popular") return Number(lastItem.sort_number);
         if (sort === "new") return lastItem.uploaded_at.getTime();
         if (sort === "priceAsc" || sort === "priceDesc") return lastItem.price;
         return undefined;
     })();
+
+    console.log("nextCursorScore:", nextCursorScore);
 
     const nextCursorId = lastItem?.id ?? null;
 

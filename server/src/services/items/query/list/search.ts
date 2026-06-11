@@ -3,7 +3,7 @@ import { SearchItemParams } from "../../../../types/serviceType/items.js";
 
 export const getSearchItems = ({ limit, where, order }: SearchItemParams) => {
     return Item.findAll({
-        attributes: ["id", "name", "price", "status", "gender_type", "age_type", "first_image_url", "attributes"],
+        attributes: ["id", "name", "price", "status", "gender_type", "age_type", "first_image_url", "attributes", "sort_number", "uploaded_at"],
         where,
         limit,
         order,
