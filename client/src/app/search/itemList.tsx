@@ -93,7 +93,7 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
             {items.length > 0 && (
                 <>
                     <div className={styles.headerButtonFlex}>
-                        <FilterMenu isDesktop={isDesktop} />
+                        <FilterMenu isDesktop={isDesktop} sort={sort} />
 
                         {viewMode === "video" && (
                             <button type="button" className={styles.stateButton} onClick={() => setViewMode("item")}>

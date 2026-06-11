@@ -4,9 +4,10 @@ import styles from "./styles.module.css";
 
 type Props = {
     onClose: () => void;
+    sort: "popular" | "new" | "priceAsc" | "priceDesc";
 };
 
-export const FilterContent = ({ onClose }: Props) => {
+export const FilterContent = ({ onClose, sort }: Props) => {
     const handleSort = async () => {};
 
     return (
