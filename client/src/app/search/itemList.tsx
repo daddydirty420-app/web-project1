@@ -192,6 +192,12 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                                                 <div className={styles.duration}>
                                                     {formatDuration(item.Video?.duration)}
                                                 </div>
+
+                                                {item.status === "soldout" && (
+                                                    <div className={styles.soldoutOverlay}>
+                                                        <span className={styles.soldoutOverlayText}>SOLD OUT</span>
+                                                    </div>
+                                                )}
                                             </Link>
 
                                             <div className={styles.itemData}>
@@ -221,9 +227,6 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                                                             <p className={styles.beforePrice}>
                                                                 ￥{item.Sale.before_price.toLocaleString()}
                                                             </p>
-                                                        )}
-                                                        {item.status === "soldout" && (
-                                                            <p className={styles.saleSold}>SOLD OUT</p>
                                                         )}
                                                         <h3
                                                             className={clsx(
