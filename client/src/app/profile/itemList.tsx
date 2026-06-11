@@ -1,7 +1,6 @@
 "use client";
 
 import { formatDuration } from "@/lib/formatDuration";
-import styles from "../../styles/components-style/profileItemList.module.css";
 import { Items } from "@/types/itemListTypes";
 import { faAnglesLeft, faAnglesRight, faList, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +8,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import styles from "../../styles/components-style/profileItemList.module.css";
 import { fetchIL, fetchVL } from "./api/itemList";
 import pageStyle from "./profile.module.css";
 
@@ -166,7 +166,14 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                         fill
                                         priority={false}
                                     />
+
                                     <div className={styles.duration}>{formatDuration(data.Video?.duration)}</div>
+
+                                    {data.status === "soldout" && (
+                                        <div className={styles.soldoutOverlay}>
+                                            <span className={styles.soldoutOverlayText}>SOLD OUT</span>
+                                        </div>
+                                    )}
                                 </Link>
 
                                 <div className={styles.itemData}>

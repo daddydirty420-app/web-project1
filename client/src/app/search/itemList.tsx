@@ -189,6 +189,7 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                                                     fill
                                                     priority={false}
                                                 />
+                                                
                                                 <div className={styles.duration}>
                                                     {formatDuration(item.Video?.duration)}
                                                 </div>
