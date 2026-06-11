@@ -11,9 +11,10 @@ import styles from "./styles.module.css";
 type Props = {
     isDesktop: boolean;
     sort: "popular" | "new" | "priceAsc" | "priceDesc";
+    keyword: string;
 };
 
-export const FilterMenu = ({ isDesktop, sort }: Props) => {
+export const FilterMenu = ({ isDesktop, sort, keyword }: Props) => {
     const [isDisplay, setIsDisplay] = useState(false);
 
     return (
@@ -22,13 +23,13 @@ export const FilterMenu = ({ isDesktop, sort }: Props) => {
 
             {isDesktop && isDisplay && (
                 <Popover onClose={() => setIsDisplay(false)} isOpen={isDisplay}>
-                    <FilterContent onClose={() => setIsDisplay(false)} sort={sort} />
+                    <FilterContent onClose={() => setIsDisplay(false)} sort={sort} keyword={keyword} />
                 </Popover>
             )}
 
             {!isDesktop && isDisplay && (
                 <BottomSheet onClose={() => setIsDisplay(false)}>
-                    <FilterContent onClose={() => setIsDisplay(false)} sort={sort} />
+                    <FilterContent onClose={() => setIsDisplay(false)} sort={sort} keyword={keyword} />
                 </BottomSheet>
             )}
         </>

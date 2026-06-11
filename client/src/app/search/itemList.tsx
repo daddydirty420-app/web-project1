@@ -40,10 +40,13 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
     }, []);
 
     // SWRInfinite
-    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
+    const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
         getSearchItemListApiKey({ keyword, limit, sort }),
         async (url: string) => {
             return fetcher<SearchResponse>(url);
+        },
+        {
+            shouldRetryOnError: false,
         },
     );
 
@@ -67,6 +70,8 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
         const target = loadMoreRef.current;
         if (!target) return;
 
+        if (error) return;
+
         if (isReachingEnd || isValidating) return;
 
         const observer = new IntersectionObserver(
@@ -86,14 +91,14 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
         observer.observe(target);
 
         return () => observer.disconnect();
-    }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
+    }, [error, isLoadingMore, isReachingEnd, isValidating, loadMore]);
 
     return (
         <>
             {items.length > 0 && (
                 <>
                     <div className={styles.headerButtonFlex}>
-                        <FilterMenu isDesktop={isDesktop} sort={sort} />
+                        <FilterMenu isDesktop={isDesktop} sort={sort} keyword={keyword} />
 
                         {viewMode === "video" && (
                             <button type="button" className={styles.stateButton} onClick={() => setViewMode("item")}>
