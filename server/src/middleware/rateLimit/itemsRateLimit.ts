@@ -137,21 +137,21 @@ export const draftDeleteItemRateLimit = rateLimit({
 
 export const getItemListRateLimit = rateLimit({
     windowMs: 1000 * 60,
-    limit: 30,
+    limit: 50,
     standardHeaders: true,
     legacyHeaders: false,
 });
 
 export const getItemRecommendRateLimit = rateLimit({
     windowMs: 1000 * 60,
-    limit: 30,
+    limit: 50,
     standardHeaders: true,
     legacyHeaders: false,
 });
 
 export const getItemSearchRateLimit = rateLimit({
     windowMs: 1000 * 60,
-    limit: 30,
+    limit: 120,
     standardHeaders: true,
     legacyHeaders: false,
 });
