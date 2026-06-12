@@ -249,6 +249,8 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                 </>
             )}
 
+            {items.length === 0 && <p className={styles.noItems}>検索結果はありません</p>}
+
             <div ref={loadMoreRef} />
         </>
     );

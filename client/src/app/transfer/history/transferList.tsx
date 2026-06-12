@@ -63,11 +63,7 @@ export const TransferList = () => {
         <>
             {history.length > 0}
 
-            {history.length === 0 && (
-                <>
-                    <p className={styles.noHistory}>振込申請履歴がありません</p>
-                </>
-            )}
+            {history.length === 0 && <p className={styles.noHistory}>振込申請履歴がありません</p>}
 
             <div ref={loadMoreRef} />
         </>

@@ -160,6 +160,8 @@ export const NotificationList = () => {
                 </section>
             )}
 
+            {notificationList.length === 0 && <p className={styles.noNotification}>お知らせはありません</p>}
+
             {selectedNotification && (
                 <>
                     <div className={styles.overlay} onClick={closeSheet} />

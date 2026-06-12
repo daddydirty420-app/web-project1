@@ -1,0 +1,9 @@
+.noHistory {
+    display: block;
+    width: 100%;
+    max-width: 768px;
+    margin: 1rem auto;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
