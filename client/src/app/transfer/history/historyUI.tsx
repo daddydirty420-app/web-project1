@@ -7,7 +7,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function HistorySearchUI({ children }: Props) {
+export default function HistoryUI({ children }: Props) {
     return (
         <>
             <Header />
