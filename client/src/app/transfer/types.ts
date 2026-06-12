@@ -13,6 +13,25 @@ export type BankAccount = {
     AccountTypeOption?: AccountTypeOption;
 };
 
+export type TransReasonOption = {
+    id: string;
+    name: string;
+};
+
+export type Transfer = {
+    id: string;
+    all_money: number;
+    handling_charge: number;
+    trans_money: number;
+    trans_finish: boolean;
+    trans_schedule_date: Date;
+    trans_at: Date;
+    createdAt: Date;
+    transfer_id: string;
+    User?: User;
+    TransReasonOption?: TransReasonOption;
+};
+
 export type User = {
     id: string;
     uriagekin: number;
