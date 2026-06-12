@@ -1,4 +1,5 @@
-import { Transaction } from "sequelize";
+import { InferAttributes, Transaction, WhereOptions } from "sequelize";
+import { Transfer } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
@@ -6,6 +7,11 @@ export type UserIdParams = {
 
 export type TransferIdParams = {
     id: string;
+};
+
+export type TransferHistoryParams = {
+    where: WhereOptions<InferAttributes<typeof Transfer>>;
+    limit: number;
 };
 
 export type CreateTransferParams = {

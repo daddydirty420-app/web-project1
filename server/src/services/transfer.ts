@@ -2,6 +2,7 @@ import { Transfer } from "../models/index.js";
 import {
     CreateTransferParams,
     DeleteTransferUserIdTransactionParams,
+    TransferHistoryParams,
     TransferIdParams,
     UserIdParams,
 } from "../types/serviceType/transfer.js";
@@ -9,6 +10,15 @@ import {
 export const getTransferIdExistingOne = ({ id }: TransferIdParams) => {
     return Transfer.findOne({
         where: { transfer_id: id },
+    });
+};
+
+export const getTransferHistory = ({ where, limit }: TransferHistoryParams) => {
+    return Transfer.findAll({
+        attributes: ["id", "trans_money", "trans_finish", "createdAt"],
+        where,
+        order: [["createdAt", "DESC"]],
+        limit,
     });
 };
 

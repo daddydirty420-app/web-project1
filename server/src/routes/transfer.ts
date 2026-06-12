@@ -8,11 +8,14 @@ import {
 } from "../middleware/rateLimit/transferRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
+import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
+import { getTransferHistoryUseCase } from "../usecases/transfer/getTransferHistory.js";
 import { TransferBody, transferBodySchema } from "../validators/body/transfer.js";
 import { idParamSchema } from "../validators/params/id.js";
+import { GetTransferHistoryQuery, getTransferHistoryQuerySchema } from "../validators/query/transfer.js";
 
 const router = Router();
 
@@ -67,22 +70,24 @@ router.post(
     },
 );
 
-// GET /transfer/history?limit=number(&cursor=number)
+// GET /transfer/history?limit=number(&cursor="")
 // summary: 振込申請履歴取得
 // page: /transfer/history
 router.get(
     "/history",
     transferHistoryRateLimit,
     authenticateToken,
+    validateQuery(getTransferHistoryQuerySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const dataList = await Transfer.findAll({
-                attributes: ["id", "trans_money", "trans_finish"],
-                where: { user_id: req.user!.id },
-                order: [["createdAt", "DESC"]],
-            });
+        const userId = req.user!.id;
 
-            res.status(200).json({ dataList });
+        const query = req.validatedQuery as GetTransferHistoryQuery;
+        const { limit, cursor } = query;
+
+        try {
+            const { history, hasMore, nextCursor } = await getTransferHistoryUseCase({ userId, limit, cursor });
+
+            res.status(200).json({ history, hasMore, nextCursor });
         } catch (err) {
             next(err);
         }
