@@ -92,6 +92,9 @@ router.get(
     },
 );
 
+// GET /transfer/history?limit=number(&cursor=number)
+// summary: 振込申請履歴取得
+// page: /transfer/history
 router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const dataList = await Transfer.findAll({
@@ -100,7 +103,7 @@ router.get("/history", authenticateToken, async (req: Request, res: Response, ne
             order: [["createdAt", "DESC"]],
         });
 
-        res.json({ dataList });
+        res.status(200).json({ dataList });
     } catch (err) {
         next(err);
     }

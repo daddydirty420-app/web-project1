@@ -1,3 +1,9 @@
+export type TransferHistoryResponse = {
+    history: Transfer[];
+    nextCursor: string | null;
+    hasMore: boolean;
+};
+
 export type AccountTypeOption = {
     id: string;
     name: string;
