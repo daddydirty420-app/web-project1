@@ -1,7 +1,11 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { transferPointsRateLimit, transferRequestRateLimit } from "../middleware/rateLimit/transferRateLimit.js";
+import {
+    transferHistoryRateLimit,
+    transferPointsRateLimit,
+    transferRequestRateLimit,
+} from "../middleware/rateLimit/transferRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
@@ -63,6 +67,28 @@ router.post(
     },
 );
 
+// GET /transfer/history?limit=number(&cursor=number)
+// summary: 振込申請履歴取得
+// page: /transfer/history
+router.get(
+    "/history",
+    transferHistoryRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+            const dataList = await Transfer.findAll({
+                attributes: ["id", "trans_money", "trans_finish"],
+                where: { user_id: req.user!.id },
+                order: [["createdAt", "DESC"]],
+            });
+
+            res.status(200).json({ dataList });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
 router.get(
     "/detail/:id",
     validateParams(idParamSchema),
@@ -91,22 +117,5 @@ router.get(
         }
     },
 );
-
-// GET /transfer/history?limit=number(&cursor=number)
-// summary: 振込申請履歴取得
-// page: /transfer/history
-router.get("/history", authenticateToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const dataList = await Transfer.findAll({
-            attributes: ["id", "trans_money", "trans_finish"],
-            where: { user_id: req.user!.id },
-            order: [["createdAt", "DESC"]],
-        });
-
-        res.status(200).json({ dataList });
-    } catch (err) {
-        next(err);
-    }
-});
 
 export default router;

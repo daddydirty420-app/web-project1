@@ -30,3 +30,10 @@ export const transferPointsRateLimit = rateLimit({
         return `admin:${authReq.user.id}`;
     },
 });
+
+export const transferHistoryRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
