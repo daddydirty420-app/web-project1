@@ -113,138 +113,133 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                             </button>
                         )}
                     </div>
+                    
                     {viewMode === "item" && (
-                        <>
-                            <section className={styles.itemListWrapper}>
-                                {items.map((item) => {
-                                    if (!item) return;
-                                    const itemLink = `/item/${item.id}`;
+                        <section className={styles.itemListWrapper}>
+                            {items.map((item) => {
+                                if (!item) return;
+                                const itemLink = `/item/${item.id}`;
 
-                                    return (
-                                        <section className={styles.itemListSection} key={item.id}>
-                                            <Link href={itemLink}>
-                                                <div className={styles.ILImageDiv}>
-                                                    <Image
-                                                        src={
-                                                            item.first_image_url
-                                                                ? encodeURI(item.first_image_url.trim())
-                                                                : "/no-image(1x1).png"
-                                                        }
-                                                        alt={item.name}
-                                                        fill
-                                                        sizes="(max-width: 768px) 33vw, 16.66vw"
-                                                        priority={false}
-                                                        className={styles.itemImage}
-                                                    />
-                                                    {item.status === "soldout" && (
-                                                        <div className={styles.ILSold}>
-                                                            <p className={styles.ILSoldP}>SOLD</p>
-                                                        </div>
-                                                    )}
-                                                    {item.Sale?.sale_flag && (
-                                                        <div className={styles.ILSaleDiv}>
-                                                            {item.Sale?.discount_rate > 0 && (
-                                                                <p className={styles.ILSaleText}>
-                                                                    {item.Sale.discount_rate}% OFF
-                                                                </p>
-                                                            )}
-                                                            {item.Sale?.discount_amount > 0 && (
-                                                                <p className={styles.ILSaleText}>
-                                                                    {item.Sale.discount_amount.toLocaleString()}円引き
-                                                                </p>
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                    <div className={styles.ILPrice}>
-                                                        ￥{item.price.toLocaleString()}
+                                return (
+                                    <section className={styles.itemListSection} key={item.id}>
+                                        <Link href={itemLink}>
+                                            <div className={styles.ILImageDiv}>
+                                                <Image
+                                                    src={
+                                                        item.first_image_url
+                                                            ? encodeURI(item.first_image_url.trim())
+                                                            : "/no-image(1x1).png"
+                                                    }
+                                                    alt={item.name}
+                                                    fill
+                                                    sizes="(max-width: 768px) 33vw, 16.66vw"
+                                                    priority={false}
+                                                    className={styles.itemImage}
+                                                />
+                                                {item.status === "soldout" && (
+                                                    <div className={styles.ILSold}>
+                                                        <p className={styles.ILSoldP}>SOLD</p>
                                                     </div>
-                                                </div>
+                                                )}
+                                                {item.Sale?.sale_flag && (
+                                                    <div className={styles.ILSaleDiv}>
+                                                        {item.Sale?.discount_rate > 0 && (
+                                                            <p className={styles.ILSaleText}>
+                                                                {item.Sale.discount_rate}% OFF
+                                                            </p>
+                                                        )}
+                                                        {item.Sale?.discount_amount > 0 && (
+                                                            <p className={styles.ILSaleText}>
+                                                                {item.Sale.discount_amount.toLocaleString()}円引き
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                <div className={styles.ILPrice}>￥{item.price.toLocaleString()}</div>
+                                            </div>
 
-                                                <p className={clsx(styles.ILItemName, styles.line2)}>{item.name}</p>
-                                            </Link>
-                                        </section>
-                                    );
-                                })}
-                            </section>
-                        </>
+                                            <p className={clsx(styles.ILItemName, styles.line2)}>{item.name}</p>
+                                        </Link>
+                                    </section>
+                                );
+                            })}
+                        </section>
                     )}
 
                     {viewMode === "video" && (
-                        <>
-                            <section className={styles.videoListWrapper}>
-                                {items.map((item) => {
-                                    if (!item) return;
-                                    const itemLink = `/item/${item.id}`;
+                        <section className={styles.videoListWrapper}>
+                            {items.map((item) => {
+                                if (!item) return;
+                                const itemLink = `/item/${item.id}`;
 
-                                    return (
-                                        <section className={styles.videoListSection} key={item.id}>
-                                            <Link href={itemLink} className={styles.thumbnail}>
-                                                <Image
-                                                    src={
-                                                        item.Video?.thumbnail_url
-                                                            ? encodeURI(item.Video.thumbnail_url.trim())
-                                                            : "/no-image(16x9).png"
-                                                    }
-                                                    alt={item.Video?.title ?? "動画サムネイル"}
-                                                    fill
-                                                    priority={false}
-                                                />
+                                return (
+                                    <section className={styles.videoListSection} key={item.id}>
+                                        <Link href={itemLink} className={styles.thumbnail}>
+                                            <Image
+                                                src={
+                                                    item.Video?.thumbnail_url
+                                                        ? encodeURI(item.Video.thumbnail_url.trim())
+                                                        : "/no-image(16x9).png"
+                                                }
+                                                alt={item.Video?.title ?? "動画サムネイル"}
+                                                fill
+                                                priority={false}
+                                            />
 
-                                                <div className={styles.duration}>
-                                                    {formatDuration(item.Video?.duration)}
+                                            <div className={styles.duration}>
+                                                {formatDuration(item.Video?.duration)}
+                                            </div>
+
+                                            {item.status === "soldout" && (
+                                                <div className={styles.soldoutOverlay}>
+                                                    <span className={styles.soldoutOverlayText}>SOLD OUT</span>
                                                 </div>
+                                            )}
+                                        </Link>
 
-                                                {item.status === "soldout" && (
-                                                    <div className={styles.soldoutOverlay}>
-                                                        <span className={styles.soldoutOverlayText}>SOLD OUT</span>
-                                                    </div>
-                                                )}
+                                        <div className={styles.itemData}>
+                                            <Link href={itemLink} className={styles.videoUser}>
+                                                <Image
+                                                    src={item.User?.profile_image || "/default-profile.png"}
+                                                    alt="プロフィール画像"
+                                                    width={36}
+                                                    height={36}
+                                                    className={styles.profileImage}
+                                                />
+                                                <div className="flex-1">
+                                                    <p className={clsx(styles.title, styles.line2)}>
+                                                        {item.Video?.title}
+                                                    </p>
+                                                    <p className={styles.userName}>{item.User?.user_name}</p>
+                                                </div>
                                             </Link>
 
-                                            <div className={styles.itemData}>
-                                                <Link href={itemLink} className={styles.videoUser}>
-                                                    <Image
-                                                        src={item.User?.profile_image || "/default-profile.png"}
-                                                        alt="プロフィール画像"
-                                                        width={36}
-                                                        height={36}
-                                                        className={styles.profileImage}
-                                                    />
-                                                    <div className="flex-1">
-                                                        <p className={clsx(styles.title, styles.line2)}>
-                                                            {item.Video?.title}
+                                            <Link href={itemLink} className={styles.itemNamePrice}>
+                                                <p className={styles.syohin}>商品</p>
+                                                <div className={styles.itemNameDiv}>
+                                                    <h2 className={styles.itemName}>{item.name}</h2>
+                                                </div>
+                                                <div className={styles.itemPriceSale}>
+                                                    {item.Sale?.sale_flag && (
+                                                        <p className={styles.beforePrice}>
+                                                            ￥{item.Sale.before_price.toLocaleString()}
                                                         </p>
-                                                        <p className={styles.userName}>{item.User?.user_name}</p>
-                                                    </div>
-                                                </Link>
-
-                                                <Link href={itemLink} className={styles.itemNamePrice}>
-                                                    <p className={styles.syohin}>商品</p>
-                                                    <div className={styles.itemNameDiv}>
-                                                        <h2 className={styles.itemName}>{item.name}</h2>
-                                                    </div>
-                                                    <div className={styles.itemPriceSale}>
-                                                        {item.Sale?.sale_flag && (
-                                                            <p className={styles.beforePrice}>
-                                                                ￥{item.Sale.before_price.toLocaleString()}
-                                                            </p>
+                                                    )}
+                                                    <h3
+                                                        className={clsx(
+                                                            styles.price,
+                                                            item.Sale?.sale_flag ? styles.sale : "",
                                                         )}
-                                                        <h3
-                                                            className={clsx(
-                                                                styles.price,
-                                                                item.Sale?.sale_flag ? styles.sale : "",
-                                                            )}
-                                                        >
-                                                            ￥{item.price.toLocaleString()}
-                                                        </h3>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        </section>
-                                    );
-                                })}
-                            </section>
-                        </>
+                                                    >
+                                                        ￥{item.price.toLocaleString()}
+                                                    </h3>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </section>
+                                );
+                            })}
+                        </section>
                     )}
                 </>
             )}

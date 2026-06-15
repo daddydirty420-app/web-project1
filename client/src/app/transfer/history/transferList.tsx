@@ -6,6 +6,7 @@ import { fetcher } from "../../../lib/fetcher";
 import { TransferHistoryResponse } from "../types";
 import { getTransferHistoryApiKey } from "./apiKey";
 import styles from "./styles.module.css";
+import Link from "next/link";
 
 export const TransferList = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -61,7 +62,30 @@ export const TransferList = () => {
 
     return (
         <>
-            {history.length > 0}
+            {history.length > 0 && (
+                <section className={styles.transListWrapper}>
+                    {history.map((transfer) => {
+                        if (!transfer) return;
+                        const detailLink = `/transfer/detail/${transfer.id}`;
+
+                        return (
+                            <Link href={detailLink} className={styles.transferSection}>
+                                <div className={styles.transMoneyFlex}>
+                                    <p className={styles.transMoneyTitle}>振込額：</p>
+
+                                    <p className={styles.transMoney}>￥{transfer.trans_money.toLocaleString()}</p>
+                                </div>
+
+                                <p
+                                    className={`${styles.transFlag} ${transfer.trans_finish ? styles.finish : styles.yet}`}
+                                >
+                                    {transfer.trans_finish ? "振込済み" : "未振込"}
+                                </p>
+                            </Link>
+                        );
+                    })}
+                </section>
+            )}
 
             {history.length === 0 && <p className={styles.noHistory}>振込申請履歴がありません</p>}
 
