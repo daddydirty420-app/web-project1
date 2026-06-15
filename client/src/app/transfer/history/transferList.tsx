@@ -1,7 +1,8 @@
 "use client";
 
-import { faBuildingColumns, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconBuildingBank } from "@tabler/icons-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
@@ -73,7 +74,9 @@ export const TransferList = () => {
 
                         return (
                             <Link href={detailLink} className={styles.transferSection} key={transfer.id}>
-                                <FontAwesomeIcon icon={faBuildingColumns} className={styles.bankIcon} />
+                                <div className={styles.bankIconBox}>
+                                    <IconBuildingBank size={20} stroke={1.5} />
+                                </div>
 
                                 <div className={styles.transInfo}>
                                     <p className={styles.transMoney}>￥{transfer.trans_money.toLocaleString()}</p>

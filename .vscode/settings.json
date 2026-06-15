@@ -81,7 +81,8 @@
         "ILIKE",
         "Ngrams",
         "ffprobe",
-        "libx264"
+        "libx264",
+        "tabler"
     ],
     "remote.autoForwardPortsFallback": 0
 }
