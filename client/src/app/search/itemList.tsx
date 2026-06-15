@@ -113,7 +113,7 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
                             </button>
                         )}
                     </div>
-                    
+
                     {viewMode === "item" && (
                         <section className={styles.itemListWrapper}>
                             {items.map((item) => {
