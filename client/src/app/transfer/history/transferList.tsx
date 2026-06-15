@@ -1,12 +1,15 @@
 "use client";
 
+import { faBuildingColumns, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../../lib/fetcher";
+import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { TransferHistoryResponse } from "../types";
 import { getTransferHistoryApiKey } from "./apiKey";
 import styles from "./styles.module.css";
-import Link from "next/link";
 
 export const TransferList = () => {
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -70,17 +73,21 @@ export const TransferList = () => {
 
                         return (
                             <Link href={detailLink} className={styles.transferSection} key={transfer.id}>
-                                <div className={styles.transMoneyFlex}>
-                                    <p className={styles.transMoneyTitle}>振込額</p>
+                                <FontAwesomeIcon icon={faBuildingColumns} className={styles.bankIcon} />
 
+                                <div className={styles.transInfo}>
                                     <p className={styles.transMoney}>￥{transfer.trans_money.toLocaleString()}</p>
+
+                                    <p className={styles.transDate}>{formatRelativeTime(transfer.createdAt)}</p>
                                 </div>
 
-                                <p
+                                <span
                                     className={`${styles.transFlag} ${transfer.trans_finish ? styles.finish : styles.yet}`}
                                 >
                                     {transfer.trans_finish ? "振込済み" : "未振込"}
-                                </p>
+                                </span>
+
+                                <FontAwesomeIcon icon={faChevronRight} className={styles.chevron} />
                             </Link>
                         );
                     })}
