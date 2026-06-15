@@ -7,3 +7,51 @@
     font-weight: 500;
     color: var(--text-muted);
 }
+
+.transListWrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 5rem;
+}
+
+.transferSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 56px;
+    padding: 8px 10% 6px;
+    border-top: solid 0.5px var(--gray-line);
+}
+
+.transMoneyFlex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transMoneyTitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.transMoney {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.transFlag {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.finish {
+    color: var(--text-muted);
+}
+
+.yet {
+    color: var(--alert);
+}

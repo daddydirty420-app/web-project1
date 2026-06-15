@@ -69,9 +69,9 @@ export const TransferList = () => {
                         const detailLink = `/transfer/detail/${transfer.id}`;
 
                         return (
-                            <Link href={detailLink} className={styles.transferSection}>
+                            <Link href={detailLink} className={styles.transferSection} key={transfer.id}>
                                 <div className={styles.transMoneyFlex}>
-                                    <p className={styles.transMoneyTitle}>振込額：</p>
+                                    <p className={styles.transMoneyTitle}>振込額</p>
 
                                     <p className={styles.transMoney}>￥{transfer.trans_money.toLocaleString()}</p>
                                 </div>
