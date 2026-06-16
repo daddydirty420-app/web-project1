@@ -8,11 +8,9 @@ type Props = {
 
 export default function TransferUI({ title, children }: Props) {
     return (
-        <>
-            <Container>
-                <TitleAndBack title={title} />
-                {children}
-            </Container>
-        </>
+        <Container>
+            <TitleAndBack title={title} />
+            {children}
+        </Container>
     );
 }
