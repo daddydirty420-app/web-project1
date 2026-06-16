@@ -104,10 +104,10 @@ router.get(
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const transferId = Number(req.params.id);
+        const transId = Number(req.params.id);
 
         try {
-            const data = await Transfer.findByPk(transferId, {
+            const data = await Transfer.findByPk(transId, {
                 attributes: ["id", "request_money", "handling_charge", "trans_money", "transfer_id", "createdAt", "bank_snapshot", "trans_finish", "trans_schedule_date", "trans_at"],
             });
 

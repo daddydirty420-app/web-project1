@@ -7,9 +7,9 @@ import {
     UserIdParams,
 } from "../types/serviceType/transfer.js";
 
-export const getTransferIdExistingOne = ({ id }: TransferIdParams) => {
+export const getTransferIdExistingOne = ({ transferId }: TransferIdParams) => {
     return Transfer.findOne({
-        where: { transfer_id: id },
+        where: { transfer_id: transferId },
     });
 };
 

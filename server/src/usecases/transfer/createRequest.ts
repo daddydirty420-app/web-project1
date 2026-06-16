@@ -5,6 +5,7 @@ import { createTransfer } from "../../services/transfer.js";
 import { updateUsedUriagekin } from "../../services/uriagekinHistory.js";
 import { updateUriageUser } from "../../services/users/command.js";
 import { getUserHasUriagekinBank } from "../../services/users/query.js";
+import { AccountType } from "../../types/bankSnapshot.js";
 import { generateTransferId } from "../../utils/generateTransferId.js";
 
 type Params = {
@@ -100,11 +101,11 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
                 trans_schedule_date: nextNextFriday,
                 transfer_id: transferId,
                 bank_snapshot: {
-                    bank_name: account.bank_name,
-                    branch_name: account.branch,
-                    account_type: account.AccountTypeOption.name,
-                    account_number: account.account_number,
-                    meigi: account.meigi,
+                    bank_name: String(account.bank_name),
+                    branch_name: String(account.branch),
+                    account_type: account.AccountTypeOption.name as AccountType,
+                    account_number: String(account.account_number),
+                    meigi: String(account.meigi),
                 },
             },
             transaction: t,

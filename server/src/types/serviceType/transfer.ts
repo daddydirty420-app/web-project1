@@ -7,7 +7,7 @@ export type UserIdParams = {
 };
 
 export type TransferIdParams = {
-    id: string;
+    transferId: string;
 };
 
 export type TransferHistoryParams = {
