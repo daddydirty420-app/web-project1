@@ -29,7 +29,7 @@ import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } f
 import { updateUsedUriagekin } from "../../../services/uriagekinHistory.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
 import { updateUserLogicalDelete } from "../../../services/users/command.js";
-import { getUserHasBankAccount, getUserHasUriagekin } from "../../../services/users/query.js";
+import { getUserHasBankAccount, getUserHasUriagekinBank } from "../../../services/users/query.js";
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
@@ -69,9 +69,11 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
     const nowDate = new Date();
 
     // user取得
-    const user = await getUserHasUriagekin({ userId: pageUserId });
+    const user = await getUserHasUriagekinBank({ userId: pageUserId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
+
+    const account = user.BankAccount;
 
     // 出品した商品取得
     const items = await getMyItemsWithVideoAll({ userId: pageUserId });
@@ -323,6 +325,13 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                                 trans_schedule_date: twoWeeksLater,
                                 user_id: buyer.id,
                                 transfer_id: transferId,
+                                bank_snapshot: {
+                                    bank_name: account?.bank_name ?? "",
+                                    branch_name: account?.branch ?? "",
+                                    account_type: account?.AccountTypeOption.name ?? "",
+                                    account_number: account?.account_number ?? "",
+                                    meigi: account?.meigi ?? "",
+                                },
                             },
                             transaction: t,
                         });

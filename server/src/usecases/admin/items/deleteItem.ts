@@ -88,7 +88,8 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
 
                 const buyer = await getUserHasBankAccount({ userId: order.buyer_user_id });
 
-                const buyerHasAccount = !!buyer.BankAccount;
+                const account = buyer.BankAccount;
+                const buyerHasAccount = !!account;
 
                 const message =
                     `[重要] 取引中の商品「${item.name}」は利用規約違反により削除され、取引はキャンセル・返金となりました。` +
@@ -120,6 +121,13 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
                         trans_schedule_date: twoWeeksLater,
                         user_id: buyer.id,
                         transfer_id: transferId,
+                        bank_snapshot: {
+                            bank_name: account?.bank_name ?? "",
+                            branch_name: account?.branch ?? "",
+                            account_type: account?.AccountTypeOption.name ?? "",
+                            account_number: account?.account_number ?? "",
+                            meigi: account?.meigi ?? "",
+                        },
                     },
                     transaction: t,
                 });
