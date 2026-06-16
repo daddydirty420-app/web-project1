@@ -7,16 +7,27 @@ import styles from "./title-back.module.css";
 
 type pageTitleProps = {
     title: string;
+    url?: string;
 };
 
-export const TitleAndBack = ({ title }: pageTitleProps) => {
+export const TitleAndBack = ({ title, url }: pageTitleProps) => {
     const router = useRouter();
 
     return (
         <div className="mb-2">
             <h1 className={styles.title}>{title}</h1>
 
-            <FontAwesomeIcon onClick={() => router.back()} icon={faAngleLeft} className={styles.back} />
+            <FontAwesomeIcon
+                onClick={() => {
+                    if (url) {
+                        router.push(url);
+                        return;
+                    }
+                    router.back();
+                }}
+                icon={faAngleLeft}
+                className={styles.back}
+            />
         </div>
     );
 };

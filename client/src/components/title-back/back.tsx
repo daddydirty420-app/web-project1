@@ -6,8 +6,25 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import styles from "./title-back.module.css";
 
-export const Back = () => {
+type Props = {
+    url?: string;
+};
+
+export const Back = ({ url }: Props) => {
     const router = useRouter();
 
-    return <FontAwesomeIcon onClick={() => router.back()} icon={faAngleLeft} className={clsx("mb-2", styles.back)} />;
+    return (
+        <FontAwesomeIcon
+            onClick={() => {
+                if (url) {
+                    router.push(url);
+                    return;
+                }
+
+                router.back();
+            }}
+            icon={faAngleLeft}
+            className={clsx("mb-2", styles.back)}
+        />
+    );
 };
