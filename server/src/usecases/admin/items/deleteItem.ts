@@ -113,7 +113,7 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
 
                 await createTransfer({
                     data: {
-                        all_money: order.total_amount,
+                        request_money: order.total_amount,
                         handling_charge: 0,
                         trans_money: order.total_amount,
                         trans_reason_id: 2,

@@ -26,7 +26,7 @@ export type TransReasonOption = {
 
 export type Transfer = {
     id: string;
-    all_money: number;
+    request_money: number;
     handling_charge: number;
     trans_money: number;
     trans_finish: boolean;

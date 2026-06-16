@@ -8,7 +8,7 @@ import User from "./user.js";
 
 export class Transfer extends Model {
     declare id: number;
-    declare all_money: number | null;
+    declare request_money: number | null;
     declare handling_charge: number | null;
     declare trans_money: number | null;
     declare trans_reason_id: number | null;
@@ -48,7 +48,7 @@ Transfer.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        all_money: DataTypes.INTEGER,
+        request_money: DataTypes.INTEGER,
         handling_charge: DataTypes.INTEGER,
         trans_money: DataTypes.INTEGER,
         trans_reason_id: DataTypes.INTEGER,

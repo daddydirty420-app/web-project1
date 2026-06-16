@@ -17,7 +17,7 @@ export type TransferHistoryParams = {
 
 export type CreateTransferParams = {
     data: {
-        all_money: number;
+        request_money: number;
         handling_charge: number;
         trans_money: number;
         trans_reason_id: number;

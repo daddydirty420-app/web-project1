@@ -37,3 +37,10 @@ export const transferHistoryRateLimit = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+export const transferDetailRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+});

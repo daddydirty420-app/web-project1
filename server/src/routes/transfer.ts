@@ -2,6 +2,7 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
 import {
+    transferDetailRateLimit,
     transferHistoryRateLimit,
     transferPointsRateLimit,
     transferRequestRateLimit,
@@ -9,7 +10,7 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { AccountTypeOption, BankAccount, Transfer } from "../models/index.js";
+import { Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
 import { getTransferHistoryUseCase } from "../usecases/transfer/getTransferHistory.js";
@@ -94,21 +95,20 @@ router.get(
     },
 );
 
+// GET /transfer/:id/detail
+// summary: 振込申請詳細表示
+// page: /transfer/detail/[id]
 router.get(
-    "/detail/:id",
+    "/:id/detail",
+    transferDetailRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const transferId = Number(req.params.id);
+
         try {
-            const data = await Transfer.findByPk(req.params.id, {
-                attributes: ["id", "trans_money", "transfer_id", "createdAt"],
-                include: [
-                    {
-                        model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [{ model: AccountTypeOption }],
-                    },
-                ],
+            const data = await Transfer.findByPk(transferId, {
+                attributes: ["id", "request_money", "handling_charge", "trans_money", "transfer_id", "createdAt", "bank_snapshot", "trans_finish", "trans_schedule_date", "trans_at"],
             });
 
             if (!data) {
@@ -116,7 +116,7 @@ router.get(
                 return;
             }
 
-            res.json({ data });
+            res.status(200).json({ data });
         } catch (err) {
             next(err);
         }

@@ -92,7 +92,7 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
 
         const transfer = await createTransfer({
             data: {
-                all_money: requestValue,
+                request_money: requestValue,
                 handling_charge: 200,
                 trans_money: transValue,
                 trans_reason_id: 1,
