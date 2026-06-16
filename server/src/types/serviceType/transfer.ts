@@ -2,6 +2,10 @@ import { InferAttributes, Transaction, WhereOptions } from "sequelize";
 import { Transfer } from "../../models/index.js";
 import { BankSnapshot } from "../bankSnapshot.js";
 
+export type TransIdParams = {
+    id: number;
+};
+
 export type UserIdParams = {
     userId: number;
 };

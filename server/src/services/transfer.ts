@@ -4,8 +4,26 @@ import {
     DeleteTransferUserIdTransactionParams,
     TransferHistoryParams,
     TransferIdParams,
+    TransIdParams,
     UserIdParams,
 } from "../types/serviceType/transfer.js";
+
+export const getTransferDetail = ({ id }: TransIdParams) => {
+    return Transfer.findByPk(id, {
+        attributes: [
+            "id",
+            "request_money",
+            "handling_charge",
+            "trans_money",
+            "transfer_id",
+            "createdAt",
+            "bank_snapshot",
+            "trans_finish",
+            "trans_schedule_date",
+            "trans_at",
+        ],
+    });
+};
 
 export const getTransferIdExistingOne = ({ transferId }: TransferIdParams) => {
     return Transfer.findOne({

@@ -10,9 +10,9 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { Transfer } from "../models/index.js";
 import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
 import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
+import { getTransferDetailUseCase } from "../usecases/transfer/getDetail.js";
 import { getTransferHistoryUseCase } from "../usecases/transfer/getTransferHistory.js";
 import { TransferBody, transferBodySchema } from "../validators/body/transfer.js";
 import { idParamSchema } from "../validators/params/id.js";
@@ -107,16 +107,9 @@ router.get(
         const transId = Number(req.params.id);
 
         try {
-            const data = await Transfer.findByPk(transId, {
-                attributes: ["id", "request_money", "handling_charge", "trans_money", "transfer_id", "createdAt", "bank_snapshot", "trans_finish", "trans_schedule_date", "trans_at"],
-            });
+            const transfer = await getTransferDetailUseCase({ transId });
 
-            if (!data) {
-                res.status(404).json({ message: "データが見つかりません。" });
-                return;
-            }
-
-            res.status(200).json({ data });
+            res.status(200).json({ transfer });
         } catch (err) {
             next(err);
         }
