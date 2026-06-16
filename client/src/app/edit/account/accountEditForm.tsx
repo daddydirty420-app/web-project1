@@ -171,7 +171,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
 
             await fetchAccountEdit(account.id, body);
 
-            toast.success("口座情報を更新しました");
+            toast.success("口座情報を登録しました");
             await sleep(1500);
 
             if (page === "normal") {
