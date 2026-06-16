@@ -4,7 +4,7 @@ import { createNotification } from "../../services/notification.js";
 import { createTransfer } from "../../services/transfer.js";
 import { updateUsedUriagekin } from "../../services/uriagekinHistory.js";
 import { updateUriageUser } from "../../services/users/command.js";
-import { getUserHasUriagekin } from "../../services/users/query.js";
+import { getUserHasUriagekinBank } from "../../services/users/query.js";
 import { generateTransferId } from "../../utils/generateTransferId.js";
 
 type Params = {
@@ -37,9 +37,11 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
     nextNextFriday.setDate(thisFriday.getDate() + 14);
 
     // user取得
-    const user = await getUserHasUriagekin({ userId });
+    const user = await getUserHasUriagekinBank({ userId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
+
+    const account = user.BankAccount;
 
     // transferId取得
     const transferId = await generateTransferId();
@@ -97,6 +99,13 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
                 user_id: userId,
                 trans_schedule_date: nextNextFriday,
                 transfer_id: transferId,
+                bank_snapshot: {
+                    bank_name: account.bank_name,
+                    branch_name: account.branch,
+                    account_type: account.AccountTypeOption.name,
+                    account_number: account.account_number,
+                    meigi: account.meigi,
+                },
             },
             transaction: t,
         });

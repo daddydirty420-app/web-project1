@@ -87,6 +87,18 @@ export const getUserHasUriagekin = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserHasUriagekinBank = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            { model: UriagekinHistory },
+            {
+                model: BankAccount,
+                include: [{ model: AccountTypeOption }],
+            },
+        ],
+    });
+};
+
 export const getMeHighlight = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image"],
