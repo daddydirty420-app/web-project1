@@ -1,6 +1,7 @@
 "use client";
 
 import { formatDate } from "../../../lib/dayjs";
+import { getAccountTypeLabel } from "../../../lib/getAccountTypeLabel";
 import { Transfer } from "../types";
 import styles from "./styles.module.css";
 
@@ -72,10 +73,20 @@ export const TransferDetail = ({ transfer }: Props) => {
                         <p className={styles.bankTitle}>振込先口座</p>
 
                         <div className={styles.bankSnapshotDiv}>
-                            <div className={styles.nameBranchFlex}>
+                            <div className={styles.bankTextFlex}>
                                 <p className={styles.bankText}>{bank.bank_name}</p>
 
                                 <p className={styles.bankText}>{bank.branch_name}</p>
+                            </div>
+
+                            <div className={styles.bankTextFlex}>
+                                <p className={styles.bankText}>{getAccountTypeLabel({ accountType: bank.account_type })}</p>
+
+                                <p className={styles.bankText}>{bank.account_number}</p>
+                            </div>
+
+                            <div className={styles.bankTextFlex}>
+                                <p className={styles.bankText}>{bank.meigi}</p>
                             </div>
                         </div>
                     </section>

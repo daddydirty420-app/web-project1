@@ -1,5 +1,6 @@
 import { AppError } from "../../errors.js";
 import { getTransferDetail } from "../../services/transfer.js";
+import { maskAccountNumber } from "../../utils/maskAccountNumber.js";
 
 type Params = {
     transId: number;
@@ -14,5 +15,11 @@ export const getTransferDetailUseCase = async ({ transId }: Params) => {
 
     if (!transfer) throw new AppError("TRANSFER_NOT_FOUND", 404);
 
-    return transfer;
+    return {
+        ...transfer,
+        bank_snapshot: {
+            ...transfer.bank_snapshot,
+            account_number: maskAccountNumber({ accountNumber: transfer.bank_snapshot.account_number }),
+        },
+    };
 };
