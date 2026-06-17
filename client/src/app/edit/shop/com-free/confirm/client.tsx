@@ -192,7 +192,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
                     title="振込口座"
                     content={`銀行名： ${bankAccount?.bank_name ?? ""}
                 支店名： ${bankAccount?.branch_code ?? ""}
-                口座種別： ${bankAccount?.AccountTypeOption?.name ?? ""}
+                口座種別： ${bankAccount?.account_type ?? ""}
                 口座番号： ${bankAccount?.account_number ?? ""}
                 口座名義： ${bankAccount?.meigi ?? ""}`}
                     link={`/edit/account/shop/com-free/${shopEditId}`}

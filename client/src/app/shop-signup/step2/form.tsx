@@ -49,7 +49,7 @@ export const Form = ({ shopId, account }: Props) => {
 
     const [branchCode, setBranchCode] = useState(account.branch_code || "");
 
-    const [accountType, setAccountType] = useState(account.AccountTypeOption?.name || "");
+    const [accountType, setAccountType] = useState(account.account_type || "");
     const [accountNumber, setAccountNumber] = useState(account.account_number || "");
     const [meigi, setMeigi] = useState(account.meigi || "");
 

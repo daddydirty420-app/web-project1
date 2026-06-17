@@ -1,4 +1,6 @@
-export type AccountType = "普通預金" | "当座預金" | "定期預金" | "その他";
+export const ACCOUNT_TYPES = ["ordinary", "checking", "savings"] as const;
+
+export type AccountType = (typeof ACCOUNT_TYPES)[number];
 
 export type BankSnapshot = {
     bank_name: string;

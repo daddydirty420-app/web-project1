@@ -136,7 +136,7 @@ export const Form = ({ user }: Props) => {
                             <div className={styles.twoTextFlex}>
                                 <p>口座種別：</p>
                                 <span className={styles.twoTextContent}>
-                                    {user.BankAccount?.AccountTypeOption?.name}
+                                    {user.BankAccount?.account_type}
                                 </span>
                             </div>
                             <div className={styles.twoTextFlex}>

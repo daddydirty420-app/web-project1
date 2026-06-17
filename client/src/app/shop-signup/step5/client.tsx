@@ -224,7 +224,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                     title="振込口座"
                     content={`銀行名： ${shopInfo.BankAccount?.bank_name ?? ""}
                 支店名： ${shopInfo.BankAccount?.branch_code ?? ""}
-                口座種別： ${shopInfo.BankAccount?.AccountTypeOption?.name ?? ""}
+                口座種別： ${shopInfo.BankAccount?.account_type ?? ""}
                 口座番号： ${shopInfo.BankAccount?.account_number ?? ""}
                 口座名義： ${shopInfo.BankAccount?.meigi ?? ""}`}
                     link={`/edit/account/shop/signup/${shopId}`}

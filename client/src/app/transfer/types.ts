@@ -1,22 +1,18 @@
+import { BankSnapshot } from "../../types/bankSnapshot";
+
 export type TransferHistoryResponse = {
     history: Transfer[];
     nextCursor: string | null;
     hasMore: boolean;
 };
 
-export type AccountTypeOption = {
-    id: string;
-    name: string;
-};
-
 export type BankAccount = {
     id: string;
     bank_name: string;
     branch: string;
-    account_type_id: number;
+    account_type: string;
     account_number: string;
     meigi: string;
-    AccountTypeOption?: AccountTypeOption;
 };
 
 export type TransReasonOption = {
@@ -34,6 +30,7 @@ export type Transfer = {
     trans_at: Date;
     createdAt: Date;
     transfer_id: string;
+    bank_snapshot: BankSnapshot;
     User?: User;
     TransReasonOption?: TransReasonOption;
 };
