@@ -75,7 +75,7 @@ BankAccount.init(
             type: DataTypes.INTEGER,
             unique: true,
         },
-        account_type: DataTypes.ENUM,
+        account_type: DataTypes.ENUM("ordinary", "checking", "savings"),
     },
     {
         sequelize,
