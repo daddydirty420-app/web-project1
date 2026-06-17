@@ -80,7 +80,9 @@ export const TransferDetail = ({ transfer }: Props) => {
                             </div>
 
                             <div className={styles.bankTextFlex}>
-                                <p className={styles.bankText}>{getAccountTypeLabel({ accountType: bank.account_type })}</p>
+                                <p className={styles.bankText}>
+                                    {getAccountTypeLabel({ accountType: bank.account_type })}
+                                </p>
 
                                 <p className={styles.bankText}>{bank.account_number}</p>
                             </div>
