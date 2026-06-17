@@ -8,6 +8,7 @@ import { Button } from "@/components/inputForm";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ApiError } from "../../../../../lib/api/apiError";
+import { getAccountTypeLabel } from "../../../../../lib/getAccountTypeLabel";
 import { fetchUpdateField } from "../../../api/shop/shopEdit/client";
 
 type Props = {
@@ -192,7 +193,7 @@ export const Client = ({ shopId, shopInfo, shopEditId, shopInfoEdit }: Props) =>
                     title="振込口座"
                     content={`銀行名： ${bankAccount?.bank_name ?? ""}
                 支店名： ${bankAccount?.branch_code ?? ""}
-                口座種別： ${bankAccount?.account_type ?? ""}
+                口座種別： ${getAccountTypeLabel({ accountType: bankAccount?.account_type ?? null })}
                 口座番号： ${bankAccount?.account_number ?? ""}
                 口座名義： ${bankAccount?.meigi ?? ""}`}
                     link={`/edit/account/shop/com-free/${shopEditId}`}

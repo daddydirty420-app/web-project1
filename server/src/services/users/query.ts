@@ -226,7 +226,7 @@ export const getUserTransferRequest = ({ userId }: UserIdParams) => {
         include: [
             {
                 model: BankAccount,
-                attributes: ["id", "bank_name", "branch", "account_type", "account_number", "meigi", "account_type"],
+                attributes: ["id", "bank_name", "branch", "account_type", "account_number", "meigi"],
             },
         ],
     });

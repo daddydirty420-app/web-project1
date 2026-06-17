@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
+import { getAccountTypeLabel } from "../../../lib/getAccountTypeLabel";
 import { sleep } from "../../../lib/sleep";
 import { fetchStep5, fetchUpdateField } from "../api/step5";
 import { ButtonDiv } from "../buttonDiv";
@@ -224,7 +225,7 @@ export const Client = ({ shopId, shopInfo }: Props) => {
                     title="振込口座"
                     content={`銀行名： ${shopInfo.BankAccount?.bank_name ?? ""}
                 支店名： ${shopInfo.BankAccount?.branch_code ?? ""}
-                口座種別： ${shopInfo.BankAccount?.account_type ?? ""}
+                口座種別： ${getAccountTypeLabel({ accountType: shopInfo.BankAccount?.account_type ?? null })}
                 口座番号： ${shopInfo.BankAccount?.account_number ?? ""}
                 口座名義： ${shopInfo.BankAccount?.meigi ?? ""}`}
                     link={`/edit/account/shop/signup/${shopId}`}

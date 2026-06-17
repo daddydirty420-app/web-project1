@@ -1,4 +1,4 @@
-import { BankSnapshot } from "../../types/bankSnapshot";
+import { AccountType, BankSnapshot } from "../../types/bankSnapshot";
 
 export type TransferHistoryResponse = {
     history: Transfer[];
@@ -10,7 +10,7 @@ export type BankAccount = {
     id: string;
     bank_name: string;
     branch: string;
-    account_type: string;
+    account_type: AccountType | null;
     account_number: string;
     meigi: string;
 };

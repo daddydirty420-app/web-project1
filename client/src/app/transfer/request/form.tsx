@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { ApiError } from "../../../lib/api/apiError";
+import { getAccountTypeLabel } from "../../../lib/getAccountTypeLabel";
 import { sleep } from "../../../lib/sleep";
 import { fetchTransferRequest } from "../api/request";
 import styles from "../transfer.module.css";
@@ -136,7 +137,7 @@ export const Form = ({ user }: Props) => {
                             <div className={styles.twoTextFlex}>
                                 <p>口座種別：</p>
                                 <span className={styles.twoTextContent}>
-                                    {user.BankAccount?.account_type}
+                                    {getAccountTypeLabel({ accountType: user.BankAccount?.account_type ?? null })}
                                 </span>
                             </div>
                             <div className={styles.twoTextFlex}>

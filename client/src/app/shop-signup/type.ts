@@ -1,3 +1,5 @@
+import { AccountType } from "../../types/bankSnapshot";
+
 export type ComOrFreeOption = {
     id: number;
     name: string;
@@ -14,7 +16,7 @@ export type BankAccount = {
     bank_code: string;
     branch: string;
     branch_code: string;
-    account_type: string;
+    account_type: AccountType | null;
     account_number: string;
     meigi: string;
 };

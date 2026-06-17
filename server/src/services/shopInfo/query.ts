@@ -21,7 +21,6 @@ export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
                     "meigi",
                     "bank_code",
                     "branch_code",
-                    "account_type",
                 ],
             },
         ],

@@ -26,7 +26,6 @@ export const getMyAccountOne = ({ userId }: UserIdParams) => {
             "meigi",
             "bank_code",
             "branch_code",
-            "account_type",
         ],
         where: { user_id: userId },
     });
@@ -43,7 +42,6 @@ export const getShopAccountOne = ({ shopId }: ShopIdParams) => {
             "meigi",
             "bank_code",
             "branch_code",
-            "account_type",
         ],
         where: { shop_info_id: shopId },
     });

@@ -1,10 +1,12 @@
+import { AccountType } from "../../types/bankSnapshot";
+
 export type BankAccount = {
     id: string;
     bank_name: string;
     bank_code: string;
     branch: string;
     branch_code: string;
-    account_type: string;
+    account_type: AccountType | null;
     account_number: string;
     meigi: string;
 };
