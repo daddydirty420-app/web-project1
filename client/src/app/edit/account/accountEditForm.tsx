@@ -284,14 +284,14 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                     <option value="" disabled className={styles.option}>
                         --1つ選択してください。--
                     </option>
-                    <option value="普通預金" className={styles.option}>
+                    <option value="ordinary" className={styles.option}>
                         普通預金
                     </option>
-                    <option value="当座預金" className={styles.option}>
+                    <option value="checking" className={styles.option}>
                         当座預金
                     </option>
-                    <option value="その他" className={styles.option}>
-                        その他
+                    <option value="savings" className={styles.option}>
+                        貯蓄預金
                     </option>
                 </select>
             </div>

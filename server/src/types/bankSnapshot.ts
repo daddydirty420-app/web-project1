@@ -9,3 +9,9 @@ export type BankSnapshot = {
     account_number: string;
     meigi: string;
 };
+
+export const ACCOUNT_TYPE_LABEL: Record<AccountType, string> = {
+    ordinary: "普通預金",
+    checking: "当座預金",
+    savings: "貯蓄預金",
+};
