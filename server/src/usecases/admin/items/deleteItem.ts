@@ -124,7 +124,7 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
                         bank_snapshot: {
                             bank_name: account?.bank_name ?? "",
                             branch_name: account?.branch ?? "",
-                            account_type: account?.AccountTypeOption.name ?? "",
+                            account_type: account?.account_type ?? "",
                             account_number: account?.account_number ?? "",
                             meigi: account?.meigi ?? "",
                         },

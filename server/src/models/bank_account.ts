@@ -1,17 +1,15 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 import ShopInfo from "./shop_info.js";
-import AccountTypeOption from "./account_type_option.js";
+import ShopInfoEdit from "./shop_info_edit.js";
 import Transfer from "./transfer.js";
 import User from "./user.js";
-import ShopInfoEdit from "./shop_info_edit.js";
 
 export class BankAccount extends Model {
     declare id: number;
     declare bank_name: string | null;
     declare branch: string | null;
-    declare account_type_id: number | null;
     declare account_number: string | null;
     declare meigi: string | null;
     declare user_id: number | null;
@@ -22,13 +20,11 @@ export class BankAccount extends Model {
     declare bank_code: string | null;
     declare branch_code: string | null;
     declare shop_info_edit_id: number | null;
+    declare account_type: "ordinary" | "checking" | "savings";
 
     static associate() {
         BankAccount.belongsTo(ShopInfo, {
             foreignKey: "shop_info_id",
-        });
-        BankAccount.belongsTo(AccountTypeOption, {
-            foreignKey: "account_type_id",
         });
         BankAccount.belongsTo(Transfer, {
             foreignKey: "transfer_id",
@@ -44,7 +40,6 @@ export class BankAccount extends Model {
     static associations: {
         ShopInfo: Association<BankAccount, ShopInfo>;
         ShopInfoEdit: Association<BankAccount, ShopInfoEdit>;
-        AccountTypeOption: Association<BankAccount, AccountTypeOption>;
         Transfer: Association<BankAccount, Transfer>;
         User: Association<BankAccount, User>;
     };
@@ -60,7 +55,6 @@ BankAccount.init(
         },
         bank_name: DataTypes.STRING(255),
         branch: DataTypes.STRING(255),
-        account_type_id: DataTypes.INTEGER,
         account_number: DataTypes.STRING(255),
         meigi: DataTypes.STRING(255),
         user_id: {
@@ -81,6 +75,7 @@ BankAccount.init(
             type: DataTypes.INTEGER,
             unique: true,
         },
+        account_type: DataTypes.ENUM,
     },
     {
         sequelize,

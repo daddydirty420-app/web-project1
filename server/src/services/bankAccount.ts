@@ -1,4 +1,4 @@
-import { AccountTypeOption, BankAccount } from "../models/index.js";
+import { BankAccount } from "../models/index.js";
 import {
     AccountIdParams,
     BankTransactionParams,
@@ -21,14 +21,14 @@ export const getMyAccountOne = ({ userId }: UserIdParams) => {
             "id",
             "bank_name",
             "branch",
-            "account_type_id",
+            "account_type",
             "account_number",
             "meigi",
             "bank_code",
             "branch_code",
+            "account_type",
         ],
         where: { user_id: userId },
-        include: [{ model: AccountTypeOption }],
     });
 };
 
@@ -38,14 +38,14 @@ export const getShopAccountOne = ({ shopId }: ShopIdParams) => {
             "id",
             "bank_name",
             "branch",
-            "account_type_id",
+            "account_type",
             "account_number",
             "meigi",
             "bank_code",
             "branch_code",
+            "account_type",
         ],
         where: { shop_info_id: shopId },
-        include: [{ model: AccountTypeOption }],
     });
 };
 

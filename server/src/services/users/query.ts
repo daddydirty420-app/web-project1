@@ -1,5 +1,4 @@
 import {
-    AccountTypeOption,
     Address,
     BankAccount,
     GenderOption,
@@ -89,13 +88,7 @@ export const getUserHasUriagekin = async ({ userId }: UserIdParams) => {
 
 export const getUserHasUriagekinBank = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [
-            { model: UriagekinHistory },
-            {
-                model: BankAccount,
-                include: [{ model: AccountTypeOption }],
-            },
-        ],
+        include: [{ model: UriagekinHistory }, { model: BankAccount }],
     });
 };
 
@@ -233,8 +226,7 @@ export const getUserTransferRequest = ({ userId }: UserIdParams) => {
         include: [
             {
                 model: BankAccount,
-                attributes: ["id", "bank_name", "branch", "account_type_id", "account_number", "meigi"],
-                include: [{ model: AccountTypeOption }],
+                attributes: ["id", "bank_name", "branch", "account_type", "account_number", "meigi", "account_type"],
             },
         ],
     });

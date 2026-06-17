@@ -1,5 +1,4 @@
 import { AppError } from "../../errors.js";
-import { getAccountTypeOne } from "../../services/accountTypeOption.js";
 import { getBankAccount, updateBankAccount } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
@@ -32,11 +31,6 @@ export const editAccountUseCase = async ({ accountId, body }: Params) => {
 
     if (!account) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
 
-    // 口座種別照合
-    const accountTypeData = await getAccountTypeOne({ accountType });
-
-    if (!accountTypeData) throw new AppError("INVALID_ACCOUNT_TYPE", 400);
-
     // db更新
     await updateBankAccount({
         account,
@@ -45,7 +39,7 @@ export const editAccountUseCase = async ({ accountId, body }: Params) => {
             bank_name: matchedBank.normalize?.name || matchedBank.name,
             branch_code: matchedBranch.code,
             branch: matchedBranch.normalize?.name || matchedBranch.name,
-            account_type_id: accountTypeData.id,
+            account_type: accountType,
             account_number: accountNumber,
             meigi: meigi,
         },

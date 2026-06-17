@@ -1,5 +1,6 @@
 import { Transaction } from "sequelize";
 import { BankAccount } from "../../models/index.js";
+import { AccountType } from "../bankSnapshot.js";
 
 export type AccountIdParams = {
     accountId: number;
@@ -30,7 +31,7 @@ export type CreateBankShopEditParams = {
         bank_name: string;
         branch_code: string;
         branch: string;
-        account_type_id: number;
+        account_type: AccountType;
         account_number: string;
         meigi: string;
         shop_info_edit_id: number;
@@ -44,7 +45,7 @@ export type CreateBankShopEditAllowNullParams = {
         bank_name: string | null;
         branch_code: string | null;
         branch: string | null;
-        account_type_id: number | null;
+        account_type: AccountType;
         account_number: string | null;
         meigi: string | null;
         shop_info_edit_id: number;
@@ -59,7 +60,7 @@ export type updateBankParams = {
         bank_name: string;
         branch_code: string;
         branch: string;
-        account_type_id: number;
+        account_type: AccountType;
         account_number: string;
         meigi: string;
     };
@@ -72,7 +73,7 @@ export type UpsertBankShopParams = {
         bank_name: string;
         branch_code: string;
         branch: string;
-        account_type_id: number;
+        account_type: AccountType;
         account_number: string;
         meigi: string;
         shop_info_id: number;

@@ -1,5 +1,4 @@
 import {
-    AccountTypeOption,
     Address,
     BankAccount,
     ComOrFreeOption,
@@ -30,13 +29,13 @@ export const getShopEditHasBankAccount = ({ shopEditId }: ShopEditIdParams) => {
                     "id",
                     "bank_name",
                     "branch",
-                    "account_type_id",
+                    "account_type",
                     "account_number",
                     "meigi",
                     "bank_code",
                     "branch_code",
+                    "account_type",
                 ],
-                include: [{ model: AccountTypeOption }],
             },
         ],
     });
@@ -106,10 +105,7 @@ export const getShopEditComFreeConfirm = ({ shopEditId }: ShopEditIdParams) => {
                 model: Name,
                 as: "ContactNameEdit",
             },
-            {
-                model: BankAccount,
-                include: [{ model: AccountTypeOption }],
-            },
+            { model: BankAccount },
             { model: ComOrFreeOption },
             {
                 model: ShopInfo,
@@ -142,10 +138,7 @@ export const getShopEditComFreeConfirm = ({ shopEditId }: ShopEditIdParams) => {
                         model: Name,
                         as: "ContactName",
                     },
-                    {
-                        model: BankAccount,
-                        include: [{ model: AccountTypeOption }],
-                    },
+                    { model: BankAccount },
                     { model: ComOrFreeOption },
                 ],
             },

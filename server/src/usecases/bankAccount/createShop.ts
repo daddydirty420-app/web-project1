@@ -1,5 +1,4 @@
 import { AppError } from "../../errors.js";
-import { getAccountTypeOne } from "../../services/accountTypeOption.js";
 import { upsertBankAccountShop } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
@@ -35,11 +34,6 @@ export const createShopAccount = async ({ shopId, userId, body }: Params) => {
 
     if (!matchedBranch) throw new AppError("INVALID_BRANCH", 400);
 
-    // 口座種別照合
-    const accountTypeData = await getAccountTypeOne({ accountType });
-
-    if (!accountTypeData) throw new AppError("INVALID_ACCOUNT_TYPE", 400);
-
     await upsertBankAccountShop({
         data: {
             shop_info_id: shopId,
@@ -47,9 +41,9 @@ export const createShopAccount = async ({ shopId, userId, body }: Params) => {
             bank_name: matchedBank.normalize?.name || matchedBank.name,
             branch_code: matchedBranch.code,
             branch: matchedBranch.normalize?.name || matchedBranch.name,
-            account_type_id: accountTypeData.id,
             account_number: accountNumber,
             meigi: meigi,
+            account_type: accountType,
         },
     });
 };

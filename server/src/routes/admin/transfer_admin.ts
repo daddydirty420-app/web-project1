@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { AccountTypeOption, BankAccount, Transfer, TransReasonOption, User } from "../../models/index.js";
+import { BankAccount, Transfer, TransReasonOption, User } from "../../models/index.js";
 
 const router = Router();
 
@@ -26,8 +26,7 @@ router.get(
                     { model: TransReasonOption },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [{ model: AccountTypeOption }],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });
@@ -58,8 +57,7 @@ router.get(
                     { model: TransReasonOption },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [{ model: AccountTypeOption }],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });
@@ -95,13 +93,7 @@ router.get(
                     },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [
-                            {
-                                model: AccountTypeOption,
-                                attributes: ["id", "name"],
-                            },
-                        ],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });
@@ -137,13 +129,7 @@ router.get(
                     },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [
-                            {
-                                model: AccountTypeOption,
-                                attributes: ["id", "name"],
-                            },
-                        ],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });
@@ -179,13 +165,7 @@ router.get(
                     },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [
-                            {
-                                model: AccountTypeOption,
-                                attributes: ["id", "name"],
-                            },
-                        ],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });

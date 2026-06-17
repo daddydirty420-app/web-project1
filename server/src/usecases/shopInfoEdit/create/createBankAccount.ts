@@ -1,6 +1,5 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { getAccountTypeOne } from "../../../services/accountTypeOption.js";
 import { createBankAccountShopEdit } from "../../../services/bankAccount.js";
 import { getBankOne } from "../../../services/banks.js";
 import { getBranchOne } from "../../../services/branches.js";
@@ -38,11 +37,6 @@ export const createBankAccountUseCase = async ({ shopId, userId, body }: Params)
 
     if (!matchedBranch) throw new AppError("INVALID_BRANCH", 400);
 
-    // 口座種別照合
-    const accountTypeData = await getAccountTypeOne({ accountType });
-
-    if (!accountTypeData) throw new AppError("INVALID_ACCOUNT_TYPE", 400);
-
     // db登録
     await sequelize.transaction(async (t) => {
         const shopEdit = await createShopEdit({
@@ -59,7 +53,7 @@ export const createBankAccountUseCase = async ({ shopId, userId, body }: Params)
                 bank_name: matchedBank.normalize?.name || matchedBank.name,
                 branch_code: matchedBranch.code,
                 branch: matchedBranch.normalize?.name || matchedBranch.name,
-                account_type_id: accountTypeData.id,
+                account_type: accountType,
                 account_number: accountNumber,
                 meigi: meigi,
                 shop_info_edit_id: shopEdit.id,

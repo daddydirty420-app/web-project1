@@ -5,7 +5,6 @@ import { Op, WhereOptions, fn, literal } from "sequelize";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { validateParams } from "../../middleware/validate/validateParams.js";
 import {
-    AccountTypeOption,
     Address,
     BankAccount,
     ComOrFreeOption,
@@ -34,7 +33,7 @@ router.get(
                       base,
                       {
                           [Op.or]: [
-                              { conpany_name: { [Op.iLike]: `%${keyword}%` } },
+                              { company_name: { [Op.iLike]: `%${keyword}%` } },
                               { shop_name: { [Op.iLike]: `%${keyword}%` } },
                           ],
                       },
@@ -226,8 +225,7 @@ router.get(
                     },
                     {
                         model: BankAccount,
-                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi"],
-                        include: [{ model: AccountTypeOption }],
+                        attributes: ["id", "bank_name", "branch_code", "account_number", "meigi", "account_type"],
                     },
                 ],
             });

@@ -1,13 +1,5 @@
 import { Op } from "sequelize";
-import {
-    AccountTypeOption,
-    Address,
-    BankAccount,
-    ComOrFreeOption,
-    Name,
-    ShopInfo,
-    TodouhukenOption,
-} from "../../models/index.js";
+import { Address, BankAccount, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../../models/index.js";
 import { ShopIdParams, UserIdParams, UserShopIdParams } from "../../types/serviceType/shopInfo.js";
 
 export const getShop = ({ shopId }: ShopIdParams) => {
@@ -24,13 +16,13 @@ export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
                     "id",
                     "bank_name",
                     "branch",
-                    "account_type_id",
+                    "account_type",
                     "account_number",
                     "meigi",
                     "bank_code",
                     "branch_code",
+                    "account_type",
                 ],
-                include: [{ model: AccountTypeOption }],
             },
         ],
     });
@@ -166,8 +158,7 @@ export const getShopSignup5 = ({ shopId }: ShopIdParams) => {
             },
             {
                 model: BankAccount,
-                attributes: ["bank_name", "branch_code", "account_number", "meigi"],
-                include: [{ model: AccountTypeOption }],
+                attributes: ["bank_name", "branch_code", "account_number", "meigi", "account_type"],
             },
         ],
     });

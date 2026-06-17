@@ -6,7 +6,6 @@ import process from "process";
 
 import configFile from "../config/config.js";
 
-import AccountTypeOptionModel from "./account_type_option.js";
 import AddressModel from "./address.js";
 import BankAccountModel from "./bank_account.js";
 import BanksModel from "./banks.js";
@@ -91,7 +90,6 @@ const db: any = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.AccountTypeOption = AccountTypeOptionModel;
 db.Address = AddressModel;
 db.BankAccount = BankAccountModel;
 db.Banks = BanksModel;
@@ -169,7 +167,6 @@ Object.keys(db).forEach((modelName) => {
 });
 
 export const {
-    AccountTypeOption,
     Address,
     BankAccount,
     Banks,
