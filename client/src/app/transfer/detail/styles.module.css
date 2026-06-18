@@ -1,0 +1,175 @@
+.transferSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--background);
+    border: 1px solid var(--gray-line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-mini);
+    overflow: hidden;
+}
+
+.columnDiv {
+    padding: var(--space-xs) 20px;
+}
+
+.columnDiv:not(:last-child) {
+    border-bottom: solid 0.5px var(--gray-line);
+}
+
+.moneyDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.title {
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+.transMoney {
+    font-size: var(--heading1);
+    font-weight: 700;
+    color: var(--h-color);
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.transMoneySubFlex {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.transMoneySub1ColumnFlex {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    background: var(--gray-background);
+    border-radius: 8px;
+}
+
+.smallTitle {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.smallMoney {
+    font-size: var(--mid-text);
+    font-weight: 700;
+    color: var(--text);
+}
+
+.dateDiv {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.transDateDiv,
+.requestDateDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.transDateTitle,
+.requestTitle {
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.transDate {
+    font-size: var(--small-heading2);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.requestDate {
+    font-size: var(--mid-text);
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.idDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.idTitle {
+    font-size: var(--caption);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.id {
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--gray-background);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin: 0;
+}
+
+.bankAria {
+    background: var(--gray-background);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.bankTitle {
+    font-size: var(--caption);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+}
+
+.bankSnapshotDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bankTextFlex {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bankText {
+    font-size: var(--mid-text);
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+}
+
+.bankTextFlex:last-child .bankText {
+    font-weight: 700;
+    color: var(--h-color);
+}
+
+@media (max-width: 480px) {
+    .columnDiv {
+        padding: 16px;
+    }
+
+    .dateDiv {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
