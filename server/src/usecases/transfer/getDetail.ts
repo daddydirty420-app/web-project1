@@ -15,10 +15,12 @@ export const getTransferDetailUseCase = async ({ transId }: Params) => {
 
     if (!transfer) throw new AppError("TRANSFER_NOT_FOUND", 404);
 
+    const plainTransfer = transfer.get({ plain: true });
+
     return {
-        ...transfer,
+        ...plainTransfer,
         bank_snapshot: {
-            ...transfer.bank_snapshot,
+            ...plainTransfer.bank_snapshot,
             account_number: maskAccountNumber({ accountNumber: transfer.bank_snapshot.account_number }),
         },
     };

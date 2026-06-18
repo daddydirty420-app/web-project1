@@ -1,20 +1,19 @@
-import { Container, TitleAndBack } from "@/components";
+import { Back, Container } from "@/components";
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { ReactNode } from "react";
 
 type Props = {
-    title: string;
     children: ReactNode;
 };
 
-export default function DetailContainer({ title, children }: Props) {
+export default function DetailContainer({ children }: Props) {
     return (
         <>
             <Header />
 
             <Container header>
-                <TitleAndBack title={title} url="/transfer/history" />
+                <Back url="/transfer/history" />
                 {children}
             </Container>
 

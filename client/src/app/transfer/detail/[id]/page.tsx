@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
     const transfer = data.transfer;
 
     return (
-        <DetailContainer title={`振込申請 #${transfer.transfer_id}`}>
+        <DetailContainer>
             <TransferDetail transfer={transfer} />
         </DetailContainer>
     );
