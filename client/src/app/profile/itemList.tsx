@@ -191,7 +191,6 @@ export const ItemList = ({ userId, defaultVideoList, adminPage }: Props) => {
                                                     ￥{data.Sale.before_price.toLocaleString()}
                                                 </p>
                                             )}
-                                            {data.status === "soldout" && <p className={styles.saleSold}>SOLD OUT</p>}
                                             <h3 className={clsx(styles.price, data.Sale?.sale_flag ? styles.sale : "")}>
                                                 ￥{data.price.toLocaleString()}
                                             </h3>
