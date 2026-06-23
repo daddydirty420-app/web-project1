@@ -1,21 +1,28 @@
-FROM node:22
+FROM node:22 AS builder
 
-# ffmpegとffprobeをインストール
 RUN apt-get update && apt-get install -y ffmpeg
 
 WORKDIR /app
 
-# package.jsonコピー
 COPY package*.json ./
+RUN npm ci
 
-# 依存インストール
-RUN npm install
-
-# ソースコピー
 COPY . .
 
-# ポート
+RUN npm run build
+
+
+FROM node:22
+
+RUN apt-get update && apt-get install -y ffmpeg
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
 EXPOSE 5000
 
-# 開発用起動
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
