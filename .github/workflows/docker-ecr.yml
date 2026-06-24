@@ -38,6 +38,7 @@ jobs:
                   docker build -t $ECR_REGISTRY/$CLIENT_REPO:latest ./client
                   docker build -t $ECR_REGISTRY/$CLIENT_REPO:${{ github.sha }} ./client
                   docker push $ECR_REGISTRY/$CLIENT_REPO:latest
+                  docker push $ECR_REGISTRY/$CLIENT_REPO:${{ github.sha }}
 
             # =====================
             # SERVER
@@ -47,3 +48,4 @@ jobs:
                   docker build -t $ECR_REGISTRY/$SERVER_REPO:latest ./server
                   docker build -t $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }} ./server
                   docker push $ECR_REGISTRY/$SERVER_REPO:latest
+                  docker push $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }}
