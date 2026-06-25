@@ -30,8 +30,8 @@ services:
         depends_on:
             - server
         environment:
-            - NODE_ENV: production
-            - PORT: 3000
+            - NODE_ENV=production
+            - PORT=3000
 
 volumes:
     db_data:
