@@ -83,7 +83,8 @@
         "ffprobe",
         "libx264",
         "tabler",
-        "appleboy"
+        "appleboy",
+        "conta"
     ],
     "remote.autoForwardPortsFallback": 0
 }

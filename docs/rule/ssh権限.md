@@ -1,6 +1,6 @@
-### SSH権限設定
+# SSH権限設定
 
-# SSH権限設定ターミナル
+### SSH権限設定ターミナル
 
 nano ~/.ssh/config
 
