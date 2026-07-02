@@ -82,7 +82,8 @@
         "Ngrams",
         "ffprobe",
         "libx264",
-        "tabler"
+        "tabler",
+        "appleboy"
     ],
     "remote.autoForwardPortsFallback": 0
 }

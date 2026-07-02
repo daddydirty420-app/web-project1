@@ -30,9 +30,7 @@ jobs:
                   aws ecr get-login-password --region ${{ env.AWS_REGION }} | \
                   docker login --username AWS --password-stdin $ECR_REGISTRY
 
-            # =====================
-            # CLIENT
-            # =====================
+            # client
             - name: Build & Push client
               run: |
                   docker build -t $ECR_REGISTRY/$CLIENT_REPO:latest ./client
@@ -40,12 +38,21 @@ jobs:
                   docker push $ECR_REGISTRY/$CLIENT_REPO:latest
                   docker push $ECR_REGISTRY/$CLIENT_REPO:${{ github.sha }}
 
-            # =====================
-            # SERVER
-            # =====================
+            # server
             - name: Build & Push server
               run: |
                   docker build -t $ECR_REGISTRY/$SERVER_REPO:latest ./server
                   docker build -t $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }} ./server
                   docker push $ECR_REGISTRY/$SERVER_REPO:latest
                   docker push $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }}
+            
+            # deploy
+            - name: EC2 to Deploy
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.EC2_HOST }}
+                username: ubuntu
+                key: ${{ secrets.EC2_PRIVATE_KEY }}
+                script: |
+                  cd ~/web-project1
+                  ./scripts/deploy.sh
