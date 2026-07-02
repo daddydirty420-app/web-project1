@@ -146,22 +146,22 @@ aws ecr get-login-password --region ap-northeast-1 \
     --username AWS \
     --password-stdin 221082170856.dkr.ecr.ap-northeast-1.amazonaws.com
 
+echo "Clean old Docker cache..."
+docker system prune -af
+
 echo "Pull latest images..."
 docker compose -f docker-compose.prod.yml pull
 
 echo "Restart containers..."
 docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
-echo "Remove unused images..."
-docker image prune -f
-
 echo "=== Deploy Complete ==="
 ```
 
 1. ECRログイン
-2. 最新のECRイメージをdocker-composeにpull
-3. コンテナを再起動
-4. 古い未使用のECRイメージを削除
+2. 古い未使用のECRイメージを削除
+3. 最新のECRイメージをdocker-composeにpull
+4. コンテナを再起動
 
 ---
 
