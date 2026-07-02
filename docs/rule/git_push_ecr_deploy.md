@@ -72,7 +72,7 @@ echo "🎉 Release complete!"
 ### release.shの変更方法
 
 ```
-nano ./scripts/develop.sh
+nano scripts/release.sh
 ```
 
 これをローカルの **~/project** ターミナルで実行
@@ -140,6 +140,12 @@ echo "=== Deploy Start ==="
 
 cd ~/web-project1
 
+echo "Login to ECR..."
+aws ecr get-login-password --region ap-northeast-1 \
+| docker login \
+    --username AWS \
+    --password-stdin 221082170856.dkr.ecr.ap-northeast-1.amazonaws.com
+
 echo "Pull latest images..."
 docker compose -f docker-compose.prod.yml pull
 
@@ -152,9 +158,10 @@ docker image prune -f
 echo "=== Deploy Complete ==="
 ```
 
-1. 最新のECRイメージをdocker-composeにpull
-2. コンテナを再起動
-3. 古い未使用のECRイメージを削除
+1. ECRログイン
+2. 最新のECRイメージをdocker-composeにpull
+3. コンテナを再起動
+4. 古い未使用のECRイメージを削除
 
 ---
 
