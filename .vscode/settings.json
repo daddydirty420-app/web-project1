@@ -84,7 +84,10 @@
         "libx264",
         "tabler",
         "appleboy",
-        "conta"
+        "conta",
+        "webproject1",
+        "neondb",
+        "pipefail"
     ],
     "remote.autoForwardPortsFallback": 0
 }
