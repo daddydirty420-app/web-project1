@@ -4,7 +4,7 @@ services:
     db:
         image: postgres:17
         env_file:
-            - .env
+            - .env.prod
         container_name: my_postgres
         restart: always
         volumes:
@@ -13,7 +13,7 @@ services:
     server:
         image: 221082170856.dkr.ecr.ap-northeast-1.amazonaws.com/web-project1/server:latest
         env_file:
-            - .env
+            - .env.prod
         restart: always
         ports:
             - "5000:5000"
@@ -23,7 +23,7 @@ services:
     client:
         image: 221082170856.dkr.ecr.ap-northeast-1.amazonaws.com/web-project1/client:latest
         env_file:
-            - .env
+            - .env.prod
         restart: always
         ports:
             - "3000:3000"
