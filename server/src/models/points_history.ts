@@ -1,6 +1,7 @@
 import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
+import PointReasonOption from "./point_reason_option.js";
 import User from "./user.js";
 
 export class PointsHistory extends Model {
@@ -8,6 +9,7 @@ export class PointsHistory extends Model {
     declare points: number | null;
     declare used_points: number | null;
     declare user_id: number;
+    declare reason_id: number;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -15,10 +17,14 @@ export class PointsHistory extends Model {
         PointsHistory.belongsTo(User, {
             foreignKey: "user_id",
         });
+        PointsHistory.belongsTo(PointReasonOption, {
+            foreignKey: "reason_id",
+        });
     }
 
     static associations: {
         User: Association<PointsHistory, User>;
+        PointReasonOption: Association<PointsHistory, PointReasonOption>;
     };
 }
 
@@ -36,6 +42,10 @@ PointsHistory.init(
             defaultValue: 0,
         },
         user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        reason_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
