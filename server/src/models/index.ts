@@ -1,47 +1,47 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { Sequelize } from "sequelize";
 import process from "process";
+import { Sequelize } from "sequelize";
 
 import configFile from "../config/config.js";
 
 import AddressModel from "./address.js";
 import BankAccountModel from "./bank_account.js";
 import BanksModel from "./banks.js";
-import BlogCategoryOptionModel from "./blog_category_option.js";
 import BlogModel from "./blog.js";
+import BlogCategoryOptionModel from "./blog_category_option.js";
 import BranchesModel from "./branches.js";
 import BrandAliasesModel from "./brand_aliases.js";
 import BrandsModel from "./brands.js";
-import CancelFeeReturnOptionModel from "./cancel_fee_return_option.js";
 import CancelModel from "./cancel.js";
+import CancelFeeReturnOptionModel from "./cancel_fee_return_option.js";
 import CartModel from "./cart.js";
 import CategoriesModel from "./categories.js";
 import ChatModel from "./chat.js";
 import ComOrFreeOptionModel from "./com_or_free_option.js";
-import CommentLikeModel from "./comment_like.js";
-import CommentReportOptionModel from "./comment_report_option.js";
-import CommentReportModel from "./comment_report.js";
 import CommentModel from "./comment.js";
-import DeliveryStatusOptionModel from "./delivery_status_option.js";
+import CommentLikeModel from "./comment_like.js";
+import CommentReportModel from "./comment_report.js";
+import CommentReportOptionModel from "./comment_report_option.js";
 import DeliveryModel from "./delivery.js";
+import DeliveryStatusOptionModel from "./delivery_status_option.js";
 import FollowModel from "./follow.js";
 import GenderOptionModel from "./gender_option.js";
 import IdCardModel from "./id_card.js";
 import InquiryModel from "./inquiry.js";
-import ItemBuyerReportOptionModel from "./item_buyer_report_option.js";
-import ItemBuyerReportModel from "./item_buyer_report.js";
-import ItemConditionOptionModel from "./item_condition_option.js";
-import ItemDeletedModel from "./item_deleted.js";
-import ItemDeleteLogsModel from "./item_delete_logs.js";
-import ItemLikeModel from "./item_like.js";
-import ItemReportOptionModel from "./item_report_option.js";
-import ItemReportModel from "./item_report.js";
-import ItemShippingProfileModel from "./item_shipping_profile.js";
 import ItemModel from "./item.js";
-import JournalReasonOptionModel from "./journal_reason_option.js";
+import ItemBuyerReportModel from "./item_buyer_report.js";
+import ItemBuyerReportOptionModel from "./item_buyer_report_option.js";
+import ItemConditionOptionModel from "./item_condition_option.js";
+import ItemDeleteLogsModel from "./item_delete_logs.js";
+import ItemDeletedModel from "./item_deleted.js";
+import ItemLikeModel from "./item_like.js";
+import ItemReportModel from "./item_report.js";
+import ItemReportOptionModel from "./item_report_option.js";
+import ItemShippingProfileModel from "./item_shipping_profile.js";
 import JournalModel from "./journal.js";
+import JournalReasonOptionModel from "./journal_reason_option.js";
 import KanjyoOptionModel from "./kanjyo_option.js";
 import NameModel from "./name.js";
 import NotificationModel from "./notification.js";
@@ -49,6 +49,7 @@ import OrderDeletedSystemsModel from "./order_deleted.js";
 import OrdersModel from "./orders.js";
 import PaymentMethodOptionModel from "./payment_method_option.js";
 import PointConversionLogsModel from "./point_conversion_logs.js";
+import PointReasonOptionModel from "./point_reason_option.js";
 import PointsHistoryModel from "./points_history.js";
 import PointsUriageOverModel from "./points_uriage_over.js";
 import ReferenceCodeModel from "./reference_code.js";
@@ -59,8 +60,8 @@ import SearchModel from "./search.js";
 import SearchWordsModel from "./search_words.js";
 import ShippingDayOptionModel from "./shipping_day_option.js";
 import ShippingServiceOptionModel from "./shipping_service_option.js";
-import ShopInfoEditModel from "./shop_info_edit.js";
 import ShopInfoModel from "./shop_info.js";
+import ShopInfoEditModel from "./shop_info_edit.js";
 import StarHistoryModel from "./star_history.js";
 import SuggestWordsModel from "./suggest_words.js";
 import TodouhukenOptionModel from "./todouhuken_option.js";
@@ -133,6 +134,7 @@ db.OrderDeletedSystems = OrderDeletedSystemsModel;
 db.Orders = OrdersModel;
 db.PaymentMethodOption = PaymentMethodOptionModel;
 db.PointConversionLogs = PointConversionLogsModel;
+db.PointReasonOption = PointReasonOptionModel;
 db.PointsHistory = PointsHistoryModel;
 db.PointsUriageOver = PointsUriageOverModel;
 db.ReferenceCode = ReferenceCodeModel;
@@ -210,6 +212,7 @@ export const {
     Orders,
     PaymentMethodOption,
     PointConversionLogs,
+    PointReasonOption,
     PointsHistory,
     PointsUriageOver,
     ReferenceCode,

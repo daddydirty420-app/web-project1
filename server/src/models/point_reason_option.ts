@@ -1,12 +1,12 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-export class PaymentMethodOption extends Model {
+export class PointReasonOption extends Model {
     declare id: number;
     declare name: string;
 }
 
-PaymentMethodOption.init(
+PointReasonOption.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -21,11 +21,11 @@ PaymentMethodOption.init(
     },
     {
         sequelize,
-        modelName: "PaymentMethodOption",
-        tableName: "payment_method_option",
+        modelName: "PointReasonOption",
+        tableName: "point_reason_option",
         freezeTableName: true,
         timestamps: false,
     },
 );
 
-export default PaymentMethodOption;
+export default PointReasonOption;
