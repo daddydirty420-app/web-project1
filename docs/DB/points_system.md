@@ -6,6 +6,8 @@
 - point_lots: ポイント有効期限、使用歴（先入れ先出し法）
 - point_reason_option: ポイント獲得・利用に対する理由マスターテーブル
 
+- User.points（現在残高）
+
 ## PointsHistory（ポイント獲得・利用履歴）
 
 ### SQL
@@ -40,6 +42,8 @@ CREATE TABLE IF NOT EXISTS public.points_history
 
 ### 更新
 
+- INSERTのみ
+
 ## PointLots
 
 ### SQL
@@ -55,3 +59,8 @@ CREATE TABLE IF NOT EXISTS public.points_history
     - 先入れ先出し法でポイントを使用
         - 例：10/18 100pt獲得、10/20 50pt獲得、10/21 130pt利用した場合
         - 10/18 used_points: 100、10/20 used_points: 30（残り20pt使用可能）
+
+### 更新
+
+- 獲得時 INSERT
+- 利用時 UPDATE（used_point更新）
