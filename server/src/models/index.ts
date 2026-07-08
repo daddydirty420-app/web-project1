@@ -49,6 +49,7 @@ import OrderDeletedSystemsModel from "./order_deleted.js";
 import OrdersModel from "./orders.js";
 import PaymentMethodOptionModel from "./payment_method_option.js";
 import PointConversionLogsModel from "./point_conversion_logs.js";
+import PointLotsModel from "./point_lots.js";
 import PointReasonOptionModel from "./point_reason_option.js";
 import PointsHistoryModel from "./points_history.js";
 import PointsUriageOverModel from "./points_uriage_over.js";
@@ -135,6 +136,7 @@ db.Orders = OrdersModel;
 db.PaymentMethodOption = PaymentMethodOptionModel;
 db.PointConversionLogs = PointConversionLogsModel;
 db.PointReasonOption = PointReasonOptionModel;
+db.PointLots = PointLotsModel;
 db.PointsHistory = PointsHistoryModel;
 db.PointsUriageOver = PointsUriageOverModel;
 db.ReferenceCode = ReferenceCodeModel;
@@ -213,6 +215,7 @@ export const {
     PaymentMethodOption,
     PointConversionLogs,
     PointReasonOption,
+    PointLots,
     PointsHistory,
     PointsUriageOver,
     ReferenceCode,
