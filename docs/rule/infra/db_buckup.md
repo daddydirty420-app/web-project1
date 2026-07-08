@@ -10,6 +10,12 @@
 ./scripts/sync-db-dev.sh
 ```
 
+実行権限が無い場合
+
+```
+chmod +x scripts/sync-db-dev.sh
+```
+
 ### スクリプト設定時
 
 ローカルのターミナルから編集
