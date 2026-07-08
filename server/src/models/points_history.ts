@@ -7,7 +7,6 @@ import User from "./user.js";
 export class PointsHistory extends Model {
     declare id: number;
     declare points: number | null;
-    declare used_points: number | null;
     declare user_id: number;
     declare reason_id: number;
     declare createdAt: Date;
@@ -37,10 +36,6 @@ PointsHistory.init(
             autoIncrement: true,
         },
         points: DataTypes.INTEGER,
-        used_points: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-        },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
