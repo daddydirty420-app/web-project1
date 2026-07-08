@@ -90,6 +90,28 @@ export default = {
 };
 ```
 
+### カラム削除
+
+```
+export default = {
+    async up (queryInterface, Sequelize) {
+        await queryInterface.removeColumn("テーブル名", "カラム名");
+    },
+
+    async down (queryInterface, Sequelize) {
+        await queryInterface.addColumn("テーブル名", "カラム名", {
+            制約
+
+            Example:
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+        });
+    }
+};
+```
+
 ### 外部キー追加
 
 ```
