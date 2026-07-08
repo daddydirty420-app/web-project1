@@ -1,7 +1,7 @@
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
+export default {
     async up(queryInterface, Sequelize) {
         // point_reason_option作成
         await queryInterface.createTable("point_reason_option", {
