@@ -8,6 +8,8 @@ npx sequelize-cli migration:generate --name ファイル名（適当に）
 
 ## マイグレーションファイルの書き方
 
+### テーブル作成
+
 ```
 'use strict';
 
@@ -15,7 +17,7 @@ npx sequelize-cli migration:generate --name ファイル名（適当に）
 module.exports = {
     async up (queryInterface, Sequelize) {
         await queryInterface.createTable("テーブル名", {
-            追加するカラム
+            カラム
 
             Example:
             id: {
@@ -33,6 +35,62 @@ module.exports = {
 };
 ```
 
-このタイミングでdevelopにgit pushしても可
+### カラム追加
+
+```
+module.exports = {
+    async up (queryInterface, Sequelize) {
+        await queryInterface.addColumn("テーブル名", "カラム名", {
+            制約
+
+            Example:
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+        });
+    },
+
+    async down (queryInterface, Sequelize) {
+        await queryInterface.removeColumn("テーブル名", "カラム名");
+    }
+};
+```
+
+### 外部キー追加
+
+```
+module.exports = {
+    async up (queryInterface, Sequelize) {
+        await queryInterface.addConstRaint("テーブル名", {
+            外部キー制約
+
+            Example:
+            fields: ["カラム名"],
+            type: "foreign key",
+            name: "fk_points_history_カラム名", // 制約名
+            references: {
+                table: "リレーション先テーブル名",
+                field: "id（主キー）",
+            },
+            onUpdate: "",
+            onDelete: "",
+        });
+    },
+
+    async down (queryInterface, Sequelize) {
+        await queryInterface.removeConstraint("テーブル名", "制約名");
+    }
+};
+```
+
+#### onUpdate, onDelete
+
+```
+CASCADE    親レコードが削除されたら子レコードも削除
+SET NULL   外部キーをNULLにする
+RESTRICT   子レコードがある場合削除禁止
+```
+
 
 ## マイグレーション実行
