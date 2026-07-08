@@ -87,7 +87,11 @@
         "conta",
         "webproject1",
         "neondb",
-        "pipefail"
+        "pipefail",
+        "pkey",
+        "fkey",
+        "MINVALUE",
+        "MAXVALUE"
     ],
     "remote.autoForwardPortsFallback": 0
 }
