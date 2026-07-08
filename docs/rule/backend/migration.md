@@ -2,6 +2,8 @@
 
 ## マイグレーションファイル作成
 
+/serverのコマンドで実行
+
 ```
 npx sequelize-cli migration:generate --name ファイル名（適当に）
 ```
