@@ -8,13 +8,44 @@ npx sequelize-cli migration:generate --name ファイル名（適当に）
 
 ## マイグレーションファイルの書き方
 
+### CommonJSからESMへの書き換え
+
+npx sequelize-cli migration:generateだと、CommonJSでファイルが生成されるが、package.jsonに"type": "module"と設定しているため、**マイグレーションファイルをCommonJSからESMに書き換える必要がある**。
+
+```
+CommonJS
+module.exports = {
+    async up(...) {
+        ...
+    },
+
+    async down(...) {
+        ...
+    },
+};
+
+ESM
+export default {
+    async up(...) {
+        ...
+    },
+
+    async down(...) {
+        ...
+    },
+};
+
+```
+
+**module.exports =**の部分を**export default**に書き換えるだけ！
+
 ### テーブル作成
 
 ```
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
+export default = {
     async up (queryInterface, Sequelize) {
         await queryInterface.createTable("テーブル名", {
             カラム
@@ -38,7 +69,7 @@ module.exports = {
 ### カラム追加
 
 ```
-module.exports = {
+export default = {
     async up (queryInterface, Sequelize) {
         await queryInterface.addColumn("テーブル名", "カラム名", {
             制約
@@ -60,7 +91,7 @@ module.exports = {
 ### 外部キー追加
 
 ```
-module.exports = {
+export default {
     async up (queryInterface, Sequelize) {
         await queryInterface.addConstRaint("テーブル名", {
             外部キー制約
@@ -94,3 +125,9 @@ RESTRICT   子レコードがある場合削除禁止
 
 
 ## マイグレーション実行
+
+/serverのコマンドで実行
+
+```
+npx sequelize-cli db:migrate
+```
