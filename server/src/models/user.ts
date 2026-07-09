@@ -17,6 +17,7 @@ import Name from "./name.js";
 import GenderOption from "./gender_option.js";
 import PointsHistory from "./points_history.js";
 import UriagekinHistory from "./uriagekin_history.js";
+import PointLots from "./point_lots.js";
 
 export class User extends Model {
     declare id: number;
@@ -100,6 +101,9 @@ export class User extends Model {
         User.hasMany(PointsHistory, {
             foreignKey: "user_id",
         });
+        User.hasMany(PointLots, {
+            foreignKey: "user_id",
+        });
         User.hasMany(UriagekinHistory, {
             foreignKey: "user_id",
         });
@@ -121,6 +125,7 @@ export class User extends Model {
         Name: Association<User, Name>;
         GenderOption: Association<User, GenderOption>;
         PointsHistory: Association<User, PointsHistory>;
+        PointLots: Association<User, PointLots>;
         UriagekinHistory: Association<User, UriagekinHistory>;
     };
 }
