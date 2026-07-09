@@ -48,7 +48,6 @@ import NotificationModel from "./notification.js";
 import OrderDeletedSystemsModel from "./order_deleted.js";
 import OrdersModel from "./orders.js";
 import PaymentMethodOptionModel from "./payment_method_option.js";
-import PointConversionLogsModel from "./point_conversion_logs.js";
 import PointLotsModel from "./point_lots.js";
 import PointReasonOptionModel from "./point_reason_option.js";
 import PointsHistoryModel from "./points_history.js";
@@ -134,7 +133,6 @@ db.Notification = NotificationModel;
 db.OrderDeletedSystems = OrderDeletedSystemsModel;
 db.Orders = OrdersModel;
 db.PaymentMethodOption = PaymentMethodOptionModel;
-db.PointConversionLogs = PointConversionLogsModel;
 db.PointReasonOption = PointReasonOptionModel;
 db.PointLots = PointLotsModel;
 db.PointsHistory = PointsHistoryModel;
@@ -213,7 +211,6 @@ export const {
     OrderDeleted,
     Orders,
     PaymentMethodOption,
-    PointConversionLogs,
     PointReasonOption,
     PointLots,
     PointsHistory,
