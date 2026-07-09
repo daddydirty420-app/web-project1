@@ -1,23 +1,24 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import Follow from "./follow.js";
-import Cart from "./cart.js";
-import CommentLike from "./comment_like.js";
-import ItemLike from "./item_like.js";
-import Item from "./item.js";
-import ReferenceCode from "./reference_code.js";
-import Notification from "./notification.js";
-import IdCard from "./id_card.js";
-import ShopInfo from "./shop_info.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
-import WatchHistory from "./watch_history.js";
-import Name from "./name.js";
+import Cart from "./cart.js";
+import CommentLike from "./comment_like.js";
+import Follow from "./follow.js";
 import GenderOption from "./gender_option.js";
-import PointsHistory from "./points_history.js";
-import UriagekinHistory from "./uriagekin_history.js";
+import IdCard from "./id_card.js";
+import Item from "./item.js";
+import ItemLike from "./item_like.js";
+import Name from "./name.js";
+import Notification from "./notification.js";
 import PointLots from "./point_lots.js";
+import PointsHistory from "./points_history.js";
+import ReferenceCode from "./reference_code.js";
+import ShopInfo from "./shop_info.js";
+import UriagekinHistory from "./uriagekin_history.js";
+import UriagekinLots from "./uriagekin_lots.js";
+import WatchHistory from "./watch_history.js";
 
 export class User extends Model {
     declare id: number;
@@ -107,6 +108,9 @@ export class User extends Model {
         User.hasMany(UriagekinHistory, {
             foreignKey: "user_id",
         });
+        User.hasMany(UriagekinLots, {
+            foreignKey: "user_id",
+        });
     }
 
     static associations: {
@@ -127,6 +131,7 @@ export class User extends Model {
         PointsHistory: Association<User, PointsHistory>;
         PointLots: Association<User, PointLots>;
         UriagekinHistory: Association<User, UriagekinHistory>;
+        UriagekinLots: Association<User, UriagekinLots>;
     };
 }
 

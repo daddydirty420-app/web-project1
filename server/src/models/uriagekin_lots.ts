@@ -3,26 +3,27 @@ import sequelize from "../db.js";
 
 import User from "./user.js";
 
-export class UriagekinHistory extends Model {
+export class UriagekinLots extends Model {
     declare id: number;
-    declare uriagekin: number | null;
-    declare used_uriagekin: number | null;
+    declare uriagekin: number;
     declare user_id: number;
+    declare used_Uriage: number;
+    declare expires_at: Date;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        UriagekinHistory.belongsTo(User, {
+        UriagekinLots.belongsTo(User, {
             foreignKey: "user_id",
         });
     }
 
     static associations: {
-        User: Association<UriagekinHistory, User>;
+        User: Association<UriagekinLots, User>;
     };
 }
 
-UriagekinHistory.init(
+UriagekinLots.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -30,23 +31,31 @@ UriagekinHistory.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        uriagekin: DataTypes.INTEGER,
-        used_uriagekin: {
+        uriagekin: {
             type: DataTypes.INTEGER,
-            defaultValue: 0,
+            allowNull: false,
         },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        used_uriagekin: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+        },
+        expires_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
     },
     {
         sequelize,
-        modelName: "UriagekinHistory",
-        tableName: "uriagekin_history",
+        modelName: "UriagekinLots",
+        tableName: "uriagekin_lots",
         freezeTableName: true,
         timestamps: true,
     },
 );
 
-export default UriagekinHistory;
+export default UriagekinLots;

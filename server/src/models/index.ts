@@ -71,6 +71,7 @@ import TokenSignupVerificationModel from "./token_signup_verification.js";
 import TransReasonOptionModel from "./trans_reason_option.js";
 import TransferModel from "./transfer.js";
 import UriagekinHistoryModel from "./uriagekin_history.js";
+import UriagekinLotsModel from "./uriagekin_lots.js";
 import UserModel from "./user.js";
 import UserDeleteLogsModel from "./user_delete_logs.js";
 import VideoModel from "./video.js";
@@ -156,6 +157,7 @@ db.TokenSignupVerification = TokenSignupVerificationModel;
 db.TransReasonOption = TransReasonOptionModel;
 db.Transfer = TransferModel;
 db.UriagekinHistory = UriagekinHistoryModel;
+db.UriagekinLots = UriagekinLotsModel;
 db.User = UserModel;
 db.UserDeleteLogs = UserDeleteLogsModel;
 db.Video = VideoModel;
@@ -234,6 +236,7 @@ export const {
     TransReasonOption,
     Transfer,
     UriagekinHistory,
+    UriagekinLots,
     User,
     UserDeleteLogs,
     Video,
