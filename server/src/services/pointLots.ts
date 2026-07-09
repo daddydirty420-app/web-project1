@@ -1,21 +1,8 @@
-import { Transaction } from "sequelize";
 import { PointLots } from "../models/index.js";
+import { CreatePointLotsParams, GetExpiredAllParams, UpdatePointLotsParams } from "../types/serviceType/pointLots.js";
 
-type CreatePointLotsParams = {
-    data: {
-        points: number;
-        user_id: number;
-        expires_at: Date;
-    };
-    transaction?: Transaction;
-};
-
-type UpdatePointLotsParams = {
-    lot: InstanceType<typeof PointLots>;
-    data: {
-        used_points: number;
-    };
-    transaction?: Transaction;
+export const getExpiredAll = ({ where }: GetExpiredAllParams) => {
+    return PointLots.findAll({ where });
 };
 
 export const createPointLots = async ({ data, transaction }: CreatePointLotsParams) => {
