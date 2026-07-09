@@ -4,8 +4,7 @@ import { createNotification } from "../../services/notification.js";
 import { createTransfer } from "../../services/transfer.js";
 import { updateUsedUriagekin } from "../../services/uriagekinHistory.js";
 import { updateUriageUser } from "../../services/users/command.js";
-import { getUserHasUriagekinBank } from "../../services/users/query.js";
-import { AccountType } from "../../types/bankSnapshot.js";
+import { getUserHasUriagekinPointBank } from "../../services/users/query.js";
 import { generateTransferId } from "../../utils/generateTransferId.js";
 
 type Params = {
@@ -38,7 +37,7 @@ export const createTransferRequestUseCase = async ({ userId, requestValue, limit
     nextNextFriday.setDate(thisFriday.getDate() + 14);
 
     // user取得
-    const user = await getUserHasUriagekinBank({ userId });
+    const user = await getUserHasUriagekinPointBank({ userId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
