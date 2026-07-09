@@ -2,7 +2,7 @@ import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createJournal } from "../../services/journal.js";
 import { createNotification } from "../../services/notification.js";
-import { CreatePointConversionLogs } from "../../services/pointConversionLogs.js";
+import { createPointLots } from "../../services/pointLots.js";
 import { createPointsHistory } from "../../services/pointsHistory.js";
 import { updateUsedUriagekin } from "../../services/uriagekinHistory.js";
 import { updatePointsUriageUser } from "../../services/users/command.js";
@@ -78,19 +78,17 @@ export const createTransferPointsUseCase = async ({ userId, value, limit }: Para
         await createPointsHistory({
             data: {
                 points: value,
+                reason_id: 3,
                 user_id: userId,
             },
             transaction: t,
         });
 
-        await CreatePointConversionLogs({
+        await createPointLots({
             data: {
-                converted_points: value,
-                before_points: oldPoints,
-                after_points: oldPoints + value,
-                reason: "売上金ポイント変換",
-                plus: true,
+                points: value,
                 user_id: userId,
+                expires_at: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000), // 180日後
             },
             transaction: t,
         });

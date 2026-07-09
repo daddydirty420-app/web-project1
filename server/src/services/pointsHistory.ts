@@ -4,6 +4,7 @@ import { PointsHistory } from "../models/index.js";
 type CreatePointsHistoryParams = {
     data: {
         points: number;
+        reason_id: number;
         user_id: number;
     };
     transaction?: Transaction;
