@@ -21,7 +21,6 @@ import { updateNameUserLogicalDelete } from "../../../services/name.js";
 import { createNotification, deleteNotificationUserLogical } from "../../../services/notification.js";
 import { bulkCreateOrderDeleted } from "../../../services/orderDeleted.js";
 import { getTradingOrdersAll, updateOrdersStatus } from "../../../services/orders.js";
-import { updatePointsHistory } from "../../../services/pointsHistory.js";
 import { createOverConfiscated } from "../../../services/pointsUriageOver.js";
 import { deleteInputCodeUserLogical, deleteOutputCodeUserLogical } from "../../../services/referenceCode.js";
 import { updateShopUserLogicalDelete } from "../../../services/shopInfo/command.js";
@@ -29,10 +28,11 @@ import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } f
 import { updateUsedUriagekin } from "../../../services/uriagekinHistory.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
 import { updateUserLogicalDelete } from "../../../services/users/command.js";
-import { getUserHasBankAccount, getUserHasUriagekinBank } from "../../../services/users/query.js";
+import { getUserHasBankAccount, getUserHasUriagekinPointBank } from "../../../services/users/query.js";
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
+import { updatePointLots } from "../../../services/pointLots.js";
 
 type Params = {
     pageUserId: number;
@@ -69,7 +69,7 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
     const nowDate = new Date();
 
     // user取得
-    const user = await getUserHasUriagekinBank({ userId: pageUserId });
+    const user = await getUserHasUriagekinPointBank({ userId: pageUserId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
@@ -113,21 +113,21 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
             }
         }
 
-        // PointsHistory.used_points
-        if (user.PointsHistories) {
-            for (const pointsHistory of user.PointsHistories) {
+        // PointLots.used_points
+        if (user.PointLots) {
+            for (const pointLot of user.PointLots) {
                 if (deletePoints <= 0) break;
 
-                const available = Number(pointsHistory.points);
-                const usedPoints = Number(pointsHistory.used_points) || 0;
+                const available = Number(pointLot.points);
+                const usedPoints = Number(pointLot.used_points) || 0;
                 const remain = available - usedPoints;
 
                 if (remain <= 0) continue;
 
                 const used = Math.min(remain, deletePoints);
 
-                await updatePointsHistory({
-                    history: pointsHistory,
+                await updatePointLots({
+                    lot: pointLot,
                     data: {
                         used_points: usedPoints + used,
                     },
