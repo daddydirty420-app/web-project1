@@ -1,4 +1,4 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 export class PointsUriageOver extends Model {
