@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { createJournal } from "../../../services/journal.js";
 import { createNotification } from "../../../services/notification.js";
-import { updateUsedUriagekin } from "../../../services/uriagekinHistory.js";
+import { updateUsedUriagekin } from "../../../services/uriagekinLots.js";
 import { updateUriageUser } from "../../../services/users/command.js";
 import { getUserHasUriagekin } from "../../../services/users/query.js";
 
@@ -34,17 +34,17 @@ export const deleteUriageUseCase = async ({ pageUserId, deleteUriage }: Params) 
     // aとbを日時の数値に変換して引き算
     // → マイナスならaが前、プラスならbが前
     // → 結果として「古い順（昇順）」に並ぶ
-    const histories = [...(user.UriagekinHistories ?? [])].sort(
+    const lots = [...(user.UriagekinLots ?? [])].sort(
         (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
     );
 
     await sequelize.transaction(async (t) => {
-        // UriagekinHistory古い順に削除
-        for (const history of histories) {
+        // UriagekinLots古い順に削除
+        for (const data of lots) {
             if (deleteValue <= 0) break;
 
-            const available = Number(history.uriagekin);
-            const usedUriagekin = Number(history.used_uriagekin) || 0;
+            const available = Number(data.uriagekin);
+            const usedUriagekin = Number(data.used_uriagekin) || 0;
             const remain = available - usedUriagekin;
 
             if (remain <= 0) continue;
@@ -52,7 +52,7 @@ export const deleteUriageUseCase = async ({ pageUserId, deleteUriage }: Params) 
             const used = Math.min(remain, deleteValue);
 
             await updateUsedUriagekin({
-                history,
+                lots: data,
                 data: {
                     used_uriagekin: usedUriagekin + used,
                 },

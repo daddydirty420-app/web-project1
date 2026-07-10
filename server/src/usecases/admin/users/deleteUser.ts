@@ -25,7 +25,6 @@ import { createOverConfiscated } from "../../../services/pointsUriageOver.js";
 import { deleteInputCodeUserLogical, deleteOutputCodeUserLogical } from "../../../services/referenceCode.js";
 import { updateShopUserLogicalDelete } from "../../../services/shopInfo/command.js";
 import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } from "../../../services/transfer.js";
-import { updateUsedUriagekin } from "../../../services/uriagekinHistory.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
 import { updateUserLogicalDelete } from "../../../services/users/command.js";
 import { getUserHasBankAccount, getUserHasUriagekinPointBank } from "../../../services/users/query.js";
@@ -33,6 +32,7 @@ import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
 import { updatePointLots } from "../../../services/pointLots.js";
+import { updateUsedUriagekin } from "../../../services/uriagekinLots.js";
 
 type Params = {
     pageUserId: number;
@@ -88,13 +88,13 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
     let deletePoints = pointsAll;
 
     await sequelize.transaction(async (t) => {
-        // uriagekinHistory.used_uriagekin
-        if (user.UriagekinHistories) {
-            for (const uriageHistory of user.UriagekinHistories) {
+        // uriagekinLots.used_uriagekin
+        if (user.UriagekinLots) {
+            for (const data of user.UriagekinLots) {
                 if (deleteUriage <= 0) break;
 
-                const available = Number(uriageHistory.uriagekin);
-                const usedUriagekin = Number(uriageHistory.used_uriagekin) || 0;
+                const available = Number(data.uriagekin);
+                const usedUriagekin = Number(data.used_uriagekin) || 0;
                 const remain = available - usedUriagekin;
 
                 if (remain <= 0) continue;
@@ -102,7 +102,7 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                 const used = Math.min(remain, deleteUriage);
 
                 await updateUsedUriagekin({
-                    history: uriageHistory,
+                    lots: data,
                     data: {
                         used_uriagekin: usedUriagekin + used,
                     },
