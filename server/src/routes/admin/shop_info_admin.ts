@@ -11,7 +11,7 @@ import {
     Name,
     ShopInfo,
     TodouhukenOption,
-    UriagekinHistory,
+    UriagekinLots,
     User,
 } from "../../models/index.js";
 import { idParamSchema } from "../../validators/params/id.js";
@@ -165,7 +165,7 @@ router.get(
                         ],
                         include: [
                             {
-                                model: UriagekinHistory,
+                                model: UriagekinLots,
                                 attributes: ["id"],
                                 where: {
                                     createdAt: {

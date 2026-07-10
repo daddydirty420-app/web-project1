@@ -7,7 +7,7 @@ import {
     PointLots,
     ShopInfo,
     TodouhukenOption,
-    UriagekinHistory,
+    UriagekinLots,
     User,
 } from "../../models/index.js";
 import { EmailParams, GetUserAllParams, UserIdParams } from "../../types/serviceType/users.js";
@@ -62,14 +62,14 @@ export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
 
 export const getUserHasUriagekinPointLots = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [{ model: UriagekinHistory }, { model: PointLots }],
+        include: [{ model: UriagekinLots }, { model: PointLots }],
     });
 };
 
 export const getUserHasLogicalDeleteSet = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [
-            { model: UriagekinHistory },
+            { model: UriagekinLots },
             { model: PointLots },
             { model: ShopInfo },
             { model: Name },
@@ -82,13 +82,13 @@ export const getUserHasLogicalDeleteSet = async ({ userId }: UserIdParams) => {
 
 export const getUserHasUriagekin = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [{ model: UriagekinHistory }],
+        include: [{ model: UriagekinLots }],
     });
 };
 
 export const getUserHasUriagekinPointBank = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [{ model: UriagekinHistory }, { model: BankAccount }, { model: PointLots }],
+        include: [{ model: UriagekinLots }, { model: BankAccount }, { model: PointLots }],
     });
 };
 

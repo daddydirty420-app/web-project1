@@ -8,7 +8,3 @@ type UpdateUsedUriageParams = {
     };
     transaction?: Transaction;
 };
-
-export const updateUsedUriagekin = async ({ history, data, transaction }: UpdateUsedUriageParams) => {
-    await history.update(data, { transaction });
-};
