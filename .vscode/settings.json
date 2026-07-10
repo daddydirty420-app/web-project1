@@ -91,7 +91,8 @@
         "pkey",
         "fkey",
         "MINVALUE",
-        "MAXVALUE"
+        "MAXVALUE",
+        "timestamptz"
     ],
     "remote.autoForwardPortsFallback": 0
 }

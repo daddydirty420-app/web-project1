@@ -49,7 +49,21 @@ CREATE TABLE IF NOT EXISTS public.points_history
 ### SQL
 
 ```
-
+CREATE TABLE IF NOT EXISTS public.point_lots
+(
+    id serial NOT NULL,
+    points integer NOT NULL,
+    user_id integer NOT NULL,
+    used_points integer NOT NULL DEFAULT 0,
+    expires_at timestamp with time zone NOT NULL,
+    "createdAt" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT point_lots_pkey PRIMARY KEY (id),
+    CONSTRAINT point_lots_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public."user" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
 ```
 
 ### カラム詳細
@@ -59,6 +73,7 @@ CREATE TABLE IF NOT EXISTS public.points_history
     - 先入れ先出し法でポイントを使用
         - 例：10/18 100pt獲得、10/20 50pt獲得、10/21 130pt利用した場合
         - 10/18 used_points: 100、10/20 used_points: 30（残り20pt使用可能）
+- expires_at: timestamptz 有効期限
 
 ### 更新
 
