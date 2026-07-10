@@ -40,4 +40,22 @@ export const StartExpiredMoneyCron = () => {
             timezone: "Asia/Tokyo",
         },
     );
+
+    // 180日経過売上金回収
+    cron.schedule("0 12 * * *", async () => {
+        const nowDate = new Date();
+
+        try {
+            const whereCondition = {
+                [Op.and]: [{ expires_at: { [Op.lt]: nowDate } }, where(col("used_Uriagekin"), Op.lt, col("uriagekin"))],
+            };
+
+            const allExpiredData = await getExpiredAll({ where: whereCondition });
+
+            let sumGetUriagekin = 0;
+            let sumTransUriagekin = 0;
+        } catch (err) {
+            console.error("期限切れポイント回収エラー：", err);
+        }
+    });
 };
