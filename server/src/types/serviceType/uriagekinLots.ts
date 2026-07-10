@@ -1,7 +1,7 @@
 import { InferAttributes, Transaction, WhereOptions } from "sequelize";
 import UriagekinLots from "../../models/uriagekin_lots.js";
 
-export type GetExpiredAllParams = {
+export type GetExpiredUriageAllParams = {
     where: WhereOptions<InferAttributes<UriagekinLots>>;
 };
 
