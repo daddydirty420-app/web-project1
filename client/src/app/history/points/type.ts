@@ -9,3 +9,8 @@ export type PointsHistory = {
     createdAt: Date;
     PointReasonOption: PointReasonOption;
 };
+
+export type User = {
+    id: string;
+    points: number;
+}

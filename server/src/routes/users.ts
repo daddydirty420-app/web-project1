@@ -7,6 +7,7 @@ import {
     getInquiryRateLimit,
     getMyPageRateLimit,
     getPhoneNumberRateLimit,
+    getPointsRateLimit,
     getProfileEditRateLimit,
     getProfileMetadataRateLimit,
     getProfileRateLimit,
@@ -27,6 +28,7 @@ import { getHonninEditUseCase } from "../usecases/users/get/getHonnin.js";
 import { getInquiryUserUseCase } from "../usecases/users/get/getInquiryUser.js";
 import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
+import { getMePointsUseCase } from "../usecases/users/get/getPoints.js";
 import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
@@ -350,6 +352,30 @@ router.get(
         }
     },
 );
+
+// GET /user/current-points
+// summary: 現在の所有ポイント取得
+// page: /history/points
+router.get(
+    "/current-points",
+    getPointsRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const user = await getMePointsUseCase({ userId });
+
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /user/current-uriagekin
+// summary: 現在の所有売上金取得
+// page: /history/uriagekin
 
 // GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {

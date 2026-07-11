@@ -115,3 +115,17 @@ export const getTransferRequestRateLimit = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
+
+export const getPointsRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 300,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+export const getUriagekinRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 300,
+    standardHeaders: true,
+    legacyHeaders: false,
+});

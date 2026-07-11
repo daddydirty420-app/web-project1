@@ -214,6 +214,18 @@ export const getUserShopSignup1 = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMePoints = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "points"],
+    });
+};
+
+export const getMeUriagekin = ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        attributes: ["id", "uriagekin"],
+    });
+};
+
 export const getMePointsUriage = ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "points", "uriagekin"],
