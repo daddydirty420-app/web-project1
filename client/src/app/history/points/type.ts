@@ -15,6 +15,7 @@ export type PointLots = {
     points: number;
     used_points: number;
     expires_at: Date;
+    alertPoints: number;
 };
 
 export type User = {

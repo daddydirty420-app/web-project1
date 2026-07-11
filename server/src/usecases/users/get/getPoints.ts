@@ -26,5 +26,18 @@ export const getMePointsUseCase = async ({ userId }: Params) => {
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
-    return user;
+    const plainUser = user.get({ plain: true });
+
+    // 未使用ポイント計算
+    if (user.PointLots) {
+        const lots = user.PointLots;
+        const alertPoints = lots.points - lots.used_points;
+
+        plainUser.PointLots = {
+            ...lots,
+            alertPoints,
+        };
+    }
+
+    return plainUser;
 };
