@@ -10,7 +10,7 @@ import {
     UriagekinLots,
     User,
 } from "../../models/index.js";
-import { EmailParams, GetUserAllParams, UserIdParams } from "../../types/serviceType/users.js";
+import { EmailParams, GetUserAllParams, UserIdParams, UserIdWhereParams } from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
@@ -214,9 +214,18 @@ export const getUserShopSignup1 = ({ userId }: UserIdParams) => {
     });
 };
 
-export const getMePoints = ({ userId }: UserIdParams) => {
+export const getMePointsWithLots = ({ userId, where, order, limit }: UserIdWhereParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "points"],
+        include: [
+            { 
+                model: PointLots,
+                where,
+                order,
+                limit,
+                required: false,
+            },
+        ]
     });
 };
 

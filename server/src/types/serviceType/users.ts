@@ -1,9 +1,16 @@
-import { Op, Transaction } from "sequelize";
+import { Op, Order, Transaction, WhereOptions } from "sequelize";
 import { User } from "../../models/index.js";
 
 export type UserIdParams = {
     userId: number;
 };
+
+export type UserIdWhereParams = {
+    userId: number;
+    where: WhereOptions;
+    order?: Order;
+    limit?: number;
+}
 
 export type GetUserAllParams = {
     where?:

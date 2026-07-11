@@ -13,4 +13,4 @@ export type PointsHistory = {
 export type User = {
     id: string;
     points: number;
-}
+};

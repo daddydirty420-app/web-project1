@@ -67,7 +67,7 @@ export const StartExpiredMoneyCron = () => {
                 const whereCondition = {
                     [Op.and]: [
                         { expires_at: { [Op.lt]: nowDate } },
-                        where(col("used_Uriagekin"), Op.lt, col("uriagekin")),
+                        where(col("used_uriagekin"), Op.lt, col("uriagekin")),
                     ],
                 };
 
