@@ -14,6 +14,7 @@ import {
     getStarRateLimit,
     getTransferPointsRateLimit,
     getTransferRequestRateLimit,
+    getUriagekinRateLimit,
     profileEditRateLimit,
     requestHonninRateLimit,
 } from "../middleware/rateLimit/usersRateLimit.js";
@@ -33,6 +34,7 @@ import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
+import { getMeUriagekinUseCase } from "../usecases/users/get/getUriagekin.js";
 import {
     HonninBody,
     honninBodySchema,
@@ -376,6 +378,22 @@ router.get(
 // GET /user/current-uriagekin
 // summary: 現在の所有売上金取得
 // page: /history/uriagekin
+router.get(
+    "/current-uriagekin",
+    getUriagekinRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const user = await getMeUriagekinUseCase({ userId });
+
+            res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // GET /user/me
 router.get("/me", authenticateOptional, async (req: Request, res: Response): Promise<void> => {

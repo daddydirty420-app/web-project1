@@ -230,9 +230,19 @@ export const getMePointsWithLots = ({ userId, where, order, limit }: UserIdWhere
     });
 };
 
-export const getMeUriagekin = ({ userId }: UserIdParams) => {
+export const getMeUriagekinWithLots = ({ userId, where, order, limit }: UserIdWhereParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "uriagekin"],
+        include: [
+            { 
+                model: UriagekinLots,
+                attributes: ["id", "uriagekin", "used_uriagekin", "expires_at"],
+                where,
+                order,
+                limit,
+                required: false,
+            },
+        ]
     });
 };
 
