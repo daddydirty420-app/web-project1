@@ -220,6 +220,7 @@ export const getMePointsWithLots = ({ userId, where, order, limit }: UserIdWhere
         include: [
             { 
                 model: PointLots,
+                attributes: ["id", "points", "used_points", "expires_at"],
                 where,
                 order,
                 limit,

@@ -10,7 +10,15 @@ export type PointsHistory = {
     PointReasonOption: PointReasonOption;
 };
 
+export type PointLots = {
+    id: string;
+    points: number;
+    used_points: number;
+    expires_at: Date;
+};
+
 export type User = {
     id: string;
     points: number;
+    PointLots?: PointLots;
 };
