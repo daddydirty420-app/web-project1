@@ -1,3 +1,7 @@
+export type PointListResponse = {
+    user: User;
+};
+
 export type PointReasonOption = {
     id: string;
     name: string;
@@ -21,5 +25,5 @@ export type PointLots = {
 export type User = {
     id: string;
     points: number;
-    PointLots?: PointLots;
+    PointLots?: PointLots[];
 };
