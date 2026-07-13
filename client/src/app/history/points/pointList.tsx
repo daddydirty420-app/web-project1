@@ -1,7 +1,9 @@
 "use client";
 
+import { User } from "./type";
+
 type Props = {
-    nowPoints: number;
+    user: User;
 };
 
-export const PointList = ({ nowPoints }: Props) => {};
+export const PointList = ({ user }: Props) => {};
