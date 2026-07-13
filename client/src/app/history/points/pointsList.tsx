@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../../../lib/fetcher";
 import { getPointsHistoryApiKey } from "./apiKey";
+import styles from "./styles.module.css";
 import { PointsHistoryResponse, User } from "./type";
 
 type Props = {
@@ -61,4 +62,16 @@ export const PointsList = ({ user }: Props) => {
 
         return () => observer.disconnect();
     }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
+
+    return (
+        <>
+            <section className={styles.currentPointsSection}></section>
+
+            {history.length > 0}
+
+            {history.length === 0}
+
+            <div ref={loadMoreRef} />
+        </>
+    );
 };
