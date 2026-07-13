@@ -1,5 +1,7 @@
-export type PointListResponse = {
-    user: User;
+export type PointsHistoryResponse = {
+    history: PointsHistory[];
+    nextCursor: string | null;
+    hasMore: boolean;
 };
 
 export type PointReasonOption = {

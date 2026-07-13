@@ -1,7 +1,8 @@
 import z from "zod";
 
 export const getPointsHistoryQuerySchema = z.object({
-    cursorScore: z.coerce.number().positive().optional(),
-    cursorId: z.coerce.number().int().positive().min(1).optional(),
+    limit: z.coerce.number().int().positive().min(1).max(1000).default(20),
+    cursor: z.string().optional(),
 });
-export type GetUserCursorQuery = z.infer<typeof getPointsHistoryQuerySchema>;
+
+export type GetPointHistoryQuery = z.infer<typeof getPointsHistoryQuerySchema>;
