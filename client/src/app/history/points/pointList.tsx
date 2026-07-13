@@ -1,7 +1,5 @@
 "use client";
 
-// 無限スクロール
-
 type Props = {
     nowPoints: number;
 };

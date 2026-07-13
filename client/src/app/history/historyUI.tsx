@@ -4,16 +4,17 @@ import Header from "@/components/header/header";
 import { ReactNode } from "react";
 
 type Props = {
+    title: string;
     children: ReactNode;
 };
 
-export default function PointHistoryUI({ children }: Props) {
+export default function HistoryUI({ title, children }: Props) {
     return (
         <>
             <Header />
 
             <Container header>
-                <TitleAndBack title="ポイント履歴" />
+                <TitleAndBack title={title} />
                 {children}
             </Container>
 
