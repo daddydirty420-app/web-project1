@@ -15,7 +15,9 @@ services:
             - db_data:/var/lib/postgresql/data
 
     server:
-        build: ./server
+        build: 
+            context: ./server
+            dockerfile: Dockerfile.dev
         container_name: node_server
         restart: always
         ports:
