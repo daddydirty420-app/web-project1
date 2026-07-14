@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import useSWRInfinite from "swr/infinite";
-import { fetcher } from "../../lib/fetcher";
+import { useState } from "react";
+import { useInfinitePagination } from "../../hooks/useInfinitePagination";
 import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
 import { FilterMenu } from "./filter/filterMenu/filterMenu";
 import styles from "./searchItemList.module.css";
-import { SearchResponse } from "./type";
+import { Item, SearchResponse } from "./type";
 
 type Props = {
     keyword: string;
@@ -22,76 +21,17 @@ type Props = {
 export const SearchItemList = ({ keyword, sort }: Props) => {
     const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [isDesktop, setIsDesktop] = useState(false);
 
-    useEffect(() => {
-        if (window.innerWidth >= 768) setIsDesktop(true);
-
-        if (!isDesktop && viewMode === "item") {
-            setLimit(18);
-        } else if (viewMode === "video") {
-            if (!isDesktop) {
-                setLimit(6);
-            } else {
-                setLimit(18);
-            }
-        }
-    }, []);
-
-    // SWRInfinite
-    const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite<SearchResponse>(
-        getSearchItemListApiKey({ keyword, limit, sort }),
-        async (url: string) => {
-            return fetcher<SearchResponse>(url);
-        },
-        {
-            shouldRetryOnError: false,
-        },
-    );
-
-    const items = data?.flatMap((page) => page.itemList) ?? [];
-
-    // 追加フェッチ
-    const loadMore = useCallback(async () => {
-        setIsLoadingMore(true);
-
-        await setSize((prev) => prev + 1);
-
-        setIsLoadingMore(false);
-    }, [setSize]);
-
-    const isReachingEnd = data && !data[data.length - 1]?.hasMore;
-
-    // 最下部検知
-    const loadMoreRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const target = loadMoreRef.current;
-        if (!target) return;
-
-        if (error) return;
-
-        if (isReachingEnd || isValidating) return;
-
-        const observer = new IntersectionObserver(
-            async ([entry]) => {
-                if (!entry.isIntersecting) return;
-
-                if (isLoadingMore) return;
-
-                await loadMore();
-            },
-            {
-                threshold: 0.1,
-                rootMargin: "200px",
-            },
-        );
-
-        observer.observe(target);
-
-        return () => observer.disconnect();
-    }, [error, isLoadingMore, isReachingEnd, isValidating, loadMore]);
+    // 無限スクロール
+    const { data, items, mutate, loadMoreRef, isLoadingMore, isReachingEnd, isValidating } = useInfinitePagination<
+        SearchResponse,
+        Item
+    >({
+        apiKey: getSearchItemListApiKey({ keyword, limit, sort }),
+        getItems: (page) => page.itemList,
+        hasMore: (page) => page.hasMore,
+    });
 
     return (
         <>
