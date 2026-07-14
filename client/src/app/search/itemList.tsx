@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInfinitePagination } from "../../hooks/useInfinitePagination";
 import { formatDuration } from "../../lib/formatDuration";
 import { getSearchItemListApiKey } from "./apiKey";
@@ -22,6 +22,20 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
     const [viewMode, setViewMode] = useState<"item" | "video">("video");
     const [limit, setLimit] = useState(36);
     const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        if (window.innerWidth >= 768) setIsDesktop(true);
+
+        if (!isDesktop && viewMode === "item") {
+            setLimit(18);
+        } else if (viewMode === "video") {
+            if (!isDesktop) {
+                setLimit(6);
+            } else {
+                setLimit(18);
+            }
+        }
+    }, []);
 
     // 無限スクロール
     const { data, items, mutate, loadMoreRef, isLoadingMore, isReachingEnd, isValidating } = useInfinitePagination<

@@ -1,18 +1,17 @@
 "use client";
 
-import { fetcher } from "@/lib/fetcher";
 import { faCircleCheck, faSearch, faStore, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
-import useSWRInfinite from "swr/infinite";
+import { useInfinitePagination } from "../../hooks/useInfinitePagination";
 import { ApiError } from "../../lib/api/apiError";
 import { fetchRemoveFollow } from "./api/follow";
 import { getUserListApiKey } from "./apiKey";
 import { FollowButton } from "./followButton";
-import { UserListResponse } from "./type";
+import { User, UserListResponse } from "./type";
 import styles from "./userList.module.css";
 
 type Props = {
@@ -26,63 +25,21 @@ type Props = {
 
 export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollow }: Props) => {
     const [searchValue, setSearchValue] = useState("");
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<UserListResponse>(
-        (pageIndex, previousPageData) =>
-            getUserListApiKey({
-                id,
-                page,
-                followTab,
-                pageIndex,
-                previousPageData,
-                searchValue,
-            }),
-        async (url: string) => {
-            return fetcher<UserListResponse>(url);
-        },
-    );
-
-    const userList = data?.flatMap((page) => page.userList) ?? [];
-
-    // 追加フェッチ
-    const loadMore = useCallback(async () => {
-        setIsLoadingMore(true);
-
-        await setSize((prev) => prev + 1);
-
-        setIsLoadingMore(false);
-    }, [setSize]);
-
-    const isReachingEnd = data && !data[data.length - 1]?.hasMore;
-
-    // 最下部検知
-    const loadMoreRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const target = loadMoreRef.current;
-        if (!target) return;
-
-        if (isReachingEnd || isValidating) return;
-
-        const observer = new IntersectionObserver(
-            async ([entry]) => {
-                if (!entry.isIntersecting) return;
-
-                if (isLoadingMore) return;
-
-                await loadMore();
-            },
-            {
-                threshold: 0.1,
-                rootMargin: "200px",
-            },
-        );
-
-        observer.observe(target);
-
-        return () => observer.disconnect();
-    }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
+    // 無限スクロール
+    const {
+        data,
+        items: userList,
+        mutate,
+        loadMoreRef,
+        isLoadingMore,
+        isReachingEnd,
+        isValidating,
+    } = useInfinitePagination<UserListResponse, User>({
+        apiKey: getUserListApiKey({ id, page, followTab, searchValue }),
+        getItems: (page) => page.userList,
+        hasMore: (page) => page.hasMore,
+    });
 
     // フォロー解除
     const followRemove = async (userId: string) => {
