@@ -27,5 +27,5 @@ export type PointLots = {
 export type User = {
     id: string;
     points: number;
-    PointLots?: PointLots[];
+    PointLots?: PointLots;
 };

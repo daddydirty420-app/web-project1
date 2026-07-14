@@ -30,7 +30,7 @@ export const getMeUriagekinUseCase = async ({ userId }: Params) => {
 
     // 未使用売上金計算
     if (user.UriagekinLots) {
-        const lots = user.UriagekinLots;
+        const lots = user.UriagekinLots[0];
         const alertUriagekin = lots.uriagekin - lots.used_uriagekin;
 
         plainUser.UriagekinLots = {
