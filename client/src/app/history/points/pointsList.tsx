@@ -1,6 +1,7 @@
 "use client";
 
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
+import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { getPointsHistoryApiKey } from "./apiKey";
 import styles from "./styles.module.css";
 import { PointsHistory, PointsHistoryResponse, User } from "./type";
@@ -48,16 +49,38 @@ export const PointsList = ({ user }: Props) => {
                 </div>
 
                 {pointLots && pointLots?.alertPoints > 0 && (
-                    <>
-                        <div className={styles.alertPointsFlex}>
-                            あと{setAfterDate(pointLots.expires_at)}で{pointLots?.alertPoints.toLocaleString()}
-                            ptが失効します
-                        </div>
-                    </>
+                    <div className={styles.alertPointsFlex}>
+                        あと{setAfterDate(pointLots.expires_at)}で{pointLots?.alertPoints.toLocaleString()}
+                        ptが失効します
+                    </div>
                 )}
             </section>
 
-            {history.length > 0}
+            {history.length > 0 && (
+                <section className={styles.pointsListWrapper}>
+                    {history.map((pointsHistory) => {
+                        if (!pointsHistory) return;
+                        const plus = pointsHistory.points >= 0;
+
+                        return (
+                            <section className={styles.pointsHistorySection}>
+                                <div className={styles.pointsIconBox}></div>
+
+                                <div className={styles.pointsInfo}>
+                                    <p className={styles.reason}>{pointsHistory.PointReasonOption.name}</p>
+
+                                    <p className={styles.date}>{formatRelativeTime(pointsHistory.createdAt)}</p>
+                                </div>
+
+                                <span className={`${styles.points} ${plus ? styles.plus : styles.minus}`}>
+                                    {plus ? "+" : ""}
+                                    {pointsHistory.points.toLocaleString()}pt
+                                </span>
+                            </section>
+                        );
+                    })}
+                </section>
+            )}
 
             {history.length === 0}
 
