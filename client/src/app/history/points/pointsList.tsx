@@ -82,7 +82,7 @@ export const PointsList = ({ user }: Props) => {
                 </section>
             )}
 
-            {history.length === 0}
+            {history.length === 0 && <p className={styles.noHistory}>ポイント履歴がありません</p>}
 
             <div ref={loadMoreRef} />
         </>
