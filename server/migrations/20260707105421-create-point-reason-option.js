@@ -38,15 +38,9 @@ export default {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.removeConstraint(
-            "points_history",
-            "fk_points_history_reason_id"
-        );
+        await queryInterface.removeConstraint("points_history", "fk_points_history_reason_id");
 
-        await queryInterface.removeColumn(
-            "points_history",
-            "reason_id"
-        );
+        await queryInterface.removeColumn("points_history", "reason_id");
 
         await queryInterface.dropTable("point_reason_option");
     },

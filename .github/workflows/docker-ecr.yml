@@ -45,14 +45,14 @@ jobs:
                   docker build -t $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }} ./server
                   docker push $ECR_REGISTRY/$SERVER_REPO:latest
                   docker push $ECR_REGISTRY/$SERVER_REPO:${{ github.sha }}
-            
+
             # deploy
             - name: EC2 to Deploy
               uses: appleboy/ssh-action@v1
               with:
-                host: ${{ secrets.EC2_HOST }}
-                username: ubuntu
-                key: ${{ secrets.EC2_PRIVATE_KEY }}
-                script: |
-                  cd ~/web-project1
-                  ./scripts/deploy.sh
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ubuntu
+                  key: ${{ secrets.EC2_PRIVATE_KEY }}
+                  script: |
+                      cd ~/web-project1
+                      ./scripts/deploy.sh

@@ -49,10 +49,10 @@ docker-ecr.yml内で使用する環境変数の設定
 
 ```
 env:
-    AWS_REGION: 
-    ECR_REGISTRY: 
-    CLIENT_REPO: 
-    SERVER_REPO: 
+    AWS_REGION:
+    ECR_REGISTRY:
+    CLIENT_REPO:
+    SERVER_REPO:
 ```
 
 ## jobs
@@ -98,6 +98,7 @@ AWS認証
 ```
 
 secrets
+
 - Github Secretsに設定、アクセスキーの取得はAWSのIAMで行う
 
 ### Login to ECR
@@ -184,9 +185,11 @@ echo "=== Deploy Complete ==="
 githubのリポジトリから **Actions** でチェック
 
 成功したら ↓
+
 - ブラウザで動作確認
 
 失敗したら ↓
+
 - Github Actionsのログで原因調査
 - ECRに最新イメージあるか確認
 

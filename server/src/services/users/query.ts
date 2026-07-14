@@ -218,7 +218,7 @@ export const getMePointsWithLots = ({ userId, where, order, limit }: UserIdWhere
     return User.findByPk(userId, {
         attributes: ["id", "points"],
         include: [
-            { 
+            {
                 model: PointLots,
                 attributes: ["id", "points", "used_points", "expires_at"],
                 where,
@@ -226,7 +226,7 @@ export const getMePointsWithLots = ({ userId, where, order, limit }: UserIdWhere
                 limit,
                 required: false,
             },
-        ]
+        ],
     });
 };
 
@@ -234,7 +234,7 @@ export const getMeUriagekinWithLots = ({ userId, where, order, limit }: UserIdWh
     return User.findByPk(userId, {
         attributes: ["id", "uriagekin"],
         include: [
-            { 
+            {
                 model: UriagekinLots,
                 attributes: ["id", "uriagekin", "used_uriagekin", "expires_at"],
                 where,
@@ -242,7 +242,7 @@ export const getMeUriagekinWithLots = ({ userId, where, order, limit }: UserIdWh
                 limit,
                 required: false,
             },
-        ]
+        ],
     });
 };
 

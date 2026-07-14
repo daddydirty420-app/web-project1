@@ -15,7 +15,7 @@ services:
             - db_data:/var/lib/postgresql/data
 
     server:
-        build: 
+        build:
             context: ./server
             dockerfile: Dockerfile.dev
         container_name: node_server
@@ -36,7 +36,7 @@ services:
             - /app/node_modules
 
     client:
-        build: 
+        build:
             context: ./client
             dockerfile: Dockerfile.dev
         container_name: next_client

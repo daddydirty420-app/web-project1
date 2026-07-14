@@ -36,9 +36,7 @@ export const createTransferPointsUseCase = async ({ userId, value, limit }: Para
     // aとbを日時の数値に変換して引き算
     // → マイナスならaが前、プラスならbが前
     // → 結果として「古い順（昇順）」に並ぶ
-    const lots = [...(user.UriagekinLots ?? [])].sort(
-        (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
-    );
+    const lots = [...(user.UriagekinLots ?? [])].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 
     await sequelize.transaction(async (t) => {
         // UriagekinHistory古い順に削除

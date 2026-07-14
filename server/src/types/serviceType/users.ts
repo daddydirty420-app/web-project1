@@ -10,7 +10,7 @@ export type UserIdWhereParams = {
     where: WhereOptions;
     order?: Order;
     limit?: number;
-}
+};
 
 export type GetUserAllParams = {
     where?:

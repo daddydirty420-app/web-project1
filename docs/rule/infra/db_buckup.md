@@ -127,8 +127,10 @@ EOF
 1. ssh EC2へログイン、これ以降の処理はEC2内で行われる
 2. cpでEC2からEC2内のdockerへコピー
 3. restore dumpファイルの内容をEC2のDBへ反映
+
 - --clean --if-exists EC2dockerの既存テーブルを存在するときだけ全削除
 - --no-owner --no-privileges ユーザー名が違うため、権限無しで操作できるようにする
+
 4. Dockerからdumpファイル削除
 5. EC2内のdumpファイル削除
 
