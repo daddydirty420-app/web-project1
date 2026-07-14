@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
+import useSWRInfinite from "swr/infinite";
 import { fetcher } from "../lib/fetcher";
+import { Key } from "swr";
 
 type Params<T, TItem> = {
-    apiKey: SWRInfiniteKeyLoader;
+    apiKey: (pageIndex: number, previousPageData: T | null) => Key;
     getItems: (page: T) => TItem[];
     hasMore: (page: T) => boolean;
 };

@@ -4,66 +4,27 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconBuildingBank } from "@tabler/icons-react";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import useSWRInfinite from "swr/infinite";
-import { fetcher } from "../../../lib/fetcher";
+import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
 import { formatRelativeTime } from "../../../lib/formatRelativeTime";
-import { TransferHistoryResponse } from "../types";
+import { Transfer, TransferHistoryResponse } from "../types";
 import { getTransferHistoryApiKey } from "./apiKey";
 import styles from "./styles.module.css";
 
 export const TransferList = () => {
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-    // SWRInfinite
-    const { data, mutate, size, setSize, isValidating } = useSWRInfinite<TransferHistoryResponse>(
-        getTransferHistoryApiKey,
-        async (url: string) => {
-            return fetcher<TransferHistoryResponse>(url);
-        },
-    );
-
-    const history = data?.flatMap((page) => page.history) ?? [];
-    console.log("history:", history);
-
-    // 追加フェッチ
-    const loadMore = useCallback(async () => {
-        setIsLoadingMore(true);
-
-        await setSize((prev) => prev + 1);
-
-        setIsLoadingMore(false);
-    }, [setSize]);
-
-    const isReachingEnd = data && !data[data.length - 1]?.hasMore;
-
-    // 最下部検知
-    const loadMoreRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const target = loadMoreRef.current;
-        if (!target) return;
-
-        if (isReachingEnd || isValidating) return;
-
-        const observer = new IntersectionObserver(
-            async ([entry]) => {
-                if (!entry.isIntersecting) return;
-
-                if (isLoadingMore) return;
-
-                await loadMore();
-            },
-            {
-                threshold: 0.1,
-                rootMargin: "200px",
-            },
-        );
-
-        observer.observe(target);
-
-        return () => observer.disconnect();
-    }, [isLoadingMore, isReachingEnd, isValidating, loadMore]);
+    // 無限スクロール
+    const {
+        data,
+        items: history,
+        mutate,
+        loadMoreRef,
+        isLoadingMore,
+        isReachingEnd,
+        isValidating,
+    } = useInfinitePagination<TransferHistoryResponse, Transfer>({
+        apiKey: getTransferHistoryApiKey,
+        getItems: (page) => page.history,
+        hasMore: (page) => page.hasMore,
+    });
 
     return (
         <>
