@@ -34,7 +34,9 @@ services:
             - /app/node_modules
 
     client:
-        build: ./client
+        build: 
+            context: ./client
+            dockerfile: Dockerfile.dev
         container_name: next_client
         restart: always
         ports:
