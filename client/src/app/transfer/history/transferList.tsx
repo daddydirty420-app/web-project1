@@ -24,6 +24,7 @@ export const TransferList = () => {
     );
 
     const history = data?.flatMap((page) => page.history) ?? [];
+    console.log("history:", history);
 
     // 追加フェッチ
     const loadMore = useCallback(async () => {
