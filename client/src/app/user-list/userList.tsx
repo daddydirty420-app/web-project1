@@ -28,13 +28,9 @@ export const UserList = ({ loggedIn, id, currentUserId, page, followTab, myFollo
 
     // 無限スクロール
     const {
-        data,
         items: userList,
         mutate,
         loadMoreRef,
-        isLoadingMore,
-        isReachingEnd,
-        isValidating,
     } = useInfinitePagination<UserListResponse, User>({
         apiKey: getUserListApiKey({ id, page, followTab, searchValue }),
         getItems: (page) => page.userList,

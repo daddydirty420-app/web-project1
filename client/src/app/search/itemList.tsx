@@ -38,10 +38,7 @@ export const SearchItemList = ({ keyword, sort }: Props) => {
     }, []);
 
     // 無限スクロール
-    const { data, items, mutate, loadMoreRef, isLoadingMore, isReachingEnd, isValidating } = useInfinitePagination<
-        SearchResponse,
-        Item
-    >({
+    const { items, loadMoreRef } = useInfinitePagination<SearchResponse, Item>({
         apiKey: getSearchItemListApiKey({ keyword, limit, sort }),
         getItems: (page) => page.itemList,
         hasMore: (page) => page.hasMore,

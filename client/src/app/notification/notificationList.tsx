@@ -22,9 +22,6 @@ export const NotificationList = () => {
         items: notificationList,
         mutate,
         loadMoreRef,
-        isLoadingMore,
-        isReachingEnd,
-        isValidating,
     } = useInfinitePagination<NotificationResponse, Notification>({
         apiKey: getNotificationApiKey,
         getItems: (page) => page.notificationList,

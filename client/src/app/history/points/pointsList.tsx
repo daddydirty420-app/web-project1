@@ -11,15 +11,7 @@ type Props = {
 
 export const PointsList = ({ user }: Props) => {
     // 無限スクロール
-    const {
-        data,
-        items: history,
-        mutate,
-        loadMoreRef,
-        isLoadingMore,
-        isReachingEnd,
-        isValidating,
-    } = useInfinitePagination<PointsHistoryResponse, PointsHistory>({
+    const { items: history, loadMoreRef } = useInfinitePagination<PointsHistoryResponse, PointsHistory>({
         apiKey: getPointsHistoryApiKey,
         getItems: (page) => page.history,
         hasMore: (page) => page.hasMore,

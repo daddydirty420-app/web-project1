@@ -12,15 +12,7 @@ import styles from "./styles.module.css";
 
 export const TransferList = () => {
     // 無限スクロール
-    const {
-        data,
-        items: history,
-        mutate,
-        loadMoreRef,
-        isLoadingMore,
-        isReachingEnd,
-        isValidating,
-    } = useInfinitePagination<TransferHistoryResponse, Transfer>({
+    const { items: history, loadMoreRef } = useInfinitePagination<TransferHistoryResponse, Transfer>({
         apiKey: getTransferHistoryApiKey,
         getItems: (page) => page.history,
         hasMore: (page) => page.hasMore,
