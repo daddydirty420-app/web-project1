@@ -29,7 +29,7 @@ export const getMePointsUseCase = async ({ userId }: Params) => {
     const plainUser = user.get({ plain: true });
 
     // 未使用ポイント計算
-    if (user.PointLots) {
+    if (user.PointLots  && user.PointLots.length > 0) {
         const lots = user.PointLots[0];
         const alertPoints = lots.points - lots.used_points;
 
