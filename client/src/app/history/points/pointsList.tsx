@@ -1,5 +1,6 @@
 "use client";
 
+import { IconCoins, IconShoppingCart } from "@tabler/icons-react";
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
 import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { getPointsHistoryApiKey } from "./apiKey";
@@ -64,7 +65,13 @@ export const PointsList = ({ user }: Props) => {
 
                         return (
                             <section className={styles.pointsHistorySection}>
-                                <div className={styles.pointsIconBox}></div>
+                                <div className={styles.pointsIconBox}>
+                                    {plus ? (
+                                        <IconCoins size={20} stroke={1.5} />
+                                    ) : (
+                                        <IconShoppingCart size={20} stroke={1.5} />
+                                    )}
+                                </div>
 
                                 <div className={styles.pointsInfo}>
                                     <p className={styles.reason}>{pointsHistory.PointReasonOption.name}</p>
