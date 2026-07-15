@@ -34,7 +34,7 @@ export const getMeUriagekinUseCase = async ({ userId }: Params) => {
         const alertUriagekin = lots.uriagekin - lots.used_uriagekin;
 
         plainUser.UriagekinLots = {
-            ...lots,
+            ...lots.get({ plain: true }),
             alertUriagekin,
         };
     }

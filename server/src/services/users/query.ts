@@ -10,7 +10,7 @@ import {
     UriagekinLots,
     User,
 } from "../../models/index.js";
-import { EmailParams, GetUserAllParams, UserIdParams, UserIdWhereParams } from "../../types/serviceType/users.js";
+import { EmailParams, GetMyPageParams, GetUserAllParams, UserIdParams, UserIdWhereParams } from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
@@ -122,7 +122,7 @@ export const getMePhoneNumber = ({ userId }: UserIdParams) => {
     });
 };
 
-export const getMeMypage = ({ userId }: UserIdParams) => {
+export const getMeMypage = ({ userId, pointLotsWhere, uriagekinLotsWhere, order }: GetMyPageParams) => {
     return User.findByPk(userId, {
         attributes: ["id", "user_name", "profile_image", "early_seller", "honnin_verified", "points", "uriagekin"],
         include: [
@@ -130,6 +130,24 @@ export const getMeMypage = ({ userId }: UserIdParams) => {
                 model: ShopInfo,
                 where: { verified: true },
                 attributes: ["id"],
+                required: false,
+            },
+            {
+                model: PointLots,
+                attributes: ["id", "points", "used_points", "expires_at"],
+                where: pointLotsWhere,
+                order,
+                limit: 1,
+                separate: true,
+                required: false,
+            },
+            {
+                model: UriagekinLots,
+                attributes: ["id", "uriagekin", "used_uriagekin", "expires_at"],
+                where: uriagekinLotsWhere,
+                order,
+                limit: 1,
+                separate: true,
                 required: false,
             },
         ],

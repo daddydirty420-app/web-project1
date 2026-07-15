@@ -12,6 +12,14 @@ export type UserIdWhereParams = {
     limit?: number;
 };
 
+export type GetMyPageParams = {
+    userId: number;
+    pointLotsWhere: WhereOptions;
+    uriagekinLotsWhere: WhereOptions;
+    order?: Order;
+    limit?: number;
+};
+
 export type GetUserAllParams = {
     where?:
         | {
