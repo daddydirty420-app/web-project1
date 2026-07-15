@@ -1,9 +1,6 @@
 import { Metadata } from "next";
-import { cookies } from "next/headers";
-import { notFound, redirect } from "next/navigation";
-import { Form } from "./form";
-import { fetchTransferRequest } from "../api/request";
 import { fetchRequestPage } from "../api/server";
+import { Form } from "./form";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
