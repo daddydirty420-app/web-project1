@@ -1,0 +1,82 @@
+.noHistory {
+    display: block;
+    width: 100%;
+    max-width: 768px;
+    margin: 1rem auto;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.pointsListWrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 5rem;
+}
+
+.pointsHistorySection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border-bottom: solid 0.5px var(--gray-line);
+}
+.pointsHistorySection:last-child {
+    border-bottom: none;
+}
+
+.pointsIconBox {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--gray-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+    color: var(--text-muted);
+}
+
+.plus .pointsIconBox {
+    color: #237b4b;
+}
+
+.minus .pointsIconBox {
+    color: #b0603d;
+}
+
+.pointsInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.reason {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.date {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.points {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.plus {
+    color: #237b4b;
+    background: rgba(35, 123, 75, 0.1);
+}
+
+.minus {
+    color: #b0603d;
+    background: rgba(176, 96, 61, 0.1);
+}

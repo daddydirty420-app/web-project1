@@ -65,7 +65,7 @@ export const PointsList = ({ user }: Props) => {
 
                         return (
                             <section className={styles.pointsHistorySection} key={pointsHistory.id}>
-                                <div className={styles.pointsIconBox}>
+                                <div className={`${styles.pointsIconBox} ${plus ? styles.plus : styles.minus}`}>
                                     {plus ? (
                                         <IconCoins size={20} stroke={1.5} />
                                     ) : (
