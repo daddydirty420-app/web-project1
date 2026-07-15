@@ -1,6 +1,6 @@
 "use client";
 
-import { IconCoins, IconShoppingCart } from "@tabler/icons-react";
+import { IconAlertTriangle, IconCoins, IconShoppingCart } from "@tabler/icons-react";
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
 import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { PointsHistory, PointsHistoryResponse, User } from "../type";
@@ -51,6 +51,10 @@ export const PointsList = ({ user }: Props) => {
 
                 {pointLots && pointLots?.alertPoints > 0 && (
                     <div className={styles.alertPointsFlex}>
+                        <div className={styles.alertIconBox}>
+                            <IconAlertTriangle size={18} stroke={2} className={styles.alertIcon} />
+                        </div>
+
                         <p className={styles.alertPointsText}>
                             あと<span className={styles.alertBold}>{setAfterDate(pointLots.expires_at)}</span>で
                             <span className={styles.alertBold}>
