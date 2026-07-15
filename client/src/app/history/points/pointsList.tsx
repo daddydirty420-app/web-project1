@@ -64,7 +64,7 @@ export const PointsList = ({ user }: Props) => {
                         const plus = pointsHistory.points >= 0;
 
                         return (
-                            <section className={styles.pointsHistorySection}>
+                            <section className={styles.pointsHistorySection} key={pointsHistory.id}>
                                 <div className={styles.pointsIconBox}>
                                     {plus ? (
                                         <IconCoins size={20} stroke={1.5} />
