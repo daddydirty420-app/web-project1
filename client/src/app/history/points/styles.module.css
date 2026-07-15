@@ -1,3 +1,59 @@
+.currentPointsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: min(100%, 520px);
+    margin: 0 auto 32px;
+}
+
+.currentPointsFlex {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.currentPointsTitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: .02em;
+}
+
+.currentPoints {
+    line-height: 1;
+}
+
+.currentPointsNumber {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.alertPointsFlex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 12px 16px;
+
+    border-radius: 10px;
+    border-left: 4px solid #d64b3b;
+
+    background: #fff5f4;
+}
+
+.alertPointsText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c43e2f;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.alertBold {
+    font-weight: 700;
+}
+
 .noHistory {
     display: block;
     width: 100%;

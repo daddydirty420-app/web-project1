@@ -32,7 +32,7 @@ export const PointsList = ({ user }: Props) => {
         if (diffDay > 1) {
             return `${diffDay}日`;
         } else {
-            return `${diffHour}時間`;
+            return "残りわずか";
         }
     };
 
@@ -51,8 +51,14 @@ export const PointsList = ({ user }: Props) => {
 
                 {pointLots && pointLots?.alertPoints > 0 && (
                     <div className={styles.alertPointsFlex}>
-                        あと{setAfterDate(pointLots.expires_at)}で{pointLots?.alertPoints.toLocaleString()}
-                        ptが失効します
+                        <p className={styles.alertPointsText}>
+                            あと<span className={styles.alertBold}>{setAfterDate(pointLots.expires_at)}</span>で
+                            <span className={styles.alertBold}>
+                                {pointLots?.alertPoints.toLocaleString()}
+                                pt
+                            </span>
+                            が失効します
+                        </p>
                     </div>
                 )}
             </section>

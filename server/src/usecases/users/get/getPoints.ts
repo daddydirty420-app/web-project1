@@ -34,7 +34,7 @@ export const getMePointsUseCase = async ({ userId }: Params) => {
         const alertPoints = lots.points - lots.used_points;
 
         plainUser.PointLots = {
-            ...lots,
+            ...lots.get({ plain: true }),
             alertPoints,
         };
     }
