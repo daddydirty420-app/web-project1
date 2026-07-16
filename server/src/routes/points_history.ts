@@ -4,7 +4,7 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getPointsHistoryRateLimit } from "../middleware/rateLimit/pointsHistoryRateLimit.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { getMyPointsHistoryUseCase } from "../usecases/pointsHistory/getMyPointsHistory.js";
-import { GetPointHistoryQuery, getPointsHistoryQuerySchema } from "../validators/query/pointsHistory.js";
+import { GetPointsHistoryQuery, getPointsHistoryQuerySchema } from "../validators/query/pointsHistory.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get(
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
-        const query = req.validatedQuery as GetPointHistoryQuery;
+        const query = req.validatedQuery as GetPointsHistoryQuery;
 
         const { limit, cursor } = query;
 

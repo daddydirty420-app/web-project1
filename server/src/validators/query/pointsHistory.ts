@@ -5,4 +5,4 @@ export const getPointsHistoryQuerySchema = z.object({
     cursor: z.string().optional(),
 });
 
-export type GetPointHistoryQuery = z.infer<typeof getPointsHistoryQuerySchema>;
+export type GetPointsHistoryQuery = z.infer<typeof getPointsHistoryQuerySchema>;
