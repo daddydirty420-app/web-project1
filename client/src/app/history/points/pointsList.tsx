@@ -4,9 +4,9 @@ import { IconCoins, IconShoppingCart } from "@tabler/icons-react";
 import { AlertMoney } from "../../../components";
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
 import { formatRelativeTime } from "../../../lib/formatRelativeTime";
-import { PointsHistory, PointsHistoryResponse, User } from "../type";
-import { getPointsHistoryApiKey } from "./apiKey";
+import { getPointsHistoryApiKey } from "../apiKey";
 import styles from "../styles.module.css";
+import { PointsHistory, PointsHistoryResponse, User } from "../type";
 
 type Props = {
     user: User;

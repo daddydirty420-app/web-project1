@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
-import { getUriagekinHistoryApiKey } from "../points/apiKey";
+import { getUriagekinHistoryApiKey } from "../apiKey";
 import { UriagekinHistory, UriagekinHistoryResponse, User } from "../type";
 
 type Props = {
