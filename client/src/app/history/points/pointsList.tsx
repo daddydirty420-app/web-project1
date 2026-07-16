@@ -37,14 +37,14 @@ export const PointsList = ({ user }: Props) => {
             </section>
 
             {history.length > 0 && (
-                <section className={styles.pointsListWrapper}>
+                <section className={styles.historyListWrapper}>
                     {history.map((pointsHistory) => {
                         if (!pointsHistory) return;
                         const plus = pointsHistory.points >= 0;
 
                         return (
-                            <section className={styles.pointsHistorySection} key={pointsHistory.id}>
-                                <div className={`${styles.pointsIconBox} ${plus ? styles.plus : styles.minus}`}>
+                            <section className={styles.historySection} key={pointsHistory.id}>
+                                <div className={`${styles.historyIconBox} ${plus ? styles.plus : styles.minus}`}>
                                     {plus ? (
                                         <IconCoins size={20} stroke={1.5} />
                                     ) : (
@@ -52,13 +52,13 @@ export const PointsList = ({ user }: Props) => {
                                     )}
                                 </div>
 
-                                <div className={styles.pointsInfo}>
+                                <div className={styles.historyInfo}>
                                     <p className={styles.reason}>{pointsHistory.PointReasonOption.name}</p>
 
                                     <p className={styles.date}>{formatRelativeTime(pointsHistory.createdAt)}</p>
                                 </div>
 
-                                <span className={`${styles.points} ${plus ? styles.plus : styles.minus}`}>
+                                <span className={`${styles.value} ${plus ? styles.plus : styles.minus}`}>
                                     {plus ? "+" : ""}
                                     {pointsHistory.points.toLocaleString()}pt
                                 </span>

@@ -39,13 +39,13 @@
     color: var(--text-muted);
 }
 
-.pointsListWrapper {
+.historyListWrapper {
     width: 100%;
     max-width: 600px;
     margin: 0 auto 5rem;
 }
 
-.pointsHistorySection {
+.historySection {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -53,11 +53,11 @@
     padding: 14px 16px;
     border-bottom: solid 0.5px var(--gray-line);
 }
-.pointsHistorySection:last-child {
+.historySection:last-child {
     border-bottom: none;
 }
 
-.pointsIconBox {
+.historyIconBox {
     width: 40px;
     height: 40px;
     border-radius: 8px;
@@ -70,15 +70,15 @@
     color: var(--text-muted);
 }
 
-.plus .pointsIconBox {
+.plus .historyIconBox {
     color: #237b4b;
 }
 
-.minus .pointsIconBox {
+.minus .historyIconBox {
     color: #b0603d;
 }
 
-.pointsInfo {
+.historyInfo {
     flex: 1;
     min-width: 0;
 }
@@ -94,7 +94,7 @@
     margin: 0;
 }
 
-.points {
+.value {
     font-size: 14px;
     font-weight: 700;
     padding: 4px 10px;
