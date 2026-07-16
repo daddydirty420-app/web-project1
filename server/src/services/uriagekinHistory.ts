@@ -8,7 +8,7 @@ type MyUriagekinHistoryParams = {
 
 export const getMyUriagekinHistory = ({ where, limit }: MyUriagekinHistoryParams) => {
     return UriagekinHistory.findAll({
-        attributes: ["id", "points", "createdAt"],
+        attributes: ["id", "uriagekin", "createdAt"],
         where,
         order: [["createdAt", "DESC"]],
         limit,
