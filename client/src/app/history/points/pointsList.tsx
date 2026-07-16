@@ -24,12 +24,12 @@ export const PointsList = ({ user }: Props) => {
 
     return (
         <>
-            <section className={styles.currentPointsSection}>
-                <div className={styles.currentPointsFlex}>
-                    <p className={styles.currentPointsTitle}>現在のポイント</p>
+            <section className={styles.currentMoneySection}>
+                <div className={styles.currentMoneyFlex}>
+                    <p className={styles.currentMoneyTitle}>現在のポイント</p>
 
-                    <p className={styles.currentPoints}>
-                        <span className={styles.currentPointsNumber}>{user.points.toLocaleString()}</span>pt
+                    <p className={styles.currentMoney}>
+                        <span className={styles.currentMoneyNumber}>{user.points.toLocaleString()}</span>pt
                     </p>
                 </div>
 

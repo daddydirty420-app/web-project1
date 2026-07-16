@@ -53,6 +53,7 @@ export type UriagekinLots = {
 export type User = {
     id: string;
     points: number;
+    uriagekin: number;
     PointLots?: PointLots;
     UriagekinLots?: UriagekinLots;
 };
