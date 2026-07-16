@@ -1,5 +1,6 @@
 export { Accordion } from "./accordion/accordion";
 export { AccordionGrid } from "./accordion/accordion-grid";
+export { AlertMoney } from "./alertMoney/alertMoney";
 export { ConfirmSection } from "./confirm-card/confirmSection";
 export { Container } from "./container/container";
 export { FollowButton } from "./follow-button/followButton";

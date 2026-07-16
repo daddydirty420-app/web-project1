@@ -1,6 +1,7 @@
 import { IconAlertTriangle } from "@tabler/icons-react";
 import { User } from "../types";
 import styles from "./styles.module.css";
+import { AlertMoney } from "../../../components";
 
 type Props = {
     user: User;

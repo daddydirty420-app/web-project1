@@ -1,0 +1,46 @@
+.alertFlex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: fit-content;
+    max-width: 420px;
+    padding: 12px 16px;
+
+    border-radius: 10px;
+    border-left: 4px solid #d64b3b;
+    background: #fff5f4;
+}
+
+.alertIconBox {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(214, 75, 59, 0.12);
+    color: #d64b3b;
+
+    flex-shrink: 0;
+}
+
+.alertIcon {
+    flex-shrink: 0;
+    color: #d64b3b;
+}
+
+.alertText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c43e2f;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.alertBold {
+    font-weight: 700;
+}
