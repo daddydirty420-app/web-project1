@@ -43,7 +43,7 @@ export const UriagekinList = ({ user }: Props) => {
                         const plus = uriagekinHistory.uriagekin >= 0;
 
                         return (
-                            <section className={styles.historyHistorySection} key={uriagekinHistory.id}>
+                            <section className={styles.historySection} key={uriagekinHistory.id}>
                                 <div className={`${styles.historyIconBox} ${plus ? styles.plus : styles.minus}`}>
                                     {plus ? (
                                         <IconCoins size={20} stroke={1.5} />
