@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getUriagekinHistoryRateLimit } from "../middleware/rateLimit/uriagekinHistory.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
+import { getMyUriagekinHistoryUseCase } from "../usecases/uriagekinHistory/getMyUriagekinHistory.js";
 import { GetUriagekinHistoryQuery, getUriagekinHistoryQuerySchema } from "../validators/query/uriagekinHistory.js";
 
 const router = Router();
@@ -21,6 +22,14 @@ router.get(
         const query = req.validatedQuery as GetUriagekinHistoryQuery;
 
         const { limit, cursor } = query;
+
+        try {
+            const { history, hasMore, nextCursor } = await getMyUriagekinHistoryUseCase({ userId, limit, cursor });
+
+            res.status(200).json({ history, hasMore, nextCursor });
+        } catch (err) {
+            next(err);
+        }
     },
 );
 
