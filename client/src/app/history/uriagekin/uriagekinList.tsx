@@ -46,9 +46,9 @@ export const UriagekinList = ({ user }: Props) => {
                             <section className={styles.historySection} key={uriagekinHistory.id}>
                                 <div className={`${styles.historyIconBox} ${plus ? styles.plus : styles.minus}`}>
                                     {plus ? (
-                                        <IconCoins size={20} stroke={1.5} />
-                                    ) : (
                                         <IconShoppingCart size={20} stroke={1.5} />
+                                    ) : (
+                                        <IconCoins size={20} stroke={1.5} />
                                     )}
                                 </div>
 
