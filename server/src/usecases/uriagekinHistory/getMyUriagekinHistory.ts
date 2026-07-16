@@ -1,4 +1,5 @@
 import { Op, WhereOptions } from "sequelize";
+import { getMyUriagekinHistory } from "../../services/uriagekinHistory.js";
 
 type Params = {
     userId: number;
@@ -21,4 +22,17 @@ export const getMyUriagekinHistoryUseCase = async ({ userId, limit, cursor }: Pa
         : {
               user_id: userId,
           };
+
+    // UriagekinHistory取得
+        const data = await getMyUriagekinHistory({ where, limit });
+    
+        const hasMore = data.length > limit;
+    
+        const slicedData = hasMore ? data.slice(0, limit) : data;
+    
+        const lastItem = slicedData[slicedData.length - 1];
+    
+        const nextCursor = lastItem?.createdAt ?? null;
+    
+        return { history: slicedData, hasMore, nextCursor };
 };
