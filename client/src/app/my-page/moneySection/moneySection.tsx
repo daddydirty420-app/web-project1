@@ -26,7 +26,9 @@ export const MoneySection = ({ user }: Props) => {
 
             {pointLots && pointLots?.alertPoints > 0 && <AlertMoney pointLots={pointLots} mode="points" />}
 
-            {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />}
+            {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && (
+                <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />
+            )}
         </section>
     );
 };

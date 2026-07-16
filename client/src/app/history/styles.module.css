@@ -17,7 +17,7 @@
 .currentMoneyTitle {
     font-size: 14px;
     color: var(--text-muted);
-    letter-spacing: .02em;
+    letter-spacing: 0.02em;
 }
 
 .currentMoney {

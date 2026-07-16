@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 export default {
-  async up (queryInterface, Sequelize) {
+    async up(queryInterface, Sequelize) {
         // uriagekin_reason_option作成
         await queryInterface.createTable("uriagekin_reason_option", {
             id: {
@@ -35,13 +35,13 @@ export default {
             onUpdate: "CASCADE",
             onDelete: "RESTRICT",
         });
-  },
+    },
 
-  async down (queryInterface, Sequelize) {
+    async down(queryInterface, Sequelize) {
         await queryInterface.removeConstraint("uriagekin_history", "fk_uriagekin_history_reason_id");
 
         await queryInterface.removeColumn("uriagekin_history", "reason_id");
 
         await queryInterface.dropTable("uriagekin_reason_option");
-  }
+    },
 };

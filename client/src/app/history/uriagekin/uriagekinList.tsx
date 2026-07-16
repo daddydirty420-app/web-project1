@@ -3,10 +3,10 @@
 import { IconCoins, IconShoppingCart } from "@tabler/icons-react";
 import { AlertMoney } from "../../../components";
 import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
+import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { getUriagekinHistoryApiKey } from "../apiKey";
 import styles from "../styles.module.css";
 import { UriagekinHistory, UriagekinHistoryResponse, User } from "../type";
-import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 
 type Props = {
     user: User;
@@ -33,7 +33,9 @@ export const UriagekinList = ({ user }: Props) => {
                     </p>
                 </div>
 
-                {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />}
+                {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && (
+                    <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />
+                )}
             </section>
 
             {history.length > 0 && (

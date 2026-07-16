@@ -10,7 +10,13 @@ import {
     UriagekinLots,
     User,
 } from "../../models/index.js";
-import { EmailParams, GetMyPageParams, GetUserAllParams, UserIdParams, UserIdWhereParams } from "../../types/serviceType/users.js";
+import {
+    EmailParams,
+    GetMyPageParams,
+    GetUserAllParams,
+    UserIdParams,
+    UserIdWhereParams,
+} from "../../types/serviceType/users.js";
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);
