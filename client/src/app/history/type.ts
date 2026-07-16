@@ -4,6 +4,19 @@ export type PointsHistoryResponse = {
     hasMore: boolean;
 };
 
+export type UriagekinHistoryResponse = {
+    history: PointsHistory[];
+    nextCursor: string | null;
+    hasMore: boolean;
+};
+
+export type UriagekinHistory = {
+    id: string;
+    points: number;
+    createdAt: Date;
+    PointReasonOption: PointReasonOption;
+};
+
 export type PointReasonOption = {
     id: string;
     name: string;

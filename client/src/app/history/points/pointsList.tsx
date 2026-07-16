@@ -6,7 +6,7 @@ import { useInfinitePagination } from "../../../hooks/useInfinitePagination";
 import { formatRelativeTime } from "../../../lib/formatRelativeTime";
 import { PointsHistory, PointsHistoryResponse, User } from "../type";
 import { getPointsHistoryApiKey } from "./apiKey";
-import styles from "./styles.module.css";
+import styles from "../styles.module.css";
 
 type Props = {
     user: User;
