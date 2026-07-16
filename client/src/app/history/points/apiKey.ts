@@ -1,4 +1,4 @@
-import { PointsHistoryResponse } from "../type";
+import { PointsHistoryResponse, UriagekinHistoryResponse } from "../type";
 
 export const getPointsHistoryApiKey = (pageIndex: number, previousPageData: PointsHistoryResponse | null) => {
     if (previousPageData && !previousPageData.hasMore) return null;
@@ -8,4 +8,14 @@ export const getPointsHistoryApiKey = (pageIndex: number, previousPageData: Poin
     }
 
     return `${process.env.NEXT_PUBLIC_API_URL}/points-history?limit=30&cursor=${previousPageData?.nextCursor}`;
+};
+
+export const getUriagekinHistoryApiKey = (pageIndex: number, previousPageData: UriagekinHistoryResponse | null) => {
+    if (previousPageData && !previousPageData.hasMore) return null;
+
+    if (pageIndex === 0) {
+        return `${process.env.NEXT_PUBLIC_API_URL}/uriagekin-history?limit=30`;
+    }
+
+    return `${process.env.NEXT_PUBLIC_API_URL}/uriagekin-history?limit=30&cursor=${previousPageData?.nextCursor}`;
 };

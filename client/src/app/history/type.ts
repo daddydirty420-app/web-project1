@@ -5,7 +5,7 @@ export type PointsHistoryResponse = {
 };
 
 export type UriagekinHistoryResponse = {
-    history: PointsHistory[];
+    history: UriagekinHistory[];
     nextCursor: string | null;
     hasMore: boolean;
 };
