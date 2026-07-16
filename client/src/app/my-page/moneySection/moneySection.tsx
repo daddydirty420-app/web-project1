@@ -1,7 +1,7 @@
 import { IconAlertTriangle } from "@tabler/icons-react";
+import { AlertMoney } from "../../../components";
 import { User } from "../types";
 import styles from "./styles.module.css";
-import { AlertMoney } from "../../../components";
 
 type Props = {
     user: User;
@@ -41,22 +41,9 @@ export const MoneySection = ({ user }: Props) => {
                 </div>
             </section>
 
-            {pointLots && pointLots?.alertPoints > 0 && (
-                <div className={styles.alertPointsFlex}>
-                    <div className={styles.alertIconBox}>
-                        <IconAlertTriangle size={18} stroke={2} className={styles.alertIcon} />
-                    </div>
+            {pointLots && pointLots?.alertPoints > 0 && <AlertMoney pointLots={pointLots} mode="points" />}
 
-                    <p className={styles.alertPointsText}>
-                        あと<span className={styles.alertBold}>{setAfterDate(pointLots.expires_at)}</span>で
-                        <span className={styles.alertBold}>
-                            {pointLots?.alertPoints.toLocaleString()}
-                            pt
-                        </span>
-                        が失効します
-                    </p>
-                </div>
-            )}
+            {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />}
         </section>
     );
 };

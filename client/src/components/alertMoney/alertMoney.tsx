@@ -13,6 +13,7 @@ type Props = {
 export const AlertMoney = ({ pointLots, uriagekinLots, mode }: Props) => {
     if (mode === "points" && !pointLots) return null;
     if (mode === "uriagekin" && !uriagekinLots) return null;
+    if (pointLots && uriagekinLots) return null;
 
     // alert残り日数
     const setAfterDate = (date: Date | string): string => {
