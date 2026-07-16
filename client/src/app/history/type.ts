@@ -10,16 +10,21 @@ export type UriagekinHistoryResponse = {
     hasMore: boolean;
 };
 
-export type UriagekinHistory = {
+export type UriagekinReasonOption = {
     id: string;
-    points: number;
-    createdAt: Date;
-    PointReasonOption: PointReasonOption;
+    name: string;
 };
 
 export type PointReasonOption = {
     id: string;
     name: string;
+};
+
+export type UriagekinHistory = {
+    id: string;
+    uriagekin: number;
+    createdAt: Date;
+    UriagekinReasonOption: UriagekinReasonOption;
 };
 
 export type PointsHistory = {
