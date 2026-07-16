@@ -33,6 +33,10 @@ export const UriagekinList = ({ user }: Props) => {
 
                 {uriagekinLots && uriagekinLots?.alertUriagekin > 0 && <AlertMoney uriagekinLots={uriagekinLots} mode="uriagekin" />}
             </section>
+
+            {history.length === 0 && <p className={styles.noHistory}>ポイント履歴がありません</p>}
+
+            <div ref={loadMoreRef} />
         </>
     );
 };
