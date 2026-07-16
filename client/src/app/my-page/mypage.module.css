@@ -91,32 +91,6 @@
     background-color: var(--button-gray-hover);
 }
 
-.moneySection {
-    background: var(--gray-background);
-    border-radius: 12px;
-    padding: 8px 12px;
-}
-
-.moneyDiv {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 0;
-}
-
-.moneyP {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-}
-
-.money {
-    font-size: 18px;
-    font-weight: 700;
-    font-feature-settings: "tnum";
-}
-
 .linkElem {
     display: flex;
     align-items: center;

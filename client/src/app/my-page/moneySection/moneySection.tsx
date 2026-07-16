@@ -1,6 +1,6 @@
 import { IconAlertTriangle } from "@tabler/icons-react";
-import styles from "./mypage.module.css";
-import { User } from "./types";
+import { User } from "../types";
+import styles from "./styles.module.css";
 
 type Props = {
     user: User;
@@ -28,8 +28,8 @@ export const MoneySection = ({ user }: Props) => {
     const uriagekinLots = user.UriagekinLots;
 
     return (
-        <div className={styles.block}>
-            <section className={styles.moneySection}>
+        <section className={styles.moneySection}>
+            <section className={styles.moneyMainBlock}>
                 <div className={styles.moneyDiv}>
                     <p className={styles.moneyP}>売上金</p>
                     <p className={styles.money}>￥{user.uriagekin?.toLocaleString()}</p>
@@ -56,6 +56,6 @@ export const MoneySection = ({ user }: Props) => {
                     </p>
                 </div>
             )}
-        </div>
+        </section>
     );
 };

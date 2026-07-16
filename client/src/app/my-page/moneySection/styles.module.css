@@ -1,0 +1,82 @@
+.moneySection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: min(100%, 520px);
+    margin: 0 auto;
+}
+
+.moneyMainBlock {
+    width: 100%;
+    background: var(--gray-background);
+    border-radius: 12px;
+    padding: 8px 12px;
+}
+
+.moneyDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.moneyP {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+}
+
+.money {
+    font-size: 18px;
+    font-weight: 700;
+    font-feature-settings: "tnum";
+}
+
+.alertPointsFlex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: fit-content;
+    max-width: 420px;
+    padding: 12px 16px;
+
+    border-radius: 10px;
+    border-left: 4px solid #d64b3b;
+    background: #fff5f4;
+}
+
+.alertIconBox {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(214, 75, 59, 0.12);
+    color: #d64b3b;
+
+    flex-shrink: 0;
+}
+
+.alertIcon {
+    flex-shrink: 0;
+    color: #d64b3b;
+}
+
+.alertPointsText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c43e2f;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.alertBold {
+    font-weight: 700;
+}

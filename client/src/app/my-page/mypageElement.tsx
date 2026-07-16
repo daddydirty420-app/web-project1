@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LinkSection } from "./linkSection";
 import { Logout } from "./logout";
-import { MoneySection } from "./moneySection";
+import { MoneySection } from "./moneySection/moneySection";
 import styles from "./mypage.module.css";
 import MypageUI from "./mypageUI";
 import { ProfileSection } from "./profileSection";
