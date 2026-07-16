@@ -77,6 +77,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                 <NormalLink url="/transfer/history" text="振込申請履歴" />
                 <NormalLink url="/transfer/points" text="ポイント変換" />
                 <NormalLink url="/history/points" text="ポイント履歴" />
+                <NormalLink url="/history/uriagekin" text="売上金履歴" />
             </NormalLinkContainer>
 
             <MypageLinkHeader text="〇〇について" />
