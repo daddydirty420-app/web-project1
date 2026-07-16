@@ -24,8 +24,17 @@ export type PointLots = {
     alertPoints: number;
 };
 
+export type UriagekinLots = {
+    id: string;
+    uriagekin: number;
+    used_Uriagekin: number;
+    expires_at: Date;
+    alertUriagekin: number;
+};
+
 export type User = {
     id: string;
     points: number;
     PointLots?: PointLots;
+    UriagekinLots?: UriagekinLots;
 };

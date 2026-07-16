@@ -1,3 +1,19 @@
+export type PointLots = {
+    id: string;
+    points: number;
+    used_points: number;
+    expires_at: Date;
+    alertPoints: number;
+};
+
+export type UriagekinLots = {
+    id: string;
+    uriagekin: number;
+    used_Uriagekin: number;
+    expires_at: Date;
+    alertUriagekin: number;
+};
+
 export type User = {
     id: number;
     user_name: string;
@@ -6,6 +22,8 @@ export type User = {
     honnin_verified: boolean;
     points: number;
     uriagekin: number;
+    PointLots?: PointLots;
+    UriagekinLots?: UriagekinLots;
 };
 
 export type Res = {
