@@ -72,6 +72,7 @@ import TransReasonOptionModel from "./trans_reason_option.js";
 import TransferModel from "./transfer.js";
 import UriagekinHistoryModel from "./uriagekin_history.js";
 import UriagekinLotsModel from "./uriagekin_lots.js";
+import UriagekinReasonOptionModel from "./uriagekin_reason_option.js";
 import UserModel from "./user.js";
 import UserDeleteLogsModel from "./user_delete_logs.js";
 import VideoModel from "./video.js";
@@ -158,6 +159,7 @@ db.TransReasonOption = TransReasonOptionModel;
 db.Transfer = TransferModel;
 db.UriagekinHistory = UriagekinHistoryModel;
 db.UriagekinLots = UriagekinLotsModel;
+db.UriagekinReasonOption = UriagekinReasonOptionModel;
 db.User = UserModel;
 db.UserDeleteLogs = UserDeleteLogsModel;
 db.Video = VideoModel;
@@ -237,6 +239,7 @@ export const {
     Transfer,
     UriagekinHistory,
     UriagekinLots,
+    UriagekinReasonOption,
     User,
     UserDeleteLogs,
     Video,
