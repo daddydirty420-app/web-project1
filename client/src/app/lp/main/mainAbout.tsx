@@ -26,7 +26,7 @@ export const MainAbout = ({ shopPage }: Props) => {
                 </MainP>
                 {!shopPage && (
                     <MainP>
-                        「<strong className="text-[var(--theme)]">○○</strong>
+                        「<strong className="text-[var(--theme)]">{SITE.appName}</strong>
                         」は、キャンプ・登山用品を動画で「
                         <strong>FLEX（自慢）</strong>
                         」して紹介する全く新しいフリマです。動画で紹介するから

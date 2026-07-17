@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { SITE } from "../../../config/site.js";
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { upsertCancel } from "../../../services/cancel.js";
@@ -51,7 +52,7 @@ export const deleteAdminItemUseCase = async ({ itemId, adminId, deleteReason }: 
                 type: "ITEM_DELETED_BY_ADMIN",
                 read_user_id: sellerId,
                 url: `/profile/${sellerId}`,
-                message: `平素より〇〇をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
+                message: `平素より${SITE.appName}をご利用いただき誠にありがとうございます。社内で慎重に協議した結果、利用規約違反が確認されたため、「${item.name}」を削除しました。削除理由は以下の通りです。「${deleteReason}」。今後とも利用規約に沿ったご利用をお願いいたします。`,
             },
             transaction: t,
         });

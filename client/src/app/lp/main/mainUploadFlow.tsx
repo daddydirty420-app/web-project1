@@ -74,7 +74,7 @@ export const MainUploadFlow = ({ loggedIn }: Props) => {
                             <strong>ポイント変換</strong>：
                         </p>
                         <p className="flex-1">
-                            <span className="text-[var(--theme)]">○○</span>限定で使えるポイントに即時変換（
+                            <span className="text-[var(--theme)]">{SITE.appName}</span>限定で使えるポイントに即時変換（
                             <strong>手数料無料でお得！</strong>）
                         </p>
                     </li>
