@@ -17,7 +17,9 @@ export const Content = () => {
             <TitleAndBack title="利用規約" />
 
             <p className={clsx("max-w-[768px] block m-auto", styles.termsP)}>
-                この規約（以下「本規約」といいます。）は、{SITE.companyName}（以下「弊社」といいます。）が運営するインターネットサービス「{SITE.appName}」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。本規約は、弊社とすべての利用者との間に適用されます。
+                この規約（以下「本規約」といいます。）は、{SITE.companyName}
+                （以下「弊社」といいます。）が運営するインターネットサービス「{SITE.appName}
+                」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。本規約は、弊社とすべての利用者との間に適用されます。
             </p>
 
             <TermsSection number={1} heading="総則">

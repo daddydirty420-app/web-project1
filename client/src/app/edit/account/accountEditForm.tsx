@@ -308,7 +308,14 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 patternNum
             />
 
-            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder={SITE.inputName} hissu />
+            <InputStr
+                title="口座名義"
+                type="text"
+                value={meigi}
+                onChange={setMeigi}
+                placeholder={SITE.inputName}
+                hissu
+            />
 
             {page === "shop" && (
                 <p className={clsx(styles.centerSmall, "mt-4")}>

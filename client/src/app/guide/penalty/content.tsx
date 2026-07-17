@@ -237,7 +237,9 @@ export const Content = () => {
                             <ListDiscSecond>商品と関係ないものをセットで発送すること</ListDiscSecond>
                             <ListDiscSecond>第三者が取引を代行すること</ListDiscSecond>
                             <ListDiscSecond>差出人情報を記載せずに発送すること</ListDiscSecond>
-                            <ListDiscSecond>{SITE.appName}で知り得た個人情報を取引以外の目的で利用すること</ListDiscSecond>
+                            <ListDiscSecond>
+                                {SITE.appName}で知り得た個人情報を取引以外の目的で利用すること
+                            </ListDiscSecond>
                             <ListDiscSecond>梱包に不十分な点があること</ListDiscSecond>
                             <ListDiscSecond>「良かった」の評価をつけるよう指定すること</ListDiscSecond>
                         </div>

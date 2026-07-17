@@ -90,7 +90,8 @@ export const Content = () => {
                     <p className="mt-4 mb-2">
                         <strong className="text-[var(--theme)]">{SITE.shopName}</strong>とは、
                         <strong>法人、個人事業主向け</strong>
-                        のショップ運用サービスです。通常の{SITE.shopName}と使い勝手は同じですが、内容は異なり、一つの商品につき
+                        のショップ運用サービスです。通常の{SITE.shopName}
+                        と使い勝手は同じですが、内容は異なり、一つの商品につき
                         <strong>複数点出品</strong>や専用の<strong>在庫管理システム</strong>、毎月の
                         <strong>自動振込</strong>など、事業者にとってうれしい機能が盛りだくさんのサービスです！
                     </p>

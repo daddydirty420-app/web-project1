@@ -151,7 +151,14 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 placeholder={SITE.inputShikutyouson}
                 hissu
             />
-            <InputStr title="町名・番地" type="text" value={banchi} onChange={setBanchi} placeholder={SITE.inputBanchi} hissu />
+            <InputStr
+                title="町名・番地"
+                type="text"
+                value={banchi}
+                onChange={setBanchi}
+                placeholder={SITE.inputBanchi}
+                hissu
+            />
             <InputStr
                 title="建物名・部屋番号"
                 type="text"

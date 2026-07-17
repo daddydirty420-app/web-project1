@@ -210,10 +210,12 @@ export const Content = () => {
 
                 <Accordion heading="ポイント変換">
                     <GuideSection heading="売上金はポイントに変換することができます。">
-                        ポイントは<strong className="text-[var(--theme)]">{SITE.appName}</strong>でのお支払いにご利用いただけます。
+                        ポイントは<strong className="text-[var(--theme)]">{SITE.appName}</strong>
+                        でのお支払いにご利用いただけます。
                     </GuideSection>
                     <GuideSection heading="ポイントの有効期限：保有日から180日後">
-                        ポイントは売上金と同様に保有日から<strong className="text-[var(--theme)]">{SITE.pointsExpires.toLocaleString()}日後</strong>
+                        ポイントは売上金と同様に保有日から
+                        <strong className="text-[var(--theme)]">{SITE.pointsExpires.toLocaleString()}日後</strong>
                         まで使用されなかった場合、無効になり、弊社が回収いたします。
                     </GuideSection>
                 </Accordion>

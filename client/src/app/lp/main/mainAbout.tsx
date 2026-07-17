@@ -42,7 +42,8 @@ export const MainAbout = ({ shopPage }: Props) => {
                             で商品紹介してアウトドア用品を出品できる全く新しいフリマ/ネットショップのプラットフォームです。
                         </MainP>
                         <Link href="/lp" className="underline">
-                            <span className="text-[var(--theme)]">{SITE.appName}</span>とは何か、詳しく知りたい方はこちら→
+                            <span className="text-[var(--theme)]">{SITE.appName}</span>
+                            とは何か、詳しく知りたい方はこちら→
                         </Link>
                     </>
                 )}
