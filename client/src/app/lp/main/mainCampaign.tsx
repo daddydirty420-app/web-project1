@@ -1,5 +1,6 @@
 import { faCampground } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SITE } from "../../../config/site";
 import styles from "../lp.module.css";
 import { CampaignH3 } from "./mainComponent/campaignh3";
 import { MainH2 } from "./mainComponent/mainh2";
@@ -15,7 +16,8 @@ export const MainCampaign = () => {
             <section className={styles.mainSec}>
                 <CampaignH3 number={1} text="出品点数につきポイント配布" />
                 <MainP>
-                    早期出品期間中に出品すると、<strong className="text-[var(--theme)]">○○</strong>内でご利用できる
+                    早期出品期間中に出品すると、<strong className="text-[var(--theme)]">{SITE.appName}</strong>
+                    内でご利用できる
                     <strong>
                         ポイントをお配りします！出品点数が増えるごとに、もらえるポイントの量が多くなります！
                     </strong>
@@ -40,7 +42,7 @@ export const MainCampaign = () => {
                 <MainP>
                     <strong>10点以上出品された方</strong>に限り、早期出品した商品の販売手数料が、
                     <strong>
-                        2か月間<span className="text-[var(--theme-sub)]">10%→</span>
+                        2か月間<span className="text-[var(--theme-sub)]">{SITE.handlingChargeString}→</span>
                         <span className="text-3xl text-[var(--theme)]">8%</span>
                     </strong>
                 </MainP>

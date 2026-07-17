@@ -6,6 +6,7 @@ import styles from "../lp.module.css";
 import { MainP } from "./mainComponent/mainP";
 import { MainH3 } from "./mainComponent/mainh3";
 import { PamphletLink } from "./mainComponent/pamphletLink";
+import { SITE } from "../../../config/site";
 
 type Props = {
     shopPage?: boolean;
@@ -18,7 +19,7 @@ export const MainAbout = ({ shopPage }: Props) => {
 
             <section className={styles.mainSec}>
                 <MainH3>
-                    <span className="text-[var(--theme)]">○○</span>とは？
+                    <span className="text-[var(--theme)]">{SITE.appName}</span>とは？
                 </MainH3>
                 <MainP>
                     <strong>FLEXシリーズ第一弾！</strong>
@@ -41,7 +42,7 @@ export const MainAbout = ({ shopPage }: Props) => {
                             で商品紹介してアウトドア用品を出品できる全く新しいフリマ/ネットショップのプラットフォームです。
                         </MainP>
                         <Link href="/lp" className="underline">
-                            <span className="text-[var(--theme)]">○○</span>とは何か、詳しく知りたい方はこちら→
+                            <span className="text-[var(--theme)]">{SITE.appName}</span>とは何か、詳しく知りたい方はこちら→
                         </Link>
                     </>
                 )}
@@ -49,7 +50,7 @@ export const MainAbout = ({ shopPage }: Props) => {
 
             <section className={styles.mainSec}>
                 <MainH3>
-                    <span className="text-[var(--theme)]">○○</span>で売れる商品
+                    <span className="text-[var(--theme)]">{SITE.appName}</span>で売れる商品
                 </MainH3>
                 <MainP>
                     <strong>キャンプ・登山</strong>を中心に、<strong>アウトドア用品</strong>をご出品いただけます。

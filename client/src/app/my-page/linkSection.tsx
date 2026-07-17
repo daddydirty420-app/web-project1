@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "./mypage.module.css";
 import { ReferenceCode } from "./referenceCode";
 import { Res, User } from "./types";
+import { SITE } from "../../config/site";
 
 type Props = {
     user: User;
@@ -25,7 +26,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                         <NormalLink url="/shop-signup/step1" text="ショップ登録" />
                         {!user.honnin_verified && (
                             <ChildrenLink url="/edit/honnin">
-                                本人確認 <span className={styles.red}>※300ptプレゼント中</span>
+                                本人確認 <span className={styles.red}>※{SITE.honninPointCampaign}ptプレゼント中</span>
                             </ChildrenLink>
                         )}
                     </>
@@ -61,7 +62,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
 
             {data.userData.hasShop && (
                 <>
-                    <MypageLinkHeader text="〇〇ショップ" />
+                    <MypageLinkHeader text={SITE.shopName} />
                     <NormalLinkContainer>
                         <NormalLink url="/money-management" text="売上管理（売上データの確認）" />
                         <NormalLink url="/item-list/stock" text="在庫管理" />
@@ -80,7 +81,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                 <NormalLink url="/history/uriagekin" text="売上金履歴" />
             </NormalLinkContainer>
 
-            <MypageLinkHeader text="〇〇について" />
+            <MypageLinkHeader text={`${SITE.appName}について`} />
             <NormalLinkContainer>
                 <NormalLink url="/guide" text="使い方ガイド" />
                 <NormalLink url="/terms-and-conditions" text="利用規約" />
@@ -88,7 +89,6 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                 <NormalLink url="/tokutei/link" text="特定商取引法に基づく表記" />
                 <NormalLink url="/company" text="会社概要" />
                 <NormalLink url="/inquiry" text="お問い合わせ" />
-                <NormalLink url="/blog/list" text="〇〇ブログ" />
             </NormalLinkContainer>
         </>
     );

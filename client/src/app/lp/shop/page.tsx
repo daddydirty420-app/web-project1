@@ -2,6 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { Items } from "@/types/itemListTypes";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { SITE } from "../../../config/site";
 import { fetchGetHasShop, fetchLpVideoList } from "../api/server";
 import { Lp } from "../lp";
 
@@ -11,9 +12,8 @@ type Res = {
 };
 
 export const metadata: Metadata = {
-    title: "○○",
-    description:
-        "自慢のギアを動画で自慢！全く新しいアウトドア専門フリマ「○○」。「○○」にショップを開店して、圧倒的な面白さと信頼性でギアの販売を加速させませんか？",
+    title: SITE.appName,
+    description: `自慢のギアを動画で自慢！全く新しいアウトドア専門フリマ「${SITE.appName}」。${SITE.shopName}を開店して、圧倒的な面白さと信頼性でギアの販売を加速させませんか？`,
     robots: {
         index: false,
         follow: false,

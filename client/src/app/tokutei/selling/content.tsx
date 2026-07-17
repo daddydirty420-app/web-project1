@@ -116,7 +116,7 @@ export const Content = () => {
 
                     <SecondHeader text="【出品者】" />
                     <SecondHeader text="振込手数料" />
-                    <p>{SITE.handlingCharge}円</p>
+                    <p>{SITE.bankHandlingCharge}円</p>
 
                     <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>

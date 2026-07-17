@@ -4,11 +4,12 @@ import { ListCheck, ListFlow, ListFlowArrow, ListUl } from "@/components/list";
 import styles from "@/styles/guide.module.css";
 import clsx from "clsx";
 import Link from "next/link";
+import { SITE } from "../../../config/site";
 
 export const Content = () => {
     return (
         <>
-            <TitleAndBack title="ショップガイド" />
+            <TitleAndBack title={`${SITE.shopName}ガイド`} />
 
             <p className={clsx("mb-2", styles.sectionChildP)}>
                 ※出品、売上金、振込申請については、「
@@ -67,13 +68,13 @@ export const Content = () => {
                     <ListUl>
                         <ListCheck>法人または個人事業主の方</ListCheck>
                         <ListCheck>認許可が必要な場合、所定の認許可を取得している方</ListCheck>
-                        <ListCheck>○○と関連のある商品を販売される方</ListCheck>
+                        <ListCheck>{SITE.appName}と関連のある商品を販売される方</ListCheck>
                         <ListCheck>利用規約等に反しない方</ListCheck>
                     </ListUl>
                 </Accordion>
 
                 <Accordion heading="オプションについて">
-                    <p className="mt-4">Shop登録時に、以下のオプションの選択ができます。</p>
+                    <p className="mt-4">{SITE.shopName}登録時に、以下のオプションの選択ができます。</p>
                     <GuideSection heading="自動振込">
                         毎月10日に、前月分の売上金を自動的にお振込みいたします。これにより、振込申請の手間が省ける、申請し忘れが無くなるといったメリットがあります。（金融機関が休業日の場合、その翌営業日）
                     </GuideSection>
@@ -83,13 +84,13 @@ export const Content = () => {
                 </Accordion>
             </AccordionGrid>
 
-            <GuideSubTitle text="ショップについて" />
+            <GuideSubTitle text={`${SITE.shopName}について`} />
             <AccordionGrid>
-                <Accordion heading="〇〇ショップとは">
+                <Accordion heading={`${SITE.shopName}とは`}>
                     <p className="mt-4 mb-2">
-                        <strong className="text-[var(--theme)]">FLEX Shop</strong>とは、
+                        <strong className="text-[var(--theme)]">{SITE.shopName}</strong>とは、
                         <strong>法人、個人事業主向け</strong>
-                        のショップ運用サービスです。通常の〇〇と使い勝手は同じですが、内容は異なり、一つの商品につき
+                        のショップ運用サービスです。通常の{SITE.shopName}と使い勝手は同じですが、内容は異なり、一つの商品につき
                         <strong>複数点出品</strong>や専用の<strong>在庫管理システム</strong>、毎月の
                         <strong>自動振込</strong>など、事業者にとってうれしい機能が盛りだくさんのサービスです！
                     </p>
@@ -97,7 +98,7 @@ export const Content = () => {
 
                 <Accordion heading="在庫登録について">
                     <p className="mt-4 mb-2">
-                        <strong className="text-[var(--theme)]">FLEX Shop</strong>
+                        <strong className="text-[var(--theme)]">{SITE.shopName}</strong>
                         ユーザー様に限り、一つの商品につき複数点出品できます
                     </p>
 

@@ -1,5 +1,6 @@
 import { faBoxOpen, faCamera, faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SITE } from "../../../config/site";
 import { UploadButton } from "../button/uploadButton";
 import styles from "../lp.module.css";
 import { MainP } from "./mainComponent/mainP";
@@ -55,7 +56,9 @@ export const MainUploadFlow = ({ loggedIn }: Props) => {
 
             <section className={styles.mainSec}>
                 <MainH3>売上金、振込ルール</MainH3>
-                <MainP>取引完了後、売上金が計上されます。計上日から180日後までが保管期限です。</MainP>
+                <MainP>
+                    取引完了後、売上金が計上されます。計上日から{SITE.uriagekinExpires}日後までが保管期限です。
+                </MainP>
                 <MainP>
                     売上金は<strong>振込申請</strong>または<strong>ポイント変換</strong>のどちらかで受け取れます。
                 </MainP>

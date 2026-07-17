@@ -1,3 +1,4 @@
+import { SITE } from "../../../config/site";
 import styles from "../lp.module.css";
 import { MainH2 } from "./mainComponent/mainh2";
 import { MainH3 } from "./mainComponent/mainh3";
@@ -6,7 +7,7 @@ import { MainP } from "./mainComponent/mainP";
 export const MainShopUtil = () => {
     return (
         <>
-            <MainH2>FLEX Shopの機能</MainH2>
+            <MainH2>{SITE.shopName}の機能</MainH2>
 
             <section className={styles.mainSec}>
                 <MainH3>複数在庫出品</MainH3>
@@ -39,14 +40,14 @@ export const MainShopUtil = () => {
                     これにより、振込申請に時間をかけることなく、
                     <strong>振込申請し忘れによる売上金の未回収を防げます</strong>。
                 </MainP>
-                <small className={styles.small}>※ その他にも、FLEX Shop限定のさまざまな機能がございます。</small>
+                <small className={styles.small}>※ その他にも、{SITE.shopName}限定のさまざまな機能がございます。</small>
                 <small className={styles.small}>
-                    ※ FLEX
-                    Shop登録による料金はかかりません。販売手数料は通常と同じく10%です。配送や振込ルールも基本的に変更はありません。
+                    ※ {SITE.shopName}登録による料金はかかりません。販売手数料は通常と同じく
+                    {SITE.handlingChargeString}です。配送や振込ルールも基本的に変更はありません。
                 </small>
                 <small className={styles.small}>
-                    ※ 事業者向け「FLEX
-                    Shop」は審査が必要になります。審査の際、1～2週間ほどお時間を要する場合がございます。
+                    ※ 事業者向け「{SITE.shopName}
+                    」は審査が必要になります。審査の際、1～2週間ほどお時間を要する場合がございます。
                 </small>
             </section>
         </>

@@ -14,6 +14,7 @@ import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
 import { BankAccount } from "../type";
 import { showStep2ErrorToast } from "./errorToast";
+import { SITE } from "../../../config/site";
 
 type Props = {
     shopId: string;
@@ -286,7 +287,7 @@ export const Form = ({ shopId, account }: Props) => {
                 patternNum
             />
 
-            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder="〇〇　〇〇" hissu />
+            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder={SITE.inputName} hissu />
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />
         </SSUI>

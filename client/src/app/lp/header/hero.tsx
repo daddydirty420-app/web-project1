@@ -1,6 +1,7 @@
 import headerPic from "@/assets/images/scott-goodwill-y8Ngwq34_Ak-unsplash.jpg";
 import clsx from "clsx";
 import Image from "next/image";
+import { SITE } from "../../../config/site";
 import styles from "../lp.module.css";
 
 type Props = {
@@ -28,7 +29,7 @@ export const Hero = ({ shopPage }: Props) => {
                 )}
                 {shopPage && (
                     <p className={clsx("absolute top-[43%] left-[5%]", styles.headerText)}>
-                        FLEXで商品の販売を加速させましょう！
+                        {SITE.appName}で商品の販売を加速させましょう！
                     </p>
                 )}
             </div>

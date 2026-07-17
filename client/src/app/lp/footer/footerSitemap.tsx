@@ -24,9 +24,6 @@ export const FooterSitemap = () => {
                     <Link href="/company" className={styles.sitemapText}>
                         会社概要
                     </Link>
-                    <Link href="/blog/list" className={styles.sitemapText}>
-                        ○○ブログ
-                    </Link>
                 </nav>
             </div>
         </footer>

@@ -1,3 +1,4 @@
+import { SITE } from "../../../config/site";
 import { Answer } from "./mainComponent/answer";
 import { MainH2 } from "./mainComponent/mainh2";
 import { Question } from "./mainComponent/question";
@@ -9,7 +10,7 @@ export const MainQA = () => {
 
             <Question>販売手数料はいくらですか？</Question>
             <Answer>
-                ○○の販売手数料は、全ての商品で<strong className="text-[var(--theme)] text-2xl">10%</strong>
+                {SITE.appName}の販売手数料は、全ての商品で<strong className="text-[var(--theme)] text-2xl">10%</strong>
                 。取引完了時に、商品代金の<strong className="text-[var(--theme)] text-2xl">9割</strong>が入金されます。
             </Answer>
 

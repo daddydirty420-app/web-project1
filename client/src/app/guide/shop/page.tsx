@@ -3,10 +3,11 @@ import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { Metadata } from "next";
 import { Content } from "./content";
+import { SITE } from "../../../config/site";
 
 export const metadata: Metadata = {
     title: "ご利用ガイド - ショップガイド",
-    description: "「〇〇」の限定機能や登録方法についてわかりやすく解説しています。",
+    description: `「${SITE.appName}」の限定機能や登録方法についてわかりやすく解説しています。`,
     robots: {
         index: false,
         follow: false,

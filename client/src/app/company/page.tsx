@@ -3,11 +3,12 @@ import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { TokuteiContainer } from "@/components/tokutei";
 import { Metadata } from "next";
+import { SITE } from "../../config/site";
 import { Content } from "./content";
 
 export const metadata: Metadata = {
     title: "事業概要",
-    description: "〇〇の事業概要はこちら！",
+    description: `${SITE.companyName}の事業概要はこちら！`,
     robots: {
         index: false,
         follow: false,

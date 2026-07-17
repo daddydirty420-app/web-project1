@@ -2,13 +2,14 @@ import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { SITE } from "../../config/site";
 import { fetchMyPage } from "./api/server";
 import { CookieSet } from "./cookieSet";
 import { MypageElement } from "./mypageElement";
 
 export const metadata: Metadata = {
     title: "マイページ",
-    description: "〇〇のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！",
+    description: `${SITE.appName}のマイページはこちら！ご自身のアカウントに関する情報を閲覧できます。ログインユーザーのみ！`,
     robots: {
         index: false,
         follow: false,

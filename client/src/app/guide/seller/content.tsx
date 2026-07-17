@@ -8,6 +8,7 @@ import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import Link from "next/link";
+import { SITE } from "../../../config/site";
 import { Client } from "./client";
 
 export const Content = () => {
@@ -39,7 +40,7 @@ export const Content = () => {
 
                 <Accordion heading="動画の内容">
                     <p className="mt-4 mb-2">
-                        <span className="text-[var(--theme)] font-bold">○○</span>
+                        <span className="text-[var(--theme)] font-bold">{SITE.appName}</span>
                         では、商品の内容や特徴が伝わればどんな動画でも構いません！
                         <br />
                         動画にすることで、より商品の内容がはっきり伝わり、商品の良さや特徴を理解していただけるようなります。
@@ -84,7 +85,7 @@ export const Content = () => {
 
                 <Accordion heading="販売手数料について">
                     <p className="mt-4 mb-2">
-                        <span className="text-[var(--theme)] font-bold">○○</span>
+                        <span className="text-[var(--theme)] font-bold">{SITE.appName}</span>
                         は、決済時に販売手数料を徴収しております。
                     </p>
 
@@ -108,7 +109,7 @@ export const Content = () => {
                     <div className="ml-[2rem] mt-1">
                         <p>
                             購入者が出品者評価をしなかった場合、決済から
-                            <strong className="text-[var(--theme-sub)]">30日後</strong>に入金されます。
+                            <strong className="text-[var(--theme-sub)]">{SITE.gainExpires}日後</strong>に入金されます。
                         </p>
                         <GuideSmall>※規約違反などが確認された場合、入金されないことがございます。</GuideSmall>
                     </div>
@@ -119,7 +120,7 @@ export const Content = () => {
                             <strong>商品代金から販売手数料を引いた額が入金されます。</strong>
                         </p>
                         <p>
-                            ※商品代金の<strong className="text-[var(--theme-sub)]">90%</strong>相当額
+                            ※商品代金の<strong className="text-[var(--theme-sub)]">{SITE.gainString}</strong>相当額
                         </p>
                     </div>
 
@@ -158,7 +159,7 @@ export const Content = () => {
                 <Accordion heading="売上金の保管期限">
                     <p className={clsx("mt-4 mb-2", styles.PHeading)}>
                         売上金の保管期限は、当該売上金が加算された日から
-                        <span className="text-[var(--alert)]">180日後</span>です。
+                        <span className="text-[var(--alert)]">{SITE.uriagekinExpires}日後</span>です。
                     </p>
                     <p>期限内に振込申請またはポイント変換を行ってください。</p>
 
@@ -180,32 +181,39 @@ export const Content = () => {
                     <p className="font-bold mt-4">
                         事前に口座登録しているユーザーには、期限を経過した場合、登録されている口座にお振込みいたします。
                     </p>
-                    <GuideSmall>振込日：期限が経過した月の翌月の10日（金融機関が休業日の場合、翌営業日）</GuideSmall>
+                    <GuideSmall>振込日：{SITE.expiresTransDay}</GuideSmall>
                 </Accordion>
 
                 <Accordion heading="振込申請の注意点">
-                    <GuideSection heading="振込申請は1,000円からです！">
-                        振込申請の最低金額は<strong className="text-[var(--theme)]">1,000円</strong>
-                        です。売上金が1,000円未満の場合、振込申請ができません。
+                    <GuideSection heading={`振込申請は${SITE.transMinValue.toLocaleString()}円からです！`}>
+                        振込申請の最低金額は
+                        <strong className="text-[var(--theme)]">{SITE.transMinValue.toLocaleString()}円</strong>
+                        です。売上金が{SITE.transMinValue.toLocaleString()}円未満の場合、振込申請ができません。
                     </GuideSection>
-                    <GuideSection heading="振込が200円かかります。">
-                        振込申請1回につき手数料<strong className="text-[var(--theme)]">200円</strong>
+                    <GuideSection heading={`振込が${SITE.bankHandlingCharge}円かかります。`}>
+                        振込申請1回につき手数料
+                        <strong className="text-[var(--theme)]">{SITE.bankHandlingCharge.toLocaleString()}円</strong>
                         徴収いたします。一気にまとめて申請する方がお得です。
                     </GuideSection>
-                    <GuideSection heading="口座情報に不備がある場合、振込できません。その際も振込手数料200円発生します。">
-                        振込できない場合も、振込手数料200円発生します。振込申請の際は、お間違いがないか慎重にご確認お願いします。
+                    <GuideSection
+                        heading={`口座情報に不備がある場合、振込できません。その際も振込手数料${SITE.bankHandlingCharge.toLocaleString()}円発生します。`}
+                    >
+                        振込できない場合も、振込手数料{SITE.bankHandlingCharge.toLocaleString()}
+                        円発生します。振込申請の際は、お間違いがないか慎重にご確認お願いします。
                     </GuideSection>
-                    <GuideSection heading="口座情報の誤りで第三者の口座に振り込んだ場合、組戻し手数料880円が発生します。">
+                    <GuideSection
+                        heading={`口座情報の誤りで第三者の口座に振り込んだ場合、組戻し手数料${SITE.bankReturnValue.toLocaleString()}円が発生します。`}
+                    >
                         口座情報にお間違いがないよう、慎重に確認を行ってください。
                     </GuideSection>
                 </Accordion>
 
                 <Accordion heading="ポイント変換">
                     <GuideSection heading="売上金はポイントに変換することができます。">
-                        ポイントは<strong className="text-[var(--theme)]">○○</strong>でのお支払いにご利用いただけます。
+                        ポイントは<strong className="text-[var(--theme)]">{SITE.appName}</strong>でのお支払いにご利用いただけます。
                     </GuideSection>
                     <GuideSection heading="ポイントの有効期限：保有日から180日後">
-                        ポイントは売上金と同様に保有日から<strong className="text-[var(--theme)]">180日後</strong>
+                        ポイントは売上金と同様に保有日から<strong className="text-[var(--theme)]">{SITE.pointsExpires.toLocaleString()}日後</strong>
                         まで使用されなかった場合、無効になり、弊社が回収いたします。
                     </GuideSection>
                 </Accordion>
@@ -215,7 +223,7 @@ export const Content = () => {
             <AccordionGrid>
                 <Accordion heading="動画・画像における禁止事項">
                     <p className="mt-4 mb-2">
-                        <strong className="text-[var(--theme)]">○○</strong>
+                        <strong className="text-[var(--theme)]">{SITE.appName}</strong>
                         の商品動画・画像では以下のものを禁止しております。
                     </p>
 
