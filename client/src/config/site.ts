@@ -36,5 +36,15 @@ export const SITE = {
     inputNameMei: "穴流",
     inputNameMeiKana: "アナル",
 
+    inputBankName: "〇〇銀行",
+    inputBranchName: "〇〇支店",
+    inputAccountNumber: "0000000（半角数字のみ）",
+
+    inputPostNumber: "0000000（ハイフン無し、半角）",
+    inputTodouhuken: "〇〇県",
+    inputShikutyouson: "〇〇市",
+    inputBanchi: "〇-〇〇",
+    inputBuilding: "〇〇マンション××号室",
+
     honninPointCampaign: 300,
 };

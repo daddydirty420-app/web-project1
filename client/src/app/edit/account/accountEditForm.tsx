@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { SITE } from "../../../config/site";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { fetchAccountEdit, fetchShopAccountEdit, fetchSuggestBanks, fetchSuggestBranches } from "../api/account/client";
@@ -208,7 +209,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                         setShowBranchSuggest(false);
                     }}
                     onBlur={() => setTimeout(() => setShowBankSuggest(false), 150)}
-                    placeholder="〇〇銀行"
+                    placeholder={SITE.inputBankName}
                     className={styles.input}
                     required
                 />
@@ -246,7 +247,7 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                         setShowBankSuggest(false);
                     }}
                     onBlur={() => setTimeout(() => setShowBranchSuggest(false), 150)}
-                    placeholder="〇〇支店"
+                    placeholder={SITE.inputBranchName}
                     className={styles.input}
                     required
                 />
@@ -301,13 +302,13 @@ export const AccountEditForm = ({ account, page, shopId, shopEditId }: Props) =>
                 type="text"
                 value={accountNumber}
                 onChange={(v) => setAccountNumber(v.replace(/[^0-9]/g, ""))}
-                placeholder="0000000（半角数字のみ）"
+                placeholder={SITE.inputAccountNumber}
                 hissu
                 numeric
                 patternNum
             />
 
-            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder="〇〇　〇〇" hissu />
+            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder={SITE.inputName} hissu />
 
             {page === "shop" && (
                 <p className={clsx(styles.centerSmall, "mt-4")}>

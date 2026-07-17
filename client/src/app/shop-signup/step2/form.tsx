@@ -5,6 +5,7 @@ import { InputStr, InputTitle } from "@/components/inputForm";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { SITE } from "../../../config/site";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { fetchStep2, fetchSuggestBanks, fetchSuggestBranches } from "../api/step2";
@@ -14,7 +15,6 @@ import SSUI from "../ssUI";
 import { StepBar } from "../stepBar";
 import { BankAccount } from "../type";
 import { showStep2ErrorToast } from "./errorToast";
-import { SITE } from "../../../config/site";
 
 type Props = {
     shopId: string;
@@ -188,7 +188,7 @@ export const Form = ({ shopId, account }: Props) => {
                         setShowBranchSuggest(false);
                     }}
                     onBlur={() => setTimeout(() => setShowBankSuggest(false), 150)}
-                    placeholder="〇〇銀行"
+                    placeholder={SITE.inputBankName}
                     className={styles.input}
                     required
                 />
@@ -226,7 +226,7 @@ export const Form = ({ shopId, account }: Props) => {
                         setShowBankSuggest(false);
                     }}
                     onBlur={() => setTimeout(() => setShowBranchSuggest(false), 150)}
-                    placeholder="〇〇支店"
+                    placeholder={SITE.inputBranchName}
                     className={styles.input}
                     required
                 />
@@ -281,13 +281,20 @@ export const Form = ({ shopId, account }: Props) => {
                 type="text"
                 value={accountNumber}
                 onChange={(v) => setAccountNumber(v.replace(/[^0-9]/g, ""))}
-                placeholder="0000000（半角数字のみ）"
+                placeholder={SITE.inputAccountNumber}
                 hissu
                 numeric
                 patternNum
             />
 
-            <InputStr title="口座名義" type="text" value={meigi} onChange={setMeigi} placeholder={SITE.inputName} hissu />
+            <InputStr
+                title="口座名義"
+                type="text"
+                value={meigi}
+                onChange={setMeigi}
+                placeholder={SITE.inputName}
+                hissu
+            />
 
             <ButtonDiv nextClick={submit} backClick={backSubmit} />
         </SSUI>

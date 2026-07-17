@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
+import { SITE } from "../../../config/site";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { showAddressErrorToast } from "../../edit/address/addressErrorMessage";
@@ -398,7 +399,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={postNumber || ""}
                 onChange={setPostNumber}
-                placeholder="0000000（ハイフン無し、半角）"
+                placeholder={SITE.inputPostNumber}
                 hissu
                 numeric
                 patternNum
@@ -408,7 +409,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={todouhuken || ""}
                 onChange={setTodouhuken}
-                placeholder="〇〇県"
+                placeholder={SITE.inputTodouhuken}
                 hissu
             />
             <InputStr
@@ -416,7 +417,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={shikutyouson || ""}
                 onChange={setShikutyouson}
-                placeholder="〇〇市"
+                placeholder={SITE.inputShikutyouson}
                 hissu
             />
             <InputStr
@@ -424,7 +425,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={banchi || ""}
                 onChange={setBanchi}
-                placeholder="〇-〇〇"
+                placeholder={SITE.inputBanchi}
                 hissu
             />
             <InputStr
@@ -432,7 +433,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 type="text"
                 value={building || ""}
                 onChange={setBuilding}
-                placeholder="〇〇マンション××号室"
+                placeholder={SITE.inputBuilding}
                 hissu={false}
             />
 

@@ -12,6 +12,7 @@ import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Address } from "../type";
 import { showAddressErrorToast } from "./addressErrorMessage";
+import { SITE } from "../../../config/site";
 
 type Props = {
     address: Address;
@@ -129,7 +130,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 type="text"
                 value={postNumber}
                 onChange={setPostNumber}
-                placeholder="0000000（ハイフン無し、半角）"
+                placeholder={SITE.inputPostNumber}
                 hissu
                 numeric
                 patternNum
@@ -139,7 +140,7 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 type="text"
                 value={todouhuken}
                 onChange={setTodouhuken}
-                placeholder="〇〇県"
+                placeholder={SITE.inputTodouhuken}
                 hissu
             />
             <InputStr
@@ -147,16 +148,16 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
                 type="text"
                 value={shikutyouson}
                 onChange={setShikutyouson}
-                placeholder="〇〇市"
+                placeholder={SITE.inputShikutyouson}
                 hissu
             />
-            <InputStr title="町名・番地" type="text" value={banchi} onChange={setBanchi} placeholder="〇-〇〇" hissu />
+            <InputStr title="町名・番地" type="text" value={banchi} onChange={setBanchi} placeholder={SITE.inputBanchi} hissu />
             <InputStr
                 title="建物名・部屋番号"
                 type="text"
                 value={building}
                 onChange={setBuilding}
-                placeholder="〇〇マンション××号室"
+                placeholder={SITE.inputBuilding}
                 hissu={false}
             />
 
