@@ -9,6 +9,7 @@ import {
 } from "@/components/terms";
 import styles from "@/styles/terms.module.css";
 import clsx from "clsx";
+import { SITE } from "../../config/site";
 
 export const Content = () => {
     return (
@@ -16,7 +17,7 @@ export const Content = () => {
             <TitleAndBack title="利用規約" />
 
             <p className={clsx("max-w-[768px] block m-auto", styles.termsP)}>
-                この規約（以下「本規約」といいます。）は、○○（以下「弊社」といいます。）が運営するインターネットサービス「○○」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。本規約は、弊社とすべての利用者との間に適用されます。
+                この規約（以下「本規約」といいます。）は、{SITE.companyName}（以下「弊社」といいます。）が運営するインターネットサービス「{SITE.appName}」において、弊社が提供する各種サービス（以下「本サービス」といいます。）の利用の諸条件を定めるものです。本規約は、弊社とすべての利用者との間に適用されます。
             </p>
 
             <TermsSection number={1} heading="総則">
@@ -27,7 +28,7 @@ export const Content = () => {
                         <p>
                             弊社が運営する以下のURL配下のウェブサイトをいいます。ただし、URLは弊社の都合により変更する場合がございます。
                             <br />
-                            https://app.○○.com
+                            {SITE.appLink}
                         </p>
                     </TermsKakko>
                     <TermsKakko number={2} heading="本サービス">
@@ -630,38 +631,38 @@ export const Content = () => {
                             text="本サービスを通じ、以下に該当し、又は該当すると弊社が判断する情報を本サイト上に掲載し、又は弊社もしくは他のユーザーに送信する行為"
                         />
                         <TermsListDiv>
-                            <TermsListSecond alfabet="a" text="過度に暴力的又は残虐な表現を含む情報" />
+                            <TermsListSecond alphabet="a" text="過度に暴力的又は残虐な表現を含む情報" />
                             <TermsListSecond
-                                alfabet="b"
+                                alphabet="b"
                                 text="異性同性問わず、出会い、わいせつ行為、売買春・援助交際を目的とし又は誘引する情報"
                             />
-                            <TermsListSecond alfabet="c" text="ウィルスその他有害なコンピュータプログラムを含む情報" />
-                            <TermsListSecond alfabet="d" text="自殺、自傷行為を助長する表現を含む情報" />
+                            <TermsListSecond alphabet="c" text="ウィルスその他有害なコンピュータプログラムを含む情報" />
+                            <TermsListSecond alphabet="d" text="自殺、自傷行為を助長する表現を含む情報" />
                             <TermsListSecond
-                                alfabet="e"
+                                alphabet="e"
                                 text="違法薬物、脱法薬物の利用又は薬物の不適切な利用を助長する表現を含む情報"
                             />
                             <TermsListSecond
-                                alfabet="f"
+                                alphabet="f"
                                 text="ワンクリック詐欺サイト、ウィルス等の有害なコンピュータプログラムの流布に繋がるサイト等に誘導する情報"
                             />
                             <TermsListSecond
-                                alfabet="g"
+                                alphabet="g"
                                 text="ネットワークビジネス、マルチ商法、ネズミ講などへの勧誘、アフィリエイトその他本サービスを利用して本サービスと関係のない営利を目的とした情報"
                             />
-                            <TermsListSecond alfabet="h" text="反社会的な表現を含む情報" />
-                            <TermsListSecond alfabet="i" text="チェーンメール等の第三者への情報の拡散を求める情報" />
+                            <TermsListSecond alphabet="h" text="反社会的な表現を含む情報" />
+                            <TermsListSecond alphabet="i" text="チェーンメール等の第三者への情報の拡散を求める情報" />
                             <TermsListSecond
-                                alfabet="j"
+                                alphabet="j"
                                 text="商品やサービスの宣伝・広告・勧誘・営業活動、政治活動、宗教活動、又はこれらに類する情報"
                             />
                             <TermsListSecond
-                                alfabet="k"
+                                alphabet="k"
                                 text="仕事や就職先、留学先等の紹介・斡旋、第三者の紹介又はこれらに関連する情報"
                             />
-                            <TermsListSecond alfabet="l" text="他人に不快感を与える表現を含む情報" />
+                            <TermsListSecond alphabet="l" text="他人に不快感を与える表現を含む情報" />
                             <TermsListSecond
-                                alfabet="m"
+                                alphabet="m"
                                 text="性的に刺激を与える又は興奮させる情報、児童ポルノに関連する情報"
                             />
                         </TermsListDiv>
@@ -912,7 +913,7 @@ export const Content = () => {
                     </TermsMiniSection>
                 </TermsMiniSection>
 
-                <p className={styles.date}>2026年○○月○○日　施行</p>
+                <p className={styles.date}>{SITE.startDate} 施行</p>
             </TermsSection>
         </>
     );
