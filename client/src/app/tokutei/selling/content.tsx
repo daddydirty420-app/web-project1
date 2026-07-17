@@ -2,6 +2,7 @@ import { TitleAndBack } from "@/components";
 import { SecondHeader, TokuteiContainer, TokuteiSection } from "@/components/tokutei";
 import styles from "@/styles/tokutei.module.css";
 import Link from "next/link";
+import { SITE } from "../../../config/site";
 
 export const Content = () => {
     return (
@@ -10,22 +11,17 @@ export const Content = () => {
 
             <TokuteiContainer>
                 <TokuteiSection header="役務提供事業者">
-                    <p>〇〇〇〇</p>
+                    <p>{SITE.representative}</p>
                 </TokuteiSection>
 
                 <TokuteiSection header="所在地">
                     <div className="flex flex-start">
-                        <p className="break-all">〒210-0007</p>
-                        <p className="ml-2 break-all">
-                            神奈川県川崎市川崎区駅前本町11-2
-                            <br />
-                            川崎フロンティアビル4階
-                        </p>
+                        <p className="break-all">{SITE.address}</p>
                     </div>
                 </TokuteiSection>
 
                 <TokuteiSection header="電話番号">
-                    <p>請求があった場合、遅滞なく開示します。</p>
+                    <p>{SITE.phone}</p>
                     <small className={styles.small}>
                         ※現在、お電話による対応は原則行っておりません。お問い合わせの際は、
                         <Link href="/inquiry" className="underline cursor-pointer">
@@ -36,27 +32,27 @@ export const Content = () => {
                 </TokuteiSection>
 
                 <TokuteiSection header="メールアドレス">
-                    <p>support@○○.com</p>
+                    <p>{SITE.email}</p>
                 </TokuteiSection>
 
                 <TokuteiSection header="営業時間">
-                    <p>平日10～18時（お盆、年末年始期間を除く）</p>
+                    <p>{SITE.contactTime}</p>
                 </TokuteiSection>
 
                 <TokuteiSection header="運営統括責任者">
-                    <p>○○ ○○</p>
+                    <p>{SITE.representative}</p>
                 </TokuteiSection>
 
                 <TokuteiSection header="URL">
                     <p>
                         <Link href="/" className={styles.link}>
-                            https://fuckintesting.com
+                            {SITE.appLink}
                         </Link>
                     </p>
                 </TokuteiSection>
 
                 <TokuteiSection header="役務の内容">
-                    <p>○○は、お客様間での売買取引の機会を提供します。</p>
+                    <p>{SITE.appName}は、お客様間での売買取引の機会を提供します。</p>
                 </TokuteiSection>
 
                 <TokuteiSection header="支払い価格">
@@ -120,7 +116,7 @@ export const Content = () => {
 
                     <SecondHeader text="【出品者】" />
                     <SecondHeader text="振込手数料" />
-                    <p>{}円</p>
+                    <p>{SITE.handlingCharge}円</p>
 
                     <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>
