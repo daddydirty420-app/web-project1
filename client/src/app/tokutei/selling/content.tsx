@@ -50,7 +50,7 @@ export const Content = () => {
                 <TokuteiSection header="URL">
                     <p>
                         <Link href="/" className={styles.link}>
-                            https://flex-outdoor.com
+                            https://fuckintesting.com
                         </Link>
                     </p>
                 </TokuteiSection>
@@ -120,7 +120,7 @@ export const Content = () => {
 
                     <SecondHeader text="【出品者】" />
                     <SecondHeader text="振込手数料" />
-                    <p>200円</p>
+                    <p>{}円</p>
 
                     <div className={styles.twoTextFlex}>
                         <p>支払い方法：</p>

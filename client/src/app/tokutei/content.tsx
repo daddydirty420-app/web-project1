@@ -54,7 +54,7 @@ export const Content = () => {
                 <TokuteiSection header="URL">
                     <p>
                         <Link href="/" className={styles.link}>
-                            https://flex-outdoor.com
+                            https://fuckintesting.com
                         </Link>
                     </p>
                 </TokuteiSection>
