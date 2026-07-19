@@ -14,7 +14,7 @@ export default function PersonalInformationUI({ title, children }: Props) {
             <Header />
 
             <Container header>
-                <TitleAndBack title={title} />
+                <TitleAndBack title={title} url="/my-page" />
                 {children}
             </Container>
 

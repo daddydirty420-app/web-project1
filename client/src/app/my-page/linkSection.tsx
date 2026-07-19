@@ -1,9 +1,9 @@
 import { ChildrenLink, MypageLinkHeader, NormalLink, NormalLinkContainer } from "@/components/link";
 import Link from "next/link";
+import { SITE } from "../../config/site";
 import styles from "./mypage.module.css";
 import { ReferenceCode } from "./referenceCode";
 import { Res, User } from "./types";
-import { SITE } from "../../config/site";
 
 type Props = {
     user: User;
