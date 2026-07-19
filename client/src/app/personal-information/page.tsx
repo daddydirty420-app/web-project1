@@ -24,5 +24,5 @@ export default async function Page() {
         <PersonalInformationUI title="個人情報設定">
             <LinkSection />
         </PersonalInformationUI>
-    )
+    );
 }
