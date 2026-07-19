@@ -3,7 +3,7 @@ import { SITE } from "../../config/site";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
 import { redirect } from "next/navigation";
-import PersonalInformationUI from "./personalInfomationUI";
+import PersonalInformationUI from "./personalInformationUI";
 import { LinkSection } from "./linkSection";
 
 export const metadata: Metadata = {
