@@ -46,6 +46,7 @@ export const config = {
         "/money-management/:path*",
         "/my-page/:path*",
         "/notification/:path*",
+        "/order/:path*",
         "/personal-information/:path*",
         "/profile/admin/:path*",
         "/shop-signup/:path*",
