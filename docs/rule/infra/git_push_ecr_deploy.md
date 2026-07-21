@@ -28,6 +28,7 @@ git push origin develop
 - revert：変更取り消し
 - docs：ドキュメント
 - styles：css調整
+- release: リリース時コメント
 
 ---
 
