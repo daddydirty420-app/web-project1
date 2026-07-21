@@ -53,6 +53,40 @@ export const PasswordEditForm = () => {
                     className={styles.icon}
                 />
             </div>
+
+            <div className={styles.passwordRelativeDiv}>
+                <InputStr
+                    title="新しいパスワード"
+                    type={newPwVisible ? "text" : "password"}
+                    value={newPw}
+                    onChange={setNewPw}
+                    placeholder="********"
+                    hissu
+                />
+
+                <FontAwesomeIcon
+                    icon={newPwVisible ? faEyeSlash : faEye}
+                    onClick={() => setNewPwVisible((v) => !v)}
+                    className={styles.icon}
+                />
+            </div>
+
+            <div className={styles.passwordRelativeDiv}>
+                <InputStr
+                    title="新しいパスワード（確認用）"
+                    type={confirmNewPwVisible ? "text" : "password"}
+                    value={confirmNewPw}
+                    onChange={setConfirmNewPw}
+                    placeholder="********"
+                    hissu
+                />
+
+                <FontAwesomeIcon
+                    icon={confirmNewPwVisible ? faEyeSlash : faEye}
+                    onClick={() => setConfirmNewPwVisible((v) => !v)}
+                    className={styles.icon}
+                />
+            </div>
         </EditUI>
     );
 };
