@@ -44,6 +44,13 @@ export const pwResetRateLimit = rateLimit({
     legacyHeaders: false,
 });
 
+export const pwChangeRateLimit = rateLimit({
+    windowMs: 1000 * 60 * 15,
+    limit: 5,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 export const emailChangeRequestRateLimit = rateLimit({
     windowMs: 1000 * 60 * 60,
     limit: 3,

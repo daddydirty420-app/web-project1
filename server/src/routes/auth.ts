@@ -243,6 +243,10 @@ router.post(
     },
 );
 
+// POST /auth/change-pw
+// summary: パスワード変更
+// page: /edit/password
+
 // POST /auth/refresh-token
 // summary: トークンリフレッシュ
 // page: middleware

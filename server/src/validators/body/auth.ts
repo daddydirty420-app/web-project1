@@ -59,6 +59,19 @@ export const resetPWBodySchema = z.object({
         .regex(/^(?=.*[a-z])(?=.*[0-9])/),
 });
 
+export const changePWBodySchema = z.object({
+    currentPw: z
+        .string()
+        .trim()
+        .min(8)
+        .regex(/^(?=.*[a-z])(?=.*[0-9])/),
+    newPw: z
+        .string()
+        .trim()
+        .min(8)
+        .regex(/^(?=.*[a-z])(?=.*[0-9])/),
+})
+
 export const refreshTokenOptionalBodySchema = z.object({
     refreshToken: z.string().optional(),
 });
