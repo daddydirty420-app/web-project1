@@ -6,6 +6,7 @@ import {
     emailChangeRateLimit,
     emailChangeRequestRateLimit,
     loginRateLimit,
+    pwChangeRateLimit,
     pwResetRateLimit,
     pwResetRequestRateLimit,
     resendVerifyCodeRateLimit,
@@ -15,6 +16,7 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
+import { changePwUseCase } from "../usecases/auth/changePW.js";
 import { loginUseCase } from "../usecases/auth/login.js";
 import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
 import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
@@ -30,6 +32,8 @@ import {
     getRefreshTokenCookieOptions,
 } from "../utils/getRefreshCookies.js";
 import {
+    ChangePWBody,
+    changePWBodySchema,
     EmailBody,
     emailBodySchema,
     EmailPasswordBody,
@@ -243,9 +247,30 @@ router.post(
     },
 );
 
-// POST /auth/change-pw
+// PATCH /auth/change-pw
 // summary: パスワード変更
 // page: /edit/password
+router.patch(
+    "/change-pw",
+    pwChangeRateLimit,
+    authenticateToken,
+    validateBody(changePWBodySchema),
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as ChangePWBody;
+
+        const { currentPw, newPw } = body;
+
+        try {
+            await changePwUseCase({ userId, currentPw, newPw });
+
+            res.status(200).json({ message: "パスワードを更新しました " });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
 
 // POST /auth/refresh-token
 // summary: トークンリフレッシュ
