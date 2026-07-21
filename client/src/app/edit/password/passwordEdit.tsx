@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { InputStr } from "../../../components/inputForm";
+import { Button, InputStr } from "../../../components/inputForm";
 import EditUI from "../editUI";
 import styles from "./styles.module.css";
 
@@ -20,7 +20,12 @@ export const PasswordEditForm = () => {
 
     const router = useRouter();
 
-    const handleSubmit = async () => {
+    const submit = async () => {
+        if (newPw === currentPw) {
+            toast.error("パスワードが変更されていません");
+            return;
+        }
+
         if (newPw !== confirmNewPw) {
             toast.error("パスワードが一致しません");
             return;
@@ -87,6 +92,8 @@ export const PasswordEditForm = () => {
                     className={styles.icon}
                 />
             </div>
+
+            <Button onClick={submit}>変更する</Button>
         </EditUI>
     );
 };
