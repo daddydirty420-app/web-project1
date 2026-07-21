@@ -1,10 +1,13 @@
 .passwordRelativeDiv {
     position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .icon {
     position: absolute;
-    top: 50%;
+    top: 65%;
     right: 12px;
     transform: translateY(-50%);
     width: 18px;
