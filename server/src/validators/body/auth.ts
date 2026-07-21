@@ -70,7 +70,7 @@ export const changePWBodySchema = z.object({
         .trim()
         .min(8)
         .regex(/^(?=.*[a-z])(?=.*[0-9])/),
-})
+});
 
 export const refreshTokenOptionalBodySchema = z.object({
     refreshToken: z.string().optional(),
