@@ -40,7 +40,7 @@ export const PasswordEditForm = () => {
             <div className={styles.passwordRelativeDiv}>
                 <InputStr
                     title="現在のパスワード"
-                    type="password"
+                    type={currentPwVisible ? "text" : "password"}
                     value={currentPw}
                     onChange={setCurrentPw}
                     placeholder="********"
