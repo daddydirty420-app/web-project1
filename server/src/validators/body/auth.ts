@@ -83,4 +83,5 @@ export type VerifyTokenBody = z.infer<typeof verifyTokenBodySchema>;
 export type SignupVerifyBody = z.infer<typeof signupVerifyBodySchema>;
 export type EmailBody = z.infer<typeof emailBodySchema>;
 export type ResetPWBody = z.infer<typeof resetPWBodySchema>;
+export type ChangePWBody = z.infer<typeof changePWBodySchema>;
 export type RefreshTokenOptionalBody = z.infer<typeof refreshTokenOptionalBodySchema>;
