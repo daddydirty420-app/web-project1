@@ -1,0 +1,19 @@
+.passwordRelativeDiv {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--gray-50);
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+.icon:hover {
+    opacity: 1;
+}

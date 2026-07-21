@@ -1,8 +1,13 @@
 "use client";
 
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { InputStr } from "../../../components/inputForm";
+import EditUI from "../editUI";
+import styles from "./styles.module.css";
 
 export const PasswordEditForm = () => {
     const [currentPwVisible, setCurrentPwVisible] = useState(false);
@@ -29,4 +34,25 @@ export const PasswordEditForm = () => {
     };
 
     const isDisabled = loading || !currentPw || !newPw || !confirmNewPw;
+
+    return (
+        <EditUI title="パスワード変更">
+            <div className={styles.passwordRelativeDiv}>
+                <InputStr
+                    title="現在のパスワード"
+                    type="password"
+                    value={currentPw}
+                    onChange={setCurrentPw}
+                    placeholder="********"
+                    hissu
+                />
+
+                <FontAwesomeIcon
+                    icon={currentPwVisible ? faEyeSlash : faEye}
+                    onClick={() => setCurrentPwVisible((v) => !v)}
+                    className={styles.icon}
+                />
+            </div>
+        </EditUI>
+    );
 };
