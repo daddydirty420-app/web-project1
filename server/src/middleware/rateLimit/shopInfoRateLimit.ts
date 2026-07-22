@@ -121,6 +121,13 @@ export const shopSignup5RateLimit = rateLimit({
     },
 });
 
+export const getShopMeRateLimit = rateLimit({
+    windowMs: 1000 * 60,
+    limit: 200,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
 export const getShopAddressRateLimit = rateLimit({
     windowMs: 1000 * 60,
     limit: 100,

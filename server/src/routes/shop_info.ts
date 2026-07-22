@@ -8,6 +8,7 @@ import {
     getShopComFreeRateLimit,
     getShopCompanyNameRateLimit,
     getShopConNameRateLimit,
+    getShopMeRateLimit,
     getShopOptionRateLimit,
     getShopPhoneNumberRateLimit,
     getShopRepNameRateLimit,
@@ -535,15 +536,20 @@ router.get("/com-or-free", async (req: Request, res: Response, next: NextFunctio
     }
 });
 
+// GET /shop-info/me
+// summary: ショップの有無とidを取得
+// page: /link/edit/shop
 router.get(
-    "/has-shop/me",
+    "/me",
+    getShopMeRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const currentUserId = req.user!.id;
+        const yserId = req.user!.id;
+
         try {
             const hasShop = await ShopInfo.findOne({
                 where: {
-                    user_id: currentUserId,
+                    user_id: userId,
                     verified: true,
                 },
             });
