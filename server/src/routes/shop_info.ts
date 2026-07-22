@@ -40,7 +40,7 @@ import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.j
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
 import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
-import { getShopMeUseCase } from "../usecases/shopInfo/get/getMe.js";
+import { getMyShopUseCase } from "../usecases/shopInfo/get/getMyShop.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
@@ -265,18 +265,18 @@ router.patch(
     },
 );
 
-// GET /shop-info/me
+// GET /shop-info/my
 // summary: ショップのidを取得
 // page: /link/edit/shop
 router.get(
-    "/me",
+    "/my",
     getShopMeRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
 
         try {
-            const shop = await getShopMeUseCase({ userId });
+            const shop = await getMyShopUseCase({ userId });
 
             res.status(200).json({ shop });
         } catch (err) {

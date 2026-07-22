@@ -163,7 +163,7 @@ export const getShopSignup5 = ({ shopId }: ShopIdParams) => {
     });
 };
 
-export const getMeShop = ({ userId }: UserIdParams) => {
+export const getMyShop = ({ userId }: UserIdParams) => {
     return ShopInfo.findOne({
         attributes: ["id", "user_id"],
         where: {
