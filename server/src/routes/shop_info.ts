@@ -40,6 +40,7 @@ import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.j
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
 import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
+import { getShopMeUseCase } from "../usecases/shopInfo/get/getMe.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
@@ -258,6 +259,26 @@ router.patch(
             await updateShopSignup5UseCase({ shopId, userId });
 
             res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /shop-info/me
+// summary: ショップのidを取得
+// page: /link/edit/shop
+router.get(
+    "/me",
+    getShopMeRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const shop = await getShopMeUseCase({ userId });
+
+            res.status(200).json({ shop });
         } catch (err) {
             next(err);
         }
@@ -535,36 +556,6 @@ router.get("/com-or-free", async (req: Request, res: Response, next: NextFunctio
         next(err);
     }
 });
-
-// GET /shop-info/me
-// summary: ショップの有無とidを取得
-// page: /link/edit/shop
-router.get(
-    "/me",
-    getShopMeRateLimit,
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const hasShop = await ShopInfo.findOne({
-                where: {
-                    user_id: userId,
-                    verified: true,
-                },
-            });
-
-            if (!hasShop) {
-                res.status(200).json({ hasShop: false });
-                return;
-            }
-
-            res.status(200).json({ hasShop: true });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
 
 router.get(
     "/edit-form/:id",

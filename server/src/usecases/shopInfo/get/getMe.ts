@@ -6,7 +6,7 @@ type Params = {
 };
 
 // GET /shop-info/me
-// summary: ショップの有無とidを取得
+// summary: ショップのidを取得
 // page: /link/edit/shop
 export const getShopMeUseCase = async ({ userId }: Params) => {
     // ショップ取得
