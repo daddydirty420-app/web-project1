@@ -1,10 +1,8 @@
-import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { SITE } from "@/config/site";
-import { authOptions } from "@/lib/auth";
-import { LinkSection } from "./linkSection";
+import { Metadata } from "next";
+import { fetchMyShop } from "../../api/edit/server";
 import LinkUI from "../../linkUI";
+import { LinkSection } from "./linkSection";
 
 export const metadata: Metadata = {
     title: "ショップ情報設定",
@@ -16,13 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    const session = await getServerSession(authOptions);
-
-    if (!session) redirect("/login");
+    const data = await fetchMyShop();
 
     return (
         <LinkUI title="個人情報設定">
-            <LinkSection shopId={} />
+            <LinkSection shopId={data.shop.id} />
         </LinkUI>
     );
 }

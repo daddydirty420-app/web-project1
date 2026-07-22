@@ -1,7 +1,7 @@
 import { NormalLink, NormalLinkContainer } from "../../../../components/link";
 
 type Props = {
-    shopId: number;
+    shopId: string;
 };
 
 export const LinkSection = ({ shopId }: Props) => {
