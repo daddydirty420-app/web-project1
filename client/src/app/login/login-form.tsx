@@ -46,6 +46,7 @@ export const LoginForm = () => {
             setPassword("");
             setVisible(false);
             setLoading(false);
+            setRememberMe(false);
 
             if (res?.error) {
                 toast.error("メールアドレスまたはパスワードが正しくありません");

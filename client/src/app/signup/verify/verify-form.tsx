@@ -21,6 +21,8 @@ export const VerifyForm = () => {
         const trimCode = code.trim();
         if (!trimCode || trimCode === "") {
             toast.error("認証コードを入力してください");
+
+            setCode("");
             setLoading(false);
             return;
         }
@@ -35,6 +37,11 @@ export const VerifyForm = () => {
                 redirect: false,
             });
 
+            setCode("");
+            setReferenceCode("");
+            setRememberMe(false);
+            setReferenceVisible(false);
+
             setLoading(false);
 
             if (res?.error) {
@@ -48,6 +55,11 @@ export const VerifyForm = () => {
             router.push("/my-page");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
+
+            setCode("");
+            setReferenceCode("");
+            setReferenceVisible(false);
+
             setLoading(false);
         }
     };
