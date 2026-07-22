@@ -12,6 +12,7 @@ import { fetchResetPw } from "../api/auth";
 
 export const PwForm = () => {
     const [visible, setVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
@@ -27,6 +28,12 @@ export const PwForm = () => {
 
         if (!token) {
             toast.error("無効なリンクです");
+
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             await sleep(1000);
 
@@ -36,6 +43,12 @@ export const PwForm = () => {
 
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
+
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             return;
         }
@@ -43,6 +56,12 @@ export const PwForm = () => {
         const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             return;
         }
@@ -53,12 +72,24 @@ export const PwForm = () => {
             await fetchResetPw(token, password);
 
             toast.success("パスワードを更新しました。もう一度ログインしてください");
+
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             await sleep(1500);
 
             router.push("/login");
         } catch (err) {
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
+            
             if (err instanceof ApiError) {
                 toast.error("新しいパスワードの設定に失敗しました");
                 return;
@@ -98,7 +129,7 @@ export const PwForm = () => {
                 <p className={styles.formText}>パスワード（確認用）</p>
                 <div className="relative">
                     <input
-                        type={visible ? "text" : "password"}
+                        type={confirmVisible ? "text" : "password"}
                         name="confirmPassword"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -106,16 +137,12 @@ export const PwForm = () => {
                         className={styles.input}
                         required
                     />
-                    {visible && (
-                        <FontAwesomeIcon
-                            icon={faEyeSlash}
-                            onClick={() => setVisible((v) => !v)}
-                            className={styles.icon}
-                        />
-                    )}
-                    {!visible && (
-                        <FontAwesomeIcon icon={faEye} onClick={() => setVisible((v) => !v)} className={styles.icon} />
-                    )}
+
+                    <FontAwesomeIcon
+                        icon={confirmVisible ? faEyeSlash : faEye}
+                        onClick={() => setConfirmVisible((v) => !v)}
+                        className={styles.icon}
+                    />
                 </div>
                 {errorMsg && <p className={`${styles.small} ${styles.alert}`}>{errorMsg}</p>}
             </div>
