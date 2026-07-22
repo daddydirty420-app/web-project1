@@ -4,6 +4,10 @@ on:
     push:
         branches: ["main"]
 
+concurrency:
+    group: production
+    cancel-in-progress: true
+
 env:
     AWS_REGION: ap-northeast-1
     ECR_REGISTRY: 221082170856.dkr.ecr.ap-northeast-1.amazonaws.com
