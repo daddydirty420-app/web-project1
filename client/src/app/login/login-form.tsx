@@ -25,6 +25,7 @@ export const LoginForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+            setLoading(false);
             return;
         }
 
@@ -48,6 +49,7 @@ export const LoginForm = () => {
             }
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setLoading(false);
         }
     };
 
