@@ -15,6 +15,8 @@ REMOTE_CONTAINER="my_postgres"
 REMOTE_DB="webproject1"
 REMOTE_USER_DB="postgres"
 
+REMOTE_SERVER_CONTAINER="web-project1-server-1"
+
 DUMP_FILE="local-docker-db-$(date +%F_%H-%M-%S).dump"
 
 # 1. ローカルDBをdump
