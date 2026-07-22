@@ -99,14 +99,19 @@ ${EC2_USER}@${EC2_HOST}:~/
 ### EC2でdumpファイルからデータを復元
 
 ```
-echo "Restoring DB..."
+echo "Running migrations and restoring DB..."
 
 ssh ${EC2_HOST} << EOF
 
+echo "Running migrations..."
+docker exec ${REMOTE_SERVER_CONTAINER} npm run migration:run
+
+echo "Copying dump..."
 docker cp \
 ~/${DUMP_FILE} \
 ${REMOTE_CONTAINER}:/tmp/${DUMP_FILE}
 
+echo "Restoring database..."
 docker exec ${REMOTE_CONTAINER} \
 pg_restore \
 -U ${REMOTE_USER_DB} \
@@ -125,8 +130,9 @@ EOF
 ```
 
 1. ssh EC2へログイン、これ以降の処理はEC2内で行われる
-2. cpでEC2からEC2内のdockerへコピー
-3. restore dumpファイルの内容をEC2のDBへ反映
+2. EC2でマイグレーション実行（ローカルとテーブル・カラム構造を一致させる）
+3. cpでEC2からEC2内のdockerへコピー
+4. restore dumpファイルの内容をEC2のDBへ反映
 
 - --clean --if-exists EC2dockerの既存テーブルを存在するときだけ全削除
 - --no-owner --no-privileges ユーザー名が違うため、権限無しで操作できるようにする

@@ -21,6 +21,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 
+COPY migrations ./migrations
+COPY config ./config
+COPY .sequelizerc ./
+
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 5000

@@ -43,14 +43,19 @@ ${EC2_USER}@${EC2_HOST}:~/
 
 # 3. EC2で復元
 
-echo "Restoring DB..."
+echo "Running migrations and restoring DB..."
 
 ssh ${EC2_HOST} << EOF
 
+echo "Running migrations..."
+docker exec ${REMOTE_SERVER_CONTAINER} npm run migration:run
+
+echo "Copying dump..."
 docker cp \
 ~/${DUMP_FILE} \
 ${REMOTE_CONTAINER}:/tmp/${DUMP_FILE}
 
+echo "Restoring database..."
 docker exec ${REMOTE_CONTAINER} \
 pg_restore \
 -U ${REMOTE_USER_DB} \

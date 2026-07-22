@@ -92,7 +92,8 @@
         "fkey",
         "MINVALUE",
         "MAXVALUE",
-        "timestamptz"
+        "timestamptz",
+        "sequelizerc"
     ],
     "remote.autoForwardPortsFallback": 0
 }
