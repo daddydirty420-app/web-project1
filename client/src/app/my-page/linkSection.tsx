@@ -18,7 +18,6 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
             <NormalLinkContainer>
                 <NormalLink url={profileLink} text="プロフィール" />
                 <NormalLink url="/edit/profile" text="プロフィール設定" />
-                <NormalLink url="/edit/email" text="メールアドレス設定" />
                 {!data.userData.hasShop && (
                     <>
                         <NormalLink url="/personal-information" text="個人情報設定" />
