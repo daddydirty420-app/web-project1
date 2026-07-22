@@ -11,6 +11,7 @@ import { ApiError } from "../../lib/api/apiError";
 import { fetchSignup } from "./api/auth";
 
 export const SignupForm = () => {
+    const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,8 +20,11 @@ export const SignupForm = () => {
     const router = useRouter();
 
     const handleSubmit = async () => {
+        setLoading(true);
+
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
+            setLoading(false);
             return;
         }
 
@@ -29,12 +33,14 @@ export const SignupForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+            setLoading(false);
             return;
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+            setLoading(false);
             return;
         }
 
@@ -44,10 +50,12 @@ export const SignupForm = () => {
             const data = await fetchSignup(trimEmail, password);
 
             toast.success("認証コードを発行しました");
+            setLoading(false);
             await sleep(1500);
 
             router.push(data.reissueUrl);
         } catch (err) {
+            setLoading(false);
             if (err instanceof ApiError) {
                 switch (err.code) {
                     case "ALREADY_USED_EMAIL":
@@ -126,7 +134,7 @@ export const SignupForm = () => {
             </div>
 
             <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
-                認証メールを送る
+                {loading ? "送信中..." : "認証メールを送る"}
             </button>
         </div>
     );
