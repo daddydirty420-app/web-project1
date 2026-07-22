@@ -16,12 +16,14 @@ export const VerifyForm = () => {
     const router = useRouter();
 
     const handleSubmit = async () => {
+        setLoading(true);
+
         const trimCode = code.trim();
         if (!trimCode || trimCode === "") {
             toast.error("認証コードを入力してください");
+            setLoading(false);
             return;
         }
-        setLoading(true);
 
         const trimReferenceCode = referenceCode.trim();
 
@@ -46,6 +48,7 @@ export const VerifyForm = () => {
             router.push("/my-page");
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setLoading(false);
         }
     };
 
