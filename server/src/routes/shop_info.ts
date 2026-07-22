@@ -544,7 +544,7 @@ router.get(
     getShopMeRateLimit,
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const yserId = req.user!.id;
+        const userId = req.user!.id;
 
         try {
             const hasShop = await ShopInfo.findOne({
