@@ -13,10 +13,12 @@ import { fetchSignup } from "./api/auth";
 export const SignupForm = () => {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [confirmVisible, setConfirmVisible] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+
     const router = useRouter();
 
     const handleSubmit = async () => {
@@ -24,6 +26,13 @@ export const SignupForm = () => {
 
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
+
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             return;
         }
@@ -33,6 +42,13 @@ export const SignupForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             return;
         }
@@ -40,6 +56,12 @@ export const SignupForm = () => {
         const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             return;
         }
@@ -50,12 +72,26 @@ export const SignupForm = () => {
             const data = await fetchSignup(trimEmail, password);
 
             toast.success("認証コードを発行しました");
+
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
             await sleep(1500);
 
             router.push(data.reissueUrl);
         } catch (err) {
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setVisible(false);
+            setConfirmVisible(false);
+
             setLoading(false);
+            
             if (err instanceof ApiError) {
                 switch (err.code) {
                     case "ALREADY_USED_EMAIL":
@@ -116,7 +152,7 @@ export const SignupForm = () => {
                 <p className={styles.formText}>パスワード（確認用）</p>
                 <div className="relative">
                     <input
-                        type={visible ? "text" : "password"}
+                        type={confirmVisible ? "text" : "password"}
                         name="confirmPassword"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -125,8 +161,8 @@ export const SignupForm = () => {
                         required
                     />
                     <FontAwesomeIcon
-                        icon={visible ? faEyeSlash : faEye}
-                        onClick={() => setVisible((v) => !v)}
+                        icon={confirmVisible ? faEyeSlash : faEye}
+                        onClick={() => setConfirmVisible((v) => !v)}
                         className={styles.icon}
                     />
                 </div>
