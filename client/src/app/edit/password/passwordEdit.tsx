@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button, InputStr } from "../../../components/inputForm";
+import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { fetchPasswordEdit } from "../api/password/client";
 import EditUI from "../editUI";
@@ -61,7 +62,28 @@ export const PasswordEditForm = () => {
 
             router.back();
         } catch (err) {
+            setCurrentPw("");
+            setNewPw("");
+            setConfirmNewPw("");
+            setCurrentPwVisible(false);
+            setNewPwVisible(false);
+            setConfirmNewPwVisible(false);
+
             setLoading(false);
+
+            if (err instanceof ApiError) {
+                switch (err.code) {
+                    case "NOT_SAME_CURRENT_PASSWORD":
+                        toast.error("現在のパスワードが正しくありません");
+                        break;
+                    case "INVALID_PASSWORD":
+                        toast.error("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+                        break;
+                    default:
+                        toast.error("パスワードの変更に失敗しました");
+                }
+                return;
+            }
 
             alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
