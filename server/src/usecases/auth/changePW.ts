@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { AppError } from "../../errors.js";
-import { getUser } from "../../services/users/query.js";
 import { updatePasswordUser } from "../../services/users/command.js";
+import { getUser } from "../../services/users/query.js";
 
 type Params = {
     userId: number;
@@ -13,11 +13,15 @@ type Params = {
 // summary: パスワード変更
 // page: /edit/password
 export const changePwUseCase = async ({ userId, currentPw, newPw }: Params) => {
-    // ユーザー取得・現在のパスワード照合
+    // ユーザー取得
     const user = await getUser({ userId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
-    if (user.password !== currentPw) throw new AppError("NOT_SAME_CURRENT_PASSWORD", 400);
+
+    // 現在のパスワード照合
+    const isMatch = await bcrypt.compare(currentPw, user.password);
+
+    if (!isMatch) throw new AppError("NOT_SAME_CURRENT_PASSWORD", 400);
 
     // パスワードバリデーションチェック
     const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
