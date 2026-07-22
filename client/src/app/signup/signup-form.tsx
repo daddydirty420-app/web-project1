@@ -27,12 +27,6 @@ export const SignupForm = () => {
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
 
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
-
             setLoading(false);
             return;
         }
@@ -43,12 +37,6 @@ export const SignupForm = () => {
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
 
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
-
             setLoading(false);
             return;
         }
@@ -56,11 +44,6 @@ export const SignupForm = () => {
         const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
-
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
 
             setLoading(false);
             return;
@@ -91,7 +74,7 @@ export const SignupForm = () => {
             setConfirmVisible(false);
 
             setLoading(false);
-            
+
             if (err instanceof ApiError) {
                 switch (err.code) {
                     case "ALREADY_USED_EMAIL":

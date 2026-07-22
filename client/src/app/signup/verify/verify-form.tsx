@@ -22,7 +22,6 @@ export const VerifyForm = () => {
         if (!trimCode || trimCode === "") {
             toast.error("認証コードを入力してください");
 
-            setCode("");
             setLoading(false);
             return;
         }

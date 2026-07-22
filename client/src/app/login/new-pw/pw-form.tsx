@@ -29,11 +29,6 @@ export const PwForm = () => {
         if (!token) {
             toast.error("無効なリンクです");
 
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
-
             setLoading(false);
             await sleep(1000);
 
@@ -44,11 +39,6 @@ export const PwForm = () => {
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
 
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
-
             setLoading(false);
             return;
         }
@@ -56,11 +46,6 @@ export const PwForm = () => {
         const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
-
-            setPassword("");
-            setConfirmPassword("");
-            setVisible(false);
-            setConfirmVisible(false);
 
             setLoading(false);
             return;
