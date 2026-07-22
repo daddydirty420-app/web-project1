@@ -21,19 +21,24 @@ export const PasswordEditForm = () => {
     const router = useRouter();
 
     const submit = async () => {
+        setLoading(true);
+
         if (newPw === currentPw) {
             toast.error("パスワードが変更されていません");
+            setLoading(false);
             return;
         }
 
         if (newPw !== confirmNewPw) {
             toast.error("パスワードが一致しません");
+            setLoading(false);
             return;
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(newPw)) {
             toast.error("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+            setLoading(false);
             return;
         }
     };
@@ -93,7 +98,7 @@ export const PasswordEditForm = () => {
                 />
             </div>
 
-            <Button onClick={submit}>変更する</Button>
+            <Button onClick={submit} disabled={isDisabled}>{loading ? "変更中..." : "変更する"}</Button>
         </EditUI>
     );
 };

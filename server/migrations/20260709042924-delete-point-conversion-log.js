@@ -39,7 +39,7 @@ export default {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "users",
+                    model: "user",
                     key: "id",
                 },
                 onUpdate: "CASCADE",
