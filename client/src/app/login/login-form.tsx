@@ -26,10 +26,11 @@ export const LoginForm = () => {
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
 
+            setEmail("");
             setPassword("");
             setVisible(false);
             setLoading(false);
-            
+
             return;
         }
 

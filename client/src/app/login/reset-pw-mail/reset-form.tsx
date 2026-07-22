@@ -17,6 +17,7 @@ export const ResetForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+            setEmail("");
             setLoading(false);
             return;
         }
@@ -25,9 +26,11 @@ export const ResetForm = () => {
             await fetchRequestResetPw(trimEmail);
 
             toast.success("メールを送信しました");
+            setEmail("");
             setLoading(false);
         } catch (err) {
             toast.success("メールを送信しました");
+            setEmail("");
             setLoading(false);
         }
     };
