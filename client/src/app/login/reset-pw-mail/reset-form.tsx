@@ -6,14 +6,18 @@ import toast from "react-hot-toast";
 import { fetchRequestResetPw } from "../api/auth";
 
 export const ResetForm = () => {
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState("");
 
     const handleSubmit = async () => {
+        setLoading(true);
+
         const trimEmail = email.trim();
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+            setLoading(false);
             return;
         }
 
@@ -21,8 +25,10 @@ export const ResetForm = () => {
             await fetchRequestResetPw(trimEmail);
 
             toast.success("メールを送信しました");
+            setLoading(false);
         } catch (err) {
             toast.success("メールを送信しました");
+            setLoading(false);
         }
     };
 
@@ -43,7 +49,7 @@ export const ResetForm = () => {
             />
 
             <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
-                メールを送信する
+                {loading ? "送信中..." : "メールを送信する"}
             </button>
         </div>
     );
