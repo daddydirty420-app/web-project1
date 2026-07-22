@@ -15,14 +15,19 @@ export const PwForm = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const handleSubmit = async () => {
+        setLoading(true);
+
         const token = searchParams.get("token");
 
         if (!token) {
             toast.error("無効なリンクです");
+            setLoading(false);
             await sleep(1000);
 
             router.push("/login");
@@ -31,12 +36,14 @@ export const PwForm = () => {
 
         if (password !== confirmPassword) {
             setErrorMsg("パスワードが一致しません");
+            setLoading(false);
             return;
         }
 
         const regex = /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regex.test(password)) {
             setErrorMsg("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
+            setLoading(false);
             return;
         }
 
@@ -46,10 +53,12 @@ export const PwForm = () => {
             await fetchResetPw(token, password);
 
             toast.success("パスワードを更新しました。もう一度ログインしてください");
+            setLoading(false);
             await sleep(1500);
 
             router.push("/login");
         } catch (err) {
+            setLoading(false);
             if (err instanceof ApiError) {
                 toast.error("新しいパスワードの設定に失敗しました");
                 return;
@@ -112,7 +121,7 @@ export const PwForm = () => {
             </div>
 
             <button type="submit" className={styles.mainB} disabled={isDisabled} onClick={handleSubmit}>
-                リセットする
+                {loading ? "リセット中..." : "リセットする"}
             </button>
         </div>
     );
