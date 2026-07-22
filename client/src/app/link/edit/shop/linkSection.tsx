@@ -4,7 +4,7 @@ type Props = {
     shopId: number;
 };
 
-export const linkSection = ({ shopId }: Props) => {
+export const LinkSection = ({ shopId }: Props) => {
     return (
         <NormalLinkContainer>
             <NormalLink url={`/edit/name/shop/rep-name/${shopId}`} text="代表者氏名" />
