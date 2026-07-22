@@ -74,7 +74,7 @@ export const PwForm = () => {
             setConfirmVisible(false);
 
             setLoading(false);
-            
+
             if (err instanceof ApiError) {
                 toast.error("新しいパスワードの設定に失敗しました");
                 return;
