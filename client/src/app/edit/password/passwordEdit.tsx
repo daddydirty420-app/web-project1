@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button, InputStr } from "../../../components/inputForm";
+import { sleep } from "../../../lib/sleep";
+import { fetchPasswordEdit } from "../api/password/client";
 import EditUI from "../editUI";
 import styles from "./styles.module.css";
 
@@ -40,6 +42,28 @@ export const PasswordEditForm = () => {
             toast.error("パスワードは半角小文字英字と数字を含む8文字以上にしてください");
             setLoading(false);
             return;
+        }
+
+        try {
+            await fetchPasswordEdit({ currentPw, newPw });
+
+            toast.success("パスワードの変更が完了しました");
+
+            setCurrentPw("");
+            setNewPw("");
+            setConfirmNewPw("");
+            setCurrentPwVisible(false);
+            setNewPwVisible(false);
+            setConfirmNewPwVisible(false);
+
+            setLoading(false);
+            await sleep(1500);
+
+            router.back();
+        } catch (err) {
+            setLoading(false);
+
+            alert("システムエラーが発生しました。時間をおいて再試行してください。");
         }
     };
 
@@ -98,7 +122,9 @@ export const PasswordEditForm = () => {
                 />
             </div>
 
-            <Button onClick={submit} disabled={isDisabled}>{loading ? "変更中..." : "変更する"}</Button>
+            <Button onClick={submit} disabled={isDisabled}>
+                {loading ? "変更中..." : "変更する"}
+            </Button>
         </EditUI>
     );
 };

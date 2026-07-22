@@ -25,7 +25,11 @@ export const LoginForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(trimEmail)) {
             toast.error("正しいメールアドレスの形式で入力してください");
+
+            setPassword("");
+            setVisible(false);
             setLoading(false);
+            
             return;
         }
 
@@ -37,6 +41,9 @@ export const LoginForm = () => {
                 rememberMe: rememberMe ? "true" : "false",
             });
 
+            setEmail("");
+            setPassword("");
+            setVisible(false);
             setLoading(false);
 
             if (res?.error) {
@@ -49,6 +56,8 @@ export const LoginForm = () => {
             }
         } catch (err) {
             alert("システムエラーが発生しました。時間をおいて再試行してください");
+            setPassword("");
+            setVisible(false);
             setLoading(false);
         }
     };
