@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import { SITE } from "../../config/site";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../lib/auth";
 import { redirect } from "next/navigation";
-import PersonalInformationUI from "./personalInformationUI";
+import { SITE } from "@/config/site";
+import { authOptions } from "@/lib/auth";
 import { LinkSection } from "./linkSection";
+import LinkUI from "../../linkUI";
 
 export const metadata: Metadata = {
     title: "個人情報設定",
@@ -21,8 +21,8 @@ export default async function Page() {
     if (!session) redirect("/login");
 
     return (
-        <PersonalInformationUI title="個人情報設定">
+        <LinkUI title="個人情報設定">
             <LinkSection />
-        </PersonalInformationUI>
+        </LinkUI>
     );
 }

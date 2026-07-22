@@ -8,7 +8,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function PersonalInformationUI({ title, children }: Props) {
+export default function LinkUI({ title, children }: Props) {
     return (
         <>
             <Header />

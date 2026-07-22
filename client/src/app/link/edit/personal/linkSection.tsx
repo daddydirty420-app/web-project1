@@ -1,4 +1,4 @@
-import { NormalLink, NormalLinkContainer } from "../../components/link";
+import { NormalLink, NormalLinkContainer } from "@/components/link";
 
 export const LinkSection = () => {
     return (

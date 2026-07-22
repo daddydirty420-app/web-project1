@@ -148,7 +148,7 @@ app.use("/api/journal", JournalRouter);
 app.use("/api/name", NameRouter);
 app.use("/api/notification", NotificationRouter);
 app.use("/api/orders", OrdersRouter);
-app.use("/api/personal-info", IdCardRouter);
+app.use("/api/id-card", IdCardRouter);
 app.use("/api/points-history", PointsHistoryRouter);
 app.use("/api/points-uriage-over", PointsUriageOverRouter);
 app.use("/api/point-lots", PointLotsRouter);

@@ -47,7 +47,7 @@ export const config = {
         "/my-page/:path*",
         "/notification/:path*",
         "/order/:path*",
-        "/personal-information/:path*",
+        "/link/edit/:path*",
         "/profile/admin/:path*",
         "/shop-signup/:path*",
         "/transfer/:path*",
