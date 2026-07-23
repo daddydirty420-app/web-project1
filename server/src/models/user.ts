@@ -45,8 +45,33 @@ export class User extends Model {
     declare honnin_verify_request: boolean | null;
     declare email_verified: boolean | null;
     declare report_trust_score: number;
+    declare address_id: number | null;
+    declare name_id: number | null;
+    declare account_id: number | null;
 
     static associate() {
+        User.belongsTo(Address, {
+            foreignKey: "address_id",
+        });
+        User.belongsTo(Name, {
+            foreignKey: "name_id",
+        });
+        User.belongsTo(BankAccount, {
+            foreignKey: "account_id",
+        });
+        User.belongsTo(GenderOption, {
+            foreignKey: "gender_id",
+        });
+        User.hasOne(IdCard, {
+            foreignKey: "user_id",
+        });
+        User.hasOne(ShopInfo, {
+            foreignKey: "user_id",
+        });
+        User.hasOne(ReferenceCode, {
+            foreignKey: "input_user_id",
+            as: "Input",
+        });
         User.hasMany(Cart, {
             foreignKey: "user_id",
         });
@@ -74,30 +99,8 @@ export class User extends Model {
         User.hasMany(Notification, {
             foreignKey: "read_user_id",
         });
-        User.hasOne(IdCard, {
-            foreignKey: "user_id",
-        });
-        User.hasOne(ShopInfo, {
-            foreignKey: "user_id",
-        });
-        User.hasOne(Address, {
-            foreignKey: "user_id",
-        });
-        User.hasOne(BankAccount, {
-            foreignKey: "user_id",
-        });
         User.hasMany(WatchHistory, {
             foreignKey: "user_id",
-        });
-        User.hasOne(Name, {
-            foreignKey: "user_id",
-        });
-        User.hasOne(ReferenceCode, {
-            foreignKey: "input_user_id",
-            as: "Input",
-        });
-        User.belongsTo(GenderOption, {
-            foreignKey: "gender_id",
         });
         User.hasMany(PointsHistory, {
             foreignKey: "user_id",
@@ -213,6 +216,9 @@ User.init(
             defaultValue: 0.3,
             allowNull: false,
         },
+        address_id: DataTypes.INTEGER,
+        name_id: DataTypes.INTEGER,
+        account_id: DataTypes.INTEGER,
     },
     {
         sequelize,
