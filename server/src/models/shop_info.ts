@@ -32,6 +32,8 @@ export class ShopInfo extends Model {
     declare permit_url: string[] | null;
     declare name_representative_id: number | null;
     declare name_contact_id: number | null;
+    declare address_id: number | null;
+    declare account_id: number | null;
 
     static associate() {
         ShopInfo.belongsTo(User, {
@@ -48,11 +50,11 @@ export class ShopInfo extends Model {
             foreignKey: "name_contact_id",
             as: "ContactName",
         });
-        ShopInfo.hasOne(Address, {
-            foreignKey: "shop_info_id",
+        ShopInfo.belongsTo(Address, {
+            foreignKey: "address_id",
         });
-        ShopInfo.hasOne(BankAccount, {
-            foreignKey: "shop_info_id",
+        ShopInfo.belongsTo(BankAccount, {
+            foreignKey: "account_id",
         });
     }
 
@@ -115,6 +117,8 @@ ShopInfo.init(
         },
         name_representative_id: DataTypes.INTEGER,
         name_contact_id: DataTypes.INTEGER,
+        address_id: DataTypes.INTEGER,
+        account_id: DataTypes.INTEGER,
     },
     {
         sequelize,
