@@ -20,6 +20,7 @@ export class Transfer extends Model {
     declare updatedAt: Date;
     declare transfer_id: string | null;
     declare bank_snapshot: BankSnapshot;
+    declare account_id: number | null;
 
     static associate() {
         Transfer.belongsTo(TransReasonOption, {
@@ -28,8 +29,8 @@ export class Transfer extends Model {
         Transfer.belongsTo(User, {
             foreignKey: "user_id",
         });
-        Transfer.hasOne(BankAccount, {
-            foreignKey: "transfer_id",
+        Transfer.belongsTo(BankAccount, {
+            foreignKey: "account_id",
         });
     }
 
@@ -69,6 +70,7 @@ Transfer.init(
             allowNull: false,
             defaultValue: {},
         },
+        account_id: DataTypes.INTEGER,
     },
     {
         sequelize,
