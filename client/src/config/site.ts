@@ -1,7 +1,7 @@
 export const SITE = {
-    companyName: "マジックミラースタジアム株式会社",
-    representative: "ラミン・アナル",
-    email: "anal@nullnull.peropero",
+    companyName: "Oracle Rednull Racing",
+    representative: "クリスチャン・ホーナー",
+    email: "nulln@nullnull.peropero",
     supportEmail: "nullnull@nullnull.sitainoyo~n",
     phone: "420-893-666",
     address: "〒893-1919 東京都川崎市横浜6-666 null404階",
@@ -30,11 +30,11 @@ export const SITE = {
 
     expiresTransDay: "期限が経過した月の翌月の10日（金融機関が休業日の場合、翌営業日）",
 
-    inputName: "裸民　穴流",
-    inputNameSei: "裸民",
-    inputNameSeiKana: "ラミン",
-    inputNameMei: "穴流",
-    inputNameMeiKana: "アナル",
+    inputName: "拉麺　二郎",
+    inputNameSei: "拉麵",
+    inputNameSeiKana: "ラーメン",
+    inputNameMei: "二郎",
+    inputNameMeiKana: "ジロウ",
 
     inputBankName: "〇〇銀行",
     inputBranchName: "〇〇支店",
