@@ -17,7 +17,7 @@ export default async function Page() {
     const data = await fetchMyShop();
 
     return (
-        <LinkUI title="個人情報設定">
+        <LinkUI title="ショップ情報設定">
             <LinkSection shopId={data.shop.id} />
         </LinkUI>
     );

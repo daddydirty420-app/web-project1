@@ -66,7 +66,7 @@ export const LinkSection = ({ user, data, profileLink }: Props) => {
                         <NormalLink url="/money-management" text="売上管理（売上データの確認）" />
                         <NormalLink url="/item-list/stock" text="在庫管理" />
                         <NormalLink url="/shop-info" text="ショップ情報" />
-                        <NormalLink url="/shop-info/edit" text="ショップ情報編集" />
+                        <NormalLink url="/link/edit/shop" text="ショップ情報設定" />
                     </NormalLinkContainer>
                 </>
             )}
