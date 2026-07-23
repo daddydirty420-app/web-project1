@@ -32,6 +32,8 @@ export class Delivery extends Model {
     declare shipping_from_phone: string | null; // 出品者電話番号
     declare tracking_number: string | null; // 追跡番号（手入力）
     declare shipping_memo: string | null; // 配送メモ（自由入力）
+    declare address_id: number | null;
+    declare name_id: number | null;
 
     static associate() {
         Delivery.belongsTo(ShippingDayOption, {
@@ -49,11 +51,11 @@ export class Delivery extends Model {
         Delivery.belongsTo(Orders, {
             foreignKey: "orders_id",
         });
-        Delivery.hasOne(Address, {
-            foreignKey: "delivery_id",
+        Delivery.belongsTo(Address, {
+            foreignKey: "address_id",
         }); // buyer
-        Delivery.hasOne(Name, {
-            foreignKey: "delivery_id",
+        Delivery.belongsTo(Name, {
+            foreignKey: "name_id",
         }); // buyer
     }
 
@@ -101,6 +103,8 @@ Delivery.init(
         shipping_from_phone: DataTypes.STRING(255),
         tracking_number: DataTypes.STRING(255),
         shipping_memo: DataTypes.TEXT,
+        address_id: DataTypes.INTEGER,
+        name_id: DataTypes.INTEGER,
     },
     {
         sequelize,
