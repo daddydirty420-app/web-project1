@@ -12,27 +12,23 @@ export class BankAccount extends Model {
     declare branch: string | null;
     declare account_number: string | null;
     declare meigi: string | null;
-    declare user_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare shop_info_id: number | null;
-    declare transfer_id: number | null;
     declare bank_code: string | null;
     declare branch_code: string | null;
-    declare shop_info_edit_id: number | null;
     declare account_type: "ordinary" | "checking" | "savings";
 
     static associate() {
-        BankAccount.belongsTo(ShopInfo, {
+        BankAccount.hasOne(ShopInfo, {
             foreignKey: "shop_info_id",
         });
-        BankAccount.belongsTo(Transfer, {
+        BankAccount.hasOne(Transfer, {
             foreignKey: "transfer_id",
         });
-        BankAccount.belongsTo(User, {
+        BankAccount.hasOne(User, {
             foreignKey: "user_id",
         });
-        BankAccount.belongsTo(ShopInfoEdit, {
+        BankAccount.hasOne(ShopInfoEdit, {
             foreignKey: "shop_info_edit_id",
         });
     }
@@ -57,24 +53,8 @@ BankAccount.init(
         branch: DataTypes.STRING(255),
         account_number: DataTypes.STRING(255),
         meigi: DataTypes.STRING(255),
-        user_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        shop_info_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        transfer_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
         bank_code: DataTypes.STRING(20),
         branch_code: DataTypes.STRING(20),
-        shop_info_edit_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
         account_type: DataTypes.ENUM("ordinary", "checking", "savings"),
     },
     {
