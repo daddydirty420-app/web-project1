@@ -217,9 +217,18 @@ User.init(
             defaultValue: 0.3,
             allowNull: false,
         },
-        address_id: DataTypes.INTEGER,
-        name_id: DataTypes.INTEGER,
-        account_id: DataTypes.INTEGER,
+        address_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        name_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        account_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
         idcard_id: {
             type: DataTypes.INTEGER,
             unique: true,
