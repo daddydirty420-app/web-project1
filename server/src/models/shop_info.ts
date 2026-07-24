@@ -115,10 +115,22 @@ ShopInfo.init(
                 },
             },
         },
-        name_representative_id: DataTypes.INTEGER,
-        name_contact_id: DataTypes.INTEGER,
-        address_id: DataTypes.INTEGER,
-        account_id: DataTypes.INTEGER,
+        name_representative_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        name_contact_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        address_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        account_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,

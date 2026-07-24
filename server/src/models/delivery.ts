@@ -1,13 +1,13 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
+import Address from "./address.js";
+import DeliveryStatusOption from "./delivery_status_option.js";
+import Name from "./name.js";
+import Orders from "./orders.js";
 import ShippingDayOption from "./shipping_day_option.js";
 import ShippingServiceOption from "./shipping_service_option.js";
-import DeliveryStatusOption from "./delivery_status_option.js";
 import TodouhukenOption from "./todouhuken_option.js";
-import Orders from "./orders.js";
-import Address from "./address.js";
-import Name from "./name.js";
 
 export class Delivery extends Model {
     declare id: number;
@@ -103,8 +103,14 @@ Delivery.init(
         shipping_from_phone: DataTypes.STRING(255),
         tracking_number: DataTypes.STRING(255),
         shipping_memo: DataTypes.TEXT,
-        address_id: DataTypes.INTEGER,
-        name_id: DataTypes.INTEGER,
+        address_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
+        name_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,
