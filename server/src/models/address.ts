@@ -11,31 +11,27 @@ export class Address extends Model {
     declare id: number;
     declare post_number: string | null;
     declare todouhuken_id: number | null;
-    declare sikutyouson: string | null;
+    declare shikutyouson: string | null;
     declare banchi: string | null;
     declare building: string | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare shop_info_id: number | null;
-    declare shop_info_edit_id: number | null;
-    declare delivery_id: number | null;
-    declare user_id: number | null;
 
     static associate() {
         Address.belongsTo(TodouhukenOption, {
             foreignKey: "todouhuken_id",
             as: "AddressTodouhuken",
         });
-        Address.belongsTo(ShopInfo, {
+        Address.hasOne(ShopInfo, {
             foreignKey: "shop_info_id",
         });
-        Address.belongsTo(ShopInfoEdit, {
+        Address.hasOne(ShopInfoEdit, {
             foreignKey: "shop_info_edit_id",
         });
-        Address.belongsTo(Delivery, {
+        Address.hasOne(Delivery, {
             foreignKey: "delivery_id",
         });
-        Address.belongsTo(User, {
+        Address.hasOne(User, {
             foreignKey: "user_id",
         });
     }
@@ -62,22 +58,6 @@ Address.init(
         shikutyouson: DataTypes.STRING(255),
         banchi: DataTypes.STRING(255),
         building: DataTypes.STRING(255),
-        shop_info_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        shop_info_edit_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        delivery_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
     },
     {
         sequelize,
