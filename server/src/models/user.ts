@@ -220,7 +220,10 @@ User.init(
         address_id: DataTypes.INTEGER,
         name_id: DataTypes.INTEGER,
         account_id: DataTypes.INTEGER,
-        idcard_id: DataTypes.INTEGER,
+        idcard_id: {
+            type: DataTypes.INTEGER,
+            unique: true,
+        },
     },
     {
         sequelize,
