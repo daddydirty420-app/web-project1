@@ -48,6 +48,7 @@ export class User extends Model {
     declare address_id: number | null;
     declare name_id: number | null;
     declare account_id: number | null;
+    declare idcard_id: number | null;
 
     static associate() {
         User.belongsTo(Address, {
@@ -62,7 +63,7 @@ export class User extends Model {
         User.belongsTo(GenderOption, {
             foreignKey: "gender_id",
         });
-        User.hasOne(IdCard, {
+        User.belongsTo(IdCard, {
             foreignKey: "user_id",
         });
         User.hasOne(ShopInfo, {
@@ -219,6 +220,7 @@ User.init(
         address_id: DataTypes.INTEGER,
         name_id: DataTypes.INTEGER,
         account_id: DataTypes.INTEGER,
+        idcard_id: DataTypes.INTEGER,
     },
     {
         sequelize,
