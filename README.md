@@ -1,6 +1,8 @@
-🇺🇸 English version: README.en.md
+⚠ 開発中
 
-# Web Project 1（名称未定）
+2026/07/24版
+
+# Project（名称未定）
 
 ## 概要
 
@@ -9,26 +11,27 @@
 
 従来のECサイトでは、商品情報が画像やテキストに依存しているため、商品の理解が十分に伝わらない場合があります。
 本プラットフォームでは商品情報に動画を必須とすることで、より豊富な情報を提供し、**出品者と購入者のマッチング精度の向上**を目指しています。
+また、従来のマーケットプレイスシステムでは情報がテキストに依存していたため、主にセールスポイント等の情報を動画に移すことで、**UI最適化とCVR向上**を目指しています。
 
 現在、本プロジェクトは開発中です。
 
 ## 開発の進捗
 
-2026年4月15日現在の開発進捗
+2026年7月24日現在の開発進捗
 
 ### フロントエンド
 
-商品ページ・ユーザー登録および個人情報登録・認証系・その他インプット系・規約・ガイドが完成。決済系・取引系・チャット系・検索機能（一部を除く）・トップページ・LP・売上管理・管理者機能は未実装。
+商品ページ・ユーザー登録および個人情報登録・認証系・検索系・商品リスト系・その他インプット系・規約・ガイドが完成。決済系・取引系・チャット系・トップページ・LP・売上管理・管理者機能は未実装。
 
-一部、以前のサービス（アウトドア系EC）から未改修の部分あり。
+一部、以前のサービス（アウトドア系CtoC EC）から未改修の部分あり。
 
 ### バックエンド
 
-Sequelizeモデル・APIルート・ユースケース層・サービス層を、フロントエンドと連動して開発中。その他、cron、認証ミドルウェア、インフラ、マイグレーション等も並行して開発中。ルートハンドラのREST API設計への改修と、/usecase、/serviceへの内部処理の依存関係の分離と一部抽象化も並行してリファクタ中。
+Sequelizeモデル・APIルート・ユースケース層・サービス層を、フロントエンドと連動して開発中。その他、cron、認証ミドルウェア、インフラ、マイグレーション等も並行して開発中。
 
 ---
 
-# 主な目的
+# 主な機能・設計
 
 1. **動画を活用した商品出品機能**
 
@@ -59,7 +62,7 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 
 <img src="images/readme_UI_mobile.png" width="300">
 
-モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。
+モバイルUIでは、動画・商品説明・購入手続きがすべて1画面で収まるように設計されています。PCでも、これらを近い位置に配置し、迷いのない設計になっています。また、薄いグレー背景の概要セクションをクリックすることで、詳細情報が書かれたセクションへ遷移します。
 
 <img src="images/readme_UI_pc.png" width="600">
 
@@ -71,6 +74,9 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 
 - Next.js（App Router）
 - TypeScript
+- CSS Modules
+- SWR
+- NextAuth.js
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
@@ -80,8 +86,13 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 - Node.js
 - Express
 - Sequelize ORM
-- Typescript
+- TypeScript
+- JWT
+- bcrypt
+- Multer
+- FFmpeg
 
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=flat&logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 
@@ -89,20 +100,33 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 
 - PostgreSQL
 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
+
 ### ストレージ
 
-- Amazon S3（画像・動画ファイルのアップロード先）
-- PostgreSQL に S3 の URL を保存して参照
+- Amazon S3
 
 ![AWS S3](https://img.shields.io/badge/Amazon_S3-FF9900?style=flat&logo=amazons3&logoColor=white)
 
 ### インフラ / デプロイ
 
-- Vercel（フロントエンド）
-- Render（バックエンド・DB）
+- Docker
+- Amazon EC2
+- Amazon ECR
+- GitHub Actions
 
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
-![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+![Amazon EC2](https://img.shields.io/badge/Amazon%20EC2-FF9900?style=flat&logo=amazonec2&logoColor=white)
+![Amazon ECR](https://img.shields.io/badge/Amazon%20ECR-FF9900?style=flat&logo=amazonaws&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
+
+### バージョン管理
+
+- Git
+- GitHub
+
+![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)
 
 ## 技術選定理由
 
@@ -114,32 +138,40 @@ Sequelizeモデル・APIルート・ユースケース層・サービス層を�
 | Sequelize            | TypeScriptとの親和性が高く、マイグレーション管理が容易なため                                                      |
 | PostgreSQL           | リレーション設計が複雑なECデータ（商品・注文・ユーザー）に適しているため                                          |
 | Amazon S3            | 大容量の画像・動画ファイルを低コストかつ高可用性で保存できるため。DBにはURLのみ保存し、ファイル管理を分離する設計 |
-| Vercel               | Next.jsとの親和性が非常に高く、App RouterのSSR/ISRに最適化されており、無料で利用できるため                        |
-| Render               | Node.js + Expressのデプロイが簡単で、無料枠から始められコスト効率が良いため                                       |
+| Docker               | 開発環境と本番環境を統一し、環境差異によるトラブルを防止できるため                                                |
+| Amazon EC2           | 権限やスケーラビリティ等設計の自由度が高いのと、パフォーマンス最適化を図るため                                    |
+| Amazon ECR           | Dockerイメージを安全に管理でき、EC2へのデプロイを効率化できるため                                                 |
+| GitHub Actions       | ビルド・テスト・デプロイを自動化し、CI/CDを実現するため                                                           |
 
 ## システム構成
 
 ```mermaid
 graph TD
-  subgraph Vercel
+  subgraph Client
     A[Next.js Client]
   end
 
-  subgraph Render
-    B[Express Server]
-    D[(PostgreSQL)]
-  end
-
   subgraph AWS
-    E[Amazon S3\n画像・動画ストレージ]
+    E[Amazon S3<br/>画像・動画ストレージ]
+    G[Amazon ECR]
+
+    subgraph EC2インスタンス
+      B[Amazon EC2<br/>Express Server]
+      D[(PostgreSQL)]
+    end
   end
 
-  A -->|REST API リクエスト| B
+  F[GitHub Actions]
+
+  A -->|REST API| B
   B --> C[Sequelize ORM]
   C --> D
-  B -->|ファイルアップロード| E
-  D -->|S3 URL を保存・参照| D
-  A -->|S3 URL で直接表示| E
+  B -->|画像・動画アップロード| E
+  D -->|S3 URLを保存| E
+  A -->|S3 URLで表示| E
+
+  F -->|Build & Push| G[Amazon ECR]
+  G -->|docker pull| B
 ```
 
 ## 開発環境
@@ -204,11 +236,15 @@ npm run dev
 
 # 現在実装されている機能
 
+フロントエンドのページ単位では **63%** 完了（7月24日現在）
+
 - 商品ページ
 - 商品出品機能
 - ユーザー認証
 - ユーザープロフィール
 - 商品リスト
+- お知らせ
+- 商品検索機能
 - フォロー機能
 - コメント機能
 - ショップ登録
@@ -222,7 +258,7 @@ npm run dev
 # 直近の実装予定
 
 - 注文 / 決済 / 取引機能
-- お知らせ・メール通知機能
+- メール通知機能
 - トップページ / LP（ランディングページ）
 - 管理者ツール
 
@@ -230,12 +266,12 @@ npm run dev
 
 # 今後の計画
 
-- モバイルアプリ開発
 - レコメンド機能
 - 機械学習の導入
 - 多ジャンル展開
-- 配送API連携
 - 決済ゲートウェイ連携
+- モバイルアプリ開発
+- 配送API連携
 
 ---
 
@@ -243,15 +279,22 @@ npm run dev
 
 GitHub: https://github.com/daddydirty420-app
 
+Rednull Racing
+
 エンジニア1年目として、最初のWebアプリフルスタック開発に挑戦中。2026年内リリースを目指す。
 
 以前はノーコードツール Bubble を使って同様のWebアプリを2つ開発。
 1つ目はPVが伸びず撤退、2つ目はパフォーマンスが目標水準に達せず断念。
 
-パフォーマンス課題の解決と機能拡張を目的に、 Typescript を用いたフルスタック開発に挑戦している。
+パフォーマンス課題の解決と機能拡張を目的に、 Typescript を用いたフルスタック開発を行っている。
 
 ### AI 利用方針
 
 ChatGPT・Claude などのLLMと設計や実装について壁打ちしながら開発を進める。
-ただし Claude Code・Codex・Cursor などのコーディングエージェントは使用しない方針。
-基本的な設計・実装の技術的理解を、手を動かすことで深めることを重視しているため。
+ただし Claude Code・Codex などのコーディングエージェントは使用しない方針。
+基本的な設計・実装の技術的理解を、手を動かすことで深めることを重視しているため。要件や設計があいまいなものに対するコーディングエージェントでの実装リスクも考慮している。
+
+# ライセンス
+
+本リポジトリは個人学習・事業用途・技術力証明のために公開しています。
+コードの利用・転用はご遠慮ください。
