@@ -1,9 +1,9 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import User from "./user.js";
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
+import User from "./user.js";
 
 export class IdCard extends Model {
     declare id: number;

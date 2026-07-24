@@ -2,7 +2,6 @@ import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 import { BankSnapshot } from "../types/bankSnapshot.js";
-import BankAccount from "./bank_account.js";
 import TransReasonOption from "./trans_reason_option.js";
 import User from "./user.js";
 
@@ -20,7 +19,6 @@ export class Transfer extends Model {
     declare updatedAt: Date;
     declare transfer_id: string | null;
     declare bank_snapshot: BankSnapshot;
-    declare account_id: number | null;
 
     static associate() {
         Transfer.belongsTo(TransReasonOption, {
@@ -29,15 +27,11 @@ export class Transfer extends Model {
         Transfer.belongsTo(User, {
             foreignKey: "user_id",
         });
-        Transfer.belongsTo(BankAccount, {
-            foreignKey: "account_id",
-        });
     }
 
     static associations: {
         TransReasonOption: Association<Transfer, TransReasonOption>;
         User: Association<Transfer, User>;
-        BankAccount: Association<Transfer, BankAccount>;
     };
 }
 
@@ -70,7 +64,6 @@ Transfer.init(
             allowNull: false,
             defaultValue: {},
         },
-        account_id: DataTypes.INTEGER,
     },
     {
         sequelize,
