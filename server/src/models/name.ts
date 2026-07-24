@@ -15,15 +15,12 @@ export class Name extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
     declare shop_type: string;
-    declare shop_info_edit_id: number | null;
-    declare delivery_id: number | null;
-    declare user_id: number | null;
 
     static associate() {
-        Name.belongsTo(Delivery, {
+        Name.hasOne(Delivery, {
             foreignKey: "delivery_id",
         });
-        Name.belongsTo(User, {
+        Name.hasOne(User, {
             foreignKey: "user_id",
         });
         Name.hasOne(ShopInfo, {
@@ -69,14 +66,6 @@ Name.init(
             validate: {
                 isIn: [["representative", "contact"]],
             },
-        },
-        delivery_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            unique: true,
         },
     },
     {
