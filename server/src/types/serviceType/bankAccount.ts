@@ -27,7 +27,7 @@ export type CreateBankParams = {
     transaction?: Transaction;
 };
 
-export type CreateBankShopEditAllowNullParams = {
+export type CreateBankAllowNullParams = {
     data: {
         bank_code: string | null;
         bank_name: string | null;
@@ -36,7 +36,6 @@ export type CreateBankShopEditAllowNullParams = {
         account_type: AccountType;
         account_number: string | null;
         meigi: string | null;
-        shop_info_edit_id: number;
     };
     transaction?: Transaction;
 };

@@ -3,7 +3,7 @@ import {
     AccountIdParams,
     BankTransactionParams,
     TransactionParams,
-    CreateBankShopEditAllowNullParams,
+    CreateBankAllowNullParams,
     CreateBankParams,
     updateBankParams,
     UpsertBankShopParams,
@@ -21,8 +21,8 @@ export const createBankAccount = async ({ data, transaction }: CreateBankParams)
     return BankAccount.create(data, { transaction });
 };
 
-export const createBankAccountShopEditAllowNull = async ({ data, transaction }: CreateBankShopEditAllowNullParams) => {
-    await BankAccount.create(data, { transaction });
+export const createBankAccountAllowNull = async ({ data, transaction }: CreateBankAllowNullParams) => {
+    return BankAccount.create(data, { transaction });
 };
 
 export const updateBankAccount = async ({ account, data, transaction }: updateBankParams) => {

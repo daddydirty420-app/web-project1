@@ -52,6 +52,7 @@ export type CreateShopEditComFreeParams = {
         name_representative_id: number;
         name_contact_id: number;
         address_id: number;
+        account_id: number;
     };
     transaction?: Transaction;
 };

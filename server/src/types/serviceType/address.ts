@@ -28,6 +28,17 @@ export type CreateAddressParams = {
     transaction?: Transaction;
 };
 
+export type CreateAddressAllowNullParams = {
+    data: {
+        post_number: string | null;
+        todouhuken_id: number | null;
+        shikutyouson: string | null;
+        banchi: string | null;
+        building?: string | null;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateAddressParams = {
     address: InstanceType<typeof Address>;
     data: {

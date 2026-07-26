@@ -1,7 +1,7 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createAddress } from "../../../services/address.js";
-import { createBankAccountShopEditAllowNull } from "../../../services/bankAccount.js";
+import { createAddressAllowNull } from "../../../services/address.js";
+import { createBankAccountAllowNull } from "../../../services/bankAccount.js";
 import { createNameShopAllowNull } from "../../../services/name.js";
 import { getShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
 import { createShopEditComFree } from "../../../services/shopInfoEdit/command.js";
@@ -54,13 +54,26 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
             transaction: t,
         });
 
-        const newAddress = await createAddress({
+        const newAddress = await createAddressAllowNull({
             data: {
                 post_number: address?.post_number ?? null,
                 todouhuken_id: address?.todouhuken_id ?? null,
                 shikutyouson: address?.shikutyouson ?? null,
                 banchi: address?.banchi ?? null,
                 building: address?.building ?? null,
+            },
+            transaction: t,
+        });
+
+        const newAccount = await createBankAccountAllowNull({
+            data: {
+                bank_name: bank?.bank_name ?? null,
+                bank_code: bank?.bank_code ?? null,
+                branch: bank?.branch ?? null,
+                branch_code: bank?.branch_code ?? null,
+                account_type: bank?.account_type ?? null,
+                account_number: bank?.account_number ?? null,
+                meigi: bank?.meigi ?? null,
             },
             transaction: t,
         });
@@ -82,20 +95,7 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
                 name_representative_id: newRepName.id,
                 name_contact_id: newConName.id,
                 address_id: newAddress.id,
-            },
-            transaction: t,
-        });
-
-        await createBankAccountShopEditAllowNull({
-            data: {
-                bank_name: bank?.bank_name ?? null,
-                bank_code: bank?.bank_code ?? null,
-                branch: bank?.branch ?? null,
-                branch_code: bank?.branch_code ?? null,
-                account_type: bank?.account_type ?? null,
-                account_number: bank?.account_number ?? null,
-                meigi: bank?.meigi ?? null,
-                shop_info_edit_id: shopEdit.id,
+                account_id: newAccount.id,
             },
             transaction: t,
         });
