@@ -5,6 +5,10 @@ export type ItemIdParams = {
     itemId: number;
 };
 
+export type DeliveryIdParams = {
+    deliveryId: number;
+};
+
 export type CreateDeliveryParams = {
     itemId: number;
     user: InstanceType<typeof User>;

@@ -1,6 +1,28 @@
 import { Op } from "sequelize";
-import { Delivery, Orders } from "../models/index.js";
-import { CreateDeliveryParams, ItemIdParams, UpdateDeliveryCancelParams } from "../types/serviceType/delivery.js";
+import { Address, Delivery, Orders, TodouhukenOption } from "../models/index.js";
+import {
+    CreateDeliveryParams,
+    DeliveryIdParams,
+    ItemIdParams,
+    UpdateDeliveryCancelParams,
+} from "../types/serviceType/delivery.js";
+
+export const getDeliveryHasAddress = ({ deliveryId }: DeliveryIdParams) => {
+    return Delivery.findByPk(deliveryId, {
+        include: [
+            {
+                model: Address,
+                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+        ],
+    });
+};
 
 export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
     return Delivery.findAll({

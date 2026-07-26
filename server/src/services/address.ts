@@ -7,27 +7,12 @@ import {
     CreateAddressShopEditParams,
     CreateAddressShopParams,
     CreateDeliveryAddressParams,
-    DeliveryIdParams,
     UpdateAddressParams,
     UpdateAddressUserLogicalDeleteParams,
-    UserIdParams,
 } from "../types/serviceType/address.js";
 
 export const getAddress = ({ addressId }: AddressIdParams) => {
     return Address.findByPk(addressId, {
-        include: [
-            {
-                model: TodouhukenOption,
-                as: "AddressTodouhuken",
-            },
-        ],
-    });
-};
-
-export const getDeliveryAddressOne = ({ deliveryId }: DeliveryIdParams) => {
-    return Address.findOne({
-        attributes: ["id", "post_number", "shikutyouson", "banchi", "building", "delivery_id", "user_id"],
-        where: { delivery_id: deliveryId },
         include: [
             {
                 model: TodouhukenOption,

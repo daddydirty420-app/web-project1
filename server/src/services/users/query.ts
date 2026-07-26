@@ -47,6 +47,7 @@ export const getUserHasAddress = async ({ userId }: UserIdParams) => {
         include: [
             {
                 model: Address,
+                attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
                 include: [
                     {
                         model: TodouhukenOption,

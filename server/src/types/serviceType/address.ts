@@ -5,14 +5,6 @@ export type AddressIdParams = {
     addressId: number;
 };
 
-export type UserIdParams = {
-    userId: number;
-};
-
-export type DeliveryIdParams = {
-    deliveryId: number;
-};
-
 export type ShopIdParams = {
     shopId: number;
 };

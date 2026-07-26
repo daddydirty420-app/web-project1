@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { getDeliveryAddressOne } from "../../services/address.js";
+import { getDeliveryHasAddress } from "../../services/delivery.js";
 
 type Params = {
     deliveryId: number;
@@ -9,9 +9,13 @@ type Params = {
 // summary: 配送用住所取得
 // page: /edit/address/delivery/[id]
 export const getDeliveryAddressUseCase = async ({ deliveryId }: Params) => {
-    const data = await getDeliveryAddressOne({ deliveryId });
+    const delivery = await getDeliveryHasAddress({ deliveryId });
 
-    if (!data) throw new AppError("DELIVERY_ADDRESS_NOT_FOUND", 404);
+    if (!delivery) throw new AppError("DELIVERY_DATA_NOT_FOUND", 404);
 
-    return data;
+    const address = delivery.Address;
+
+    if (!address) throw new AppError("ADDRESS_NOT_FOUND", 404);
+
+    return address;
 };
