@@ -4,7 +4,7 @@ import {
     BankTransactionParams,
     TransactionParams,
     CreateBankShopEditAllowNullParams,
-    CreateBankShopEditParams,
+    CreateBankParams,
     updateBankParams,
     UpsertBankShopParams,
 } from "../types/serviceType/bankAccount.js";
@@ -17,8 +17,8 @@ export const createBankAccountFirst = async ({ transaction }: TransactionParams)
     await BankAccount.create({ transaction });
 };
 
-export const createBankAccountShopEdit = async ({ data, transaction }: CreateBankShopEditParams) => {
-    await BankAccount.create(data, { transaction });
+export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {
+    return BankAccount.create(data, { transaction });
 };
 
 export const createBankAccountShopEditAllowNull = async ({ data, transaction }: CreateBankShopEditAllowNullParams) => {

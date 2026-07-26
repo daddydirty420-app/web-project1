@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createBankAccountShopEdit } from "../../../services/bankAccount.js";
+import { createBankAccount } from "../../../services/bankAccount.js";
 import { getBankOne } from "../../../services/banks.js";
 import { getBranchOne } from "../../../services/branches.js";
 import { createNotification } from "../../../services/notification.js";
@@ -39,15 +39,7 @@ export const createBankAccountUseCase = async ({ shopId, userId, body }: Params)
 
     // db登録
     await sequelize.transaction(async (t) => {
-        const shopEdit = await createShopEdit({
-            data: {
-                user_id: userId,
-                shop_info_id: shopId,
-            },
-            transaction: t,
-        });
-
-        await createBankAccountShopEdit({
+        const newAccount = await createBankAccount({
             data: {
                 bank_code: matchedBank.code,
                 bank_name: matchedBank.normalize?.name || matchedBank.name,
@@ -56,7 +48,15 @@ export const createBankAccountUseCase = async ({ shopId, userId, body }: Params)
                 account_type: accountType,
                 account_number: accountNumber,
                 meigi: meigi,
-                shop_info_edit_id: shopEdit.id,
+            },
+            transaction: t,
+        });
+
+        await createShopEdit({
+            data: {
+                user_id: userId,
+                shop_info_id: shopId,
+                account_id: newAccount.id,
             },
             transaction: t,
         });

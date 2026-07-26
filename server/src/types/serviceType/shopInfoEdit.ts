@@ -10,6 +10,7 @@ export type CreateShopEditParams = {
         user_id: number;
         shop_info_id: number;
         address_id?: number;
+        account_id?: number;
     };
     transaction?: Transaction;
 };

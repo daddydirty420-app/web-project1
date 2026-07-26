@@ -14,7 +14,7 @@ export type TransactionParams = {
     transaction?: Transaction;
 };
 
-export type CreateBankShopEditParams = {
+export type CreateBankParams = {
     data: {
         bank_code: string;
         bank_name: string;
@@ -23,7 +23,6 @@ export type CreateBankShopEditParams = {
         account_type: AccountType;
         account_number: string;
         meigi: string;
-        shop_info_edit_id: number;
     };
     transaction?: Transaction;
 };
