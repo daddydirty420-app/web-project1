@@ -42,6 +42,22 @@ export const getUserHasShop = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserHasAddress = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            {
+                model: Address,
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+        ],
+    });
+};
+
 export const getUserHasBankAccount = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [{ model: BankAccount }],

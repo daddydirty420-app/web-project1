@@ -1,10 +1,10 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import TodouhukenOption from "./todouhuken_option.js";
+import Delivery from "./delivery.js";
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
-import Delivery from "./delivery.js";
+import TodouhukenOption from "./todouhuken_option.js";
 import User from "./user.js";
 
 export class Address extends Model {

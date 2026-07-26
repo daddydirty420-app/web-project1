@@ -1,10 +1,10 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createDeliveryAddress, getAddressOne } from "../../services/address.js";
+import { createDeliveryAddress } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
 import { createDeliveryName, getNameOne } from "../../services/name.js";
-import { getUser } from "../../services/users/query.js";
+import { getUser, getUserHasAddress } from "../../services/users/query.js";
 
 type Params = {
     itemId: number;
@@ -32,7 +32,8 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     }
 
     // 住所・氏名取得
-    const userAddress = await getAddressOne({ userId });
+    const userAddress = await getUserHasAddress({ userId });
+    const address = userAddress.Address;
 
     const userName = await getNameOne({ userId });
 
@@ -45,11 +46,11 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
         await createDeliveryAddress({
             data: {
                 delivery_id: deliveryId,
-                post_number: userAddress?.post_number ?? null,
-                todouhuken_id: userAddress?.todouhuken_id ?? null,
-                shikutyouson: userAddress?.shikutyouson ?? null,
-                banchi: userAddress?.banchi ?? null,
-                building: userAddress?.building ?? null,
+                post_number: address?.post_number ?? null,
+                todouhuken_id: address?.todouhuken_id ?? null,
+                shikutyouson: address?.shikutyouson ?? null,
+                banchi: address?.banchi ?? null,
+                building: address?.building ?? null,
             },
             transaction: t,
         });
