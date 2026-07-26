@@ -24,19 +24,6 @@ export const getAddress = ({ addressId }: AddressIdParams) => {
     });
 };
 
-export const getMyAddressOne = ({ userId }: UserIdParams) => {
-    return Address.findOne({
-        attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
-        where: { user_id: userId },
-        include: [
-            {
-                model: TodouhukenOption,
-                as: "AddressTodouhuken",
-            },
-        ],
-    });
-};
-
 export const getDeliveryAddressOne = ({ deliveryId }: DeliveryIdParams) => {
     return Address.findOne({
         attributes: ["id", "post_number", "shikutyouson", "banchi", "building", "delivery_id", "user_id"],

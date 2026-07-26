@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { getMyAddressOne } from "../../services/address.js";
+import { getUserHasAddress } from "../../services/users/query.js";
 
 type Params = {
     userId: number;
@@ -9,9 +9,13 @@ type Params = {
 // summary: 住所取得
 // page: /edit/address
 export const getMyAddressUseCase = async ({ userId }: Params) => {
-    const data = await getMyAddressOne({ userId });
+    const user = await getUserHasAddress({ userId });
 
-    if (!data) throw new AppError("MY_ADDRESS_NOT_FOUND", 404);
+    if (!user) throw new AppError("USER_NOT_FOUND", 404);
 
-    return data;
+    const address = user.Address;
+
+    if (!address) throw new AppError("ADDRESS_NOT_FOUND", 404);
+
+    return address;
 };
