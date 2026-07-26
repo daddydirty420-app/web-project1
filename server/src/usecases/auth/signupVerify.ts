@@ -69,12 +69,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
             transaction: t,
         });
 
-        await createAddressFirst({
-            data: {
-                user_id: userId,
-            },
-            transaction: t,
-        });
+        await createAddressFirst({ transaction: t });
 
         await createName({
             data: {

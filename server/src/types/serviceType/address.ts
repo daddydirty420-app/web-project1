@@ -14,9 +14,6 @@ export type ShopEditIdParams = {
 };
 
 export type CreateAddressFirstParams = {
-    data: {
-        user_id: number;
-    };
     transaction?: Transaction;
 };
 
