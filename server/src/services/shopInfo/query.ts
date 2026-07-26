@@ -22,6 +22,7 @@ export const getShopHasBankAccount = ({ shopId }: ShopIdParams) => {
                     "bank_code",
                     "branch_code",
                 ],
+                required: false,
             },
         ],
     });

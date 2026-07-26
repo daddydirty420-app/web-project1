@@ -6,10 +6,6 @@ export type AccountIdParams = {
     accountId: number;
 };
 
-export type ShopIdParams = {
-    shopId: number;
-};
-
 export type ShopEditIdParams = {
     shopEditId: number;
 };

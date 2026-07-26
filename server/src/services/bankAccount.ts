@@ -5,29 +5,12 @@ import {
     CreateBankParams,
     CreateBankShopEditAllowNullParams,
     CreateBankShopEditParams,
-    ShopIdParams,
     updateBankParams,
     UpsertBankShopParams,
 } from "../types/serviceType/bankAccount.js";
 
 export const getBankAccount = ({ accountId }: AccountIdParams) => {
     return BankAccount.findByPk(accountId);
-};
-
-export const getShopAccountOne = ({ shopId }: ShopIdParams) => {
-    return BankAccount.findOne({
-        attributes: [
-            "id",
-            "bank_name",
-            "branch",
-            "account_type",
-            "account_number",
-            "meigi",
-            "bank_code",
-            "branch_code",
-        ],
-        where: { shop_info_id: shopId },
-    });
 };
 
 export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {
