@@ -50,13 +50,11 @@ export const createAddressShopEditUseCase = async ({ shopId, userId, body }: Par
             transaction: t,
         });
 
-        const newAddressId = newAddress.id;
-
         await createShopEdit({
             data: {
                 user_id: userId,
                 shop_info_id: shopId,
-                address_id: newAddressId,
+                address_id: newAddress.id,
             },
             transaction: t,
         });

@@ -4,7 +4,6 @@ import {
     AddressTransactionParams,
     CreateAddressFirstParams,
     CreateAddressParams,
-    CreateAddressShopEditAllowNullParams,
     UpdateAddressParams,
     UpdateAddressUserLogicalDeleteParams,
 } from "../types/serviceType/address.js";
@@ -26,10 +25,6 @@ export const createAddressFirst = async ({ transaction }: CreateAddressFirstPara
 
 export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
     return Address.create(data, { transaction });
-};
-
-export const createAddressShopEditAllowNull = async ({ data, transaction }: CreateAddressShopEditAllowNullParams) => {
-    await Address.create(data, { transaction });
 };
 
 export const updateAddress = async ({ address, data, transaction }: UpdateAddressParams) => {

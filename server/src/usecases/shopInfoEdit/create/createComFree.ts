@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createAddressShopEditAllowNull } from "../../../services/address.js";
+import { createAddress } from "../../../services/address.js";
 import { createBankAccountShopEditAllowNull } from "../../../services/bankAccount.js";
 import { createNameShopAllowNull } from "../../../services/name.js";
 import { getShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
@@ -54,6 +54,17 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
             transaction: t,
         });
 
+        const newAddress = await createAddress({
+            data: {
+                post_number: address?.post_number ?? null,
+                todouhuken_id: address?.todouhuken_id ?? null,
+                shikutyouson: address?.shikutyouson ?? null,
+                banchi: address?.banchi ?? null,
+                building: address?.building ?? null,
+            },
+            transaction: t,
+        });
+
         const shopEdit = await createShopEditComFree({
             data: {
                 company_name: shop.company_name,
@@ -70,18 +81,7 @@ export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }
                 com_or_free_id: comFreeId,
                 name_representative_id: newRepName.id,
                 name_contact_id: newConName.id,
-            },
-            transaction: t,
-        });
-
-        await createAddressShopEditAllowNull({
-            data: {
-                post_number: address?.post_number ?? null,
-                todouhuken_id: address?.todouhuken_id ?? null,
-                shikutyouson: address?.shikutyouson ?? null,
-                banchi: address?.banchi ?? null,
-                building: address?.building ?? null,
-                shop_info_edit_id: shopEdit.id,
+                address_id: newAddress.id,
             },
             transaction: t,
         });

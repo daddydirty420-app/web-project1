@@ -50,8 +50,6 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             transaction: t,
         });
 
-        const addressId = newAddress.id;
-
         await createDeliveryName({
             data: {
                 delivery_id: deliveryId,
@@ -71,7 +69,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
                 delivery_status_id: 1,
                 shipping_place_id: item.ItemShippingProfile.shipping_place_id,
                 item_id: itemId,
-                address_id: addressId,
+                address_id: newAddress.id,
                 shipping_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
                 shipping_from_postcode: item.User.Address?.post_number ?? "",
                 shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
