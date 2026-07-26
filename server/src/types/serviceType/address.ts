@@ -28,18 +28,6 @@ export type CreateAddressParams = {
     transaction?: Transaction;
 };
 
-export type CreateAddressShopParams = {
-    data: {
-        post_number: string;
-        todouhuken_id: number;
-        shikutyouson: string;
-        banchi: string;
-        building?: string;
-        shop_info_id: number;
-    };
-    transaction?: Transaction;
-};
-
 export type CreateAddressShopEditParams = {
     data: {
         post_number: string;

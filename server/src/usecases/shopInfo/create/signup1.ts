@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createAddressShop } from "../../../services/address.js";
+import { createAddress } from "../../../services/address.js";
 import { createNameShop } from "../../../services/name.js";
 import { createShop } from "../../../services/shopInfo/command.js";
 import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
@@ -131,6 +131,20 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
             transaction: t,
         });
 
+        // 住所
+        const newAddress = await createAddress({
+            data: {
+                post_number: trimmed.postNumber,
+                todouhuken_id: fromZip.todouhuken_id,
+                shikutyouson: trimmed.shikutyouson,
+                banchi: trimmed.banchi,
+                building,
+            },
+            transaction: t,
+        });
+
+        const newAddressId = newAddress.id;
+
         // ショップ
         const shop = await createShop({
             data: {
@@ -144,6 +158,7 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
                 capital: capital ?? 0,
                 member_count: memberCount,
                 user_id: userId,
+                address_id: newAddressId,
                 com_or_free_id: selectOption ?? 2,
                 founded_date: foundedDate,
                 name_representative_id: repName.id,
@@ -153,19 +168,6 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
         });
 
         const shopId = shop.id;
-
-        // 住所
-        await createAddressShop({
-            data: {
-                post_number: trimmed.postNumber,
-                todouhuken_id: fromZip.todouhuken_id,
-                shikutyouson: trimmed.shikutyouson,
-                banchi: trimmed.banchi,
-                building,
-                shop_info_id: shopId,
-            },
-            transaction: t,
-        });
 
         return shopId;
     });

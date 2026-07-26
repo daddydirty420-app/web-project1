@@ -26,6 +26,7 @@ export type CreateShopParams = {
         capital: number;
         member_count: number;
         user_id: number;
+        address_id: number;
         com_or_free_id: number;
         founded_date: Date;
         name_representative_id: number;
