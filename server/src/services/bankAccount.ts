@@ -2,7 +2,7 @@ import { BankAccount } from "../models/index.js";
 import {
     AccountIdParams,
     BankTransactionParams,
-    CreateBankParams,
+    TransactionParams,
     CreateBankShopEditAllowNullParams,
     CreateBankShopEditParams,
     updateBankParams,
@@ -13,8 +13,8 @@ export const getBankAccount = ({ accountId }: AccountIdParams) => {
     return BankAccount.findByPk(accountId);
 };
 
-export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {
-    await BankAccount.create(data, { transaction });
+export const createBankAccountFirst = async ({ transaction }: TransactionParams) => {
+    await BankAccount.create({ transaction });
 };
 
 export const createBankAccountShopEdit = async ({ data, transaction }: CreateBankShopEditParams) => {

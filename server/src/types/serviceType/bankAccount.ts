@@ -10,10 +10,7 @@ export type ShopEditIdParams = {
     shopEditId: number;
 };
 
-export type CreateBankParams = {
-    data: {
-        user_id: number;
-    };
+export type TransactionParams = {
     transaction?: Transaction;
 };
 
