@@ -41,7 +41,7 @@ export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
     });
 };
 
-export const createDelivery = async ({ itemId, user, item, transaction }: CreateDeliveryParams) => {
+export const createDelivery = async ({ itemId, addressId, user, item, transaction }: CreateDeliveryParams) => {
     return Delivery.create(
         {
             buyer_phone_number: user.phone_number ?? "",
@@ -50,6 +50,7 @@ export const createDelivery = async ({ itemId, user, item, transaction }: Create
             delivery_status_id: 1,
             shipping_place_id: item.ItemShippingProfile.shipping_place_id,
             item_id: itemId,
+            address_id: addressId,
             shipping_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
             shipping_from_postcode: item.User.Address?.post_number ?? "",
             shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",

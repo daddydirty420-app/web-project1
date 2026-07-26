@@ -1,6 +1,6 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createAddress } from "../../services/address.js";
+import { createAddressFirst } from "../../services/address.js";
 import { createBankAccount } from "../../services/bankAccount.js";
 import { createIdCard } from "../../services/idCard.js";
 import { createName } from "../../services/name.js";
@@ -69,7 +69,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
             transaction: t,
         });
 
-        await createAddress({
+        await createAddressFirst({
             data: {
                 user_id: userId,
             },

@@ -1,6 +1,6 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createDeliveryAddress } from "../../services/address.js";
+import { createAddress } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
 import { createDeliveryName, getNameOne } from "../../services/name.js";
@@ -39,13 +39,8 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
 
     // データ作成
     const deliveryId = await sequelize.transaction(async (t) => {
-        const newDelivery = await createDelivery({ itemId, item, user, transaction: t });
-
-        const id = newDelivery.id;
-
-        await createDeliveryAddress({
+        const newAddress = await createAddress({
             data: {
-                delivery_id: deliveryId,
                 post_number: address?.post_number ?? null,
                 todouhuken_id: address?.todouhuken_id ?? null,
                 shikutyouson: address?.shikutyouson ?? null,
@@ -54,6 +49,8 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             },
             transaction: t,
         });
+
+        const addressId = newAddress.id;
 
         await createDeliveryName({
             data: {
@@ -65,6 +62,10 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             },
             transaction: t,
         });
+
+        const newDelivery = await createDelivery({ itemId, addressId, item, user, transaction: t });
+
+        const id = newDelivery.id;
 
         return id;
     });

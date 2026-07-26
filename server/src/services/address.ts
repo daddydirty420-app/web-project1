@@ -2,11 +2,11 @@ import { Address, TodouhukenOption } from "../models/index.js";
 import {
     AddressIdParams,
     AddressTransactionParams,
-    CreateAddressParams,
+    CreateAddressFirstParams,
     CreateAddressShopEditAllowNullParams,
     CreateAddressShopEditParams,
     CreateAddressShopParams,
-    CreateDeliveryAddressParams,
+    CreateAddressParams,
     UpdateAddressParams,
     UpdateAddressUserLogicalDeleteParams,
 } from "../types/serviceType/address.js";
@@ -22,12 +22,12 @@ export const getAddress = ({ addressId }: AddressIdParams) => {
     });
 };
 
-export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
+export const createAddressFirst = async ({ data, transaction }: CreateAddressFirstParams) => {
     await Address.create(data, { transaction });
 };
 
-export const createDeliveryAddress = async ({ data, transaction }: CreateDeliveryAddressParams) => {
-    await Address.create(data, { transaction });
+export const createAddress = async ({ data, transaction }: CreateAddressParams) => {
+    return Address.create(data, { transaction });
 };
 
 export const createAddressShop = async ({ data, transaction }: CreateAddressShopParams) => {

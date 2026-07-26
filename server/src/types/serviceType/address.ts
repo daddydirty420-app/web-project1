@@ -13,16 +13,15 @@ export type ShopEditIdParams = {
     shopEditId: number;
 };
 
-export type CreateAddressParams = {
+export type CreateAddressFirstParams = {
     data: {
         user_id: number;
     };
     transaction?: Transaction;
 };
 
-export type CreateDeliveryAddressParams = {
+export type CreateAddressParams = {
     data: {
-        delivery_id: number;
         post_number: string;
         todouhuken_id: number;
         shikutyouson: string;

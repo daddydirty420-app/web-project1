@@ -11,6 +11,7 @@ export type DeliveryIdParams = {
 
 export type CreateDeliveryParams = {
     itemId: number;
+    addressId: number;
     user: InstanceType<typeof User>;
     item: InstanceType<typeof Item>;
     transaction?: Transaction;
