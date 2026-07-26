@@ -8,8 +8,8 @@ import {
     UpdateShopEditIdPermitParams,
 } from "../../types/serviceType/shopInfoEdit.js";
 
-export const createShopEdit = ({ data, transaction }: CreateShopEditParams) => {
-    return ShopInfoEdit.create(data, { transaction });
+export const createShopEdit = async ({ data, transaction }: CreateShopEditParams) => {
+    await ShopInfoEdit.create(data, { transaction });
 };
 
 export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWithIdCardParams) => {

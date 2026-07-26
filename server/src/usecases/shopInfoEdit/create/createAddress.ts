@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { createAddressShopEdit } from "../../../services/address.js";
+import { createAddress } from "../../../services/address.js";
 import { createNotification } from "../../../services/notification.js";
 import { getShop } from "../../../services/shopInfo/query.js";
 import { createShopEdit } from "../../../services/shopInfoEdit/command.js";
@@ -39,22 +39,24 @@ export const createAddressShopEditUseCase = async ({ shopId, userId, body }: Par
 
     // db登録
     await sequelize.transaction(async (t) => {
-        const shopEdit = await createShopEdit({
-            data: {
-                user_id: userId,
-                shop_info_id: shopId,
-            },
-            transaction: t,
-        });
-
-        await createAddressShopEdit({
+        const newAddress = await createAddress({
             data: {
                 post_number: postNumber,
                 todouhuken_id: fromZip.todouhuken_id,
                 shikutyouson: shikutyouson,
                 banchi: banchi,
                 building: building,
-                shop_info_edit_id: shopEdit.id,
+            },
+            transaction: t,
+        });
+
+        const newAddressId = newAddress.id;
+
+        await createShopEdit({
+            data: {
+                user_id: userId,
+                shop_info_id: shopId,
+                address_id: newAddressId,
             },
             transaction: t,
         });
