@@ -9,7 +9,7 @@ import {
 } from "../../types/serviceType/shopInfoEdit.js";
 
 export const createShopEdit = async ({ data, transaction }: CreateShopEditParams) => {
-    await ShopInfoEdit.create(data, { transaction });
+    return ShopInfoEdit.create(data, { transaction });
 };
 
 export const createShopEditWithIdCard = ({ data, transaction }: CreateShopEditWithIdCardParams) => {

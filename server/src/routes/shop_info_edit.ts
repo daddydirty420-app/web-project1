@@ -17,7 +17,7 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
-import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddressFirst.js";
+import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
 import { createShopEditComFreeUseCase } from "../usecases/shopInfoEdit/create/createComFree.js";
 import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
