@@ -8,27 +8,10 @@ import {
     ShopIdParams,
     updateBankParams,
     UpsertBankShopParams,
-    UserIdParams,
 } from "../types/serviceType/bankAccount.js";
 
 export const getBankAccount = ({ accountId }: AccountIdParams) => {
     return BankAccount.findByPk(accountId);
-};
-
-export const getMyAccountOne = ({ userId }: UserIdParams) => {
-    return BankAccount.findOne({
-        attributes: [
-            "id",
-            "bank_name",
-            "branch",
-            "account_type",
-            "account_number",
-            "meigi",
-            "bank_code",
-            "branch_code",
-        ],
-        where: { user_id: userId },
-    });
 };
 
 export const getShopAccountOne = ({ shopId }: ShopIdParams) => {

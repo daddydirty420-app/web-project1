@@ -61,7 +61,21 @@ export const getUserHasAddress = async ({ userId }: UserIdParams) => {
 
 export const getUserHasBankAccount = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
-        include: [{ model: BankAccount }],
+        include: [
+            {
+                model: BankAccount,
+                attributes: [
+                    "id",
+                    "bank_name",
+                    "branch",
+                    "account_type",
+                    "account_number",
+                    "meigi",
+                    "bank_code",
+                    "branch_code",
+                ],
+            },
+        ],
     });
 };
 

@@ -1,6 +1,7 @@
 import { AppError } from "../../../errors.js";
-import { getMyAccountOne, getShopAccountOne } from "../../../services/bankAccount.js";
+import { getShopAccountOne } from "../../../services/bankAccount.js";
 import { getShop } from "../../../services/shopInfo/query.js";
+import { getUserHasBankAccount } from "../../../services/users/query.js";
 
 type Params = {
     userId: number;
@@ -21,7 +22,11 @@ export const getShopSignup2UseCase = async ({ userId, shopId }: Params) => {
     let account = await getShopAccountOne({ shopId });
 
     if (!account) {
-        account = await getMyAccountOne({ userId });
+        const user = await getUserHasBankAccount({ userId });
+
+        if (!user) throw new AppError("USER_NOT_FOUND", 404);
+
+        account = user.BankAccount;
     }
 
     if (!account) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
