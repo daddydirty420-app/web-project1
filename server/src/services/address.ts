@@ -5,7 +5,6 @@ import {
     CreateAddressFirstParams,
     CreateAddressParams,
     UpdateAddressParams,
-    UpdateAddressUserLogicalDeleteParams,
 } from "../types/serviceType/address.js";
 
 export const getAddress = ({ addressId }: AddressIdParams) => {
@@ -28,14 +27,6 @@ export const createAddress = async ({ data, transaction }: CreateAddressParams) 
 };
 
 export const updateAddress = async ({ address, data, transaction }: UpdateAddressParams) => {
-    await address.update(data, { transaction });
-};
-
-export const updateAddressUserLogicalDelete = async ({
-    address,
-    data,
-    transaction,
-}: UpdateAddressUserLogicalDeleteParams) => {
     await address.update(data, { transaction });
 };
 

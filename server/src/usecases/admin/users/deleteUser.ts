@@ -3,7 +3,6 @@ import crypto from "crypto";
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
-import { updateAddressUserLogicalDelete } from "../../../services/address.js";
 import { deleteBankAccount } from "../../../services/bankAccount.js";
 import { upsertCancel } from "../../../services/cancel.js";
 import { deleteCartUserLogical } from "../../../services/cart.js";
@@ -21,18 +20,18 @@ import { updateNameUserLogicalDelete } from "../../../services/name.js";
 import { createNotification, deleteNotificationUserLogical } from "../../../services/notification.js";
 import { bulkCreateOrderDeleted } from "../../../services/orderDeleted.js";
 import { getTradingOrdersAll, updateOrdersStatus } from "../../../services/orders.js";
+import { updatePointLots } from "../../../services/pointLots.js";
 import { createOverConfiscated } from "../../../services/pointsUriageOver.js";
 import { deleteInputCodeUserLogical, deleteOutputCodeUserLogical } from "../../../services/referenceCode.js";
 import { updateShopUserLogicalDelete } from "../../../services/shopInfo/command.js";
 import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } from "../../../services/transfer.js";
+import { updateUsedUriagekin } from "../../../services/uriagekinLots.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
 import { updateUserLogicalDelete } from "../../../services/users/command.js";
 import { getUserHasBankAccount, getUserHasUriagekinPointBank } from "../../../services/users/query.js";
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
-import { updatePointLots } from "../../../services/pointLots.js";
-import { updateUsedUriagekin } from "../../../services/uriagekinLots.js";
 
 type Params = {
     pageUserId: number;
@@ -194,14 +193,6 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
         if (user.ShopInfo) {
             await updateShopUserLogicalDelete({
                 shopInfo: user.ShopInfo,
-                data: { user_id: null },
-                transaction: t,
-            });
-        }
-
-        if (user.Address) {
-            await updateAddressUserLogicalDelete({
-                address: user.Address,
                 data: { user_id: null },
                 transaction: t,
             });
