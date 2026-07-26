@@ -54,20 +54,6 @@ export type updateBankParams = {
     transaction?: Transaction;
 };
 
-export type UpsertBankShopParams = {
-    data: {
-        bank_code: string;
-        bank_name: string;
-        branch_code: string;
-        branch: string;
-        account_type: AccountType;
-        account_number: string;
-        meigi: string;
-        shop_info_id: number;
-    };
-    transaction?: Transaction;
-};
-
 export type BankTransactionParams = {
     account: InstanceType<typeof BankAccount>;
     transaction?: Transaction;

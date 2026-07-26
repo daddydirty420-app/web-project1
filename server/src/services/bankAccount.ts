@@ -2,11 +2,10 @@ import { BankAccount } from "../models/index.js";
 import {
     AccountIdParams,
     BankTransactionParams,
-    TransactionParams,
     CreateBankAllowNullParams,
     CreateBankParams,
+    TransactionParams,
     updateBankParams,
-    UpsertBankShopParams,
 } from "../types/serviceType/bankAccount.js";
 
 export const getBankAccount = ({ accountId }: AccountIdParams) => {
@@ -27,10 +26,6 @@ export const createBankAccountAllowNull = async ({ data, transaction }: CreateBa
 
 export const updateBankAccount = async ({ account, data, transaction }: updateBankParams) => {
     await account.update(data, { transaction });
-};
-
-export const upsertBankAccountShop = async ({ data, transaction }: UpsertBankShopParams) => {
-    await BankAccount.upsert(data, { transaction });
 };
 
 export const deleteBankAccount = async ({ account, transaction }: BankTransactionParams) => {

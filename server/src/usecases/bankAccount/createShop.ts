@@ -1,7 +1,9 @@
+import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { upsertBankAccountShop } from "../../services/bankAccount.js";
+import { createBankAccount } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
+import { updateShopBankAccount } from "../../services/shopInfo/command.js";
 import { getShop } from "../../services/shopInfo/query.js";
 import { BankBody } from "../../validators/body/bankAccount.js";
 
@@ -34,16 +36,27 @@ export const createShopAccount = async ({ shopId, userId, body }: Params) => {
 
     if (!matchedBranch) throw new AppError("INVALID_BRANCH", 400);
 
-    await upsertBankAccountShop({
-        data: {
-            shop_info_id: shopId,
-            bank_code: matchedBank.code,
-            bank_name: matchedBank.normalize?.name || matchedBank.name,
-            branch_code: matchedBranch.code,
-            branch: matchedBranch.normalize?.name || matchedBranch.name,
-            account_number: accountNumber,
-            meigi: meigi,
-            account_type: accountType,
-        },
+    // 口座情報作成
+    await sequelize.transaction(async (t) => {
+        const newAccount = await createBankAccount({
+            data: {
+                bank_code: matchedBank.code,
+                bank_name: matchedBank.normalize?.name || matchedBank.name,
+                branch_code: matchedBranch.code,
+                branch: matchedBranch.normalize?.name || matchedBranch.name,
+                account_number: accountNumber,
+                meigi: meigi,
+                account_type: accountType,
+            },
+            transaction: t,
+        });
+
+        await updateShopBankAccount({
+            shopInfo: shop,
+            data: {
+                account_id: newAccount.id,
+            },
+            transaction: t,
+        });
     });
 };

@@ -103,6 +103,14 @@ export type UpdateShopRequestAllParams = {
     transaction?: Transaction;
 };
 
+export type UpdateBankAccountParams = {
+    shopInfo: InstanceType<typeof ShopInfo>;
+    data: {
+        account_id: number;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateShopUserLogicalDeleteParams = {
     shopInfo: InstanceType<typeof ShopInfo>;
     data: {

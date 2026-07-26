@@ -2,6 +2,7 @@ import { ShopInfo } from "../../models/index.js";
 import {
     CreateShopParams,
     ShopTransactionParams,
+    UpdateBankAccountParams,
     UpdateCompanyNameParams,
     UpdateOptionParams,
     UpdateShopAnyParams,
@@ -43,6 +44,10 @@ export const updateShopCompanyName = async ({ shopInfo, data, transaction }: Upd
 };
 
 export const updateShopOption = async ({ shopInfo, data, transaction }: UpdateOptionParams) => {
+    await shopInfo.update(data, { transaction });
+};
+
+export const updateShopBankAccount = async ({ shopInfo, data, transaction }: UpdateBankAccountParams) => {
     await shopInfo.update(data, { transaction });
 };
 
