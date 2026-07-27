@@ -3,7 +3,7 @@ import { AppError } from "../../errors.js";
 import { createAddressFirst } from "../../services/address.js";
 import { createBankAccountFirst } from "../../services/bankAccount.js";
 import { createIdCardFirst } from "../../services/idCard.js";
-import { createName } from "../../services/name.js";
+import { createNameFirst } from "../../services/name.js";
 import { createInputCode } from "../../services/referenceCode.js";
 import { createRefreshToken } from "../../services/refreshTokens.js";
 import { destroyToken, getTokenVerificationOne } from "../../services/tokenSignupVerificationCode.js";
@@ -52,14 +52,6 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
 
     // db更新
     await sequelize.transaction(async (t) => {
-        await emailVerifyUser({
-            user,
-            data: {
-                email_verified: true,
-            },
-            transaction: t,
-        });
-
         await createRefreshToken({
             data: {
                 token: newRefreshToken,
@@ -69,18 +61,25 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
             transaction: t,
         });
 
-        await createAddressFirst({ transaction: t });
+        const address = await createAddressFirst({ transaction: t });
 
-        await createName({
+        const name = await createNameFirst({ transaction: t });
+
+        const bankAccount = await createBankAccountFirst({ transaction: t });
+
+        const idCard = await createIdCardFirst({ transaction: t });
+
+        await emailVerifyUser({
+            user,
             data: {
-                user_id: userId,
+                email_verified: true,
+                address_id: address.id,
+                name_id: name.id,
+                account_id: bankAccount.id,
+                idcard_id: idCard.id,
             },
             transaction: t,
         });
-
-        await createBankAccountFirst({ transaction: t });
-
-        await createIdCardFirst({ transaction: t });
     });
 
     destroyToken({ tokenRecord }).catch((err) => {

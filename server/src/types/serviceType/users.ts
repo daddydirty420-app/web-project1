@@ -46,6 +46,10 @@ export type EmailVerifyParams = {
     user: InstanceType<typeof User>;
     data: {
         email_verified: boolean;
+        address_id: number;
+        name_id: number;
+        account_id: number;
+        idcard_id: number;
     };
     transaction?: Transaction;
 };

@@ -5,10 +5,7 @@ export type NameIdParams = {
     nameId: number;
 };
 
-export type CreateNameParams = {
-    data: {
-        user_id: number | null;
-    };
+export type CreateNameFirstParams = {
     transaction?: Transaction;
 };
 

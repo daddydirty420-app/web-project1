@@ -7,7 +7,7 @@ import {
 } from "../types/serviceType/idCard.js";
 
 export const createIdCardFirst = async ({ transaction }: CreateIdFirstParams) => {
-    await IdCard.create({ transaction });
+    return IdCard.create({ transaction });
 };
 
 export const createIdCard = async ({ data, transaction }: CreateIdParams) => {

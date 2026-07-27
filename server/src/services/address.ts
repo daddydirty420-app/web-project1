@@ -20,7 +20,7 @@ export const getAddress = ({ addressId }: AddressIdParams) => {
 };
 
 export const createAddressFirst = async ({ transaction }: CreateAddressFirstParams) => {
-    await Address.create({ transaction });
+    return Address.create({ transaction });
 };
 
 export const createAddress = async ({ data, transaction }: CreateAddressParams) => {

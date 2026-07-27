@@ -13,7 +13,7 @@ export const getBankAccount = ({ accountId }: AccountIdParams) => {
 };
 
 export const createBankAccountFirst = async ({ transaction }: TransactionParams) => {
-    await BankAccount.create({ transaction });
+    return BankAccount.create({ transaction });
 };
 
 export const createBankAccount = async ({ data, transaction }: CreateBankParams) => {

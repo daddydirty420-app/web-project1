@@ -1,7 +1,7 @@
 import { Name } from "../models/index.js";
 import {
     CreateDeliveryNameParams,
-    CreateNameParams,
+    CreateNameFirstParams,
     CreateNameShopAllowNullParams,
     CreateNameShopParams,
     NameIdParams,
@@ -14,8 +14,8 @@ export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
 };
 
-export const createName = async ({ data, transaction }: CreateNameParams) => {
-    await Name.create(data, { transaction });
+export const createNameFirst = async ({ transaction }: CreateNameFirstParams) => {
+    return Name.create({ transaction });
 };
 
 export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNameParams) => {
