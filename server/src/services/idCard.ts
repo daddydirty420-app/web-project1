@@ -1,13 +1,13 @@
 import { IdCard } from "../models/index.js";
 import {
-    CreateIdParams,
+    CreateIdFirstParams,
     CreateIdUrlParams,
     IdCardTransactionParams,
     UpdateIdParams,
 } from "../types/serviceType/idCard.js";
 
-export const createIdCard = async ({ data, transaction }: CreateIdParams) => {
-    await IdCard.create(data, { transaction });
+export const createIdCardFirst = async ({ transaction }: CreateIdFirstParams) => {
+    await IdCard.create({ transaction });
 };
 
 export const createIdCardUrl = async ({ data, transaction }: CreateIdUrlParams) => {

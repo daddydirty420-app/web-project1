@@ -1,10 +1,7 @@
 import { Transaction } from "sequelize";
 import { IdCard } from "../../models/index.js";
 
-export type CreateIdParams = {
-    data: {
-        user_id: number;
-    };
+export type CreateIdFirstParams = {
     transaction?: Transaction;
 };
 

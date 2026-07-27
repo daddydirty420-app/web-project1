@@ -2,7 +2,7 @@ import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createAddressFirst } from "../../services/address.js";
 import { createBankAccountFirst } from "../../services/bankAccount.js";
-import { createIdCard } from "../../services/idCard.js";
+import { createIdCardFirst } from "../../services/idCard.js";
 import { createName } from "../../services/name.js";
 import { createInputCode } from "../../services/referenceCode.js";
 import { createRefreshToken } from "../../services/refreshTokens.js";
@@ -80,12 +80,7 @@ export const signupVerifyUseCase = async ({ verificationCode, rememberMe, refere
 
         await createBankAccountFirst({ transaction: t });
 
-        await createIdCard({
-            data: {
-                user_id: userId,
-            },
-            transaction: t,
-        });
+        await createIdCardFirst({ transaction: t });
     });
 
     destroyToken({ tokenRecord }).catch((err) => {
