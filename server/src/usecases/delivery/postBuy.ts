@@ -3,8 +3,8 @@ import { AppError } from "../../errors.js";
 import { createAddress } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
-import { createDeliveryName, getNameOne } from "../../services/name.js";
-import { getUser, getUserHasAddress } from "../../services/users/query.js";
+import { createDeliveryName } from "../../services/name.js";
+import { getUser, getUserHasAddress, getUserHasName } from "../../services/users/query.js";
 
 type Params = {
     itemId: number;
@@ -35,7 +35,8 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     const userAddress = await getUserHasAddress({ userId });
     const address = userAddress.Address;
 
-    const userName = await getNameOne({ userId });
+    const userName = await getUserHasName({ userId });
+    const name = userName.Name;
 
     // データ作成
     const deliveryId = await sequelize.transaction(async (t) => {
@@ -53,10 +54,10 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
         await createDeliveryName({
             data: {
                 delivery_id: deliveryId,
-                sei: userName?.sei ?? null,
-                mei: userName?.mei ?? null,
-                sei_kana: userName?.sei_kana ?? null,
-                mei_kana: userName?.mei_kana ?? null,
+                sei: name?.sei ?? null,
+                mei: name?.mei ?? null,
+                sei_kana: name?.sei_kana ?? null,
+                mei_kana: name?.mei_kana ?? null,
             },
             transaction: t,
         });

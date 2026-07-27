@@ -79,6 +79,17 @@ export const getUserHasBankAccount = async ({ userId }: UserIdParams) => {
     });
 };
 
+export const getUserHasName = async ({ userId }: UserIdParams) => {
+    return User.findByPk(userId, {
+        include: [
+            {
+                model: Name,
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+        ],
+    });
+};
+
 export const getUserWithAddressNameId = async ({ userId }: UserIdParams) => {
     return User.findByPk(userId, {
         include: [
