@@ -2,11 +2,11 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateAddress } from "../../../services/address.js";
-import { createIdCardUrl, updateIdCard } from "../../../services/idCard.js";
+import { createIdCard, updateIdCard } from "../../../services/idCard.js";
 import { updateName } from "../../../services/name.js";
 import { createNotification } from "../../../services/notification.js";
 import { getTodouhukenOne } from "../../../services/todouhuken.js";
-import { updateHonninUser } from "../../../services/users/command.js";
+import { updateHonninUser, updateIdCardIdUser } from "../../../services/users/command.js";
 import { getUserWithAddressNameId } from "../../../services/users/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
@@ -136,12 +136,17 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
                     transaction: t,
                 });
             } else {
-                await createIdCardUrl({
+                const newIdCard = await createIdCard({
                     data: {
                         id_card_front: frontUrl,
                         id_card_rear: rearUrl,
-                        user_id: userId,
                     },
+                    transaction: t,
+                });
+
+                await updateIdCardIdUser({
+                    user,
+                    data: { idcard_id: newIdCard.id },
                     transaction: t,
                 });
             }

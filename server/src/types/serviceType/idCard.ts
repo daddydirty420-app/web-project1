@@ -5,9 +5,8 @@ export type CreateIdFirstParams = {
     transaction?: Transaction;
 };
 
-export type CreateIdUrlParams = {
+export type CreateIdParams = {
     data: {
-        user_id: number;
         id_card_front: string;
         id_card_rear: string;
     };

@@ -121,6 +121,14 @@ export type UpdateUserPenaltyParams = {
     transaction?: Transaction;
 };
 
+export type UpdateUserIdCardIdParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        idcard_id: number;
+    };
+    transaction?: Transaction;
+};
+
 export type UpdateUserLogicalDeleteParams = {
     user: InstanceType<typeof User>;
     data: {
