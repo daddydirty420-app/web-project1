@@ -1,9 +1,9 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { createAddress } from "../../services/address.js";
+import { createAddressAllowNull } from "../../services/address.js";
 import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
-import { createDeliveryName } from "../../services/name.js";
+import { createNameAllowNull } from "../../services/name.js";
 import { getUser, getUserHasAddress, getUserHasName } from "../../services/users/query.js";
 
 type Params = {
@@ -40,7 +40,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
 
     // データ作成
     const deliveryId = await sequelize.transaction(async (t) => {
-        const newAddress = await createAddress({
+        const newAddress = await createAddressAllowNull({
             data: {
                 post_number: address?.post_number ?? null,
                 todouhuken_id: address?.todouhuken_id ?? null,
@@ -51,9 +51,8 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             transaction: t,
         });
 
-        await createDeliveryName({
+        const newName = await createNameAllowNull({
             data: {
-                delivery_id: deliveryId,
                 sei: name?.sei ?? null,
                 mei: name?.mei ?? null,
                 sei_kana: name?.sei_kana ?? null,
@@ -71,6 +70,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
                 shipping_place_id: item.ItemShippingProfile.shipping_place_id,
                 item_id: itemId,
                 address_id: newAddress.id,
+                name_id: newName.id,
                 shipping_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
                 shipping_from_postcode: item.User.Address?.post_number ?? "",
                 shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",

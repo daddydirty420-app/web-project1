@@ -18,6 +18,7 @@ export type CreateDeliveryParams = {
         shipping_place_id: number;
         item_id: number;
         address_id: number;
+        name_id: number;
         shipping_from_name: string;
         shipping_from_postcode: string;
         shipping_from_prefecture: string;

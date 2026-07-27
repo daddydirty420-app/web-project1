@@ -9,9 +9,8 @@ export type CreateNameFirstParams = {
     transaction?: Transaction;
 };
 
-export type CreateDeliveryNameParams = {
+export type CreateNameAllowNullParams = {
     data: {
-        delivery_id: number;
         sei: string | null;
         mei: string | null;
         sei_kana: string | null;

@@ -1,6 +1,6 @@
 import { Name } from "../models/index.js";
 import {
-    CreateDeliveryNameParams,
+    CreateNameAllowNullParams,
     CreateNameFirstParams,
     CreateNameShopAllowNullParams,
     CreateNameShopParams,
@@ -18,7 +18,7 @@ export const createNameFirst = async ({ transaction }: CreateNameFirstParams) =>
     return Name.create({ transaction });
 };
 
-export const createDeliveryName = async ({ data, transaction }: CreateDeliveryNameParams) => {
+export const createNameAllowNull = async ({ data, transaction }: CreateNameAllowNullParams) => {
     return Name.create(data, { transaction });
 };
 
