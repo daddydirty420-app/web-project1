@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { getDeliveryNameOne } from "../../services/name.js";
+import { getDeliveryHasName } from "../../services/delivery.js";
 
 type Params = {
     deliveryId: number;
@@ -9,7 +9,11 @@ type Params = {
 // summary: 配送用氏名取得
 // page: /edit/name/delivery/[id]
 export const getDeliveryNameUseCase = async ({ deliveryId }: Params) => {
-    const name = await getDeliveryNameOne({ deliveryId });
+    const delivery = await getDeliveryHasName({ deliveryId });
+
+    if (!delivery) throw new AppError("DELIVERY_NOT_FOUND", 404);
+
+    const name = delivery.Name;
 
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 

@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Address, Delivery, Orders, TodouhukenOption } from "../models/index.js";
+import { Address, Delivery, Name, Orders, TodouhukenOption } from "../models/index.js";
 import {
     CreateDeliveryParams,
     DeliveryIdParams,
@@ -19,6 +19,17 @@ export const getDeliveryHasAddress = ({ deliveryId }: DeliveryIdParams) => {
                         as: "AddressTodouhuken",
                     },
                 ],
+            },
+        ],
+    });
+};
+
+export const getDeliveryHasName = ({ deliveryId }: DeliveryIdParams) => {
+    return Delivery.findByPk(deliveryId, {
+        include: [
+            {
+                model: Name,
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
     });

@@ -4,7 +4,6 @@ import {
     CreateNameParams,
     CreateNameShopAllowNullParams,
     CreateNameShopParams,
-    DeliveryIdParams,
     NameIdParams,
     NameTransactionParams,
     UpdateNameParams,
@@ -13,13 +12,6 @@ import {
 
 export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
-};
-
-export const getDeliveryNameOne = ({ deliveryId }: DeliveryIdParams) => {
-    return Name.findOne({
-        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana", "delivery_id"],
-        where: { delivery_id: deliveryId },
-    });
 };
 
 export const createName = async ({ data, transaction }: CreateNameParams) => {
