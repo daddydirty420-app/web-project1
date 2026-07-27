@@ -3,27 +3,23 @@ import crypto from "crypto";
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { Item } from "../../../models/index.js";
-import { deleteBankAccount } from "../../../services/bankAccount.js";
 import { upsertCancel } from "../../../services/cancel.js";
 import { deleteCartUserLogical } from "../../../services/cart.js";
 import { deleteCommentUserLogical } from "../../../services/comment.js";
 import { deleteCommentLikeUserLogical } from "../../../services/commentLike.js";
 import { updateDeliveryCancel } from "../../../services/delivery.js";
 import { deleteFollowerUserLogical, deleteFollowUserLogical } from "../../../services/follow.js";
-import { deleteIdCard } from "../../../services/idCard.js";
 import { bulkCreateItemDeleted } from "../../../services/itemDeleted.js";
 import { bulkCreateItemDeleteLogs } from "../../../services/itemDeleteLogs.js";
 import { deleteItemLikeUserLogical } from "../../../services/itemLike.js";
 import { destroyPerfectItem, getMyItemsWithVideoAll } from "../../../services/items/index.js";
 import { createJournal } from "../../../services/journal.js";
-import { updateNameUserLogicalDelete } from "../../../services/name.js";
 import { createNotification, deleteNotificationUserLogical } from "../../../services/notification.js";
 import { bulkCreateOrderDeleted } from "../../../services/orderDeleted.js";
 import { getTradingOrdersAll, updateOrdersStatus } from "../../../services/orders.js";
 import { updatePointLots } from "../../../services/pointLots.js";
 import { createOverConfiscated } from "../../../services/pointsUriageOver.js";
 import { deleteInputCodeUserLogical, deleteOutputCodeUserLogical } from "../../../services/referenceCode.js";
-import { updateShopUserLogicalDelete } from "../../../services/shopInfo/command.js";
 import { createTransfer, deleteTransferUserLogical, sumTransferNotFinishUser } from "../../../services/transfer.js";
 import { updateUsedUriagekin } from "../../../services/uriagekinLots.js";
 import { createUserDeleteLogs } from "../../../services/userDeleteLogs.js";
@@ -188,38 +184,6 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
             },
             transaction: t,
         });
-
-        // ショップ・住所・氏名user_id削除
-        if (user.ShopInfo) {
-            await updateShopUserLogicalDelete({
-                shopInfo: user.ShopInfo,
-                data: { user_id: null },
-                transaction: t,
-            });
-        }
-
-        if (user.Name) {
-            await updateNameUserLogicalDelete({
-                name: user.Name,
-                data: { user_id: null },
-                transaction: t,
-            });
-        }
-
-        // ユーザー関連データ削除
-        if (user.IdCard) {
-            await deleteIdCard({
-                idCard: user.IdCard,
-                transaction: t,
-            });
-        }
-
-        if (user.BankAccount) {
-            await deleteBankAccount({
-                account: user.BankAccount,
-                transaction: t,
-            });
-        }
 
         await deleteCartUserLogical({ userId: pageUserId, transaction: t });
         await deleteFollowUserLogical({ userId: pageUserId, transaction: t });
