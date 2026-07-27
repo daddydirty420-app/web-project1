@@ -9,18 +9,10 @@ import {
     NameTransactionParams,
     UpdateNameParams,
     UpdateNameUserLogicalDeleteParams,
-    UserIdParams,
 } from "../types/serviceType/name.js";
 
 export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
-};
-
-export const getMyNameOne = ({ userId }: UserIdParams) => {
-    return Name.findOne({
-        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-        where: { user_id: userId },
-    });
 };
 
 export const getDeliveryNameOne = ({ deliveryId }: DeliveryIdParams) => {

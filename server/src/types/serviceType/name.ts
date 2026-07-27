@@ -1,10 +1,6 @@
 import { Transaction } from "sequelize";
 import { Name } from "../../models/index.js";
 
-export type UserIdParams = {
-    userId: number;
-};
-
 export type NameIdParams = {
     nameId: number;
 };
