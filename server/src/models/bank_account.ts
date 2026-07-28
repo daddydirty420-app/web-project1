@@ -20,16 +20,16 @@ export class BankAccount extends Model {
 
     static associate() {
         BankAccount.hasOne(ShopInfo, {
-            foreignKey: "shop_info_id",
+            foreignKey: "account_id",
         });
         BankAccount.hasOne(Transfer, {
-            foreignKey: "transfer_id",
+            foreignKey: "account_id",
         });
         BankAccount.hasOne(User, {
-            foreignKey: "user_id",
+            foreignKey: "account_id",
         });
         BankAccount.hasOne(ShopInfoEdit, {
-            foreignKey: "shop_info_edit_id",
+            foreignKey: "account_id",
         });
     }
 

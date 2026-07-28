@@ -18,10 +18,10 @@ export class Name extends Model {
 
     static associate() {
         Name.hasOne(Delivery, {
-            foreignKey: "delivery_id",
+            foreignKey: "name_id",
         });
         Name.hasOne(User, {
-            foreignKey: "user_id",
+            foreignKey: "name_id",
         });
         Name.hasOne(ShopInfo, {
             foreignKey: "name_representative_id",

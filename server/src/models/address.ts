@@ -23,16 +23,16 @@ export class Address extends Model {
             as: "AddressTodouhuken",
         });
         Address.hasOne(ShopInfo, {
-            foreignKey: "shop_info_id",
+            foreignKey: "address_id",
         });
         Address.hasOne(ShopInfoEdit, {
-            foreignKey: "shop_info_edit_id",
+            foreignKey: "address_id",
         });
         Address.hasOne(Delivery, {
-            foreignKey: "delivery_id",
+            foreignKey: "address_id",
         });
         Address.hasOne(User, {
-            foreignKey: "user_id",
+            foreignKey: "address_id",
         });
     }
 

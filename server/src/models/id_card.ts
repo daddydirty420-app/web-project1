@@ -12,7 +12,7 @@ export class IdCard extends Model {
 
     static associate() {
         IdCard.hasOne(User, {
-            foreignKey: "user_id",
+            foreignKey: "idcard_id",
         });
     }
 
