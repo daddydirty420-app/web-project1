@@ -1,11 +1,11 @@
-import { AppError } from "../../errors.js";
-import { getUserHasBankAccount } from "../../services/users/query.js";
+import { AppError } from "../../../errors.js";
+import { getUserHasBankAccount } from "../../../services/users/query.js";
 
 type Params = {
     userId: number;
 };
 
-// GET /bank-account/myaccount
+// GET /user/myaccount
 // summary: 口座情報取得
 // page: /edit/account
 export const getMyAccountUseCase = async ({ userId }: Params) => {

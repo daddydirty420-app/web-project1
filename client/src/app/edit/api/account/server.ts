@@ -6,7 +6,7 @@ type AccountPageResponse = {
 };
 
 export const fetchAccountPage = async (): Promise<AccountPageResponse> => {
-    return apiFetchServer("/bank-account/myaccount", {
+    return apiFetchServer("/user/myaccount", {
         cache: "no-store",
     });
 };

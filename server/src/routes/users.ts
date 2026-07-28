@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import {
     editPhoneNumberRateLimit,
+    getAccountRateLimit,
     getAddressRateLimit,
     getHonninRateLimit,
     getInquiryRateLimit,
@@ -28,6 +29,8 @@ import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
 import { editProfileUseCase } from "../usecases/users/edit/profile.js";
 import { getHonninEditUseCase } from "../usecases/users/get/getHonnin.js";
 import { getInquiryUserUseCase } from "../usecases/users/get/getInquiryUser.js";
+import { getMyAccountUseCase } from "../usecases/users/get/getMyAccount.js";
+import { getMyAddressUseCase } from "../usecases/users/get/getMyAddress.js";
 import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
 import { getMePointsUseCase } from "../usecases/users/get/getPoints.js";
@@ -51,7 +54,6 @@ import {
     ProfileEditQuery,
     profileEditQuerySchema,
 } from "../validators/query/users.js";
-import { getMyAddressUseCase } from "../usecases/users/get/getMyAddress.js";
 
 const router = Router();
 
@@ -409,6 +411,26 @@ router.get(
 
         try {
             const data = await getMyAddressUseCase({ userId });
+
+            res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /user/myaccount
+// summary: 口座情報取得
+// page: /edit/account
+router.get(
+    "/myaccount",
+    getAccountRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const data = await getMyAccountUseCase({ userId });
 
             res.status(200).json({ data });
         } catch (err) {

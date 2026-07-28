@@ -1,12 +1,11 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { authenticateToken } from "../middleware/index.js";
-import { bankEditRateLimit, getAccountRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
+import { bankEditRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { createShopAccount } from "../usecases/bankAccount/createShop.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
-import { getMyAccountUseCase } from "../usecases/bankAccount/getMyAccount.js";
 import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
 
@@ -57,26 +56,6 @@ router.patch(
             });
 
             res.status(200).json({ message: "口座情報を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-// GET /bank-account/myaccount
-// summary: 口座情報取得
-// page: /edit/account
-router.get(
-    "/myaccount",
-    getAccountRateLimit,
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const data = await getMyAccountUseCase({ userId });
-
-            res.status(200).json({ data });
         } catch (err) {
             next(err);
         }
