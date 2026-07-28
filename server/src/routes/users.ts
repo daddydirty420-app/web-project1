@@ -8,6 +8,7 @@ import {
     getHonninRateLimit,
     getInquiryRateLimit,
     getMyPageRateLimit,
+    getNameRateLimit,
     getPhoneNumberRateLimit,
     getPointsRateLimit,
     getProfileEditRateLimit,
@@ -54,6 +55,7 @@ import {
     ProfileEditQuery,
     profileEditQuerySchema,
 } from "../validators/query/users.js";
+import { getMyNameUseCase } from "../usecases/users/get/getMyName.js";
 
 const router = Router();
 
@@ -433,6 +435,26 @@ router.get(
             const data = await getMyAccountUseCase({ userId });
 
             res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /user/myname
+// summary: 自分の氏名取得
+// page: /edit/nameなど
+router.get(
+    "/myname",
+    getNameRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const name = await getMyNameUseCase({ userId });
+
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }

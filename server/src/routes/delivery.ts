@@ -2,7 +2,11 @@ import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, Sequelize } from "sequelize";
 import { authenticateToken } from "../middleware/index.js";
-import { createDeliveryRateLimit, getAddressRateLimit } from "../middleware/rateLimit/deliveryRateLiimit.js";
+import {
+    createDeliveryRateLimit,
+    getAddressRateLimit,
+    getNameRateLimit,
+} from "../middleware/rateLimit/deliveryRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import {
     Address,
@@ -14,9 +18,10 @@ import {
     ShippingServiceOption,
     TodouhukenOption,
 } from "../models/index.js";
+import { getDeliveryAddressUseCase } from "../usecases/delivery/getAddress.js";
+import { getDeliveryNameUseCase } from "../usecases/delivery/getName.js";
 import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { getDeliveryAddressUseCase } from "../usecases/delivery/getDeliveryAddress.js";
 
 const router = Router();
 
@@ -57,6 +62,27 @@ router.get(
             const data = await getDeliveryAddressUseCase({ deliveryId });
 
             res.status(200).json({ data });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /delivery/:id/name
+// summary: 配送用氏名取得
+// page: /edit/name/delivery/[id]
+router.get(
+    "/:id/name",
+    getNameRateLimit,
+    validateParams(idParamSchema),
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const deliveryId = Number(req.params.id);
+
+        try {
+            const name = await getDeliveryNameUseCase({ deliveryId });
+
+            res.status(200).json({ name });
         } catch (err) {
             next(err);
         }

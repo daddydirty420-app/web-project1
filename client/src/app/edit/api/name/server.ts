@@ -11,13 +11,13 @@ type RepNameResponse = {
 };
 
 export const fetchNamePage = async (): Promise<NamePageResponse> => {
-    return apiFetchServer("/name/myname", {
+    return apiFetchServer("/user/myname", {
         cache: "no-store",
     });
 };
 
 export const fetchDeliveryNamePage = async (deliveryId: string): Promise<NamePageResponse> => {
-    return apiFetchServer(`/name/${deliveryId}/delivery-name`, {
+    return apiFetchServer(`/delivery/${deliveryId}/name`, {
         cache: "no-store",
     });
 };
