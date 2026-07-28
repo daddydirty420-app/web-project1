@@ -220,7 +220,6 @@ router.post("/name-create/:id", validateParams(idParamSchema), async (req: Reque
             mei: "George",
             sei_kana: "ラッセル",
             mei_kana: "ジョージ",
-            user_id: user.id,
         });
 
         res.status(201).json({ message: "ok" });
@@ -260,7 +259,6 @@ router.post(
                 shikutyouson: "川崎市川崎区",
                 banchi: "駅前本町11-2",
                 building: "川崎フロンティアビル4F",
-                user_id: user.id,
             });
 
             res.status(201).json({ message: "ok" });

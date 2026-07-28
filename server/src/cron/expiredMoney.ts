@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { col, Model, Op, where } from "sequelize";
+import { col, Op, where } from "sequelize";
 import { getExpiredAll } from "../services/pointLots.js";
 import { createPoint180, createUriage180 } from "../services/pointsUriageOver.js";
 import { createTransfer } from "../services/transfer.js";
@@ -7,16 +7,6 @@ import { getExpiredUriageAll } from "../services/uriagekinLots.js";
 import { getUserHasBankAccount } from "../services/users/query.js";
 import { UriagekinLotsInstance } from "../types/serviceType/uriagekinLots.js";
 import { generateTransferId } from "../utils/generateTransferId.js";
-
-type ExpiredUriageAttributes = {
-    id: number;
-    user_id: number;
-    uriagekin: number;
-    used_Uriagekin: number;
-    expires_at: Date;
-};
-
-type ExpiredUriageModel = Model<ExpiredUriageAttributes> & ExpiredUriageAttributes;
 
 export const StartExpiredMoneyCron = () => {
     // 180日経過ポイント回収
