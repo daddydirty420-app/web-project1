@@ -73,9 +73,6 @@ import VideoRouter from "./routes/video.js";
 import WatchHistoryRouter from "./routes/watch_history.js";
 
 import { AppError } from "./errors.js";
-import db from "./models/index.js";
-
-db.sequelize.sync();
 
 // view engine setup
 const __filename = fileURLToPath(import.meta.url);
