@@ -5,7 +5,7 @@ type Params = {
     deliveryId: number;
 };
 
-// GET /address/:id/delivery-address
+// GET /delivery/:id/address
 // summary: 配送用住所取得
 // page: /edit/address/delivery/[id]
 export const getDeliveryAddressUseCase = async ({ deliveryId }: Params) => {

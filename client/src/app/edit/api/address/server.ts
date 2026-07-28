@@ -6,13 +6,13 @@ type AddressPageResponse = {
 };
 
 export const fetchAddressPage = async (): Promise<AddressPageResponse> => {
-    return apiFetchServer("/address/myaddress", {
+    return apiFetchServer("/user/myaddress", {
         cache: "no-store",
     });
 };
 
 export const fetchDeliveryAddressPage = async (deliveryId: string): Promise<AddressPageResponse> => {
-    return apiFetchServer(`/address/${deliveryId}/delivery-address`, {
+    return apiFetchServer(`/delivery/${deliveryId}/address`, {
         cache: "no-store",
     });
 };

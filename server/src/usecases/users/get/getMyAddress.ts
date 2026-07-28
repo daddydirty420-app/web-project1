@@ -1,11 +1,11 @@
-import { AppError } from "../../errors.js";
-import { getUserHasAddress } from "../../services/users/query.js";
+import { AppError } from "../../../errors.js";
+import { getUserHasAddress } from "../../../services/users/query.js";
 
 type Params = {
     userId: number;
 };
 
-// GET /address/myaddress
+// GET /user/myaddress
 // summary: 住所取得
 // page: /edit/address
 export const getMyAddressUseCase = async ({ userId }: Params) => {

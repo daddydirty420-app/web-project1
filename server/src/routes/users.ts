@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import {
     editPhoneNumberRateLimit,
+    getAddressRateLimit,
     getHonninRateLimit,
     getInquiryRateLimit,
     getMyPageRateLimit,
@@ -50,6 +51,7 @@ import {
     ProfileEditQuery,
     profileEditQuerySchema,
 } from "../validators/query/users.js";
+import { getMyAddressUseCase } from "../usecases/users/get/getMyAddress.js";
 
 const router = Router();
 
@@ -389,6 +391,26 @@ router.get(
             const user = await getMeUriagekinUseCase({ userId });
 
             res.status(200).json({ user });
+        } catch (err) {
+            next(err);
+        }
+    },
+);
+
+// GET /user/myaddress
+// summary: 住所取得
+// page: /edit/address
+router.get(
+    "/myaddress",
+    getAddressRateLimit,
+    authenticateToken,
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const userId = req.user!.id;
+
+        try {
+            const data = await getMyAddressUseCase({ userId });
+
+            res.status(200).json({ data });
         } catch (err) {
             next(err);
         }
