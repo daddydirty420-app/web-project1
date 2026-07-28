@@ -2,7 +2,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import session from "express-session";
 import helmet from "helmet";
 import logger from "morgan";
 import path from "path";
@@ -82,14 +81,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.set("trust proxy", 1);
 
-var session_opt = {
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 1000 },
-};
-app.use(session(session_opt));
-
 const allowedOrigins = [process.env.CLIENT_URL, process.env.CLIENT_URL_PROD, process.env.CLIENT_URL_DEV];
 
 app.use(logger("dev"));
@@ -113,11 +104,6 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-});
 
 app.use("/api/user", usersRouter);
 app.use("/api/users/me/items", UsersMeItemsRouter);
