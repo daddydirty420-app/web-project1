@@ -22,10 +22,12 @@ router.patch(
     validateBody(saleEditBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const saleId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const body = req.validatedBody as SaleEditBody;
 
         try {
-            await saleEditUseCase({ saleId, body });
+            await saleEditUseCase({ saleId, userId, body });
 
             res.status(200).json({ message: "値引きしました！" });
         } catch (err) {
@@ -44,9 +46,10 @@ router.patch(
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const saleId = Number(req.params.id);
+        const userId = req.user!.id;
 
         try {
-            await saleStopUseCase({ saleId });
+            await saleStopUseCase({ saleId, userId });
 
             res.status(200).json({ message: "値引きを終了しました！" });
         } catch (err) {

@@ -1,6 +1,6 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { getItem, updatePrice } from "../../services/items/index.js";
+import { getMyItem, updatePrice } from "../../services/items/index.js";
 import { getSale, updateSaleEdit } from "../../services/sale.js";
 
 type Body = {
@@ -11,13 +11,14 @@ type Body = {
 
 type Params = {
     saleId: number;
+    userId: number;
     body: Body;
 };
 
 // PATCH /sale/:id/edit
 // summary: セール開始
 // page: /item
-export const saleEditUseCase = async ({ saleId, body }: Params) => {
+export const saleEditUseCase = async ({ saleId, userId, body }: Params) => {
     const { discountRate, discountAmount, finalPrice } = body;
 
     // bodyバリデーション
@@ -34,7 +35,7 @@ export const saleEditUseCase = async ({ saleId, body }: Params) => {
     if (!sale) throw new AppError("SALE_NOT_FOUND", 404);
 
     // item取得
-    const item = await getItem({ itemId: sale.item_id });
+    const item = await getMyItem({ itemId: sale.item_id, userId });
 
     if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
 
