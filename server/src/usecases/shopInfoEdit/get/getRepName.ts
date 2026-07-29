@@ -12,6 +12,8 @@ type Params = {
 export const getRepNameEditUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getMyShopEditHasRepName({ shopEditId, userId });
 
+    if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
+
     const name = shopEdit.RepresentativeNameEdit;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 

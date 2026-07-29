@@ -13,7 +13,6 @@ export const getMyShopIdUseCase = async ({ userId }: Params) => {
     const shop = await getMyShopId({ userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     return shop;
 };

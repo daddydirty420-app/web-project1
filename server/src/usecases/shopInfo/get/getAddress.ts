@@ -12,6 +12,8 @@ type Params = {
 export const getAddressShopUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getMyShopHasAddress({ shopId, userId });
 
+    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+
     const data = shop.Address;
     if (!data) throw new AppError("ADDRESS_NOT_FOUND", 404);
 

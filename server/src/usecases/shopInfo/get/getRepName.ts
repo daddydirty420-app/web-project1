@@ -12,6 +12,8 @@ type Params = {
 export const getRepNameUseCase = async ({ shopId, userId }: Params) => {
     const shop = await getMyShopHasRepName({ shopId, userId });
 
+    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+
     const name = shop.RepresentativeName;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 

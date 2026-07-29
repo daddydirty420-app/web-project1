@@ -14,5 +14,7 @@ export const getShopComFreeConfirmUseCase = async ({ shopEditId, userId }: Param
 
     if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
 
+    if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
+
     return shopEdit;
 };

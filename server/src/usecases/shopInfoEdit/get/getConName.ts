@@ -12,6 +12,8 @@ type Params = {
 export const getConNameEditUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getMyShopEditHasConName({ shopEditId, userId });
 
+    if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
+
     const name = shopEdit.ContactNameEdit;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
 

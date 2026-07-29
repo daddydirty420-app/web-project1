@@ -12,6 +12,8 @@ type Params = {
 export const getAddressShopEditUseCase = async ({ shopEditId, userId }: Params) => {
     const shopEdit = await getMyShopEditHasAddress({ shopEditId, userId });
 
+    if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
+
     const data = shopEdit.Address;
     if (!data) throw new AppError("ADDRESS_NOT_FOUND", 404);
 
