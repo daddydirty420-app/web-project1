@@ -5,6 +5,11 @@ export type ShopEditIdParams = {
     shopEditId: number;
 };
 
+export type ShopEditUserIdParams = {
+    shopEditId: number;
+    userId: number;
+};
+
 export type CreateShopEditParams = {
     data: {
         user_id: number;

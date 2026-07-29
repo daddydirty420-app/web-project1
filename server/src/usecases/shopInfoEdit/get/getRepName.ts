@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopEditHasRepName } from "../../../services/shopInfoEdit/query.js";
+import { getMyShopEditHasRepName } from "../../../services/shopInfoEdit/query.js";
 
 type Params = {
     shopEditId: number;
@@ -10,9 +10,7 @@ type Params = {
 // summary: shopEdit代表者氏名取得
 // page: /edit/name/shop/rep-name/com-free/[id]
 export const getRepNameEditUseCase = async ({ shopEditId, userId }: Params) => {
-    const shopEdit = await getShopEditHasRepName({ shopEditId });
-
-    if (shopEdit.user_id !== userId) throw new AppError("FORBIDDEN", 403);
+    const shopEdit = await getMyShopEditHasRepName({ shopEditId, userId });
 
     const name = shopEdit.RepresentativeNameEdit;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);

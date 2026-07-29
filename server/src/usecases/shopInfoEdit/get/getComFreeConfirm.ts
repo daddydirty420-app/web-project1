@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopEditComFreeConfirm } from "../../../services/shopInfoEdit/query.js";
+import { getMyShopEditComFreeConfirm } from "../../../services/shopInfoEdit/query.js";
 
 type Params = {
     shopEditId: number;
@@ -10,10 +10,9 @@ type Params = {
 // summary: 事業形態変更確認ページデータ取得
 // page: /edit/shop/com-free/confirm/[id]
 export const getShopComFreeConfirmUseCase = async ({ shopEditId, userId }: Params) => {
-    const shopEdit = await getShopEditComFreeConfirm({ shopEditId });
+    const shopEdit = await getMyShopEditComFreeConfirm({ shopEditId, userId });
 
     if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
-    if (shopEdit.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     return shopEdit;
 };
