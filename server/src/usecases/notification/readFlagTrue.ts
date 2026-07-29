@@ -1,16 +1,17 @@
 import { AppError } from "../../errors.js";
-import { getNotification, updateReadFlag } from "../../services/notification.js";
+import { getMyNotification, getNotification, updateReadFlag } from "../../services/notification.js";
 
 type Params = {
     notificationId: number;
+    userId: number;
 };
 
 // PATCH /notification/:id/read-flag
 // summary: 既読
 // page: /notification
-export const patchReadFlagTrueUseCase = async ({ notificationId }: Params) => {
+export const patchReadFlagTrueUseCase = async ({ notificationId, userId }: Params) => {
     // notification取得
-    const notification = await getNotification({ notificationId });
+    const notification = await getMyNotification({ notificationId, userId });
 
     if (!notification) throw new AppError("NOTIFICATION_NOT_FOUND", 404);
 

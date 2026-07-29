@@ -10,6 +10,11 @@ export type NotificationIdParams = {
     notificationId: number;
 };
 
+export type NotificationUserIdParams = {
+    notificationId: number;
+    userId: number;
+};
+
 export type NotificationListParams = {
     where:
         | {

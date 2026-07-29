@@ -6,6 +6,7 @@ import {
     DeleteNotificationUserIdTransactionParams,
     NotificationIdParams,
     NotificationListParams,
+    NotificationUserIdParams,
     UpdateReadFlagParams,
     UpdateTypeParams,
     UserIdParams,
@@ -26,6 +27,15 @@ export const getMyNotificationAll = () => {
 
 export const getNotification = ({ notificationId }: NotificationIdParams) => {
     return Notification.findByPk(notificationId);
+};
+
+export const getMyNotification = ({ notificationId, userId }: NotificationUserIdParams) => {
+    return Notification.findOne({
+        where: {
+            id: notificationId,
+            read_user_id: userId,
+        },
+    });
 };
 
 export const createNotification = async ({ data, transaction }: CreateNotificationParams) => {

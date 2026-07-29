@@ -27,9 +27,10 @@ router.patch(
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const notificationId = Number(req.params.id);
+        const userId = req.user!.id;
 
         try {
-            await patchReadFlagTrueUseCase({ notificationId });
+            await patchReadFlagTrueUseCase({ notificationId, userId });
 
             res.status(200).json({ isRead: true });
         } catch (err) {
