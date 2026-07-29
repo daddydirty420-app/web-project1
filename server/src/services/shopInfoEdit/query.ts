@@ -13,8 +13,27 @@ export const getShopEdit = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId);
 };
 
+export const getMyShopEdit = ({ shopEditId, userId }: ShopEditUserIdParams) => {
+    return ShopInfoEdit.findOne({
+        where: {
+            id: shopEditId,
+            user_id: userId,
+        },
+    });
+};
+
 export const getShopEditHasShop = ({ shopEditId }: ShopEditIdParams) => {
     return ShopInfoEdit.findByPk(shopEditId, {
+        include: [{ model: ShopInfo }],
+    });
+};
+
+export const getMyShopEditHasShop = ({ shopEditId, userId }: ShopEditUserIdParams) => {
+    return ShopInfoEdit.findOne({
+        where: {
+            id: shopEditId,
+            user_id: userId,
+        },
         include: [{ model: ShopInfo }],
     });
 };

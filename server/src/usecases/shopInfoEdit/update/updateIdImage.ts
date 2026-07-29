@@ -2,7 +2,7 @@ import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { createNotification } from "../../../services/notification.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
-import { getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
+import { getMyShopEditHasShop, getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
 import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
 
@@ -26,10 +26,9 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
     }
 
     // shopEdit取得
-    const shopEdit = await getShopEditHasShop({ shopEditId });
+    const shopEdit = await getMyShopEditHasShop({ shopEditId, userId });
 
     if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
-    if (shopEdit.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     const shopId = shopEdit.ShopInfo.id;
 
