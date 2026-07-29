@@ -105,9 +105,10 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const transId = Number(req.params.id);
+        const userId = req.user!.id;
 
         try {
-            const transfer = await getTransferDetailUseCase({ transId });
+            const transfer = await getTransferDetailUseCase({ transId, userId });
 
             res.status(200).json({ transfer });
         } catch (err) {

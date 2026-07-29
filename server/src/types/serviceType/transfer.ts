@@ -3,10 +3,15 @@ import { Transfer } from "../../models/index.js";
 import { BankSnapshot } from "../bankSnapshot.js";
 
 export type TransIdParams = {
-    id: number;
+    transId: number;
 };
 
 export type UserIdParams = {
+    userId: number;
+};
+
+export type TransUserIdParams = {
+    transId: number;
     userId: number;
 };
 

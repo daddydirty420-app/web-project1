@@ -5,11 +5,33 @@ import {
     TransferHistoryParams,
     TransferIdParams,
     TransIdParams,
+    TransUserIdParams,
     UserIdParams,
 } from "../types/serviceType/transfer.js";
 
-export const getTransferDetail = ({ id }: TransIdParams) => {
-    return Transfer.findByPk(id, {
+export const getTransferDetail = ({ transId }: TransIdParams) => {
+    return Transfer.findByPk(transId, {
+        attributes: [
+            "id",
+            "request_money",
+            "handling_charge",
+            "trans_money",
+            "transfer_id",
+            "createdAt",
+            "bank_snapshot",
+            "trans_finish",
+            "trans_schedule_date",
+            "trans_at",
+        ],
+    });
+};
+
+export const getMyTransferDetail = ({ transId, userId }: TransUserIdParams) => {
+    return Transfer.findOne({
+        where: {
+            id: transId,
+            user_id: userId,
+        },
         attributes: [
             "id",
             "request_money",
