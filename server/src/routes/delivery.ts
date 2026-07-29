@@ -57,9 +57,10 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const deliveryId = Number(req.params.id);
+        const userId = req.user!.id;
 
         try {
-            const data = await getDeliveryAddressUseCase({ deliveryId });
+            const data = await getDeliveryAddressUseCase({ deliveryId, userId });
 
             res.status(200).json({ data });
         } catch (err) {
@@ -78,9 +79,10 @@ router.get(
     authenticateToken,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const deliveryId = Number(req.params.id);
+        const userId = req.user!.id;
 
         try {
-            const name = await getDeliveryNameUseCase({ deliveryId });
+            const name = await getDeliveryNameUseCase({ deliveryId, userId });
 
             res.status(200).json({ name });
         } catch (err) {

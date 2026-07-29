@@ -9,6 +9,11 @@ export type DeliveryIdParams = {
     deliveryId: number;
 };
 
+export type DeliveryUserIdParams = {
+    deliveryId: number;
+    userId: number;
+};
+
 export type CreateDeliveryParams = {
     data: {
         buyer_phone_number: string;

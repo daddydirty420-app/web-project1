@@ -2,14 +2,25 @@ import { Op } from "sequelize";
 import { Address, Delivery, Name, Orders, TodouhukenOption } from "../models/index.js";
 import {
     CreateDeliveryParams,
-    DeliveryIdParams,
+    DeliveryUserIdParams,
     ItemIdParams,
     UpdateDeliveryCancelParams,
 } from "../types/serviceType/delivery.js";
 
-export const getDeliveryHasAddress = ({ deliveryId }: DeliveryIdParams) => {
-    return Delivery.findByPk(deliveryId, {
+export const getMyDeliveryHasAddress = ({ deliveryId, userId }: DeliveryUserIdParams) => {
+    return Delivery.findOne({
+        where: {
+            id: deliveryId,
+        },
         include: [
+            {
+                model: Orders,
+                where: {
+                    user_id: userId,
+                },
+                attributes: [],
+                required: true,
+            },
             {
                 model: Address,
                 attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
@@ -24,9 +35,20 @@ export const getDeliveryHasAddress = ({ deliveryId }: DeliveryIdParams) => {
     });
 };
 
-export const getDeliveryHasName = ({ deliveryId }: DeliveryIdParams) => {
-    return Delivery.findByPk(deliveryId, {
+export const getMyDeliveryHasName = ({ deliveryId, userId }: DeliveryUserIdParams) => {
+    return Delivery.findOne({
+        where: {
+            id: deliveryId,
+        },
         include: [
+            {
+                model: Orders,
+                where: {
+                    user_id: userId,
+                },
+                attributes: [],
+                required: true,
+            },
             {
                 model: Name,
                 attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],

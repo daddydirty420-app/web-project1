@@ -1,15 +1,16 @@
 import { AppError } from "../../errors.js";
-import { getDeliveryHasName } from "../../services/delivery.js";
+import { getMyDeliveryHasName } from "../../services/delivery.js";
 
 type Params = {
     deliveryId: number;
+    userId: number;
 };
 
 // GET /delivery/:id/name
 // summary: 配送用氏名取得
 // page: /edit/name/delivery/[id]
-export const getDeliveryNameUseCase = async ({ deliveryId }: Params) => {
-    const delivery = await getDeliveryHasName({ deliveryId });
+export const getDeliveryNameUseCase = async ({ deliveryId, userId }: Params) => {
+    const delivery = await getMyDeliveryHasName({ deliveryId, userId });
 
     if (!delivery) throw new AppError("DELIVERY_NOT_FOUND", 404);
 

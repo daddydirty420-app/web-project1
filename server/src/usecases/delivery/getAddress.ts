@@ -1,15 +1,16 @@
 import { AppError } from "../../errors.js";
-import { getDeliveryHasAddress } from "../../services/delivery.js";
+import { getMyDeliveryHasAddress } from "../../services/delivery.js";
 
 type Params = {
     deliveryId: number;
+    userId: number;
 };
 
 // GET /delivery/:id/address
 // summary: 配送用住所取得
 // page: /edit/address/delivery/[id]
-export const getDeliveryAddressUseCase = async ({ deliveryId }: Params) => {
-    const delivery = await getDeliveryHasAddress({ deliveryId });
+export const getDeliveryAddressUseCase = async ({ deliveryId, userId }: Params) => {
+    const delivery = await getMyDeliveryHasAddress({ deliveryId, userId });
 
     if (!delivery) throw new AppError("DELIVERY_DATA_NOT_FOUND", 404);
 
