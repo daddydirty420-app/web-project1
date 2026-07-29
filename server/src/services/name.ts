@@ -1,4 +1,4 @@
-import { Name } from "../models/index.js";
+import { Name, User } from "../models/index.js";
 import {
     CreateNameAllowNullParams,
     CreateNameFirstParams,
@@ -6,11 +6,30 @@ import {
     CreateNameShopParams,
     NameIdParams,
     NameTransactionParams,
+    NameUserIdParams,
     UpdateNameParams,
 } from "../types/serviceType/name.js";
 
 export const getName = ({ nameId }: NameIdParams) => {
     return Name.findByPk(nameId);
+};
+
+export const getMyName = ({ nameId, userId }: NameUserIdParams) => {
+    return Name.findOne({
+        where: {
+            id: nameId,
+        },
+        include: [
+            {
+                model: User,
+                where: {
+                    id: userId,
+                },
+                attributes: [],
+                required: true,
+            },
+        ],
+    });
 };
 
 export const createNameFirst = async ({ transaction }: CreateNameFirstParams) => {

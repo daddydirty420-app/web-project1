@@ -21,12 +21,13 @@ router.patch(
     validateBody(nameBodySchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const nameId = Number(req.params.id);
+        const userId = req.user!.id;
 
         const body = req.validatedBody as NameBody;
         const { sei, mei, seiKana, meiKana } = body;
 
         try {
-            await editNameUseCase({ nameId, sei, mei, seiKana, meiKana });
+            await editNameUseCase({ nameId, userId, sei, mei, seiKana, meiKana });
 
             res.status(200).json({ message: "氏名を更新しました。" });
         } catch (err) {
