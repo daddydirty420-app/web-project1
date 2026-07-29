@@ -5,6 +5,11 @@ export type CommentIdParams = {
     commentId: number;
 };
 
+export type CommentUserIdParams = {
+    commentId: number;
+    userId: number;
+};
+
 export type ItemIdParams = {
     itemId: number;
 };

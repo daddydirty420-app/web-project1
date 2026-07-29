@@ -1,6 +1,7 @@
 import { Comment, User } from "../models/index.js";
 import {
     CommentIdParams,
+    CommentUserIdParams,
     CreateCommentParams,
     DeleteCommentUserIdTransactionParams,
     DestroyAllParams,
@@ -12,6 +13,15 @@ import {
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
+};
+
+export const getMyComment = ({ commentId, userId }: CommentUserIdParams) => {
+    return Comment.findOne({
+        where: {
+            id: commentId,
+            user_id: userId,
+        },
+    });
 };
 
 export const getAllComments = ({ itemId }: ItemIdParams) => {

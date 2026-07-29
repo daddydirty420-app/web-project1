@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { destroyComment, getComment } from "../../services/comment.js";
+import { destroyComment, getComment, getMyComment } from "../../services/comment.js";
 import { getItem } from "../../services/items/index.js";
 import { createNotification } from "../../services/notification.js";
 
@@ -14,7 +14,13 @@ type Params = {
 // page: /item/[id]・/item/admin/[id]
 export const deleteCommentUseCase = async ({ userId, commentId, page }: Params) => {
     // commentデータ取得
-    const comment = await getComment({ commentId });
+    let comment = null;
+
+    if (page === "normal") {
+        comment = await getMyComment({ commentId, userId });
+    } else if (page === "admin") {
+        comment = await getComment({ commentId });
+    }
 
     if (!comment) throw new AppError("COMMENT_NOT_FOUND", 404);
 
