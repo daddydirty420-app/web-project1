@@ -1,6 +1,7 @@
-import { BankAccount } from "../models/index.js";
+import { BankAccount, User } from "../models/index.js";
 import {
     AccountIdParams,
+    AccountUserIdParams,
     BankTransactionParams,
     CreateBankAllowNullParams,
     CreateBankParams,
@@ -10,6 +11,20 @@ import {
 
 export const getBankAccount = ({ accountId }: AccountIdParams) => {
     return BankAccount.findByPk(accountId);
+};
+
+export const getMyBankAccount = ({ accountId, userId }: AccountUserIdParams) => {
+    return BankAccount.findOne({
+        where: { id: accountId },
+        include: [
+            {
+                model: User,
+                where: { id: userId },
+                attributes: [],
+                required: true,
+            },
+        ],
+    });
 };
 
 export const createBankAccountFirst = async ({ transaction }: TransactionParams) => {

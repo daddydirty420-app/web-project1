@@ -1,10 +1,11 @@
 import { AppError } from "../../errors.js";
-import { getBankAccount, updateBankAccount } from "../../services/bankAccount.js";
+import { getMyBankAccount, updateBankAccount } from "../../services/bankAccount.js";
 import { getBankOne } from "../../services/banks.js";
 import { getBranchOne } from "../../services/branches.js";
 import { BankBody } from "../../validators/body/bankAccount.js";
 
 type Params = {
+    userId: number;
     accountId: number;
     body: BankBody;
 };
@@ -12,7 +13,7 @@ type Params = {
 // PATCH /bank-account/:id
 // summary: 口座情報変更
 // page: /edit/account
-export const editAccountUseCase = async ({ accountId, body }: Params) => {
+export const editAccountUseCase = async ({ userId, accountId, body }: Params) => {
     // body
     const { bankName, branch, accountType, accountNumber, meigi } = body;
 
@@ -27,7 +28,7 @@ export const editAccountUseCase = async ({ accountId, body }: Params) => {
     if (!matchedBranch) throw new AppError("INVALID_BRANCH", 400);
 
     // 口座情報取得
-    const account = await getBankAccount({ accountId });
+    const account = await getMyBankAccount({ accountId, userId });
 
     if (!account) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
 

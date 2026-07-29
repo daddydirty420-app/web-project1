@@ -46,11 +46,13 @@ router.patch(
     bankEditRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const accountId = Number(req.params.id);
+        const userId = req.user!.id;
 
         const body = req.validatedBody as BankBody;
 
         try {
             await editAccountUseCase({
+                userId,
                 accountId,
                 body,
             });

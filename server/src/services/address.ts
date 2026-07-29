@@ -34,6 +34,7 @@ export const getMyAddress = ({ addressId, userId }: AddressUserIdParams) => {
                 model: User,
                 where: { id: userId },
                 attributes: [],
+                required: true,
             },
         ],
     });

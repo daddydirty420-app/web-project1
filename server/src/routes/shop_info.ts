@@ -40,7 +40,7 @@ import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.j
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
 import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
 import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
-import { getMyShopUseCase } from "../usecases/shopInfo/get/getMyShop.js";
+import { getMyShopIdUseCase } from "../usecases/shopInfo/get/getMyShop.js";
 import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
 import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
 import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
@@ -276,7 +276,7 @@ router.get(
         const userId = req.user!.id;
 
         try {
-            const shop = await getMyShopUseCase({ userId });
+            const shop = await getMyShopIdUseCase({ userId });
 
             res.status(200).json({ shop });
         } catch (err) {

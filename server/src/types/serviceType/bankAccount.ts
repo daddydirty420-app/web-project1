@@ -6,6 +6,11 @@ export type AccountIdParams = {
     accountId: number;
 };
 
+export type AccountUserIdParams = {
+    accountId: number;
+    userId: number;
+};
+
 export type ShopEditIdParams = {
     shopEditId: number;
 };
