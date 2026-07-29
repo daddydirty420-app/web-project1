@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateShopIdPermit } from "../../../services/shopInfo/command.js";
-import { getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
 import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
@@ -26,10 +26,9 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
     }
 
     // shopInfo取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;

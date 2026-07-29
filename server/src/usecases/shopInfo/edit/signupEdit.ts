@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { updateShopAny } from "../../../services/shopInfo/command.js";
-import { getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -13,10 +13,9 @@ type Params = {
 // page: /shop-signup/step5/[id]
 export const updateShopSignupEditUseCase = async ({ shopId, userId, updateData }: Params) => {
     // shop取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // db更新
     await updateShopAny({

@@ -5,7 +5,7 @@ import { deleteAddress } from "../../../services/address.js";
 import { deleteBankAccount } from "../../../services/bankAccount.js";
 import { deleteName } from "../../../services/name.js";
 import { deleteShop, updateShopRequestAll } from "../../../services/shopInfo/command.js";
-import { getOldShopAll, getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop, getOldShopAll, getShop } from "../../../services/shopInfo/query.js";
 
 type OldShop = {
     ShopInfo: InstanceType<typeof ShopInfo> & {
@@ -26,10 +26,9 @@ type Params = {
 // page: /shop-signup/step5/[id]
 export const updateShopSignup5UseCase = async ({ shopId, userId }: Params) => {
     // shop取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 既存承認待ちshop削除
     const oldShops: OldShop[] = await getOldShopAll({ userId, shopId });

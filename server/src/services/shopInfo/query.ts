@@ -238,6 +238,23 @@ export const getShopSignup1One = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMyShopHasRepName = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "id_card_front", "id_card_rear", "user_id"],
+        include: [
+            {
+                model: Name,
+                as: "RepresentativeName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+        ],
+    });
+};
+
 export const getOldShopAll = ({ userId, shopId }: UserShopIdParams) => {
     return ShopInfo.findAll({
         where: {

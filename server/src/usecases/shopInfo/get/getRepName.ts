@@ -1,5 +1,4 @@
 import { AppError } from "../../../errors.js";
-import { getShopHasRepName } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -10,7 +9,7 @@ type Params = {
 // summary: 代表者氏名取得
 // page: /edit/name/shop/rep-name/[id]・/edit/name/shop/rep-name/signup/[id]
 export const getRepNameUseCase = async ({ shopId, userId }: Params) => {
-    const shop = await getShopHasRepName({ shopId });
+    const shop = await getMyShopHasRepName({ shopId });
 
     const name = shop.RepresentativeName;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);

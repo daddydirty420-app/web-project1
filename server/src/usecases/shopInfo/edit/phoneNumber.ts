@@ -1,7 +1,7 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { updateShopPhoneNumber } from "../../../services/shopInfo/command.js";
-import { getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop } from "../../../services/shopInfo/query.js";
 import { updatePhoneNumberUser } from "../../../services/users/command.js";
 import { getUser } from "../../../services/users/query.js";
 
@@ -16,10 +16,9 @@ type Params = {
 // page: /edit/phone-number/shop/[id]
 export const editShopPhoneNumberUseCase = async ({ shopId, userId, phoneNumber }: Params) => {
     // shopInfo取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // user取得
     const user = await getUser({ userId });

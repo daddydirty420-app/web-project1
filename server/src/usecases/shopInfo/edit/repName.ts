@@ -3,7 +3,7 @@ import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateName } from "../../../services/name.js";
 import { updateShopIdCard } from "../../../services/shopInfo/command.js";
-import { getShopHasRepName } from "../../../services/shopInfo/query.js";
+import { getMyShopHasRepName } from "../../../services/shopInfo/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/index.js";
 import { RepNameBody } from "../../../validators/body/shopInfo.js";
@@ -34,10 +34,9 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
     } = body;
 
     // ショップ取得
-    const shop = await getShopHasRepName({ shopId });
+    const shop = await getMyShopHasRepName({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 身分証アップロード
     let frontSignedUrl: string | null = null;
