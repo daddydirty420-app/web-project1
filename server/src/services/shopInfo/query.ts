@@ -114,8 +114,12 @@ export const getShopIdCard = ({ shopId }: ShopIdParams) => {
     });
 };
 
-export const getShopSignup5 = ({ shopId }: ShopIdParams) => {
-    return ShopInfo.findByPk(shopId, {
+export const getShopSignup5 = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
         attributes: [
             "id",
             "company_name",
@@ -238,6 +242,81 @@ export const getShopSignup1One = ({ userId }: UserIdParams) => {
     });
 };
 
+export const getMyShopHasAddress = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "user_id"],
+        include: [
+            {
+                model: Address,
+                attributes: ["id", "post_number", "todouhuken_id", "shikutyouson", "banchi", "building"],
+                include: [
+                    {
+                        model: TodouhukenOption,
+                        as: "AddressTodouhuken",
+                    },
+                ],
+            },
+        ],
+    });
+};
+
+export const getMyShopHasBankAccount = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "user_id"],
+        include: [
+            {
+                model: BankAccount,
+                attributes: [
+                    "id",
+                    "bank_name",
+                    "branch",
+                    "account_type",
+                    "account_number",
+                    "meigi",
+                    "bank_code",
+                    "branch_code",
+                ],
+                required: false,
+            },
+        ],
+    });
+};
+
+export const getMyShopHasConName = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "user_id"],
+        include: [
+            {
+                model: Name,
+                as: "ContactName",
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
+            },
+        ],
+    });
+};
+
+export const getMyShopIdCard = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "id_card_front", "id_card_rear", "permit_url", "user_id"],
+    });
+};
+
 export const getMyShopHasRepName = ({ shopId, userId }: UserShopIdParams) => {
     return ShopInfo.findOne({
         where: {
@@ -252,6 +331,37 @@ export const getMyShopHasRepName = ({ shopId, userId }: UserShopIdParams) => {
                 attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
+    });
+};
+
+export const getMyShopPhoneNumber = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "phone_number", "user_id"],
+    });
+};
+
+export const getMyShopHasComFree = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "company_name", "com_or_free_id", "user_id"],
+        include: [{ model: ComOrFreeOption }],
+    });
+};
+
+export const getMyShopOption = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        attributes: ["id", "auto_trans", "open_info", "user_id"],
     });
 };
 

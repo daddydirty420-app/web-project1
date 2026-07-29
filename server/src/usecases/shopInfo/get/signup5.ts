@@ -11,10 +11,9 @@ type Params = {
 // page: /shop-signup/step5/[id]
 export const getShopSignup5UseCase = async ({ userId, shopId }: Params) => {
     // shop取得
-    const shop = await getShopSignup5({ shopId });
+    const shop = await getShopSignup5({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     return shop;
 };

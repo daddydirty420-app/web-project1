@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopHasConName } from "../../../services/shopInfo/query.js";
+import { getMyShopHasConName } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -10,11 +10,10 @@ type Params = {
 // summary: 担当者氏名取得
 // page: /edit/name/shop/con-name/[id]・/edit/name/shop/con-name/signup/[id]
 export const getConNameUseCase = async ({ shopId, userId }: Params) => {
-    const shop = await getShopHasConName({ shopId });
+    const shop = await getMyShopHasConName({ shopId, userId });
 
     const name = shop.ContactName;
     if (!name) throw new AppError("NAME_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     return name;
 };

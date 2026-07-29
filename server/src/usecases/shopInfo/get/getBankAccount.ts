@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getShopHasBankAccount } from "../../../services/shopInfo/query.js";
+import { getMyShopHasBankAccount } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -10,11 +10,10 @@ type Params = {
 // summary: ショップ口座情報取得
 // page: /edit/account/shop/[id]・/edit/account/shop/signup/[id]
 export const getBankAccountUseCase = async ({ shopId, userId }: Params) => {
-    const shop = await getShopHasBankAccount({ shopId });
+    const shop = await getMyShopHasBankAccount({ shopId, userId });
 
     const data = shop.BankAccount;
     if (!data) throw new AppError("BANK_ACCOUNT_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     return data;
 };

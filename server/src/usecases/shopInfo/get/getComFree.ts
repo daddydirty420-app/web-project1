@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { getComFreeOptionAll } from "../../../services/comOrFreeOption.js";
-import { getShopHasComFree } from "../../../services/shopInfo/query.js";
+import { getMyShopHasComFree, getShopHasComFree } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -11,10 +11,9 @@ type Params = {
 // summary: 事業形態取得
 // page: /edit/shop/com-free/[id]
 export const getShopComFreeUseCase = async ({ shopId, userId }: Params) => {
-    const shop = await getShopHasComFree({ shopId });
+    const shop = await getMyShopHasComFree({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     const comFree = await getComFreeOptionAll();
 
