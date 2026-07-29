@@ -9,14 +9,15 @@ import { getUserHasShop } from "../../../services/users/query.js";
 
 type Params = {
     itemId: number;
+    userId: number;
 };
 
 // GET /items/:id/form-data
 // summary: アップロードフォーム表示データ取得
 // page: /upload
-export const getFormDataUseCase = async ({ itemId }: Params) => {
+export const getFormDataUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
-    const item = await getItemFormData({ itemId });
+    const item = await getItemFormData({ itemId, userId });
 
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);

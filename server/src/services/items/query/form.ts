@@ -11,10 +11,14 @@ import {
     TodouhukenOption,
     Video,
 } from "../../../models/index.js";
-import { ItemIdParams } from "../../../types/serviceType/items.js";
+import { UserItemIdParams } from "../../../types/serviceType/items.js";
 
-export const getItemFormData = ({ itemId }: ItemIdParams) => {
-    return Item.findByPk(itemId, {
+export const getItemFormData = ({ itemId, userId }: UserItemIdParams) => {
+    return Item.findOne({
+        where: {
+            id: itemId,
+            seller_id: userId,
+        },
         attributes: [
             "id",
             "name",

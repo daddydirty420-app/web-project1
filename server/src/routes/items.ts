@@ -528,10 +528,12 @@ router.get(
     validateParams(idParamSchema),
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const itemId = parseInt(req.params.id);
+        const userId = req.user!.id;
 
         try {
             const { item, category, allCondition, allDay, allService, allPlace, hasShop } = await getFormDataUseCase({
                 itemId,
+                userId,
             });
 
             res.status(200).json({
