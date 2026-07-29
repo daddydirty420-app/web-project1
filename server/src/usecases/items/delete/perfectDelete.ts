@@ -1,7 +1,7 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { destroyPerfectItem, getItem } from "../../../services/items/index.js";
 import { createPerfectDelete } from "../../../services/itemDeleteLogs.js";
+import { destroyPerfectItem, getMyItem } from "../../../services/items/index.js";
 
 type Params = {
     itemId: number;
@@ -13,7 +13,7 @@ type Params = {
 // page: /item/deleted/[id]
 export const deleteItemPerfectUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
-    const item = await getItem({ itemId });
+    const item = await getMyItem({ itemId, userId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

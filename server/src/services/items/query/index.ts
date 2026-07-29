@@ -13,10 +13,12 @@ export { getMetadata } from "./meta.js";
 export { getAdminItemPage, getItemPageData } from "./page.js";
 export {
     getItem,
+    getMyItem,
     getItemHighlight,
     getItemWithCategory,
     getItemWithVideoCategoriesUser,
     getItemWithVideoSaleShipping,
+    getMyItemWithVideoSaleShipping,
     getMyItemsWithVideoAll,
 } from "./relation.js";
 export { getItemForBuy } from "./transaction.js";

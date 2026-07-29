@@ -1,12 +1,12 @@
 import sequelize from "../../../../db.js";
+import { AppError } from "../../../../errors.js";
+import { createShippingCopyUpload } from "../../../../services/itemShippingProfile.js";
+import { createItemCopyUpload } from "../../../../services/items/index.js";
+import { getMyItemWithVideoSaleShipping } from "../../../../services/items/query/relation.js";
+import { createSaleCopyUpload } from "../../../../services/sale.js";
+import { createVideoCopyUpload } from "../../../../services/video.js";
 import type { ItemAttributes } from "../../../../types/itemAttributes.js";
 import { copyS3Object, getFileName } from "../../../../utils/s3/index.js";
-import { getItemWithVideoSaleShipping } from "../../../../services/items/index.js";
-import { AppError } from "../../../../errors.js";
-import { createItemCopyUpload } from "../../../../services/items/index.js";
-import { createVideoCopyUpload } from "../../../../services/video.js";
-import { createSaleCopyUpload } from "../../../../services/sale.js";
-import { createShippingCopyUpload } from "../../../../services/itemShippingProfile.js";
 
 type Params = {
     itemId: number;
@@ -21,7 +21,7 @@ type ColorVariantSize = NonNullable<ColorVariant["sizes"]>[number];
 // page: /item/[id]
 export const itemCopyUploadUseCase = async ({ itemId, userId }: Params) => {
     // item取得
-    const item = await getItemWithVideoSaleShipping({ itemId });
+    const item = await getMyItemWithVideoSaleShipping({ itemId, userId });
 
     if (!item) throw new AppError("ITEM_NOT_FOUND", 404);
     if (!item.Video) throw new AppError("VIDEO_NOT_FOUND", 404);

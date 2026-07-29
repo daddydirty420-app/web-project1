@@ -1,9 +1,18 @@
 // 複数関連モデル取得
 import { Categories, Item, ItemShippingProfile, Sale, User, Video } from "../../../models/index.js";
-import { ItemIdParams, UserIdParams } from "../../../types/serviceType/items.js";
+import { ItemIdParams, UserIdParams, UserItemIdParams } from "../../../types/serviceType/items.js";
 
 export const getItem = ({ itemId }: ItemIdParams) => {
     return Item.findByPk(itemId);
+};
+
+export const getMyItem = ({ itemId, userId }: UserItemIdParams) => {
+    return Item.findOne({
+        where: {
+            id: itemId,
+            seller_id: userId,
+        },
+    });
 };
 
 export const getItemHighlight = ({ itemId }: ItemIdParams) => {
@@ -56,6 +65,16 @@ export const getItemWithVideoCategoriesUser = ({ itemId }: ItemIdParams) => {
             },
             { model: User },
         ],
+    });
+};
+
+export const getMyItemWithVideoSaleShipping = ({ itemId, userId }: UserItemIdParams) => {
+    return Item.findOne({
+        where: {
+            id: itemId,
+            seller_id: userId,
+        },
+        include: [{ model: Video }, { model: Sale }, { model: ItemShippingProfile }],
     });
 };
 

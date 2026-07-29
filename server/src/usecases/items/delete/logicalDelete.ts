@@ -4,7 +4,7 @@ import { destroyAllCarts, getAllCarts } from "../../../services/cart.js";
 import { destroyAllComments, getAllComments } from "../../../services/comment.js";
 import { findDeliveryNow } from "../../../services/delivery.js";
 import { destroyItemLikeTransaction, getAllItemLikes } from "../../../services/itemLike.js";
-import { getItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
+import { getMyItemWithVideoSaleShipping, updateLogicalDeleteItem } from "../../../services/items/index.js";
 import { createNotification } from "../../../services/notification.js";
 import { updateLogicalDelete } from "../../../services/sale.js";
 
@@ -24,7 +24,7 @@ export const deleteItemLogicallyUseCase = async ({ itemId, userId }: Params) => 
     }
 
     // Item取得
-    const item = await getItemWithVideoSaleShipping({ itemId });
+    const item = await getMyItemWithVideoSaleShipping({ itemId, userId });
 
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);

@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { updateShipping } from "../../../services/itemShippingProfile.js";
 import { updateImage, updateItem } from "../../../services/items/command/update.js";
-import { getItemWithVideoSaleShipping } from "../../../services/items/index.js";
+import { getMyItemWithVideoSaleShipping } from "../../../services/items/query/relation.js";
 import { createNotification } from "../../../services/notification.js";
 import { updateSale } from "../../../services/sale.js";
 import { updateVideo } from "../../../services/video.js";
@@ -25,7 +25,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
     const { attributes, shipping, videoMeta, itemMeta, genderAge } = body;
 
     // Item取得
-    const item = await getItemWithVideoSaleShipping({ itemId });
+    const item = await getMyItemWithVideoSaleShipping({ itemId, userId });
 
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
