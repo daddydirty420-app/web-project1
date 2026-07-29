@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { countFollower } from "../../../services/follow.js";
-import { countSellItem, getItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
+import { countSellItem, getItemWithVideoCategoriesUser, getMyItemWithVideoCategoriesUser, updatePublishItem } from "../../../services/items/index.js";
 import { createNotification } from "../../../services/notification.js";
 import { normalizeJapanese } from "../../../utils/normalizeJapanese.js";
 
@@ -13,8 +13,8 @@ type Params = {
 // summary: 商品公開
 // page: /item/confirm/[id]
 export const patchPublishUseCase = async ({ itemId, userId }: Params) => {
-    // getData
-    const item = await getItemWithVideoCategoriesUser({ itemId });
+    // item取得
+    const item = await getMyItemWithVideoCategoriesUser({ itemId, userId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

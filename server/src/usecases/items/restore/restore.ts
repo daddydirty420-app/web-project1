@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getItem, updateRestoreItem } from "../../../services/items/index.js";
+import { getMyItem, updateRestoreItem } from "../../../services/items/index.js";
 import { createNotification } from "../../../services/notification.js";
 
 type Params = {
@@ -12,7 +12,7 @@ type Params = {
 // page: /item/deleted/[id]
 export const restoreItemUseCase = async ({ itemId, userId }: Params) => {
     // Item取得
-    const item = await getItem({ itemId });
+    const item = await getMyItem({ itemId, userId });
     if (!item) {
         throw new AppError("ITEM_NOT_FOUND", 404);
     }

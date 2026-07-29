@@ -33,6 +33,7 @@ export {
     getMetadata,
     getMyItem,
     getMyItemsWithVideoAll,
+    getMyItemWithVideoCategoriesUser,
     getMyItemWithVideoSaleShipping,
     getProfileItemsWithCount,
     getProfileVideosWithCount,

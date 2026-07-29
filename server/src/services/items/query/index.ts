@@ -19,6 +19,7 @@ export {
     getItemWithVideoCategoriesUser,
     getItemWithVideoSaleShipping,
     getMyItemWithVideoSaleShipping,
+    getMyItemWithVideoCategoriesUser,
     getMyItemsWithVideoAll,
 } from "./relation.js";
 export { getItemForBuy } from "./transaction.js";

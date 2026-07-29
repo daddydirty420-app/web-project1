@@ -78,6 +78,30 @@ export const getMyItemWithVideoSaleShipping = ({ itemId, userId }: UserItemIdPar
     });
 };
 
+export const getMyItemWithVideoCategoriesUser = ({ itemId, userId }: UserItemIdParams) => {
+    return Item.findOne({
+        where: {
+            id: itemId,
+            seller_id: userId,
+        },
+        include: [
+            { model: Video },
+            {
+                model: Categories,
+                as: "Category",
+                include: [
+                    {
+                        model: Categories,
+                        as: "parent",
+                        required: false,
+                    },
+                ],
+            },
+            { model: User },
+        ],
+    });
+};
+
 export const getMyItemsWithVideoAll = ({ userId }: UserIdParams) => {
     return Item.findAll({
         where: { seller_id: userId },
