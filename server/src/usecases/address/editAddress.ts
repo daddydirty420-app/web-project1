@@ -1,8 +1,9 @@
 import { AppError } from "../../errors.js";
-import { getAddress, updateAddress } from "../../services/address.js";
+import { getMyAddress, updateAddress } from "../../services/address.js";
 import { fetchAddressFromZipUseCase } from "./zipUseCase.js";
 
 type Params = {
+    userId: number;
     addressId: number;
     postNumber: string;
     todouhuken: string;
@@ -15,6 +16,7 @@ type Params = {
 // summary: 住所変更
 // page: /edit/addressなど
 export const editAddressUseCase = async ({
+    userId,
     addressId,
     postNumber,
     todouhuken,
@@ -23,7 +25,7 @@ export const editAddressUseCase = async ({
     building,
 }: Params) => {
     // Address取得
-    const address = await getAddress({ addressId });
+    const address = await getMyAddress({ addressId, userId });
 
     if (!address) throw new AppError("ADDRESS_NOT_FOUND", 404);
 

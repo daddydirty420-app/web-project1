@@ -1,7 +1,8 @@
-import { Address, TodouhukenOption } from "../models/index.js";
+import { Address, TodouhukenOption, User } from "../models/index.js";
 import {
     AddressIdParams,
     AddressTransactionParams,
+    AddressUserIdParams,
     CreateAddressAllowNullParams,
     CreateAddressFirstParams,
     CreateAddressParams,
@@ -14,6 +15,25 @@ export const getAddress = ({ addressId }: AddressIdParams) => {
             {
                 model: TodouhukenOption,
                 as: "AddressTodouhuken",
+            },
+        ],
+    });
+};
+
+export const getMyAddress = ({ addressId, userId }: AddressUserIdParams) => {
+    return Address.findOne({
+        where: {
+            id: addressId,
+        },
+        include: [
+            {
+                model: TodouhukenOption,
+                as: "AddressTodouhuken",
+            },
+            {
+                model: User,
+                where: { id: userId },
+                attributes: [],
             },
         ],
     });

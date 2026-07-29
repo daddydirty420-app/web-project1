@@ -25,13 +25,14 @@ router.patch(
     addressEditRateLimit,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const addressId = Number(req.params.id);
+        const userId = req.user!.id;
 
         const body = req.validatedBody as AddressBody;
 
         const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
 
         try {
-            await editAddressUseCase({ addressId, postNumber, todouhuken, shikutyouson, banchi, building });
+            await editAddressUseCase({ userId, addressId, postNumber, todouhuken, shikutyouson, banchi, building });
 
             res.status(200).json({ message: "住所を更新しました。" });
         } catch (err) {

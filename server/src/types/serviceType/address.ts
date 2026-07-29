@@ -5,6 +5,11 @@ export type AddressIdParams = {
     addressId: number;
 };
 
+export type AddressUserIdParams = {
+    addressId: number;
+    userId: number;
+};
+
 export type ShopIdParams = {
     shopId: number;
 };
