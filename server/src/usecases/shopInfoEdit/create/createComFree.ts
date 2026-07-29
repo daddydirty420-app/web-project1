@@ -3,7 +3,7 @@ import { AppError } from "../../../errors.js";
 import { createAddressAllowNull } from "../../../services/address.js";
 import { createBankAccountAllowNull } from "../../../services/bankAccount.js";
 import { createNameShopAllowNull } from "../../../services/name.js";
-import { getShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
+import { getMyShopHasAddressNameBank } from "../../../services/shopInfo/query.js";
 import { createShopEditComFree } from "../../../services/shopInfoEdit/command.js";
 
 type Params = {
@@ -17,10 +17,9 @@ type Params = {
 // page: /edit/shop/com-free/[id]
 export const createShopEditComFreeUseCase = async ({ shopId, userId, comFreeId }: Params) => {
     // shopInfo取得
-    const shop = await getShopHasAddressNameBank({ shopId });
+    const shop = await getMyShopHasAddressNameBank({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
     if (comFreeId === Number(shop.com_or_free_id)) {
         throw new AppError("INVALID_COM_FREE_ID", 400);
     }

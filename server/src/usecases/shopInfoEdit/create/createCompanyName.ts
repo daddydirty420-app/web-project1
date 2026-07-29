@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors.js";
 import { createNotification } from "../../../services/notification.js";
 import { updateShopCompanyName } from "../../../services/shopInfo/command.js";
-import { getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
 import { createShopEditCompanyName } from "../../../services/shopInfoEdit/command.js";
 
 type Params = {
@@ -15,10 +15,9 @@ type Params = {
 // page: /edit/shop/company-name/[id]
 export const createCompanyNameUseCase = async ({ shopId, userId, companyName }: Params) => {
     // ショップ取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     const comFreeId = shop.com_or_free_id;
 

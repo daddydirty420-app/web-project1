@@ -2,7 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { createAddress } from "../../../services/address.js";
 import { createNotification } from "../../../services/notification.js";
-import { getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop } from "../../../services/shopInfo/query.js";
 import { createShopEdit } from "../../../services/shopInfoEdit/command.js";
 import { AddressBody } from "../../../validators/body/address.js";
 import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
@@ -21,10 +21,9 @@ export const createAddressShopEditUseCase = async ({ shopId, userId, body }: Par
     const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
 
     // shopInfo取得
-    const shop = await getShop({ shopId });
+    const shop = await getMyShop({ shopId, userId });
 
     if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
-    if (shop.user_id !== userId) throw new AppError("FORBIDDEN", 403);
 
     // 住所バリデーションチェック
     const fromZip = await fetchAddressFromZipUseCase({ zipcode: postNumber });

@@ -365,6 +365,27 @@ export const getMyShopOption = ({ shopId, userId }: UserShopIdParams) => {
     });
 };
 
+export const getMyShopHasAddressNameBank = ({ shopId, userId }: UserShopIdParams) => {
+    return ShopInfo.findOne({
+        where: {
+            id: shopId,
+            user_id: userId,
+        },
+        include: [
+            { model: Address },
+            {
+                model: Name,
+                as: "RepresentativeName",
+            },
+            {
+                model: Name,
+                as: "ContactName",
+            },
+            { model: BankAccount },
+        ],
+    });
+};
+
 export const getOldShopAll = ({ userId, shopId }: UserShopIdParams) => {
     return ShopInfo.findAll({
         where: {
