@@ -3,7 +3,7 @@ import crypto from "crypto";
 import fs from "fs";
 import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
-import { getVideo, updateStatus } from "../../services/video.js";
+import { getMyVideo, getVideo, updateStatus } from "../../services/video.js";
 import { getDuration } from "../../utils/ffmpeg.js";
 import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 
@@ -21,7 +21,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     let isTimedOut = false;
 
     // video取得
-    const video = await getVideo({ videoId });
+    const video = await getMyVideo({ videoId, userId });
     if (!video) {
         throw new AppError("VIDEO_NOT_FOUND", 404);
     }

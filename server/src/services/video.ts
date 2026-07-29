@@ -6,10 +6,20 @@ import {
     UpdateStatusParams,
     UpdateVideoParams,
     VideoIdParams,
+    VideoUserIdParams,
 } from "../types/serviceType/video.js";
 
 export const getVideo = ({ videoId }: VideoIdParams) => {
     return Video.findByPk(videoId);
+};
+
+export const getMyVideo = ({ videoId, userId }: VideoUserIdParams) => {
+    return Video.findOne({
+        where: {
+            id: videoId,
+            user_id: userId,
+        },
+    });
 };
 
 export const addPlayCount = async ({ video, data }: PlayCountParams) => {

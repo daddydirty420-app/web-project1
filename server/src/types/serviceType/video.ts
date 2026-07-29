@@ -5,6 +5,11 @@ export type VideoIdParams = {
     videoId: number;
 };
 
+export type VideoUserIdParams = {
+    videoId: number;
+    userId: number;
+};
+
 export type PlayCountParams = {
     video: InstanceType<typeof Video>;
     data: {
