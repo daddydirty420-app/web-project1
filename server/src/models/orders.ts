@@ -1,13 +1,13 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 import type { PurchaseSnapshot } from "../types/purchaseSnapshot.js";
 
-import PaymentMethodOption from "./payment_method_option.js";
-import Item from "./item.js";
-import Delivery from "./delivery.js";
-import User from "./user.js";
-import Chat from "./chat.js";
 import Cancel from "./cancel.js";
+import Chat from "./chat.js";
+import Delivery from "./delivery.js";
+import Item from "./item.js";
+import PaymentMethodOption from "./payment_method_option.js";
+import User from "./user.js";
 
 export class Orders extends Model {
     declare id: number;
