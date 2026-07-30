@@ -1,6 +1,7 @@
 import { Model, DataTypes, Association } from "sequelize";
 import sequelize from "../db.js";
 import type { BodyCategory, LifeStyleCategory, Layer } from "../types/itemAttributes.js";
+import CouponCategory from "./coupon_category.js";
 
 export class Categories extends Model {
     declare id: number;
@@ -24,10 +25,14 @@ export class Categories extends Model {
             foreignKey: "parent_id",
             as: "children",
         });
+        Categories.hasMany(CouponCategory, {
+            foreignKey: "category_id",
+        });
     }
 
     static associations: {
         Categories: Association<Categories, Categories>;
+        CouponCategory: Association<Categories, CouponCategory>;
     };
 }
 
