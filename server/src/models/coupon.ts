@@ -2,6 +2,7 @@ import { Model } from "sequelize";
 import CouponUser from "./coupon_user.js";
 import User from "./user.js";
 import CouponItem from "./coupon_item.js";
+import CouponShop from "./coupon_shop.js";
 
 export class Coupon extends Model {
     declare id: number;
@@ -44,6 +45,9 @@ export class Coupon extends Model {
             foreignKey: "coupon_id",
         });
         Coupon.hasMany(CouponItem, {
+            foreignKey: "coupon_id",
+        });
+        Coupon.hasMany(CouponShop, {
             foreignKey: "coupon_id",
         });
     }

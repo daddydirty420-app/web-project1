@@ -4,6 +4,7 @@ import sequelize from "../db.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
+import CouponShop from "./coupon_shop.js";
 import Name from "./name.js";
 import User from "./user.js";
 
@@ -56,6 +57,9 @@ export class ShopInfo extends Model {
         ShopInfo.belongsTo(BankAccount, {
             foreignKey: "account_id",
         });
+        ShopInfo.hasMany(CouponShop, {
+            foreignKey: "shop_info_id",
+        });
     }
 
     static associations: {
@@ -64,6 +68,7 @@ export class ShopInfo extends Model {
         Address: Association<ShopInfo, Address>;
         Name: Association<ShopInfo, Name>;
         BankAccount: Association<ShopInfo, BankAccount>;
+        CouponShop: Association<ShopInfo, CouponShop>;
     };
 }
 
