@@ -1,4 +1,5 @@
 import { Model } from "sequelize";
+import CouponUser from "./coupon_user.js";
 import User from "./user.js";
 
 export class Coupon extends Model {
@@ -38,5 +39,10 @@ export class Coupon extends Model {
             foreignKey: "updated_admin_id",
             as: "UpdatedAdmin",
         });
+        Coupon.hasMany(CouponUser, {
+            foreignKey: "coupon_id",
+        });
     }
 }
+
+export default Coupon;
