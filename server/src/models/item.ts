@@ -16,6 +16,7 @@ import Sale from "./sale.js";
 import User from "./user.js";
 import Video from "./video.js";
 import WatchHistory from "./watch_history.js";
+import CouponItem from "./coupon_item.js";
 
 export class Item extends Model {
     declare id: number;
@@ -92,6 +93,9 @@ export class Item extends Model {
         Item.hasMany(WatchHistory, {
             foreignKey: "item_id",
         });
+        Item.hasMany(CouponItem, {
+            foreignKey: "item_id",
+        });
     }
 
     static associations: {
@@ -109,6 +113,7 @@ export class Item extends Model {
         Comment: Association<Item, Comment>;
         WatchHistory: Association<Item, WatchHistory>;
         PurchaseSession: Association<Item, PurchaseSession>;
+        CouponItem: Association<Item, CouponItem>;
     };
 }
 
