@@ -1,11 +1,11 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
+import Delivery from "./delivery.js";
+import PurchaseSession from "./purchase_session.js";
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
-import Delivery from "./delivery.js";
 import User from "./user.js";
-import PurchaseSession from "./purchase_session.js";
 
 export class Name extends Model {
     declare id: number;
@@ -47,6 +47,7 @@ export class Name extends Model {
 
     static associations: {
         ShopInfo: Association<Name, ShopInfo>;
+        PurchaseSession: Association<Name, PurchaseSession>;
         ShopInfoEdit: Association<Name, ShopInfoEdit>;
         Delivery: Association<Name, Delivery>;
         User: Association<Name, User>;

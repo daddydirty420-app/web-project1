@@ -46,6 +46,7 @@ export class Address extends Model {
         ShopInfoEdit: Association<Address, ShopInfoEdit>;
         Delivery: Association<Address, Delivery>;
         User: Association<Address, User>;
+        PurchaseSession: Association<Address, PurchaseSession>;
     };
 }
 

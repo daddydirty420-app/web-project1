@@ -1,21 +1,21 @@
-import { Model, DataTypes, Association } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 import type { ItemAttributes } from "../types/itemAttributes.js";
 
-import User from "./user.js";
-import ItemConditionOption from "./item_condition_option.js";
-import Cart from "./cart.js";
-import ItemLike from "./item_like.js";
-import Video from "./video.js";
-import Sale from "./sale.js";
-import ItemReport from "./item_report.js";
-import Categories from "./categories.js";
-import Brands from "./brands.js";
-import ItemShippingProfile from "./item_shipping_profile.js";
 import BrandAliases from "./brand_aliases.js";
+import Brands from "./brands.js";
+import Cart from "./cart.js";
+import Categories from "./categories.js";
 import Comment from "./comment.js";
-import WatchHistory from "./watch_history.js";
+import ItemConditionOption from "./item_condition_option.js";
+import ItemLike from "./item_like.js";
+import ItemReport from "./item_report.js";
+import ItemShippingProfile from "./item_shipping_profile.js";
 import PurchaseSession from "./purchase_session.js";
+import Sale from "./sale.js";
+import User from "./user.js";
+import Video from "./video.js";
+import WatchHistory from "./watch_history.js";
 
 export class Item extends Model {
     declare id: number;
@@ -108,6 +108,7 @@ export class Item extends Model {
         ItemShippingProfile: Association<Item, ItemShippingProfile>;
         Comment: Association<Item, Comment>;
         WatchHistory: Association<Item, WatchHistory>;
+        PurchaseSession: Association<Item, PurchaseSession>;
     };
 }
 
