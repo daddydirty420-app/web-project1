@@ -1,8 +1,9 @@
-import { Model } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
 import CouponUser from "./coupon_user.js";
 import User from "./user.js";
 import CouponItem from "./coupon_item.js";
 import CouponShop from "./coupon_shop.js";
+import CouponCategory from "./coupon_category.js";
 
 export class Coupon extends Model {
     declare id: number;
@@ -50,6 +51,17 @@ export class Coupon extends Model {
         Coupon.hasMany(CouponShop, {
             foreignKey: "coupon_id",
         });
+        Coupon.hasMany(CouponCategory, {
+            foreignKey: "coupon_id",
+        });
+    }
+
+    static associations: {
+        User: Association<Coupon, User>;
+        CouponUser: Association<Coupon, CouponUser>;
+        CouponItem: Association<Coupon, CouponItem>;
+        CouponShop: Association<Coupon, CouponShop>;
+        CouponCategory: Association<Coupon, CouponCategory>;
     }
 }
 
