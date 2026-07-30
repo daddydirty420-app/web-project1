@@ -64,7 +64,7 @@ export class Coupon extends Model {
         CouponItem: Association<Coupon, CouponItem>;
         CouponShop: Association<Coupon, CouponShop>;
         CouponCategory: Association<Coupon, CouponCategory>;
-    }
+    };
 }
 
 Coupon.init(
