@@ -1,4 +1,5 @@
-import { Association, Model } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
+import sequelize from "../db.js";
 
 import Coupon from "./coupon.js";
 import ShopInfo from "./shop_info.js";
@@ -24,5 +25,31 @@ export class CouponShop extends Model {
         ShopInfo: Association<CouponShop, ShopInfo>;
     };
 }
+
+CouponShop.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        coupon_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        shop_info_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+    },
+    {
+        sequelize,
+        modelName: "CouponShop",
+        tableName: "coupon_shop",
+        freezeTableName: true,
+        timestamps: true,
+    },
+);
 
 export default CouponShop;
