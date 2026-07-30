@@ -1,4 +1,6 @@
 import { Association, DataTypes, Model } from "sequelize";
+import sequelize from "../db.js";
+
 import CouponUser from "./coupon_user.js";
 import User from "./user.js";
 import CouponItem from "./coupon_item.js";
@@ -64,5 +66,69 @@ export class Coupon extends Model {
         CouponCategory: Association<Coupon, CouponCategory>;
     }
 }
+
+Coupon.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        discount_type: {
+            type: DataTypes.ENUM("fixed", "percent", "free_shipping"),
+            allowNull: false,
+        },
+        discount_value: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        minimum_amount: DataTypes.INTEGER,
+        maximum_discount: DataTypes.INTEGER,
+        user_limit: DataTypes.INTEGER,
+        issue_limit: DataTypes.INTEGER,
+        distribution_type: {
+            type: DataTypes.ENUM("public", "manual", "campaign"),
+            allowNull: false,
+            defaultValue: "public",
+        },
+        started_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        expires_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        status: {
+            type: DataTypes.ENUM("active", "stopped"),
+            allowNull: false,
+            defaultValue: "active",
+        },
+        created_admin_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        updated_admin_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+    },
+    {
+        sequelize,
+        modelName: "Coupon",
+        tableName: "coupon",
+        freezeTableName: true,
+        timestamps: true,
+    },
+);
 
 export default Coupon;
