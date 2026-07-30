@@ -1,10 +1,10 @@
-import { Model } from "sequelize";
-import User from "./user.js";
-import Item from "./item.js";
+import { Association, Model } from "sequelize";
 import Address from "./address.js";
-import Name from "./name.js";
 import CouponUser from "./coupon_user.js";
+import Item from "./item.js";
+import Name from "./name.js";
 import PaymentMethodOption from "./payment_method_option.js";
+import User from "./user.js";
 
 type SelectedVariant = {
     color?: string;
@@ -50,6 +50,15 @@ export class PurchaseSession extends Model {
             foreignKey: "payment_method_id",
         });
     }
+
+    static associations: {
+        User: Association<PurchaseSession, User>;
+        Item: Association<PurchaseSession, Item>;
+        Address: Association<PurchaseSession, Address>;
+        Name: Association<PurchaseSession, Name>;
+        CouponUser: Association<PurchaseSession, CouponUser>;
+        PaymentMethodOption: Association<PurchaseSession, PaymentMethodOption>;
+    };
 }
 
 export default PurchaseSession;

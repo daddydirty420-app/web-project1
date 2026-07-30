@@ -1,9 +1,9 @@
-import { Model } from "sequelize";
+import { Association, Model } from "sequelize";
 
 import Coupon from "./coupon.js";
-import User from "./user.js";
-import PurchaseSession from "./purchase_session.js";
 import Orders from "./orders.js";
+import PurchaseSession from "./purchase_session.js";
+import User from "./user.js";
 
 export class CouponUser extends Model {
     declare id: number;
@@ -32,6 +32,13 @@ export class CouponUser extends Model {
             foreignKey: "coupon_user_id",
         });
     }
+
+    static associations: {
+        User: Association<CouponUser, User>;
+        Coupon: Association<CouponUser, Coupon>;
+        PurchaseSession: Association<CouponUser, PurchaseSession>;
+        Orders: Association<CouponUser, Orders>;
+    };
 }
 
 export default CouponUser;

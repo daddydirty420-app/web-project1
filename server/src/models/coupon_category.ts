@@ -1,4 +1,5 @@
-import { Model } from "sequelize";
+import { Association, Model } from "sequelize";
+
 import Categories from "./categories.js";
 import Coupon from "./coupon.js";
 
@@ -6,6 +7,8 @@ export class CouponCategory extends Model {
     declare id: number;
     declare coupon_id: number;
     declare category_id: number;
+    declare createdAt: Date;
+    declare updatedAt: Date;
 
     static associate() {
         CouponCategory.belongsTo(Coupon, {
@@ -15,6 +18,11 @@ export class CouponCategory extends Model {
             foreignKey: "category_id",
         });
     }
+
+    static associations: {
+        Coupon: Association<CouponCategory, Coupon>;
+        ShopInfo: Association<CouponCategory, Categories>;
+    };
 }
 
 export default CouponCategory;
