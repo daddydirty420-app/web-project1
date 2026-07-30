@@ -8,6 +8,7 @@ import Delivery from "./delivery.js";
 import Item from "./item.js";
 import PaymentMethodOption from "./payment_method_option.js";
 import User from "./user.js";
+import CouponUser from "./coupon_user.js";
 
 export class Orders extends Model {
     declare id: number;
@@ -31,6 +32,7 @@ export class Orders extends Model {
     declare order_id: string | null; // 22文字、crypto.randomBytes(16).toString("base64url");
     declare status: "pending" | "paid" | "shipped" | "completed" | "cancelled" | "returned";
     declare purchase_snapshot: PurchaseSnapshot;
+    declare coupon_user_id: number | null;
 
     static associate() {
         Orders.belongsTo(PaymentMethodOption, {
@@ -47,6 +49,9 @@ export class Orders extends Model {
             foreignKey: "buyer_user_id",
             as: "Buyer",
         });
+        Orders.belongsTo(CouponUser, {
+            foreignKey: "coupon_user_id",
+        });
         Orders.hasOne(Delivery, {
             foreignKey: "orders_id",
         });
@@ -60,6 +65,7 @@ export class Orders extends Model {
 
     static associations: {
         PaymentMethodOption: Association<Orders, PaymentMethodOption>;
+        CouponUser: Association<Orders, CouponUser>;
         Item: Association<Orders, Item>;
         Delivery: Association<Orders, Delivery>;
         User: Association<Orders, User>;
@@ -105,6 +111,7 @@ Orders.init(
             allowNull: false,
             defaultValue: {},
         },
+        coupon_user_id: DataTypes.INTEGER,
     },
     {
         sequelize,
