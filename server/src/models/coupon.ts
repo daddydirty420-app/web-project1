@@ -1,5 +1,5 @@
-import { Association, DataTypes, Model } from "sequelize";
-import sequelize from "../db.js";
+import { Model } from "sequelize";
+import User from "./user.js";
 
 export class Coupon extends Model {
     declare id: number;
@@ -28,4 +28,15 @@ export class Coupon extends Model {
 
     declare createdAt: Date;
     declare updatedAt: Date;
+
+    static associate() {
+        Coupon.belongsTo(User, {
+            foreignKey: "created_admin_id",
+            as: "CreatedAdmin",
+        });
+        Coupon.belongsTo(User, {
+            foreignKey: "updated_admin_id",
+            as: "UpdatedAdmin",
+        });
+    }
 }
