@@ -1,4 +1,5 @@
-import { Association, Model } from "sequelize";
+import { Association, DataTypes, Model } from "sequelize";
+import sequelize from "../db.js";
 
 import Coupon from "./coupon.js";
 import Orders from "./orders.js";
@@ -40,5 +41,40 @@ export class CouponUser extends Model {
         Orders: Association<CouponUser, Orders>;
     };
 }
+
+CouponUser.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        coupon_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        received_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        expires_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        used_at: DataTypes.DATE,
+    },
+    {
+        sequelize,
+        modelName: "CouponUser",
+        tableName: "coupon_user",
+        freezeTableName: true,
+        timestamps: true,
+    },
+);
 
 export default CouponUser;
