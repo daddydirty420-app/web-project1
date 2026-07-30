@@ -2,6 +2,7 @@ import { Model } from "sequelize";
 
 import Coupon from "./coupon.js";
 import User from "./user.js";
+import PurchaseSession from "./purchase_session.js";
 
 export class CouponUser extends Model {
     declare id: number;
@@ -22,6 +23,9 @@ export class CouponUser extends Model {
         });
         CouponUser.belongsTo(Coupon, {
             foreignKey: "coupon_id",
+        });
+        CouponUser.hasOne(PurchaseSession, {
+            foreignKey: "coupon_user_id",
         });
     }
 }

@@ -1,4 +1,10 @@
-import { Association, Model } from "sequelize";
+import { Model } from "sequelize";
+import User from "./user.js";
+import Item from "./item.js";
+import Address from "./address.js";
+import Name from "./name.js";
+import CouponUser from "./coupon_user.js";
+import PaymentMethodOption from "./payment_method_option.js";
 
 type SelectedVariant = {
     color?: string;
@@ -23,4 +29,27 @@ export class PurchaseSession extends Model {
     declare expires_at: Date;
     declare createdAt: Date;
     declare updatedAt: Date;
+
+    static associate() {
+        PurchaseSession.belongsTo(User, {
+            foreignKey: "buyer_user_id",
+        });
+        PurchaseSession.belongsTo(Item, {
+            foreignKey: "item_id",
+        });
+        PurchaseSession.belongsTo(Address, {
+            foreignKey: "address_id",
+        });
+        PurchaseSession.belongsTo(Name, {
+            foreignKey: "name_id",
+        });
+        PurchaseSession.belongsTo(CouponUser, {
+            foreignKey: "coupon_user_id",
+        });
+        PurchaseSession.belongsTo(PaymentMethodOption, {
+            foreignKey: "payment_method_id",
+        });
+    }
 }
+
+export default PurchaseSession;

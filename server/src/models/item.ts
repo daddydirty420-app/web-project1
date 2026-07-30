@@ -15,6 +15,7 @@ import ItemShippingProfile from "./item_shipping_profile.js";
 import BrandAliases from "./brand_aliases.js";
 import Comment from "./comment.js";
 import WatchHistory from "./watch_history.js";
+import PurchaseSession from "./purchase_session.js";
 
 export class Item extends Model {
     declare id: number;
@@ -80,6 +81,9 @@ export class Item extends Model {
             foreignKey: "item_id",
         });
         Item.hasOne(ItemShippingProfile, {
+            foreignKey: "item_id",
+        });
+        Item.hasOne(PurchaseSession, {
             foreignKey: "item_id",
         });
         Item.hasMany(Comment, {

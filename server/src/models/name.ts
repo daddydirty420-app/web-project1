@@ -5,6 +5,7 @@ import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
 import Delivery from "./delivery.js";
 import User from "./user.js";
+import PurchaseSession from "./purchase_session.js";
 
 export class Name extends Model {
     declare id: number;
@@ -18,6 +19,9 @@ export class Name extends Model {
 
     static associate() {
         Name.hasOne(Delivery, {
+            foreignKey: "name_id",
+        });
+        Name.hasOne(PurchaseSession, {
             foreignKey: "name_id",
         });
         Name.hasOne(User, {

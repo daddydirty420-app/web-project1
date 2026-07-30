@@ -6,6 +6,7 @@ import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
 import TodouhukenOption from "./todouhuken_option.js";
 import User from "./user.js";
+import PurchaseSession from "./purchase_session.js";
 
 export class Address extends Model {
     declare id: number;
@@ -32,6 +33,9 @@ export class Address extends Model {
             foreignKey: "address_id",
         });
         Address.hasOne(User, {
+            foreignKey: "address_id",
+        });
+        Address.hasOne(PurchaseSession, {
             foreignKey: "address_id",
         });
     }
