@@ -84,7 +84,7 @@ export class Item extends Model {
         Item.hasOne(ItemShippingProfile, {
             foreignKey: "item_id",
         });
-        Item.hasOne(PurchaseSession, {
+        Item.hasMany(PurchaseSession, {
             foreignKey: "item_id",
         });
         Item.hasMany(Comment, {

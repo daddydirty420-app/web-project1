@@ -16,7 +16,7 @@ export class CouponShop extends Model {
             foreignKey: "coupon_id",
         });
         CouponShop.belongsTo(ShopInfo, {
-            foreignKey: "Shop_info_id",
+            foreignKey: "shop_info_id",
         });
     }
 

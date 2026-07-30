@@ -69,9 +69,11 @@ coupon ||--|{ coupon_user : "1つのcouponは多数のcoupon_userを持つ"
 
 user（admin） ||--o{ coupon : "1人のuser(admin)は0以上のcouponを作成できる"
 
-purchase_session ||--o| coupon_user : "1つのpurchase_sessionは0または1のcoupon_userから参照される"
+user（admin） ||--o{ coupon : "1人のuser(admin)は0以上のcouponを編集できる"
 
-orders ||--o| coupon_user : "1つのordersは0または1のcoupon_userから参照される"
+coupon_user ||--o{ purchase_session : "1枚のCouponUserは0または1つのPurchaseSessionで使用される"
+
+coupon_user ||--o{ orders : "1枚のCouponUserは0または1つのOrderで使用される"
 
 item ||--o{ coupon_item : "1つのitemは0以上のcoupon_itemを持つ"
 

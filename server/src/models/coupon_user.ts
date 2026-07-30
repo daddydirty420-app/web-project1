@@ -26,10 +26,10 @@ export class CouponUser extends Model {
         CouponUser.belongsTo(Coupon, {
             foreignKey: "coupon_id",
         });
-        CouponUser.hasOne(PurchaseSession, {
+        CouponUser.hasMany(PurchaseSession, {
             foreignKey: "coupon_user_id",
         });
-        CouponUser.hasOne(Orders, {
+        CouponUser.hasMany(Orders, {
             foreignKey: "coupon_user_id",
         });
     }

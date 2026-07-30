@@ -22,7 +22,7 @@ export class CouponItem extends Model {
 
     static associations: {
         Coupon: Association<CouponItem, Coupon>;
-        ShopInfo: Association<CouponItem,Item>;
+        Item: Association<CouponItem,Item>;
     };
 }
 
