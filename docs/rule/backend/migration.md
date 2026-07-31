@@ -155,6 +155,8 @@ RESTRICT   子レコードがある場合削除禁止
 npx sequelize-cli db:migrate
 ```
 
+---
+
 ## AI特記事項
 
 ### 基本方針
