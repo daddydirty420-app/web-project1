@@ -4,7 +4,7 @@
 
 ## マイグレーションファイル追加場所
 
-/server/migration
+/server/migrations
 
 ## 変更前提
 
@@ -26,7 +26,7 @@ migrationは必ず現在のmodelの定義に合わせて作成してください
 
 ## 参照すべきmodelファイル
 
-/server/src/model
+/server/src/models
 
 - coupon.ts
 - coupon_user.ts
