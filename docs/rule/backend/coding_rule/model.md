@@ -99,14 +99,10 @@ updatedAt
 例
 
 ```ts
-declare;
-id: number;
-declare;
-title: string;
-declare;
-createdAt: Date;
-declare;
-updatedAt: Date;
+declare id: number;
+declare title: string;
+declare createdAt: Date;
+declare updatedAt: Date;
 ```
 
 ---

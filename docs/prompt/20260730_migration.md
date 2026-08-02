@@ -46,7 +46,7 @@ association定義も確認し、
 
 ## 過去のマイグレーション参照方法
 
-/server/migration を確認し、
+/server/migrations を確認し、
 
 - ファイル命名規則
 - 外部キー
