@@ -73,33 +73,97 @@ PurchaseSession.init(
         buyer_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
         },
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         address_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "address",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "RESTRICT",
         },
         name_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "RESTRICT",
         },
-        coupon_user_id: DataTypes.INTEGER,
-        buyer_phone_number: DataTypes.STRING,
-        item_count: DataTypes.INTEGER,
-        points_used: DataTypes.INTEGER,
-        payment_method_id: DataTypes.INTEGER,
+        coupon_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "coupon_user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        buyer_phone_number: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        item_count: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        points_used: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        payment_method_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "payment_method_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         selected_variant: {
             type: DataTypes.JSONB,
             allowNull: false,
             defaultValue: {},
         },
-        arrive_specified_date: DataTypes.DATE,
+        arrive_specified_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
         expires_at: {
             type: DataTypes.DATE,
             allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

@@ -37,10 +37,32 @@ CouponCategory.init(
         coupon_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "coupon",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         category_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "categories",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

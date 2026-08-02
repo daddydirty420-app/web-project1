@@ -53,10 +53,22 @@ CouponUser.init(
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         coupon_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "coupon",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         received_at: {
             type: DataTypes.DATE,
@@ -66,7 +78,20 @@ CouponUser.init(
             type: DataTypes.DATE,
             allowNull: false,
         },
-        used_at: DataTypes.DATE,
+        used_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

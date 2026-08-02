@@ -24,6 +24,11 @@ import CommentModel from "./comment.js";
 import CommentLikeModel from "./comment_like.js";
 import CommentReportModel from "./comment_report.js";
 import CommentReportOptionModel from "./comment_report_option.js";
+import CouponModel from "./coupon.js";
+import CouponCategoryModel from "./coupon_category.js";
+import CouponItemModel from "./coupon_item.js";
+import CouponShopModel from "./coupon_shop.js";
+import CouponUserModel from "./coupon_user.js";
 import DeliveryModel from "./delivery.js";
 import DeliveryStatusOptionModel from "./delivery_status_option.js";
 import FollowModel from "./follow.js";
@@ -52,6 +57,7 @@ import PointLotsModel from "./point_lots.js";
 import PointReasonOptionModel from "./point_reason_option.js";
 import PointsHistoryModel from "./points_history.js";
 import PointsUriageOverModel from "./points_uriage_over.js";
+import PurchaseSessionModel from "./purchase_session.js";
 import ReferenceCodeModel from "./reference_code.js";
 import RefreshTokensModel from "./refresh_tokens.js";
 import SaleModel from "./sale.js";
@@ -111,6 +117,11 @@ db.CommentLike = CommentLikeModel;
 db.CommentReportOption = CommentReportOptionModel;
 db.CommentReport = CommentReportModel;
 db.Comment = CommentModel;
+db.Coupon = CouponModel;
+db.CouponUser = CouponUserModel;
+db.CouponItem = CouponItemModel;
+db.CouponShop = CouponShopModel;
+db.CouponCategory = CouponCategoryModel;
 db.DeliveryStatusOption = DeliveryStatusOptionModel;
 db.Delivery = DeliveryModel;
 db.Follow = FollowModel;
@@ -139,6 +150,7 @@ db.PointReasonOption = PointReasonOptionModel;
 db.PointLots = PointLotsModel;
 db.PointsHistory = PointsHistoryModel;
 db.PointsUriageOver = PointsUriageOverModel;
+db.PurchaseSession = PurchaseSessionModel;
 db.ReferenceCode = ReferenceCodeModel;
 db.RefreshTokens = RefreshTokensModel;
 db.Sale = SaleModel;
@@ -191,6 +203,11 @@ export const {
     CommentReportOption,
     CommentReport,
     Comment,
+    Coupon,
+    CouponCategory,
+    CouponItem,
+    CouponShop,
+    CouponUser,
     DeliveryStatusOption,
     Delivery,
     Follow,
@@ -219,6 +236,7 @@ export const {
     PointLots,
     PointsHistory,
     PointsUriageOver,
+    PurchaseSession,
     ReferenceCode,
     RefreshTokens,
     Sale,

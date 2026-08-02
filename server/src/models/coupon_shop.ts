@@ -37,10 +37,32 @@ CouponShop.init(
         coupon_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "coupon",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         shop_info_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "shop_info",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

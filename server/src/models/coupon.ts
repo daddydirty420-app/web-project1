@@ -1,11 +1,11 @@
 import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
-import CouponUser from "./coupon_user.js";
-import User from "./user.js";
+import CouponCategory from "./coupon_category.js";
 import CouponItem from "./coupon_item.js";
 import CouponShop from "./coupon_shop.js";
-import CouponCategory from "./coupon_category.js";
+import CouponUser from "./coupon_user.js";
+import User from "./user.js";
 
 export class Coupon extends Model {
     declare id: number;
@@ -91,10 +91,22 @@ Coupon.init(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        minimum_amount: DataTypes.INTEGER,
-        maximum_discount: DataTypes.INTEGER,
-        user_limit: DataTypes.INTEGER,
-        issue_limit: DataTypes.INTEGER,
+        minimum_amount: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        maximum_discount: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        user_limit: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        issue_limit: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         distribution_type: {
             type: DataTypes.ENUM("public", "manual", "campaign"),
             allowNull: false,
@@ -116,10 +128,32 @@ Coupon.init(
         created_admin_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "RESTRICT",
         },
         updated_admin_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "RESTRICT",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {
