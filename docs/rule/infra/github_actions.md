@@ -10,13 +10,7 @@
 
 ### ユーザー操作
 
-```
-./scripts/release.sh
-```
-
-- ローカルのターミナルで実行
-
-git mainマージからgithub actions（ECRイメージ追加、EC2デプロイ）まで自動で行う。詳しくは<u>git_push_ecr_deploy.md</u>に記載。
+githubのPRからmainにマージすると、自動でCI/CD（github actions）が作動する。
 
 ### Github Actions概要
 

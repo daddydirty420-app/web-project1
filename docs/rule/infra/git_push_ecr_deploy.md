@@ -32,56 +32,13 @@ git push origin develop
 
 ---
 
-## Git marge ~ EC2自動デプロイ
+## EC2自動デプロイ
 
-### 操作方法
+必ずgithubのPRからmainにマージする。mainにマージされたら自動でCI/CD（github actions）が作動する。
 
-ローカルの **~/project** ターミナルで実行
+2026年8月2日追記：
 
-```
-./scripts/release.sh
-```
-
----
-
-### release.shの内容
-
-```
-#!/bin/bash
-
-set -e
-
-trap 'git checkout develop' EXIT
-
-git checkout main
-git merge develop
-git push origin main
-
-echo "🎉 Release complete!"
-```
-
-- mainブランチにチェックアウト（git checkout main）
-- developブランチの変更をmainブランチにマージ（git merge develop）
-- mainブランチに変更内容をpush（git push origin main）
-
-- 作業環境をdevelopブランチに戻す（git checkout develop）
-
-**trap 'git checkout develop' EXIT**で、EXITトラップによりエラーで止まっても最終的に作業環境がdevelopに戻るようにする
-
----
-
-### release.shの変更方法
-
-```
-nano scripts/release.sh
-```
-
-これをローカルの **~/project** ターミナルで実行
-
-内容を変更したら
-
-- **ctrl + 0**で保存
-- **ctrl + x**で閉じる
+以降は./scripts/release.shを使用しない。./scripts/release.shを使用しても権限設定の影響でエラー出る。
 
 ---
 
