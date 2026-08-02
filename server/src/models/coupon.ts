@@ -133,7 +133,7 @@ Coupon.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "RESTRICT",
         },
         updated_admin_id: {
             type: DataTypes.INTEGER,
@@ -143,7 +143,7 @@ Coupon.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "RESTRICT",
         },
         createdAt: {
             type: DataTypes.DATE,
