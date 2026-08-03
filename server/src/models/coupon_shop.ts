@@ -74,7 +74,7 @@ CouponShop.init(
         indexes: [
             {
                 unique: true,
-                fields: ["coupon_id", "shop_id"],
+                fields: ["coupon_id", "shop_info_id"],
                 name: "uq_coupon_shop_coupon_id_shop_info_id",
             },
         ],

@@ -87,7 +87,7 @@ association定義も確認し、
 - その他、書き方の特徴がわからなければ、過去のmigrationファイルを参考にして既存実装を参考にし、わからなければ質問する
 - migrationファイルの実装のみを行い、実行はしない
 - migrationファイル以外は変更しないでください。
-既存のmodel・service・route・usecase・middleware等は編集しないでください。
+  既存のmodel・service・route・usecase・middleware等は編集しないでください。
 
 ## 技術スタック
 
