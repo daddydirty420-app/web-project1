@@ -12,9 +12,9 @@ export class CouponUser extends Model {
     declare user_id: number;
     declare coupon_id: number;
 
-    declare received_at: Date;
-    declare expires_at: Date;
-    declare used_at: Date | null;
+    declare received_at: Date; // 受け取り日時
+    declare expires_at: Date; // 有効期限
+    declare used_at: Date | null; // 使用日時
 
     declare createdAt: Date;
     declare updatedAt: Date;
