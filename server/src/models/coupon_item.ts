@@ -71,6 +71,13 @@ CouponItem.init(
         tableName: "coupon_item",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["coupon_id", "item_id"],
+                name: "uq_coupon_item_coupon_id_item_id",
+            },
+        ],
     },
 );
 

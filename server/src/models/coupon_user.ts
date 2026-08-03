@@ -99,6 +99,13 @@ CouponUser.init(
         tableName: "coupon_user",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["coupon_id", "user_id"],
+                name: "uq_coupon_user_coupon_id_user_id",
+            },
+        ],
     },
 );
 

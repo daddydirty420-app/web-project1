@@ -71,6 +71,13 @@ CouponCategory.init(
         tableName: "coupon_category",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["coupon_id", "category_id"],
+                name: "uq_coupon_category_coupon_id_category_id",
+            },
+        ],
     },
 );
 
