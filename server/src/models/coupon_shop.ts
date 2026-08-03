@@ -71,6 +71,13 @@ CouponShop.init(
         tableName: "coupon_shop",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["coupon_id", "shop_info_id"],
+                name: "uq_coupon_shop_coupon_id_shop_info_id",
+            },
+        ],
     },
 );
 

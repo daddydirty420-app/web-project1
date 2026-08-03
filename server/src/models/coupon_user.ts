@@ -12,9 +12,9 @@ export class CouponUser extends Model {
     declare user_id: number;
     declare coupon_id: number;
 
-    declare received_at: Date;
-    declare expires_at: Date;
-    declare used_at: Date | null;
+    declare received_at: Date; // 受け取り日時
+    declare expires_at: Date; // 有効期限
+    declare used_at: Date | null; // 使用日時
 
     declare createdAt: Date;
     declare updatedAt: Date;
@@ -99,6 +99,13 @@ CouponUser.init(
         tableName: "coupon_user",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["coupon_id", "user_id"],
+                name: "uq_coupon_user_coupon_id_user_id",
+            },
+        ],
     },
 );
 
