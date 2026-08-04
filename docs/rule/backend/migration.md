@@ -4,7 +4,7 @@
 
 /serverのコマンドで実行
 
-```
+```bash
 npx sequelize-cli migration:generate --name ファイル名（適当に）
 ```
 
@@ -14,8 +14,8 @@ npx sequelize-cli migration:generate --name ファイル名（適当に）
 
 npx sequelize-cli migration:generateだと、CommonJSでファイルが生成されるが、package.jsonに"type": "module"と設定しているため、**マイグレーションファイルをCommonJSからESMに書き換える必要がある**。
 
-```
-CommonJS
+```js
+// CommonJS
 module.exports = {
     async up(...) {
         ...
@@ -26,7 +26,7 @@ module.exports = {
     },
 };
 
-ESM
+// ESM
 export default {
     async up(...) {
         ...
@@ -43,11 +43,11 @@ export default {
 
 ### テーブル作成
 
-```
+```js
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-export default = {
+export default {
     async up (queryInterface, Sequelize) {
         await queryInterface.createTable("テーブル名", {
             カラム
@@ -70,8 +70,8 @@ export default = {
 
 ### カラム追加
 
-```
-export default = {
+```js
+export default {
     async up (queryInterface, Sequelize) {
         await queryInterface.addColumn("テーブル名", "カラム名", {
             制約
@@ -92,8 +92,8 @@ export default = {
 
 ### カラム削除
 
-```
-export default = {
+```js
+export default {
     async up (queryInterface, Sequelize) {
         await queryInterface.removeColumn("テーブル名", "カラム名");
     },
@@ -114,7 +114,7 @@ export default = {
 
 ### 外部キー追加
 
-```
+```js
 export default {
     async up (queryInterface, Sequelize) {
         await queryInterface.addConstRaint("テーブル名", {
@@ -151,7 +151,7 @@ RESTRICT   子レコードがある場合削除禁止
 
 /serverのコマンドで実行
 
-```
+```bash
 npx sequelize-cli db:migrate
 ```
 
@@ -173,7 +173,7 @@ npx sequelize-cli db:migrate
 
 Modelでは通常のカラムとして定義されているが、migrationでは必ず以下の形式で実装する
 
-```
+```js
 createdAt: {
     allowNull: false,
     type: Sequelize.DATE,
