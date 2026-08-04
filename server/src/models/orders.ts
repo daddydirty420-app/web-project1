@@ -4,11 +4,11 @@ import type { PurchaseSnapshot } from "../types/purchaseSnapshot.js";
 
 import Cancel from "./cancel.js";
 import Chat from "./chat.js";
+import CouponUser from "./coupon_user.js";
 import Delivery from "./delivery.js";
 import Item from "./item.js";
 import PaymentMethodOption from "./payment_method_option.js";
 import User from "./user.js";
-import CouponUser from "./coupon_user.js";
 
 export class Orders extends Model {
     declare id: number;
@@ -82,39 +82,48 @@ Orders.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        unit_price: { // 1点当たり
+        unit_price: {
+            // 1点当たり
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        item_count: { // 個数
+        item_count: {
+            // 個数
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        subtotal_amount: { // 小計
+        subtotal_amount: {
+            // 小計
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        discount_amount: { // クーポン等
+        discount_amount: {
+            // クーポン等
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        total_amount: { //　ポイント込み合計請求金額
+        total_amount: {
+            //　ポイント込み合計請求金額
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        points_used: { // ポイント利用
+        points_used: {
+            // ポイント利用
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        paid_amount: { //　ポイント除外合計請求金額
+        paid_amount: {
+            //　ポイント除外合計請求金額
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        sales_commission_amount: { // 販売手数料
+        sales_commission_amount: {
+            // 販売手数料
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        gain_amount: { //出品者売上金
+        gain_amount: {
+            //出品者売上金
             type: DataTypes.INTEGER,
             allowNull: true,
         },
@@ -184,6 +193,7 @@ Orders.init(
         coupon_user_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            unique: true,
             references: {
                 model: "coupon_user",
                 key: "id",
