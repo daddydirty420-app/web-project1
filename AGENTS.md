@@ -46,7 +46,7 @@
     - 共通コンポーネント
 - `/server`
     - Expressバックエンド
-- `/server/src/model`
+- `/server/src/models`
     - Sequelizeモデル
 - `/server/src/routes`
     - APIルート

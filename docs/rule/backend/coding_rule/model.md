@@ -99,14 +99,12 @@ updatedAt
 例
 
 ```ts
-declare;
-id: number;
-declare;
-title: string;
-declare;
-createdAt: Date;
-declare;
-updatedAt: Date;
+class Test extends Model {
+    declare id: number;
+    declare title: string;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+}
 ```
 
 ---

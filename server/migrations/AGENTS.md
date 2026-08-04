@@ -2,7 +2,7 @@
 
 ## 基本方針
 
-- `/server/src/model` の Model 定義を唯一の正とする。
+- `/server/src/models` の Model 定義を唯一の正とする。
 - migration は Model に忠実に作成し、型・NULL 制約・初期値・一意制約・外部キー制約を漏れなく反映する。
 - Model に存在しない制約や仕様を独自判断で追加しない。
 - migration 作成のために Model を変更しない。
