@@ -22,7 +22,8 @@ export class Follow extends Model {
     }
 
     static associations: {
-        User: Association<Follow, User>;
+        FollowUser: Association<Follow, User>;
+        FollowerUser: Association<Follow, User>;
     };
 }
 
@@ -37,10 +38,32 @@ Follow.init(
         follow_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         follower_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

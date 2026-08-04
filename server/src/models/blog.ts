@@ -37,22 +37,64 @@ Blog.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        title: DataTypes.STRING(255),
-        content: DataTypes.TEXT,
-        summary: DataTypes.TEXT,
-        mokuji: DataTypes.TEXT,
-        image_url: DataTypes.TEXT,
+        title: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        content: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        summary: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        mokuji: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        image_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         views_count: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         views_24h: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
-        public: DataTypes.BOOLEAN,
-        uploaded_at: DataTypes.DATE,
-        blog_category_id: DataTypes.INTEGER,
+        public: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+        },
+        uploaded_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        blog_category_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "blog_category_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

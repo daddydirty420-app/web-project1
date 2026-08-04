@@ -4,11 +4,11 @@ import type { PurchaseSnapshot } from "../types/purchaseSnapshot.js";
 
 import Cancel from "./cancel.js";
 import Chat from "./chat.js";
+import CouponUser from "./coupon_user.js";
 import Delivery from "./delivery.js";
 import Item from "./item.js";
 import PaymentMethodOption from "./payment_method_option.js";
 import User from "./user.js";
-import CouponUser from "./coupon_user.js";
 
 export class Orders extends Model {
     declare id: number;
@@ -68,7 +68,8 @@ export class Orders extends Model {
         CouponUser: Association<Orders, CouponUser>;
         Item: Association<Orders, Item>;
         Delivery: Association<Orders, Delivery>;
-        User: Association<Orders, User>;
+        Seller: Association<Orders, User>;
+        Buyer: Association<Orders, User>;
         Chat: Association<Orders, Chat>;
         Cancel: Association<Orders, Cancel>;
     };
@@ -82,23 +83,102 @@ Orders.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        unit_price: DataTypes.INTEGER, // 1点当たり
-        item_count: DataTypes.INTEGER, // 個数
-        subtotal_amount: DataTypes.INTEGER, // 小計
-        discount_amount: DataTypes.INTEGER, // クーポン等
-        total_amount: DataTypes.INTEGER, //　ポイント込み合計請求金額
-        points_used: DataTypes.INTEGER, // ポイント利用
-        paid_amount: DataTypes.INTEGER, //　ポイント除外合計請求金額
-        sales_commission_amount: DataTypes.INTEGER, // 販売手数料
-        gain_amount: DataTypes.INTEGER, //出品者売上金
-        payment_method_id: DataTypes.INTEGER,
-        item_id: DataTypes.INTEGER,
-        seller_user_id: DataTypes.INTEGER,
-        buyer_user_id: DataTypes.INTEGER,
-        buy_at: DataTypes.DATE,
-        paid_at: DataTypes.DATE,
+        unit_price: {
+            // 1点当たり
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        item_count: {
+            // 個数
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        subtotal_amount: {
+            // 小計
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        discount_amount: {
+            // クーポン等
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        total_amount: {
+            //　ポイント込み合計請求金額
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        points_used: {
+            // ポイント利用
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        paid_amount: {
+            //　ポイント除外合計請求金額
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        sales_commission_amount: {
+            // 販売手数料
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        gain_amount: {
+            //出品者売上金
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        payment_method_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "payment_method_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        item_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        seller_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        buyer_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        buy_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        paid_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
         order_id: {
             type: DataTypes.STRING(50),
+            allowNull: true,
             unique: true,
         },
         status: {
@@ -111,7 +191,27 @@ Orders.init(
             allowNull: false,
             defaultValue: {},
         },
-        coupon_user_id: DataTypes.INTEGER,
+        coupon_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "coupon_user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

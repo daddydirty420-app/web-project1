@@ -59,7 +59,8 @@ export class Coupon extends Model {
     }
 
     static associations: {
-        User: Association<Coupon, User>;
+        CreatedAdmin: Association<Coupon, User>;
+        UpdatedAdmin: Association<Coupon, User>;
         CouponUser: Association<Coupon, CouponUser>;
         CouponItem: Association<Coupon, CouponItem>;
         CouponShop: Association<Coupon, CouponShop>;
@@ -76,11 +77,11 @@ Coupon.init(
             autoIncrement: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         discount_type: {

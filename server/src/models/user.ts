@@ -64,7 +64,7 @@ export class User extends Model {
             foreignKey: "gender_id",
         });
         User.belongsTo(IdCard, {
-            foreignKey: "user_id",
+            foreignKey: "idcard_id",
         });
         User.hasOne(ShopInfo, {
             foreignKey: "user_id",
@@ -119,11 +119,13 @@ export class User extends Model {
 
     static associations: {
         Cart: Association<User, Cart>;
-        Follow: Association<User, Follow>;
+        FollowUser: Association<User, Follow>;
+        FollowerUser: Association<User, Follow>;
         CommentLike: Association<User, CommentLike>;
         ItemLike: Association<User, ItemLike>;
         Item: Association<User, Item>;
-        ReferenceCode: Association<User, ReferenceCode>;
+        Input: Association<User, ReferenceCode>;
+        Output: Association<User, ReferenceCode>;
         Notification: Association<User, Notification>;
         IdCard: Association<User, IdCard>;
         ShopInfo: Association<User, ShopInfo>;
@@ -147,23 +149,36 @@ User.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        user_name: DataTypes.STRING(255),
-        user_introduction: DataTypes.TEXT,
-        profile_image: DataTypes.TEXT,
+        user_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        user_introduction: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        profile_image: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         penalty_points: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         early_seller: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         honnin_verified: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         admin: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         email: {
@@ -175,10 +190,12 @@ User.init(
         },
         campaign_points: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         campaign_points_sum: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         password: {
@@ -187,29 +204,50 @@ User.init(
         },
         points: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         uriagekin: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         star_amount: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         star_average: {
             type: DataTypes.DECIMAL,
+            allowNull: true,
             defaultValue: 0,
         },
-        gender_id: DataTypes.INTEGER,
-        birthday: DataTypes.DATE,
-        phone_number: DataTypes.STRING(255),
+        gender_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "gender_option",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        birthday: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        phone_number: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         honnin_verify_request: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         email_verified: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         report_trust_score: {
@@ -219,19 +257,57 @@ User.init(
         },
         address_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "address",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         name_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         account_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         idcard_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "id_card",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

@@ -94,7 +94,8 @@
         "MAXVALUE",
         "timestamptz",
         "sequelizerc",
-        "rednull"
+        "rednull",
+        "mokuji"
     ],
     "remote.autoForwardPortsFallback": 0
 }

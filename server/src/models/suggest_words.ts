@@ -21,7 +21,20 @@ SuggestWords.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        normalized_word: DataTypes.STRING(255),
+        normalized_word: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

@@ -32,7 +32,7 @@ export class Item extends Model {
     declare seller_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare uploaded_date: Date | null;
+    declare uploaded_at: Date | null;
     declare search_text: string | null;
     declare sort_buzz_number: number | null;
     declare deleted_at: Date | null;
@@ -125,10 +125,17 @@ Item.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        name: DataTypes.STRING(255),
-        detail: DataTypes.TEXT,
+        name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        detail: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         image_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: true,
             validate: {
                 maxArrayLength(value: string[]) {
                     if (value && value.length > 10) {
@@ -137,9 +144,13 @@ Item.init(
                 },
             },
         },
-        price: DataTypes.INTEGER,
+        price: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         sort_number: {
             type: DataTypes.DECIMAL,
+            allowNull: true,
             get() {
                 // getterで明示的にNumberに変換
                 return Number(this.getDataValue("sort_number"));
@@ -147,30 +158,67 @@ Item.init(
         },
         views_count: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             defaultValue: 0,
         },
         checked: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         early_sell: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
-        item_condition_id: DataTypes.INTEGER,
-        seller_id: DataTypes.INTEGER,
-        uploaded_at: DataTypes.DATE,
-        search_text: DataTypes.TEXT,
+        item_condition_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "item_condition_option",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        seller_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        uploaded_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        search_text: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         sort_buzz_number: {
             type: DataTypes.DECIMAL,
+            allowNull: true,
             get() {
                 // getterで明示的にNumberに変換
                 return Number(this.getDataValue("sort_buzz_number"));
             },
         },
-        deleted_at: DataTypes.DATE,
-        first_image_url: DataTypes.TEXT,
-        save_at: DataTypes.DATE,
+        deleted_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        first_image_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        save_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
         gender_type: {
             type: DataTypes.ENUM("men", "women", "unisex"),
             allowNull: false,
@@ -186,9 +234,36 @@ Item.init(
             allowNull: false,
             defaultValue: "editing",
         },
-        category_id: DataTypes.INTEGER,
-        brand_id: DataTypes.INTEGER,
-        brand_aliases_id: DataTypes.INTEGER,
+        category_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "categories",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        brand_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "brands",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "SET NULL",
+        },
+        brand_aliases_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "brand_aliases",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "SET NULL",
+        },
         attributes: {
             type: DataTypes.JSONB,
             allowNull: false,
@@ -196,12 +271,23 @@ Item.init(
         },
         recommend: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
         report_score: {
             type: DataTypes.DECIMAL,
             defaultValue: 0,
             allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

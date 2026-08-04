@@ -25,7 +25,7 @@ export class OrderDeleted extends Model {
             foreignKey: "deleted_by",
         });
         OrderDeleted.belongsTo(Delivery, {
-            foreignKey: "delevery_id",
+            foreignKey: "delivery_id",
         });
     }
 
@@ -48,11 +48,23 @@ OrderDeleted.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         delivery_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "delivery",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         cancel_reason: {
             type: DataTypes.TEXT,
@@ -62,7 +74,10 @@ OrderDeleted.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        refund_method: DataTypes.STRING(255),
+        refund_method: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         refund_amount: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -70,6 +85,22 @@ OrderDeleted.init(
         deleted_by: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

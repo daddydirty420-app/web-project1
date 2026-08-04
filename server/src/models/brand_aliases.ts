@@ -28,9 +28,24 @@ BrandAliases.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        brand_id: DataTypes.INTEGER,
-        name: DataTypes.STRING(255),
-        name_normalized: DataTypes.STRING(255),
+        brand_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "brands",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        name_normalized: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
     },
     {
         sequelize,

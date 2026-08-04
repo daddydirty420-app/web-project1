@@ -99,10 +99,12 @@ updatedAt
 例
 
 ```ts
-declare id: number;
-declare title: string;
-declare createdAt: Date;
-declare updatedAt: Date;
+class Test extends Model {
+    declare id: number;
+    declare title: string;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+}
 ```
 
 ---
@@ -308,16 +310,3 @@ PascalCase
 ```
 camelCase
 ```
-
----
-
-# AIへの注意事項
-
-- この規約を唯一の正とする。
-- 他のModelを参照して実装しない。
-- migrationや他ファイルから推測しない。
-- この規約および対象Modelのみを根拠に実装する。
-- DB設計を独自判断で変更しない。
-- CASCADE・RESTRICT・SET NULL等は変更・推測せず、Model定義どおりに実装する。
-- 型・allowNull・defaultValue・references・onDelete・onUpdateなどを一切省略しない。
-- 指示されていないリファクタリング・最適化・命名変更・並び替えは行わない。

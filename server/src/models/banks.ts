@@ -27,9 +27,18 @@ Banks.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        kana: DataTypes.STRING(255),
-        hira: DataTypes.STRING(255),
-        normalize: DataTypes.JSONB,
+        kana: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        hira: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        normalize: {
+            type: DataTypes.JSONB,
+            allowNull: true,
+        },
     },
     {
         sequelize,

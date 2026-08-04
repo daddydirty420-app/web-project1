@@ -78,38 +78,145 @@ Delivery.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        buyer_phone_number: DataTypes.STRING(255),
+        buyer_phone_number: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         cancel: {
             type: DataTypes.BOOLEAN,
+            allowNull: true,
             defaultValue: false,
         },
-        shipping_day_id: DataTypes.INTEGER,
-        shipping_service_id: DataTypes.INTEGER,
-        delivery_status_id: DataTypes.INTEGER,
-        shipping_place_id: DataTypes.INTEGER,
+        shipping_day_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "shipping_day_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        shipping_service_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "shipping_service_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        delivery_status_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "delivery_status_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        shipping_place_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "todouhuken_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
         orders_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
-        shipping_at: DataTypes.DATE,
-        arrived_at: DataTypes.DATE,
-        arrive_specified_date: DataTypes.DATE,
-        shipping_service_free_text: DataTypes.STRING(255),
-        shipping_from_name: DataTypes.STRING(255),
-        shipping_from_postcode: DataTypes.STRING(255),
-        shipping_from_prefecture: DataTypes.STRING(255),
-        shipping_from_address_line1: DataTypes.STRING(255),
-        shipping_from_address_line2: DataTypes.STRING(255),
-        shipping_from_phone: DataTypes.STRING(255),
-        tracking_number: DataTypes.STRING(255),
-        shipping_memo: DataTypes.TEXT,
+        shipping_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        arrived_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        arrive_specified_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        shipping_service_free_text: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_postcode: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_prefecture: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_address_line1: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_address_line2: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_from_phone: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        tracking_number: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shipping_memo: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         address_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "address",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         name_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

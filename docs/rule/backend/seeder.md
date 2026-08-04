@@ -4,7 +4,7 @@
 
 /serverのコマンドで実行
 
-```
+```bash
 npx sequelize-cli seed:generate --name ファイル名（適当に）
 ```
 
@@ -14,8 +14,8 @@ npx sequelize-cli seed:generate --name ファイル名（適当に）
 
 npx sequelize-cli seed:generateだと、CommonJSでファイルが生成されるが、package.jsonに"type": "module"と設定しているため、**SeederファイルをCommonJSからESMに書き換える必要がある**。
 
-```
-CommonJS
+```js
+// CommonJS
 module.exports = {
     async up(...) {
         ...
@@ -26,7 +26,7 @@ module.exports = {
     },
 };
 
-ESM
+// ESM
 export default {
     async up(...) {
         ...
@@ -43,7 +43,7 @@ export default {
 
 ### レコード追加
 
-```
+```js
 "use strict";
 
 /** @type {import('sequelize-cli').Migration} */
@@ -66,6 +66,6 @@ export default {
 
 /serverのコマンドで実行
 
-```
+```bash
 npx sequelize-cli db:seed:all
 ```

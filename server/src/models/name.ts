@@ -46,9 +46,11 @@ export class Name extends Model {
     }
 
     static associations: {
-        ShopInfo: Association<Name, ShopInfo>;
+        RepresentativeName: Association<Name, ShopInfo>;
+        ContactName: Association<Name, ShopInfo>;
         PurchaseSession: Association<Name, PurchaseSession>;
-        ShopInfoEdit: Association<Name, ShopInfoEdit>;
+        RepresentativeNameEdit: Association<Name, ShopInfoEdit>;
+        ContactNameEdit: Association<Name, ShopInfoEdit>;
         Delivery: Association<Name, Delivery>;
         User: Association<Name, User>;
     };
@@ -62,15 +64,38 @@ Name.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        sei: DataTypes.STRING(255),
-        mei: DataTypes.STRING(255),
-        sei_kana: DataTypes.STRING(255),
-        mei_kana: DataTypes.STRING(255),
+        sei: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        mei: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        sei_kana: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        mei_kana: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         shop_type: {
             type: DataTypes.STRING(20),
+            allowNull: false,
             validate: {
                 isIn: [["representative", "contact"]],
             },
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

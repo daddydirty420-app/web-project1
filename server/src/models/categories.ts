@@ -31,7 +31,8 @@ export class Categories extends Model {
     }
 
     static associations: {
-        Categories: Association<Categories, Categories>;
+        parent: Association<Categories, Categories>;
+        children: Association<Categories, Categories>;
         CouponCategory: Association<Categories, CouponCategory>;
     };
 }
@@ -60,6 +61,12 @@ Categories.init(
         parent_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            references: {
+                model: "categories",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "CASCADE",
         },
         allowed_gender: {
             type: DataTypes.STRING(20),
@@ -71,10 +78,22 @@ Categories.init(
             allowNull: false,
             defaultValue: "both",
         },
-        body_category: DataTypes.STRING(255),
-        lifestyle_category: DataTypes.STRING(255),
-        layer: DataTypes.STRING(255),
-        path: DataTypes.STRING(255),
+        body_category: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        lifestyle_category: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        layer: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        path: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
     },
     {
         sequelize,

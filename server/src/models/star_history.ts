@@ -23,7 +23,8 @@ export class StarHistory extends Model {
     }
 
     static associations: {
-        User: Association<StarHistory, User>;
+        Seller: Association<StarHistory, User>;
+        Buyer: Association<StarHistory, User>;
     };
 }
 
@@ -35,9 +36,40 @@ StarHistory.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        star: DataTypes.INTEGER,
-        seller_user_id: DataTypes.INTEGER,
-        buyer_user_id: DataTypes.INTEGER,
+        star: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        seller_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        buyer_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

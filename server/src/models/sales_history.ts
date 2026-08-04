@@ -36,7 +36,10 @@ SalesHistory.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        item_count: DataTypes.INTEGER,
+        item_count: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         price: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -44,10 +47,32 @@ SalesHistory.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         seller_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

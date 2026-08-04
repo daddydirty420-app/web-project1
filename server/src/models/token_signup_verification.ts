@@ -53,6 +53,22 @@ TokenSignupVerification.init(
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

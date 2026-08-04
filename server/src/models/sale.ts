@@ -32,9 +32,18 @@ Sale.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        before_price: DataTypes.INTEGER,
-        discount_rate: DataTypes.INTEGER,
-        discount_amount: DataTypes.INTEGER,
+        before_price: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        discount_rate: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        discount_amount: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         sale_flag: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -42,7 +51,24 @@ Sale.init(
         },
         item_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

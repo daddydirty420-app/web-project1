@@ -115,10 +115,12 @@ indexes: [
 coupon_itemの例。
 
 禁止
+
 - coupon1 → item1
 - coupon1 → item1
 
 許可
+
 - coupon1 → item1
 - coupon1 → item2
 - coupon1 → item1
@@ -129,7 +131,6 @@ coupon_itemの例。
 ## purchase_session, orders
 
 ### coupon_user_id
-
 
 ```typescript
 coupon_user_id: {

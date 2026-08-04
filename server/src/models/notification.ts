@@ -38,7 +38,10 @@ Notification.init(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        message_image: DataTypes.TEXT,
+        message_image: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         read_flag: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -47,10 +50,35 @@ Notification.init(
         read_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
-        url: DataTypes.TEXT,
-        expires_at: DataTypes.DATE,
-        type: DataTypes.STRING,
+        url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        expires_at: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        type: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

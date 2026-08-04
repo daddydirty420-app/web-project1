@@ -43,14 +43,42 @@ ItemReport.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         report_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         option_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item_report_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

@@ -51,25 +51,62 @@ ItemBuyerReport.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         report_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         option_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item_buyer_report_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
-        detail_text: DataTypes.TEXT,
+        detail_text: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         orders_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         checked: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

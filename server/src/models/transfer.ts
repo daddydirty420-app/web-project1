@@ -43,26 +43,70 @@ Transfer.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        request_money: DataTypes.INTEGER,
-        handling_charge: DataTypes.INTEGER,
-        trans_money: DataTypes.INTEGER,
-        trans_reason_id: DataTypes.INTEGER,
+        request_money: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        handling_charge: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        trans_money: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        trans_reason_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "trans_reason_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
+        },
         trans_finish: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
         },
-        user_id: DataTypes.INTEGER,
-        trans_schedule_date: DataTypes.DATE,
-        trans_at: DataTypes.DATE,
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        trans_schedule_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        trans_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
         transfer_id: {
             type: DataTypes.STRING(50),
+            allowNull: true,
             unique: true,
         },
         bank_snapshot: {
             type: DataTypes.JSONB,
             allowNull: false,
             defaultValue: {},
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {
