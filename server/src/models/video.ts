@@ -71,7 +71,7 @@ Video.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "CASCADE",
         },
         item_id: {
             type: DataTypes.INTEGER,
@@ -82,7 +82,7 @@ Video.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "CASCADE",
         },
         original_url: {
             type: DataTypes.TEXT,

@@ -62,7 +62,7 @@ Journal.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         kanjyo_kari2: {
             type: DataTypes.INTEGER,
@@ -72,7 +72,7 @@ Journal.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         kanjyo_kashi1: {
             type: DataTypes.INTEGER,
@@ -82,7 +82,7 @@ Journal.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         kanjyo_kashi2: {
             type: DataTypes.INTEGER,
@@ -92,7 +92,7 @@ Journal.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         reason_id: {
             type: DataTypes.INTEGER,
@@ -102,7 +102,7 @@ Journal.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         price_kari1: {
             type: DataTypes.INTEGER,

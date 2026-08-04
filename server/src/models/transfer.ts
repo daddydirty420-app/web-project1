@@ -63,7 +63,7 @@ Transfer.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         trans_finish: {
             type: DataTypes.BOOLEAN,

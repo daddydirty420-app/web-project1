@@ -48,7 +48,7 @@ CommentReport.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         report_user_id: {
             type: DataTypes.INTEGER,
@@ -58,7 +58,7 @@ CommentReport.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         option_id: {
             type: DataTypes.INTEGER,
@@ -68,7 +68,7 @@ CommentReport.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,

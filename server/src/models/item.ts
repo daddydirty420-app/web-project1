@@ -178,8 +178,8 @@ Item.init(
                 model: "item_condition_option",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         seller_id: {
             type: DataTypes.INTEGER,
@@ -188,8 +188,8 @@ Item.init(
                 model: "user",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         uploaded_at: {
             type: DataTypes.DATE,
@@ -241,8 +241,8 @@ Item.init(
                 model: "categories",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         brand_id: {
             type: DataTypes.INTEGER,
@@ -251,7 +251,7 @@ Item.init(
                 model: "brands",
                 key: "id",
             },
-            onUpdate: "CASCADE",
+            onUpdate: "NO ACTION",
             onDelete: "SET NULL",
         },
         brand_aliases_id: {
@@ -261,7 +261,7 @@ Item.init(
                 model: "brand_aliases",
                 key: "id",
             },
-            onUpdate: "CASCADE",
+            onUpdate: "NO ACTION",
             onDelete: "SET NULL",
         },
         attributes: {

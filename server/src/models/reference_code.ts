@@ -54,7 +54,7 @@ ReferenceCode.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "CASCADE",
         },
         output_user_id: {
             type: DataTypes.INTEGER,
@@ -64,7 +64,7 @@ ReferenceCode.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "CASCADE",
         },
         checked: {
             type: DataTypes.BOOLEAN,

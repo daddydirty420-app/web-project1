@@ -46,7 +46,7 @@ Search.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,

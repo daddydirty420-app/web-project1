@@ -70,7 +70,7 @@ Address.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         shikutyouson: {
             type: DataTypes.STRING(255),

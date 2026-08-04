@@ -52,7 +52,7 @@ SalesHistory.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         seller_user_id: {
             type: DataTypes.INTEGER,
@@ -62,7 +62,7 @@ SalesHistory.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,

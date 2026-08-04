@@ -95,7 +95,7 @@ Delivery.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         shipping_service_id: {
             type: DataTypes.INTEGER,
@@ -105,7 +105,7 @@ Delivery.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         delivery_status_id: {
             type: DataTypes.INTEGER,
@@ -115,7 +115,7 @@ Delivery.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         shipping_place_id: {
             type: DataTypes.INTEGER,
@@ -125,7 +125,7 @@ Delivery.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         orders_id: {
             type: DataTypes.INTEGER,

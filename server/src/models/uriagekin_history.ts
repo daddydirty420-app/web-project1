@@ -46,7 +46,7 @@ UriagekinHistory.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         reason_id: {
             type: DataTypes.INTEGER,
@@ -56,7 +56,7 @@ UriagekinHistory.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "RESTRICT",
         },
         createdAt: {
             type: DataTypes.DATE,

@@ -128,7 +128,7 @@ ShopInfoEdit.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         shop_info_id: {
             type: DataTypes.INTEGER,
@@ -138,7 +138,7 @@ ShopInfoEdit.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         com_or_free_id: {
             type: DataTypes.INTEGER,
@@ -148,7 +148,7 @@ ShopInfoEdit.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         permit_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
@@ -170,7 +170,7 @@ ShopInfoEdit.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         name_contact_id: {
             type: DataTypes.INTEGER,
@@ -181,7 +181,7 @@ ShopInfoEdit.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         address_id: {
             type: DataTypes.INTEGER,

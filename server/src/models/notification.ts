@@ -66,7 +66,7 @@ Notification.init(
             allowNull: true,
         },
         type: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
             allowNull: false,
         },
         createdAt: {

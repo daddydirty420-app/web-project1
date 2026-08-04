@@ -57,7 +57,7 @@ TokenSignupVerification.init(
                 model: "user",
                 key: "id",
             },
-            onUpdate: "CASCADE",
+            onUpdate: "NO ACTION",
             onDelete: "CASCADE",
         },
         createdAt: {

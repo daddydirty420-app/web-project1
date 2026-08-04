@@ -126,7 +126,7 @@ Orders.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         item_id: {
             type: DataTypes.INTEGER,
@@ -136,7 +136,7 @@ Orders.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         seller_user_id: {
             type: DataTypes.INTEGER,
@@ -146,7 +146,7 @@ Orders.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         buyer_user_id: {
             type: DataTypes.INTEGER,
@@ -156,7 +156,7 @@ Orders.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         buy_at: {
             type: DataTypes.DATE,

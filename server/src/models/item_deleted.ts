@@ -58,8 +58,8 @@ ItemDeleted.init(
                 model: "user",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         item_name: {
             type: DataTypes.STRING(255),
@@ -111,8 +111,8 @@ ItemDeleted.init(
                 model: "user",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,

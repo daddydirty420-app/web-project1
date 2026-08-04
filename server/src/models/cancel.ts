@@ -63,7 +63,7 @@ Cancel.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         orders_id: {
             type: DataTypes.INTEGER,
@@ -74,7 +74,7 @@ Cancel.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,

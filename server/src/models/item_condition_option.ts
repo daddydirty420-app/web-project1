@@ -4,9 +4,6 @@ import sequelize from "../db.js";
 export class ItemConditionOption extends Model {
     declare id: number;
     declare name: string;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 }
 
 ItemConditionOption.init(
@@ -21,23 +18,13 @@ ItemConditionOption.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "ItemConditionOption",
         tableName: "item_condition_option",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

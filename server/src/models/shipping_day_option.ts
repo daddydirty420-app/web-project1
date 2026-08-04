@@ -4,9 +4,6 @@ import sequelize from "../db.js";
 export class ShippingDayOption extends Model {
     declare id: number;
     declare name: string;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 }
 
 ShippingDayOption.init(
@@ -21,23 +18,13 @@ ShippingDayOption.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "ShippingDayOption",
         tableName: "shipping_day_option",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

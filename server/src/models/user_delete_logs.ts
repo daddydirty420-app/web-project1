@@ -45,7 +45,7 @@ UserDeleteLogs.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         delete_reason: {
             type: DataTypes.TEXT,
@@ -63,7 +63,7 @@ UserDeleteLogs.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         ip_address: {
             type: DataTypes.TEXT,

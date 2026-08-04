@@ -4,9 +4,6 @@ import sequelize from "../db.js";
 export class JournalReasonOption extends Model {
     declare id: number;
     declare name: string;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 }
 
 JournalReasonOption.init(
@@ -21,23 +18,13 @@ JournalReasonOption.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "JournalReasonOption",
         tableName: "journal_reason_option",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

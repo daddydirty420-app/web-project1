@@ -7,9 +7,6 @@ export class BrandAliases extends Model {
     declare brand_id: Number | null;
     declare name: string | null;
     declare name_normalized: string | null;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 
     static associate() {
         BrandAliases.belongsTo(Brands, {
@@ -38,8 +35,8 @@ BrandAliases.init(
                 model: "brands",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         name: {
             type: DataTypes.STRING(255),
@@ -49,23 +46,13 @@ BrandAliases.init(
             type: DataTypes.STRING(255),
             allowNull: true,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "BrandAliases",
         tableName: "brand_aliases",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

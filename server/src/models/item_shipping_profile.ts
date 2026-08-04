@@ -55,7 +55,7 @@ ItemShippingProfile.init(
                 model: "item",
                 key: "id",
             },
-            onUpdate: "CASCADE",
+            onUpdate: "NO ACTION",
             onDelete: "CASCADE",
         },
         shipping_day_id: {
@@ -65,8 +65,8 @@ ItemShippingProfile.init(
                 model: "shipping_day_option",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         shipping_service_id: {
             type: DataTypes.INTEGER,
@@ -75,8 +75,8 @@ ItemShippingProfile.init(
                 model: "shipping_service_option",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         shipping_place_id: {
             type: DataTypes.INTEGER,
@@ -85,8 +85,8 @@ ItemShippingProfile.init(
                 model: "todouhuken_option",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         shipping_service_free_text: {
             type: DataTypes.STRING(255),

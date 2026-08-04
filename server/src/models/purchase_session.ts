@@ -121,7 +121,7 @@ PurchaseSession.init(
             onDelete: "SET NULL",
         },
         buyer_phone_number: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: true,
         },
         item_count: {

@@ -83,7 +83,7 @@ Comment.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "CASCADE",
         },
         user_id: {
             type: DataTypes.INTEGER,

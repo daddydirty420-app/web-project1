@@ -10,9 +10,6 @@ export class Branches extends Model {
     declare kana: string | null;
     declare hira: string | null;
     declare normalize: object | null;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 
     static associate() {
         Branches.belongsTo(Banks, {
@@ -60,23 +57,13 @@ Branches.init(
             type: DataTypes.JSONB,
             allowNull: true,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "Branches",
         tableName: "branches",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

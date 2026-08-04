@@ -147,7 +147,7 @@ ShopInfo.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         com_or_free_id: {
             type: DataTypes.INTEGER,
@@ -157,7 +157,7 @@ ShopInfo.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onDelete: "NO ACTION",
         },
         founded_date: {
             type: DataTypes.DATE,

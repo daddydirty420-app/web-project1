@@ -15,9 +15,6 @@ export class Categories extends Model {
     declare lifestyle_category: LifeStyleCategory | null;
     declare layer?: Layer | null;
     declare path?: string | null;
-    declare createdAt: Date;
-    declare updatedAt: Date;
-
 
     static associate() {
         Categories.belongsTo(Categories, {
@@ -67,8 +64,8 @@ Categories.init(
                 model: "categories",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "CASCADE",
         },
         allowed_gender: {
             type: DataTypes.STRING(20),
@@ -96,23 +93,13 @@ Categories.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     },
     {
         sequelize,
         modelName: "Categories",
         tableName: "categories",
         freezeTableName: true,
-        timestamps: true,
+        timestamps: false,
     },
 );
 

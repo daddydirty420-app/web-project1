@@ -64,7 +64,7 @@ export class User extends Model {
             foreignKey: "gender_id",
         });
         User.belongsTo(IdCard, {
-            foreignKey: "user_id",
+            foreignKey: "idcard_id",
         });
         User.hasOne(ShopInfo, {
             foreignKey: "user_id",
@@ -227,8 +227,8 @@ User.init(
                 model: "gender_option",
                 key: "id",
             },
-            onUpdate: "CASCADE",
-            onDelete: "SET NULL",
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         birthday: {
             type: DataTypes.DATE,
@@ -290,6 +290,12 @@ User.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             unique: true,
+            references: {
+                model: "id_card",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         createdAt: {
             type: DataTypes.DATE,

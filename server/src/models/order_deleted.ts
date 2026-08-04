@@ -25,7 +25,7 @@ export class OrderDeleted extends Model {
             foreignKey: "deleted_by",
         });
         OrderDeleted.belongsTo(Delivery, {
-            foreignKey: "delevery_id",
+            foreignKey: "delivery_id",
         });
     }
 
@@ -53,12 +53,18 @@ OrderDeleted.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         delivery_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "delivery",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "NO ACTION",
         },
         cancel_reason: {
             type: DataTypes.TEXT,
@@ -84,7 +90,7 @@ OrderDeleted.init(
                 key: "id",
             },
             onUpdate: "CASCADE",
-            onDelete: "CASCADE",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,
