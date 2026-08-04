@@ -6,7 +6,8 @@
 
 ## 最優先ルール
 
-- Model を唯一の正（Single Source of Truth）とする。
+- 新規設計および通常のスキーマ変更では、Model を唯一の正（Single Source of Truth）とする。
+- 既存DBとの不整合を解消する修正、またはコーディング規約変更に伴うmodelの修正といった、例外的な処理であることが明示されている場合、既存DBを唯一の正とする。
 - DB 設計は必ず Model から行う。
 - migration や他ファイルから Model を推測・変更しない。
 - 指示された範囲以外の Model は変更しない。
