@@ -44,11 +44,11 @@ export default {
 ### テーブル作成
 
 ```js
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 export default {
-    async up (queryInterface, Sequelize) {
+    async up(queryInterface, Sequelize) {
         await queryInterface.createTable("テーブル名", {
             // カラム
 
@@ -62,9 +62,9 @@ export default {
         });
     },
 
-    async down (queryInterface, Sequelize) {
+    async down(queryInterface, Sequelize) {
         await queryInterface.dropTable("テーブル名");
-    }
+    },
 };
 ```
 
@@ -72,7 +72,7 @@ export default {
 
 ```js
 export default {
-    async up (queryInterface, Sequelize) {
+    async up(queryInterface, Sequelize) {
         await queryInterface.addColumn("テーブル名", "カラム名", {
             // 制約
 
@@ -84,9 +84,9 @@ export default {
         });
     },
 
-    async down (queryInterface, Sequelize) {
+    async down(queryInterface, Sequelize) {
         await queryInterface.removeColumn("テーブル名", "カラム名");
-    }
+    },
 };
 ```
 
@@ -94,11 +94,11 @@ export default {
 
 ```js
 export default {
-    async up (queryInterface, Sequelize) {
+    async up(queryInterface, Sequelize) {
         await queryInterface.removeColumn("テーブル名", "カラム名");
     },
 
-    async down (queryInterface, Sequelize) {
+    async down(queryInterface, Sequelize) {
         await queryInterface.addColumn("テーブル名", "カラム名", {
             // 制約
 
@@ -108,7 +108,7 @@ export default {
             autoIncrement: true,
             primaryKey: true,
         });
-    }
+    },
 };
 ```
 
@@ -116,7 +116,7 @@ export default {
 
 ```js
 export default {
-    async up (queryInterface, Sequelize) {
+    async up(queryInterface, Sequelize) {
         await queryInterface.addConstRaint("テーブル名", {
             // 外部キー制約
 
@@ -133,9 +133,9 @@ export default {
         });
     },
 
-    async down (queryInterface, Sequelize) {
+    async down(queryInterface, Sequelize) {
         await queryInterface.removeConstraint("テーブル名", "制約名");
-    }
+    },
 };
 ```
 
