@@ -68,7 +68,8 @@ export class Orders extends Model {
         CouponUser: Association<Orders, CouponUser>;
         Item: Association<Orders, Item>;
         Delivery: Association<Orders, Delivery>;
-        User: Association<Orders, User>;
+        Seller: Association<Orders, User>;
+        Buyer: Association<Orders, User>;
         Chat: Association<Orders, Chat>;
         Cancel: Association<Orders, Cancel>;
     };

@@ -33,7 +33,8 @@ export class ItemDeleted extends Model {
     }
 
     static associations: {
-        User: Association<ItemDeleted, User>;
+        Seller: Association<ItemDeleted, User>;
+        DeletedBy: Association<ItemDeleted, User>;
         Delivery: Association<ItemDeleted, Delivery>;
     };
 }

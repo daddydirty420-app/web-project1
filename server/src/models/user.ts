@@ -119,11 +119,13 @@ export class User extends Model {
 
     static associations: {
         Cart: Association<User, Cart>;
-        Follow: Association<User, Follow>;
+        FollowUser: Association<User, Follow>;
+        FollowerUser: Association<User, Follow>;
         CommentLike: Association<User, CommentLike>;
         ItemLike: Association<User, ItemLike>;
         Item: Association<User, Item>;
-        ReferenceCode: Association<User, ReferenceCode>;
+        Input: Association<User, ReferenceCode>;
+        Output: Association<User, ReferenceCode>;
         Notification: Association<User, Notification>;
         IdCard: Association<User, IdCard>;
         ShopInfo: Association<User, ShopInfo>;

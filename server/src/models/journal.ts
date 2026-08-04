@@ -41,7 +41,10 @@ export class Journal extends Model {
     }
 
     static associations: {
-        KanjyoOption: Association<Journal, KanjyoOption>;
+        Kari1: Association<Journal, KanjyoOption>;
+        Kari2: Association<Journal, KanjyoOption>;
+        Kashi1: Association<Journal, KanjyoOption>;
+        Kashi2: Association<Journal, KanjyoOption>;
         JournalReasonOption: Association<Journal, JournalReasonOption>;
     };
 }

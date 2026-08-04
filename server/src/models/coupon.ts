@@ -59,7 +59,8 @@ export class Coupon extends Model {
     }
 
     static associations: {
-        User: Association<Coupon, User>;
+        CreatedAdmin: Association<Coupon, User>;
+        UpdatedAdmin: Association<Coupon, User>;
         CouponUser: Association<Coupon, CouponUser>;
         CouponItem: Association<Coupon, CouponItem>;
         CouponShop: Association<Coupon, CouponShop>;

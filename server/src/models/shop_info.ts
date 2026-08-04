@@ -66,7 +66,8 @@ export class ShopInfo extends Model {
         User: Association<ShopInfo, User>;
         ComOrFreeOption: Association<ShopInfo, ComOrFreeOption>;
         Address: Association<ShopInfo, Address>;
-        Name: Association<ShopInfo, Name>;
+        RepresentativeName: Association<ShopInfo, Name>;
+        ContactName: Association<ShopInfo, Name>;
         BankAccount: Association<ShopInfo, BankAccount>;
         CouponShop: Association<ShopInfo, CouponShop>;
     };

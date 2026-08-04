@@ -23,7 +23,8 @@ export class StarHistory extends Model {
     }
 
     static associations: {
-        User: Association<StarHistory, User>;
+        Seller: Association<StarHistory, User>;
+        Buyer: Association<StarHistory, User>;
     };
 }
 

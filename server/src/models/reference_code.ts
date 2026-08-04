@@ -25,7 +25,8 @@ export class ReferenceCode extends Model {
     }
 
     static associations: {
-        User: Association<ReferenceCode, User>;
+        InputUser: Association<ReferenceCode, User>;
+        OutputUser: Association<ReferenceCode, User>;
     };
 }
 

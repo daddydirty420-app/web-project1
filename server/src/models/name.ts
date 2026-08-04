@@ -46,9 +46,11 @@ export class Name extends Model {
     }
 
     static associations: {
-        ShopInfo: Association<Name, ShopInfo>;
+        RepresentativeName: Association<Name, ShopInfo>;
+        ContactName: Association<Name, ShopInfo>;
         PurchaseSession: Association<Name, PurchaseSession>;
-        ShopInfoEdit: Association<Name, ShopInfoEdit>;
+        RepresentativeNameEdit: Association<Name, ShopInfoEdit>;
+        ContactNameEdit: Association<Name, ShopInfoEdit>;
         Delivery: Association<Name, Delivery>;
         User: Association<Name, User>;
     };

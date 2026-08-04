@@ -63,7 +63,8 @@ export class ShopInfoEdit extends Model {
         ShopInfo: Association<ShopInfoEdit, ShopInfo>;
         ComOrFreeOption: Association<ShopInfoEdit, ComOrFreeOption>;
         Address: Association<ShopInfoEdit, Address>;
-        Name: Association<ShopInfoEdit, Name>;
+        RepresentativeNameEdit: Association<ShopInfoEdit, Name>;
+        ContactNameEdit: Association<ShopInfoEdit, Name>;
         BankAccount: Association<ShopInfoEdit, BankAccount>;
     };
 }

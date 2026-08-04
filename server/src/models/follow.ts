@@ -22,7 +22,8 @@ export class Follow extends Model {
     }
 
     static associations: {
-        User: Association<Follow, User>;
+        FollowUser: Association<Follow, User>;
+        FollowerUser: Association<Follow, User>;
     };
 }
 

@@ -31,7 +31,8 @@ export class Categories extends Model {
     }
 
     static associations: {
-        Categories: Association<Categories, Categories>;
+        parent: Association<Categories, Categories>;
+        children: Association<Categories, Categories>;
         CouponCategory: Association<Categories, CouponCategory>;
     };
 }
