@@ -76,22 +76,83 @@ ShopInfoEdit.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        company_name: DataTypes.STRING(255),
-        company_number: DataTypes.STRING(20),
-        id_card_front: DataTypes.TEXT,
-        id_card_rear: DataTypes.TEXT,
-        phone_number: DataTypes.STRING(20),
-        email: DataTypes.STRING(255),
-        founded_date: DataTypes.DATE,
-        member_count: DataTypes.INTEGER,
-        homepage_url: DataTypes.STRING,
-        capital: DataTypes.DECIMAL,
-        open_date_time: DataTypes.TEXT,
-        user_id: DataTypes.INTEGER,
-        shop_info_id: DataTypes.INTEGER,
-        com_or_free_id: DataTypes.INTEGER,
+        company_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        company_number: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        id_card_front: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        id_card_rear: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        phone_number: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        email: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        founded_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        member_count: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        homepage_url: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        capital: {
+            type: DataTypes.DECIMAL,
+            allowNull: true,
+        },
+        open_date_time: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        shop_info_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "shop_info",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        com_or_free_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "com_or_free_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         permit_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: true,
             validate: {
                 maxArrayLength(value: any[]) {
                     if (value && value.length > 10) {
@@ -102,19 +163,57 @@ ShopInfoEdit.init(
         },
         name_representative_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         name_contact_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         address_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "address",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         account_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

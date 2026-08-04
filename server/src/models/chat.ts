@@ -32,11 +32,42 @@ Chat.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        seller_username: DataTypes.STRING(255),
-        seller_chat: DataTypes.TEXT,
-        buyer_username: DataTypes.STRING(255),
-        buyer_chat: DataTypes.TEXT,
-        orders_id: DataTypes.INTEGER,
+        seller_username: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        seller_chat: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        buyer_username: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        buyer_chat: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        orders_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

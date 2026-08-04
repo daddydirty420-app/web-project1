@@ -29,8 +29,24 @@ IdCard.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        id_card_front: DataTypes.TEXT,
-        id_card_rear: DataTypes.TEXT,
+        id_card_front: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        id_card_rear: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

@@ -4,6 +4,9 @@ import sequelize from "../db.js";
 export class ComOrFreeOption extends Model {
     declare id: number;
     declare name: string;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+
 }
 
 ComOrFreeOption.init(
@@ -18,13 +21,23 @@ ComOrFreeOption.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,
         modelName: "ComOrFreeOption",
         tableName: "com_or_free_option",
         freezeTableName: true,
-        timestamps: false,
+        timestamps: true,
     },
 );
 

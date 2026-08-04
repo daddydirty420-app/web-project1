@@ -8,6 +8,9 @@ export class Banks extends Model {
     declare kana: string | null;
     declare hira: string | null;
     declare normalize: object | null;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+
 }
 
 Banks.init(
@@ -27,16 +30,35 @@ Banks.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        kana: DataTypes.STRING(255),
-        hira: DataTypes.STRING(255),
-        normalize: DataTypes.JSONB,
+        kana: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        hira: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        normalize: {
+            type: DataTypes.JSONB,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,
         modelName: "Banks",
         tableName: "banks",
         freezeTableName: true,
-        timestamps: false,
+        timestamps: true,
     },
 );
 

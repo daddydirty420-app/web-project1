@@ -34,14 +34,39 @@ UriagekinHistory.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        uriagekin: DataTypes.INTEGER,
+        uriagekin: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         reason_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "uriagekin_reason_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

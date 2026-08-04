@@ -15,6 +15,9 @@ export class Categories extends Model {
     declare lifestyle_category: LifeStyleCategory | null;
     declare layer?: Layer | null;
     declare path?: string | null;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+
 
     static associate() {
         Categories.belongsTo(Categories, {
@@ -60,6 +63,12 @@ Categories.init(
         parent_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
+            references: {
+                model: "categories",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         allowed_gender: {
             type: DataTypes.STRING(20),
@@ -71,17 +80,39 @@ Categories.init(
             allowNull: false,
             defaultValue: "both",
         },
-        body_category: DataTypes.STRING(255),
-        lifestyle_category: DataTypes.STRING(255),
-        layer: DataTypes.STRING(255),
-        path: DataTypes.STRING(255),
+        body_category: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        lifestyle_category: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        layer: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        path: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,
         modelName: "Categories",
         tableName: "categories",
         freezeTableName: true,
-        timestamps: false,
+        timestamps: true,
     },
 );
 

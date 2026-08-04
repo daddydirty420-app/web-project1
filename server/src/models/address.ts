@@ -58,11 +58,42 @@ Address.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        post_number: DataTypes.STRING(20),
-        todouhuken_id: DataTypes.INTEGER,
-        shikutyouson: DataTypes.STRING(255),
-        banchi: DataTypes.STRING(255),
-        building: DataTypes.STRING(255),
+        post_number: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        todouhuken_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "todouhuken_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        shikutyouson: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        banchi: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        building: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

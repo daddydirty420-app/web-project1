@@ -68,20 +68,52 @@ Comment.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
-        parent_comment_id: DataTypes.INTEGER,
+        parent_comment_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "comment",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         pin: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
         report_score: {
             type: DataTypes.DECIMAL,
             defaultValue: 0,
             allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

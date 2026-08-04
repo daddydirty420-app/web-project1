@@ -80,38 +80,97 @@ ShopInfo.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        company_name: DataTypes.STRING(255),
-        shop_name: DataTypes.STRING(255),
-        email: DataTypes.STRING(255),
-        phone_number: DataTypes.STRING(255),
-        homepage_url: DataTypes.TEXT,
-        open_date_time: DataTypes.TEXT,
-        company_number: DataTypes.STRING(20),
-        capital: DataTypes.DECIMAL,
-        member_count: DataTypes.INTEGER,
-        id_card_front: DataTypes.TEXT,
-        id_card_rear: DataTypes.TEXT,
+        company_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        shop_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        email: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        phone_number: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        homepage_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        open_date_time: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        company_number: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        capital: {
+            type: DataTypes.DECIMAL,
+            allowNull: true,
+        },
+        member_count: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        id_card_front: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        id_card_rear: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         request_all: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
         verified: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
         auto_trans: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
-        user_id: DataTypes.INTEGER,
-        com_or_free_id: DataTypes.INTEGER,
-        founded_date: DataTypes.DATE,
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        com_or_free_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "com_or_free_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        founded_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
         open_info: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         },
         permit_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: true,
             validate: {
                 maxArrayLength(value: any[]) {
                     if (value && value.length > 10) {
@@ -122,19 +181,57 @@ ShopInfo.init(
         },
         name_representative_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         name_contact_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "name",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         address_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "address",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
         account_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

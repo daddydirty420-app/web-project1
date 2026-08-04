@@ -39,16 +39,41 @@ ItemDeleteLogs.init(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         delete_user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         delete_by_admin: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        delete_reason: DataTypes.TEXT,
+        delete_reason: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

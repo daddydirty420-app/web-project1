@@ -38,18 +38,53 @@ Cancel.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        cancel_reason: DataTypes.TEXT,
-        return_amount: DataTypes.INTEGER,
-        item_count: DataTypes.INTEGER,
+        cancel_reason: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        return_amount: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        item_count: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         cancel_flag: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
         }, // false: 申請中, true: キャンセル確定
-        cancel_fee_return_id: DataTypes.INTEGER,
+        cancel_fee_return_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "cancel_fee_return_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         orders_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

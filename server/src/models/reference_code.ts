@@ -37,17 +37,49 @@ ReferenceCode.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        input: DataTypes.STRING(255),
+        input: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         output: {
             type: DataTypes.STRING(255),
+            allowNull: true,
             unique: true,
         },
-        input_user_id: DataTypes.INTEGER,
-        output_user_id: DataTypes.INTEGER,
+        input_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        output_user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         checked: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

@@ -40,15 +40,49 @@ UserDeleteLogs.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
-        delete_reason: DataTypes.TEXT,
+        delete_reason: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         deleted_by_admin: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        admin_id: DataTypes.INTEGER,
-        ip_address: DataTypes.TEXT,
-        user_agent: DataTypes.TEXT,
+        admin_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        ip_address: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        user_agent: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

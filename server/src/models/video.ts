@@ -42,23 +42,70 @@ Video.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        thumbnail_url: DataTypes.TEXT,
-        title: DataTypes.STRING(255),
-        summary: DataTypes.TEXT,
-        duration: DataTypes.INTEGER,
+        thumbnail_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        title: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        summary: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        duration: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
         play_count: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
         },
-        user_id: DataTypes.INTEGER,
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         item_id: {
             type: DataTypes.INTEGER,
+            allowNull: true,
             unique: true,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
         },
-        original_url: DataTypes.TEXT,
-        converted_url: DataTypes.TEXT,
-        status: DataTypes.STRING(255),
+        original_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        converted_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        status: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

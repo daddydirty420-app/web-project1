@@ -54,15 +54,82 @@ Journal.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        kanjyo_kari1: DataTypes.INTEGER,
-        kanjyo_kari2: DataTypes.INTEGER,
-        kanjyo_kashi1: DataTypes.INTEGER,
-        kanjyo_kashi2: DataTypes.INTEGER,
-        reason_id: DataTypes.INTEGER,
-        price_kari1: DataTypes.INTEGER,
-        price_kari2: DataTypes.INTEGER,
-        price_kashi1: DataTypes.INTEGER,
-        price_kashi2: DataTypes.INTEGER,
+        kanjyo_kari1: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "kanjyo_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        kanjyo_kari2: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "kanjyo_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        kanjyo_kashi1: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "kanjyo_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        kanjyo_kashi2: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "kanjyo_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        reason_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "journal_reason_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        price_kari1: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        price_kari2: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        price_kashi1: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        price_kashi2: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

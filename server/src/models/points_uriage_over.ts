@@ -19,10 +19,32 @@ PointsUriageOver.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        points_180: DataTypes.INTEGER,
-        uriagekin_180: DataTypes.INTEGER,
-        points_confiscated: DataTypes.INTEGER,
-        uriagekin_confiscated: DataTypes.INTEGER,
+        points_180: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        uriagekin_180: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        points_confiscated: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        uriagekin_confiscated: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

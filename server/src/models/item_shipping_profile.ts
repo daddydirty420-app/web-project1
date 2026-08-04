@@ -51,11 +51,57 @@ ItemShippingProfile.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "item",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
-        shipping_day_id: DataTypes.INTEGER,
-        shipping_service_id: DataTypes.INTEGER,
-        shipping_place_id: DataTypes.INTEGER,
-        shipping_service_free_text: DataTypes.STRING(255),
+        shipping_day_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "shipping_day_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        shipping_service_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "shipping_service_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        shipping_place_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "todouhuken_option",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        shipping_service_free_text: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

@@ -54,18 +54,28 @@ ItemDeleted.init(
         seller_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         item_name: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        explain: DataTypes.TEXT,
+        explain: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         price: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
         image_url: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: true,
             validate: {
                 maxArrayLength(value: string[]) {
                     if (value && value.length > 10) {
@@ -74,10 +84,22 @@ ItemDeleted.init(
                 },
             },
         },
-        video_url: DataTypes.TEXT,
-        thumbnail_url: DataTypes.TEXT,
-        video_title: DataTypes.STRING(255),
-        video_summary: DataTypes.TEXT,
+        video_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        thumbnail_url: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        video_title: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        video_summary: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         delete_reason: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -85,6 +107,22 @@ ItemDeleted.init(
         deleted_by: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

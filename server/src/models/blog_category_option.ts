@@ -4,6 +4,9 @@ import sequelize from "../db.js";
 export class BlogCategoryOption extends Model {
     declare id: number;
     declare name: string;
+    declare createdAt: Date;
+    declare updatedAt: Date;
+
 }
 
 BlogCategoryOption.init(
@@ -18,13 +21,23 @@ BlogCategoryOption.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,
         modelName: "BlogCategoryOption",
         tableName: "blog_category_option",
         freezeTableName: true,
-        timestamps: false,
+        timestamps: true,
     },
 );
 

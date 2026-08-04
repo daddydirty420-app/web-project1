@@ -30,9 +30,34 @@ Search.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        search_text: DataTypes.TEXT,
-        category_text: DataTypes.STRING(255),
-        user_id: DataTypes.INTEGER,
+        search_text: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        category_text: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

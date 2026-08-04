@@ -49,13 +49,44 @@ BankAccount.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        bank_name: DataTypes.STRING(255),
-        branch: DataTypes.STRING(255),
-        account_number: DataTypes.STRING(255),
-        meigi: DataTypes.STRING(255),
-        bank_code: DataTypes.STRING(20),
-        branch_code: DataTypes.STRING(20),
-        account_type: DataTypes.ENUM("ordinary", "checking", "savings"),
+        bank_name: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        branch: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        account_number: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        meigi: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
+        bank_code: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        branch_code: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        account_type: {
+            type: DataTypes.ENUM("ordinary", "checking", "savings"),
+            allowNull: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,

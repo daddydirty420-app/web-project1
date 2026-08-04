@@ -48,6 +48,12 @@ OrderDeleted.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
+            references: {
+                model: "orders",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
         },
         delivery_id: {
             type: DataTypes.INTEGER,
@@ -62,7 +68,10 @@ OrderDeleted.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        refund_method: DataTypes.STRING(255),
+        refund_method: {
+            type: DataTypes.STRING(255),
+            allowNull: true,
+        },
         refund_amount: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -70,6 +79,22 @@ OrderDeleted.init(
         deleted_by: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: "user",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {
