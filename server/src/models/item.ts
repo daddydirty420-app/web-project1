@@ -32,7 +32,7 @@ export class Item extends Model {
     declare seller_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
-    declare uploaded_date: Date | null;
+    declare uploaded_at: Date | null;
     declare search_text: string | null;
     declare sort_buzz_number: number | null;
     declare deleted_at: Date | null;
