@@ -28,3 +28,7 @@ Controller は以下を担当する。
 -   戻り値は Promise<void>とする。
 -   エラーは try/catch で next(err)へ渡す。
 -   Express の型は type import を使用する。
+
+## 注意
+
+-   指示されていないリファクタリングは行わない。

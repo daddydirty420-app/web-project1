@@ -22,8 +22,11 @@
 -   共通化や UseCase 再設計は行わない。
 -   指示された Route 以外は変更しない。
 
-## ルール
+## 実装ルール
 
+-   Route の handler は Controller のみを指定する。
+-   Route に async (req, res, next) => {} を残さない。
+-   req.body、req.params、req.query の取得位置は変更しない。
 -   ルーティングの上に、3 行コメントを記載する（現段階で記載されていないものについては、コメントなし可）
     -   パス（/api 以下）
     -   処理概要
@@ -33,3 +36,7 @@
 ## 例外
 
 -   prototype、maintenance、script 用途の処理は通常 Route へ移さない。
+
+## 注意
+
+-   指示されていないリファクタリングは行わない。
