@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { editTypeUseCase } from "../../usecases/notification/test/editType.js";
+import { editTypeUseCase } from "../usecase/notification/editType.js";
 
 const router = Router();
 
