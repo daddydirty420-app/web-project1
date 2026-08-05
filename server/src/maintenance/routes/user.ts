@@ -6,7 +6,7 @@ import { getAllUserListUseCase } from "../usecase/user/getUserList.js";
 
 const router = Router();
 
-// GET /dev/users?limit=number&cursor
+// GET /maintenance/users?limit=number&cursor
 router.get(
     "/",
     validateQuery(getDevUserListQuerySchema),
