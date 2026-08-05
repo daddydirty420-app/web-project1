@@ -55,11 +55,10 @@ export const createItemController = async (req: Request, res: Response, next: Ne
 // summary: 商品コピーアップロード
 // page: /item/[id]
 export const copyUploadItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const newItemId = await itemCopyUploadUseCase({ itemId, userId });
 
         res.status(200).json({ newItemId });
@@ -72,18 +71,16 @@ export const copyUploadItemController = async (req: Request, res: Response, next
 // summary: 商品アップロード
 // page: /upload/[id]
 export const uploadItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = parseInt(req.params.id);
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as ItemUploadQuery;
-
-    const mode = query.mode;
-
-    const body = req.validatedBody as ItemUploadBody;
-
-    const usecase = mode === "main" ? uploadMainUseCase : uploadDraftUseCase;
-
     try {
+        const itemId = parseInt(req.params.id);
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as ItemUploadQuery;
+
+        const body = req.validatedBody as ItemUploadBody;
+
+        const usecase = query.mode === "main" ? uploadMainUseCase : uploadDraftUseCase;
+
         const { videoSignedUrl, thumbnailSignedUrl, itemImageSignedUrls, attributesImageSignedUrls } = await usecase({
             itemId,
             userId,
@@ -105,10 +102,10 @@ export const uploadItemController = async (req: Request, res: Response, next: Ne
 // summary: 商品公開
 // page: /item/confirm/[id]
 export const publishItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await patchPublishUseCase({ itemId, userId });
 
         res.status(200).json({ message: "出品成功！" });
@@ -160,7 +157,6 @@ export const decreaseItemSortNumberController = async (
 // page: /item/[id]
 export const patchItemAccessLogsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
-
     const userId = req.user?.id ?? null;
 
     patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
@@ -175,7 +171,6 @@ export const patchItemAccessLogsController = async (req: Request, res: Response,
 // page: /item/deleted/[id]
 export const restoreItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const itemId = Number(req.params.id);
-
     const userId = req.user!.id;
 
     try {
@@ -191,11 +186,10 @@ export const restoreItemController = async (req: Request, res: Response, next: N
 // summary: 商品論理削除
 // page: /item/[id]
 export const deleteItemLogicallyController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await deleteItemLogicallyUseCase({ itemId, userId });
 
         res.status(200).json({ message: "商品を削除しました" });
@@ -208,11 +202,10 @@ export const deleteItemLogicallyController = async (req: Request, res: Response,
 // summary: 商品完全削除
 // page: /item/deleted/[id]
 export const deleteItemPerfectController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await deleteItemPerfectUseCase({ itemId, userId });
 
         res.status(200).json({ message: "商品削除が完了しました。" });
@@ -225,11 +218,10 @@ export const deleteItemPerfectController = async (req: Request, res: Response, n
 // summary: 下書き商品削除
 // page: /item/draft/[id]
 export const deleteDraftItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await deleteDraftItemUseCase({ itemId, userId });
 
         res.status(200).json({ message: "下書き商品を削除しました" });
@@ -242,41 +234,41 @@ export const deleteDraftItemController = async (req: Request, res: Response, nex
 // summary: 商品リスト取得
 // page: /lp・/profile
 export const getItemListController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-
-    const query = req.validatedQuery as ItemListQuery;
-
-    const type = query.type;
-    const page = query.page ?? 1;
-    const view = query.view;
-    const limit = query.limit ?? 6;
-    const pageUserId = query.pageUserId ?? undefined;
-
-    if (view === "profile" && !pageUserId) {
-        throw new AppError("PAGE_USER_NOT_FOUND", 404);
-    }
-
-    const baseParams = { page, limit };
-
-    // usecaseマップ（アロー関数で包む）
-    const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
-        index: {
-            video: () => getIndexVideosUseCase({ ...baseParams, userId }),
-            item: () => getIndexItemsUseCase({ ...baseParams, userId }),
-        },
-        profile: {
-            video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
-            item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
-        },
-    };
-
-    const usecase = usecaseMap[view]?.[type];
-
-    if (!usecase) {
-        throw new AppError("INVALID_VIEW_OR_TYPE", 400);
-    }
-
     try {
+        const userId = req.user?.id ?? null;
+
+        const query = req.validatedQuery as ItemListQuery;
+
+        const type = query.type;
+        const page = query.page ?? 1;
+        const view = query.view;
+        const limit = query.limit ?? 6;
+        const pageUserId = query.pageUserId ?? undefined;
+
+        if (view === "profile" && !pageUserId) {
+            throw new AppError("PAGE_USER_NOT_FOUND", 404);
+        }
+
+        const baseParams = { page, limit };
+
+        // usecaseマップ（アロー関数で包む）
+        const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
+            index: {
+                video: () => getIndexVideosUseCase({ ...baseParams, userId }),
+                item: () => getIndexItemsUseCase({ ...baseParams, userId }),
+            },
+            profile: {
+                video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
+                item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
+            },
+        };
+
+        const usecase = usecaseMap[view]?.[type];
+
+        if (!usecase) {
+            throw new AppError("INVALID_VIEW_OR_TYPE", 400);
+        }
+
         const { items, totalPages } = await usecase();
 
         res.status(200).json({ items, totalPages });
@@ -289,32 +281,32 @@ export const getItemListController = async (req: Request, res: Response, next: N
 // summary: レコメンドリスト取得
 // page: /item・/item-list/cart・/など
 export const getRecommendItemsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-
-    const query = req.validatedQuery as RecommendItemsQuery;
-
-    const view = query.view;
-
-    const itemId = query.itemId ?? undefined;
-
-    if (view === "itemPage" && !itemId) {
-        throw new AppError("INVALID_QUERY", 400);
-    }
-
-    // 関数そのものを保存（実行しない）
-    const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
-        recommend: () => getIndexRecommendUseCase({ userId }),
-        cart: () => getCartRecommendUseCase({ userId }),
-        itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
-    };
-
-    const usecase = usecaseMap[view];
-
-    if (!usecase) {
-        throw new AppError("INVALID_VIEW", 400);
-    }
-
     try {
+        const userId = req.user?.id ?? null;
+
+        const query = req.validatedQuery as RecommendItemsQuery;
+
+        const view = query.view;
+
+        const itemId = query.itemId ?? undefined;
+
+        if (view === "itemPage" && !itemId) {
+            throw new AppError("INVALID_QUERY", 400);
+        }
+
+        // 関数そのものを保存（実行しない）
+        const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
+            recommend: () => getIndexRecommendUseCase({ userId }),
+            cart: () => getCartRecommendUseCase({ userId }),
+            itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
+        };
+
+        const usecase = usecaseMap[view];
+
+        if (!usecase) {
+            throw new AppError("INVALID_VIEW", 400);
+        }
+
         const items = await usecase();
 
         res.status(200).json({ items });
@@ -327,13 +319,13 @@ export const getRecommendItemsController = async (req: Request, res: Response, n
 // summary: キーワード検索
 // page: /search?keyword=""
 export const searchItemsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? undefined;
-
-    const query = req.validatedQuery as SearchItemsQuery;
-
-    const { keyword, limit, sort, cursorScore, cursorId } = query;
-
     try {
+        const userId = req.user?.id ?? undefined;
+
+        const query = req.validatedQuery as SearchItemsQuery;
+
+        const { keyword, limit, sort, cursorScore, cursorId } = query;
+
         const { itemList, nextCursorScore, nextCursorId, hasMore } = await getSearchItemsUseCase({
             keyword,
             limit,
@@ -353,14 +345,14 @@ export const searchItemsController = async (req: Request, res: Response, next: N
 // summary: 商品ページ データ取得
 // page: /item
 export const getItemPageController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user?.id ?? null;
-
-    const query = req.validatedQuery as ItemPageQuery;
-
-    const mode = query.mode;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user?.id ?? null;
+
+        const query = req.validatedQuery as ItemPageQuery;
+
+        const mode = query.mode;
+
         const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
             itemId,
             userId,
@@ -384,9 +376,8 @@ export const getItemPageController = async (req: Request, res: Response, next: N
 // summary: 商品ページメタデータ
 // page: /item
 export const getItemMetadataController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
     try {
+        const itemId = Number(req.params.id);
         const item = await getMetadataUseCase({ itemId });
 
         res.status(200).json({ item });
@@ -399,10 +390,10 @@ export const getItemMetadataController = async (req: Request, res: Response, nex
 // summary: アップロードフォーム表示データ取得
 // page: /upload
 export const getItemFormDataController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = parseInt(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const { item, category, allCondition, allDay, allService, allPlace, hasShop } = await getFormDataUseCase({
             itemId,
             userId,
@@ -426,9 +417,9 @@ export const getItemFormDataController = async (req: Request, res: Response, nex
 // summary: 商品データ簡易表示
 // page: /upload/ok
 export const getItemHighlightController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-
     try {
+        const itemId = Number(req.params.id);
+
         const item = await getItemHighlightUseCase({ itemId });
 
         res.status(200).json({ item });

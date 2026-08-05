@@ -124,11 +124,11 @@ app.use("/api/video", VideoRouter);
 app.use("/api/watch-history", WatchHistoryRouter);
 app.use("/api/admin/items", ItemAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
-app.use("/api/dev/users", MaintenanceItemsRouter);
+app.use("/api/maintenance/items", MaintenanceItemsRouter);
 app.use("/api/maintenance/notification", MaintenanceNotificationRouter);
 app.use("/api/maintenance/suggest-words", MaintenanceSuggestWordsRouter);
-app.use("/api/dev/items", MaintenanceUsersRouter);
-app.use("/api/dev/test", TestRouter);
+app.use("/api/maintenance/users", MaintenanceUsersRouter);
+app.use("/api/maintenance/test", TestRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
