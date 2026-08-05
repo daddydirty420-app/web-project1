@@ -1,0 +1,438 @@
+import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { AppError } from "../errors.js";
+import { deleteDraftItemUseCase } from "../usecases/items/delete/draftDelete.js";
+import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDelete.js";
+import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
+import { getFormDataUseCase } from "../usecases/items/formData/getFormData.js";
+import { getItemHighlightUseCase } from "../usecases/items/highlight/getItemHighlight.js";
+import { getIndexItemsUseCase } from "../usecases/items/itemList/indexItemList.js";
+import { getIndexVideosUseCase } from "../usecases/items/itemList/indexVideoList.js";
+import { getProfileItemsUseCase } from "../usecases/items/itemList/profileItemList.js";
+import { getProfileVideosUseCase } from "../usecases/items/itemList/profileVideoList.js";
+import { getCartRecommendUseCase } from "../usecases/items/itemList/recommend/cartRecommend.js";
+import { getIndexRecommendUseCase } from "../usecases/items/itemList/recommend/indexRecommend.js";
+import { getItemPageRecommendUseCase } from "../usecases/items/itemList/recommend/itemPageRecommend.js";
+import { getItemPageUseCase } from "../usecases/items/itemPage/itemPage.js";
+import { getMetadataUseCase } from "../usecases/items/itemPage/metadata.js";
+import { patchItemLogsAccessUseCase } from "../usecases/items/log/accessLogs.js";
+import { restoreItemUseCase } from "../usecases/items/restore/restore.js";
+import { getSearchItemsUseCase } from "../usecases/items/search/getSearchItems.js";
+import { patchSortNumberAddUseCase, patchSortNumberDecreaseUseCase } from "../usecases/items/sortNumber/sortNumber.js";
+import { itemCopyUploadUseCase } from "../usecases/items/upload/copyUpload/copyUpload.js";
+import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
+import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
+import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
+import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
+import type { ItemUploadBody } from "../validators/body/items.js";
+import type {
+    ItemListQuery,
+    ItemListType,
+    ItemListView,
+    ItemPageQuery,
+    ItemSortNumberQuery,
+    ItemUploadQuery,
+    RecommendItemsQuery,
+    RecommendItemsview,
+    SearchItemsQuery,
+} from "../validators/query/items.js";
+
+// POST /items
+// summary: 商品データ作成
+// page: /upload/before
+export const createItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user!.id;
+
+    try {
+        const itemId = await createItemsUseCase({ userId });
+
+        res.status(200).json({ itemId });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// POST /items/:id/copy-upload
+// summary: 商品コピーアップロード
+// page: /item/[id]
+export const copyUploadItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        const newItemId = await itemCopyUploadUseCase({ itemId, userId });
+
+        res.status(200).json({ newItemId });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// PUT /items/:id?mode=""
+// summary: 商品アップロード
+// page: /upload/[id]
+export const uploadItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = parseInt(req.params.id);
+    const userId = req.user!.id;
+
+    const query = req.validatedQuery as ItemUploadQuery;
+
+    const mode = query.mode;
+
+    const body = req.validatedBody as ItemUploadBody;
+
+    const usecase = mode === "main" ? uploadMainUseCase : uploadDraftUseCase;
+
+    try {
+        const { videoSignedUrl, thumbnailSignedUrl, itemImageSignedUrls, attributesImageSignedUrls } = await usecase({
+            itemId,
+            userId,
+            body,
+        });
+
+        res.status(200).json({
+            videoSignedUrl,
+            thumbnailSignedUrl,
+            itemImageSignedUrls,
+            attributesImageSignedUrls,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// PATCH /items/:id/publish
+// summary: 商品公開
+// page: /item/confirm/[id]
+export const publishItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+    const userId = req.user!.id;
+
+    try {
+        await patchPublishUseCase({ itemId, userId });
+
+        res.status(200).json({ message: "出品成功！" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// PATCH /items/:id/sort-number/add?number=number
+// summary: sortNumber追加
+// page: /itemなど
+export const addItemSortNumberController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const query = req.validatedQuery as ItemSortNumberQuery;
+
+    const number = query.number;
+
+    patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+};
+
+// PATCH /items/:id/sort-number/decrease?number=number
+// summary: sortNumber減少
+// page: /itemなど
+export const decreaseItemSortNumberController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const query = req.validatedQuery as ItemSortNumberQuery;
+
+    const number = query.number;
+
+    patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "sort_numberの更新を受け付けました" });
+};
+
+// PATCH /items/:id/logs/access
+// summary: アクセスログ記録
+// page: /item/[id]
+export const patchItemAccessLogsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user?.id ?? null;
+
+    patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
+        console.error(err);
+    });
+
+    res.status(202).json({ message: "商品ページアクセス処理を受け付けました" });
+};
+
+// PATCH /items/:id/restore
+// summary: 商品データ復元
+// page: /item/deleted/[id]
+export const restoreItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await restoreItemUseCase({ userId, itemId });
+
+        res.status(200).json({ message: "商品を復元しました" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// DELETE /items/:id/logical
+// summary: 商品論理削除
+// page: /item/[id]
+export const deleteItemLogicallyController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteItemLogicallyUseCase({ itemId, userId });
+
+        res.status(200).json({ message: "商品を削除しました" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// DELETE /items/:id/perfect
+// summary: 商品完全削除
+// page: /item/deleted/[id]
+export const deleteItemPerfectController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteItemPerfectUseCase({ itemId, userId });
+
+        res.status(200).json({ message: "商品削除が完了しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// DELETE /items/:id/draft
+// summary: 下書き商品削除
+// page: /item/draft/[id]
+export const deleteDraftItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    const userId = req.user!.id;
+
+    try {
+        await deleteDraftItemUseCase({ itemId, userId });
+
+        res.status(200).json({ message: "下書き商品を削除しました" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
+// summary: 商品リスト取得
+// page: /lp・/profile
+export const getItemListController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? null;
+
+    const query = req.validatedQuery as ItemListQuery;
+
+    const type = query.type;
+    const page = query.page ?? 1;
+    const view = query.view;
+    const limit = query.limit ?? 6;
+    const pageUserId = query.pageUserId ?? undefined;
+
+    if (view === "profile" && !pageUserId) {
+        throw new AppError("PAGE_USER_NOT_FOUND", 404);
+    }
+
+    const baseParams = { page, limit };
+
+    // usecaseマップ（アロー関数で包む）
+    const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
+        index: {
+            video: () => getIndexVideosUseCase({ ...baseParams, userId }),
+            item: () => getIndexItemsUseCase({ ...baseParams, userId }),
+        },
+        profile: {
+            video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
+            item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
+        },
+    };
+
+    const usecase = usecaseMap[view]?.[type];
+
+    if (!usecase) {
+        throw new AppError("INVALID_VIEW_OR_TYPE", 400);
+    }
+
+    try {
+        const { items, totalPages } = await usecase();
+
+        res.status(200).json({ items, totalPages });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items/recommend?view=""(&itemId=number)
+// summary: レコメンドリスト取得
+// page: /item・/item-list/cart・/など
+export const getRecommendItemsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? null;
+
+    const query = req.validatedQuery as RecommendItemsQuery;
+
+    const view = query.view;
+
+    const itemId = query.itemId ?? undefined;
+
+    if (view === "itemPage" && !itemId) {
+        throw new AppError("INVALID_QUERY", 400);
+    }
+
+    // 関数そのものを保存（実行しない）
+    const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
+        recommend: () => getIndexRecommendUseCase({ userId }),
+        cart: () => getCartRecommendUseCase({ userId }),
+        itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
+    };
+
+    const usecase = usecaseMap[view];
+
+    if (!usecase) {
+        throw new AppError("INVALID_VIEW", 400);
+    }
+
+    try {
+        const items = await usecase();
+
+        res.status(200).json({ items });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /item/search?keyword=""&limit=number&sort=""(&cursorScore=number&cursorId=number)
+// summary: キーワード検索
+// page: /search?keyword=""
+export const searchItemsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const userId = req.user?.id ?? undefined;
+
+    const query = req.validatedQuery as SearchItemsQuery;
+
+    const { keyword, limit, sort, cursorScore, cursorId } = query;
+
+    try {
+        const { itemList, nextCursorScore, nextCursorId, hasMore } = await getSearchItemsUseCase({
+            keyword,
+            limit,
+            sort,
+            cursorId,
+            cursorScore,
+            userId,
+        });
+
+        res.status(200).json({ itemList, nextCursorScore, nextCursorId, hasMore });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items/:id?mode=""
+// summary: 商品ページ データ取得
+// page: /item
+export const getItemPageController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+    const userId = req.user?.id ?? null;
+
+    const query = req.validatedQuery as ItemPageQuery;
+
+    const mode = query.mode;
+
+    try {
+        const { item, sellerMe, likeCount, isLikeByMe, commentCount, me } = await getItemPageUseCase({
+            itemId,
+            userId,
+            mode,
+        });
+
+        res.status(200).json({
+            item,
+            sellerMe,
+            likeCount,
+            isLikeByMe,
+            commentCount,
+            me,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items/:id/metadata
+// summary: 商品ページメタデータ
+// page: /item
+export const getItemMetadataController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    try {
+        const item = await getMetadataUseCase({ itemId });
+
+        res.status(200).json({ item });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items/:id/form-data
+// summary: アップロードフォーム表示データ取得
+// page: /upload
+export const getItemFormDataController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = parseInt(req.params.id);
+    const userId = req.user!.id;
+
+    try {
+        const { item, category, allCondition, allDay, allService, allPlace, hasShop } = await getFormDataUseCase({
+            itemId,
+            userId,
+        });
+
+        res.status(200).json({
+            item,
+            category,
+            allCondition,
+            hasShop,
+            allDay,
+            allService,
+            allPlace,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// GET /items/:id/highlight
+// summary: 商品データ簡易表示
+// page: /upload/ok
+export const getItemHighlightController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const itemId = Number(req.params.id);
+
+    try {
+        const item = await getItemHighlightUseCase({ itemId });
+
+        res.status(200).json({ item });
+    } catch (err) {
+        next(err);
+    }
+};
