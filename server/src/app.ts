@@ -13,7 +13,7 @@ startAllCrons();
 const app = express();
 
 import MaintenanceNotificationRouter from "./maintenance/routes/notification.js";
-import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggest_words.js";
+import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggestWords.js";
 import AddressRouter from "./routes/address.js";
 import BlogAdminRouter from "./routes/admin/blog_admin.js";
 import CommentAdminRouter from "./routes/admin/comment_admin.js";
