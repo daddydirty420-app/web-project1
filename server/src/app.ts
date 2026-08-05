@@ -12,8 +12,11 @@ startAllCrons();
 
 const app = express();
 
+import MaintenanceItemsRouter from "./maintenance/routes/item.js";
 import MaintenanceNotificationRouter from "./maintenance/routes/notification.js";
 import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggestWords.js";
+import TestRouter from "./maintenance/routes/test.js";
+import MaintenanceUsersRouter from "./maintenance/routes/user.js";
 import AddressRouter from "./routes/address.js";
 import BlogAdminRouter from "./routes/admin/blog_admin.js";
 import CommentAdminRouter from "./routes/admin/comment_admin.js";
@@ -39,9 +42,6 @@ import CommentLikeRouter from "./routes/comment-like.js";
 import CommentRouter from "./routes/comment.js";
 import CommentReportRouter from "./routes/comment_report.js";
 import DeliveryRouter from "./routes/delivery.js";
-import DevItemsRouter from "./routes/dev/items.js";
-import TestRouter from "./routes/dev/test.js";
-import DevUsersRouter from "./routes/dev/users.js";
 import FollowRouter from "./routes/follow.js";
 import IdCardRouter from "./routes/id_card.js";
 import InquiryRouter from "./routes/inquiry.js";
@@ -162,11 +162,11 @@ app.use("/api/report-admin", ReportAdminRouter);
 app.use("/api/shop-info-admin", ShopInfoAdminRouter);
 app.use("/api/transfer-admin", TransferAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
-app.use("/api/dev/test", TestRouter);
-app.use("/api/dev/users", DevUsersRouter);
-app.use("/api/dev/items", DevItemsRouter);
+app.use("/api/dev/users", MaintenanceItemsRouter);
 app.use("/api/maintenance/notification", MaintenanceNotificationRouter);
 app.use("/api/maintenance/suggest-words", MaintenanceSuggestWordsRouter);
+app.use("/api/dev/items", MaintenanceUsersRouter);
+app.use("/api/dev/test", TestRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

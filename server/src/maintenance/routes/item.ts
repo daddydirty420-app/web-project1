@@ -6,7 +6,7 @@ import { GetDevItemListQuery, getDevItemListQuerySchema } from "../../validators
 
 const router = Router();
 
-// GET /dev/item?limit=number&cursor
+// GET /maintenance/item?limit=number&cursor
 router.get(
     "/",
     validateQuery(getDevItemListQuerySchema),
