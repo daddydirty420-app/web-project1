@@ -32,6 +32,7 @@ import { getHonninEditUseCase } from "../usecases/users/get/getHonnin.js";
 import { getInquiryUserUseCase } from "../usecases/users/get/getInquiryUser.js";
 import { getMyAccountUseCase } from "../usecases/users/get/getMyAccount.js";
 import { getMyAddressUseCase } from "../usecases/users/get/getMyAddress.js";
+import { getMyNameUseCase } from "../usecases/users/get/getMyName.js";
 import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
 import { getMePointsUseCase } from "../usecases/users/get/getPoints.js";
@@ -55,7 +56,6 @@ import {
     ProfileEditQuery,
     profileEditQuerySchema,
 } from "../validators/query/users.js";
-import { getMyNameUseCase } from "../usecases/users/get/getMyName.js";
 
 const router = Router();
 

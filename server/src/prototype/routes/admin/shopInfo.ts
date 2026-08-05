@@ -2,8 +2,8 @@ import { endOfMonth, startOfMonth, subDays, subMonths } from "date-fns";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op, WhereOptions, fn, literal } from "sequelize";
-import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { validateParams } from "../../middleware/validate/validateParams.js";
+import { authenticateToken, isAdmin } from "../../../middleware/index.js";
+import { validateParams } from "../../../middleware/validate/validateParams.js";
 import {
     Address,
     BankAccount,
@@ -13,8 +13,8 @@ import {
     TodouhukenOption,
     UriagekinLots,
     User,
-} from "../../models/index.js";
-import { idParamSchema } from "../../validators/params/id.js";
+} from "../../../models/index.js";
+import { idParamSchema } from "../../../validators/params/id.js";
 
 const router = Router();
 

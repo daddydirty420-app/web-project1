@@ -1,12 +1,12 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { validateQuery } from "../../middleware/validate/validateQuery.js";
-import { getAllUserListUseCase } from "../../usecases/dev/users/getUserList.js";
 import { GetDevUserListQuery, getDevUserListQuerySchema } from "../../validators/query/dev/users.js";
+import { getAllUserListUseCase } from "../usecase/user/getUserList.js";
 
 const router = Router();
 
-// GET /dev/users?limit=number&cursor
+// GET /maintenance/users?limit=number&cursor
 router.get(
     "/",
     validateQuery(getDevUserListQuerySchema),

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
-import { validateParams } from "../middleware/validate/validateParams.js";
-import { Blog, BlogCategoryOption } from "../models/index.js";
-import { idParamSchema } from "../validators/params/id.js";
+import { validateParams } from "../../middleware/validate/validateParams.js";
+import { Blog, BlogCategoryOption } from "../../models/index.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 

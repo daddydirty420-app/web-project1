@@ -1,10 +1,10 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
-import { authenticateOptional, authenticateToken } from "../middleware/index.js";
-import { validateParams } from "../middleware/validate/validateParams.js";
-import { Item, Sale, Search, User, Video } from "../models/index.js";
-import { idParamSchema } from "../validators/params/id.js";
+import { authenticateOptional, authenticateToken } from "../../middleware/index.js";
+import { validateParams } from "../../middleware/validate/validateParams.js";
+import { Item, Sale, Search, User, Video } from "../../models/index.js";
+import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();
 

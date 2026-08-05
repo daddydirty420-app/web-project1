@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, isAdmin } from "../../middleware/index.js";
-import { BankAccount, Transfer, TransReasonOption, User } from "../../models/index.js";
+import { authenticateToken, isAdmin } from "../../../middleware/index.js";
+import { BankAccount, Transfer, TransReasonOption, User } from "../../../models/index.js";
 
 const router = Router();
 

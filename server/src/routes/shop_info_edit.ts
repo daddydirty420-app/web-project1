@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateToken, isAdmin } from "../middleware/index.js";
+import { authenticateToken } from "../middleware/index.js";
 import {
     getShopEditAddressRateLimit,
     getShopEditComFreeConfirmRateLimit,
@@ -16,7 +16,6 @@ import {
 } from "../middleware/rateLimit/shopInfoEditRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { Address, ComOrFreeOption, Name, ShopInfoEdit, TodouhukenOption } from "../models/index.js";
 import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
 import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
 import { createShopEditComFreeUseCase } from "../usecases/shopInfoEdit/create/createComFree.js";
@@ -335,40 +334,6 @@ router.get(
             const shopEdit = await getShopComFreeConfirmUseCase({ shopEditId, userId });
 
             res.status(200).json({ shopEdit });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
-
-router.get(
-    "/admin/list",
-    authenticateToken,
-    isAdmin,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const dataList = await ShopInfoEdit.findAll({
-                order: [["createdAt", "ASC"]],
-                include: [
-                    { model: ComOrFreeOption },
-                    {
-                        model: Address,
-                        attributes: ["id", "post_number", "shikutyouson", "banchi", "building"],
-                        include: [
-                            {
-                                model: TodouhukenOption,
-                                as: "AddressTodouhuken",
-                            },
-                        ],
-                    },
-                    {
-                        model: Name,
-                        attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
-                    },
-                ],
-            });
-
-            res.json({ dataList });
         } catch (err) {
             next(err);
         }

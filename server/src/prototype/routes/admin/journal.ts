@@ -2,13 +2,13 @@ import { subDays } from "date-fns";
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { Op } from "sequelize";
-import { authenticateToken, isAdmin } from "../middleware/index.js";
-import { Journal, JournalReasonOption } from "../models/index.js";
+import { authenticateToken, isAdmin } from "../../../middleware/index.js";
+import { Journal, JournalReasonOption } from "../../../models/index.js";
 
 const router = Router();
 
 router.get(
-    "/admin/list",
+    "/list",
     authenticateToken,
     isAdmin,
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -28,7 +28,7 @@ router.get(
                 include: [{ model: JournalReasonOption }],
             });
 
-            res.json({ dataList });
+            res.status(200).json({ dataList });
         } catch (err) {
             next(err);
         }

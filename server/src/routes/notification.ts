@@ -11,7 +11,6 @@ import { validateQuery } from "../middleware/validate/validateQuery.js";
 import { countUnread } from "../services/notification.js";
 import { getNotificationListUseCase } from "../usecases/notification/getList.js";
 import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
-import { editTypeUseCase } from "../usecases/notification/test/editType.js";
 import { idParamSchema } from "../validators/params/id.js";
 import { GetNotificationListQuery, getNotificationListQuerySchema } from "../validators/query/notification.js";
 
@@ -86,19 +85,5 @@ router.get(
         }
     },
 );
-
-// test
-
-router.patch("/type", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const useCase = new editTypeUseCase();
-
-        await useCase.execute();
-
-        res.status(200).json({ message: "type変更完了" });
-    } catch (err) {
-        next(err);
-    }
-});
 
 export default router;
