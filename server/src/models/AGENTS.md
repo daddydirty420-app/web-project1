@@ -1,4 +1,4 @@
-# Model Agent Instructions
+# models/AGENTS.md
 
 ## 対象
 
