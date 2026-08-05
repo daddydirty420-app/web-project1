@@ -12,6 +12,8 @@ startAllCrons();
 
 const app = express();
 
+import MaintenanceNotificationRouter from "./maintenance/routes/notification.js";
+import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggest_words.js";
 import AddressRouter from "./routes/address.js";
 import BlogAdminRouter from "./routes/admin/blog_admin.js";
 import CommentAdminRouter from "./routes/admin/comment_admin.js";
@@ -163,6 +165,8 @@ app.use("/api/admin/user", UserAdminRouter);
 app.use("/api/dev/test", TestRouter);
 app.use("/api/dev/users", DevUsersRouter);
 app.use("/api/dev/items", DevItemsRouter);
+app.use("/api/maintenance/notification", MaintenanceNotificationRouter);
+app.use("/api/maintenance/suggest-words", MaintenanceSuggestWordsRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
