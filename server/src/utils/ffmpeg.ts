@@ -22,7 +22,12 @@ export const getDuration = async ({ filePath }: DurationParams): Promise<number>
 
     await new Promise<void>((resolve, reject) => {
         ffprobe.on("close", (code) => {
-            code !== 0 ? reject(new Error("ffprobe failed")) : resolve();
+            if (code !== 0) {
+                reject(new Error("ffprobe failed"));
+                return;
+            }
+
+            resolve();
         });
     });
 
