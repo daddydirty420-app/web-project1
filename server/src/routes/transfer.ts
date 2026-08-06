@@ -1,5 +1,10 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    transferPostRequestController,
+    transferPostPointsController,
+    transferGetHistoryController,
+    transferGetByIdDetailController,
+} from "../controllers/transfer.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     transferDetailRateLimit,
@@ -10,13 +15,9 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { createTransferPointsUseCase } from "../usecases/transfer/createPoints.js";
-import { createTransferRequestUseCase } from "../usecases/transfer/createRequest.js";
-import { getTransferDetailUseCase } from "../usecases/transfer/getDetail.js";
-import { getTransferHistoryUseCase } from "../usecases/transfer/getTransferHistory.js";
-import { TransferBody, transferBodySchema } from "../validators/body/transfer.js";
+import { transferBodySchema } from "../validators/body/transfer.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { GetTransferHistoryQuery, getTransferHistoryQuerySchema } from "../validators/query/transfer.js";
+import { getTransferHistoryQuerySchema } from "../validators/query/transfer.js";
 
 const router = Router();
 
@@ -28,23 +29,7 @@ router.post(
     authenticateToken,
     transferRequestRateLimit,
     validateBody(transferBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as TransferBody;
-        const { value, limit } = body;
-
-        try {
-            const transId = await createTransferRequestUseCase({ userId, requestValue: value, limit });
-
-            res.status(200).json({
-                message: "振込申請が完了しました。",
-                transId,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    transferPostRequestController,
 );
 
 // POST /transfer/points
@@ -55,20 +40,7 @@ router.post(
     authenticateToken,
     transferPointsRateLimit,
     validateBody(transferBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as TransferBody;
-        const { value, limit } = body;
-
-        try {
-            await createTransferPointsUseCase({ userId, value, limit });
-
-            res.status(200).json({ message: "売上金をポイント変換しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    transferPostPointsController,
 );
 
 // GET /transfer/history?limit=number(&cursor="")
@@ -79,20 +51,7 @@ router.get(
     transferHistoryRateLimit,
     authenticateToken,
     validateQuery(getTransferHistoryQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as GetTransferHistoryQuery;
-        const { limit, cursor } = query;
-
-        try {
-            const { history, hasMore, nextCursor } = await getTransferHistoryUseCase({ userId, limit, cursor });
-
-            res.status(200).json({ history, hasMore, nextCursor });
-        } catch (err) {
-            next(err);
-        }
-    },
+    transferGetHistoryController,
 );
 
 // GET /transfer/:id/detail
@@ -103,18 +62,7 @@ router.get(
     transferDetailRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const transId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const transfer = await getTransferDetailUseCase({ transId, userId });
-
-            res.status(200).json({ transfer });
-        } catch (err) {
-            next(err);
-        }
-    },
+    transferGetByIdDetailController,
 );
 
 export default router;

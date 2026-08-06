@@ -1,10 +1,9 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { uriagekinHistoryGetRootController } from "../controllers/uriagekin_history.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getUriagekinHistoryRateLimit } from "../middleware/rateLimit/uriagekinHistory.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { getMyUriagekinHistoryUseCase } from "../usecases/uriagekinHistory/getMyUriagekinHistory.js";
-import { GetUriagekinHistoryQuery, getUriagekinHistoryQuerySchema } from "../validators/query/uriagekinHistory.js";
+import { getUriagekinHistoryQuerySchema } from "../validators/query/uriagekinHistory.js";
 
 const router = Router();
 
@@ -16,21 +15,7 @@ router.get(
     getUriagekinHistoryRateLimit,
     authenticateToken,
     validateQuery(getUriagekinHistoryQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as GetUriagekinHistoryQuery;
-
-        const { limit, cursor } = query;
-
-        try {
-            const { history, hasMore, nextCursor } = await getMyUriagekinHistoryUseCase({ userId, limit, cursor });
-
-            res.status(200).json({ history, hasMore, nextCursor });
-        } catch (err) {
-            next(err);
-        }
-    },
+    uriagekinHistoryGetRootController,
 );
 
 export default router;

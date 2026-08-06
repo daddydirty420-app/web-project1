@@ -120,7 +120,7 @@ export const exampleController = async (req: Request, res: Response, next: NextF
 Expressの型はtype importを使用してください。
 
 ```ts
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 ```
 
 既存Route内にある以下の内容は、意味や順序を変えずControllerへ移してください。

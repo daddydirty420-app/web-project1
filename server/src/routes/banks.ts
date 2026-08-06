@@ -1,8 +1,7 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { banksGetSearchController } from "../controllers/banks.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { searchBanksUseCase } from "../usecases/banks/search.js";
-import { KeywordQuery, keywordQuerySchema } from "../validators/query/keyword.js";
+import { keywordQuerySchema } from "../validators/query/keyword.js";
 import { bankSearchRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
 
 const router = Router();
@@ -14,17 +13,7 @@ router.get(
     "/search",
     validateQuery(keywordQuerySchema),
     bankSearchRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const query = req.validatedQuery as KeywordQuery;
-
-        try {
-            const matchedBanks = await searchBanksUseCase({ kw: query.keyword });
-
-            res.status(200).json({ banks: matchedBanks });
-        } catch (err) {
-            next(err);
-        }
-    },
+    banksGetSearchController,
 );
 
 export default router;

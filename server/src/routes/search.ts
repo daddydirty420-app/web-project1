@@ -1,8 +1,7 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { searchGetHistoryController } from "../controllers/search.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getSearchHistoryRateLimit } from "../middleware/rateLimit/searchRateLimit.js";
-import { getSearchHistoryUseCase } from "../usecases/search/getSearchHistory.js";
 
 const router = Router();
 
@@ -13,17 +12,7 @@ router.get(
     "/history",
     getSearchHistoryRateLimit,
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction) => {
-        const userId = req.user!.id;
-
-        try {
-            const sortedData = await getSearchHistoryUseCase({ userId });
-
-            res.status(200).json({ sortedData });
-        } catch (err) {
-            next(err);
-        }
-    },
+    searchGetHistoryController,
 );
 
 export default router;

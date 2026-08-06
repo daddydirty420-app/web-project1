@@ -1,5 +1,9 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    notificationPatchByIdReadFlagController,
+    notificationGetUnreadCountController,
+    notificationGetRootController,
+} from "../controllers/notification.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     getNotificationListRateLimit,
@@ -8,11 +12,8 @@ import {
 } from "../middleware/rateLimit/notificationRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { countUnread } from "../services/notification.js";
-import { getNotificationListUseCase } from "../usecases/notification/getList.js";
-import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { GetNotificationListQuery, getNotificationListQuerySchema } from "../validators/query/notification.js";
+import { getNotificationListQuerySchema } from "../validators/query/notification.js";
 
 const router = Router();
 
@@ -24,18 +25,7 @@ router.patch(
     patchReadFlagRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const notificationId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            await patchReadFlagTrueUseCase({ notificationId, userId });
-
-            res.status(200).json({ isRead: true });
-        } catch (err) {
-            next(err);
-        }
-    },
+    notificationPatchByIdReadFlagController,
 );
 
 // GET /notification/unread-count
@@ -45,17 +35,7 @@ router.get(
     "/unread-count",
     getUnreadCountRateLimit,
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const unreadCount = await countUnread({ userId });
-
-            res.status(200).json({ unreadCount });
-        } catch (err) {
-            next(err);
-        }
-    },
+    notificationGetUnreadCountController,
 );
 
 // GET /notification?limit=00(&cursor="")
@@ -66,24 +46,7 @@ router.get(
     getNotificationListRateLimit,
     validateQuery(getNotificationListQuerySchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as GetNotificationListQuery;
-        const { limit, cursor } = query;
-
-        try {
-            const { notificationList, unreadCount, nextCursor, hasMore } = await getNotificationListUseCase({
-                userId,
-                limit,
-                cursor,
-            });
-
-            res.status(200).json({ notificationList, unreadCount, nextCursor, hasMore });
-        } catch (err) {
-            next(err);
-        }
-    },
+    notificationGetRootController,
 );
 
 export default router;

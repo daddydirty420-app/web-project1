@@ -1,5 +1,27 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    shopInfoPostRootController,
+    shopInfoPatchByIdRepNameController,
+    shopInfoPatchByIdPhoneNumberController,
+    shopInfoPatchByIdOptionController,
+    shopInfoPatchByIdSignup3Controller,
+    shopInfoPatchByIdSignup4Controller,
+    shopInfoPatchByIdSignupEditController,
+    shopInfoPatchByIdSignup5Controller,
+    shopInfoGetMyController,
+    shopInfoGetByIdAddressController,
+    shopInfoGetByIdBankAccountController,
+    shopInfoGetByIdRepNameController,
+    shopInfoGetByIdConNameController,
+    shopInfoGetByIdPhoneNumberController,
+    shopInfoGetByIdCompanyNameController,
+    shopInfoGetByIdOptionController,
+    shopInfoGetByIdComFreeController,
+    shopInfoGetSignup1Controller,
+    shopInfoGetByIdSignup2Controller,
+    shopInfoGetByIdSignup3Controller,
+    shopInfoGetByIdSignup5Controller,
+} from "../controllers/shop_info.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     createShopStep1RateLimit,
@@ -26,39 +48,13 @@ import {
 } from "../middleware/rateLimit/shopInfoRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { Address, ComOrFreeOption, Name, ShopInfo, TodouhukenOption } from "../models/index.js";
-import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
-import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
-import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
-import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
-import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
-import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
-import { updateShopSignup5UseCase } from "../usecases/shopInfo/edit/signup5.js";
-import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
-import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
-import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
-import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
-import { getCompanyNameUseCase } from "../usecases/shopInfo/get/getCompanyName.js";
-import { getConNameUseCase } from "../usecases/shopInfo/get/getConName.js";
-import { getMyShopIdUseCase } from "../usecases/shopInfo/get/getMyShop.js";
-import { getShopOptionUseCase } from "../usecases/shopInfo/get/getOption.js";
-import { getShopPhoneNumberUseCase } from "../usecases/shopInfo/get/getPhoneNumber.js";
-import { getRepNameUseCase } from "../usecases/shopInfo/get/getRepName.js";
-import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
-import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
-import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
-import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
 import {
     createSignup1BBodySchema,
-    CreateSignup1Body,
-    RepNameBody,
     repNameBodySchema,
-    ShopIdCardBody,
     shopIdCardBodySchema,
-    ShopOptionBody,
     shopOptionBodySchema,
 } from "../validators/body/shopInfo.js";
-import { PhoneNumberBody, phoneNumberBodySchema } from "../validators/body/users.js";
+import { phoneNumberBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -71,18 +67,7 @@ router.post(
     authenticateToken,
     createShopStep1RateLimit,
     validateBody(createSignup1BBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const body = req.validatedBody as CreateSignup1Body;
-
-        try {
-            const shopId = await createShopSignup1({ userId, body });
-
-            res.status(200).json({ shopId });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPostRootController,
 );
 
 // PATCH /shop-info/:id/rep-name
@@ -94,19 +79,7 @@ router.patch(
     shopRepNameEditRateLimit,
     validateParams(idParamSchema),
     validateBody(repNameBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as RepNameBody;
-
-        try {
-            const { frontSignedUrl, rearSignedUrl } = await updateRepNameUseCase({ shopId, userId, body });
-
-            res.status(200).json({ frontSignedUrl, rearSignedUrl });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdRepNameController,
 );
 
 // PATCH /shop-info/:id/phone-number
@@ -118,21 +91,7 @@ router.patch(
     shopPhoneNumberEditRateLimit,
     validateParams(idParamSchema),
     validateBody(phoneNumberBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as PhoneNumberBody;
-        const phoneNumber = body.phoneNumber;
-
-        try {
-            await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
-
-            res.status(200).json({ message: "電話番号を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdPhoneNumberController,
 );
 
 // PATCH /shop-info/:id/option
@@ -144,21 +103,7 @@ router.patch(
     shopOptionEditRateLimit,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as ShopOptionBody;
-        const { autoTrans, openInfo } = body;
-
-        try {
-            await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
-
-            res.status(200).json({ message: "オプションを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdOptionController,
 );
 
 // PATCH /shop-info/:id/signup/3
@@ -170,28 +115,7 @@ router.patch(
     shopSignup3RateLimit,
     validateParams(idParamSchema),
     validateBody(shopIdCardBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as ShopIdCardBody;
-
-        try {
-            const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
-                shopId,
-                userId,
-                body,
-            });
-
-            res.status(200).json({
-                message: "身分証・許認可証のDB登録が完了しました。",
-                frontSignedUrl,
-                rearSignedUrl,
-                permitSignedUrls,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdSignup3Controller,
 );
 
 // PATCH /shop-info/:id/signup/4
@@ -203,21 +127,7 @@ router.patch(
     shopSignup4RateLimit,
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as ShopOptionBody;
-        const { autoTrans, openInfo } = body;
-
-        try {
-            await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
-
-            res.status(200).json({ message: "データ更新完了" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdSignup4Controller,
 );
 
 // PATCH /shop-info/:id/signup/edit
@@ -228,19 +138,7 @@ router.patch(
     authenticateToken,
     shopSignup5EditRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const updateData = req.body;
-
-        try {
-            await updateShopSignupEditUseCase({ shopId, userId, updateData });
-
-            res.status(200).json({ message: "更新しました。", updated: updateData });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdSignupEditController,
 );
 
 // PATCH /shop-info/:id/signup/5
@@ -251,18 +149,7 @@ router.patch(
     authenticateToken,
     shopSignup5RateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            await updateShopSignup5UseCase({ shopId, userId });
-
-            res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoPatchByIdSignup5Controller,
 );
 
 // GET /shop-info/my
@@ -272,17 +159,7 @@ router.get(
     "/my",
     getShopMeRateLimit,
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getMyShopIdUseCase({ userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetMyController,
 );
 
 // GET /shop-info/:id/address
@@ -293,18 +170,7 @@ router.get(
     getShopAddressRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getAddressShopUseCase({ shopId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdAddressController,
 );
 
 // GET /shop-info/:id/bank-account
@@ -315,18 +181,7 @@ router.get(
     getShopBankAccountRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getBankAccountUseCase({ shopId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdBankAccountController,
 );
 
 // GET /shop-info/:id/rep-name
@@ -337,18 +192,7 @@ router.get(
     getShopRepNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const { shop, name } = await getRepNameUseCase({ shopId, userId });
-
-            res.status(200).json({ shop, name });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdRepNameController,
 );
 
 // GET /shop-info/:id/con-name
@@ -359,18 +203,7 @@ router.get(
     getShopConNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const name = await getConNameUseCase({ shopId, userId });
-
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdConNameController,
 );
 
 // GET /shop-info/:id/phone-number
@@ -381,18 +214,7 @@ router.get(
     getShopPhoneNumberRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getShopPhoneNumberUseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdPhoneNumberController,
 );
 
 // GET /shop-info/:id/company-name
@@ -403,18 +225,7 @@ router.get(
     getShopCompanyNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getCompanyNameUseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdCompanyNameController,
 );
 
 // GET /shop-info/:id/option
@@ -425,18 +236,7 @@ router.get(
     getShopOptionRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shop = await getShopOptionUseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdOptionController,
 );
 
 // GET /shop-info/:id/com-free
@@ -447,18 +247,7 @@ router.get(
     getShopComFreeRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
-
-            res.status(200).json({ shop, comFree });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdComFreeController,
 );
 
 // GET /shop-info/signup/1
@@ -468,17 +257,7 @@ router.get(
     "/signup/1",
     getShopSignup1RateLimit,
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        try {
-            const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
-
-            res.status(200).json({ shop, user, comFree });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetSignup1Controller,
 );
 
 // GET /shop-info/:id/signup/2
@@ -489,18 +268,7 @@ router.get(
     getShopSignup2RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const account = await getShopSignup2UseCase({ userId, shopId });
-
-            res.status(200).json({ account });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdSignup2Controller,
 );
 
 // GET /shop-info/:id/signup/3
@@ -511,18 +279,7 @@ router.get(
     getShopSignup3RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const shop = await getShopSignup3UseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdSignup3Controller,
 );
 
 // GET /shop-info/:id/signup/5
@@ -533,18 +290,7 @@ router.get(
     getShopSignup5RateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
-
-        try {
-            const shop = await getShopSignup5UseCase({ shopId, userId });
-
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoGetByIdSignup5Controller,
 );
 
 export default router;

@@ -1,16 +1,19 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
+import {
+    addressPatchByIdController,
+    addressGetSearchController,
+} from "../controllers/address.js";
 import { authenticateToken } from "../middleware/index.js";
-import { addressEditRateLimit, addressSearchRateLimit } from "../middleware/rateLimit/addressRateLimit.js";
+import {
+    addressEditRateLimit,
+    addressSearchRateLimit,
+} from "../middleware/rateLimit/addressRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { editAddressUseCase } from "../usecases/address/editAddress.js";
-import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
-import { AddressBody, addressBodySchema } from "../validators/body/address.js";
+import { addressBodySchema } from "../validators/body/address.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { ZipcodeQuery, zipcodeQuerySchema } from "../validators/query/address.js";
+import { zipcodeQuerySchema } from "../validators/query/address.js";
 
 const router = Router();
 
@@ -23,22 +26,7 @@ router.patch(
     validateBody(addressBodySchema),
     authenticateToken,
     addressEditRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const addressId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as AddressBody;
-
-        const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
-
-        try {
-            await editAddressUseCase({ userId, addressId, postNumber, todouhuken, shikutyouson, banchi, building });
-
-            res.status(200).json({ message: "住所を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    addressPatchByIdController,
 );
 
 // GET /address/search
@@ -48,21 +36,7 @@ router.get(
     "/search",
     addressSearchRateLimit,
     validateQuery(zipcodeQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const query = req.validatedQuery as ZipcodeQuery;
-
-        const zipcode = query.zipcode;
-
-        if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
-
-        try {
-            const address = await fetchAddressFromZipUseCase({ zipcode });
-
-            res.status(200).json({ address });
-        } catch (err) {
-            next(err);
-        }
-    },
+    addressGetSearchController,
 );
 
 export default router;

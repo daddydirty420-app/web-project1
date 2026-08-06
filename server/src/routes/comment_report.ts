@@ -1,12 +1,16 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    commentReportPostByIdController,
+    commentReportGetAllOptionsController,
+} from "../controllers/comment_report.js";
 import { authenticateToken } from "../middleware/index.js";
-import { commentReportRateLimit, getCommentReportRateLimit } from "../middleware/rateLimit/commentReportRateLimit.js";
+import {
+    commentReportRateLimit,
+    getCommentReportRateLimit,
+} from "../middleware/rateLimit/commentReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { getAllCommentReportOptions } from "../services/commentReport.js";
-import { createCommentReportUseCase } from "../usecases/commentReport/create.js";
-import { OptionIdBody, optionIdBodySchema } from "../validators/body/report.js";
+import { optionIdBodySchema } from "../validators/body/report.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -20,21 +24,7 @@ router.post(
     validateBody(optionIdBodySchema),
     authenticateToken,
     commentReportRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const commentId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as OptionIdBody;
-        const optionId = body.selected;
-
-        try {
-            await createCommentReportUseCase({ commentId, userId, optionId });
-
-            res.status(200).json({ message: "報告を作成しました" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentReportPostByIdController,
 );
 
 // GET /comment-report/all-options
@@ -43,15 +33,7 @@ router.post(
 router.get(
     "/all-options",
     getCommentReportRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const options = await getAllCommentReportOptions();
-
-            res.status(200).json({ options });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentReportGetAllOptionsController,
 );
 
 export default router;

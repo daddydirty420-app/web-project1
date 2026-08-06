@@ -1,6 +1,20 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
+import {
+    authPostLoginController,
+    authPostSetCookieController,
+    authPostClearCookieController,
+    authPostSignupController,
+    authPostResendVerificationCodeController,
+    authPostSignupVerifyController,
+    authPostRequestPasswordResetController,
+    authPostResetPwController,
+    authPatchChangePwController,
+    authPostRefreshTokenController,
+    authPostRehashPasswordController,
+    authPatchEmailController,
+    authPatchNewEmailController,
+    authGetStatusController,
+} from "../controllers/auth.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     emailChangeRateLimit,
@@ -15,41 +29,17 @@ import {
 } from "../middleware/rateLimit/authRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
-import { changePwUseCase } from "../usecases/auth/changePW.js";
-import { loginUseCase } from "../usecases/auth/login.js";
-import { changeNewEmailUseCase } from "../usecases/auth/newEmail.js";
-import { refreshTokenUseCase } from "../usecases/auth/refreshToken.js";
-import { rehashPasswordUseCase } from "../usecases/auth/rehashPassword.js";
-import { requestPasswordResetUseCase } from "../usecases/auth/requestPasswordReset.js";
-import { resendVerificationCodeUseCase } from "../usecases/auth/resendVerificationCode.js";
-import { resetPWUseCase } from "../usecases/auth/resetPW.js";
-import { signupUseCase } from "../usecases/auth/signup.js";
-import { signupVerifyUseCase } from "../usecases/auth/signupVerify.js";
 import {
-    getClearAccessTokenCookieOptions,
-    getClearRefreshTokenCookieOptions,
-    getRefreshTokenCookieOptions,
-} from "../utils/getRefreshCookies.js";
-import {
-    ChangePWBody,
     changePWBodySchema,
-    EmailBody,
     emailBodySchema,
-    EmailPasswordBody,
     emailPasswordBodySchema,
-    LoginBody,
     loginBodySchema,
-    ResetPWBody,
     resetPWBodySchema,
-    SetCookieBody,
     setCookieBodySchema,
-    SignupVerifyBody,
     signupVerifyBodySchema,
-    VerifyTokenBody,
     verifyTokenBodySchema,
 } from "../validators/body/auth.js";
-import { NewEmailTokenQuery, newEmailTokenQuerySchema } from "../validators/query/auth.js";
+import { newEmailTokenQuerySchema } from "../validators/query/auth.js";
 
 const router = Router();
 
@@ -60,33 +50,7 @@ router.post(
     "/login",
     loginRateLimit,
     validateBody(loginBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as LoginBody;
-
-        const { email, password, rememberMe } = body;
-
-        try {
-            const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
-                email,
-                password,
-                rememberMe,
-            });
-
-            res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
-
-            res.status(200).json({
-                id,
-                email,
-                user_name: userName,
-                admin,
-                rememberMe,
-                accessToken,
-                refreshToken,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostLoginController,
 );
 
 // POST /auth/set-cookie
@@ -95,26 +59,16 @@ router.post(
 router.post(
     "/set-cookie",
     validateBody(setCookieBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as SetCookieBody;
-
-        const { refreshToken, rememberMe } = body;
-
-        res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
-
-        res.status(200).json({ message: "Cookieをセットしました" });
-    },
+    authPostSetCookieController,
 );
 
 // POST /auth/clear-cookie
 // summary: クッキー削除
 // page: /my-page
-router.post("/clear-cookie", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    res.clearCookie("access-token", getClearAccessTokenCookieOptions());
-    res.clearCookie("refreshToken", getClearRefreshTokenCookieOptions());
-
-    res.status(200).json({ message: "Cookieを削除しました" });
-});
+router.post(
+    "/clear-cookie",
+    authPostClearCookieController,
+);
 
 // POST /auth/signup
 // summary: サインアップ
@@ -123,26 +77,7 @@ router.post(
     "/signup",
     signupRateLimit,
     validateBody(emailPasswordBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as EmailPasswordBody;
-
-        const { email, password } = body;
-
-        try {
-            const { expiresAt, reissueUrl } = await signupUseCase({
-                email,
-                password,
-            });
-
-            res.status(201).json({
-                message: "サインアップ成功！認証コードを送信しました！",
-                expiresAt,
-                reissueUrl,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostSignupController,
 );
 
 // POST /auth/resend-verification-code
@@ -152,23 +87,7 @@ router.post(
     "/resend-verification-code",
     resendVerifyCodeRateLimit,
     validateBody(verifyTokenBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as VerifyTokenBody;
-
-        try {
-            const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
-                token: body.token,
-            });
-
-            res.status(200).json({
-                message: "新しい認証コードを発行しました。",
-                expiresAt,
-                reissueUrl,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostResendVerificationCodeController,
 );
 
 // POST /auth/signup-verify
@@ -178,31 +97,7 @@ router.post(
     "/signup-verify",
     signupVerifyRateLimit,
     validateBody(signupVerifyBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as SignupVerifyBody;
-
-        const { verificationCode, rememberMe, referenceCode } = body;
-
-        try {
-            const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
-                verificationCode,
-                rememberMe,
-                referenceCode,
-            });
-
-            res.status(200).json({
-                id,
-                email,
-                user_name: userName,
-                admin,
-                rememberMe,
-                accessToken,
-                refreshToken,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostSignupVerifyController,
 );
 
 // POST /auth/request-password-reset
@@ -212,17 +107,7 @@ router.post(
     "/request-password-reset",
     pwResetRequestRateLimit,
     validateBody(emailBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as EmailBody;
-
-        try {
-            await requestPasswordResetUseCase({ email: body.email });
-
-            res.status(200).json({ message: "メールを送信しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostRequestPasswordResetController,
 );
 
 // POST /auth/reset-pw
@@ -232,19 +117,7 @@ router.post(
     "/reset-pw",
     pwResetRateLimit,
     validateBody(resetPWBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as ResetPWBody;
-
-        const { token, password } = body;
-
-        try {
-            await resetPWUseCase({ token, password });
-
-            res.status(200).json({ message: "パスワードを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPostResetPwController,
 );
 
 // PATCH /auth/change-pw
@@ -255,61 +128,24 @@ router.patch(
     pwChangeRateLimit,
     authenticateToken,
     validateBody(changePWBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as ChangePWBody;
-
-        const { currentPw, newPw } = body;
-
-        try {
-            await changePwUseCase({ userId, currentPw, newPw });
-
-            res.status(200).json({ message: "パスワードを更新しました " });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPatchChangePwController,
 );
 
 // POST /auth/refresh-token
 // summary: トークンリフレッシュ
 // page: middleware
-router.post("/refresh-token", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
-
-    if (!refreshTokenQuery) throw new AppError("INVALID_REFRESH_TOKEN", 401);
-
-    try {
-        const { accessToken, refreshToken, exp } = await refreshTokenUseCase({ refreshToken: refreshTokenQuery });
-
-        res.status(200).json({
-            accessToken,
-            refreshToken,
-            exp,
-        });
-    } catch (err) {
-        next(err);
-    }
-});
+router.post(
+    "/refresh-token",
+    authPostRefreshTokenController,
+);
 
 // POST /auth/rehash-password
 // summary: パスワード再ハッシュ
 // page:
-router.post("/rehash-password", async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const body = req.validatedBody as EmailPasswordBody;
-
-    const email = body.email;
-    const plainPassword = body.password;
-
-    try {
-        await rehashPasswordUseCase({ email, plainPassword });
-
-        res.status(200).json({ message: "パスワードをハッシュ化して保存しました！" });
-    } catch (err) {
-        next(err);
-    }
-});
+router.post(
+    "/rehash-password",
+    authPostRehashPasswordController,
+);
 
 // PATCH /auth/email
 // summary: メールアドレス変更リクエスト
@@ -319,21 +155,7 @@ router.patch(
     authenticateToken,
     emailChangeRequestRateLimit,
     validateBody(emailBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as EmailBody;
-
-        try {
-            await changeEmailUseCase({ userId, newEmail: body.email });
-
-            res.status(200).json({
-                message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPatchEmailController,
 );
 
 // PATCH /auth/new-email?token=""
@@ -343,24 +165,16 @@ router.patch(
     "/new-email",
     emailChangeRateLimit,
     validateQuery(newEmailTokenQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const query = req.validatedQuery as NewEmailTokenQuery;
-
-        try {
-            await changeNewEmailUseCase({ token: query.token });
-
-            res.status(200).json({ message: "メールアドレスを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    authPatchNewEmailController,
 );
 
 // GET /auth/status
 // summary: ログインステータス取得
 // page:
-router.get("/status", authenticateToken, (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({ message: "トークン有効", loggedIn: true, user: req.user });
-});
+router.get(
+    "/status",
+    authenticateToken,
+    authGetStatusController,
+);
 
 export default router;

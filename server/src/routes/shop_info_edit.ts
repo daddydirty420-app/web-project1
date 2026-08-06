@@ -1,5 +1,18 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    shopInfoEditPostByIdAddressController,
+    shopInfoEditPostByIdBankAccountController,
+    shopInfoEditPostByIdRepNameController,
+    shopInfoEditPostByIdCompanyNameController,
+    shopInfoEditPostByIdComFreeController,
+    shopInfoEditPatchByIdController,
+    shopInfoEditPatchByIdIdImageUploadController,
+    shopInfoEditGetByIdAddressController,
+    shopInfoEditGetByIdBankAccountController,
+    shopInfoEditGetByIdRepNameController,
+    shopInfoEditGetByIdConNameController,
+    shopInfoEditGetByIdComFreeConfirmController,
+} from "../controllers/shop_info_edit.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     getShopEditAddressRateLimit,
@@ -16,25 +29,14 @@ import {
 } from "../middleware/rateLimit/shopInfoEditRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { createAddressShopEditUseCase } from "../usecases/shopInfoEdit/create/createAddress.js";
-import { createBankAccountUseCase } from "../usecases/shopInfoEdit/create/createBankAccount.js";
-import { createShopEditComFreeUseCase } from "../usecases/shopInfoEdit/create/createComFree.js";
-import { createCompanyNameUseCase } from "../usecases/shopInfoEdit/create/createCompanyName.js";
-import { createRepNameUseCase } from "../usecases/shopInfoEdit/create/createRepName.js";
-import { getAddressShopEditUseCase } from "../usecases/shopInfoEdit/get/getAddress.js";
-import { getBankAccountShopEditUseCase } from "../usecases/shopInfoEdit/get/getBankAccount.js";
-import { getShopComFreeConfirmUseCase } from "../usecases/shopInfoEdit/get/getComFreeConfirm.js";
-import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.js";
-import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
-import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
-import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
-import { AddressBody, addressBodySchema } from "../validators/body/address.js";
-import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
-import { RepNameBody, repNameBodySchema, ShopIdCardBody, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
+import { addressBodySchema } from "../validators/body/address.js";
+import { bankBodySchema } from "../validators/body/bankAccount.js";
 import {
-    ComFreeIdBody,
+    repNameBodySchema,
+    shopIdCardBodySchema,
+} from "../validators/body/shopInfo.js";
+import {
     comFreeIdBodySchema,
-    CreateCompanyNameBody,
     createCompanyNameBodySchema,
 } from "../validators/body/shopInfoEdit.js";
 import { idParamSchema } from "../validators/params/id.js";
@@ -50,24 +52,7 @@ router.post(
     shopEditAddressEditRateLimit,
     validateParams(idParamSchema),
     validateBody(addressBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as AddressBody;
-
-        try {
-            await createAddressShopEditUseCase({
-                shopId,
-                userId,
-                body,
-            });
-
-            res.status(200).json({ message: "住所の変更を受け付けました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPostByIdAddressController,
 );
 
 // POST /shop-info-edit/:id/bank-account
@@ -79,24 +64,7 @@ router.post(
     shopEditBankEditRateLimit,
     validateParams(idParamSchema),
     validateBody(bankBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as BankBody;
-
-        try {
-            await createBankAccountUseCase({
-                userId,
-                shopId,
-                body,
-            });
-
-            res.status(200).json({ message: "口座情報の変更を受け付けました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPostByIdBankAccountController,
 );
 
 // POST /shop-info-edit/:id/rep-name
@@ -108,19 +76,7 @@ router.post(
     shopEditRepNameEditRateLimit,
     validateParams(idParamSchema),
     validateBody(repNameBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as RepNameBody;
-
-        try {
-            const { frontSignedUrl, rearSignedUrl } = await createRepNameUseCase({ shopId, userId, body });
-
-            res.status(200).json({ frontSignedUrl, rearSignedUrl });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPostByIdRepNameController,
 );
 
 // POST /shop-info-edit/:id/company-name
@@ -132,21 +88,7 @@ router.post(
     shopEditCompanyNameRateLimit,
     validateParams(idParamSchema),
     validateBody(createCompanyNameBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as CreateCompanyNameBody;
-        const companyName = body.companyName;
-
-        try {
-            await createCompanyNameUseCase({ shopId, userId, companyName });
-
-            res.status(200).json({ message: "会社名の変更を受け付けました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPostByIdCompanyNameController,
 );
 
 // POST /shop-info-edit/:id/com-free
@@ -158,21 +100,7 @@ router.post(
     shopEditComFreeRateLimit,
     validateParams(idParamSchema),
     validateBody(comFreeIdBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as ComFreeIdBody;
-        const comFreeId = body.selectOption;
-
-        try {
-            const editId = await createShopEditComFreeUseCase({ shopId, userId, comFreeId });
-
-            res.status(200).json({ editId });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPostByIdComFreeController,
 );
 
 // PATCH /shop-info-edit/:id
@@ -183,19 +111,7 @@ router.patch(
     authenticateToken,
     patchShopEditRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-        const updateData = req.body;
-
-        try {
-            await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
-
-            res.status(200).json({ message: "更新しました" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPatchByIdController,
 );
 
 // PATCH /shop-info-edit/:id/id-image-upload
@@ -207,28 +123,7 @@ router.patch(
     shopEditIdUploadRateLimit,
     validateParams(idParamSchema),
     validateBody(shopIdCardBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as ShopIdCardBody;
-
-        try {
-            const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({
-                shopEditId,
-                userId,
-                body,
-            });
-
-            res.status(200).json({
-                message: "身分証・許認可証のDB登録が完了しました。",
-                frontSignedUrl,
-                rearSignedUrl,
-                permitSignedUrls,
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditPatchByIdIdImageUploadController,
 );
 
 // GET /shop-info-edit/:id/address
@@ -239,18 +134,7 @@ router.get(
     getShopEditAddressRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getAddressShopEditUseCase({ shopEditId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditGetByIdAddressController,
 );
 
 // GET /shop-info-edit/:id/bank-account
@@ -260,18 +144,7 @@ router.get(
     "/:id/bank-account",
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getBankAccountShopEditUseCase({ shopEditId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditGetByIdBankAccountController,
 );
 
 // GET /shop-info-edit/:id/rep-name
@@ -282,18 +155,7 @@ router.get(
     getShopEditRepNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const name = await getRepNameEditUseCase({ shopEditId, userId });
-
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditGetByIdRepNameController,
 );
 
 // GET /shop-info-edit/:id/con-name
@@ -304,18 +166,7 @@ router.get(
     getShopEditConNameRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const name = await getConNameEditUseCase({ shopEditId, userId });
-
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditGetByIdConNameController,
 );
 
 // GET /shop-info-edit/:id/com-free-confirm
@@ -326,18 +177,7 @@ router.get(
     getShopEditComFreeConfirmRateLimit,
     authenticateToken,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopEditId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const shopEdit = await getShopComFreeConfirmUseCase({ shopEditId, userId });
-
-            res.status(200).json({ shopEdit });
-        } catch (err) {
-            next(err);
-        }
-    },
+    shopInfoEditGetByIdComFreeConfirmController,
 );
 
 export default router;

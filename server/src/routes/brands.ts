@@ -1,10 +1,8 @@
 import { Router } from "express";
-import type { Request, Response } from "express-serve-static-core";
+import { brandsGetSuggestController } from "../controllers/brands.js";
 import { brandSuggestRateLimit } from "../middleware/rateLimit/brandRateLimit.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { getBrandsSuggestUseCase } from "../usecases/brands/getBrandsSuggest.js";
-import { normalizeJapanese } from "../utils/normalizeJapanese.js";
-import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
+import { keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
@@ -15,25 +13,7 @@ router.get(
     "/suggest",
     brandSuggestRateLimit,
     validateQuery(keywordOptionalQuerySchema),
-    async (req: Request, res: Response): Promise<void> => {
-        const query = req.validatedQuery as KeywordOptionalQuery;
-
-        if (!query.keyword) {
-            res.status(200).json({ suggest: [] });
-            return;
-        }
-
-        const keyword = normalizeJapanese(query.keyword);
-
-        try {
-            const brands = await getBrandsSuggestUseCase({ keyword });
-
-            res.status(200).json({ brands });
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ suggest: [] });
-        }
-    },
+    brandsGetSuggestController,
 );
 
 export default router;

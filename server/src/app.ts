@@ -40,7 +40,6 @@ import NameRouter from "./routes/name.js";
 import NotificationRouter from "./routes/notification.js";
 import OrdersRouter from "./routes/orders.js";
 import PointsHistoryRouter from "./routes/points_history.js";
-import PointsUriageOverRouter from "./routes/points_uriage_over.js";
 import ReferenceCodeRouter from "./routes/reference_code.js";
 import SaleRouter from "./routes/sale.js";
 import SearchRouter from "./routes/search.js";
@@ -110,7 +109,6 @@ app.use("/api/name", NameRouter);
 app.use("/api/notification", NotificationRouter);
 app.use("/api/orders", OrdersRouter);
 app.use("/api/points-history", PointsHistoryRouter);
-app.use("/api/points-uriage-over", PointsUriageOverRouter);
 app.use("/api/reference-code", ReferenceCodeRouter);
 app.use("/api/item-report", ItemReportRouter);
 app.use("/api/sale", SaleRouter);
@@ -136,7 +134,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
     console.error(err);
 
     if (err instanceof AppError) {

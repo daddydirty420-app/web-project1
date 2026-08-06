@@ -1,6 +1,16 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import {
+    commentPostByIdController,
+    commentPatchByIdSortNumberAddController,
+    commentPatchByIdSortNumberDecreaseController,
+    commentDeleteByIdController,
+    commentGetByIdController,
+    commentGetByIdReplyController,
+} from "../controllers/comment.js";
+import {
+    authenticateOptional,
+    authenticateToken,
+} from "../middleware/index.js";
 import {
     createCommentRateLimit,
     deleteCommentRateLimit,
@@ -10,23 +20,10 @@ import {
 } from "../middleware/rateLimit/commentRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { deleteCommentUseCase } from "../usecases/comment/delete.js";
-import { getAllCommentsUseCase } from "../usecases/comment/getAll.js";
-import { getAllRepliesUseCase } from "../usecases/comment/getReply.js";
-import {
-    patchCommentSortNumberAddUseCase,
-    patchCommentSortNumberDecreaseUseCase,
-} from "../usecases/comment/patchSortNumber.js";
-import { uploadCommentUseCase } from "../usecases/comment/upload.js";
-import { CreateCommentBody } from "../validators/body/comment.js";
 import { idParamSchema } from "../validators/params/id.js";
 import {
-    CommentPageQuery,
-    CommentSellerMeAdminQuery,
     commentSellerMeAdminQuerySchema,
-    CommentSortNumberQuery,
     commentSortNumberQuerySchema,
-    CreateCommentQuery,
     createCommentQuerySchema,
 } from "../validators/query/comment.js";
 
@@ -41,32 +38,7 @@ router.post(
     validateQuery(createCommentQuerySchema),
     authenticateToken,
     createCommentRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const itemId = Number(req.params.id);
-
-        const query = req.validatedQuery as CreateCommentQuery;
-        const { sellerMe, parentId } = query;
-
-        const body = req.validatedBody as CreateCommentBody;
-        const commentText = body.inputComment;
-        const commentLength = commentText.length;
-
-        try {
-            const comment = await uploadCommentUseCase({
-                userId,
-                itemId,
-                commentText,
-                commentLength,
-                sellerMe,
-                parentId,
-            });
-
-            res.status(200).json({ comment });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentPostByIdController,
 );
 
 // PATCH /comment/:id/sort-number/add?number=number
@@ -77,18 +49,7 @@ router.patch(
     editSortCommentRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSortNumberQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const commentId = Number(req.params.id);
-
-        const query = req.validatedQuery as CommentSortNumberQuery;
-        const number = query.number;
-
-        patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
-            console.error(err);
-        });
-
-        res.status(202).json({ message: "sort_numberの更新を受け付けました" });
-    },
+    commentPatchByIdSortNumberAddController,
 );
 
 // PATCH /comment/:id/sort-number/decrease?number=number
@@ -99,18 +60,7 @@ router.patch(
     editSortCommentRateLimit,
     validateParams(idParamSchema),
     validateQuery(commentSortNumberQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const commentId = Number(req.params.id);
-
-        const query = req.validatedQuery as CommentSortNumberQuery;
-        const number = query.number;
-
-        patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
-            console.error(err);
-        });
-
-        res.status(202).json({ message: "sort_numberの更新を受け付けました" });
-    },
+    commentPatchByIdSortNumberDecreaseController,
 );
 
 // DELETE /comment/:id?page=""
@@ -121,21 +71,7 @@ router.delete(
     validateParams(idParamSchema),
     authenticateToken,
     deleteCommentRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const commentId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as CommentPageQuery;
-        const page = query.page;
-
-        try {
-            await deleteCommentUseCase({ userId, commentId, page });
-
-            res.status(200).json({ message: "コメントを削除しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentDeleteByIdController,
 );
 
 // GET /comment/:id?sellerMe=boolean(&admin=boolean)
@@ -147,26 +83,7 @@ router.get(
     validateParams(idParamSchema),
     validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user?.id ?? null;
-        const itemId = Number(req.params.id);
-
-        const query = req.validatedQuery as CommentSellerMeAdminQuery;
-        const { sellerMe, admin } = query;
-
-        try {
-            const commentList = await getAllCommentsUseCase({
-                itemId,
-                userId,
-                sellerMe,
-                admin,
-            });
-
-            res.status(200).json({ commentList });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentGetByIdController,
 );
 
 // GET /comment/:id/reply?sellerMe=boolean(&admin=boolean)
@@ -178,26 +95,7 @@ router.get(
     validateParams(idParamSchema),
     validateQuery(commentSellerMeAdminQuerySchema),
     authenticateOptional,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user?.id ?? null;
-        const parentCommentId = Number(req.params.id);
-
-        const query = req.validatedQuery as CommentSellerMeAdminQuery;
-        const { sellerMe, admin } = query;
-
-        try {
-            const commentList = await getAllRepliesUseCase({
-                parentCommentId,
-                userId,
-                sellerMe,
-                admin,
-            });
-
-            res.status(200).json({ commentList });
-        } catch (err) {
-            next(err);
-        }
-    },
+    commentGetByIdReplyController,
 );
 
 export default router;

@@ -1,10 +1,9 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { pointsHistoryGetRootController } from "../controllers/points_history.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getPointsHistoryRateLimit } from "../middleware/rateLimit/pointsHistoryRateLimit.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { getMyPointsHistoryUseCase } from "../usecases/pointsHistory/getMyPointsHistory.js";
-import { GetPointsHistoryQuery, getPointsHistoryQuerySchema } from "../validators/query/pointsHistory.js";
+import { getPointsHistoryQuerySchema } from "../validators/query/pointsHistory.js";
 
 const router = Router();
 
@@ -16,21 +15,7 @@ router.get(
     getPointsHistoryRateLimit,
     authenticateToken,
     validateQuery(getPointsHistoryQuerySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as GetPointsHistoryQuery;
-
-        const { limit, cursor } = query;
-
-        try {
-            const { history, hasMore, nextCursor } = await getMyPointsHistoryUseCase({ userId, limit, cursor });
-
-            res.status(200).json({ history, hasMore, nextCursor });
-        } catch (err) {
-            next(err);
-        }
-    },
+    pointsHistoryGetRootController,
 );
 
 export default router;
