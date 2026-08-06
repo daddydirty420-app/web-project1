@@ -19,17 +19,17 @@ import {
 // summary: コメント作成
 // page: /item
 export const commentPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const itemId = Number(req.params.id);
-
-    const query = req.validatedQuery as CreateCommentQuery;
-    const { sellerMe, parentId } = query;
-
-    const body = req.validatedBody as CreateCommentBody;
-    const commentText = body.inputComment;
-    const commentLength = commentText.length;
-
     try {
+        const userId = req.user!.id;
+        const itemId = Number(req.params.id);
+
+        const query = req.validatedQuery as CreateCommentQuery;
+        const { sellerMe, parentId } = query;
+
+        const body = req.validatedBody as CreateCommentBody;
+        const commentText = body.inputComment;
+        const commentLength = commentText.length;
+
         const comment = await uploadCommentUseCase({
             userId,
             itemId,
@@ -81,13 +81,13 @@ export const commentPatchByIdSortNumberDecreaseController = async (req: Request,
 // summary: コメント削除
 // page: /item・/item/admin
 export const commentDeleteByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const commentId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as CommentPageQuery;
-    const page = query.page;
-
     try {
+        const commentId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as CommentPageQuery;
+        const page = query.page;
+
         await deleteCommentUseCase({ userId, commentId, page });
 
         res.status(200).json({ message: "コメントを削除しました。" });
@@ -100,13 +100,13 @@ export const commentDeleteByIdController = async (req: Request, res: Response, n
 // summary: コメント一覧取得
 // page: /item
 export const commentGetByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-    const itemId = Number(req.params.id);
-
-    const query = req.validatedQuery as CommentSellerMeAdminQuery;
-    const { sellerMe, admin } = query;
-
     try {
+        const userId = req.user?.id ?? null;
+        const itemId = Number(req.params.id);
+
+        const query = req.validatedQuery as CommentSellerMeAdminQuery;
+        const { sellerMe, admin } = query;
+
         const commentList = await getAllCommentsUseCase({
             itemId,
             userId,
@@ -124,13 +124,13 @@ export const commentGetByIdController = async (req: Request, res: Response, next
 // summary: 返信リスト取得
 // page: /item
 export const commentGetByIdReplyController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-    const parentCommentId = Number(req.params.id);
-
-    const query = req.validatedQuery as CommentSellerMeAdminQuery;
-    const { sellerMe, admin } = query;
-
     try {
+        const userId = req.user?.id ?? null;
+        const parentCommentId = Number(req.params.id);
+
+        const query = req.validatedQuery as CommentSellerMeAdminQuery;
+        const { sellerMe, admin } = query;
+
         const commentList = await getAllRepliesUseCase({
             parentCommentId,
             userId,

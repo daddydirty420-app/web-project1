@@ -10,12 +10,12 @@ import { GetTransferHistoryQuery } from "../validators/query/transfer.js";
 // summary: 振込申請データ作成
 // page: /transfer/request
 export const transferPostRequestController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as TransferBody;
-    const { value, limit } = body;
-
     try {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as TransferBody;
+        const { value, limit } = body;
+
         const transId = await createTransferRequestUseCase({ userId, requestValue: value, limit });
 
         res.status(200).json({
@@ -31,12 +31,12 @@ export const transferPostRequestController = async (req: Request, res: Response,
 // summary: 売上金ポイント変換
 // page: /transfer/points
 export const transferPostPointsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as TransferBody;
-    const { value, limit } = body;
-
     try {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as TransferBody;
+        const { value, limit } = body;
+
         await createTransferPointsUseCase({ userId, value, limit });
 
         res.status(200).json({ message: "売上金をポイント変換しました。" });
@@ -49,12 +49,12 @@ export const transferPostPointsController = async (req: Request, res: Response, 
 // summary: 振込申請履歴取得
 // page: /transfer/history
 export const transferGetHistoryController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as GetTransferHistoryQuery;
-    const { limit, cursor } = query;
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as GetTransferHistoryQuery;
+        const { limit, cursor } = query;
+
         const { history, hasMore, nextCursor } = await getTransferHistoryUseCase({ userId, limit, cursor });
 
         res.status(200).json({ history, hasMore, nextCursor });
@@ -71,10 +71,10 @@ export const transferGetByIdDetailController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const transId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const transId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const transfer = await getTransferDetailUseCase({ transId, userId });
 
         res.status(200).json({ transfer });

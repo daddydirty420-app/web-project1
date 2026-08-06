@@ -6,11 +6,11 @@ import { BranchSearchQuery } from "../validators/query/branches.js";
 // summary: 支店名検索
 // page: /edit/accountなど
 export const branchesGetSearchController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const query = req.validatedQuery as BranchSearchQuery;
-
-    const { bankCode, keyword } = query;
-
     try {
+        const query = req.validatedQuery as BranchSearchQuery;
+
+        const { bankCode, keyword } = query;
+
         const matchedBranches = await searchBranchesUseCase({ kw: keyword, bankCode });
 
         res.status(200).json({ branches: matchedBranches });

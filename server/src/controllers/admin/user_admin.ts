@@ -15,17 +15,17 @@ export const adminUserAdminDeleteByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const pageUserId = Number(req.params.id);
-    const adminId = req.user!.id;
-
-    const body = req.validatedBody as DeleteReasonBody;
-
-    const deleteReason = body.deleteReason;
-    if (!deleteReason.trim()) {
-        throw new AppError("INVALID_BODY_EMPTY", 400);
-    }
-
     try {
+        const pageUserId = Number(req.params.id);
+        const adminId = req.user!.id;
+
+        const body = req.validatedBody as DeleteReasonBody;
+
+        const deleteReason = body.deleteReason;
+        if (!deleteReason.trim()) {
+            throw new AppError("INVALID_BODY_EMPTY", 400);
+        }
+
         await deleteUserAdminUseCase({ pageUserId, adminId, deleteReason });
 
         res.status(200).json({ message: "ユーザーを削除しました。" });
@@ -42,12 +42,12 @@ export const adminUserAdminPatchByIdAddPenaltyController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const pageUserId = Number(req.params.id);
-
-    const body = req.validatedBody as AddPenaltyBody;
-    const addPenalty = body.addPenalty;
-
     try {
+        const pageUserId = Number(req.params.id);
+
+        const body = req.validatedBody as AddPenaltyBody;
+        const addPenalty = body.addPenalty;
+
         await addPenaltyUseCase({ pageUserId, addPenalty });
 
         res.status(200).json({ message: "ペナルティポイントを追加しました。" });
@@ -64,13 +64,13 @@ export const adminUserAdminPatchByIdDeleteUriageController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const pageUserId = Number(req.params.id);
-
-    const body = req.validatedBody as DeleteUriageBody;
-
-    const deleteUriage = body.deleteUriage;
-
     try {
+        const pageUserId = Number(req.params.id);
+
+        const body = req.validatedBody as DeleteUriageBody;
+
+        const deleteUriage = body.deleteUriage;
+
         await deleteUriageUseCase({ pageUserId, deleteUriage });
 
         res.status(200).json({
@@ -90,9 +90,9 @@ export const adminUserAdminGetByIdProfileController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const pageUserId = Number(req.params.id);
-
     try {
+        const pageUserId = Number(req.params.id);
+
         const user = await getAdminProfileUseCase({ pageUserId });
 
         res.status(200).json({ user });

@@ -11,13 +11,13 @@ export const commentReportPostByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const commentId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as OptionIdBody;
-    const optionId = body.selected;
-
     try {
+        const commentId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as OptionIdBody;
+        const optionId = body.selected;
+
         await createCommentReportUseCase({ commentId, userId, optionId });
 
         res.status(200).json({ message: "報告を作成しました" });

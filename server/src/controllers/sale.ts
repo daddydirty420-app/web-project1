@@ -7,12 +7,12 @@ import { SaleEditBody } from "../validators/body/sale.js";
 // summary: セール開始
 // page: /item
 export const salePatchByIdEditController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const saleId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as SaleEditBody;
-
     try {
+        const saleId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as SaleEditBody;
+
         await saleEditUseCase({ saleId, userId, body });
 
         res.status(200).json({ message: "値引きしました！" });
@@ -25,10 +25,10 @@ export const salePatchByIdEditController = async (req: Request, res: Response, n
 // summary: セール終了
 // page: /item
 export const salePatchByIdStopController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const saleId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const saleId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await saleStopUseCase({ saleId, userId });
 
         res.status(200).json({ message: "値引きを終了しました！" });

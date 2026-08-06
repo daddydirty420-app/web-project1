@@ -10,13 +10,13 @@ export const pointsHistoryGetRootController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as GetPointsHistoryQuery;
-
-    const { limit, cursor } = query;
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as GetPointsHistoryQuery;
+
+        const { limit, cursor } = query;
+
         const { history, hasMore, nextCursor } = await getMyPointsHistoryUseCase({ userId, limit, cursor });
 
         res.status(200).json({ history, hasMore, nextCursor });

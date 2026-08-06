@@ -23,14 +23,14 @@ import { GetProfileQuery, ProfileEditQuery } from "../validators/query/users.js"
 // summary: プロフィール編集
 // page: /edit/profile
 export const usersPatchProfileController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as ProfileEditQuery;
-    const imageEdit = query.imageEdit;
-
-    const body = req.validatedBody as ProfileEditBody;
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as ProfileEditQuery;
+        const imageEdit = query.imageEdit;
+
+        const body = req.validatedBody as ProfileEditBody;
+
         const signedUrl = await editProfileUseCase({ userId, body, imageEdit });
 
         res.status(200).json({ signedUrl });
@@ -47,12 +47,12 @@ export const usersPatchPhoneNumberController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as PhoneNumberBody;
-    const phoneNumber = body.phoneNumber;
-
     try {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as PhoneNumberBody;
+        const phoneNumber = body.phoneNumber;
+
         await editPhoneNumber({ userId, phoneNumber });
 
         res.status(200).json({ message: "電話番号を更新しました。" });
@@ -65,10 +65,10 @@ export const usersPatchPhoneNumberController = async (
 // summary: 本人確認リクエスト
 // page: /edit/honnin
 export const usersPatchHonninController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const body = req.validatedBody as HonninBody;
-
     try {
+        const userId = req.user!.id;
+        const body = req.validatedBody as HonninBody;
+
         const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
 
         res.status(200).json({
@@ -84,12 +84,12 @@ export const usersPatchHonninController = async (req: Request, res: Response, ne
 // summary: プロフィール表示データ取得
 // page: /profile/[id]
 export const usersGetByIdProfileController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = Number(req.params.id);
-
-    const query = req.validatedQuery as GetProfileQuery;
-    const { page, limit } = query;
-
     try {
+        const userId = Number(req.params.id);
+
+        const query = req.validatedQuery as GetProfileQuery;
+        const { page, limit } = query;
+
         const { user, hasShop, items, hasItemCount, totalPages } = await getProfileUseCase({ userId, page, limit });
 
         res.status(200).json({
@@ -110,9 +110,9 @@ export const usersGetByIdProfileController = async (req: Request, res: Response,
 // summary: スター数取得
 // page: /profileなど
 export const usersGetByIdStarController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = Number(req.params.id);
-
     try {
+        const userId = Number(req.params.id);
+
         const user = await getStar({ userId });
 
         res.status(200).json({ user });
@@ -129,9 +129,9 @@ export const usersGetByIdProfileMetadataController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = Number(req.params.id);
-
     try {
+        const userId = Number(req.params.id);
+
         const user = await getProfileMetadata({ userId });
 
         res.status(200).json({ user });
@@ -144,9 +144,9 @@ export const usersGetByIdProfileMetadataController = async (
 // summary: マイページ表示データ取得
 // page: /my-page
 export const usersGetMyPageController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const { user, hasShop, itemCount, soldItemCount, unreadCount, referenceCount } = await getMyPageUseCase({
             userId,
         });
@@ -170,9 +170,9 @@ export const usersGetMyPageController = async (req: Request, res: Response, next
 // summary: お問い合わせフォーム表示データ取得
 // page: /inquiry
 export const usersGetInquiryController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getInquiryUserUseCase({ userId });
 
         res.status(200).json({ user });
@@ -185,9 +185,9 @@ export const usersGetInquiryController = async (req: Request, res: Response, nex
 // summary: 電話番号取得
 // page: /edit/phone-number
 export const usersGetPhoneNumberController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getPhoneNumberUseCase({ userId });
 
         res.status(200).json({ user });
@@ -204,9 +204,9 @@ export const usersGetProfileEditDataController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getProfileEditDataUseCase({ userId });
 
         res.status(200).json({ user });
@@ -219,9 +219,9 @@ export const usersGetProfileEditDataController = async (
 // summary: 本人確認フォーム表示データ取得
 // page: /edit/honnin
 export const usersGetHonninController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const { user, genderAllOptions } = await getHonninEditUseCase({ userId });
 
         res.status(200).json({
@@ -241,9 +241,9 @@ export const usersGetTransferPointsController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getUserTransferPointsUseCase({ userId });
 
         res.status(200).json({ user });
@@ -260,9 +260,9 @@ export const usersGetTransferRequestController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getUserTransferRequestUseCase({ userId });
 
         res.status(200).json({ user });
@@ -279,9 +279,9 @@ export const usersGetCurrentPointsController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getMePointsUseCase({ userId });
 
         res.status(200).json({ user });
@@ -298,9 +298,9 @@ export const usersGetCurrentUriagekinController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const user = await getMeUriagekinUseCase({ userId });
 
         res.status(200).json({ user });
@@ -313,9 +313,9 @@ export const usersGetCurrentUriagekinController = async (
 // summary: 住所取得
 // page: /edit/address
 export const usersGetMyaddressController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const data = await getMyAddressUseCase({ userId });
 
         res.status(200).json({ data });
@@ -328,9 +328,9 @@ export const usersGetMyaddressController = async (req: Request, res: Response, n
 // summary: 口座情報取得
 // page: /edit/account
 export const usersGetMyaccountController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const data = await getMyAccountUseCase({ userId });
 
         res.status(200).json({ data });
@@ -343,9 +343,9 @@ export const usersGetMyaccountController = async (req: Request, res: Response, n
 // summary: 自分の氏名取得
 // page: /edit/nameなど
 export const usersGetMynameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const name = await getMyNameUseCase({ userId });
 
         res.status(200).json({ name });

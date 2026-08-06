@@ -7,13 +7,13 @@ import { OptionIdBody } from "../validators/body/report.js";
 // summary: item報告作成
 // page: /report/item/[id]
 export const itemReportPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as OptionIdBody;
-    const optionId = body.selected;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as OptionIdBody;
+        const optionId = body.selected;
+
         await createItemReportUseCase({ itemId, userId, optionId });
 
         res.status(200).json({ message: "報告を作成しました" });

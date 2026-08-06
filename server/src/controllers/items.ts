@@ -40,9 +40,9 @@ import type {
 // summary: 商品データ作成
 // page: /upload/before
 export const createItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const itemId = await createItemsUseCase({ userId });
 
         res.status(200).json({ itemId });
@@ -166,10 +166,10 @@ export const patchItemAccessLogsController = async (req: Request, res: Response)
 // summary: 商品データ復元
 // page: /item/deleted/[id]
 export const restoreItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await restoreItemUseCase({ userId, itemId });
 
         res.status(200).json({ message: "商品を復元しました" });

@@ -9,9 +9,9 @@ export const referenceCodePostOutputController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const output = await outputReferenceCodeUseCase({ userId });
 
         res.status(200).json({ output });

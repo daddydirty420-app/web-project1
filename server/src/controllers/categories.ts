@@ -9,9 +9,9 @@ export const categoriesGetByIdLevel2Controller = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const parentId = Number(req.params.id);
-
     try {
+        const parentId = Number(req.params.id);
+
         const category2 = await getLevel2UseCase({ parentId });
 
         res.status(200).json({ category2 });

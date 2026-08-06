@@ -11,11 +11,11 @@ export const bankAccountPostByIdShopController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-    const body = req.validatedBody as BankBody;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const body = req.validatedBody as BankBody;
+
         await createShopAccount({ shopId, userId, body });
 
         res.status(200).json({ message: "口座情報を登録しました。" });
@@ -32,12 +32,12 @@ export const bankAccountPatchByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const accountId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as BankBody;
-
     try {
+        const accountId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as BankBody;
+
         await editAccountUseCase({
             userId,
             accountId,

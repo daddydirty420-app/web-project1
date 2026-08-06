@@ -12,19 +12,19 @@ export const adminItemAdminDeleteByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const adminId = req.user!.id;
-
-    const body = req.validatedBody as DeleteReasonBody;
-
-    const deleteReason = body.deleteReason;
-
-    if (!deleteReason.trim()) {
-        throw new AppError("INVALID_BODY_EMPTY", 400);
-    }
-
     try {
+        const itemId = Number(req.params.id);
+
+        const adminId = req.user!.id;
+
+        const body = req.validatedBody as DeleteReasonBody;
+
+        const deleteReason = body.deleteReason;
+
+        if (!deleteReason.trim()) {
+            throw new AppError("INVALID_BODY_EMPTY", 400);
+        }
+
         await deleteAdminItemUseCase({ itemId, adminId, deleteReason });
 
         res.status(200).json({ message: "商品を削除しました。" });
@@ -41,10 +41,10 @@ export const adminItemAdminGetByIdItemPageController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const { item, likeCount, commentCount, reportCount, me } = await getAdminItemPageUseCase({
             itemId,
             userId,

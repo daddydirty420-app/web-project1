@@ -14,39 +14,39 @@ import { UserItemsListQuery, UserItemsListType } from "../../../validators/query
 // summary: ユーザー関連各種商品リスト取得
 // page: /item-list/...
 export const usersMeItemsGetRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as UserItemsListQuery;
-
-    const type = query.type;
-
-    const page = query.page ?? 1;
-
-    const status = query.status;
-
-    const rawKeyword = query.keyword;
-
-    const keyword = rawKeyword ? normalizeJapanese(rawKeyword) : undefined;
-
-    const baseParams = { page, userId, keyword };
-
-    const usecaseMap: Record<UserItemsListType, () => Promise<any>> = {
-        cart: () => getUserItemsCartsUseCase(baseParams),
-        deleted: () => getDeletedItemsUseCase(baseParams),
-        draft: () => getDraftItemsUseCase(baseParams),
-        like: () => getUserItemsLikesUseCase(baseParams),
-        stock: () => getStockItemsUseCase(baseParams),
-        uploaded: () => getUploadedItemsUseCase({ ...baseParams, status }),
-        watchHistory: () => getUserItemsWatchUseCase(baseParams),
-    };
-
-    const usecase = usecaseMap[type];
-
-    if (!usecase) {
-        throw new AppError("INVALID_TYPE", 400);
-    }
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as UserItemsListQuery;
+
+        const type = query.type;
+
+        const page = query.page ?? 1;
+
+        const status = query.status;
+
+        const rawKeyword = query.keyword;
+
+        const keyword = rawKeyword ? normalizeJapanese(rawKeyword) : undefined;
+
+        const baseParams = { page, userId, keyword };
+
+        const usecaseMap: Record<UserItemsListType, () => Promise<any>> = {
+            cart: () => getUserItemsCartsUseCase(baseParams),
+            deleted: () => getDeletedItemsUseCase(baseParams),
+            draft: () => getDraftItemsUseCase(baseParams),
+            like: () => getUserItemsLikesUseCase(baseParams),
+            stock: () => getStockItemsUseCase(baseParams),
+            uploaded: () => getUploadedItemsUseCase({ ...baseParams, status }),
+            watchHistory: () => getUserItemsWatchUseCase(baseParams),
+        };
+
+        const usecase = usecaseMap[type];
+
+        if (!usecase) {
+            throw new AppError("INVALID_TYPE", 400);
+        }
+
         const { itemList, totalPages } = await usecase();
 
         res.status(200).json({ itemList, totalPages });

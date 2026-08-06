@@ -6,9 +6,9 @@ import { KeywordQuery } from "../validators/query/keyword.js";
 // summary: 銀行検索
 // page: /edit/accountなど
 export const banksGetSearchController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const query = req.validatedQuery as KeywordQuery;
-
     try {
+        const query = req.validatedQuery as KeywordQuery;
+
         const matchedBanks = await searchBanksUseCase({ kw: query.keyword });
 
         res.status(200).json({ banks: matchedBanks });

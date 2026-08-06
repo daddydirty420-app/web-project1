@@ -24,12 +24,12 @@ export const shopInfoEditPostByIdAddressController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as AddressBody;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as AddressBody;
+
         await createAddressShopEditUseCase({
             shopId,
             userId,
@@ -50,12 +50,12 @@ export const shopInfoEditPostByIdBankAccountController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as BankBody;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as BankBody;
+
         await createBankAccountUseCase({
             userId,
             shopId,
@@ -76,11 +76,11 @@ export const shopInfoEditPostByIdRepNameController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-    const body = req.validatedBody as RepNameBody;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+        const body = req.validatedBody as RepNameBody;
+
         const { frontSignedUrl, rearSignedUrl } = await createRepNameUseCase({ shopId, userId, body });
 
         res.status(200).json({ frontSignedUrl, rearSignedUrl });
@@ -97,13 +97,13 @@ export const shopInfoEditPostByIdCompanyNameController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as CreateCompanyNameBody;
-    const companyName = body.companyName;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as CreateCompanyNameBody;
+        const companyName = body.companyName;
+
         await createCompanyNameUseCase({ shopId, userId, companyName });
 
         res.status(200).json({ message: "会社名の変更を受け付けました。" });
@@ -120,13 +120,13 @@ export const shopInfoEditPostByIdComFreeController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as ComFreeIdBody;
-    const comFreeId = body.selectOption;
-
     try {
+        const shopId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as ComFreeIdBody;
+        const comFreeId = body.selectOption;
+
         const editId = await createShopEditComFreeUseCase({ shopId, userId, comFreeId });
 
         res.status(200).json({ editId });
@@ -143,11 +143,11 @@ export const shopInfoEditPatchByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-    const updateData = req.body;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+        const updateData = req.body;
+
         await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
 
         res.status(200).json({ message: "更新しました" });
@@ -164,11 +164,11 @@ export const shopInfoEditPatchByIdIdImageUploadController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-    const body = req.validatedBody as ShopIdCardBody;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+        const body = req.validatedBody as ShopIdCardBody;
+
         const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({
             shopEditId,
             userId,
@@ -194,10 +194,10 @@ export const shopInfoEditGetByIdAddressController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const data = await getAddressShopEditUseCase({ shopEditId, userId });
 
         res.status(200).json({ data });
@@ -214,10 +214,10 @@ export const shopInfoEditGetByIdBankAccountController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const data = await getBankAccountShopEditUseCase({ shopEditId, userId });
 
         res.status(200).json({ data });
@@ -234,10 +234,10 @@ export const shopInfoEditGetByIdRepNameController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const name = await getRepNameEditUseCase({ shopEditId, userId });
 
         res.status(200).json({ name });
@@ -254,10 +254,10 @@ export const shopInfoEditGetByIdConNameController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const name = await getConNameEditUseCase({ shopEditId, userId });
 
         res.status(200).json({ name });
@@ -274,10 +274,10 @@ export const shopInfoEditGetByIdComFreeConfirmController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const shopEditId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const shopEditId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const shopEdit = await getShopComFreeConfirmUseCase({ shopEditId, userId });
 
         res.status(200).json({ shopEdit });
