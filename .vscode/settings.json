@@ -95,7 +95,9 @@
         "timestamptz",
         "sequelizerc",
         "rednull",
-        "mokuji"
+        "mokuji",
+        "zenn",
+        "techdebt"
     ],
     "remote.autoForwardPortsFallback": 0
 }
