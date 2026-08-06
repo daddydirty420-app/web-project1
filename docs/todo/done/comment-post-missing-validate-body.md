@@ -40,3 +40,11 @@ Controller 側では既存どおり `req.validatedBody` を参照する。
 - npm --prefix server run lint
 - npm --prefix server run typecheck
 ```
+
+---
+
+## 報告
+
+/server/src/routes/comment.tsに、validatedBody追加。
+
+lint、typecheck問題なし。

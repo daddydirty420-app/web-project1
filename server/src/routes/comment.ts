@@ -15,8 +15,10 @@ import {
     getCommentListRateLimit,
     getReplyListRateLimit,
 } from "../middleware/rateLimit/commentRateLimit.js";
+import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
+import { createCommentBodySchema } from "../validators/body/comment.js";
 import { idParamSchema } from "../validators/params/id.js";
 import {
     commentSellerMeAdminQuerySchema,
@@ -33,6 +35,7 @@ router.post(
     "/:id",
     validateParams(idParamSchema),
     validateQuery(createCommentQuerySchema),
+    validateBody(createCommentBodySchema),
     authenticateToken,
     createCommentRateLimit,
     commentPostByIdController,
