@@ -21,7 +21,7 @@ router.get(
 
             res.status(200).json({ itemList, nextCursor, hasMore });
         } catch (err) {
-            next();
+            next(err);
         }
     },
 );
