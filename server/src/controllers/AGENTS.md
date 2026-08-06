@@ -28,6 +28,11 @@ Controller は以下を担当する。
 -   戻り値は Promise<void>とする。
 -   エラーは try/catch で next(err)へ渡す。
 -   Express の型は type import を使用する。
+-   その他、コーディング規約に従って実装する。
+
+## コーディング規約
+
+/docs/rule/backend/coding_rule/controller.md
 
 ## スコープ管理
 

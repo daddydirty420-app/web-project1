@@ -32,6 +32,11 @@
     -   処理概要
     -   フロントの対応ページ
 -   3 行コメントは route を正とし、controller や usecase などのコメントとずれている場合は、route のものに直す
+-   その他、コーディング規約に従って実装する。
+
+## コーディング規約
+
+/docs/rule/backend/coding_rule/route.md
 
 ## 例外
 
@@ -59,4 +64,4 @@ Todo 追加自体が現在の依頼範囲に含まれない場合でも、
 
 ## 現時点での作業進捗
 
-items.tsのみリファクタ完了！/routesの書き方はitems.tsを参照する。
+items.ts のみリファクタ完了！/routes の書き方は items.ts を参照する。
