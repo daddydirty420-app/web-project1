@@ -9,7 +9,7 @@ type Params = {
 };
 
 // PATCH /shop-info-edit/:id
-// summary: 事業形態変更確認ページ　データ更新
+// summary: 事業形態変更確認ページ データ更新
 // page: /edit/shop/com-free/confirm/[id]
 export const updateShopEditAnyUseCase = async ({ shopEditId, userId, updateData }: Params) => {
     // shopEdit取得

@@ -10,7 +10,7 @@ type Params = {
 // summary: 支店名検索
 // page: /edit/accountなど
 export const searchBranchesUseCase = async ({ kw, bankCode }: Params) => {
-    //　支店名全件取得
+    // 支店名全件取得
     const branches = await getBranchesAll({ bankCode });
 
     // 検索

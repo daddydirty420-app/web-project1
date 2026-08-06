@@ -38,7 +38,7 @@ type Params = {
 };
 
 // POST /shop-info
-// summary: ShopInfo作成　事業者登録
+// summary: ShopInfo作成 事業者登録
 // page: /shop-signup/step1
 export const createShopSignup1 = async ({ userId, body }: Params) => {
     const {

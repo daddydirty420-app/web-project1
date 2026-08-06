@@ -3,7 +3,7 @@ import crypto from "crypto";
 import fs from "fs";
 import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
-import { getMyVideo, getVideo, updateStatus } from "../../services/video.js";
+import { getMyVideo, updateStatus } from "../../services/video.js";
 import { getDuration } from "../../utils/ffmpeg.js";
 import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 
@@ -82,16 +82,13 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         console.log(data.toString());
     });
 
-    const timeout = setTimeout(
-        async () => {
-            isTimedOut = true;
-            console.error("ffmpeg timeout");
-            ffmpeg.kill("SIGKILL");
+    const timeout = setTimeout(async () => {
+        isTimedOut = true;
+        console.error("ffmpeg timeout");
+        ffmpeg.kill("SIGKILL");
 
-            await updateStatus({ video, data: { status: "failed" } });
-        },
-        5 * 60 * 1000,
-    ); // 5分
+        await updateStatus({ video, data: { status: "failed" } });
+    }, 5 * 60 * 1000); // 5分
 
     // 再生時間
     let seconds: number = 0;
@@ -132,8 +129,8 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                     const contentType = f.endsWith(".ts")
                         ? "video/mp2t"
                         : f.endsWith(".m3u8")
-                          ? "application/vnd.apple.mpegurl"
-                          : "application/octet-stream";
+                        ? "application/vnd.apple.mpegurl"
+                        : "application/octet-stream";
 
                     await uploadVideoToS3({ filePath, key, contentType });
                 }

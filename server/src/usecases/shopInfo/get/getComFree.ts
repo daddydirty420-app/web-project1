@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { getComFreeOptionAll } from "../../../services/comOrFreeOption.js";
-import { getMyShopHasComFree, getShopHasComFree } from "../../../services/shopInfo/query.js";
+import { getMyShopHasComFree } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;

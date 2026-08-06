@@ -6,7 +6,7 @@ type Params = {
 };
 
 // GET /user/transfer-points
-// summary: ポイント変換ページ　表示データ取得
+// summary: ポイント変換ページ 表示データ取得
 // page: /transfer/points
 export const getUserTransferPointsUseCase = async ({ userId }: Params) => {
     // user取得

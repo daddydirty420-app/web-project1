@@ -1,6 +1,6 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
-import { getItem, getMyItem, updatePrice } from "../../services/items/index.js";
+import { getMyItem, updatePrice } from "../../services/items/index.js";
 import { getSale, updateSaleEdit } from "../../services/sale.js";
 
 type Params = {

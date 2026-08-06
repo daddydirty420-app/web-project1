@@ -6,7 +6,7 @@ type Params = {
 };
 
 export const validateNumber = async ({ body }: Params) => {
-    const { category, condition, shipping, price, brand } = body;
+    const { category, condition, shipping, brand } = body;
 
     // 数値チェック
     const categoryId = toNullableNumber(category.id);
