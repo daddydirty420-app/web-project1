@@ -12,11 +12,6 @@ startAllCrons();
 
 const app = express();
 
-import MaintenanceItemsRouter from "./maintenance/routes/item.js";
-import MaintenanceNotificationRouter from "./maintenance/routes/notification.js";
-import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggestWords.js";
-import TestRouter from "./maintenance/routes/test.js";
-import MaintenanceUsersRouter from "./maintenance/routes/user.js";
 import AddressRouter from "./routes/address.js";
 import ItemAdminRouter from "./routes/admin/item_admin.js";
 import UserAdminRouter from "./routes/admin/user_admin.js";
@@ -122,11 +117,6 @@ app.use("/api/video", VideoRouter);
 app.use("/api/watch-history", WatchHistoryRouter);
 app.use("/api/admin/items", ItemAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
-app.use("/api/maintenance/items", MaintenanceItemsRouter);
-app.use("/api/maintenance/notification", MaintenanceNotificationRouter);
-app.use("/api/maintenance/suggest-words", MaintenanceSuggestWordsRouter);
-app.use("/api/maintenance/users", MaintenanceUsersRouter);
-app.use("/api/maintenance/test", TestRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
