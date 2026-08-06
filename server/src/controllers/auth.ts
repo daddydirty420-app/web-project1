@@ -66,7 +66,7 @@ export const authPostLoginController = async (req: Request, res: Response, next:
 // POST /auth/set-cookie
 // summary: クッキーセット
 // page: /my-page
-export const authPostSetCookieController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const authPostSetCookieController = async (req: Request, res: Response): Promise<void> => {
         const body = req.validatedBody as SetCookieBody;
 
         const { refreshToken, rememberMe } = body;
@@ -79,7 +79,7 @@ export const authPostSetCookieController = async (req: Request, res: Response, n
 // POST /auth/clear-cookie
 // summary: クッキー削除
 // page: /my-page
-export const authPostClearCookieController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const authPostClearCookieController = async (req: Request, res: Response): Promise<void> => {
     res.clearCookie("access-token", getClearAccessTokenCookieOptions());
     res.clearCookie("refreshToken", getClearRefreshTokenCookieOptions());
 
@@ -287,6 +287,6 @@ export const authPatchNewEmailController = async (req: Request, res: Response, n
 // GET /auth/status
 // summary: ログインステータス取得
 // page:
-export const authGetStatusController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const authGetStatusController = async (req: Request, res: Response): Promise<void> => {
     res.status(200).json({ message: "トークン有効", loggedIn: true, user: req.user });
 };

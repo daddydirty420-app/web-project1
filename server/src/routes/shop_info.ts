@@ -60,7 +60,7 @@ import { idParamSchema } from "../validators/params/id.js";
 const router = Router();
 
 // POST /shop-info
-// summary: ShopInfo作成　事業者登録
+// summary: ShopInfo作成 事業者登録
 // page: /shop-signup/step1
 router.post(
     "/",
@@ -131,7 +131,7 @@ router.patch(
 );
 
 // PATCH /shop-info/:id/signup/edit
-// summary: ショップ登録確認ページ　インプット編集
+// summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/edit",
@@ -142,7 +142,7 @@ router.patch(
 );
 
 // PATCH /shop-info/:id/signup/5
-// summary: ショップ登録　確定
+// summary: ショップ登録 確定
 // page: /shop-signup/step5/[id]
 router.patch(
     "/:id/signup/5",
@@ -251,7 +251,7 @@ router.get(
 );
 
 // GET /shop-info/signup/1
-// summary: 事業者情報登録ページ　インプット表示データ取得
+// summary: 事業者情報登録ページ インプット表示データ取得
 // page: /shop-signup/step1
 router.get(
     "/signup/1",
@@ -261,7 +261,7 @@ router.get(
 );
 
 // GET /shop-info/:id/signup/2
-// summary: ショップ口座登録ページ　インプット表示データ取得
+// summary: ショップ口座登録ページ インプット表示データ取得
 // page: /shop-signup/step2/[id]
 router.get(
     "/:id/signup/2",
@@ -272,7 +272,7 @@ router.get(
 );
 
 // GET /shop-info/:id/signup/3
-// summary: ショップ身分証登録ページ　インプット表示データ取得
+// summary: ショップ身分証登録ページ インプット表示データ取得
 // page: /shop-signup/step3/[id]
 router.get(
     "/:id/signup/3",

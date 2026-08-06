@@ -126,7 +126,7 @@ export const shopInfoEditPostByIdComFreeController = async (req: Request, res: R
     };
 
 // PATCH /shop-info-edit/:id
-// summary: 事業形態変更確認ページ　データ更新
+// summary: 事業形態変更確認ページ データ更新
 // page: /edit/shop/com-free/confirm/[id]
 export const shopInfoEditPatchByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);
@@ -143,7 +143,7 @@ export const shopInfoEditPatchByIdController = async (req: Request, res: Respons
     };
 
 // PATCH /shop-info-edit/:id/id-image-upload
-// summary: 事業者登録　代表者身分証アップロード
+// summary: 事業者登録 代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 export const shopInfoEditPatchByIdIdImageUploadController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopEditId = Number(req.params.id);

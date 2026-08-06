@@ -117,7 +117,7 @@ router.get(
 );
 
 // GET /user/:id/profile/metadata
-// summary: プロフィールページ　メタデータ
+// summary: プロフィールページ メタデータ
 // page: /profile/[id]
 router.get(
     "/:id/profile/metadata",
@@ -177,7 +177,7 @@ router.get(
 );
 
 // GET /user/transfer-points
-// summary: ポイント変換ページ　表示データ取得
+// summary: ポイント変換ページ 表示データ取得
 // page: /transfer/points
 router.get(
     "/transfer-points",
@@ -187,7 +187,7 @@ router.get(
 );
 
 // GET /user/transfer-request
-// summary: 振込申請ページ　表示データ取得
+// summary: 振込申請ページ 表示データ取得
 // page: /transfer/request
 router.get(
     "/transfer-request",

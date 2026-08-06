@@ -132,7 +132,7 @@ export const usersGetByIdStarController = async (req: Request, res: Response, ne
     };
 
 // GET /user/:id/profile/metadata
-// summary: プロフィールページ　メタデータ
+// summary: プロフィールページ メタデータ
 // page: /profile/[id]
 export const usersGetByIdProfileMetadataController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = Number(req.params.id);
@@ -236,7 +236,7 @@ export const usersGetHonninController = async (req: Request, res: Response, next
     };
 
 // GET /user/transfer-points
-// summary: ポイント変換ページ　表示データ取得
+// summary: ポイント変換ページ 表示データ取得
 // page: /transfer/points
 export const usersGetTransferPointsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -251,7 +251,7 @@ export const usersGetTransferPointsController = async (req: Request, res: Respon
     };
 
 // GET /user/transfer-request
-// summary: 振込申請ページ　表示データ取得
+// summary: 振込申請ページ 表示データ取得
 // page: /transfer/request
 export const usersGetTransferRequestController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;

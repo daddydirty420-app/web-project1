@@ -104,7 +104,7 @@ router.post(
 );
 
 // PATCH /shop-info-edit/:id
-// summary: 事業形態変更確認ページ　データ更新
+// summary: 事業形態変更確認ページ データ更新
 // page: /edit/shop/com-free/confirm/[id]
 router.patch(
     "/:id",
@@ -115,7 +115,7 @@ router.patch(
 );
 
 // PATCH /shop-info-edit/:id/id-image-upload
-// summary: 事業者登録　代表者身分証アップロード
+// summary: 事業者登録 代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 router.patch(
     "/:id/id-image-upload",

@@ -33,7 +33,7 @@ import {
 import { PhoneNumberBody } from "../validators/body/users.js";
 
 // POST /shop-info
-// summary: ShopInfo作成　事業者登録
+// summary: ShopInfo作成 事業者登録
 // page: /shop-signup/step1
 export const shopInfoPostRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -149,7 +149,7 @@ export const shopInfoPatchByIdSignup4Controller = async (req: Request, res: Resp
     };
 
 // PATCH /shop-info/:id/signup/edit
-// summary: ショップ登録確認ページ　インプット編集
+// summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
 export const shopInfoPatchByIdSignupEditController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -166,7 +166,7 @@ export const shopInfoPatchByIdSignupEditController = async (req: Request, res: R
     };
 
 // PATCH /shop-info/:id/signup/5
-// summary: ショップ登録　確定
+// summary: ショップ登録 確定
 // page: /shop-signup/step5/[id]
 export const shopInfoPatchByIdSignup5Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const shopId = Number(req.params.id);
@@ -325,7 +325,7 @@ export const shopInfoGetByIdComFreeController = async (req: Request, res: Respon
     };
 
 // GET /shop-info/signup/1
-// summary: 事業者情報登録ページ　インプット表示データ取得
+// summary: 事業者情報登録ページ インプット表示データ取得
 // page: /shop-signup/step1
 export const shopInfoGetSignup1Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -340,7 +340,7 @@ export const shopInfoGetSignup1Controller = async (req: Request, res: Response, 
     };
 
 // GET /shop-info/:id/signup/2
-// summary: ショップ口座登録ページ　インプット表示データ取得
+// summary: ショップ口座登録ページ インプット表示データ取得
 // page: /shop-signup/step2/[id]
 export const shopInfoGetByIdSignup2Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;
@@ -356,7 +356,7 @@ export const shopInfoGetByIdSignup2Controller = async (req: Request, res: Respon
     };
 
 // GET /shop-info/:id/signup/3
-// summary: ショップ身分証登録ページ　インプット表示データ取得
+// summary: ショップ身分証登録ページ インプット表示データ取得
 // page: /shop-signup/step3/[id]
 export const shopInfoGetByIdSignup3Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const userId = req.user!.id;

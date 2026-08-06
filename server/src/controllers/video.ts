@@ -1,5 +1,4 @@
 import type {
-    NextFunction,
     Request,
     Response,
 } from "express-serve-static-core";
@@ -9,7 +8,7 @@ import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
 // PATCH /video/:id/onplay
 // summary: 動画再生ログ更新
 // page: /item
-export const videoPatchByIdOnplayController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const videoPatchByIdOnplayController = async (req: Request, res: Response): Promise<void> => {
         const videoId = Number(req.params.id);
 
         const userId = req.user?.id ?? null;
@@ -24,7 +23,7 @@ export const videoPatchByIdOnplayController = async (req: Request, res: Response
 // PATCH /video/:id/convert
 // summary: 動画HLS変換
 // page: /upload
-export const videoPatchByIdConvertController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const videoPatchByIdConvertController = async (req: Request, res: Response): Promise<void> => {
         const videoId = Number(req.params.id);
 
         const userId = req.user!.id;

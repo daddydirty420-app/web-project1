@@ -52,7 +52,7 @@ export const commentPostByIdController = async (req: Request, res: Response, nex
 // PATCH /comment/:id/sort-number/add?number=number
 // summary: sort_number追加
 // page: /item
-export const commentPatchByIdSortNumberAddController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const commentPatchByIdSortNumberAddController = async (req: Request, res: Response): Promise<void> => {
         const commentId = Number(req.params.id);
 
         const query = req.validatedQuery as CommentSortNumberQuery;
@@ -68,7 +68,7 @@ export const commentPatchByIdSortNumberAddController = async (req: Request, res:
 // PATCH /comment/:id/sort-number/decrease?number=number
 // summary: sort_number減少
 // page: /item
-export const commentPatchByIdSortNumberDecreaseController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const commentPatchByIdSortNumberDecreaseController = async (req: Request, res: Response): Promise<void> => {
         const commentId = Number(req.params.id);
 
         const query = req.validatedQuery as CommentSortNumberQuery;
