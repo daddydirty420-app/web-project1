@@ -26,7 +26,7 @@
 
 -   Route の handler は Controller のみを指定する。
 -   Route に async (req, res, next) => {} を残さない。
--   req.body、req.params、req.query の取得位置は変更しない。
+-   req.body、req.params、req.query の取得方法・取得順序・型アサーション・デフォルト値を変更しない。
 -   ルーティングの上に、3 行コメントを記載する（現段階で記載されていないものについては、コメントなし可）
     -   パス（/api 以下）
     -   処理概要
