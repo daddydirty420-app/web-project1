@@ -155,12 +155,7 @@ router.patch(
 // GET /shop-info/my
 // summary: ショップのidを取得
 // page: /link/edit/shop
-router.get(
-    "/my",
-    getShopMeRateLimit,
-    authenticateToken,
-    shopInfoGetMyController,
-);
+router.get("/my", getShopMeRateLimit, authenticateToken, shopInfoGetMyController);
 
 // GET /shop-info/:id/address
 // summary: 会社所在地取得
@@ -253,12 +248,7 @@ router.get(
 // GET /shop-info/signup/1
 // summary: 事業者情報登録ページ インプット表示データ取得
 // page: /shop-signup/step1
-router.get(
-    "/signup/1",
-    getShopSignup1RateLimit,
-    authenticateToken,
-    shopInfoGetSignup1Controller,
-);
+router.get("/signup/1", getShopSignup1RateLimit, authenticateToken, shopInfoGetSignup1Controller);
 
 // GET /shop-info/:id/signup/2
 // summary: ショップ口座登録ページ インプット表示データ取得

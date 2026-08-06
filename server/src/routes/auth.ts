@@ -46,39 +46,22 @@ const router = Router();
 // POST /auth/login
 // summary: ログイン
 // page: /login
-router.post(
-    "/login",
-    loginRateLimit,
-    validateBody(loginBodySchema),
-    authPostLoginController,
-);
+router.post("/login", loginRateLimit, validateBody(loginBodySchema), authPostLoginController);
 
 // POST /auth/set-cookie
 // summary: クッキーセット
 // page: /my-page
-router.post(
-    "/set-cookie",
-    validateBody(setCookieBodySchema),
-    authPostSetCookieController,
-);
+router.post("/set-cookie", validateBody(setCookieBodySchema), authPostSetCookieController);
 
 // POST /auth/clear-cookie
 // summary: クッキー削除
 // page: /my-page
-router.post(
-    "/clear-cookie",
-    authPostClearCookieController,
-);
+router.post("/clear-cookie", authPostClearCookieController);
 
 // POST /auth/signup
 // summary: サインアップ
 // page: /signup
-router.post(
-    "/signup",
-    signupRateLimit,
-    validateBody(emailPasswordBodySchema),
-    authPostSignupController,
-);
+router.post("/signup", signupRateLimit, validateBody(emailPasswordBodySchema), authPostSignupController);
 
 // POST /auth/resend-verification-code
 // summary: 認証コード再送信
@@ -113,12 +96,7 @@ router.post(
 // POST /auth/reset-pw
 // summary: パスワードリセット
 // page: /login/new-pw
-router.post(
-    "/reset-pw",
-    pwResetRateLimit,
-    validateBody(resetPWBodySchema),
-    authPostResetPwController,
-);
+router.post("/reset-pw", pwResetRateLimit, validateBody(resetPWBodySchema), authPostResetPwController);
 
 // PATCH /auth/change-pw
 // summary: パスワード変更
@@ -134,18 +112,12 @@ router.patch(
 // POST /auth/refresh-token
 // summary: トークンリフレッシュ
 // page: middleware
-router.post(
-    "/refresh-token",
-    authPostRefreshTokenController,
-);
+router.post("/refresh-token", authPostRefreshTokenController);
 
 // POST /auth/rehash-password
 // summary: パスワード再ハッシュ
 // page:
-router.post(
-    "/rehash-password",
-    authPostRehashPasswordController,
-);
+router.post("/rehash-password", authPostRehashPasswordController);
 
 // PATCH /auth/email
 // summary: メールアドレス変更リクエスト
@@ -161,20 +133,11 @@ router.patch(
 // PATCH /auth/new-email?token=""
 // summary: メールアドレス更新
 // page: /edit/email/new-email
-router.patch(
-    "/new-email",
-    emailChangeRateLimit,
-    validateQuery(newEmailTokenQuerySchema),
-    authPatchNewEmailController,
-);
+router.patch("/new-email", emailChangeRateLimit, validateQuery(newEmailTokenQuerySchema), authPatchNewEmailController);
 
 // GET /auth/status
 // summary: ログインステータス取得
 // page:
-router.get(
-    "/status",
-    authenticateToken,
-    authGetStatusController,
-);
+router.get("/status", authenticateToken, authGetStatusController);
 
 export default router;

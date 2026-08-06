@@ -24,13 +24,7 @@ const router = Router();
 // POST /item-like/:id
 // summary: いいね作成
 // page: /item
-router.post(
-    "/:id",
-    addItemLikeRateLimit,
-    validateParams(idParamSchema),
-    authenticateToken,
-    itemLikePostByIdController,
-);
+router.post("/:id", addItemLikeRateLimit, validateParams(idParamSchema), authenticateToken, itemLikePostByIdController);
 
 // DELETE /item-like/:id
 // summary: いいね削除
@@ -57,12 +51,7 @@ router.get(
 // GET /item-like/:id/count
 // summary: いいね数取得
 // page: /item
-router.get(
-    "/:id/count",
-    itemLikeCountRateLimit,
-    validateParams(idParamSchema),
-    itemLikeGetByIdCountController,
-);
+router.get("/:id/count", itemLikeCountRateLimit, validateParams(idParamSchema), itemLikeGetByIdCountController);
 
 // GET /item-like/:id/user(?keyword="")
 // summary: いいねしたユーザーリスト取得

@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { editAddressUseCase } from "../usecases/address/editAddress.js";
 import { fetchAddressFromZipUseCase } from "../usecases/address/zipUseCase.js";
@@ -13,37 +9,37 @@ import { ZipcodeQuery } from "../validators/query/address.js";
 // summary: 住所変更
 // page: /edit/addressなど
 export const addressPatchByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const addressId = Number(req.params.id);
-        const userId = req.user!.id;
+    const addressId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as AddressBody;
+    const body = req.validatedBody as AddressBody;
 
-        const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
+    const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
 
-        try {
-            await editAddressUseCase({ userId, addressId, postNumber, todouhuken, shikutyouson, banchi, building });
+    try {
+        await editAddressUseCase({ userId, addressId, postNumber, todouhuken, shikutyouson, banchi, building });
 
-            res.status(200).json({ message: "住所を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "住所を更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /address/search
 // summary: 住所検索
 // page: /edit/addressなど
 export const addressGetSearchController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const query = req.validatedQuery as ZipcodeQuery;
+    const query = req.validatedQuery as ZipcodeQuery;
 
-        const zipcode = query.zipcode;
+    const zipcode = query.zipcode;
 
-        if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
+    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
 
-        try {
-            const address = await fetchAddressFromZipUseCase({ zipcode });
+    try {
+        const address = await fetchAddressFromZipUseCase({ zipcode });
 
-            res.status(200).json({ address });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ address });
+    } catch (err) {
+        next(err);
+    }
+};

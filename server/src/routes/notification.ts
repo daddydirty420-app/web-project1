@@ -31,12 +31,7 @@ router.patch(
 // GET /notification/unread-count
 // summary: 未読通知カウント
 // page: footer, /my-page
-router.get(
-    "/unread-count",
-    getUnreadCountRateLimit,
-    authenticateToken,
-    notificationGetUnreadCountController,
-);
+router.get("/unread-count", getUnreadCountRateLimit, authenticateToken, notificationGetUnreadCountController);
 
 // GET /notification?limit=00(&cursor="")
 // summary: お知らせ一覧取得

@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { createInquiryUseCase } from "../usecases/inquiry/create.js";
 import { CreateInquiryBody } from "../validators/body/inquiry.js";
 
@@ -10,16 +6,16 @@ import { CreateInquiryBody } from "../validators/body/inquiry.js";
 // summary: お問い合わせ作成
 // page: /inquiry
 export const inquiryPostRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user?.id ?? null;
+    const userId = req.user?.id ?? null;
 
-        const validatedBody = req.validatedBody as CreateInquiryBody;
-        const { name, email, title, body } = validatedBody;
+    const validatedBody = req.validatedBody as CreateInquiryBody;
+    const { name, email, title, body } = validatedBody;
 
-        try {
-            await createInquiryUseCase({ userId, name, email, title, body });
+    try {
+        await createInquiryUseCase({ userId, name, email, title, body });
 
-            res.status(200).json({ message: "お問い合わせを送信しました！" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "お問い合わせを送信しました！" });
+    } catch (err) {
+        next(err);
+    }
+};

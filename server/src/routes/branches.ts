@@ -9,11 +9,6 @@ const router = Router();
 // GET /branches/search?keyword=""&bankcode=""
 // summary: 支店名検索
 // page: /edit/accountなど
-router.get(
-    "/search",
-    validateQuery(branchSearchQuerySchema),
-    bankSearchRateLimit,
-    branchesGetSearchController,
-);
+router.get("/search", validateQuery(branchSearchQuerySchema), bankSearchRateLimit, branchesGetSearchController);
 
 export default router;

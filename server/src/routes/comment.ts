@@ -7,10 +7,7 @@ import {
     commentGetByIdController,
     commentGetByIdReplyController,
 } from "../controllers/comment.js";
-import {
-    authenticateOptional,
-    authenticateToken,
-} from "../middleware/index.js";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import {
     createCommentRateLimit,
     deleteCommentRateLimit,

@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
@@ -24,365 +20,432 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
-import {
-    CreateSignup1Body,
-    RepNameBody,
-    ShopIdCardBody,
-    ShopOptionBody,
-} from "../validators/body/shopInfo.js";
+import { CreateSignup1Body, RepNameBody, ShopIdCardBody, ShopOptionBody } from "../validators/body/shopInfo.js";
 import { PhoneNumberBody } from "../validators/body/users.js";
 
 // POST /shop-info
 // summary: ShopInfo作成 事業者登録
 // page: /shop-signup/step1
 export const shopInfoPostRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const body = req.validatedBody as CreateSignup1Body;
+    const userId = req.user!.id;
+    const body = req.validatedBody as CreateSignup1Body;
 
-        try {
-            const shopId = await createShopSignup1({ userId, body });
+    try {
+        const shopId = await createShopSignup1({ userId, body });
 
-            res.status(200).json({ shopId });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shopId });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/rep-name
 // summary 代表者氏名変更
 // page: /edit/name/shop/rep-name/signup/[id]
-export const shopInfoPatchByIdRepNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as RepNameBody;
+export const shopInfoPatchByIdRepNameController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+    const body = req.validatedBody as RepNameBody;
 
-        try {
-            const { frontSignedUrl, rearSignedUrl } = await updateRepNameUseCase({ shopId, userId, body });
+    try {
+        const { frontSignedUrl, rearSignedUrl } = await updateRepNameUseCase({ shopId, userId, body });
 
-            res.status(200).json({ frontSignedUrl, rearSignedUrl });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ frontSignedUrl, rearSignedUrl });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/phone-number
 // summary: 電話番号変更
 // page: /edit/phone-number/shop/[id]
-export const shopInfoPatchByIdPhoneNumberController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoPatchByIdPhoneNumberController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as PhoneNumberBody;
-        const phoneNumber = body.phoneNumber;
+    const body = req.validatedBody as PhoneNumberBody;
+    const phoneNumber = body.phoneNumber;
 
-        try {
-            await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
+    try {
+        await editShopPhoneNumberUseCase({ shopId, userId, phoneNumber });
 
-            res.status(200).json({ message: "電話番号を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "電話番号を更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/option
 // summary: オプション変更
 // page: /edit/shop/option/[id]
-export const shopInfoPatchByIdOptionController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoPatchByIdOptionController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as ShopOptionBody;
-        const { autoTrans, openInfo } = body;
+    const body = req.validatedBody as ShopOptionBody;
+    const { autoTrans, openInfo } = body;
 
-        try {
-            await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
+    try {
+        await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
 
-            res.status(200).json({ message: "オプションを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "オプションを更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/signup/3
 // summary: ショップ登録身分証・許認可証追加
 // page: /shop-signup/step3/[id]
-export const shopInfoPatchByIdSignup3Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as ShopIdCardBody;
+export const shopInfoPatchByIdSignup3Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+    const body = req.validatedBody as ShopIdCardBody;
 
-        try {
-            const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
-                shopId,
-                userId,
-                body,
-            });
+    try {
+        const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
+            shopId,
+            userId,
+            body,
+        });
 
-            res.status(200).json({
-                message: "身分証・許認可証のDB登録が完了しました。",
-                frontSignedUrl,
-                rearSignedUrl,
-                permitSignedUrls,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({
+            message: "身分証・許認可証のDB登録が完了しました。",
+            frontSignedUrl,
+            rearSignedUrl,
+            permitSignedUrls,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/signup/4
 // summary: ショップ登録オプション選択
 // page: /shop-signup/step4/[id]
-export const shopInfoPatchByIdSignup4Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoPatchByIdSignup4Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as ShopOptionBody;
-        const { autoTrans, openInfo } = body;
+    const body = req.validatedBody as ShopOptionBody;
+    const { autoTrans, openInfo } = body;
 
-        try {
-            await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
+    try {
+        await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
 
-            res.status(200).json({ message: "データ更新完了" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "データ更新完了" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/signup/edit
 // summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
-export const shopInfoPatchByIdSignupEditController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const updateData = req.body;
+export const shopInfoPatchByIdSignupEditController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
+    const updateData = req.body;
 
-        try {
-            await updateShopSignupEditUseCase({ shopId, userId, updateData });
+    try {
+        await updateShopSignupEditUseCase({ shopId, userId, updateData });
 
-            res.status(200).json({ message: "更新しました。", updated: updateData });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "更新しました。", updated: updateData });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /shop-info/:id/signup/5
 // summary: ショップ登録 確定
 // page: /shop-signup/step5/[id]
-export const shopInfoPatchByIdSignup5Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoPatchByIdSignup5Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            await updateShopSignup5UseCase({ shopId, userId });
+    try {
+        await updateShopSignup5UseCase({ shopId, userId });
 
-            res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "ショップ登録のリクエストが完了しました！" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/my
 // summary: ショップのidを取得
 // page: /link/edit/shop
 export const shopInfoGetMyController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        try {
-            const shop = await getMyShopIdUseCase({ userId });
+    try {
+        const shop = await getMyShopIdUseCase({ userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/address
 // summary: 会社所在地取得
 // page: /edit/address/shop/[id]・/edit/address/shop/signup/[id]
-export const shopInfoGetByIdAddressController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdAddressController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const data = await getAddressShopUseCase({ shopId, userId });
+    try {
+        const data = await getAddressShopUseCase({ shopId, userId });
 
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ data });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/bank-account
 // summary: ショップ口座情報取得
 // page: /edit/account/shop/[id]・/edit/account/shop/signup/[id]
-export const shopInfoGetByIdBankAccountController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdBankAccountController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const data = await getBankAccountUseCase({ shopId, userId });
+    try {
+        const data = await getBankAccountUseCase({ shopId, userId });
 
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ data });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/rep-name
 // summary: 代表者氏名取得
 // page: /edit/name/shop/rep-name/[id]・/edit/name/shop/rep-name/signup/[id]
-export const shopInfoGetByIdRepNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdRepNameController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const { shop, name } = await getRepNameUseCase({ shopId, userId });
+    try {
+        const { shop, name } = await getRepNameUseCase({ shopId, userId });
 
-            res.status(200).json({ shop, name });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop, name });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/con-name
 // summary: 担当者氏名取得
 // page: /edit/name/shop/con-name/[id]・/edit/name/shop/con-name/signup/[id]
-export const shopInfoGetByIdConNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdConNameController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const name = await getConNameUseCase({ shopId, userId });
+    try {
+        const name = await getConNameUseCase({ shopId, userId });
 
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ name });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/phone-number
 // summary: 電話番号取得
 // page: /edit/phone-number/shop/[id]
-export const shopInfoGetByIdPhoneNumberController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdPhoneNumberController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const shop = await getShopPhoneNumberUseCase({ shopId, userId });
+    try {
+        const shop = await getShopPhoneNumberUseCase({ shopId, userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/company-name
 // summary: 会社名取得
 // page: /edit/shop/company-name/[id]
-export const shopInfoGetByIdCompanyNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdCompanyNameController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const shop = await getCompanyNameUseCase({ shopId, userId });
+    try {
+        const shop = await getCompanyNameUseCase({ shopId, userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/option
 // summary: オプション取得
 // page: /edit/shop/option/[id]
-export const shopInfoGetByIdOptionController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdOptionController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const shop = await getShopOptionUseCase({ shopId, userId });
+    try {
+        const shop = await getShopOptionUseCase({ shopId, userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/com-free
 // summary: 事業形態取得
 // page: /edit/shop/com-free/[id]
-export const shopInfoGetByIdComFreeController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
+export const shopInfoGetByIdComFreeController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const shopId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
+    try {
+        const { shop, comFree } = await getShopComFreeUseCase({ shopId, userId });
 
-            res.status(200).json({ shop, comFree });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop, comFree });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/signup/1
 // summary: 事業者情報登録ページ インプット表示データ取得
 // page: /shop-signup/step1
 export const shopInfoGetSignup1Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        try {
-            const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
+    try {
+        const { shop, user, comFree } = await getShopSignup1UseCase({ userId });
 
-            res.status(200).json({ shop, user, comFree });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop, user, comFree });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/signup/2
 // summary: ショップ口座登録ページ インプット表示データ取得
 // page: /shop-signup/step2/[id]
-export const shopInfoGetByIdSignup2Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
+export const shopInfoGetByIdSignup2Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const userId = req.user!.id;
+    const shopId = Number(req.params.id);
 
-        try {
-            const account = await getShopSignup2UseCase({ userId, shopId });
+    try {
+        const account = await getShopSignup2UseCase({ userId, shopId });
 
-            res.status(200).json({ account });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ account });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/signup/3
 // summary: ショップ身分証登録ページ インプット表示データ取得
 // page: /shop-signup/step3/[id]
-export const shopInfoGetByIdSignup3Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
+export const shopInfoGetByIdSignup3Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const userId = req.user!.id;
+    const shopId = Number(req.params.id);
 
-        try {
-            const shop = await getShopSignup3UseCase({ shopId, userId });
+    try {
+        const shop = await getShopSignup3UseCase({ shopId, userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /shop-info/:id/signup/5
 // summary: ショップ登録確認ページデータ取得
 // page: /shop-signup/step5/[id]
-export const shopInfoGetByIdSignup5Controller = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const shopId = Number(req.params.id);
+export const shopInfoGetByIdSignup5Controller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const userId = req.user!.id;
+    const shopId = Number(req.params.id);
 
-        try {
-            const shop = await getShopSignup5UseCase({ shopId, userId });
+    try {
+        const shop = await getShopSignup5UseCase({ shopId, userId });
 
-            res.status(200).json({ shop });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ shop });
+    } catch (err) {
+        next(err);
+    }
+};

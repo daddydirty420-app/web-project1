@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { getAllItemReportOptions } from "../services/itemReport.js";
 import { createItemReportUseCase } from "../usecases/itemReport/create.js";
 import { OptionIdBody } from "../validators/body/report.js";
@@ -11,30 +7,34 @@ import { OptionIdBody } from "../validators/body/report.js";
 // summary: item報告作成
 // page: /report/item/[id]
 export const itemReportPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
+    const itemId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as OptionIdBody;
-        const optionId = body.selected;
+    const body = req.validatedBody as OptionIdBody;
+    const optionId = body.selected;
 
-        try {
-            await createItemReportUseCase({ itemId, userId, optionId });
+    try {
+        await createItemReportUseCase({ itemId, userId, optionId });
 
-            res.status(200).json({ message: "報告を作成しました" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "報告を作成しました" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /item-report/all-options
 // summary: ItemReportOptions取得
 // page: /report/item/[id]
-export const itemReportGetAllOptionsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const options = await getAllItemReportOptions();
+export const itemReportGetAllOptionsController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const options = await getAllItemReportOptions();
 
-            res.status(200).json({ options });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ options });
+    } catch (err) {
+        next(err);
+    }
+};

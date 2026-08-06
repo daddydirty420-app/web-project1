@@ -57,12 +57,7 @@ router.get(
 // GET /comment-like/:id/count
 // summary: いいね数取得
 // page: /item
-router.get(
-    "/:id/count",
-    commentLikeCountRateLimit,
-    validateParams(idParamSchema),
-    commentLikeGetByIdCountController,
-);
+router.get("/:id/count", commentLikeCountRateLimit, validateParams(idParamSchema), commentLikeGetByIdCountController);
 
 // GET /comment-like/:id/user(?keyword="")
 // summary: いいねしたユーザーリスト取得

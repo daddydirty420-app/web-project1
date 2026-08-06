@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { AppError } from "../errors.js";
 import { changeEmailUseCase } from "../usecases/auth/changeEmail.js";
 import { changePwUseCase } from "../usecases/auth/changePW.js";
@@ -36,45 +32,45 @@ import { NewEmailTokenQuery } from "../validators/query/auth.js";
 // summary: ログイン
 // page: /login
 export const authPostLoginController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as LoginBody;
+    const body = req.validatedBody as LoginBody;
 
-        const { email, password, rememberMe } = body;
+    const { email, password, rememberMe } = body;
 
-        try {
-            const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
-                email,
-                password,
-                rememberMe,
-            });
+    try {
+        const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
+            email,
+            password,
+            rememberMe,
+        });
 
-            res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
+        res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
-            res.status(200).json({
-                id,
-                email,
-                user_name: userName,
-                admin,
-                rememberMe,
-                accessToken,
-                refreshToken,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({
+            id,
+            email,
+            user_name: userName,
+            admin,
+            rememberMe,
+            accessToken,
+            refreshToken,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/set-cookie
 // summary: クッキーセット
 // page: /my-page
 export const authPostSetCookieController = async (req: Request, res: Response): Promise<void> => {
-        const body = req.validatedBody as SetCookieBody;
+    const body = req.validatedBody as SetCookieBody;
 
-        const { refreshToken, rememberMe } = body;
+    const { refreshToken, rememberMe } = body;
 
-        res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
+    res.cookie("refreshToken", refreshToken, getRefreshTokenCookieOptions(rememberMe));
 
-        res.status(200).json({ message: "Cookieをセットしました" });
-    };
+    res.status(200).json({ message: "Cookieをセットしました" });
+};
 
 // POST /auth/clear-cookie
 // summary: クッキー削除
@@ -90,131 +86,147 @@ export const authPostClearCookieController = async (req: Request, res: Response)
 // summary: サインアップ
 // page: /signup
 export const authPostSignupController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as EmailPasswordBody;
+    const body = req.validatedBody as EmailPasswordBody;
 
-        const { email, password } = body;
+    const { email, password } = body;
 
-        try {
-            const { expiresAt, reissueUrl } = await signupUseCase({
-                email,
-                password,
-            });
+    try {
+        const { expiresAt, reissueUrl } = await signupUseCase({
+            email,
+            password,
+        });
 
-            res.status(201).json({
-                message: "サインアップ成功！認証コードを送信しました！",
-                expiresAt,
-                reissueUrl,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(201).json({
+            message: "サインアップ成功！認証コードを送信しました！",
+            expiresAt,
+            reissueUrl,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/resend-verification-code
 // summary: 認証コード再送信
 // page: /signup/verify
-export const authPostResendVerificationCodeController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as VerifyTokenBody;
+export const authPostResendVerificationCodeController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const body = req.validatedBody as VerifyTokenBody;
 
-        try {
-            const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
-                token: body.token,
-            });
+    try {
+        const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
+            token: body.token,
+        });
 
-            res.status(200).json({
-                message: "新しい認証コードを発行しました。",
-                expiresAt,
-                reissueUrl,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({
+            message: "新しい認証コードを発行しました。",
+            expiresAt,
+            reissueUrl,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/signup-verify
 // summary: サインアップコード認証
 // page: /signup/verify
-export const authPostSignupVerifyController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as SignupVerifyBody;
+export const authPostSignupVerifyController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const body = req.validatedBody as SignupVerifyBody;
 
-        const { verificationCode, rememberMe, referenceCode } = body;
+    const { verificationCode, rememberMe, referenceCode } = body;
 
-        try {
-            const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
-                verificationCode,
-                rememberMe,
-                referenceCode,
-            });
+    try {
+        const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
+            verificationCode,
+            rememberMe,
+            referenceCode,
+        });
 
-            res.status(200).json({
-                id,
-                email,
-                user_name: userName,
-                admin,
-                rememberMe,
-                accessToken,
-                refreshToken,
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({
+            id,
+            email,
+            user_name: userName,
+            admin,
+            rememberMe,
+            accessToken,
+            refreshToken,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/request-password-reset
 // summary: パスワードリセットリクエスト
 // page: /login/reset-pw-mail
-export const authPostRequestPasswordResetController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as EmailBody;
+export const authPostRequestPasswordResetController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const body = req.validatedBody as EmailBody;
 
-        try {
-            await requestPasswordResetUseCase({ email: body.email });
+    try {
+        await requestPasswordResetUseCase({ email: body.email });
 
-            res.status(200).json({ message: "メールを送信しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "メールを送信しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/reset-pw
 // summary: パスワードリセット
 // page: /login/new-pw
 export const authPostResetPwController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const body = req.validatedBody as ResetPWBody;
+    const body = req.validatedBody as ResetPWBody;
 
-        const { token, password } = body;
+    const { token, password } = body;
 
-        try {
-            await resetPWUseCase({ token, password });
+    try {
+        await resetPWUseCase({ token, password });
 
-            res.status(200).json({ message: "パスワードを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "パスワードを更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /auth/change-pw
 // summary: パスワード変更
 // page: /edit/password
 export const authPatchChangePwController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as ChangePWBody;
+    const body = req.validatedBody as ChangePWBody;
 
-        const { currentPw, newPw } = body;
+    const { currentPw, newPw } = body;
 
-        try {
-            await changePwUseCase({ userId, currentPw, newPw });
+    try {
+        await changePwUseCase({ userId, currentPw, newPw });
 
-            res.status(200).json({ message: "パスワードを更新しました " });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "パスワードを更新しました " });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // POST /auth/refresh-token
 // summary: トークンリフレッシュ
 // page: middleware
-export const authPostRefreshTokenController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const authPostRefreshTokenController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
     const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!refreshTokenQuery) throw new AppError("INVALID_REFRESH_TOKEN", 401);
@@ -235,7 +247,11 @@ export const authPostRefreshTokenController = async (req: Request, res: Response
 // POST /auth/rehash-password
 // summary: パスワード再ハッシュ
 // page:
-export const authPostRehashPasswordController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const authPostRehashPasswordController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
     const body = req.validatedBody as EmailPasswordBody;
 
     const email = body.email;
@@ -254,35 +270,35 @@ export const authPostRehashPasswordController = async (req: Request, res: Respon
 // summary: メールアドレス変更リクエスト
 // page: /edit/email
 export const authPatchEmailController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as EmailBody;
+    const body = req.validatedBody as EmailBody;
 
-        try {
-            await changeEmailUseCase({ userId, newEmail: body.email });
+    try {
+        await changeEmailUseCase({ userId, newEmail: body.email });
 
-            res.status(200).json({
-                message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
-            });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({
+            message: "新しいメールアドレスにメールを送信しました。メールアドレスの変更はまだ完了しておりません。",
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // PATCH /auth/new-email?token=""
 // summary: メールアドレス更新
 // page: /edit/email/new-email
 export const authPatchNewEmailController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const query = req.validatedQuery as NewEmailTokenQuery;
+    const query = req.validatedQuery as NewEmailTokenQuery;
 
-        try {
-            await changeNewEmailUseCase({ token: query.token });
+    try {
+        await changeNewEmailUseCase({ token: query.token });
 
-            res.status(200).json({ message: "メールアドレスを更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "メールアドレスを更新しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /auth/status
 // summary: ログインステータス取得

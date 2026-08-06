@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { countUnread } from "../services/notification.js";
 import { getNotificationListUseCase } from "../usecases/notification/getList.js";
 import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
@@ -11,52 +7,60 @@ import { GetNotificationListQuery } from "../validators/query/notification.js";
 // PATCH /notification/:id/read-flag
 // summary: 既読
 // page: /notification
-export const notificationPatchByIdReadFlagController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const notificationId = Number(req.params.id);
-        const userId = req.user!.id;
+export const notificationPatchByIdReadFlagController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const notificationId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        try {
-            await patchReadFlagTrueUseCase({ notificationId, userId });
+    try {
+        await patchReadFlagTrueUseCase({ notificationId, userId });
 
-            res.status(200).json({ isRead: true });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ isRead: true });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /notification/unread-count
 // summary: 未読通知カウント
 // page: footer, /my-page
-export const notificationGetUnreadCountController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+export const notificationGetUnreadCountController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const userId = req.user!.id;
 
-        try {
-            const unreadCount = await countUnread({ userId });
+    try {
+        const unreadCount = await countUnread({ userId });
 
-            res.status(200).json({ unreadCount });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ unreadCount });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /notification?limit=00(&cursor="")
 // summary: お知らせ一覧取得
 // page: /notification
 export const notificationGetRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        const query = req.validatedQuery as GetNotificationListQuery;
-        const { limit, cursor } = query;
+    const query = req.validatedQuery as GetNotificationListQuery;
+    const { limit, cursor } = query;
 
-        try {
-            const { notificationList, unreadCount, nextCursor, hasMore } = await getNotificationListUseCase({
-                userId,
-                limit,
-                cursor,
-            });
+    try {
+        const { notificationList, unreadCount, nextCursor, hasMore } = await getNotificationListUseCase({
+            userId,
+            limit,
+            cursor,
+        });
 
-            res.status(200).json({ notificationList, unreadCount, nextCursor, hasMore });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ notificationList, unreadCount, nextCursor, hasMore });
+    } catch (err) {
+        next(err);
+    }
+};

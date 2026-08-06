@@ -8,11 +8,6 @@ const router = Router();
 // GET /search/history
 // summary: 検索履歴取得
 // page: header
-router.get(
-    "/history",
-    getSearchHistoryRateLimit,
-    authenticateToken,
-    searchGetHistoryController,
-);
+router.get("/history", getSearchHistoryRateLimit, authenticateToken, searchGetHistoryController);
 
 export default router;

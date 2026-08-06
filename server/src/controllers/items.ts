@@ -134,10 +134,7 @@ export const addItemSortNumberController = async (req: Request, res: Response): 
 // PATCH /items/:id/sort-number/decrease?number=number
 // summary: sortNumber減少
 // page: /itemなど
-export const decreaseItemSortNumberController = async (
-    req: Request,
-    res: Response,
-): Promise<void> => {
+export const decreaseItemSortNumberController = async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const query = req.validatedQuery as ItemSortNumberQuery;

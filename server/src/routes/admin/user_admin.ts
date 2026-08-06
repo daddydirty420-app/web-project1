@@ -5,10 +5,7 @@ import {
     adminUserAdminPatchByIdDeleteUriageController,
     adminUserAdminGetByIdProfileController,
 } from "../../controllers/admin/user_admin.js";
-import {
-    authenticateToken,
-    isAdmin,
-} from "../../middleware/index.js";
+import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
     adminAddPenaltyRateLimit,
     adminDeleteUriageRateLimit,
@@ -18,10 +15,7 @@ import {
 import { validateBody } from "../../middleware/validate/validateBody.js";
 import { validateParams } from "../../middleware/validate/validateParams.js";
 import { deleteReasonBodySchema } from "../../validators/body/admin/admin.js";
-import {
-    addPenaltyBodySchema,
-    deleteUriageBodySchema,
-} from "../../validators/body/admin/users.js";
+import { addPenaltyBodySchema, deleteUriageBodySchema } from "../../validators/body/admin/users.js";
 import { idParamSchema } from "../../validators/params/id.js";
 
 const router = Router();

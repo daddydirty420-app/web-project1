@@ -6,10 +6,7 @@ import {
     followGetByIdCountController,
     followGetByIdUserController,
 } from "../controllers/follow.js";
-import {
-    authenticateOptional,
-    authenticateToken,
-} from "../middleware/index.js";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import {
     addFollowRateLimit,
     deleteFollowRateLimit,
@@ -27,13 +24,7 @@ const router = Router();
 // POST /follow/:id
 // summary: フォロー作成
 // page: フォローボタンがあるページ
-router.post(
-    "/:id",
-    addFollowRateLimit,
-    validateParams(idParamSchema),
-    authenticateToken,
-    followPostByIdController,
-);
+router.post("/:id", addFollowRateLimit, validateParams(idParamSchema), authenticateToken, followPostByIdController);
 
 // DELETE /follow/:id
 // summary: フォロー削除
@@ -60,12 +51,7 @@ router.get(
 // GET /follow/:id/count
 // summary: フォロー・フォロワー数カウント取得
 // page: フォロー・フォロワー数表示
-router.get(
-    "/:id/count",
-    followCountRateLimit,
-    validateParams(idParamSchema),
-    followGetByIdCountController,
-);
+router.get("/:id/count", followCountRateLimit, validateParams(idParamSchema), followGetByIdCountController);
 
 // GET /follow/:id/user?type=""(&keyword="")
 // summary: フォロー・フォロワーリスト取得

@@ -1,8 +1,4 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { getAllCommentReportOptions } from "../services/commentReport.js";
 import { createCommentReportUseCase } from "../usecases/commentReport/create.js";
 import { OptionIdBody } from "../validators/body/report.js";
@@ -10,31 +6,39 @@ import { OptionIdBody } from "../validators/body/report.js";
 // POST /comment-report/:id
 // summary: comment報告作成
 // page: /report/comment/[id]
-export const commentReportPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const commentId = Number(req.params.id);
-        const userId = req.user!.id;
+export const commentReportPostByIdController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const commentId = Number(req.params.id);
+    const userId = req.user!.id;
 
-        const body = req.validatedBody as OptionIdBody;
-        const optionId = body.selected;
+    const body = req.validatedBody as OptionIdBody;
+    const optionId = body.selected;
 
-        try {
-            await createCommentReportUseCase({ commentId, userId, optionId });
+    try {
+        await createCommentReportUseCase({ commentId, userId, optionId });
 
-            res.status(200).json({ message: "報告を作成しました" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "報告を作成しました" });
+    } catch (err) {
+        next(err);
+    }
+};
 
 // GET /comment-report/all-options
 // summary: CommentReportOptions取得
 // page: /report/comment/[id]
-export const commentReportGetAllOptionsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const options = await getAllCommentReportOptions();
+export const commentReportGetAllOptionsController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const options = await getAllCommentReportOptions();
 
-            res.status(200).json({ options });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ options });
+    } catch (err) {
+        next(err);
+    }
+};

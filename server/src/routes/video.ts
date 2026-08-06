@@ -1,16 +1,7 @@
 import { Router } from "express";
-import {
-    videoPatchByIdOnplayController,
-    videoPatchByIdConvertController,
-} from "../controllers/video.js";
-import {
-    authenticateOptional,
-    authenticateToken,
-} from "../middleware/index.js";
-import {
-    convertVideoRateLimit,
-    playVideoLogRateLimit,
-} from "../middleware/rateLimit/videoRateLimit.js";
+import { videoPatchByIdOnplayController, videoPatchByIdConvertController } from "../controllers/video.js";
+import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { convertVideoRateLimit, playVideoLogRateLimit } from "../middleware/rateLimit/videoRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { idParamSchema } from "../validators/params/id.js";
 

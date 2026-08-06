@@ -9,11 +9,6 @@ const router = Router();
 // /users/me/items?type="typename"(&page=number&status=""&keyword="search")
 // summary: ユーザー関連各種商品リスト取得
 // page: /item-list/...
-router.get(
-    "/",
-    authenticateToken,
-    validateQuery(userItemsListQuerySchema),
-    usersMeItemsGetRootController,
-);
+router.get("/", authenticateToken, validateQuery(userItemsListQuerySchema), usersMeItemsGetRootController);
 
 export default router;

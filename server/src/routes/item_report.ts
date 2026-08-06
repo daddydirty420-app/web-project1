@@ -1,13 +1,7 @@
 import { Router } from "express";
-import {
-    itemReportPostByIdController,
-    itemReportGetAllOptionsController,
-} from "../controllers/item_report.js";
+import { itemReportPostByIdController, itemReportGetAllOptionsController } from "../controllers/item_report.js";
 import { authenticateToken } from "../middleware/index.js";
-import {
-    getItemReportRateLimit,
-    itemReportRateLimit,
-} from "../middleware/rateLimit/itemReportRateLimit.js";
+import { getItemReportRateLimit, itemReportRateLimit } from "../middleware/rateLimit/itemReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { optionIdBodySchema } from "../validators/body/report.js";
@@ -30,10 +24,6 @@ router.post(
 // GET /item-report/all-options
 // summary: ItemReportOptions取得
 // page: /report/item/[id]
-router.get(
-    "/all-options",
-    getItemReportRateLimit,
-    itemReportGetAllOptionsController,
-);
+router.get("/all-options", getItemReportRateLimit, itemReportGetAllOptionsController);
 
 export default router;

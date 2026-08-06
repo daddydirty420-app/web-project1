@@ -1,23 +1,23 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express-serve-static-core";
+import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.js";
 
 // DELETE /watch-history/:id
 // summary: 閲覧履歴削除
 // page: /item-list/watch-history
-export const watchHistoryDeleteByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
+export const watchHistoryDeleteByIdController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    const itemId = Number(req.params.id);
 
-        const userId = req.user!.id;
+    const userId = req.user!.id;
 
-        try {
-            await deleteWatchHistoryUseCase({ itemId, userId });
+    try {
+        await deleteWatchHistoryUseCase({ itemId, userId });
 
-            res.status(200).json({ message: "閲覧履歴を削除しました" });
-        } catch (err) {
-            next(err);
-        }
-    };
+        res.status(200).json({ message: "閲覧履歴を削除しました" });
+    } catch (err) {
+        next(err);
+    }
+};

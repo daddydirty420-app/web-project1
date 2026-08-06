@@ -9,11 +9,6 @@ const router = Router();
 // GET /categories/:id/level2
 // summary: カテゴリーlevel2取得
 // page: /upload
-router.get(
-    "/:id/level2",
-    getLevel2RateLimit,
-    validateParams(idParamSchema),
-    categoriesGetByIdLevel2Controller,
-);
+router.get("/:id/level2", getLevel2RateLimit, validateParams(idParamSchema), categoriesGetByIdLevel2Controller);
 
 export default router;

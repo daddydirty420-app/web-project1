@@ -9,11 +9,6 @@ const router = Router();
 // GET /suggest-words?keyword
 // summary: 検索サジェスト一覧取得
 // page: header
-router.get(
-    "/",
-    getSuggestWordsRateLimit,
-    validateQuery(keywordOptionalQuerySchema),
-    suggestWordsGetRootController,
-);
+router.get("/", getSuggestWordsRateLimit, validateQuery(keywordOptionalQuerySchema), suggestWordsGetRootController);
 
 export default router;

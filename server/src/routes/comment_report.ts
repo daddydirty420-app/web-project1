@@ -4,10 +4,7 @@ import {
     commentReportGetAllOptionsController,
 } from "../controllers/comment_report.js";
 import { authenticateToken } from "../middleware/index.js";
-import {
-    commentReportRateLimit,
-    getCommentReportRateLimit,
-} from "../middleware/rateLimit/commentReportRateLimit.js";
+import { commentReportRateLimit, getCommentReportRateLimit } from "../middleware/rateLimit/commentReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { optionIdBodySchema } from "../validators/body/report.js";
@@ -30,10 +27,6 @@ router.post(
 // GET /comment-report/all-options
 // summary: CommentReportOptions取得
 // page: /report/comment/[id]
-router.get(
-    "/all-options",
-    getCommentReportRateLimit,
-    commentReportGetAllOptionsController,
-);
+router.get("/all-options", getCommentReportRateLimit, commentReportGetAllOptionsController);
 
 export default router;
