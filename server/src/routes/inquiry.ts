@@ -1,10 +1,9 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { inquiryPostRootController } from "../controllers/inquiry.js";
 import { authenticateOptional } from "../middleware/authOptional.js";
 import { createInquiryRateLimit } from "../middleware/rateLimit/inquiryRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
-import { createInquiryUseCase } from "../usecases/inquiry/create.js";
-import { CreateInquiryBody, createInquiryBodySchema } from "../validators/body/inquiry.js";
+import { createInquiryBodySchema } from "../validators/body/inquiry.js";
 
 const router = Router();
 
@@ -16,20 +15,7 @@ router.post(
     authenticateOptional,
     validateBody(createInquiryBodySchema),
     createInquiryRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user?.id ?? null;
-
-        const validatedBody = req.validatedBody as CreateInquiryBody;
-        const { name, email, title, body } = validatedBody;
-
-        try {
-            await createInquiryUseCase({ userId, name, email, title, body });
-
-            res.status(200).json({ message: "お問い合わせを送信しました！" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    inquiryPostRootController,
 );
 
 export default router;

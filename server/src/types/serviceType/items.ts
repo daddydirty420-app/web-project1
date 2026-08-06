@@ -11,11 +11,11 @@ export type UserIdParams = {
 };
 
 export type GetAllItemParams = {
-    where?:
-        | {
-              id: { [Op.gt]: number };
-          }
-        | {};
+    where?: {
+        id?: {
+            [Op.gt]: number;
+        };
+    };
     limit?: number;
 };
 

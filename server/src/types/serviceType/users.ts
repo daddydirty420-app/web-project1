@@ -21,11 +21,11 @@ export type GetMyPageParams = {
 };
 
 export type GetUserAllParams = {
-    where?:
-        | {
-              id: { [Op.gt]: number };
-          }
-        | {};
+    where?: {
+        id?: {
+            [Op.gt]: number;
+        };
+    };
     limit?: number;
 };
 

@@ -1,12 +1,10 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { itemReportPostByIdController, itemReportGetAllOptionsController } from "../controllers/item_report.js";
 import { authenticateToken } from "../middleware/index.js";
 import { getItemReportRateLimit, itemReportRateLimit } from "../middleware/rateLimit/itemReportRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { getAllItemReportOptions } from "../services/itemReport.js";
-import { createItemReportUseCase } from "../usecases/itemReport/create.js";
-import { OptionIdBody, optionIdBodySchema } from "../validators/body/report.js";
+import { optionIdBodySchema } from "../validators/body/report.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -20,38 +18,12 @@ router.post(
     validateBody(optionIdBodySchema),
     authenticateToken,
     itemReportRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as OptionIdBody;
-        const optionId = body.selected;
-
-        try {
-            await createItemReportUseCase({ itemId, userId, optionId });
-
-            res.status(200).json({ message: "報告を作成しました" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    itemReportPostByIdController,
 );
 
 // GET /item-report/all-options
 // summary: ItemReportOptions取得
 // page: /report/item/[id]
-router.get(
-    "/all-options",
-    getItemReportRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        try {
-            const options = await getAllItemReportOptions();
-
-            res.status(200).json({ options });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
+router.get("/all-options", getItemReportRateLimit, itemReportGetAllOptionsController);
 
 export default router;

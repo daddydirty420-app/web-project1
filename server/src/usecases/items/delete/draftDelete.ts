@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { destroyDraftItem, getItem } from "../../../services/items/index.js";
+import { destroyDraftItem } from "../../../services/items/index.js";
 import { getMyItem } from "../../../services/items/query/relation.js";
 
 type Params = {

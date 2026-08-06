@@ -117,7 +117,7 @@ export const publishItemController = async (req: Request, res: Response, next: N
 // PATCH /items/:id/sort-number/add?number=number
 // summary: sortNumber追加
 // page: /itemなど
-export const addItemSortNumberController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const addItemSortNumberController = async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const query = req.validatedQuery as ItemSortNumberQuery;
@@ -134,11 +134,7 @@ export const addItemSortNumberController = async (req: Request, res: Response, n
 // PATCH /items/:id/sort-number/decrease?number=number
 // summary: sortNumber減少
 // page: /itemなど
-export const decreaseItemSortNumberController = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): Promise<void> => {
+export const decreaseItemSortNumberController = async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
 
     const query = req.validatedQuery as ItemSortNumberQuery;
@@ -155,7 +151,7 @@ export const decreaseItemSortNumberController = async (
 // PATCH /items/:id/logs/access
 // summary: アクセスログ記録
 // page: /item/[id]
-export const patchItemAccessLogsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const patchItemAccessLogsController = async (req: Request, res: Response): Promise<void> => {
     const itemId = Number(req.params.id);
     const userId = req.user?.id ?? null;
 

@@ -2,7 +2,7 @@ import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { createNotification } from "../../../services/notification.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
-import { getMyShopEditHasShop, getShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
+import { getMyShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
 import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
 
@@ -13,7 +13,7 @@ type Params = {
 };
 
 // PATCH /shop-info-edit/:id/id-image-upload
-// summary: 事業者登録　代表者身分証アップロード
+// summary: 事業者登録 代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
 export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }: Params) => {
     const now = Date.now();
@@ -55,8 +55,8 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
     }
 
     // 許認可証アップロード
-    let permitSignedUrls: string[] = [];
-    let permitUrls: string[] = [];
+    const permitSignedUrls: string[] = [];
+    const permitUrls: string[] = [];
 
     if (Array.isArray(permitFiles) && permitFiles.length > 0) {
         for (const file of permitFiles) {

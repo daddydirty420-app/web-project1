@@ -10,7 +10,9 @@
         "mig:generate": "ts-node ./node_modules/sequelize-typescript-migration/dist/cli.js generate --sequelize-path src/setupModels.ts",
         "migration:generate": "sequelize-typescript-migration generate",
         "migration:run": "sequelize-cli db:migrate",
-        "migration:revert": "sequelize-cli db:migrate:undo"
+        "migration:revert": "sequelize-cli db:migrate:undo",
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.1022.0",
@@ -60,8 +62,11 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
+        "@eslint/js": "^9.39.5",
+        "eslint": "^9.39.5",
         "nodemon": "^3.1.14",
         "ts-node-dev": "^2.0.0",
-        "tsx": "^4.21.0"
+        "tsx": "^4.21.0",
+        "typescript-eslint": "^8.66.0"
     }
 }

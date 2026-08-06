@@ -21,7 +21,7 @@ export const signupUseCase = async ({ email, password }: Params) => {
 
     if (emailUser.length > 0) throw new AppError("ALREADY_USED_EMAIL", 400);
 
-    // パスワード　ハッシュ化
+    // パスワード ハッシュ化
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // ユーザーネーム生成

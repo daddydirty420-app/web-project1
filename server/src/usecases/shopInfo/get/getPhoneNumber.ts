@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { getMyShopPhoneNumber, getShopPhoneNumber } from "../../../services/shopInfo/query.js";
+import { getMyShopPhoneNumber } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;

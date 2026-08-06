@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors.js";
 import { s3Domain } from "../../../infra/aws/s3.js";
 import { updateShopIdPermit } from "../../../services/shopInfo/command.js";
-import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop } from "../../../services/shopInfo/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
 import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
 import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
@@ -72,8 +72,8 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
     }
 
     // 許認可証アップロード
-    let permitSignedUrls: string[] = [];
-    let permitUrls: string[] = [];
+    const permitSignedUrls: string[] = [];
+    const permitUrls: string[] = [];
     const oldPermitUrls: string[] = Array.isArray(shop.permit_url) ? shop.permit_url : [];
 
     if (Array.isArray(permitFiles) && permitFiles.length > 0) {

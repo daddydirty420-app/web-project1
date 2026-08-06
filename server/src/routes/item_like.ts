@@ -1,5 +1,11 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    itemLikePostByIdController,
+    itemLikeDeleteByIdController,
+    itemLikeGetByIdStatusController,
+    itemLikeGetByIdCountController,
+    itemLikeGetByIdUserController,
+} from "../controllers/item_like.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     addItemLikeRateLimit,
@@ -10,37 +16,15 @@ import {
 } from "../middleware/rateLimit/itemLikeRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";
-import { addItemLikeUseCase } from "../usecases/itemLike/add.js";
-import { itemLikeCountUseCase } from "../usecases/itemLike/count.js";
-import { deleteItemLikeUseCase } from "../usecases/itemLike/delete.js";
-import { itemLikeStatusUseCase } from "../usecases/itemLike/status.js";
-import { getItemLikeUserListUseCase } from "../usecases/itemLike/userList.js";
 import { idParamSchema } from "../validators/params/id.js";
-import { KeywordOptionalQuery, keywordOptionalQuerySchema } from "../validators/query/keyword.js";
+import { keywordOptionalQuerySchema } from "../validators/query/keyword.js";
 
 const router = Router();
 
 // POST /item-like/:id
 // summary: いいね作成
 // page: /item
-router.post(
-    "/:id",
-    addItemLikeRateLimit,
-    validateParams(idParamSchema),
-    authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            await addItemLikeUseCase({ itemId, userId });
-
-            res.status(200).json({ isGood: true });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
+router.post("/:id", addItemLikeRateLimit, validateParams(idParamSchema), authenticateToken, itemLikePostByIdController);
 
 // DELETE /item-like/:id
 // summary: いいね削除
@@ -50,18 +34,7 @@ router.delete(
     deleteItemLikeRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            await deleteItemLikeUseCase({ itemId, userId });
-
-            res.status(200).json({ isGood: false });
-        } catch (err) {
-            next(err);
-        }
-    },
+    itemLikeDeleteByIdController,
 );
 
 // GET /item-like/:id/status
@@ -72,39 +45,13 @@ router.get(
     itemLikeStatusRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const isGood = await itemLikeStatusUseCase({ itemId, userId });
-
-            res.status(200).json({ isGood });
-        } catch (err) {
-            next(err);
-        }
-    },
+    itemLikeGetByIdStatusController,
 );
 
 // GET /item-like/:id/count
 // summary: いいね数取得
 // page: /item
-router.get(
-    "/:id/count",
-    itemLikeCountRateLimit,
-    validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-
-        try {
-            const count = await itemLikeCountUseCase({ itemId });
-
-            res.status(200).json({ count });
-        } catch (err) {
-            next(err);
-        }
-    },
-);
+router.get("/:id/count", itemLikeCountRateLimit, validateParams(idParamSchema), itemLikeGetByIdCountController);
 
 // GET /item-like/:id/user(?keyword="")
 // summary: いいねしたユーザーリスト取得
@@ -115,21 +62,7 @@ router.get(
     validateParams(idParamSchema),
     validateQuery(keywordOptionalQuerySchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const query = req.validatedQuery as KeywordOptionalQuery;
-        const keyword = query.keyword;
-
-        try {
-            const userList = await getItemLikeUserListUseCase({ itemId, userId, keyword });
-
-            res.status(200).json({ userList });
-        } catch (err) {
-            next(err);
-        }
-    },
+    itemLikeGetByIdUserController,
 );
 
 export default router;

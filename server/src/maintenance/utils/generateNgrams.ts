@@ -3,7 +3,7 @@ export function generateNgrams(text: string): string[] {
 
     const normalized = text
         .trim()
-        .replace(/[　・\-、,/._()\[\]\{\}]+/g, " ")
+        .replace(/[\u3000・\-、,/._()[\]{}]+/g, " ")
         .replace(/\s+/g, " ");
 
     const words = normalized.split(" ");

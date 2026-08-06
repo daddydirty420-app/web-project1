@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { faCommentDots } from "@fortawesome/free-regular-svg-icons";

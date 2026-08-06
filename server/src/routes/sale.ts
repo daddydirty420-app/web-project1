@@ -1,12 +1,10 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { salePatchByIdEditController, salePatchByIdStopController } from "../controllers/sale.js";
 import { authenticateToken } from "../middleware/index.js";
 import { saleRateLimit, saleStopRateLimit } from "../middleware/rateLimit/saleRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { saleEditUseCase } from "../usecases/sale/saleEdit.js";
-import { saleStopUseCase } from "../usecases/sale/saleStop.js";
-import { SaleEditBody, saleEditBodySchema } from "../validators/body/sale.js";
+import { saleEditBodySchema } from "../validators/body/sale.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -20,20 +18,7 @@ router.patch(
     saleRateLimit,
     validateParams(idParamSchema),
     validateBody(saleEditBodySchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const saleId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as SaleEditBody;
-
-        try {
-            await saleEditUseCase({ saleId, userId, body });
-
-            res.status(200).json({ message: "値引きしました！" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    salePatchByIdEditController,
 );
 
 // PATCH /sale/:id/stop
@@ -44,18 +29,7 @@ router.patch(
     authenticateToken,
     saleStopRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const saleId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            await saleStopUseCase({ saleId, userId });
-
-            res.status(200).json({ message: "値引きを終了しました！" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    salePatchByIdStopController,
 );
 
 export default router;

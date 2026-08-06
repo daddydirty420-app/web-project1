@@ -1,5 +1,9 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import {
+    deliveryPostByIdController,
+    deliveryGetByIdAddressController,
+    deliveryGetByIdNameController,
+} from "../controllers/delivery.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     createDeliveryRateLimit,
@@ -7,9 +11,6 @@ import {
     getNameRateLimit,
 } from "../middleware/rateLimit/deliveryRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { getDeliveryAddressUseCase } from "../usecases/delivery/getAddress.js";
-import { getDeliveryNameUseCase } from "../usecases/delivery/getName.js";
-import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -22,18 +23,7 @@ router.post(
     validateParams(idParamSchema),
     authenticateToken,
     createDeliveryRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const userId = req.user!.id;
-        const itemId = Number(req.params.id);
-
-        try {
-            const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
-
-            res.status(200).json({ deliveryId });
-        } catch (err) {
-            next(err);
-        }
-    },
+    deliveryPostByIdController,
 );
 
 // GET /delivery/:id/address
@@ -44,18 +34,7 @@ router.get(
     getAddressRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const deliveryId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const data = await getDeliveryAddressUseCase({ deliveryId, userId });
-
-            res.status(200).json({ data });
-        } catch (err) {
-            next(err);
-        }
-    },
+    deliveryGetByIdAddressController,
 );
 
 // GET /delivery/:id/name
@@ -66,18 +45,7 @@ router.get(
     getNameRateLimit,
     validateParams(idParamSchema),
     authenticateToken,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const deliveryId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        try {
-            const name = await getDeliveryNameUseCase({ deliveryId, userId });
-
-            res.status(200).json({ name });
-        } catch (err) {
-            next(err);
-        }
-    },
+    deliveryGetByIdNameController,
 );
 
 export default router;

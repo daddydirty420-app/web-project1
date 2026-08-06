@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { getMyTransferDetail, getTransferDetail } from "../../services/transfer.js";
+import { getMyTransferDetail } from "../../services/transfer.js";
 import { maskAccountNumber } from "../../utils/maskAccountNumber.js";
 
 type Params = {

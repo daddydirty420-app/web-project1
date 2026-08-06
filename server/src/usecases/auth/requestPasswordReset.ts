@@ -29,6 +29,7 @@ export const requestPasswordResetUseCase = async ({ email }: Params) => {
         },
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resetUrl = `${process.env.CLIENT_URL}/login/new-pw?token=${newResetToken}`;
 
     // メール送信処理

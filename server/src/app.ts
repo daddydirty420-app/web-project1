@@ -12,11 +12,6 @@ startAllCrons();
 
 const app = express();
 
-import MaintenanceItemsRouter from "./maintenance/routes/item.js";
-import MaintenanceNotificationRouter from "./maintenance/routes/notification.js";
-import MaintenanceSuggestWordsRouter from "./maintenance/routes/suggestWords.js";
-import TestRouter from "./maintenance/routes/test.js";
-import MaintenanceUsersRouter from "./maintenance/routes/user.js";
 import AddressRouter from "./routes/address.js";
 import ItemAdminRouter from "./routes/admin/item_admin.js";
 import UserAdminRouter from "./routes/admin/user_admin.js";
@@ -40,7 +35,6 @@ import NameRouter from "./routes/name.js";
 import NotificationRouter from "./routes/notification.js";
 import OrdersRouter from "./routes/orders.js";
 import PointsHistoryRouter from "./routes/points_history.js";
-import PointsUriageOverRouter from "./routes/points_uriage_over.js";
 import ReferenceCodeRouter from "./routes/reference_code.js";
 import SaleRouter from "./routes/sale.js";
 import SearchRouter from "./routes/search.js";
@@ -110,7 +104,6 @@ app.use("/api/name", NameRouter);
 app.use("/api/notification", NotificationRouter);
 app.use("/api/orders", OrdersRouter);
 app.use("/api/points-history", PointsHistoryRouter);
-app.use("/api/points-uriage-over", PointsUriageOverRouter);
 app.use("/api/reference-code", ReferenceCodeRouter);
 app.use("/api/item-report", ItemReportRouter);
 app.use("/api/sale", SaleRouter);
@@ -124,11 +117,6 @@ app.use("/api/video", VideoRouter);
 app.use("/api/watch-history", WatchHistoryRouter);
 app.use("/api/admin/items", ItemAdminRouter);
 app.use("/api/admin/user", UserAdminRouter);
-app.use("/api/maintenance/items", MaintenanceItemsRouter);
-app.use("/api/maintenance/notification", MaintenanceNotificationRouter);
-app.use("/api/maintenance/suggest-words", MaintenanceSuggestWordsRouter);
-app.use("/api/maintenance/users", MaintenanceUsersRouter);
-app.use("/api/maintenance/test", TestRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -136,7 +124,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
     console.error(err);
 
     if (err instanceof AppError) {

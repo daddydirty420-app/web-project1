@@ -158,7 +158,7 @@ export const uploadMainUseCase = async ({ itemId, userId, body }: Params) => {
         await updateImage({ item, urls: finalImageUrls, transaction: t });
     });
 
-    //　お知らせ作成
+    // お知らせ作成
     createNotification({
         data: {
             read_user_id: userId,

@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { updateShopOption } from "../../../services/shopInfo/command.js";
-import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;

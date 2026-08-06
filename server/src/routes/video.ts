@@ -1,10 +1,8 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { videoPatchByIdOnplayController, videoPatchByIdConvertController } from "../controllers/video.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
 import { convertVideoRateLimit, playVideoLogRateLimit } from "../middleware/rateLimit/videoRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { convertVideoUseCase } from "../usecases/video/convert.js";
-import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -17,17 +15,7 @@ router.patch(
     authenticateOptional,
     playVideoLogRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const videoId = Number(req.params.id);
-
-        const userId = req.user?.id ?? null;
-
-        onPlayVideoUseCase({ videoId, userId }).catch((err) => {
-            console.error(err);
-        });
-
-        res.status(200).json({ message: "再生回数追加成功！" });
-    },
+    videoPatchByIdOnplayController,
 );
 
 // PATCH /video/:id/convert
@@ -38,17 +26,7 @@ router.patch(
     authenticateToken,
     convertVideoRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const videoId = Number(req.params.id);
-
-        const userId = req.user!.id;
-
-        convertVideoUseCase({ videoId, userId }).catch((err) => {
-            console.error(err);
-        });
-
-        res.status(202).json({ message: "変換処理を受け付けました" });
-    },
+    videoPatchByIdConvertController,
 );
 
 export default router;

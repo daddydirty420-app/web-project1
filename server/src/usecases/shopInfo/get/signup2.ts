@@ -8,7 +8,7 @@ type Params = {
 };
 
 // GET /shop-info/:id/signup/2
-// summary: ショップ口座登録ページ　インプット表示データ取得
+// summary: ショップ口座登録ページ インプット表示データ取得
 // page: /shop-signup/step2/[id]
 export const getShopSignup2UseCase = async ({ userId, shopId }: Params) => {
     // shop取得（確認用）

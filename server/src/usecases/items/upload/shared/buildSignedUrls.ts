@@ -49,8 +49,8 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
     const existingImages = Array.isArray(item.image_url) ? item.image_url : [];
 
     let itemImageSignedUrls: SignedUrlWithIndex[] = [];
-    let newUploadedUrls: string[] = []; // 新規用
-    let finalImageUrls: string[] = []; // DB保存用
+    const newUploadedUrls: string[] = []; // 新規用
+    const finalImageUrls: string[] = []; // DB保存用
 
     await Promise.all(
         (itemImages ?? []).map(async (img, index) => {
@@ -94,8 +94,8 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
         }
     });
 
-    let attributesImageSignedUrls: Record<string, string> = {};
-    let attributesImageUrls: Record<string, string> = {};
+    const attributesImageSignedUrls: Record<string, string> = {};
+    const attributesImageUrls: Record<string, string> = {};
 
     const attributesTargets = attributes.colorVariants.filter((v) => v.image && v.image.name && !v.image.uploaded);
 

@@ -15,7 +15,7 @@ export const moveToGlacier = async ({ userId, url }: Params) => {
 
     try {
         await headCmdS3({ key });
-    } catch (e) {
+    } catch {
         console.warn(`S3にファイルが存在しないためスキップ: ${key}`);
         return null;
     }

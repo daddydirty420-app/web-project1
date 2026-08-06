@@ -29,7 +29,7 @@ export const editProfileUseCase = async ({ userId, body, imageEdit }: Params) =>
     // プロフィール画像署名付きurl取得
     let signedUrl: string | null = null;
     let imageUrl: string | null = null;
-    let oldImageUrl = user.profile_image;
+    const oldImageUrl = user.profile_image;
 
     if (fileName && contentType && imageEdit) {
         const key = `profile-image/${userId}/${now}_${fileName}`;

@@ -131,7 +131,7 @@ export const StartExpiredMoneyCron = () => {
 
                             sumGetUriagekin = sumGetUriagekin + sumRemainingUriagekin;
                         }
-                    } catch (err) {
+                    } catch {
                         console.error(`userId: ${userId}の売上金回収処理中にエラー発生`);
                         continue;
                     }

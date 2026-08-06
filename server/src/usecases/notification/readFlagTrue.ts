@@ -1,5 +1,5 @@
 import { AppError } from "../../errors.js";
-import { getMyNotification, getNotification, updateReadFlag } from "../../services/notification.js";
+import { getMyNotification, updateReadFlag } from "../../services/notification.js";
 
 type Params = {
     notificationId: number;

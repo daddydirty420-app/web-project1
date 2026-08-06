@@ -1,12 +1,10 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { bankAccountPostByIdShopController, bankAccountPatchByIdController } from "../controllers/bank_account.js";
 import { authenticateToken } from "../middleware/index.js";
 import { bankEditRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { createShopAccount } from "../usecases/bankAccount/createShop.js";
-import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
-import { BankBody, bankBodySchema } from "../validators/body/bankAccount.js";
+import { bankBodySchema } from "../validators/body/bankAccount.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -20,19 +18,7 @@ router.post(
     validateBody(bankBodySchema),
     authenticateToken,
     bankEditRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as BankBody;
-
-        try {
-            await createShopAccount({ shopId, userId, body });
-
-            res.status(200).json({ message: "口座情報を登録しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    bankAccountPostByIdShopController,
 );
 
 // PATCH /bank-account/:id
@@ -44,24 +30,7 @@ router.patch(
     validateBody(bankBodySchema),
     authenticateToken,
     bankEditRateLimit,
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const accountId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as BankBody;
-
-        try {
-            await editAccountUseCase({
-                userId,
-                accountId,
-                body,
-            });
-
-            res.status(200).json({ message: "口座情報を更新しました。" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    bankAccountPatchByIdController,
 );
 
 export default router;

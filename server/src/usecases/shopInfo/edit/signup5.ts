@@ -5,7 +5,7 @@ import { deleteAddress } from "../../../services/address.js";
 import { deleteBankAccount } from "../../../services/bankAccount.js";
 import { deleteName } from "../../../services/name.js";
 import { deleteShop, updateShopRequestAll } from "../../../services/shopInfo/command.js";
-import { getMyShop, getOldShopAll, getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop, getOldShopAll } from "../../../services/shopInfo/query.js";
 
 type OldShop = {
     ShopInfo: InstanceType<typeof ShopInfo> & {
@@ -22,7 +22,7 @@ type Params = {
 };
 
 // PATCH /shop-info/:id/signup/5
-// summary: ショップ登録　確定
+// summary: ショップ登録 確定
 // page: /shop-signup/step5/[id]
 export const updateShopSignup5UseCase = async ({ shopId, userId }: Params) => {
     // shop取得

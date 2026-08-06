@@ -6,7 +6,7 @@ type Params = {
 };
 
 // GET /user/transfer-request
-// summary: 振込申請ページ　表示データ取得
+// summary: 振込申請ページ 表示データ取得
 // page: /transfer/request
 export const getUserTransferRequestUseCase = async ({ userId }: Params) => {
     // user取得

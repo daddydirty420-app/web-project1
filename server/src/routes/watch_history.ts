@@ -1,9 +1,8 @@
 import { Router } from "express";
-import type { NextFunction, Request, Response } from "express-serve-static-core";
+import { watchHistoryDeleteByIdController } from "../controllers/watch_history.js";
 import { authenticateToken } from "../middleware/index.js";
 import { deleteWatchHistoryRateLimit } from "../middleware/rateLimit/watchHistoryRateLimit.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { deleteWatchHistoryUseCase } from "../usecases/watchHistory/delete.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -16,19 +15,7 @@ router.delete(
     authenticateToken,
     deleteWatchHistoryRateLimit,
     validateParams(idParamSchema),
-    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const itemId = Number(req.params.id);
-
-        const userId = req.user!.id;
-
-        try {
-            await deleteWatchHistoryUseCase({ itemId, userId });
-
-            res.status(200).json({ message: "閲覧履歴を削除しました" });
-        } catch (err) {
-            next(err);
-        }
-    },
+    watchHistoryDeleteByIdController,
 );
 
 export default router;

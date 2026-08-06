@@ -447,8 +447,6 @@ router.patch("/orders-patch/:id", validateParams(idParamSchema), async (req: Req
             ],
         });
 
-        const now = new Date();
-
         await Promise.all(
             orders.map(async (orders: any) => {
                 await orders.update(

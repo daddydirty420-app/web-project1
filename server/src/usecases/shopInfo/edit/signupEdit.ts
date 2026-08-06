@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors.js";
 import { updateShopAny } from "../../../services/shopInfo/command.js";
-import { getMyShop, getShop } from "../../../services/shopInfo/query.js";
+import { getMyShop } from "../../../services/shopInfo/query.js";
 
 type Params = {
     shopId: number;
@@ -9,7 +9,7 @@ type Params = {
 };
 
 // PATCH /shop-info/:id/signup/edit
-// summary: ショップ登録確認ページ　インプット編集
+// summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
 export const updateShopSignupEditUseCase = async ({ shopId, userId, updateData }: Params) => {
     // shop取得
