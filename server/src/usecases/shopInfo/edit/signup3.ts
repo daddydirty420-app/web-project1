@@ -72,8 +72,8 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
     }
 
     // 許認可証アップロード
-    let permitSignedUrls: string[] = [];
-    let permitUrls: string[] = [];
+    const permitSignedUrls: string[] = [];
+    const permitUrls: string[] = [];
     const oldPermitUrls: string[] = Array.isArray(shop.permit_url) ? shop.permit_url : [];
 
     if (Array.isArray(permitFiles) && permitFiles.length > 0) {

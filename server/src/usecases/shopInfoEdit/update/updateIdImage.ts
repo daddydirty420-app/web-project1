@@ -55,8 +55,8 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
     }
 
     // 許認可証アップロード
-    let permitSignedUrls: string[] = [];
-    let permitUrls: string[] = [];
+    const permitSignedUrls: string[] = [];
+    const permitUrls: string[] = [];
 
     if (Array.isArray(permitFiles) && permitFiles.length > 0) {
         for (const file of permitFiles) {

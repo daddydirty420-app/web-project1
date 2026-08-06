@@ -87,8 +87,8 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
     let rearSignedUrl: string | null = null;
     let frontUrl: string | null = null;
     let rearUrl: string | null = null;
-    let oldFrontUrl = user.IdCard?.id_card_front || null;
-    let oldRearUrl = user.IdCard?.id_card_rear || null;
+    const oldFrontUrl = user.IdCard?.id_card_front || null;
+    const oldRearUrl = user.IdCard?.id_card_rear || null;
 
     if (frontFileName && frontFileType && idFrontUpload) {
         const key = `idcard/front/${userId}/${now}_${frontFileName}`;
