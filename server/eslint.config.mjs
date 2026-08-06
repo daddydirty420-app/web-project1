@@ -7,11 +7,12 @@ export default tseslint.config(
             ".vscode/**",
             "dist/**",
             "node_modules/**",
-            "migration/**",
+            "migrations/**",
             "seeders/**",
             "public/**",
             "tmp/**",
             "eslint.config.mjs",
+            "scripts/**"
         ],
     },
 
