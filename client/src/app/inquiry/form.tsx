@@ -20,11 +20,11 @@ export const Form = ({ user }: Props) => {
     const [body, setBody] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const router = useRouter();
+
     useEffect(() => {
         router.refresh();
     }, []);
-
-    const router = useRouter();
 
     const submit = async () => {
         const emailTrim = email.trim();
