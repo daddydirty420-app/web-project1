@@ -48,3 +48,7 @@ Controller は以下を担当する。
 
 Todo 追加自体が現在の依頼範囲に含まれない場合でも、
 ルートの `AGENTS.md` と `/docs/todo` のルールに従う。
+
+## 現時点での作業進捗
+
+items.tsのみリファクタ完了！/routesの書き方はitems.tsを参照する。
