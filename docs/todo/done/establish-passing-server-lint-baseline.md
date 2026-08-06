@@ -32,3 +32,14 @@ ESLint 設定と対象ファイルの責務を確認し、実行対象として�
 
 特に `server/src/controllers` と `server/src/routes` は、未使用 import・未使用引数・不正な空白を解消し、Route/Controller の責務分離ルールを維持してください。変更後は `npm --prefix server run lint` と `npm --prefix server run typecheck` を実行し、結果を報告してください。
 ```
+
+---
+
+## 報告
+
+確認しました。問題ありません。
+
+- npm --prefix server run lint: 成功
+- npm --prefix server run typecheck: 成功
+
+変更は行っていません。
