@@ -37,6 +37,7 @@ export const changeEmailUseCase = async ({ userId, newEmail }: Params) => {
         },
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const url = `${process.env.CLIENT_URL}/edit/email/new-email/${token}`;
 
     // メール送信処理
