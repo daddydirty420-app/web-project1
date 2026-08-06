@@ -97,7 +97,8 @@
         "rednull",
         "mokuji",
         "zenn",
-        "techdebt"
+        "techdebt",
+        "fontawesome"
     ],
     "remote.autoForwardPortsFallback": 0
 }

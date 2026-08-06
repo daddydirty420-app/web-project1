@@ -11,11 +11,8 @@
         "migration:generate": "sequelize-typescript-migration generate",
         "migration:run": "sequelize-cli db:migrate",
         "migration:revert": "sequelize-cli db:migrate:undo",
-        "lint": "npm run lint:server",
-        "lint:server": "npm --prefix server run lint",
-        "typecheck": "npm run typecheck:server",
-        "typecheck:server": "npm --prefix server run typecheck",
-        "test": "npm run test:server"
+        "lint": "eslint .",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.1022.0",
