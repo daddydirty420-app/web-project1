@@ -104,7 +104,7 @@ Orders.init(
             allowNull: true,
         },
         total_amount: {
-            //　ポイント込み合計請求金額
+            // ポイント込み合計請求金額
             type: DataTypes.INTEGER,
             allowNull: true,
         },
@@ -114,7 +114,7 @@ Orders.init(
             allowNull: true,
         },
         paid_amount: {
-            //　ポイント除外合計請求金額
+            // ポイント除外合計請求金額
             type: DataTypes.INTEGER,
             allowNull: true,
         },

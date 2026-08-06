@@ -4,7 +4,7 @@ import Brands from "./brands.js";
 
 export class BrandAliases extends Model {
     declare id: number;
-    declare brand_id: Number | null;
+    declare brand_id: number | null;
     declare name: string | null;
     declare name_normalized: string | null;
 
