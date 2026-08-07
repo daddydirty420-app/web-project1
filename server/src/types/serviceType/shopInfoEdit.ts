@@ -62,9 +62,20 @@ export type CreateShopEditComFreeParams = {
     transaction?: Transaction;
 };
 
+export type ShopInfoEditUpdateData =
+    | { company_name: string }
+    | { phone_number: string }
+    | { email: string }
+    | { open_date_time: string }
+    | { founded_date: Date }
+    | { member_count: number }
+    | { homepage_url: string }
+    | { company_number: string }
+    | { capital: number };
+
 export type UpdateShopEditAnyParams = {
     shopEdit: InstanceType<typeof ShopInfoEdit>;
-    data: any;
+    data: ShopInfoEditUpdateData;
     transaction?: Transaction;
 };
 

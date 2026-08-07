@@ -35,21 +35,21 @@ UseCaseとServiceでは `any` を廃止し、schemaから推論した型、ま�
 ## 対象ファイル・関数
 
 - `/server/src/controllers/shop_info.ts`
-  - `shopInfoPatchByIdSignupEditController`
+    - `shopInfoPatchByIdSignupEditController`
 - `/server/src/controllers/shop_info_edit.ts`
-  - `shopInfoEditPatchByIdController`
+    - `shopInfoEditPatchByIdController`
 - `/server/src/routes/shop_info.ts`
 - `/server/src/routes/shop_info_edit.ts`
 - `/server/src/validators/body/shopInfo.ts`
 - `/server/src/validators/body/shopInfoEdit.ts`
 - `/server/src/usecases/shopInfo/edit/signupEdit.ts`
-  - `updateShopSignupEditUseCase`
+    - `updateShopSignupEditUseCase`
 - `/server/src/usecases/shopInfoEdit/update/updateAny.ts`
-  - `updateShopEditAnyUseCase`
+    - `updateShopEditAnyUseCase`
 - `/server/src/services/shopInfo/command.ts`
-  - `updateShopAny`
+    - `updateShopAny`
 - `/server/src/services/shopInfoEdit/command.ts`
-  - `updateShopEditAny`
+    - `updateShopEditAny`
 - `/server/src/types/serviceType/shopInfo.ts`
 - `/server/src/types/serviceType/shopInfoEdit.ts`
 - `/client/src/app/shop-signup/api/step5.ts`
@@ -77,6 +77,7 @@ UseCaseとServiceでは `any` を廃止し、schemaから推論した型、ま�
 ```
 
 ---
+
 追記
 
 ## 参考フロントエンド
@@ -105,3 +106,39 @@ UseCaseとServiceでは `any` を廃止し、schemaから推論した型、ま�
 - /type/serviceType
 
 これらは必要あらば修正してください。フロントエンドに変更は一切加えないでください。
+
+---
+
+## 報告
+
+実装完了しました。フロントエンドは変更していません。
+
+主な変更:
+
+- 13種／9種の更新フィールドをstrict union schemaで限定
+- 未知キー、保護カラム、複数キーを400 INVALID_BODYで拒否
+- Controllerをreq.validatedBody参照へ変更
+- UseCaseで数値・日付・booleanをDB型へ明示変換
+- Service引数のdata: anyを具体的なunion型へ変更
+- 既存のHTTP status・レスポンス形式を維持
+
+変更箇所:
+
+- server/src/validators/body/shopInfo.ts
+- server/src/validators/body/shopInfoEdit.ts
+- server/src/routes/shop_info.ts
+- server/src/routes/shop_info_edit.ts
+- server/src/controllers/shop_info.ts
+- server/src/controllers/shop_info_edit.ts
+- server/src/usecases/shopInfo/edit/signupEdit.ts
+- server/src/usecases/shopInfoEdit/update/updateAny.ts
+- server/src/types/serviceType/shopInfo.ts
+- server/src/types/serviceType/shopInfoEdit.ts
+
+確認結果:
+
+- npm run lint: 成功
+- npm run typecheck: 成功
+- schema実行確認: 成功
+- git diff --check: 問題なし
+- フロントエンド変更: なし

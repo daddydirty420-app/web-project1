@@ -52,6 +52,7 @@ import {
     createSignup1BBodySchema,
     repNameBodySchema,
     shopIdCardBodySchema,
+    shopSignupEditBodySchema,
     shopOptionBodySchema,
 } from "../validators/body/shopInfo.js";
 import { phoneNumberBodySchema } from "../validators/body/users.js";
@@ -138,6 +139,7 @@ router.patch(
     authenticateToken,
     shopSignup5EditRateLimit,
     validateParams(idParamSchema),
+    validateBody(shopSignupEditBodySchema),
     shopInfoPatchByIdSignupEditController,
 );
 

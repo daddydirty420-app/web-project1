@@ -20,8 +20,14 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
-import { CreateSignup1Body, RepNameBody, ShopIdCardBody, ShopOptionBody } from "../validators/body/shopInfo.js";
-import { PhoneNumberBody } from "../validators/body/users.js";
+import type {
+    CreateSignup1Body,
+    RepNameBody,
+    ShopIdCardBody,
+    ShopOptionBody,
+    ShopSignupEditBody,
+} from "../validators/body/shopInfo.js";
+import type { PhoneNumberBody } from "../validators/body/users.js";
 
 // POST /shop-info
 // summary: ShopInfo作成 事業者登録
@@ -170,7 +176,7 @@ export const shopInfoPatchByIdSignupEditController = async (
     try {
         const shopId = Number(req.params.id);
         const userId = req.user!.id;
-        const updateData = req.body;
+        const updateData = req.validatedBody as ShopSignupEditBody;
 
         await updateShopSignupEditUseCase({ shopId, userId, updateData });
 

@@ -11,10 +11,14 @@ import { getConNameEditUseCase } from "../usecases/shopInfoEdit/get/getConName.j
 import { getRepNameEditUseCase } from "../usecases/shopInfoEdit/get/getRepName.js";
 import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/updateAny.js";
 import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
-import { AddressBody } from "../validators/body/address.js";
-import { BankBody } from "../validators/body/bankAccount.js";
-import { RepNameBody, ShopIdCardBody } from "../validators/body/shopInfo.js";
-import { ComFreeIdBody, CreateCompanyNameBody } from "../validators/body/shopInfoEdit.js";
+import type { AddressBody } from "../validators/body/address.js";
+import type { BankBody } from "../validators/body/bankAccount.js";
+import type { RepNameBody, ShopIdCardBody } from "../validators/body/shopInfo.js";
+import type {
+    ComFreeIdBody,
+    CreateCompanyNameBody,
+    ShopInfoEditUpdateBody,
+} from "../validators/body/shopInfoEdit.js";
 
 // POST /shop-info-edit/:id/address
 // summary: 会社所在地変更リクエスト
@@ -146,7 +150,7 @@ export const shopInfoEditPatchByIdController = async (
     try {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
-        const updateData = req.body;
+        const updateData = req.validatedBody as ShopInfoEditUpdateBody;
 
         await updateShopEditAnyUseCase({ shopEditId, userId, updateData });
 

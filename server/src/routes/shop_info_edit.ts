@@ -32,7 +32,11 @@ import { validateParams } from "../middleware/validate/validateParams.js";
 import { addressBodySchema } from "../validators/body/address.js";
 import { bankBodySchema } from "../validators/body/bankAccount.js";
 import { repNameBodySchema, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
-import { comFreeIdBodySchema, createCompanyNameBodySchema } from "../validators/body/shopInfoEdit.js";
+import {
+    comFreeIdBodySchema,
+    createCompanyNameBodySchema,
+    shopInfoEditUpdateBodySchema,
+} from "../validators/body/shopInfoEdit.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -105,6 +109,7 @@ router.patch(
     authenticateToken,
     patchShopEditRateLimit,
     validateParams(idParamSchema),
+    validateBody(shopInfoEditUpdateBodySchema),
     shopInfoEditPatchByIdController,
 );
 
