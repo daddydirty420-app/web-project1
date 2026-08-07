@@ -75,3 +75,33 @@ UseCaseとServiceでは `any` を廃止し、schemaから推論した型、ま�
 
 必要なテストを追加または更新し、許可フィールドは更新できること、未知のフィールドと保護対象フィールドは拒否されることを確認してください。最後に `cd server && npm run lint && npm run typecheck` を実行して結果を報告してください。
 ```
+
+---
+追記
+
+## 参考フロントエンド
+
+### shopInfoPatchByIdSignupEditController
+
+- /client/src/app/shop-signup/step5/client.ts
+
+このコンポーネント部分から、submit() → fetchStep5()を経由して、APIリクエストが飛んできます。
+
+### shopInfoEditPatchByIdController
+
+- /client/src/app/edit/shop/com-free/confirm/client.tsx
+
+このコンポーネント部分から、updateField() → fetchUpdateField() を経由して、APIリクエストが飛んできます。
+
+### 修正ファイル
+
+/server/srcの
+
+- /routes
+- /controllers
+- /validators
+- /usecases
+- /services
+- /type/serviceType
+
+これらは必要あらば修正してください。フロントエンドに変更は一切加えないでください。
