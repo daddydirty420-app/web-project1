@@ -18,14 +18,7 @@ type Result =
 // GET /items?type=""&page=number&view=""&limit=number(&pageUserId=${id})
 // summary: 商品リスト取得
 // page: /lp・/profile
-export const getItemListUseCase = async ({
-    userId,
-    type,
-    page,
-    view,
-    limit,
-    pageUserId,
-}: Params): Promise<Result> => {
+export const getItemListUseCase = async ({ userId, type, page, view, limit, pageUserId }: Params): Promise<Result> => {
     if (view === "index") {
         if (type === "video") {
             return await getIndexVideosUseCase({ page, limit, userId });

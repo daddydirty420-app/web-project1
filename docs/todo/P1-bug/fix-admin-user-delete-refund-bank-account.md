@@ -21,15 +21,15 @@
 ## 対象ファイル
 
 - `/server/src/usecases/admin/users/deleteUser.ts`
-  - `deleteUserAdminUseCase`
+    - `deleteUserAdminUseCase`
 
 ## 参照すべきファイル
 
 - `/server/src/services/users/query.ts`
-  - `getUserHasBankAccount`
-  - `getUserHasUriagekinPointBank`
+    - `getUserHasBankAccount`
+    - `getUserHasUriagekinPointBank`
 - `/server/src/services/transfer.ts`
-  - `createTransfer`
+    - `createTransfer`
 - `/server/src/types/serviceType/transfer.ts`
 - 購入者へのキャンセル返金を作成している他のUseCase
 

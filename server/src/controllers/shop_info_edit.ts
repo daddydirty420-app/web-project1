@@ -14,11 +14,7 @@ import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/up
 import type { AddressBody } from "../validators/body/address.js";
 import type { BankBody } from "../validators/body/bankAccount.js";
 import type { RepNameBody, ShopIdCardBody } from "../validators/body/shopInfo.js";
-import type {
-    ComFreeIdBody,
-    CreateCompanyNameBody,
-    ShopInfoEditUpdateBody,
-} from "../validators/body/shopInfoEdit.js";
+import type { ComFreeIdBody, CreateCompanyNameBody, ShopInfoEditUpdateBody } from "../validators/body/shopInfoEdit.js";
 
 // POST /shop-info-edit/:id/address
 // summary: 会社所在地変更リクエスト

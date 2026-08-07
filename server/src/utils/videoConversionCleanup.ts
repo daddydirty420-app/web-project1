@@ -5,10 +5,7 @@ type Params = {
     convertedDir: string;
 };
 
-export const cleanupVideoConversionFiles = ({
-    originalFilePath,
-    convertedDir,
-}: Params): void => {
+export const cleanupVideoConversionFiles = ({ originalFilePath, convertedDir }: Params): void => {
     const cleanupErrors: unknown[] = [];
 
     try {
@@ -24,9 +21,6 @@ export const cleanupVideoConversionFiles = ({
     }
 
     if (cleanupErrors.length > 0) {
-        throw new AggregateError(
-            cleanupErrors,
-            "Failed to clean up video conversion files",
-        );
+        throw new AggregateError(cleanupErrors, "Failed to clean up video conversion files");
     }
 };

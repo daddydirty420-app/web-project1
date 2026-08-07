@@ -9,6 +9,6 @@ type Params = {
 // page: footer, /my-page
 export const countUnreadNotificationsUseCase = async ({ userId }: Params): Promise<number> => {
     const count = await countUnread({ userId });
-    
+
     return count;
 };

@@ -25,7 +25,13 @@ type Result =
 // /users/me/items?type="typename"(&page=number&status=""&keyword="search")
 // summary: ユーザー関連各種商品リスト取得
 // page: /item-list/...
-export const getUserItemsUseCase = async ({ userId, type, page, status, keyword: rawKeyword }: Params): Promise<Result> => {
+export const getUserItemsUseCase = async ({
+    userId,
+    type,
+    page,
+    status,
+    keyword: rawKeyword,
+}: Params): Promise<Result> => {
     const keyword = rawKeyword ? normalizeJapanese(rawKeyword) : undefined;
     const baseParams = { page, userId, keyword };
 

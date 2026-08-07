@@ -6,9 +6,7 @@ import test from "node:test";
 import { cleanupVideoConversionFiles } from "../../src/utils/videoConversionCleanup.js";
 
 test("元動画と変換途中ディレクトリだけを削除する", () => {
-    const temporaryRoot = fs.mkdtempSync(
-        path.join(os.tmpdir(), "video-conversion-cleanup-"),
-    );
+    const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "video-conversion-cleanup-"));
     const originalFilePath = path.join(temporaryRoot, "original-video");
     const convertedDir = path.join(temporaryRoot, "converted-video");
     const unrelatedFilePath = path.join(temporaryRoot, "unrelated-video");
@@ -30,9 +28,7 @@ test("元動画と変換途中ディレクトリだけを削除する", () => {
 });
 
 test("cleanup対象が存在しない場合も正常終了する", () => {
-    const temporaryRoot = fs.mkdtempSync(
-        path.join(os.tmpdir(), "video-conversion-cleanup-"),
-    );
+    const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "video-conversion-cleanup-"));
 
     try {
         assert.doesNotThrow(() => {
