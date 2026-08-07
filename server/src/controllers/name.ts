@@ -6,13 +6,13 @@ import { NameBody } from "../validators/body/name.js";
 // summary: 氏名変更
 // page: /edit/name
 export const namePatchByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const nameId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as NameBody;
-    const { sei, mei, seiKana, meiKana } = body;
-
     try {
+        const nameId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as NameBody;
+        const { sei, mei, seiKana, meiKana } = body;
+
         await editNameUseCase({ nameId, userId, sei, mei, seiKana, meiKana });
 
         res.status(200).json({ message: "氏名を更新しました。" });

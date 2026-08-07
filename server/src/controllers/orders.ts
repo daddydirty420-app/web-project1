@@ -8,16 +8,16 @@ import { OrderListQuery } from "../validators/query/orders.js";
 // page: type=purchased: /order/list/purchased
 // page: type=sold: /order/list/sold
 export const ordersGetRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as OrderListQuery;
-    const { type, page, status } = query;
-
-    const params = { page, userId, status };
-
-    const usecase = type === "purchased" ? () => getPurchasedListUseCase(params) : () => getSoldListUseCase(params);
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as OrderListQuery;
+        const { type, page, status } = query;
+
+        const params = { page, userId, status };
+
+        const usecase = type === "purchased" ? () => getPurchasedListUseCase(params) : () => getSoldListUseCase(params);
+
         const { ordersList, totalPages } = await usecase();
 
         res.status(200).json({ ordersList, totalPages });

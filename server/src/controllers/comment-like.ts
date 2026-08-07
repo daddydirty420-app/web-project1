@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { countCommentLike } from "../services/commentLike.js";
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
+import { countCommentLikeUseCase } from "../usecases/commentLike/count.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
 import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
@@ -10,11 +10,11 @@ import { KeywordOptionalQuery } from "../validators/query/keyword.js";
 // summary: いいね作成
 // page: /item
 export const commentLikePostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const commentId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const commentId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
         await addCommentLikeUseCase({ commentId, userId });
 
         res.status(200).json({ isGood: true });
@@ -31,11 +31,11 @@ export const commentLikeDeleteByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const commentId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const commentId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
         await deleteCommentLikeUseCase({ commentId, userId });
 
         res.status(200).json({ isGood: false });
@@ -52,11 +52,11 @@ export const commentLikeGetByIdStatusController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const commentId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const commentId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
         const isGood = await commentLikeStatusUseCase({ commentId, userId });
 
         res.status(200).json({ isGood });
@@ -73,10 +73,10 @@ export const commentLikeGetByIdCountController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const commentId = Number(req.params.id);
-
     try {
-        const count = await countCommentLike({ commentId });
+        const commentId = Number(req.params.id);
+
+        const count = await countCommentLikeUseCase({ commentId });
 
         res.status(200).json({ count });
     } catch (err) {
@@ -92,13 +92,13 @@ export const commentLikeGetByIdUserController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const commentId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as KeywordOptionalQuery;
-    const keyword = query.keyword;
-
     try {
+        const commentId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as KeywordOptionalQuery;
+        const keyword = query.keyword;
+
         const userList = await getCommentLikeUserListUseCase({ commentId, userId, keyword });
 
         res.status(200).json({ userList });

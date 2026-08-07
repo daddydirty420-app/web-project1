@@ -9,11 +9,11 @@ export const watchHistoryDeleteByIdController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const itemId = Number(req.params.id);
-
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+
+        const userId = req.user!.id;
+
         await deleteWatchHistoryUseCase({ itemId, userId });
 
         res.status(200).json({ message: "閲覧履歴を削除しました" });

@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { countUnread } from "../services/notification.js";
+import { countUnreadNotificationsUseCase } from "../usecases/notification/countUnread.js";
 import { getNotificationListUseCase } from "../usecases/notification/getList.js";
 import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
 import { GetNotificationListQuery } from "../validators/query/notification.js";
@@ -12,10 +12,10 @@ export const notificationPatchByIdReadFlagController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const notificationId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const notificationId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await patchReadFlagTrueUseCase({ notificationId, userId });
 
         res.status(200).json({ isRead: true });
@@ -32,10 +32,10 @@ export const notificationGetUnreadCountController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
-        const unreadCount = await countUnread({ userId });
+        const userId = req.user!.id;
+
+        const unreadCount = await countUnreadNotificationsUseCase({ userId });
 
         res.status(200).json({ unreadCount });
     } catch (err) {
@@ -47,12 +47,12 @@ export const notificationGetUnreadCountController = async (
 // summary: お知らせ一覧取得
 // page: /notification
 export const notificationGetRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const query = req.validatedQuery as GetNotificationListQuery;
-    const { limit, cursor } = query;
-
     try {
+        const userId = req.user!.id;
+
+        const query = req.validatedQuery as GetNotificationListQuery;
+        const { limit, cursor } = query;
+
         const { notificationList, unreadCount, nextCursor, hasMore } = await getNotificationListUseCase({
             userId,
             limit,

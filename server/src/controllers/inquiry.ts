@@ -6,12 +6,12 @@ import { CreateInquiryBody } from "../validators/body/inquiry.js";
 // summary: お問い合わせ作成
 // page: /inquiry
 export const inquiryPostRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user?.id ?? null;
-
-    const validatedBody = req.validatedBody as CreateInquiryBody;
-    const { name, email, title, body } = validatedBody;
-
     try {
+        const userId = req.user?.id ?? null;
+
+        const validatedBody = req.validatedBody as CreateInquiryBody;
+        const { name, email, title, body } = validatedBody;
+
         await createInquiryUseCase({ userId, name, email, title, body });
 
         res.status(200).json({ message: "お問い合わせを送信しました！" });

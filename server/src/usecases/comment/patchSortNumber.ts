@@ -18,9 +18,7 @@ export const patchCommentSortNumberAddUseCase = async ({ commentId, number }: Pa
 
     const newSortNumber = comment.sort_number + number;
 
-    updateSortNumber({ comment, data: { sort_number: newSortNumber } }).catch((err) => {
-        console.error("service Comment updateSortNumber error:", err);
-    });
+    await updateSortNumber({ comment, data: { sort_number: newSortNumber } });
 };
 
 // PATCH /comment/:id/sort-number/decrease?number=number
@@ -35,7 +33,5 @@ export const patchCommentSortNumberDecreaseUseCase = async ({ commentId, number 
 
     const newSortNumber = comment.sort_number - Math.min(comment.sort_number, number);
 
-    updateSortNumber({ comment, data: { sort_number: newSortNumber } }).catch((err) => {
-        console.error("service Comment updateSortNumber error:", err);
-    });
+    await updateSortNumber({ comment, data: { sort_number: newSortNumber } });
 };

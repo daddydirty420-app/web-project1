@@ -7,10 +7,10 @@ import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
 // summary: 配送データ作成
 // page: /item
 export const deliveryPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-    const itemId = Number(req.params.id);
-
     try {
+        const userId = req.user!.id;
+        const itemId = Number(req.params.id);
+
         const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
 
         res.status(200).json({ deliveryId });
@@ -27,10 +27,10 @@ export const deliveryGetByIdAddressController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const deliveryId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const deliveryId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const data = await getDeliveryAddressUseCase({ deliveryId, userId });
 
         res.status(200).json({ data });
@@ -43,10 +43,10 @@ export const deliveryGetByIdAddressController = async (
 // summary: 配送用氏名取得
 // page: /edit/name/delivery/[id]
 export const deliveryGetByIdNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deliveryId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const deliveryId = Number(req.params.id);
+        const userId = req.user!.id;
+
         const name = await getDeliveryNameUseCase({ deliveryId, userId });
 
         res.status(200).json({ name });

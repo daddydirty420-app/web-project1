@@ -9,14 +9,14 @@ import { ZipcodeQuery } from "../validators/query/address.js";
 // summary: 住所変更
 // page: /edit/addressなど
 export const addressPatchByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const addressId = Number(req.params.id);
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as AddressBody;
-
-    const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
-
     try {
+        const addressId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as AddressBody;
+
+        const { postNumber, todouhuken, shikutyouson, banchi, building } = body;
+
         await editAddressUseCase({ userId, addressId, postNumber, todouhuken, shikutyouson, banchi, building });
 
         res.status(200).json({ message: "住所を更新しました。" });
@@ -29,13 +29,13 @@ export const addressPatchByIdController = async (req: Request, res: Response, ne
 // summary: 住所検索
 // page: /edit/addressなど
 export const addressGetSearchController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const query = req.validatedQuery as ZipcodeQuery;
-
-    const zipcode = query.zipcode;
-
-    if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
-
     try {
+        const query = req.validatedQuery as ZipcodeQuery;
+
+        const zipcode = query.zipcode;
+
+        if (!zipcode) throw new AppError("INVALID_ZIPCODE", 400);
+
         const address = await fetchAddressFromZipUseCase({ zipcode });
 
         res.status(200).json({ address });

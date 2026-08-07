@@ -1,17 +1,11 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { deleteDraftItemUseCase } from "../usecases/items/delete/draftDelete.js";
 import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
 import { getFormDataUseCase } from "../usecases/items/formData/getFormData.js";
 import { getItemHighlightUseCase } from "../usecases/items/highlight/getItemHighlight.js";
-import { getIndexItemsUseCase } from "../usecases/items/itemList/indexItemList.js";
-import { getIndexVideosUseCase } from "../usecases/items/itemList/indexVideoList.js";
-import { getProfileItemsUseCase } from "../usecases/items/itemList/profileItemList.js";
-import { getProfileVideosUseCase } from "../usecases/items/itemList/profileVideoList.js";
-import { getCartRecommendUseCase } from "../usecases/items/itemList/recommend/cartRecommend.js";
-import { getIndexRecommendUseCase } from "../usecases/items/itemList/recommend/indexRecommend.js";
-import { getItemPageRecommendUseCase } from "../usecases/items/itemList/recommend/itemPageRecommend.js";
+import { getItemListUseCase } from "../usecases/items/itemList/itemList.js";
+import { getRecommendItemsUseCase } from "../usecases/items/itemList/recommendItems.js";
 import { getItemPageUseCase } from "../usecases/items/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/items/itemPage/metadata.js";
 import { patchItemLogsAccessUseCase } from "../usecases/items/log/accessLogs.js";
@@ -23,16 +17,14 @@ import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
 import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
 import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
 import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
+import { runDetachedTask } from "../utils/runDetachedTask.js";
 import type { ItemUploadBody } from "../validators/body/items.js";
 import type {
     ItemListQuery,
-    ItemListType,
-    ItemListView,
     ItemPageQuery,
     ItemSortNumberQuery,
     ItemUploadQuery,
     RecommendItemsQuery,
-    RecommendItemsview,
     SearchItemsQuery,
 } from "../validators/query/items.js";
 
@@ -40,9 +32,9 @@ import type {
 // summary: 商品データ作成
 // page: /upload/before
 export const createItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const itemId = await createItemsUseCase({ userId });
 
         res.status(200).json({ itemId });
@@ -124,8 +116,10 @@ export const addItemSortNumberController = async (req: Request, res: Response): 
 
     const number = query.number;
 
-    patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemSortNumberAdd",
+        target: { itemId },
+        task: () => patchSortNumberAddUseCase({ itemId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
@@ -141,8 +135,10 @@ export const decreaseItemSortNumberController = async (req: Request, res: Respon
 
     const number = query.number;
 
-    patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemSortNumberDecrease",
+        target: { itemId },
+        task: () => patchSortNumberDecreaseUseCase({ itemId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
@@ -155,8 +151,10 @@ export const patchItemAccessLogsController = async (req: Request, res: Response)
     const itemId = Number(req.params.id);
     const userId = req.user?.id ?? null;
 
-    patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemAccessLogs",
+        target: { itemId },
+        task: () => patchItemLogsAccessUseCase({ itemId, userId }),
     });
 
     res.status(202).json({ message: "商品ページアクセス処理を受け付けました" });
@@ -166,10 +164,10 @@ export const patchItemAccessLogsController = async (req: Request, res: Response)
 // summary: 商品データ復元
 // page: /item/deleted/[id]
 export const restoreItemController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const itemId = Number(req.params.id);
-    const userId = req.user!.id;
-
     try {
+        const itemId = Number(req.params.id);
+        const userId = req.user!.id;
+
         await restoreItemUseCase({ userId, itemId });
 
         res.status(200).json({ message: "商品を復元しました" });
@@ -235,37 +233,7 @@ export const getItemListController = async (req: Request, res: Response, next: N
 
         const query = req.validatedQuery as ItemListQuery;
 
-        const type = query.type;
-        const page = query.page ?? 1;
-        const view = query.view;
-        const limit = query.limit ?? 6;
-        const pageUserId = query.pageUserId ?? undefined;
-
-        if (view === "profile" && !pageUserId) {
-            throw new AppError("PAGE_USER_NOT_FOUND", 404);
-        }
-
-        const baseParams = { page, limit };
-
-        // usecaseマップ（アロー関数で包む）
-        const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
-            index: {
-                video: () => getIndexVideosUseCase({ ...baseParams, userId }),
-                item: () => getIndexItemsUseCase({ ...baseParams, userId }),
-            },
-            profile: {
-                video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
-                item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
-            },
-        };
-
-        const usecase = usecaseMap[view]?.[type];
-
-        if (!usecase) {
-            throw new AppError("INVALID_VIEW_OR_TYPE", 400);
-        }
-
-        const { items, totalPages } = await usecase();
+        const { items, totalPages } = await getItemListUseCase({ ...query, userId });
 
         res.status(200).json({ items, totalPages });
     } catch (err) {
@@ -282,28 +250,7 @@ export const getRecommendItemsController = async (req: Request, res: Response, n
 
         const query = req.validatedQuery as RecommendItemsQuery;
 
-        const view = query.view;
-
-        const itemId = query.itemId ?? undefined;
-
-        if (view === "itemPage" && !itemId) {
-            throw new AppError("INVALID_QUERY", 400);
-        }
-
-        // 関数そのものを保存（実行しない）
-        const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
-            recommend: () => getIndexRecommendUseCase({ userId }),
-            cart: () => getCartRecommendUseCase({ userId }),
-            itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
-        };
-
-        const usecase = usecaseMap[view];
-
-        if (!usecase) {
-            throw new AppError("INVALID_VIEW", 400);
-        }
-
-        const items = await usecase();
+        const items = await getRecommendItemsUseCase({ ...query, userId });
 
         res.status(200).json({ items });
     } catch (err) {

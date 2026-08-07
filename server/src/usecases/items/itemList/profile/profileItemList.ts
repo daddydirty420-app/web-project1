@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { getProfileItemsWithCount } from "../../../services/items/index.js";
+import { getProfileItemsWithCount } from "../../../../services/items/index.js";
 
 type Params = {
     page: number;

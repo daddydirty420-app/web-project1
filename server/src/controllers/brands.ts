@@ -7,16 +7,16 @@ import { KeywordOptionalQuery } from "../validators/query/keyword.js";
 // summary: ブランドサジェスト検索リスト取得
 // page: /upload
 export const brandsGetSuggestController = async (req: Request, res: Response): Promise<void> => {
-    const query = req.validatedQuery as KeywordOptionalQuery;
-
-    if (!query.keyword) {
-        res.status(200).json({ suggest: [] });
-        return;
-    }
-
-    const keyword = normalizeJapanese(query.keyword);
-
     try {
+        const query = req.validatedQuery as KeywordOptionalQuery;
+
+        if (!query.keyword) {
+            res.status(200).json({ suggest: [] });
+            return;
+        }
+
+        const keyword = normalizeJapanese(query.keyword);
+
         const brands = await getBrandsSuggestUseCase({ keyword });
 
         res.status(200).json({ brands });

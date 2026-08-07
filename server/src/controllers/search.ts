@@ -5,9 +5,9 @@ import { getSearchHistoryUseCase } from "../usecases/search/getSearchHistory.js"
 // summary: 検索履歴取得
 // page: header
 export const searchGetHistoryController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
     try {
+        const userId = req.user!.id;
+
         const sortedData = await getSearchHistoryUseCase({ userId });
 
         res.status(200).json({ sortedData });

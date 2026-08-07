@@ -32,11 +32,11 @@ import { NewEmailTokenQuery } from "../validators/query/auth.js";
 // summary: ログイン
 // page: /login
 export const authPostLoginController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const body = req.validatedBody as LoginBody;
-
-    const { email, password, rememberMe } = body;
-
     try {
+        const body = req.validatedBody as LoginBody;
+
+        const { email, password, rememberMe } = body;
+
         const { id, userName, admin, accessToken, refreshToken } = await loginUseCase({
             email,
             password,
@@ -86,11 +86,11 @@ export const authPostClearCookieController = async (req: Request, res: Response)
 // summary: サインアップ
 // page: /signup
 export const authPostSignupController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const body = req.validatedBody as EmailPasswordBody;
-
-    const { email, password } = body;
-
     try {
+        const body = req.validatedBody as EmailPasswordBody;
+
+        const { email, password } = body;
+
         const { expiresAt, reissueUrl } = await signupUseCase({
             email,
             password,
@@ -114,9 +114,9 @@ export const authPostResendVerificationCodeController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const body = req.validatedBody as VerifyTokenBody;
-
     try {
+        const body = req.validatedBody as VerifyTokenBody;
+
         const { expiresAt, reissueUrl } = await resendVerificationCodeUseCase({
             token: body.token,
         });
@@ -139,11 +139,11 @@ export const authPostSignupVerifyController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const body = req.validatedBody as SignupVerifyBody;
-
-    const { verificationCode, rememberMe, referenceCode } = body;
-
     try {
+        const body = req.validatedBody as SignupVerifyBody;
+
+        const { verificationCode, rememberMe, referenceCode } = body;
+
         const { id, email, userName, admin, accessToken, refreshToken } = await signupVerifyUseCase({
             verificationCode,
             rememberMe,
@@ -172,9 +172,9 @@ export const authPostRequestPasswordResetController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const body = req.validatedBody as EmailBody;
-
     try {
+        const body = req.validatedBody as EmailBody;
+
         await requestPasswordResetUseCase({ email: body.email });
 
         res.status(200).json({ message: "メールを送信しました。" });
@@ -187,11 +187,11 @@ export const authPostRequestPasswordResetController = async (
 // summary: パスワードリセット
 // page: /login/new-pw
 export const authPostResetPwController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const body = req.validatedBody as ResetPWBody;
-
-    const { token, password } = body;
-
     try {
+        const body = req.validatedBody as ResetPWBody;
+
+        const { token, password } = body;
+
         await resetPWUseCase({ token, password });
 
         res.status(200).json({ message: "パスワードを更新しました。" });
@@ -204,13 +204,13 @@ export const authPostResetPwController = async (req: Request, res: Response, nex
 // summary: パスワード変更
 // page: /edit/password
 export const authPatchChangePwController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as ChangePWBody;
-
-    const { currentPw, newPw } = body;
-
     try {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as ChangePWBody;
+
+        const { currentPw, newPw } = body;
+
         await changePwUseCase({ userId, currentPw, newPw });
 
         res.status(200).json({ message: "パスワードを更新しました " });
@@ -227,11 +227,11 @@ export const authPostRefreshTokenController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
-
-    if (!refreshTokenQuery) throw new AppError("INVALID_REFRESH_TOKEN", 401);
-
     try {
+        const refreshTokenQuery = req.cookies?.refreshToken || req.body?.refreshToken;
+
+        if (!refreshTokenQuery) throw new AppError("INVALID_REFRESH_TOKEN", 401);
+
         const { accessToken, refreshToken, exp } = await refreshTokenUseCase({ refreshToken: refreshTokenQuery });
 
         res.status(200).json({
@@ -252,12 +252,12 @@ export const authPostRehashPasswordController = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const body = req.validatedBody as EmailPasswordBody;
-
-    const email = body.email;
-    const plainPassword = body.password;
-
     try {
+        const body = req.validatedBody as EmailPasswordBody;
+
+        const email = body.email;
+        const plainPassword = body.password;
+
         await rehashPasswordUseCase({ email, plainPassword });
 
         res.status(200).json({ message: "パスワードをハッシュ化して保存しました！" });
@@ -270,11 +270,11 @@ export const authPostRehashPasswordController = async (
 // summary: メールアドレス変更リクエスト
 // page: /edit/email
 export const authPatchEmailController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const userId = req.user!.id;
-
-    const body = req.validatedBody as EmailBody;
-
     try {
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as EmailBody;
+
         await changeEmailUseCase({ userId, newEmail: body.email });
 
         res.status(200).json({
@@ -289,9 +289,9 @@ export const authPatchEmailController = async (req: Request, res: Response, next
 // summary: メールアドレス更新
 // page: /edit/email/new-email
 export const authPatchNewEmailController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const query = req.validatedQuery as NewEmailTokenQuery;
-
     try {
+        const query = req.validatedQuery as NewEmailTokenQuery;
+
         await changeNewEmailUseCase({ token: query.token });
 
         res.status(200).json({ message: "メールアドレスを更新しました。" });
