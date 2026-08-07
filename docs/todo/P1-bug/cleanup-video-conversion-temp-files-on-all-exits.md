@@ -39,3 +39,39 @@ timeout、ffmpeg非ゼロ終了、spawn error、S3アップロード失敗、DB 
 - 新しいライブラリは追加しない。
 - 永続ジョブキューの導入とは別タスクとして扱う。
 - 広いディレクトリや未検証のパスを再帰削除しない。
+
+---
+
+## 報告
+
+実装完了しました。
+
+変更内容:
+
+- convertVideoUseCase 全体を共通の finally cleanup境界で囲みました。
+- timeout、ffmpeg非ゼロ終了、spawn error、S3失敗、DB更新失敗でもcleanupへ到達します。
+- spawn error時は動画statusをfailedへ更新します。
+- 変換エラーとcleanupエラーが同時に発生した場合、元の変換エラーを維持し、cleanupエラーは動画ID付きで記録します。
+- cleanupは生成した元動画パスと変換ディレクトリだけを対象にします。
+- cleanup専用Utilsと、対象外ファイルを削除しないこと・対象が存在しない場合のテストを追加しました。
+
+変更ファイル:
+
+- server/src/usecases/video/convert.ts
+- server/src/utils/videoConversionCleanup.ts
+- server/test/utils/videoConversionCleanup.test.ts
+
+確認結果:
+
+- cleanupテスト: 成功
+- npm run lint: 成功
+- npm run typecheck: 成功
+- git diff --check: 成功
+
+正常時のS3キー、動画status、HTTP受付レスポンスは変更していません。
+
+---
+
+## 発見
+
+testファイルのimportにエラー出てる。

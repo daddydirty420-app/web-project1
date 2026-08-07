@@ -6,6 +6,7 @@ import { s3Domain } from "../../infra/aws/s3.js";
 import { getMyVideo, updateStatus } from "../../services/video.js";
 import { getDuration } from "../../utils/ffmpeg.js";
 import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
+import { cleanupVideoConversionFiles } from "../../utils/videoConversionCleanup.js";
 
 type Params = {
     videoId: number;
@@ -36,137 +37,173 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     // 一時保存先
     const originalFilePath = `tmp/original_${videoId}_${now}_${tempId}`;
     const convertedDir = `tmp/converted_${videoId}_${now}_${tempId}`;
+    let hasConversionError = false;
+    let conversionError: unknown;
+    let cleanupError: unknown;
 
-    fs.mkdirSync("tmp", { recursive: true });
-
-    await downloadVideoFromS3({ key: originalKey, filePath: originalFilePath });
-
-    await updateStatus({ video, data: { status: "processing" } });
-
-    // 変換ディレクトリ作成
-    fs.mkdirSync(convertedDir, { recursive: true });
-
-    // ffmpegでHLS変換
-    const ffmpeg = spawn("ffmpeg", [
-        "-y", // ← 追加（既存ファイルを上書き）
-        "-i",
-        originalFilePath,
-        "-map",
-        "0:v:0", // ← 追加（動画トラックを明示）
-        "-map",
-        "0:a:0?", // ← 追加（音声はあれば使う）
-        "-profile:v",
-        "baseline",
-        "-c:v",
-        "libx264",
-        "-c:a",
-        "aac",
-        "-vf",
-        "scale='min(1280,iw)':-2",
-        "-level",
-        "3.0",
-        "-start_number",
-        "0",
-        "-hls_time",
-        "10",
-        "-hls_playlist_type",
-        "vod",
-        "-hls_segment_filename",
-        `${convertedDir}/${now}_${tempId}_seg_%03d.ts`, // ← 追加（名前が綺麗）
-        "-f",
-        "hls",
-        `${convertedDir}/${now}_${tempId}_index.m3u8`,
-    ]);
-
-    ffmpeg.stderr.on("data", (data) => {
-        console.log(data.toString());
-    });
-
-    const timeout = setTimeout(
-        () => {
-            isTimedOut = true;
-            ffmpeg.kill("SIGKILL");
-        },
-        5 * 60 * 1000,
-    ); // 5分
-
-    // 再生時間
-    let seconds: number = 0;
     try {
-        seconds = await getDuration({ filePath: originalFilePath });
-    } catch (err) {
-        console.error(err);
+        fs.mkdirSync("tmp", { recursive: true });
+
+        await downloadVideoFromS3({ key: originalKey, filePath: originalFilePath });
+
+        await updateStatus({ video, data: { status: "processing" } });
+
+        // 変換ディレクトリ作成
+        fs.mkdirSync(convertedDir, { recursive: true });
+
+        // ffmpegでHLS変換
+        const ffmpeg = spawn("ffmpeg", [
+            "-y", // ← 追加（既存ファイルを上書き）
+            "-i",
+            originalFilePath,
+            "-map",
+            "0:v:0", // ← 追加（動画トラックを明示）
+            "-map",
+            "0:a:0?", // ← 追加（音声はあれば使う）
+            "-profile:v",
+            "baseline",
+            "-c:v",
+            "libx264",
+            "-c:a",
+            "aac",
+            "-vf",
+            "scale='min(1280,iw)':-2",
+            "-level",
+            "3.0",
+            "-start_number",
+            "0",
+            "-hls_time",
+            "10",
+            "-hls_playlist_type",
+            "vod",
+            "-hls_segment_filename",
+            `${convertedDir}/${now}_${tempId}_seg_%03d.ts`, // ← 追加（名前が綺麗）
+            "-f",
+            "hls",
+            `${convertedDir}/${now}_${tempId}_index.m3u8`,
+        ]);
+
+        ffmpeg.stderr.on("data", (data) => {
+            console.log(data.toString());
+        });
+
+        const timeout = setTimeout(
+            () => {
+                isTimedOut = true;
+                ffmpeg.kill("SIGKILL");
+            },
+            5 * 60 * 1000,
+        ); // 5分
+
+        // 再生時間
+        let seconds: number = 0;
+        try {
+            seconds = await getDuration({ filePath: originalFilePath });
+        } catch (err) {
+            console.error(err);
+        }
+
+        await new Promise<void>((resolve, reject) => {
+            const handleClose = async (code: number | null): Promise<void> => {
+                clearTimeout(timeout);
+
+                if (isTimedOut) {
+                    await updateStatus({ video, data: { status: "failed" } });
+                    throw new AppError("ffmpeg timeout", 408);
+                }
+
+                if (code !== 0) {
+                    await updateStatus({ video, data: { status: "failed" } });
+                    throw new AppError(`ffmpeg exited with code ${code}`, 422);
+                }
+
+                try {
+                    // HLSファイル生成
+                    const files = fs.readdirSync(convertedDir);
+
+                    const hasPlaylist = files.some((f) => f.endsWith(".m3u8"));
+                    if (!hasPlaylist) {
+                        throw new AppError("playlist not generated", 422);
+                    }
+
+                    // HLSファイルS3アップロード
+                    for (const f of files) {
+                        const filePath = `${convertedDir}/${f}`;
+                        const key = `video/converted/${userId}/${videoId}/${f}`;
+
+                        const contentType = f.endsWith(".ts")
+                            ? "video/mp2t"
+                            : f.endsWith(".m3u8")
+                              ? "application/vnd.apple.mpegurl"
+                              : "application/octet-stream";
+
+                        await uploadVideoToS3({ filePath, key, contentType });
+                    }
+
+                    const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_${tempId}_index.m3u8`;
+
+                    // video更新
+                    await updateStatus({
+                        video,
+                        data: {
+                            status: "done",
+                            converted_url: convertedUrl,
+                            duration: seconds,
+                        },
+                    });
+                } catch (e) {
+                    await updateStatus({ video, data: { status: "failed" } });
+
+                    if (e instanceof AppError) {
+                        throw e;
+                    } else {
+                        throw new AppError("server error", 500);
+                    }
+                }
+            };
+
+            const handleCloseEvent = (code: number | null): void => {
+                void handleClose(code).then(resolve).catch(reject);
+            };
+
+            ffmpeg.once("close", handleCloseEvent);
+
+            ffmpeg.once("error", (err) => {
+                clearTimeout(timeout);
+                ffmpeg.removeListener("close", handleCloseEvent);
+                void updateStatus({ video, data: { status: "failed" } })
+                    .catch((statusError: unknown) => {
+                        console.error("Failed to update video status", {
+                            videoId,
+                            error: statusError,
+                        });
+                    })
+                    .finally(() => reject(err));
+            });
+        });
+    } catch (error) {
+        hasConversionError = true;
+        conversionError = error;
+    } finally {
+        try {
+            cleanupVideoConversionFiles({ originalFilePath, convertedDir });
+        } catch (error) {
+            cleanupError = error;
+        }
     }
 
-    await new Promise<void>((resolve, reject) => {
-        const handleClose = async (code: number | null): Promise<void> => {
-            clearTimeout(timeout);
+    if (hasConversionError) {
+        if (cleanupError) {
+            console.error("Video conversion cleanup failed", {
+                videoId,
+                error: cleanupError,
+            });
+        }
 
-            if (isTimedOut) {
-                await updateStatus({ video, data: { status: "failed" } });
-                throw new AppError("ffmpeg timeout", 408);
-            }
+        throw conversionError;
+    }
 
-            if (code !== 0) {
-                await updateStatus({ video, data: { status: "failed" } });
-                throw new AppError(`ffmpeg exited with code ${code}`, 422);
-            }
-
-            try {
-                // HLSファイル生成
-                const files = fs.readdirSync(convertedDir);
-
-                const hasPlaylist = files.some((f) => f.endsWith(".m3u8"));
-                if (!hasPlaylist) {
-                    throw new AppError("playlist not generated", 422);
-                }
-
-                // HLSファイルS3アップロード
-                for (const f of files) {
-                    const filePath = `${convertedDir}/${f}`;
-                    const key = `video/converted/${userId}/${videoId}/${f}`;
-
-                    const contentType = f.endsWith(".ts")
-                        ? "video/mp2t"
-                        : f.endsWith(".m3u8")
-                          ? "application/vnd.apple.mpegurl"
-                          : "application/octet-stream";
-
-                    await uploadVideoToS3({ filePath, key, contentType });
-                }
-
-                const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_${tempId}_index.m3u8`;
-
-                // video更新
-                await updateStatus({
-                    video,
-                    data: {
-                        status: "done",
-                        converted_url: convertedUrl,
-                        duration: seconds,
-                    },
-                });
-            } catch (e) {
-                await updateStatus({ video, data: { status: "failed" } });
-
-                if (e instanceof AppError) {
-                    throw e;
-                } else {
-                    throw new AppError("server error", 500);
-                }
-            } finally {
-                fs.rmSync(originalFilePath, { force: true });
-                fs.rmSync(convertedDir, { recursive: true, force: true });
-            }
-        };
-
-        ffmpeg.on("close", (code) => {
-            void handleClose(code).then(resolve).catch(reject);
-        });
-
-        ffmpeg.on("error", (err) => {
-            clearTimeout(timeout);
-            reject(err);
-        });
-    });
+    if (cleanupError) {
+        throw cleanupError;
+    }
 };
