@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { countCommentLike } from "../services/commentLike.js";
 import { addCommentLikeUseCase } from "../usecases/commentLike/add.js";
+import { countCommentLikeUseCase } from "../usecases/commentLike/count.js";
 import { deleteCommentLikeUseCase } from "../usecases/commentLike/delete.js";
 import { commentLikeStatusUseCase } from "../usecases/commentLike/status.js";
 import { getCommentLikeUserListUseCase } from "../usecases/commentLike/userList.js";
@@ -76,7 +76,7 @@ export const commentLikeGetByIdCountController = async (
     try {
         const commentId = Number(req.params.id);
 
-        const count = await countCommentLike({ commentId });
+        const count = await countCommentLikeUseCase({ commentId });
 
         res.status(200).json({ count });
     } catch (err) {

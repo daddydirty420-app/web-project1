@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { getAllItemReportOptions } from "../services/itemReport.js";
 import { createItemReportUseCase } from "../usecases/itemReport/create.js";
+import { getAllItemReportOptionsUseCase } from "../usecases/itemReport/getAllOptions.js";
 import { OptionIdBody } from "../validators/body/report.js";
 
 // POST /item-report/:id
@@ -31,7 +31,7 @@ export const itemReportGetAllOptionsController = async (
     next: NextFunction,
 ): Promise<void> => {
     try {
-        const options = await getAllItemReportOptions();
+        const options = await getAllItemReportOptionsUseCase();
 
         res.status(200).json({ options });
     } catch (err) {

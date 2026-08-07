@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { getProfileMetadata, getStar } from "../services/users/query.js";
 import { editHonninUserUseCase } from "../usecases/users/edit/honnin.js";
 import { editPhoneNumber } from "../usecases/users/edit/phoneNumber.js";
 import { editProfileUseCase } from "../usecases/users/edit/profile.js";
@@ -10,9 +9,11 @@ import { getMyAddressUseCase } from "../usecases/users/get/getMyAddress.js";
 import { getMyNameUseCase } from "../usecases/users/get/getMyName.js";
 import { getMyPageUseCase } from "../usecases/users/get/getMyPage.js";
 import { getPhoneNumberUseCase } from "../usecases/users/get/getPhoneNumber.js";
+import { getUserProfileMetadataUseCase } from "../usecases/users/get/getProfileMetadata.js";
 import { getMePointsUseCase } from "../usecases/users/get/getPoints.js";
 import { getProfileUseCase } from "../usecases/users/get/getProfile.js";
 import { getProfileEditDataUseCase } from "../usecases/users/get/getProfileEditData.js";
+import { getUserStarUseCase } from "../usecases/users/get/getStar.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
 import { getMeUriagekinUseCase } from "../usecases/users/get/getUriagekin.js";
@@ -113,7 +114,7 @@ export const usersGetByIdStarController = async (req: Request, res: Response, ne
     try {
         const userId = Number(req.params.id);
 
-        const user = await getStar({ userId });
+        const user = await getUserStarUseCase({ userId });
 
         res.status(200).json({ user });
     } catch (err) {
@@ -132,7 +133,7 @@ export const usersGetByIdProfileMetadataController = async (
     try {
         const userId = Number(req.params.id);
 
-        const user = await getProfileMetadata({ userId });
+        const user = await getUserProfileMetadataUseCase({ userId });
 
         res.status(200).json({ user });
     } catch (err) {

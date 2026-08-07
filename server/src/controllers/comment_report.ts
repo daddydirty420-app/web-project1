@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { getAllCommentReportOptions } from "../services/commentReport.js";
 import { createCommentReportUseCase } from "../usecases/commentReport/create.js";
+import { getAllCommentReportOptionsUseCase } from "../usecases/commentReport/getAllOptions.js";
 import { OptionIdBody } from "../validators/body/report.js";
 
 // POST /comment-report/:id
@@ -35,7 +35,7 @@ export const commentReportGetAllOptionsController = async (
     next: NextFunction,
 ): Promise<void> => {
     try {
-        const options = await getAllCommentReportOptions();
+        const options = await getAllCommentReportOptionsUseCase();
 
         res.status(200).json({ options });
     } catch (err) {

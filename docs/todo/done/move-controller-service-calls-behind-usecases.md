@@ -38,16 +38,16 @@ ControllerはUseCaseを呼ぶという規約に対し、次の6関数がService�
 ## 対象ファイル・関数
 
 - `/server/src/controllers/comment-like.ts`
-  - `commentLikeGetByIdCountController`
+    - `commentLikeGetByIdCountController`
 - `/server/src/controllers/comment_report.ts`
-  - `commentReportGetAllOptionsController`
+    - `commentReportGetAllOptionsController`
 - `/server/src/controllers/item_report.ts`
-  - `itemReportGetAllOptionsController`
+    - `itemReportGetAllOptionsController`
 - `/server/src/controllers/notification.ts`
-  - `notificationGetUnreadCountController`
+    - `notificationGetUnreadCountController`
 - `/server/src/controllers/users.ts`
-  - `usersGetByIdStarController`
-  - `usersGetByIdProfileMetadataController`
+    - `usersGetByIdStarController`
+    - `usersGetByIdProfileMetadataController`
 - 上記処理に対応する `/server/src/usecases` と `/server/src/services`
 
 ## 影響範囲
@@ -77,3 +77,18 @@ ControllerからServiceを直接呼んでいる次の処理を、機能別のUse
 
 変更後は関連テストを実行し、`cd server && npm run lint && npm run typecheck` の結果を報告してください。
 ```
+
+---
+
+## 報告
+
+確認結果:
+
+- 関連する既存テストおよびテストスクリプト: なし
+- npm run lint: 成功
+- npm run typecheck: 成功
+- git diff --check: 成功
+
+## 追加作業
+
+手でエラー条件分岐追加

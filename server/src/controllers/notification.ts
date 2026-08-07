@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { countUnread } from "../services/notification.js";
+import { countUnreadNotificationsUseCase } from "../usecases/notification/countUnread.js";
 import { getNotificationListUseCase } from "../usecases/notification/getList.js";
 import { patchReadFlagTrueUseCase } from "../usecases/notification/readFlagTrue.js";
 import { GetNotificationListQuery } from "../validators/query/notification.js";
@@ -35,7 +35,7 @@ export const notificationGetUnreadCountController = async (
     try {
         const userId = req.user!.id;
 
-        const unreadCount = await countUnread({ userId });
+        const unreadCount = await countUnreadNotificationsUseCase({ userId });
 
         res.status(200).json({ unreadCount });
     } catch (err) {
