@@ -7,8 +7,9 @@ import {
     patchCommentSortNumberDecreaseUseCase,
 } from "../usecases/comment/patchSortNumber.js";
 import { uploadCommentUseCase } from "../usecases/comment/upload.js";
-import { CreateCommentBody } from "../validators/body/comment.js";
-import {
+import { runDetachedTask } from "../utils/runDetachedTask.js";
+import type { CreateCommentBody } from "../validators/body/comment.js";
+import type {
     CommentPageQuery,
     CommentSellerMeAdminQuery,
     CommentSortNumberQuery,
@@ -54,8 +55,10 @@ export const commentPatchByIdSortNumberAddController = async (req: Request, res:
     const query = req.validatedQuery as CommentSortNumberQuery;
     const number = query.number;
 
-    patchCommentSortNumberAddUseCase({ commentId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchCommentSortNumberAdd",
+        target: { commentId },
+        task: () => patchCommentSortNumberAddUseCase({ commentId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
@@ -70,8 +73,10 @@ export const commentPatchByIdSortNumberDecreaseController = async (req: Request,
     const query = req.validatedQuery as CommentSortNumberQuery;
     const number = query.number;
 
-    patchCommentSortNumberDecreaseUseCase({ commentId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchCommentSortNumberDecrease",
+        target: { commentId },
+        task: () => patchCommentSortNumberDecreaseUseCase({ commentId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });

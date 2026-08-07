@@ -23,14 +23,12 @@ export const patchSortNumberAddUseCase = async ({ itemId, number, buzzNumber }: 
     const newSortBuzzNumber = item.sort_buzz_number + sortBuzzNumber;
 
     if (item.status === "active") {
-        updateSortNumber({
+        await updateSortNumber({
             item,
             data: {
                 sort_number: newSortNumber,
                 sort_buzz_number: newSortBuzzNumber,
             },
-        }).catch((err) => {
-            console.error("service Item updateSortNumber error:", err);
         });
     }
 };
@@ -51,14 +49,12 @@ export const patchSortNumberDecreaseUseCase = async ({ itemId, number, buzzNumbe
     const newSortBuzzNumber = item.sort_buzz_number - Math.min(item.sort_buzz_number, sortBuzzNumber);
 
     if (item.status === "active") {
-        updateSortNumber({
+        await updateSortNumber({
             item,
             data: {
                 sort_number: newSortNumber,
                 sort_buzz_number: newSortBuzzNumber,
             },
-        }).catch((err) => {
-            console.error("service Item updateSortNumber error:", err);
         });
     }
 };

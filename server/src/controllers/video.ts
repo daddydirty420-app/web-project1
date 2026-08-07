@@ -1,6 +1,7 @@
 import type { Request, Response } from "express-serve-static-core";
 import { convertVideoUseCase } from "../usecases/video/convert.js";
 import { onPlayVideoUseCase } from "../usecases/video/onPlay.js";
+import { runDetachedTask } from "../utils/runDetachedTask.js";
 
 // PATCH /video/:id/onplay
 // summary: 動画再生ログ更新
@@ -10,8 +11,10 @@ export const videoPatchByIdOnplayController = async (req: Request, res: Response
 
     const userId = req.user?.id ?? null;
 
-    onPlayVideoUseCase({ videoId, userId }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchVideoOnPlay",
+        target: { videoId },
+        task: () => onPlayVideoUseCase({ videoId, userId }),
     });
 
     res.status(200).json({ message: "再生回数追加成功！" });
@@ -25,8 +28,10 @@ export const videoPatchByIdConvertController = async (req: Request, res: Respons
 
     const userId = req.user!.id;
 
-    convertVideoUseCase({ videoId, userId }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "convertVideo",
+        target: { videoId },
+        task: () => convertVideoUseCase({ videoId, userId }),
     });
 
     res.status(202).json({ message: "変換処理を受け付けました" });

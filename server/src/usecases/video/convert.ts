@@ -83,12 +83,9 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     });
 
     const timeout = setTimeout(
-        async () => {
+        () => {
             isTimedOut = true;
-            console.error("ffmpeg timeout");
             ffmpeg.kill("SIGKILL");
-
-            await updateStatus({ video, data: { status: "failed" } });
         },
         5 * 60 * 1000,
     ); // 5分
@@ -102,17 +99,17 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     }
 
     await new Promise<void>((resolve, reject) => {
-        ffmpeg.on("close", async (code) => {
+        const handleClose = async (code: number | null): Promise<void> => {
             clearTimeout(timeout);
 
             if (isTimedOut) {
-                return reject(new AppError("ffmpeg timeout", 408));
+                await updateStatus({ video, data: { status: "failed" } });
+                throw new AppError("ffmpeg timeout", 408);
             }
 
             if (code !== 0) {
-                console.error(`ffmpeg exited with code ${code}`);
                 await updateStatus({ video, data: { status: "failed" } });
-                return reject(new AppError(`ffmpeg exited with code ${code}`, 422));
+                throw new AppError(`ffmpeg exited with code ${code}`, 422);
             }
 
             try {
@@ -149,24 +146,26 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                         duration: seconds,
                     },
                 });
-
-                resolve();
             } catch (e) {
-                console.error(e);
                 await updateStatus({ video, data: { status: "failed" } });
 
                 if (e instanceof AppError) {
-                    reject(e);
+                    throw e;
                 } else {
-                    reject(new AppError("server error", 500));
+                    throw new AppError("server error", 500);
                 }
             } finally {
                 fs.rmSync(originalFilePath, { force: true });
                 fs.rmSync(convertedDir, { recursive: true, force: true });
             }
+        };
+
+        ffmpeg.on("close", (code) => {
+            void handleClose(code).then(resolve).catch(reject);
         });
 
         ffmpeg.on("error", (err) => {
+            clearTimeout(timeout);
             reject(err);
         });
     });

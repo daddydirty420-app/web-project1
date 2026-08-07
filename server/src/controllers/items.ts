@@ -17,6 +17,7 @@ import { createItemsUseCase } from "../usecases/items/upload/createItem.js";
 import { patchPublishUseCase } from "../usecases/items/upload/publish.js";
 import { uploadDraftUseCase } from "../usecases/items/upload/uploadDraft.js";
 import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
+import { runDetachedTask } from "../utils/runDetachedTask.js";
 import type { ItemUploadBody } from "../validators/body/items.js";
 import type {
     ItemListQuery,
@@ -115,8 +116,10 @@ export const addItemSortNumberController = async (req: Request, res: Response): 
 
     const number = query.number;
 
-    patchSortNumberAddUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemSortNumberAdd",
+        target: { itemId },
+        task: () => patchSortNumberAddUseCase({ itemId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
@@ -132,8 +135,10 @@ export const decreaseItemSortNumberController = async (req: Request, res: Respon
 
     const number = query.number;
 
-    patchSortNumberDecreaseUseCase({ itemId, number }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemSortNumberDecrease",
+        target: { itemId },
+        task: () => patchSortNumberDecreaseUseCase({ itemId, number }),
     });
 
     res.status(202).json({ message: "sort_numberの更新を受け付けました" });
@@ -146,8 +151,10 @@ export const patchItemAccessLogsController = async (req: Request, res: Response)
     const itemId = Number(req.params.id);
     const userId = req.user?.id ?? null;
 
-    patchItemLogsAccessUseCase({ itemId, userId }).catch((err) => {
-        console.error(err);
+    runDetachedTask({
+        taskName: "patchItemAccessLogs",
+        target: { itemId },
+        task: () => patchItemLogsAccessUseCase({ itemId, userId }),
     });
 
     res.status(202).json({ message: "商品ページアクセス処理を受け付けました" });

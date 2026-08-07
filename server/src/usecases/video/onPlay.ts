@@ -19,9 +19,7 @@ export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
     // 再生回数 +1
     const newPlayCount = (video.play_count += 1);
 
-    addPlayCount({ video, data: { play_count: newPlayCount } }).catch((err) => {
-        console.error("service video addPlayCount error:", err);
-    });
+    await addPlayCount({ video, data: { play_count: newPlayCount } });
 
     // item取得
     const item = await getItem({ itemId: video.item_id });
@@ -33,14 +31,12 @@ export const onPlayVideoUseCase = async ({ videoId, userId }: Params) => {
         const newSortNumber = item.sort_number + 15;
         const newSortBuzzNumber = item.sort_buzz_number + 70;
 
-        updateSortNumber({
+        await updateSortNumber({
             item,
             data: {
                 sort_number: newSortNumber,
                 sort_buzz_number: newSortBuzzNumber,
             },
-        }).catch((err) => {
-            console.error("service Item updateSortNumber error:", err);
         });
     }
 };

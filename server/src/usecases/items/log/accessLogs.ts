@@ -22,13 +22,9 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
         const history = await getWatchHistoryOne({ itemId, userId });
 
         if (history) {
-            updateUpdateAt({ history }).catch((err) => {
-                console.error("service WatchHistory updateUpdateAt error:", err);
-            });
+            await updateUpdateAt({ history });
         } else {
-            createWatchHistory({ itemId, userId }).catch((err) => {
-                console.error("service WatchHistory createWatchHistory error:", err);
-            });
+            await createWatchHistory({ itemId, userId });
         }
     }
 
@@ -36,9 +32,7 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
     if (item.seller_id !== userId) {
         const newViewsCount = item.views_count + 1;
 
-        addViewsCount({ item, data: { views_count: newViewsCount } }).catch((err) => {
-            console.error("item service addViewsCount error:", err);
-        });
+        await addViewsCount({ item, data: { views_count: newViewsCount } });
 
         const addSort = item.recommend ? 10 : 5;
         const addBuzzSort = item.recommend ? 60 : 30;
@@ -46,14 +40,12 @@ export const patchItemLogsAccessUseCase = async ({ itemId, userId }: Params) => 
         const newSort = item.sort_number + addSort;
         const newSortBuzz = item.sort_buzz_number + addBuzzSort;
 
-        updateSortNumber({
+        await updateSortNumber({
             item,
             data: {
                 sort_number: newSort,
                 sort_buzz_number: newSortBuzz,
             },
-        }).catch((err) => {
-            console.error("item service updateSortNumber error:", err);
         });
     }
 };
