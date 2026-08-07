@@ -1,17 +1,11 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { AppError } from "../errors.js";
 import { deleteDraftItemUseCase } from "../usecases/items/delete/draftDelete.js";
 import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDelete.js";
 import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
 import { getFormDataUseCase } from "../usecases/items/formData/getFormData.js";
 import { getItemHighlightUseCase } from "../usecases/items/highlight/getItemHighlight.js";
-import { getIndexItemsUseCase } from "../usecases/items/itemList/index/indexItemList.js";
-import { getIndexVideosUseCase } from "../usecases/items/itemList/index/indexVideoList.js";
-import { getProfileItemsUseCase } from "../usecases/items/itemList/profile/profileItemList.js";
-import { getProfileVideosUseCase } from "../usecases/items/itemList/profile/profileVideoList.js";
-import { getCartRecommendUseCase } from "../usecases/items/itemList/recommend/cartRecommend.js";
-import { getIndexRecommendUseCase } from "../usecases/items/itemList/recommend/indexRecommend.js";
-import { getItemPageRecommendUseCase } from "../usecases/items/itemList/recommend/itemPageRecommend.js";
+import { getItemListUseCase } from "../usecases/items/itemList/itemList.js";
+import { getRecommendItemsUseCase } from "../usecases/items/itemList/recommendItems.js";
 import { getItemPageUseCase } from "../usecases/items/itemPage/itemPage.js";
 import { getMetadataUseCase } from "../usecases/items/itemPage/metadata.js";
 import { patchItemLogsAccessUseCase } from "../usecases/items/log/accessLogs.js";
@@ -26,13 +20,10 @@ import { uploadMainUseCase } from "../usecases/items/upload/uploadMain.js";
 import type { ItemUploadBody } from "../validators/body/items.js";
 import type {
     ItemListQuery,
-    ItemListType,
-    ItemListView,
     ItemPageQuery,
     ItemSortNumberQuery,
     ItemUploadQuery,
     RecommendItemsQuery,
-    RecommendItemsview,
     SearchItemsQuery,
 } from "../validators/query/items.js";
 
@@ -235,37 +226,7 @@ export const getItemListController = async (req: Request, res: Response, next: N
 
         const query = req.validatedQuery as ItemListQuery;
 
-        const type = query.type;
-        const page = query.page ?? 1;
-        const view = query.view;
-        const limit = query.limit ?? 6;
-        const pageUserId = query.pageUserId ?? undefined;
-
-        if (view === "profile" && !pageUserId) {
-            throw new AppError("PAGE_USER_NOT_FOUND", 404);
-        }
-
-        const baseParams = { page, limit };
-
-        // usecaseマップ（アロー関数で包む）
-        const usecaseMap: Record<ItemListView, Record<ItemListType, () => Promise<any>>> = {
-            index: {
-                video: () => getIndexVideosUseCase({ ...baseParams, userId }),
-                item: () => getIndexItemsUseCase({ ...baseParams, userId }),
-            },
-            profile: {
-                video: () => getProfileVideosUseCase({ ...baseParams, pageUserId: pageUserId }),
-                item: () => getProfileItemsUseCase({ ...baseParams, pageUserId: pageUserId }),
-            },
-        };
-
-        const usecase = usecaseMap[view]?.[type];
-
-        if (!usecase) {
-            throw new AppError("INVALID_VIEW_OR_TYPE", 400);
-        }
-
-        const { items, totalPages } = await usecase();
+        const { items, totalPages } = await getItemListUseCase({ ...query, userId });
 
         res.status(200).json({ items, totalPages });
     } catch (err) {
@@ -282,28 +243,7 @@ export const getRecommendItemsController = async (req: Request, res: Response, n
 
         const query = req.validatedQuery as RecommendItemsQuery;
 
-        const view = query.view;
-
-        const itemId = query.itemId ?? undefined;
-
-        if (view === "itemPage" && !itemId) {
-            throw new AppError("INVALID_QUERY", 400);
-        }
-
-        // 関数そのものを保存（実行しない）
-        const usecaseMap: Record<RecommendItemsview, () => Promise<any>> = {
-            recommend: () => getIndexRecommendUseCase({ userId }),
-            cart: () => getCartRecommendUseCase({ userId }),
-            itemPage: () => getItemPageRecommendUseCase({ userId, itemId }),
-        };
-
-        const usecase = usecaseMap[view];
-
-        if (!usecase) {
-            throw new AppError("INVALID_VIEW", 400);
-        }
-
-        const items = await usecase();
+        const items = await getRecommendItemsUseCase({ ...query, userId });
 
         res.status(200).json({ items });
     } catch (err) {

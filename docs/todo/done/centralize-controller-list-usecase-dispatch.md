@@ -35,10 +35,10 @@ API単位の上位UseCaseを追加し、Controllerはvalidated queryとuserIdを
 ## 対象ファイル・関数
 
 - `/server/src/controllers/items.ts`
-  - `getItemListController`
-  - `getRecommendItemsController`
+    - `getItemListController`
+    - `getRecommendItemsController`
 - `/server/src/controllers/users/me/items.ts`
-  - `usersMeItemsGetRootController`
+    - `usersMeItemsGetRootController`
 - `/server/src/usecases/items/itemList/**`
 - `/server/src/validators/query/items.ts`
 - `/server/src/validators/query/userItems.ts`
@@ -65,3 +65,64 @@ Controllerは認証ユーザーとvalidated queryから必要値を取得し、�
 
 関連テストを追加または更新し、全view/typeと必須パラメータ不足を確認してください。最後に `cd server && npm run lint && npm run typecheck` を実行して結果を報告してください。
 ```
+
+---
+
+追記
+
+## 作成するファイル
+
+### getItemListController
+
+/server/src/usecases/items/itemList/itemList.ts
+
+### getRecommendItemsController
+
+/server/src/usecases/items/itemList/recommendItems.ts
+
+### usersMeItemsGetRootController
+
+/server/src/usecases/items/itemList/userItems.ts
+
+---
+
+## 作業上の諸注意
+
+- 必ず進捗を報告しながら作業すること
+- 今回のタスクと関係のないエラーや問題を発見したら、修正せず、/docs/todo配下の適切なフォルダにmarkdown形式でまとめること
+
+---
+
+## 報告
+
+実装完了しました。3つの上位UseCaseへディスパッチ処理を移動しています。
+
+作成ファイル:
+
+- server/src/usecases/items/itemList/itemList.ts
+- server/src/usecases/items/itemList/recommendItems.ts
+- server/src/usecases/items/itemList/userItems.ts
+
+変更内容:
+
+- server/src/controllers/items.ts
+    - 商品一覧・レコメンド一覧を上位UseCaseの1回呼び出しへ変更
+    - Promise<any>、UseCase map、組み合わせ判定を削除
+
+- server/src/controllers/users/me/items.ts
+    - 7種類の一覧選択とkeyword正規化を上位UseCaseへ移動
+
+- PAGE_USER_NOT_FOUND、INVALID_QUERYなどの既存エラーを維持
+- 戻り値をAwaited<ReturnType<...>>のunionで具体的に型定義
+- HTTP status、レスポンスキー、page・limit、正規化処理は変更なし
+- Validatorは既存の推論型で要件を満たすため変更なし
+- ordersGetRootControllerは変更なし
+
+確認結果:
+
+- npm run lint: 成功
+- npm run typecheck: 成功
+- 空白・差分チェック: 問題なし
+- 関連テスト基盤・テストスクリプトがないため、テスト追加は行っていません
+
+既存のTodoファイルにあったユーザー側の変更はそのまま維持しています。
