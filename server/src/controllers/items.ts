@@ -5,10 +5,10 @@ import { deleteItemLogicallyUseCase } from "../usecases/items/delete/logicalDele
 import { deleteItemPerfectUseCase } from "../usecases/items/delete/perfectDelete.js";
 import { getFormDataUseCase } from "../usecases/items/formData/getFormData.js";
 import { getItemHighlightUseCase } from "../usecases/items/highlight/getItemHighlight.js";
-import { getIndexItemsUseCase } from "../usecases/items/itemList/indexItemList.js";
-import { getIndexVideosUseCase } from "../usecases/items/itemList/indexVideoList.js";
-import { getProfileItemsUseCase } from "../usecases/items/itemList/profileItemList.js";
-import { getProfileVideosUseCase } from "../usecases/items/itemList/profileVideoList.js";
+import { getIndexItemsUseCase } from "../usecases/items/itemList/index/indexItemList.js";
+import { getIndexVideosUseCase } from "../usecases/items/itemList/index/indexVideoList.js";
+import { getProfileItemsUseCase } from "../usecases/items/itemList/profile/profileItemList.js";
+import { getProfileVideosUseCase } from "../usecases/items/itemList/profile/profileVideoList.js";
 import { getCartRecommendUseCase } from "../usecases/items/itemList/recommend/cartRecommend.js";
 import { getIndexRecommendUseCase } from "../usecases/items/itemList/recommend/indexRecommend.js";
 import { getItemPageRecommendUseCase } from "../usecases/items/itemList/recommend/itemPageRecommend.js";

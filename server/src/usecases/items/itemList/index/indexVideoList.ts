@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { getIndexItemsWithCount } from "../../../services/items/index.js";
+import { getIndexVideosWithCount } from "../../../../services/items/index.js";
 
 type Params = {
     userId: number | null;
@@ -10,7 +10,7 @@ type Params = {
 // GET /items?type=""&page=number&view="index"&limit=number(&pageUserId=${id})
 // summary: 商品リスト取得
 // page: /lp・/など
-export const getIndexItemsUseCase = async ({ userId, page, limit }: Params) => {
+export const getIndexVideosUseCase = async ({ userId, page, limit }: Params) => {
     const where: any = { status: "active" };
     if (userId) {
         where.seller_id = { [Op.ne]: userId };
@@ -18,7 +18,7 @@ export const getIndexItemsUseCase = async ({ userId, page, limit }: Params) => {
 
     const offset = (page - 1) * limit;
 
-    const { items, totalCount } = await getIndexItemsWithCount({ where, limit, offset });
+    const { items, totalCount } = await getIndexVideosWithCount({ where, limit, offset });
 
     return {
         items,
