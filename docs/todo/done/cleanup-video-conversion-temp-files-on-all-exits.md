@@ -75,3 +75,7 @@ timeout、ffmpeg非ゼロ終了、spawn error、S3アップロード失敗、DB 
 ## 発見
 
 testファイルのimportにエラー出てる。
+
+## 解決
+
+tsconfigの問題だったから、/testにtsconfig追加した。
