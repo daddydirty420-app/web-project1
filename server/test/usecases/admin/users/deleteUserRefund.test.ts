@@ -24,9 +24,7 @@ test("購入者の口座から返金用スナップショットを作成する",
         meigi: "コウニュウシャ",
     });
     assert.equal(
-        createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: true }).includes(
-            unregisteredMessage,
-        ),
+        createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: true }).includes(unregisteredMessage),
         false,
     );
 });

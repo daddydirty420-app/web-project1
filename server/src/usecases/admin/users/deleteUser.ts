@@ -28,10 +28,7 @@ import { getUserHasBankAccount, getUserHasUriagekinPointBank } from "../../../se
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
-import {
-    createBuyerRefundBankSnapshot,
-    createBuyerRefundNotificationMessage,
-} from "./deleteUserRefund.js";
+import { createBuyerRefundBankSnapshot, createBuyerRefundNotificationMessage } from "./deleteUserRefund.js";
 
 type Params = {
     pageUserId: number;
