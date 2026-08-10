@@ -59,3 +59,30 @@ Node.jsのEventEmitterは、リスナー登録前に発火したイベントを�
 - このUseCaseが生成した明示的な一時パス以外を削除しない。
 - 新しいライブラリや永続ジョブキューは追加しない。
 - 動画変換以外の無関係な処理は変更しない。
+
+---
+
+## 報告
+
+ffmpegのイベント監視順序を修正しました。
+
+- spawn直後、最初のawait前にerror・close・timeoutを登録
+- getDuration待機中の早期終了も確実に捕捉
+- error後のcloseなど、複数イベントによる二重処理を防止
+- Promiseへ即座にrejection handlerを設定し、未処理rejectionを防止
+- 正常時は動画時間取得後にS3アップロードとdone更新を実施
+- 起動失敗・非ゼロ終了・timeoutはfailedへ更新し、外側のfinallyへ伝播
+- timeoutを各完了経路で解除
+
+変更ファイル：
+
+- server/src/usecases/video/convert.ts
+- server/src/utils/ffmpegCompletion.ts
+- server/test/utils/ffmpegCompletion.test.ts
+
+確認結果：
+
+- 新規テストを含む全8件: 成功
+- npm run lint: 成功
+- npm run typecheck: 成功
+- git diff --check: 成功
