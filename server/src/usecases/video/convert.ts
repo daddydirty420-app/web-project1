@@ -5,6 +5,7 @@ import { AppError } from "../../errors.js";
 import { s3Domain } from "../../infra/aws/s3.js";
 import { getMyVideo, updateStatus } from "../../services/video.js";
 import { getDuration } from "../../utils/ffmpeg.js";
+import { createFfmpegCompletionPromise } from "../../utils/ffmpegCompletion.js";
 import { downloadVideoFromS3, uploadVideoToS3 } from "../../utils/s3/index.js";
 import { cleanupVideoConversionFiles } from "../../utils/videoConversionCleanup.js";
 
@@ -19,7 +20,6 @@ type Params = {
 export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
     const now = Date.now();
     const tempId = crypto.randomUUID();
-    let isTimedOut = false;
 
     // video取得
     const video = await getMyVideo({ videoId, userId });
@@ -83,41 +83,34 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
             `${convertedDir}/${now}_${tempId}_index.m3u8`,
         ]);
 
-        ffmpeg.stderr.on("data", (data) => {
-            console.log(data.toString());
-        });
-
-        const timeout = setTimeout(
-            () => {
-                isTimedOut = true;
-                ffmpeg.kill("SIGKILL");
-            },
-            5 * 60 * 1000,
-        ); // 5分
-
-        // 再生時間
-        let seconds: number = 0;
-        try {
-            seconds = await getDuration({ filePath: originalFilePath });
-        } catch (err) {
-            console.error(err);
-        }
-
-        await new Promise<void>((resolve, reject) => {
-            const handleClose = async (code: number | null): Promise<void> => {
-                clearTimeout(timeout);
-
-                if (isTimedOut) {
+        const conversionPromise = createFfmpegCompletionPromise({
+            ffmpeg,
+            timeoutMs: 5 * 60 * 1000,
+            onError: async (error) => {
+                try {
                     await updateStatus({ video, data: { status: "failed" } });
-                    throw new AppError("ffmpeg timeout", 408);
+                } catch (statusError) {
+                    console.error("Failed to update video status", {
+                        videoId,
+                        error: statusError,
+                    });
                 }
 
+                throw error;
+            },
+            onTimeout: async () => {
+                await updateStatus({ video, data: { status: "failed" } });
+                throw new AppError("ffmpeg timeout", 408);
+            },
+            onClose: async (code) => {
                 if (code !== 0) {
                     await updateStatus({ video, data: { status: "failed" } });
                     throw new AppError(`ffmpeg exited with code ${code}`, 422);
                 }
 
                 try {
+                    const seconds = await durationPromise;
+
                     // HLSファイル生成
                     const files = fs.readdirSync(convertedDir);
 
@@ -151,36 +144,26 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                             duration: seconds,
                         },
                     });
-                } catch (e) {
+                } catch (error) {
                     await updateStatus({ video, data: { status: "failed" } });
 
-                    if (e instanceof AppError) {
-                        throw e;
-                    } else {
-                        throw new AppError("server error", 500);
-                    }
+                    if (error instanceof AppError) throw error;
+                    throw new AppError("server error", 500);
                 }
-            };
-
-            const handleCloseEvent = (code: number | null): void => {
-                void handleClose(code).then(resolve).catch(reject);
-            };
-
-            ffmpeg.once("close", handleCloseEvent);
-
-            ffmpeg.once("error", (err) => {
-                clearTimeout(timeout);
-                ffmpeg.removeListener("close", handleCloseEvent);
-                void updateStatus({ video, data: { status: "failed" } })
-                    .catch((statusError: unknown) => {
-                        console.error("Failed to update video status", {
-                            videoId,
-                            error: statusError,
-                        });
-                    })
-                    .finally(() => reject(err));
-            });
+            },
         });
+
+        ffmpeg.stderr.on("data", (data) => {
+            console.log(data.toString());
+        });
+
+        // 再生時間
+        const durationPromise = getDuration({ filePath: originalFilePath }).catch((error: unknown) => {
+            console.error(error);
+            return 0;
+        });
+
+        await conversionPromise;
     } catch (error) {
         hasConversionError = true;
         conversionError = error;

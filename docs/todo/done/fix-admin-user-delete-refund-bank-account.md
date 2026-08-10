@@ -49,3 +49,31 @@
 - 返金金額、振込予定日、通知種別、注文・配送のキャンセル処理を変更しない。
 - 口座情報や個人情報をログへ出力しない。
 - 新しいライブラリを追加しない。
+
+---
+
+## 報告
+
+• 修正を完了しました。
+
+- 返金口座を注文ごとの購入者口座から生成
+- 購入者が存在しない場合はトランザクションをエラー終了
+- 口座未登録時は既存仕様どおり空のスナップショットを保存
+- 未登録案内の条件を修正
+- 削除対象ユーザーの口座変数を返金処理から排除
+- 正常系・口座未登録・複数注文のテストを追加
+- 空スナップショットの実態に合わせてBankSnapshot型を調整
+
+変更箇所：
+
+- server/src/usecases/admin/users/deleteUser.ts
+- server/src/usecases/admin/users/deleteUserRefund.ts
+- server/src/types/bankSnapshot.ts
+- server/test/usecases/admin/users/deleteUserRefund.test.ts
+
+確認結果：
+
+- npm run lint: 成功
+- npm run typecheck: 成功
+- 追加テスト: 3件すべて成功
+- git diff --check: 成功

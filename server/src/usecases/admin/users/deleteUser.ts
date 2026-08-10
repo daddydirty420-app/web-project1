@@ -28,6 +28,7 @@ import { getUserHasBankAccount, getUserHasUriagekinPointBank } from "../../../se
 import { deleteWatchHistoryUserLogical } from "../../../services/watchHistory.js";
 import { DeleteOrderType } from "../../../types/deleteOrderType.js";
 import { moveToGlacier } from "../../../utils/moveToGlacier.js";
+import { createBuyerRefundBankSnapshot, createBuyerRefundNotificationMessage } from "./deleteUserRefund.js";
 
 type Params = {
     pageUserId: number;
@@ -67,8 +68,6 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
     const user = await getUserHasUriagekinPointBank({ userId: pageUserId });
 
     if (!user) throw new AppError("USER_NOT_FOUND", 404);
-
-    const account = user.BankAccount;
 
     // 出品した商品取得
     const items = await getMyItemsWithVideoAll({ userId: pageUserId });
@@ -248,16 +247,13 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
 
                         const buyer = await getUserHasBankAccount({ userId: order.buyer_user_id });
 
-                        const buyerHasAccount = !!buyer.BankAccount;
+                        if (!buyer) throw new AppError("USER_NOT_FOUND", 404);
 
-                        const message =
-                            `[重要] 取引中の商品「${item.name}」は利用規約違反により削除され、取引はキャンセル・返金となりました。` +
-                            `購入費用は全額お客様の口座に返金されます。なお、お振込日は本日から翌々週の金曜日以降となります。ご迷惑をおかけいたしますが、ご対応のほどよろしくお願いします。` +
-                            `${
-                                buyerHasAccount
-                                    ? "口座情報が未登録です。至急口座を登録してください。30日以内に登録がない場合、返金できませんのでご注意ください。"
-                                    : ""
-                            }`;
+                        const buyerAccount = buyer.BankAccount;
+                        const message = createBuyerRefundNotificationMessage({
+                            itemName: item.name,
+                            buyerHasAccount: !!buyerAccount,
+                        });
 
                         await createNotification({
                             data: {
@@ -280,13 +276,7 @@ export const deleteUserAdminUseCase = async ({ pageUserId, adminId, deleteReason
                                 trans_schedule_date: twoWeeksLater,
                                 user_id: buyer.id,
                                 transfer_id: transferId,
-                                bank_snapshot: {
-                                    bank_name: account?.bank_name ?? "",
-                                    branch_name: account?.branch ?? "",
-                                    account_type: account?.account_type ?? "",
-                                    account_number: account?.account_number ?? "",
-                                    meigi: account?.meigi ?? "",
-                                },
+                                bank_snapshot: createBuyerRefundBankSnapshot(buyerAccount),
                             },
                             transaction: t,
                         });
