@@ -1,6 +1,13 @@
-import type { ChildProcess } from "node:child_process";
+type CloseListener = (code: number | null) => void;
+type ErrorListener = (error: Error) => void;
 
-type FfmpegProcess = Pick<ChildProcess, "kill" | "once" | "removeListener">;
+type FfmpegProcess = {
+    kill(signal: NodeJS.Signals): boolean;
+    once(event: "close", listener: CloseListener): void;
+    once(event: "error", listener: ErrorListener): void;
+    removeListener(event: "close", listener: CloseListener): void;
+    removeListener(event: "error", listener: ErrorListener): void;
+};
 
 type Params = {
     ffmpeg: FfmpegProcess;
