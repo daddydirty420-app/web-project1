@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { validateQuery } from "../../middleware/validate/validateQuery.js";
-import { GetDevItemListQuery, getDevItemListQuerySchema } from "../../validators/query/dev/items.js";
+import { GetDevItemListQuery, getDevItemListQuerySchema } from "../../validators/query/maintenance/items.js";
 import { getAllItemListUseCase } from "../usecase/item/getItemList.js";
 
 const router = Router();

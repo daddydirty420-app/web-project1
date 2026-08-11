@@ -1,3 +1,118 @@
+## このディレクトリについて
+
+server/src はバックエンドのソースコードを配置するディレクトリです。
+
+各ディレクトリは責務を明確に分離してください。
+
+```
+src/
+├── app.ts                 # アプリケーション初期化
+├── routes/                # URL・HTTPメソッド・middleware・Controller呼び出し
+├── controllers/           # HTTPリクエスト・レスポンス
+├── usecases/              # 業務ロジック
+├── services/              # DBアクセス
+├── models/                # Sequelize Model定義
+├── validators/            # Zodバリデーション
+├── middleware/            # Express Middleware
+├── utils/                 # 汎用ユーティリティ
+├── types/                 # 型定義
+├── config/                # 定数
+├── cron/                  # 定期実行バッジ処理
+├── infra/                 # 外部システム連携
+├── maintenance/           # 管理者実行機能
+├── prototype/             # 未使用仮置きロジック
+├── scripts/               # CLI実行スクリプト
+├── bin/                   # www
+├── errors.ts              # AppError等
+├── db.ts                  # Sequelizeをdbにつなぐ
+└── ...
+```
+
+## レイヤー構成
+
+```
+Frontend
+    ↓
+Route
+    ↓
+Controller
+    ↓
+UseCase
+    ↓
+Service
+    ↓
+Model
+    ↓
+Database
+```
+
+データは上から下へ流れることを基本とする。
+
+## レイヤー依存
+
+各レイヤーは直下のレイヤーのみを呼び出す。
+
+例
+
+Route → Controller → UseCase → Service → Model
+
+ControllerからServiceを直接呼ばない。
+
+UseCaseからModelを直接呼ばない。
+
+責務
+
+Route
+ルーティングのみ
+
+Controller
+HTTP処理のみ
+
+UseCase
+業務ロジックのみ
+
+Service
+DBアクセスのみ
+
+許可
+
+Route
+→ Controller
+
+Controller
+→ UseCase
+
+UseCase
+→ Service
+→ Utils
+
+Service
+→ Model
+
+Model
+→ Sequelize
+
+禁止
+
+Route → Service
+Route → Model
+
+Controller → Model
+
+UseCase → Express
+
+Service → Express
+
+## 基本方針
+
+-   各レイヤーは責務を守る
+-   他レイヤーの責務を持ち込まない
+-   既存の設計方針に合わせる
+-   詳細な実装ルールは各ディレクトリの AGENTS.md に従う
+-   新しい実装を行う前に、同じ種類の既存実装を確認し、命名・構成・実装方法をできるだけ合わせる。既存の設計を壊す新しい書き方は行わない。
+
+---
+
 ## ユーザー向け文章
 
 ユーザーへ表示する文章（お知らせ、メール、通知、画面メッセージ、エラーメッセージなど）は、
@@ -31,5 +146,16 @@
 のように、自然でシンプルな表現を優先する。
 
 迷った場合は、
-「便利で使いやすいサービスならどう表示するか」
+
+「初めて利用するユーザーでも、
+説明なしで理解できるか」
+
 を基準に文章を作成する。
+
+---
+
+## お願い
+
+実装前に、
+このディレクトリ配下および親ディレクトリの AGENTS.md を確認し、
+内容に従って実装する。
