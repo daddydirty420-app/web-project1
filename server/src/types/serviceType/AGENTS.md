@@ -30,8 +30,6 @@ Service 用型の実装は、次の規約に必ず従う。
 
 `/docs/rule/backend/coding_rule/type.md`
 
-規約が未作成の場合は、この `AGENTS.md`、上位ディレクトリの `AGENTS.md`、既存の型定義に従う。
-
 ## スコープ管理
 
 - 現在依頼されている範囲以外は変更しない。
