@@ -64,11 +64,11 @@ export const postPurchaseSessionUseCase = async ({ itemId, userId }: Params) => 
         const newPurchaseSession = await createPurchaseSession({
             data: {
                 buyer_user_id: userId,
-                buyer_phone_number: user.phone_number ?? "",
+                buyer_phone_number: user.phone_number,
                 item_id: itemId,
                 address_id: newAddress.id,
                 name_id: newName.id,
-                expires_at: new Date(Date.now() + 30 * 60 * 1000),
+                expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
             },
             transaction: t,
         });
