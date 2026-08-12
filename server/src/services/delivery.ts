@@ -1,11 +1,6 @@
 import { Op } from "sequelize";
 import { Address, Delivery, Name, Orders, TodouhukenOption } from "../models/index.js";
-import {
-    CreateDeliveryParams,
-    DeliveryUserIdParams,
-    ItemIdParams,
-    UpdateDeliveryCancelParams,
-} from "../types/serviceType/delivery.js";
+import { DeliveryUserIdParams, ItemIdParams, UpdateDeliveryCancelParams } from "../types/serviceType/delivery.js";
 
 export const getMyDeliveryHasAddress = ({ deliveryId, userId }: DeliveryUserIdParams) => {
     return Delivery.findOne({
@@ -72,10 +67,6 @@ export const findDeliveryNow = async ({ itemId }: ItemIdParams) => {
             },
         ],
     });
-};
-
-export const createDelivery = async ({ data, transaction }: CreateDeliveryParams) => {
-    return Delivery.create(data, { transaction });
 };
 
 export const updateDeliveryCancel = async ({ delivery, data, transaction }: UpdateDeliveryCancelParams) => {

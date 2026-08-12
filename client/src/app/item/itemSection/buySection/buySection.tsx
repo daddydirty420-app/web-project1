@@ -1,6 +1,5 @@
 "use client";
 
-import { getAccessToken } from "@/lib/getAccessToken";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -28,7 +27,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
                     const data = await fetchGetCartStatus(id);
 
                     setCartIn(data.status);
-                } catch (err) {}
+                } catch {}
             };
 
             fetchData();
@@ -76,7 +75,7 @@ export const BuySection = ({ id, loggedIn }: Props) => {
             const data = await fetchBuy(id);
 
             // 配送ページとカラー選択ページをできれば1つにまとめる
-            router.push(`/buy/trans/${String(data.deliveryId)}`);
+            router.push(`/buy/trans/${String(data.purchaseSessionId)}`);
         } catch (err) {
             if (err instanceof ApiError) {
                 if (err.code === "INVALID_ITEM") {

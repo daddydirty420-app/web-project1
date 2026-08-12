@@ -4,7 +4,7 @@ import {
     adminUserAdminPatchByIdAddPenaltyController,
     adminUserAdminPatchByIdDeleteUriageController,
     adminUserAdminGetByIdProfileController,
-} from "../../controllers/admin/user_admin.js";
+} from "../../controllers/admin/userAdmin.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import {
     adminAddPenaltyRateLimit,

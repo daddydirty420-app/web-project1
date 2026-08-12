@@ -3,6 +3,7 @@ import { Op } from "sequelize";
 import { Item } from "../models/index.js";
 
 export const startItemSortDecayCron = () => {
+    // Item.sort_number減算
     cron.schedule(
         "0, 30 * * * *",
         async () => {

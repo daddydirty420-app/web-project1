@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
     adminItemAdminDeleteByIdController,
     adminItemAdminGetByIdItemPageController,
-} from "../../controllers/admin/item_admin.js";
+} from "../../controllers/admin/itemAdmin.js";
 import { authenticateToken, isAdmin } from "../../middleware/index.js";
 import { adminDeleteItemRateLimit, adminItemPageRateLimit } from "../../middleware/rateLimit/admin/itemRateLimit.js";
 import { validateBody } from "../../middleware/validate/validateBody.js";

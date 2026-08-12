@@ -1,9 +1,9 @@
 import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
 import { createAddressAllowNull } from "../../services/address.js";
-import { createDelivery } from "../../services/delivery.js";
 import { getItemForBuy } from "../../services/items/index.js";
 import { createNameAllowNull } from "../../services/name.js";
+import { createPurchaseSession } from "../../services/purchaseSession.js";
 import { getUser, getUserHasAddress, getUserHasName } from "../../services/users/query.js";
 
 type Params = {
@@ -11,10 +11,10 @@ type Params = {
     userId: number;
 };
 
-// POST /delivery/:id
-// summary: 配送データ作成
+// POST /purchase-session/:id
+// summary: 購入セッションデータ作成
 // page: /item
-export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
+export const postPurchaseSessionUseCase = async ({ itemId, userId }: Params) => {
     // 自ユーザー情報取得
     const user = await getUser({ userId });
     if (!user) {
@@ -39,7 +39,7 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
     const name = userName.Name;
 
     // データ作成
-    const deliveryId = await sequelize.transaction(async (t) => {
+    const purchaseSessionId = await sequelize.transaction(async (t) => {
         const newAddress = await createAddressAllowNull({
             data: {
                 post_number: address?.post_number ?? null,
@@ -61,32 +61,20 @@ export const postDeliveryBuyUseCase = async ({ itemId, userId }: Params) => {
             transaction: t,
         });
 
-        const newDelivery = await createDelivery({
+        const newPurchaseSession = await createPurchaseSession({
             data: {
-                buyer_phone_number: user.phone_number ?? "",
-                shipping_day_id: item.ItemShippingProfile.shipping_day_id,
-                shipping_service_id: item.ItemShippingProfile.shipping_service_id,
-                delivery_status_id: 1,
-                shipping_place_id: item.ItemShippingProfile.shipping_place_id,
+                buyer_user_id: userId,
+                buyer_phone_number: user.phone_number,
                 item_id: itemId,
                 address_id: newAddress.id,
                 name_id: newName.id,
-                shipping_from_name: `${item.User.Name?.sei ?? ""} ${item.User.Name?.mei ?? ""}`,
-                shipping_from_postcode: item.User.Address?.post_number ?? "",
-                shipping_from_prefecture: item.User.Address?.AddressTodouhuken?.name ?? "",
-                shipping_from_address_line1: `${item.User.Address?.shikutyouson ?? ""} ${
-                    item.User.Address?.banchi ?? ""
-                }`,
-                shipping_from_address_line2: item.User.Address?.building ?? "",
-                shipping_from_phone: item.User.phone_number ?? "",
+                expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000),
             },
             transaction: t,
         });
 
-        const id = newDelivery.id;
-
-        return id;
+        return newPurchaseSession.id;
     });
 
-    return deliveryId;
+    return purchaseSessionId;
 };

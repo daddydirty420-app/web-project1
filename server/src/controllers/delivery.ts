@@ -1,23 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { getDeliveryAddressUseCase } from "../usecases/delivery/getAddress.js";
 import { getDeliveryNameUseCase } from "../usecases/delivery/getName.js";
-import { postDeliveryBuyUseCase } from "../usecases/delivery/postBuy.js";
-
-// POST /delivery/:id
-// summary: 配送データ作成
-// page: /item
-export const deliveryPostByIdController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const userId = req.user!.id;
-        const itemId = Number(req.params.id);
-
-        const deliveryId = await postDeliveryBuyUseCase({ itemId, userId });
-
-        res.status(200).json({ deliveryId });
-    } catch (err) {
-        next(err);
-    }
-};
 
 // GET /delivery/:id/address
 // summary: 配送用住所取得

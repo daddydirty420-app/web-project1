@@ -5,7 +5,7 @@ import {
     commentLikeGetByIdStatusController,
     commentLikeGetByIdCountController,
     commentLikeGetByIdUserController,
-} from "../controllers/comment-like.js";
+} from "../controllers/commentLike.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     addCommentLikeRateLimit,
