@@ -21,7 +21,7 @@ import {
     shopInfoGetByIdSignup2Controller,
     shopInfoGetByIdSignup3Controller,
     shopInfoGetByIdSignup5Controller,
-} from "../controllers/shop_info.js";
+} from "../controllers/shopInfo.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     createShopStep1RateLimit,

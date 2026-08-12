@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uriagekinHistoryGetRootController } from "../controllers/uriagekin_history.js";
+import { uriagekinHistoryGetRootController } from "../controllers/uriagekinHistory.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { getUriagekinHistoryRateLimit } from "../middleware/rateLimit/uriagekinHistory.js";
 import { validateQuery } from "../middleware/validate/validateQuery.js";

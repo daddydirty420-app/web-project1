@@ -12,7 +12,7 @@ import {
     shopInfoEditGetByIdRepNameController,
     shopInfoEditGetByIdConNameController,
     shopInfoEditGetByIdComFreeConfirmController,
-} from "../controllers/shop_info_edit.js";
+} from "../controllers/shopInfoEdit.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
     getShopEditAddressRateLimit,
