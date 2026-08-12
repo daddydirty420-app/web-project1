@@ -11,3 +11,8 @@ export type CreatePurchaseSessionParams = {
     };
     transaction?: Transaction;
 };
+
+export type CronDeleteParams = {
+    now: Date;
+    transaction?: Transaction;
+}
