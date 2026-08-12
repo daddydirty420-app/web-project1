@@ -15,4 +15,4 @@ export type CreatePurchaseSessionParams = {
 export type CronDeleteParams = {
     now: Date;
     transaction?: Transaction;
-}
+};

@@ -3,6 +3,7 @@ import { Op } from "sequelize";
 import { Comment } from "../models/index.js";
 
 export const startCommentSortDecayCron = () => {
+    // Comment.sort_number減算
     cron.schedule(
         "0 */2 * * *",
         async () => {
