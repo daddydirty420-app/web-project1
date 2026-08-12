@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Comment, User } from "../models/index.js";
 import {
     CommentIdParams,
@@ -6,6 +7,7 @@ import {
     DeleteCommentUserIdTransactionParams,
     DestroyAllParams,
     DestroyParams,
+    GetCommentsSortDecayCronParams,
     ItemIdParams,
     UpdateParams,
     UpdateReportScoreParams,
@@ -64,6 +66,14 @@ export const getAllReply = ({ commentId }: CommentIdParams) => {
                 attributes: ["id", "user_name", "profile_image"],
             },
         ],
+    });
+};
+
+export const getCommentsSortDecayCron = ({ minSortNumber }: GetCommentsSortDecayCronParams) => {
+    return Comment.findAll({
+        where: {
+            sort_number: { [Op.gt]: minSortNumber },
+        },
     });
 };
 
