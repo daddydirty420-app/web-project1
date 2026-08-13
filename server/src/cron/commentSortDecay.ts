@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { decayCommentSortNumberCronUseCase } from "../usecases/comment/cronSortDecay.js";
+import { decayCommentSortNumberCronUseCase } from "../usecases/comment/cron/cronSortDecay.js";
 
 export const startCommentSortDecayCron = () => {
     // Comment.sort_number減算
