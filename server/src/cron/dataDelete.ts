@@ -1,26 +1,19 @@
 import cron from "node-cron";
-import { Op } from "sequelize";
-import { Notification, Search, WatchHistory } from "../models/index.js";
+import { notificationCronDeleteUseCase } from "../usecases/notification/cronDelete.js";
+import { searchCronDeleteUseCase } from "../usecases/search/cronDelete.js";
+import { watchHistoryCronDeleteUseCase } from "../usecases/watchHistory/cronDelete.js";
 
 export const DataDeleteCron = () => {
     // 90日経過WatchHistory削除
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const now = Date.now();
-
-            const ninetyDaysAgo = new Date(now - 1000 * 60 * 60 * 24 * 90);
-
             try {
-                const deleted: number = await WatchHistory.destroy({
-                    where: {
-                        updatedAt: { [Op.lt]: ninetyDaysAgo },
-                    },
-                });
+                const deleted = await watchHistoryCronDeleteUseCase();
 
                 console.log(`[cron] 90日経過WatchHistoryを削除しました: ${deleted}件`);
             } catch (err) {
-                console.error("WatchHistory削除エラー：", err);
+                console.error("[cron] WatchHistory削除エラー：", err);
             }
         },
         {
@@ -32,19 +25,12 @@ export const DataDeleteCron = () => {
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const now = Date.now();
-            const halfYearsAgo = new Date(now - 1000 * 60 * 60 * 24 * 180);
-
             try {
-                const deleteSearchItems = await Search.destroy({
-                    where: {
-                        createdAt: { [Op.lt]: halfYearsAgo },
-                    },
-                });
+                const deleteSearchItems = await searchCronDeleteUseCase();
 
                 console.log(`[cron] ${deleteSearchItems}件の180日経過searchデータを削除しました。`);
             } catch (err) {
-                console.error("search削除エラー：", err);
+                console.error("[cron] search削除エラー：", err);
             }
         },
         {
@@ -56,18 +42,12 @@ export const DataDeleteCron = () => {
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const nowDate = new Date();
-
             try {
-                const deleteNotification = await Notification.destroy({
-                    where: {
-                        expires_at: { [Op.lt]: nowDate },
-                    },
-                });
+                const deleteNotification = await notificationCronDeleteUseCase();
 
                 console.log(`[cron] ${deleteNotification}件の表示期限切れnotificationデータを削除しました。`);
             } catch (err) {
-                console.error("notification削除エラー：", err);
+                console.error("[cron] notification削除エラー：", err);
             }
         },
         {

@@ -21,3 +21,7 @@ export type DeleteWatchHistoryUserIdTransactionParams = {
     userId: number;
     transaction?: Transaction;
 };
+
+export type CronDeleteWatchHistoryParams = {
+    updatedBefore: Date;
+};

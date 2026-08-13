@@ -1,5 +1,7 @@
+import { Op } from "sequelize";
 import { Item, Sale, Video, WatchHistory } from "../models/index.js";
 import {
+    type CronDeleteWatchHistoryParams,
     DeleteWatchHistoryUserIdTransactionParams,
     ItemUserParams,
     UserWatchListParams,
@@ -96,4 +98,12 @@ export const deleteWatchHistoryUserLogical = async ({
         },
         { transaction },
     );
+};
+
+export const deleteCronWatchHistory = ({ updatedBefore }: CronDeleteWatchHistoryParams) => {
+    return WatchHistory.destroy({
+        where: {
+            updatedAt: { [Op.lt]: updatedBefore },
+        },
+    });
 };

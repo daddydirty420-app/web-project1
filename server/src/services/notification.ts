@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
+import { Op } from "sequelize";
 import { NOTIFICATION_CONFIG, NOTIFICATION_RETENTION_DAYS } from "../config/notification.js";
 import { Notification } from "../models/index.js";
 import {
     CreateNotificationParams,
+    type CronDeleteNotificationParams,
     DeleteNotificationUserIdTransactionParams,
     NotificationIdParams,
     NotificationListParams,
@@ -93,4 +95,12 @@ export const deleteNotificationUserLogical = async ({
         },
         { transaction },
     );
+};
+
+export const deleteCronNotification = ({ expiredBefore }: CronDeleteNotificationParams) => {
+    return Notification.destroy({
+        where: {
+            expires_at: { [Op.lt]: expiredBefore },
+        },
+    });
 };
