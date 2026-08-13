@@ -1,46 +1,23 @@
 import cron from "node-cron";
-import { Op } from "sequelize";
-import sequelize from "../db.js";
-import { RefreshTokens, TokenEmailChange, TokenPasswordReset, TokenSignupVerification, User } from "../models/index.js";
+import { deleteCronEmailChangeTokensUseCase } from "../usecases/token/cronEmailTokenDelete.js";
+import { deleteCronPasswordResetTokensUseCase } from "../usecases/token/cronPasswordResetTokenDelete.js";
+import { deleteCronRefreshTokensUseCase } from "../usecases/token/cronRefreshTokenDelete.js";
+import { deleteCronUnverifiedUsersUseCase } from "../usecases/users/cron/cronDeleteUser.js";
 
 export const startTokenCron = () => {
     // 未認証ユーザー削除
     cron.schedule(
         "0 * * * *",
         async () => {
-            const now = Date.now();
-
             try {
-                const expiredTokens = await TokenSignupVerification.findAll({
-                    where: {
-                        verification_code_expires: { [Op.lt]: now },
-                        reissue_token_expires: { [Op.lt]: now },
-                    },
-                });
+                const deletedCount = await deleteCronUnverifiedUsersUseCase();
 
-                if (expiredTokens.length === 0) {
+                if (deletedCount === 0) {
                     console.log("[cron] 未認証削除ユーザーはありません。");
                     return;
                 }
 
-                const expiredUserIds = expiredTokens.map((tk: any) => tk.user_id);
-
-                await sequelize.transaction(async (t) => {
-                    await User.destroy({
-                        where: {
-                            id: { [Op.in]: expiredUserIds },
-                            email_verified: false,
-                        },
-                        transaction: t,
-                    });
-
-                    await TokenSignupVerification.destroy({
-                        where: { user_id: { [Op.in]: expiredUserIds } },
-                        transaction: t,
-                    });
-                });
-
-                console.log(`[cron] ${expiredUserIds.length}件の未認証ユーザーとトークンを削除しました。`);
+                console.log(`[cron] ${deletedCount}件の未認証ユーザーとトークンを削除しました。`);
             } catch (err) {
                 console.error("[cron] 未認証ユーザー削除エラー：", err);
             }
@@ -54,14 +31,8 @@ export const startTokenCron = () => {
     cron.schedule(
         "0 * * * *",
         async () => {
-            const now = Date.now();
-
             try {
-                const destroyTokens = await TokenPasswordReset.destroy({
-                    where: {
-                        expires_at: { [Op.lt]: now },
-                    },
-                });
+                const destroyTokens = await deleteCronPasswordResetTokensUseCase();
 
                 console.log(`[cron] ${destroyTokens}件の期限切れパスワードリセットトークンを削除しました。`);
             } catch (err) {
@@ -77,14 +48,8 @@ export const startTokenCron = () => {
     cron.schedule(
         "0 * * * *",
         async () => {
-            const now = Date.now();
-
             try {
-                const destroyTokens = await TokenEmailChange.destroy({
-                    where: {
-                        expires_at: { [Op.lt]: now },
-                    },
-                });
+                const destroyTokens = await deleteCronEmailChangeTokensUseCase();
 
                 console.log(`[cron] ${destroyTokens}件の期限切れメールアドレス変更トークンを削除しました。`);
             } catch (err) {
@@ -100,14 +65,8 @@ export const startTokenCron = () => {
     cron.schedule(
         "0 */3 * * *",
         async () => {
-            const now = Date.now();
-
             try {
-                const destroyTokens = await RefreshTokens.destroy({
-                    where: {
-                        expires_at: { [Op.lt]: now },
-                    },
-                });
+                const destroyTokens = await deleteCronRefreshTokensUseCase();
 
                 console.log(`[cron] ${destroyTokens}件の期限切れrefreshTokensを削除しました。`);
             } catch (err) {

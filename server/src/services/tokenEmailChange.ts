@@ -1,20 +1,12 @@
 import { Op } from "sequelize";
 import { TokenEmailChange } from "../models/index.js";
+import type {
+    CreateTokenEmailChangeParams,
+    DestroyExpiredEmailChangeTokensParams,
+    TokenEmailChangeParams,
+} from "../types/serviceType/tokenEmailChange.js";
 
-type TokenParams = {
-    token: string;
-};
-
-type TokenCreateParams = {
-    data: {
-        token_hash: string;
-        expires_at: Date;
-        user_id: number;
-        new_email: string;
-    };
-};
-
-export const getTokenEmailChangeOne = ({ token }: TokenParams) => {
+export const getTokenEmailChangeOne = ({ token }: TokenEmailChangeParams) => {
     return TokenEmailChange.findOne({
         where: {
             token_hash: token,
@@ -23,6 +15,12 @@ export const getTokenEmailChangeOne = ({ token }: TokenParams) => {
     });
 };
 
-export const createTokenEmailChange = async ({ data }: TokenCreateParams) => {
+export const createTokenEmailChange = async ({ data }: CreateTokenEmailChangeParams) => {
     await TokenEmailChange.create(data);
+};
+
+export const destroyExpiredEmailChangeTokens = ({ expiredBefore }: DestroyExpiredEmailChangeTokensParams) => {
+    return TokenEmailChange.destroy({
+        where: { expires_at: { [Op.lt]: expiredBefore } },
+    });
 };

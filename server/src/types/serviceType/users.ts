@@ -1,4 +1,5 @@
-import { Op, Order, Transaction, WhereOptions } from "sequelize";
+import { Op } from "sequelize";
+import type { Order, Transaction, WhereOptions } from "sequelize";
 import { User } from "../../models/index.js";
 
 export type UserIdParams = {
@@ -157,4 +158,9 @@ export type UpdateUserLogicalDeleteParams = {
         email_verified: boolean;
     };
     transaction?: Transaction;
+};
+
+export type DestroyUnverifiedUsersParams = {
+    userIds: number[];
+    transaction: Transaction;
 };

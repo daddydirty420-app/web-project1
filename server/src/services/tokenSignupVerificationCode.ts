@@ -1,7 +1,10 @@
+import { Op } from "sequelize";
 import { TokenSignupVerification, User } from "../models/index.js";
-import {
+import type {
     CreateTokenParams,
+    DestroySignupVerificationTokensParams,
     DestroyTokenParams,
+    GetExpiredSignupVerificationTokensParams,
     ReissueUpdateParams,
     TokenParams,
     VerificationCodeParams,
@@ -30,4 +33,26 @@ export const updateReissueToken = async ({ tokenRecord, data }: ReissueUpdatePar
 
 export const destroyToken = async ({ tokenRecord }: DestroyTokenParams) => {
     await tokenRecord.destroy();
+};
+
+export const getExpiredSignupVerificationTokens = ({
+    expiredBefore,
+}: GetExpiredSignupVerificationTokensParams) => {
+    return TokenSignupVerification.findAll({
+        attributes: ["user_id"],
+        where: {
+            verification_code_expires: { [Op.lt]: expiredBefore },
+            reissue_token_expires: { [Op.lt]: expiredBefore },
+        },
+    });
+};
+
+export const destroySignupVerificationTokens = async ({
+    userIds,
+    transaction,
+}: DestroySignupVerificationTokensParams): Promise<void> => {
+    await TokenSignupVerification.destroy({
+        where: { user_id: { [Op.in]: userIds } },
+        transaction,
+    });
 };

@@ -1,5 +1,11 @@
+import { Op } from "sequelize";
 import { TokenPasswordReset } from "../models/index.js";
-import { CreateTokenParams, DeleteTokenParams, TokenParams } from "../types/serviceType/tokenPasswordReset.js";
+import type {
+    CreateTokenParams,
+    DeleteTokenParams,
+    DestroyExpiredPasswordResetTokensParams,
+    TokenParams,
+} from "../types/serviceType/tokenPasswordReset.js";
 
 export const getTokenOne = ({ token }: TokenParams) => {
     return TokenPasswordReset.findOne({
@@ -13,4 +19,10 @@ export const createTokenResetPW = async ({ data }: CreateTokenParams) => {
 
 export const deleteTokenRecord = async ({ resetRecord }: DeleteTokenParams) => {
     await resetRecord.destroy();
+};
+
+export const destroyExpiredPasswordResetTokens = ({ expiredBefore }: DestroyExpiredPasswordResetTokensParams) => {
+    return TokenPasswordReset.destroy({
+        where: { expires_at: { [Op.lt]: expiredBefore } },
+    });
 };

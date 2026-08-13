@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import type { Transaction } from "sequelize";
 import { TokenSignupVerification } from "../../models/index.js";
 
 export type VerificationCodeParams = {
@@ -32,4 +32,13 @@ export type ReissueUpdateParams = {
 
 export type DestroyTokenParams = {
     tokenRecord: InstanceType<typeof TokenSignupVerification>;
+};
+
+export type GetExpiredSignupVerificationTokensParams = {
+    expiredBefore: number;
+};
+
+export type DestroySignupVerificationTokensParams = {
+    userIds: number[];
+    transaction: Transaction;
 };

@@ -1,6 +1,8 @@
+import { Op } from "sequelize";
 import { User } from "../../models/index.js";
-import {
+import type {
     CreateUserParams,
+    DestroyUnverifiedUsersParams,
     EmailVerifyParams,
     UpdateEmailParams,
     UpdateHonninParams,
@@ -60,4 +62,17 @@ export const updateIdCardIdUser = async ({ user, data, transaction }: UpdateUser
 
 export const updateUserLogicalDelete = async ({ user, data, transaction }: UpdateUserLogicalDeleteParams) => {
     await user.update(data, { transaction });
+};
+
+export const destroyUnverifiedUsers = async ({
+    userIds,
+    transaction,
+}: DestroyUnverifiedUsersParams): Promise<void> => {
+    await User.destroy({
+        where: {
+            id: { [Op.in]: userIds },
+            email_verified: false,
+        },
+        transaction,
+    });
 };

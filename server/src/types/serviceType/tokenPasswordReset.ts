@@ -15,3 +15,7 @@ export type CreateTokenParams = {
 export type DeleteTokenParams = {
     resetRecord: InstanceType<typeof TokenPasswordReset>;
 };
+
+export type DestroyExpiredPasswordResetTokensParams = {
+    expiredBefore: number;
+};
