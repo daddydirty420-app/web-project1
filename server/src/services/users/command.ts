@@ -9,6 +9,7 @@ import type {
     UpdatePasswordParams,
     UpdatePhoneNumberParams,
     UpdateProfileParams,
+    UpdateReportTrustScoreUserParams,
     UpdateUserIdCardIdParams,
     UpdateUserLogicalDeleteParams,
     UpdateUserPenaltyParams,
@@ -75,4 +76,12 @@ export const destroyUnverifiedUsers = async ({
         },
         transaction,
     });
+};
+
+export const updateReportTrustScoreUser = async ({
+    user,
+    data,
+    transaction,
+}: UpdateReportTrustScoreUserParams): Promise<void> => {
+    await user.update(data, { transaction });
 };

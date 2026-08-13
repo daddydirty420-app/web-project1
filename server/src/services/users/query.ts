@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import {
     Address,
     BankAccount,
@@ -11,12 +12,22 @@ import {
     User,
 } from "../../models/index.js";
 import {
+    GetCronUserTrustScoreParams,
     EmailParams,
     GetMyPageParams,
     GetUserAllParams,
     UserIdParams,
     UserIdWhereParams,
 } from "../../types/serviceType/users.js";
+
+export const getCronUserTrustScore = ({ createdBefore, reportTrustScore }: GetCronUserTrustScoreParams) => {
+    return User.findAll({
+        where: {
+            createdAt: { [Op.lt]: createdBefore },
+            report_trust_score: reportTrustScore,
+        },
+    });
+};
 
 export const getUser = ({ userId }: UserIdParams) => {
     return User.findByPk(userId);

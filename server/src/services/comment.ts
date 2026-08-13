@@ -8,10 +8,19 @@ import {
     DestroyAllParams,
     DestroyParams,
     GetCommentsSortDecayCronParams,
+    GetCommentsReportScoreCronParams,
     ItemIdParams,
     UpdateParams,
     UpdateReportScoreParams,
 } from "../types/serviceType/comment.js";
+
+export const getCommentsReportScoreCron = ({ minReportScore }: GetCommentsReportScoreCronParams) => {
+    return Comment.findAll({
+        where: {
+            report_score: { [Op.gt]: minReportScore },
+        },
+    });
+};
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);

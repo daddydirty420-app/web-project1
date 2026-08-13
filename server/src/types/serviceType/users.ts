@@ -164,3 +164,16 @@ export type DestroyUnverifiedUsersParams = {
     userIds: number[];
     transaction: Transaction;
 };
+
+export type GetCronUserTrustScoreParams = {
+    createdBefore: Date;
+    reportTrustScore: number;
+};
+
+export type UpdateReportTrustScoreUserParams = {
+    user: InstanceType<typeof User>;
+    data: {
+        report_trust_score: number;
+    };
+    transaction: Transaction;
+};

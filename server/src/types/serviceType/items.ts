@@ -18,6 +18,10 @@ export type GetItemsSortDecayCronParams = {
     minSortNumber: number;
 };
 
+export type GetItemsReportScoreCronParams = {
+    minReportScore: number;
+};
+
 export type UpdateSortBuzzNumberDecayParams = {
     item: InstanceType<typeof Item>;
     data: {
