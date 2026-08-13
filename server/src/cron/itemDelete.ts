@@ -1,57 +1,23 @@
 import cron from "node-cron";
-import { Op } from "sequelize";
-import { Item, ItemDeleteLogs } from "../models/index.js";
-import sequelize from "../db.js";
+import { cronEditingDeleteUseCase } from "../usecases/items/cron/cronEditingDelete.js";
+import { cronPerfectDeleteUseCase } from "../usecases/items/cron/cronPerfectDelete.js";
 
 export const startItemDeleteCron = () => {
     // 論理削除後30日経過item削除、ItemDeleteLogs作成
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const thirtyDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30);
-
-            const items = await Item.findAll({
-                where: {
-                    status: "deleted",
-                    deleted_at: { [Op.lt]: thirtyDaysAgo },
-                },
-            });
-
-            if (!items || items.length === 0) {
-                console.log("[cron] 30日削除アイテムはありません。");
-                return;
-            }
-
-            const t = await sequelize.transaction();
-
             try {
-                const newItemDeleteLogs: {
-                    item_id: number;
-                    delete_user_id: number;
-                    delete_by_admin: boolean;
-                    delete_reason: string;
-                }[] = [];
+                const deletedCount = await cronPerfectDeleteUseCase();
 
-                await Promise.all(
-                    items.map(async (item: typeof Item) => {
-                        newItemDeleteLogs.push({
-                            item_id: item.id,
-                            delete_user_id: item.seller_id,
-                            delete_by_admin: false,
-                            delete_reason: "自主削除、30日経過",
-                        });
+                if (deletedCount === 0) {
+                    console.log("[cron] 30日削除アイテムはありません。");
+                    return;
+                }
 
-                        await item.destroy({ transaction: t });
-                    }),
-                );
-
-                await ItemDeleteLogs.bulkCreate(newItemDeleteLogs, { transaction: t });
-
-                await t.commit();
-                console.log(`[cron] 30日経過アイテムを${items.length}件削除しました。`);
+                console.log(`[cron] 30日経過アイテムを${deletedCount}件削除しました。`);
             } catch (err) {
-                await t.rollback();
-                console.log("[cron] itemDeleteエラー：", err);
+                console.error("[cron] itemDeleteエラー：", err);
             }
         },
         {
@@ -64,14 +30,7 @@ export const startItemDeleteCron = () => {
         "0 12 * * *",
         async () => {
             try {
-                const sevenDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 7);
-
-                const deletedCount = await Item.destroy({
-                    where: {
-                        status: "editing",
-                        createdAt: { [Op.lt]: sevenDaysAgo },
-                    },
-                });
+                const deletedCount = await cronEditingDeleteUseCase();
 
                 if (deletedCount === 0) {
                     console.log("[cron] 1週間放置itemはありません。");

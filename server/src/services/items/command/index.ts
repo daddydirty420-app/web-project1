@@ -8,5 +8,5 @@ export {
     updatePrice,
     updateReportScore,
 } from "./update.js";
-export { updateLogicalDeleteItem, destroyDraftItem, destroyPerfectItem } from "./delete.js";
+export { destroyCronEditingItems, updateLogicalDeleteItem, destroyDraftItem, destroyPerfectItem } from "./delete.js";
 export { createItem, createItemCopyUpload } from "./create.js";

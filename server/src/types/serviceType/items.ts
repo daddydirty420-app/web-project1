@@ -6,6 +6,14 @@ export type ItemIdParams = {
     itemId: number;
 };
 
+export type CronPerfectDeleteItemsParams = {
+    deletedBefore: Date;
+};
+
+export type CronEditingDeleteParams = {
+    createdBefore: Date;
+};
+
 export type UserIdParams = {
     userId: number;
 };

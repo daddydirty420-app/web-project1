@@ -2,6 +2,7 @@ export {
     addViewsCount,
     createItem,
     createItemCopyUpload,
+    destroyCronEditingItems,
     destroyDraftItem,
     destroyPerfectItem,
     updateImage,
@@ -17,6 +18,7 @@ export { countSellItem, countSoldItem } from "./items.count.js";
 export {
     getAdminItemPage,
     getAllItems,
+    getCronPerfectDeleteItems,
     getCartRecommendItems,
     getIndexItemsWithCount,
     getIndexRecommendItems,
