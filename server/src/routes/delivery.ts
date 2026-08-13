@@ -9,7 +9,7 @@ const router = Router();
 
 // GET /delivery/:id/address
 // summary: 配送用住所取得
-// page: /edit/address/delivery/[id]
+// page:
 router.get(
     "/:id/address",
     getAddressRateLimit,
@@ -20,7 +20,7 @@ router.get(
 
 // GET /delivery/:id/name
 // summary: 配送用氏名取得
-// page: /edit/name/delivery/[id]
+// page:
 router.get(
     "/:id/name",
     getNameRateLimit,

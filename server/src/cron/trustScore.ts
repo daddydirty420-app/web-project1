@@ -1,46 +1,23 @@
 import cron from "node-cron";
-import { Op } from "sequelize";
-import sequelize from "../db.js";
-import { Comment, Item, User } from "../models/index.js";
+import { cronCommentTrustScoreUseCase } from "../usecases/comment/cron/cronCommentTrustScore.js";
+import { cronItemTrustScoreUseCase } from "../usecases/items/cron/cronItemTrustScore.js";
+import { cronUserTrustScoreUseCase } from "../usecases/users/cron/cronUserTrustScore.js";
 
 export const startTrustScoreCron = () => {
     // report_trust_score 0.3 → 1.0 ユーザー信頼度
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const thirtyDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30);
-
-            const users = await User.findAll({
-                where: {
-                    createdAt: { [Op.lt]: thirtyDaysAgo },
-                    report_trust_score: 0.3,
-                },
-            });
-
-            if (!users || users.length === 0) {
-                console.log(" [cron] 30日経過ユーザーはいません");
-                return;
-            }
-
-            const t = await sequelize.transaction();
-
             try {
-                await Promise.all(
-                    users.map(async (user: InstanceType<typeof User>) => {
-                        await user.update(
-                            {
-                                report_trust_score: 1,
-                            },
-                            { transaction: t },
-                        );
-                    }),
-                );
+                const updatedCount = await cronUserTrustScoreUseCase();
 
-                await t.commit();
+                if (updatedCount === 0) {
+                    console.log(" [cron] 30日経過ユーザーはいません");
+                    return;
+                }
 
-                console.log(`[cron] 30日経過ユーザー${users.length}件の報告信頼度を1.0にしました`);
+                console.log(`[cron] 30日経過ユーザー${updatedCount}件の報告信頼度を1.0にしました`);
             } catch (err) {
-                await t.rollback();
                 console.log("[cron] 30日経過user.report_trust_scoreエラー：", err);
             }
         },
@@ -53,36 +30,16 @@ export const startTrustScoreCron = () => {
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const items = await Item.findAll({
-                where: {
-                    report_score: { [Op.gt]: 0 },
-                },
-            });
-
-            if (!items || items.length === 0) {
-                console.log(" [cron] report_score減点商品はありません");
-                return;
-            }
-
-            const t = await sequelize.transaction();
-
             try {
-                await Promise.all(
-                    items.map(async (item: InstanceType<typeof Item>) => {
-                        await item.update(
-                            {
-                                report_score: item.report_score * 0.9,
-                            },
-                            { transaction: t },
-                        );
-                    }),
-                );
+                const updatedCount = await cronItemTrustScoreUseCase();
 
-                await t.commit();
+                if (updatedCount === 0) {
+                    console.log(" [cron] report_score減点商品はありません");
+                    return;
+                }
 
-                console.log(`[cron] ${items.length}件の商品のreport_scoreを減点しました`);
+                console.log(`[cron] ${updatedCount}件の商品のreport_scoreを減点しました`);
             } catch (err) {
-                await t.rollback();
                 console.log("[cron] 商品report_score減点エラー：", err);
             }
         },
@@ -95,36 +52,16 @@ export const startTrustScoreCron = () => {
     cron.schedule(
         "0 12 * * *",
         async () => {
-            const comments = await Comment.findAll({
-                where: {
-                    report_score: { [Op.gt]: 0 },
-                },
-            });
-
-            if (!comments || comments.length === 0) {
-                console.log(" [cron] report_score減点コメントはありません");
-                return;
-            }
-
-            const t = await sequelize.transaction();
-
             try {
-                await Promise.all(
-                    comments.map(async (comment: InstanceType<typeof Comment>) => {
-                        await comment.update(
-                            {
-                                report_score: comment.report_score * 0.9,
-                            },
-                            { transaction: t },
-                        );
-                    }),
-                );
+                const updatedCount = await cronCommentTrustScoreUseCase();
 
-                await t.commit();
+                if (updatedCount === 0) {
+                    console.log(" [cron] report_score減点コメントはありません");
+                    return;
+                }
 
-                console.log(`[cron] ${comments.length}件の商品のreport_scoreを減点しました`);
+                console.log(`[cron] ${updatedCount}件の商品のreport_scoreを減点しました`);
             } catch (err) {
-                await t.rollback();
                 console.log("[cron] コメントreport_score減点エラー：", err);
             }
         },

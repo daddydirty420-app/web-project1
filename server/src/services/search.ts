@@ -1,18 +1,7 @@
-import { Op, Transaction } from "sequelize";
+import { Op } from "sequelize";
 import sequelize from "../db.js";
 import { Search } from "../models/index.js";
-
-type UserIdParams = {
-    userId: number;
-};
-
-type CreateSearchKeywordParams = {
-    data: {
-        search_text: string;
-        user_id: number | null;
-    };
-    transaction?: Transaction;
-};
+import type { CreateSearchKeywordParams, CronDeleteSearchParams, UserIdParams } from "../types/serviceType/search.js";
 
 export const getSearchHistoryAll = ({ userId }: UserIdParams) => {
     return Search.findAll({
@@ -31,4 +20,12 @@ export const getSearchHistoryAll = ({ userId }: UserIdParams) => {
 
 export const createSearchKeyword = async ({ data, transaction }: CreateSearchKeywordParams) => {
     await Search.create(data, { transaction });
+};
+
+export const deleteCronSearch = ({ createdBefore }: CronDeleteSearchParams) => {
+    return Search.destroy({
+        where: {
+            createdAt: { [Op.lt]: createdBefore },
+        },
+    });
 };

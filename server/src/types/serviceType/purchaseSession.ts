@@ -1,5 +1,10 @@
 import type { Transaction } from "sequelize";
 
+export type PurchaseSessionUserIdParams = {
+    purchaseSessionId: number;
+    userId: number;
+};
+
 export type CreatePurchaseSessionParams = {
     data: {
         buyer_user_id: number;

@@ -4,7 +4,7 @@ import { getDeliveryNameUseCase } from "../usecases/delivery/getName.js";
 
 // GET /delivery/:id/address
 // summary: 配送用住所取得
-// page: /edit/address/delivery/[id]
+// page:
 export const deliveryGetByIdAddressController = async (
     req: Request,
     res: Response,
@@ -24,7 +24,7 @@ export const deliveryGetByIdAddressController = async (
 
 // GET /delivery/:id/name
 // summary: 配送用氏名取得
-// page: /edit/name/delivery/[id]
+// page:
 export const deliveryGetByIdNameController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const deliveryId = Number(req.params.id);

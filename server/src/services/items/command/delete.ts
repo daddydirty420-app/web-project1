@@ -1,4 +1,11 @@
-import { ItemDataParams, ItemTransactionParams, LogicalDeleteParams } from "../../../types/serviceType/items.js";
+import { Op } from "sequelize";
+import { Item } from "../../../models/index.js";
+import type {
+    CronEditingDeleteParams,
+    ItemDataParams,
+    ItemTransactionParams,
+    LogicalDeleteParams,
+} from "../../../types/serviceType/items.js";
 
 export const updateLogicalDeleteItem = async ({ item, data, transaction }: LogicalDeleteParams) => {
     const nowDate = new Date();
@@ -22,4 +29,13 @@ export const destroyDraftItem = async ({ item }: ItemDataParams) => {
 
 export const destroyPerfectItem = async ({ item, transaction }: ItemTransactionParams) => {
     await item.destroy({ transaction });
+};
+
+export const destroyCronEditingItems = ({ createdBefore }: CronEditingDeleteParams) => {
+    return Item.destroy({
+        where: {
+            status: "editing",
+            createdAt: { [Op.lt]: createdBefore },
+        },
+    });
 };

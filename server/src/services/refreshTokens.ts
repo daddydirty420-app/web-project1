@@ -1,10 +1,12 @@
-import { RefreshTokens } from "../models/index.js";
-import {
+import { Op } from "sequelize";
+import type {
     CreateRefreshTokenParams,
+    DestroyExpiredRefreshTokensParams,
     RefreshTokenParams,
     StoredTokenParams,
     UserIdParams,
 } from "../types/serviceType/refreshToken.js";
+import { RefreshTokens } from "../models/index.js";
 
 export const getRefreshTokenOne = ({ refreshToken }: RefreshTokenParams) => {
     return RefreshTokens.findOne({
@@ -24,4 +26,10 @@ export const destroyRefreshToken = async ({ userId }: UserIdParams) => {
 
 export const destroyStoredRefreshToken = async ({ storedToken }: StoredTokenParams) => {
     await storedToken.destroy();
+};
+
+export const destroyExpiredRefreshTokens = ({ expiredBefore }: DestroyExpiredRefreshTokensParams) => {
+    return RefreshTokens.destroy({
+        where: { expires_at: { [Op.lt]: expiredBefore } },
+    });
 };

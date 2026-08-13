@@ -6,6 +6,36 @@ export type ItemIdParams = {
     itemId: number;
 };
 
+export type CronPerfectDeleteItemsParams = {
+    deletedBefore: Date;
+};
+
+export type CronEditingDeleteParams = {
+    createdBefore: Date;
+};
+
+export type GetItemsSortDecayCronParams = {
+    minSortNumber: number;
+};
+
+export type GetItemsReportScoreCronParams = {
+    minReportScore: number;
+};
+
+export type UpdateSortBuzzNumberDecayParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        sort_buzz_number: number;
+    };
+};
+
+export type UpdateSortNumberDecayParams = {
+    item: InstanceType<typeof Item>;
+    data: {
+        sort_number: number;
+    };
+};
+
 export type UserIdParams = {
     userId: number;
 };

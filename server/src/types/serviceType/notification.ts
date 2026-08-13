@@ -60,3 +60,7 @@ export type DeleteNotificationUserIdTransactionParams = {
     userId: number;
     transaction?: Transaction;
 };
+
+export type CronDeleteNotificationParams = {
+    expiredBefore: Date;
+};

@@ -16,8 +16,8 @@ export const fetchNamePage = async (): Promise<NamePageResponse> => {
     });
 };
 
-export const fetchDeliveryNamePage = async (deliveryId: string): Promise<NamePageResponse> => {
-    return apiFetchServer(`/delivery/${deliveryId}/name`, {
+export const fetchPurchaseSessionNamePage = async (purchaseSessionId: string): Promise<NamePageResponse> => {
+    return apiFetchServer(`/purchase-session/${purchaseSessionId}/name`, {
         cache: "no-store",
     });
 };

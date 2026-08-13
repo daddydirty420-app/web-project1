@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import type { Transaction } from "sequelize";
 import { RefreshTokens } from "../../models/index.js";
 
 export type RefreshTokenParams = {
@@ -20,4 +20,8 @@ export type CreateRefreshTokenParams = {
 
 export type StoredTokenParams = {
     storedToken: InstanceType<typeof RefreshTokens>;
+};
+
+export type DestroyExpiredRefreshTokensParams = {
+    expiredBefore: number;
 };

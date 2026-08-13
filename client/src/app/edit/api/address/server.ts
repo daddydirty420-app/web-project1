@@ -11,8 +11,8 @@ export const fetchAddressPage = async (): Promise<AddressPageResponse> => {
     });
 };
 
-export const fetchDeliveryAddressPage = async (deliveryId: string): Promise<AddressPageResponse> => {
-    return apiFetchServer(`/delivery/${deliveryId}/address`, {
+export const fetchPurchaseSessionAddressPage = async (purchaseSessionId: string): Promise<AddressPageResponse> => {
+    return apiFetchServer(`/purchase-session/${purchaseSessionId}/address`, {
         cache: "no-store",
     });
 };

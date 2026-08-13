@@ -10,6 +10,14 @@ export type CommentUserIdParams = {
     userId: number;
 };
 
+export type GetCommentsSortDecayCronParams = {
+    minSortNumber: number;
+};
+
+export type GetCommentsReportScoreCronParams = {
+    minReportScore: number;
+};
+
 export type ItemIdParams = {
     itemId: number;
 };

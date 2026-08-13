@@ -1,8 +1,8 @@
-import { InferAttributes, Transaction, WhereOptions } from "sequelize";
-import PointLots from "../../models/point_lots.js";
+import type { Transaction } from "sequelize";
+import type PointLots from "../../models/point_lots.js";
 
 export type GetExpiredAllParams = {
-    where: WhereOptions<InferAttributes<PointLots>>;
+    expiredBefore: Date;
 };
 
 export type CreatePointLotsParams = {

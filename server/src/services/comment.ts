@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Comment, User } from "../models/index.js";
 import {
     CommentIdParams,
@@ -6,10 +7,20 @@ import {
     DeleteCommentUserIdTransactionParams,
     DestroyAllParams,
     DestroyParams,
+    GetCommentsSortDecayCronParams,
+    GetCommentsReportScoreCronParams,
     ItemIdParams,
     UpdateParams,
     UpdateReportScoreParams,
 } from "../types/serviceType/comment.js";
+
+export const getCommentsReportScoreCron = ({ minReportScore }: GetCommentsReportScoreCronParams) => {
+    return Comment.findAll({
+        where: {
+            report_score: { [Op.gt]: minReportScore },
+        },
+    });
+};
 
 export const getComment = ({ commentId }: CommentIdParams) => {
     return Comment.findByPk(commentId);
@@ -64,6 +75,14 @@ export const getAllReply = ({ commentId }: CommentIdParams) => {
                 attributes: ["id", "user_name", "profile_image"],
             },
         ],
+    });
+};
+
+export const getCommentsSortDecayCron = ({ minSortNumber }: GetCommentsSortDecayCronParams) => {
+    return Comment.findAll({
+        where: {
+            sort_number: { [Op.gt]: minSortNumber },
+        },
     });
 };
 

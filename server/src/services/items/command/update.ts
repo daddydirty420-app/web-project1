@@ -1,13 +1,23 @@
-import {
+import type {
     CountUpdateParams,
     ItemDataParams,
     PublishUpdateParams,
     SortUpdateParams,
+    UpdateSortBuzzNumberDecayParams,
+    UpdateSortNumberDecayParams,
     UpdateItemImageParams,
     UpdateItemParams,
     UpdatePriceParams,
     UpdateReportScoreParams,
 } from "../../../types/serviceType/items.js";
+
+export const updateSortBuzzNumberDecay = async ({ item, data }: UpdateSortBuzzNumberDecayParams) => {
+    await item.update(data);
+};
+
+export const updateSortNumberDecay = async ({ item, data }: UpdateSortNumberDecayParams) => {
+    await item.update(data);
+};
 
 export const updateSortNumber = async ({ item, data }: SortUpdateParams) => {
     await item.update(data);
