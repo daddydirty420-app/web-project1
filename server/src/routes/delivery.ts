@@ -20,7 +20,7 @@ router.get(
 
 // GET /delivery/:id/name
 // summary: 配送用氏名取得
-// page: /edit/name/delivery/[id]
+// page:
 router.get(
     "/:id/name",
     getNameRateLimit,

@@ -1,10 +1,15 @@
 import { Router } from "express";
 import {
     getPurchaseSessionAddressController,
+    getPurchaseSessionNameController,
     purchaseSessionPostByItemIdController,
 } from "../controllers/purchaseSession.js";
 import { authenticateToken } from "../middleware/index.js";
-import { createPurchaseSessionRateLimit, getAddressRateLimit } from "../middleware/rateLimit/purchaseSession.js";
+import {
+    createPurchaseSessionRateLimit,
+    getAddressRateLimit,
+    getNameRateLimit,
+} from "../middleware/rateLimit/purchaseSession.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { idParamSchema } from "../validators/params/id.js";
 
@@ -30,6 +35,17 @@ router.get(
     validateParams(idParamSchema),
     authenticateToken,
     getPurchaseSessionAddressController,
+);
+
+// GET /purchase-session/:id/name
+// summary: 購入セッション配送先氏名取得
+// page: /edit/name/purchase/[id]
+router.get(
+    "/:id/name",
+    getNameRateLimit,
+    validateParams(idParamSchema),
+    authenticateToken,
+    getPurchaseSessionNameController,
 );
 
 export default router;

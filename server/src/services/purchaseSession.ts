@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import { Address, PurchaseSession, TodouhukenOption } from "../models/index.js";
+import { Address, Name, PurchaseSession, TodouhukenOption } from "../models/index.js";
 import type {
     CreatePurchaseSessionParams,
     CronDeleteParams,
@@ -22,6 +22,21 @@ export const getMyPurchaseSessionHasAddress = ({ purchaseSessionId, userId }: Pu
                         as: "AddressTodouhuken",
                     },
                 ],
+            },
+        ],
+    });
+};
+
+export const getMyPurchaseSessionHasName = ({ purchaseSessionId, userId }: PurchaseSessionUserIdParams) => {
+    return PurchaseSession.findOne({
+        where: {
+            id: purchaseSessionId,
+            buyer_user_id: userId,
+        },
+        include: [
+            {
+                model: Name,
+                attributes: ["id", "sei", "mei", "sei_kana", "mei_kana"],
             },
         ],
     });
