@@ -22,5 +22,5 @@ export default async function Page({ params }: Props) {
 
     const data = await fetchDeliveryAddressPage(id);
 
-    return <AddressEditForm address={data.data} page="delivery" deliveryId={id} />;
+    return <AddressEditForm address={data.data} page="purchase" purchaseSessionId={id} />;
 }

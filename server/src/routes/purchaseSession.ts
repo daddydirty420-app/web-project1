@@ -23,7 +23,7 @@ router.post(
 
 // GET /purchase-session/:id/address
 // summary: 購入セッション配送先住所取得
-// page: /edit/address/delivery/[id]
+// page: /edit/address/purchase/[id]
 router.get(
     "/:id/address",
     getAddressRateLimit,

@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { SITE } from "../../../config/site";
 import { ApiError } from "../../../lib/api/apiError";
 import { sleep } from "../../../lib/sleep";
 import { fetchAddressEdit, fetchGetAddress, fetchShopAddressEdit } from "../api/address/client";
@@ -12,17 +13,16 @@ import styles from "../edit.module.css";
 import EditUI from "../editUI";
 import { Address } from "../type";
 import { showAddressErrorToast } from "./addressErrorMessage";
-import { SITE } from "../../../config/site";
 
 type Props = {
     address: Address;
-    page: "normal" | "delivery" | "shop" | "shop-signup" | "com-free";
-    deliveryId?: string;
+    page: "normal" | "purchase" | "shop" | "shop-signup" | "com-free";
+    purchaseSessionId?: string;
     shopId?: string;
     shopEditId?: string;
 };
 
-export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId }: Props) => {
+export const AddressEditForm = ({ address, page, purchaseSessionId, shopId, shopEditId }: Props) => {
     const [postNumber, setPostNumber] = useState(address?.post_number ?? "");
     const [todouhuken, setTodouhuken] = useState(address?.AddressTodouhuken?.name ?? "");
     const [shikutyouson, setShikutyouson] = useState(address?.shikutyouson ?? "");
@@ -104,8 +104,8 @@ export const AddressEditForm = ({ address, page, deliveryId, shopId, shopEditId 
             toast.success("住所を更新しました");
             await sleep(1500);
 
-            if (page === "delivery") {
-                router.push(`/buy/trans/${deliveryId}`);
+            if (page === "purchase") {
+                router.push(`/buy/trans/${purchaseSessionId}`);
             } else if (page === "shop-signup") {
                 router.push(`/shop-signup/step5/${shopId}`);
             } else if (page === "com-free") {
