@@ -9,6 +9,7 @@ type ExpiredSignupVerificationToken = {
     user_id: number;
 };
 
+// 未認証ユーザー削除
 export const deleteCronUnverifiedUsersUseCase = async (): Promise<number> => {
     const expiredTokens: ExpiredSignupVerificationToken[] = await getExpiredSignupVerificationTokens({
         expiredBefore: Date.now(),
