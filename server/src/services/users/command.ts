@@ -65,10 +65,7 @@ export const updateUserLogicalDelete = async ({ user, data, transaction }: Updat
     await user.update(data, { transaction });
 };
 
-export const destroyUnverifiedUsers = async ({
-    userIds,
-    transaction,
-}: DestroyUnverifiedUsersParams): Promise<void> => {
+export const destroyUnverifiedUsers = async ({ userIds, transaction }: DestroyUnverifiedUsersParams): Promise<void> => {
     await User.destroy({
         where: {
             id: { [Op.in]: userIds },

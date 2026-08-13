@@ -6,9 +6,7 @@ import type {
     UriagekinLotsInstance,
 } from "../types/serviceType/uriagekinLots.js";
 
-export const getExpiredUriageAll = ({
-    expiredBefore,
-}: GetExpiredUriageAllParams): Promise<UriagekinLotsInstance[]> => {
+export const getExpiredUriageAll = ({ expiredBefore }: GetExpiredUriageAllParams): Promise<UriagekinLotsInstance[]> => {
     return UriagekinLots.findAll({
         where: {
             [Op.and]: [

@@ -20,9 +20,7 @@ export const cronPerfectDeleteUseCase = async (): Promise<number> => {
     }));
 
     await sequelize.transaction(async (transaction) => {
-        await Promise.all(
-            items.map((item: InstanceType<typeof Item>) => destroyPerfectItem({ item, transaction })),
-        );
+        await Promise.all(items.map((item: InstanceType<typeof Item>) => destroyPerfectItem({ item, transaction })));
         await bulkCreateItemDeleteLogs({ data: itemDeleteLogs, transaction });
     });
 

@@ -35,9 +35,7 @@ export const destroyToken = async ({ tokenRecord }: DestroyTokenParams) => {
     await tokenRecord.destroy();
 };
 
-export const getExpiredSignupVerificationTokens = ({
-    expiredBefore,
-}: GetExpiredSignupVerificationTokensParams) => {
+export const getExpiredSignupVerificationTokens = ({ expiredBefore }: GetExpiredSignupVerificationTokensParams) => {
     return TokenSignupVerification.findAll({
         attributes: ["user_id"],
         where: {

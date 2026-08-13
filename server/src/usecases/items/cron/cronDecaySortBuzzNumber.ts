@@ -1,7 +1,4 @@
-import {
-    getItemsSortBuzzNumberDecayCron,
-    updateSortBuzzNumberDecay,
-} from "../../../services/items/index.js";
+import { getItemsSortBuzzNumberDecayCron, updateSortBuzzNumberDecay } from "../../../services/items/index.js";
 
 // Item.sort_buzz_number減算
 export const cronDecaySortBuzzNumberUseCase = async (): Promise<void> => {

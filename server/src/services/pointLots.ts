@@ -9,10 +9,7 @@ import type {
 export const getExpiredAll = ({ expiredBefore }: GetExpiredAllParams) => {
     return PointLots.findAll({
         where: {
-            [Op.and]: [
-                { expires_at: { [Op.lt]: expiredBefore } },
-                where(col("used_points"), Op.lt, col("points")),
-            ],
+            [Op.and]: [{ expires_at: { [Op.lt]: expiredBefore } }, where(col("used_points"), Op.lt, col("points"))],
         },
     });
 };
