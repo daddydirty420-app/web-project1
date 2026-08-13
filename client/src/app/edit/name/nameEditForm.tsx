@@ -18,21 +18,21 @@ type Props = {
     name: Name;
     page:
         | "normal"
-        | "delivery"
+        | "purchase"
         | "rep-shop"
         | "rep-shop-signup"
         | "rep-com-free"
         | "con-shop"
         | "con-shop-signup"
         | "con-com-free";
-    deliveryId?: string;
+    purchaseSessionId?: string;
     shopId?: string;
     shopEditId?: string;
     idFrontUrl?: string;
     idRearUrl?: string;
 };
 
-export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFrontUrl, idRearUrl }: Props) => {
+export const NameEditForm = ({ name, page, purchaseSessionId, shopId, shopEditId, idFrontUrl, idRearUrl }: Props) => {
     const [seiValue, setSeiValue] = useState(name?.sei ?? "");
     const [meiValue, setMeiValue] = useState(name?.mei ?? "");
     const [seiKanaValue, setSeiKanaValue] = useState(name?.sei_kana ?? "");
@@ -88,8 +88,8 @@ export const NameEditForm = ({ name, page, deliveryId, shopId, shopEditId, idFro
             toast.success("氏名を更新しました");
             await sleep(1500);
 
-            if (page === "delivery") {
-                router.push(`/buy/trans/${deliveryId}`);
+            if (page === "purchase") {
+                router.push(`/buy/trans/${purchaseSessionId}`);
             } else if (page === "con-shop") {
                 router.push(`/shop-info/${shopId}`);
             } else if (page === "con-shop-signup") {
