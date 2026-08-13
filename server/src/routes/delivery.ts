@@ -9,7 +9,7 @@ const router = Router();
 
 // GET /delivery/:id/address
 // summary: 配送用住所取得
-// page: /edit/address/delivery/[id]
+// page:
 router.get(
     "/:id/address",
     getAddressRateLimit,
