@@ -12,13 +12,17 @@ export {
     updatePublishItem,
     updateReportScore,
     updateRestoreItem,
+    updateSortBuzzNumberDecay,
     updateSortNumber,
+    updateSortNumberDecay,
 } from "./command/index.js";
 export { countSellItem, countSoldItem } from "./items.count.js";
 export {
     getAdminItemPage,
     getAllItems,
     getCronPerfectDeleteItems,
+    getItemsSortBuzzNumberDecayCron,
+    getItemsSortNumberDecayCron,
     getCartRecommendItems,
     getIndexItemsWithCount,
     getIndexRecommendItems,

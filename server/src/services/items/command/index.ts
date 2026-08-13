@@ -1,5 +1,7 @@
 export {
     updateSortNumber,
+    updateSortBuzzNumberDecay,
+    updateSortNumberDecay,
     updatePublishItem,
     updateRestoreItem,
     addViewsCount,
