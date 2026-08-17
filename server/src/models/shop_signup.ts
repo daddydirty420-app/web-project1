@@ -20,6 +20,7 @@ export class ShopSignup extends Model {
     declare capital: number | null;
     declare member_count: number | null;
     declare founded_date: Date | null;
+    declare request_expired_at: Date;
     declare request_all: boolean;
     declare auto_trans: boolean;
     declare open_info: boolean;
@@ -118,6 +119,10 @@ ShopSignup.init(
         founded_date: {
             type: DataTypes.DATE,
             allowNull: true,
+        },
+        request_expired_at: {
+            type: DataTypes.DATE,
+            allowNull: false,
         },
         request_all: {
             type: DataTypes.BOOLEAN,
