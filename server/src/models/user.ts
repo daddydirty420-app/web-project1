@@ -16,6 +16,7 @@ import PointLots from "./point_lots.js";
 import PointsHistory from "./points_history.js";
 import ReferenceCode from "./reference_code.js";
 import ShopInfo from "./shop_info.js";
+import ShopSignup from "./shop_signup.js";
 import UriagekinHistory from "./uriagekin_history.js";
 import UriagekinLots from "./uriagekin_lots.js";
 import WatchHistory from "./watch_history.js";
@@ -109,6 +110,9 @@ export class User extends Model {
         User.hasMany(PointLots, {
             foreignKey: "user_id",
         });
+        User.hasMany(ShopSignup, {
+            foreignKey: "user_id",
+        });
         User.hasMany(UriagekinHistory, {
             foreignKey: "user_id",
         });
@@ -129,6 +133,7 @@ export class User extends Model {
         Notification: Association<User, Notification>;
         IdCard: Association<User, IdCard>;
         ShopInfo: Association<User, ShopInfo>;
+        ShopSignup: Association<User, ShopSignup>;
         Address: Association<User, Address>;
         BankAccount: Association<User, BankAccount>;
         WatchHistory: Association<User, WatchHistory>;

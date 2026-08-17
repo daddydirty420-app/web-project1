@@ -68,6 +68,7 @@ import ShippingDayOptionModel from "./shipping_day_option.js";
 import ShippingServiceOptionModel from "./shipping_service_option.js";
 import ShopInfoModel from "./shop_info.js";
 import ShopInfoEditModel from "./shop_info_edit.js";
+import ShopSignupModel from "./shop_signup.js";
 import StarHistoryModel from "./star_history.js";
 import SuggestWordsModel from "./suggest_words.js";
 import TodouhukenOptionModel from "./todouhuken_option.js";
@@ -160,6 +161,7 @@ db.SearchWords = SearchWordsModel;
 db.ShippingDayOption = ShippingDayOptionModel;
 db.ShippingServiceOption = ShippingServiceOptionModel;
 db.ShopInfoEdit = ShopInfoEditModel;
+db.ShopSignup = ShopSignupModel;
 db.ShopInfo = ShopInfoModel;
 db.StarHistory = StarHistoryModel;
 db.SuggestWords = SuggestWordsModel;
@@ -246,6 +248,7 @@ export const {
     ShippingDayOption,
     ShippingServiceOption,
     ShopInfoEdit,
+    ShopSignup,
     ShopInfo,
     StarHistory,
     SuggestWords,

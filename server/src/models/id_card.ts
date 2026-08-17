@@ -1,6 +1,7 @@
 import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
+import ShopSignup from "./shop_signup.js";
 import User from "./user.js";
 
 export class IdCard extends Model {
@@ -14,10 +15,14 @@ export class IdCard extends Model {
         IdCard.hasOne(User, {
             foreignKey: "idcard_id",
         });
+        IdCard.hasOne(ShopSignup, {
+            foreignKey: "idcard_id",
+        });
     }
 
     static associations: {
         User: Association<IdCard, User>;
+        ShopSignup: Association<IdCard, ShopSignup>;
     };
 }
 
