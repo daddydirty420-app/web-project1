@@ -5,6 +5,7 @@ import Delivery from "./delivery.js";
 import PurchaseSession from "./purchase_session.js";
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
+import ShopSignup from "./shop_signup.js";
 import User from "./user.js";
 
 export class Name extends Model {
@@ -43,6 +44,14 @@ export class Name extends Model {
             foreignKey: "name_contact_id",
             as: "ContactNameEdit",
         });
+        Name.hasOne(ShopSignup, {
+            foreignKey: "name_representative_id",
+            as: "RepresentativeNameSignup",
+        });
+        Name.hasOne(ShopSignup, {
+            foreignKey: "name_contact_id",
+            as: "ContactNameSignup",
+        });
     }
 
     static associations: {
@@ -51,6 +60,8 @@ export class Name extends Model {
         PurchaseSession: Association<Name, PurchaseSession>;
         RepresentativeNameEdit: Association<Name, ShopInfoEdit>;
         ContactNameEdit: Association<Name, ShopInfoEdit>;
+        RepresentativeNameSignup: Association<Name, ShopSignup>;
+        ContactNameSignup: Association<Name, ShopSignup>;
         Delivery: Association<Name, Delivery>;
         User: Association<Name, User>;
     };

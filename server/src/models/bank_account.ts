@@ -3,6 +3,7 @@ import sequelize from "../db.js";
 
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
+import ShopSignup from "./shop_signup.js";
 import Transfer from "./transfer.js";
 import User from "./user.js";
 
@@ -28,6 +29,9 @@ export class BankAccount extends Model {
         BankAccount.hasOne(User, {
             foreignKey: "account_id",
         });
+        BankAccount.hasOne(ShopSignup, {
+            foreignKey: "account_id",
+        });
         BankAccount.hasOne(ShopInfoEdit, {
             foreignKey: "account_id",
         });
@@ -35,6 +39,7 @@ export class BankAccount extends Model {
 
     static associations: {
         ShopInfo: Association<BankAccount, ShopInfo>;
+        ShopSignup: Association<BankAccount, ShopSignup>;
         ShopInfoEdit: Association<BankAccount, ShopInfoEdit>;
         Transfer: Association<BankAccount, Transfer>;
         User: Association<BankAccount, User>;
