@@ -1,14 +1,14 @@
 import { Association, DataTypes, Model } from "sequelize";
-import sequelize from "../db.js";
 
+import sequelize from "../db.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
-import CouponShop from "./coupon_shop.js";
+import IdCard from "./id_card.js";
 import Name from "./name.js";
 import User from "./user.js";
 
-export class ShopInfo extends Model {
+export class ShopSignup extends Model {
     declare id: number;
     declare company_name: string | null;
     declare shop_name: string | null;
@@ -19,61 +19,59 @@ export class ShopInfo extends Model {
     declare company_number: string | null;
     declare capital: number | null;
     declare member_count: number | null;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null; // 代わりにidcard_idを作る
-    declare request_all: boolean;
-    declare verified: boolean;
-    declare auto_trans: boolean;
-    declare user_id: number | null;
-    declare com_or_free_id: number | null;
-    declare createdAt: Date;
-    declare updatedAt: Date;
     declare founded_date: Date | null;
+    declare request_all: boolean;
+    declare auto_trans: boolean;
     declare open_info: boolean;
     declare permit_url: string[] | null;
+    declare user_id: number | null;
+    declare com_or_free_id: number | null;
     declare name_representative_id: number | null;
     declare name_contact_id: number | null;
     declare address_id: number | null;
     declare account_id: number | null;
+    declare idcard_id: number | null;
+    declare createdAt: Date;
+    declare updatedAt: Date;
 
     static associate() {
-        ShopInfo.belongsTo(User, {
+        ShopSignup.belongsTo(User, {
             foreignKey: "user_id",
         });
-        ShopInfo.belongsTo(ComOrFreeOption, {
+        ShopSignup.belongsTo(ComOrFreeOption, {
             foreignKey: "com_or_free_id",
         });
-        ShopInfo.belongsTo(Name, {
+        ShopSignup.belongsTo(Name, {
             foreignKey: "name_representative_id",
             as: "RepresentativeName",
         });
-        ShopInfo.belongsTo(Name, {
+        ShopSignup.belongsTo(Name, {
             foreignKey: "name_contact_id",
             as: "ContactName",
         });
-        ShopInfo.belongsTo(Address, {
+        ShopSignup.belongsTo(Address, {
             foreignKey: "address_id",
         });
-        ShopInfo.belongsTo(BankAccount, {
+        ShopSignup.belongsTo(BankAccount, {
             foreignKey: "account_id",
         });
-        ShopInfo.hasMany(CouponShop, {
-            foreignKey: "shop_info_id",
+        ShopSignup.belongsTo(IdCard, {
+            foreignKey: "idcard_id",
         });
     }
 
     static associations: {
-        User: Association<ShopInfo, User>;
-        ComOrFreeOption: Association<ShopInfo, ComOrFreeOption>;
-        Address: Association<ShopInfo, Address>;
-        RepresentativeName: Association<ShopInfo, Name>;
-        ContactName: Association<ShopInfo, Name>;
-        BankAccount: Association<ShopInfo, BankAccount>;
-        CouponShop: Association<ShopInfo, CouponShop>;
+        User: Association<ShopSignup, User>;
+        ComOrFreeOption: Association<ShopSignup, ComOrFreeOption>;
+        Address: Association<ShopSignup, Address>;
+        RepresentativeName: Association<ShopSignup, Name>;
+        ContactName: Association<ShopSignup, Name>;
+        BankAccount: Association<ShopSignup, BankAccount>;
+        IdCard: Association<ShopSignup, IdCard>;
     };
 }
 
-ShopInfo.init(
+ShopSignup.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -117,20 +115,11 @@ ShopInfo.init(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
+        founded_date: {
+            type: DataTypes.DATE,
             allowNull: true,
         },
         request_all: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false,
-        },
-        verified: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
@@ -139,6 +128,22 @@ ShopInfo.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
+        },
+        open_info: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
+        permit_url: {
+            type: DataTypes.ARRAY(DataTypes.TEXT),
+            allowNull: true,
+            validate: {
+                maxArrayLength(value: any[]) {
+                    if (value && value.length > 10) {
+                        throw new Error("画像は最大10枚までです。");
+                    }
+                },
+            },
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -159,26 +164,6 @@ ShopInfo.init(
             },
             onUpdate: "CASCADE",
             onDelete: "NO ACTION",
-        },
-        founded_date: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        open_info: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false,
-        },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
         },
         name_representative_id: {
             type: DataTypes.INTEGER,
@@ -224,6 +209,17 @@ ShopInfo.init(
             onUpdate: "CASCADE",
             onDelete: "SET NULL",
         },
+        idcard_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "id_card",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
         createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -237,11 +233,11 @@ ShopInfo.init(
     },
     {
         sequelize,
-        modelName: "ShopInfo",
-        tableName: "shop_info",
+        modelName: "ShopSignup",
+        tableName: "shop_signup",
         freezeTableName: true,
         timestamps: true,
     },
 );
 
-export default ShopInfo;
+export default ShopSignup;
