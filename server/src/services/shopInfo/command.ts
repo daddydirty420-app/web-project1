@@ -1,6 +1,4 @@
-import { ShopInfo } from "../../models/index.js";
 import {
-    CreateShopParams,
     ShopTransactionParams,
     UpdateBankAccountParams,
     UpdateCompanyNameParams,
@@ -14,10 +12,6 @@ import {
     UpdateShopRequestAllParams,
     UpdateShopUserLogicalDeleteParams,
 } from "../../types/serviceType/shopInfo.js";
-
-export const createShop = ({ data, transaction }: CreateShopParams) => {
-    return ShopInfo.create(data, { transaction });
-};
 
 export const updateShopEmail = async ({ shopInfo, data, transaction }: UpdateShopEmailParams) => {
     await shopInfo.update(data, { transaction });
