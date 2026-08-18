@@ -71,9 +71,9 @@ user（admin） ||--o{ coupon : "1人のuser(admin)は0以上のcouponを作成�
 
 user（admin） ||--o{ coupon : "1人のuser(admin)は0以上のcouponを編集できる"
 
-coupon_user ||--o{ purchase_session : "1枚のCouponUserは0または1つのPurchaseSessionで使用される"
+coupon_user ||--o{ purchase_session : "1枚のCoupon_userは0または1つのPurchaseSessionで使用される"
 
-coupon_user ||--o{ orders : "1枚のCouponUserは0または1つのOrderで使用される"
+coupon_user ||--o{ orders : "1枚のCoupon_userは0または1つのOrderで使用される"
 
 item ||--o{ coupon_item : "1つのitemは0以上のcoupon_itemを持つ"
 
