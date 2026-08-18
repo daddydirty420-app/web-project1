@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { ja } from "date-fns/locale";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
@@ -60,11 +60,9 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const [check, setCheck] = useState(false);
 
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
-
     const router = useRouter();
 
-    const handleZipSearch = async () => {
+    const handleZipSearch = async (postNumber: string) => {
         if (!postNumber || postNumber.length < 7) {
             toast.error("7桁の郵便番号を入力してください");
             return;
@@ -83,16 +81,13 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
         }
     };
 
-    useEffect(() => {
-        if (isInitialLoad) {
-            setIsInitialLoad(false);
-            return;
-        }
+    const handlePostNumberChange = (value: string) => {
+        setPostNumber(value);
 
-        if (postNumber && postNumber.length === 7) {
-            handleZipSearch();
+        if (value.length === 7) {
+            void handleZipSearch(value);
         }
-    }, [postNumber, isInitialLoad]);
+    };
 
     const submit = async () => {
         if (!check) {
@@ -398,7 +393,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 title="郵便番号 ※ハイフン無し"
                 type="text"
                 value={postNumber || ""}
-                onChange={setPostNumber}
+                onChange={handlePostNumberChange}
                 placeholder={SITE.inputPostNumber}
                 hissu
                 numeric
