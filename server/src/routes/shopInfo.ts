@@ -1,30 +1,28 @@
 import { Router } from "express";
 import {
-    shopInfoPostRootController,
-    shopInfoPatchByIdRepNameController,
-    shopInfoPatchByIdPhoneNumberController,
-    shopInfoPatchByIdOptionController,
-    shopInfoPatchByIdSignup3Controller,
-    shopInfoPatchByIdSignup4Controller,
-    shopInfoPatchByIdSignupEditController,
-    shopInfoPatchByIdSignup5Controller,
-    shopInfoGetMyController,
     shopInfoGetByIdAddressController,
     shopInfoGetByIdBankAccountController,
-    shopInfoGetByIdRepNameController,
-    shopInfoGetByIdConNameController,
-    shopInfoGetByIdPhoneNumberController,
-    shopInfoGetByIdCompanyNameController,
-    shopInfoGetByIdOptionController,
     shopInfoGetByIdComFreeController,
-    shopInfoGetSignup1Controller,
+    shopInfoGetByIdCompanyNameController,
+    shopInfoGetByIdConNameController,
+    shopInfoGetByIdOptionController,
+    shopInfoGetByIdPhoneNumberController,
+    shopInfoGetByIdRepNameController,
     shopInfoGetByIdSignup2Controller,
     shopInfoGetByIdSignup3Controller,
     shopInfoGetByIdSignup5Controller,
+    shopInfoGetMyController,
+    shopInfoGetSignup1Controller,
+    shopInfoPatchByIdOptionController,
+    shopInfoPatchByIdPhoneNumberController,
+    shopInfoPatchByIdRepNameController,
+    shopInfoPatchByIdSignup3Controller,
+    shopInfoPatchByIdSignup4Controller,
+    shopInfoPatchByIdSignup5Controller,
+    shopInfoPatchByIdSignupEditController,
 } from "../controllers/shopInfo.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
-    createShopStep1RateLimit,
     getShopAddressRateLimit,
     getShopBankAccountRateLimit,
     getShopComFreeRateLimit,
@@ -49,27 +47,15 @@ import {
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import {
-    createSignup1BBodySchema,
     repNameBodySchema,
     shopIdCardBodySchema,
-    shopSignupEditBodySchema,
     shopOptionBodySchema,
+    shopSignupEditBodySchema,
 } from "../validators/body/shopInfo.js";
 import { phoneNumberBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
-
-// POST /shop-info
-// summary: ShopInfo作成 事業者登録
-// page: /shop-signup/step1
-router.post(
-    "/",
-    authenticateToken,
-    createShopStep1RateLimit,
-    validateBody(createSignup1BBodySchema),
-    shopInfoPostRootController,
-);
 
 // PATCH /shop-info/:id/rep-name
 // summary 代表者氏名変更

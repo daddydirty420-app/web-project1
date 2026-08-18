@@ -1,9 +1,9 @@
-import sequelize from "../../../db.js";
-import { AppError } from "../../../errors.js";
-import { createAddress } from "../../../services/address.js";
-import { createNameShop } from "../../../services/name.js";
-import { createShop } from "../../../services/shopInfo/command.js";
-import { fetchAddressFromZipUseCase } from "../../address/zipUseCase.js";
+import sequelize from "../../db.js";
+import { AppError } from "../../errors.js";
+import { createAddress } from "../../services/address.js";
+import { createNameShop } from "../../services/name.js";
+import { createShopSignup } from "../../services/shopSignup.js";
+import { fetchAddressFromZipUseCase } from "../address/zipUseCase.js";
 
 type Body = {
     selectOption: number;
@@ -37,8 +37,8 @@ type Params = {
     body: Body;
 };
 
-// POST /shop-info
-// summary: ShopInfo作成 事業者登録
+// POST /shop-signup
+// summary: ShopSignup作成 事業者登録
 // page: /shop-signup/step1
 export const createShopSignup1 = async ({ userId, body }: Params) => {
     const {
@@ -106,7 +106,7 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
     }
 
     // db作成
-    const shopId = await sequelize.transaction(async (t) => {
+    const shopSignupId = await sequelize.transaction(async (t) => {
         // 代表者氏名
         const repName = await createNameShop({
             data: {
@@ -145,8 +145,8 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
 
         const newAddressId = newAddress.id;
 
-        // ショップ
-        const shop = await createShop({
+        // shopSignup作成
+        const shopSignup = await createShopSignup({
             data: {
                 company_name: companyName,
                 shop_name: shopName,
@@ -167,10 +167,8 @@ export const createShopSignup1 = async ({ userId, body }: Params) => {
             transaction: t,
         });
 
-        const shopId = shop.id;
-
-        return shopId;
+        return shopSignup.id;
     });
 
-    return shopId;
+    return shopSignupId;
 };

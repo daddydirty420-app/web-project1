@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { createShopSignup1 } from "../usecases/shopInfo/create/signup1.js";
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
@@ -20,30 +19,8 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
-import type {
-    CreateSignup1Body,
-    RepNameBody,
-    ShopIdCardBody,
-    ShopOptionBody,
-    ShopSignupEditBody,
-} from "../validators/body/shopInfo.js";
+import type { RepNameBody, ShopIdCardBody, ShopOptionBody, ShopSignupEditBody } from "../validators/body/shopInfo.js";
 import type { PhoneNumberBody } from "../validators/body/users.js";
-
-// POST /shop-info
-// summary: ShopInfo作成 事業者登録
-// page: /shop-signup/step1
-export const shopInfoPostRootController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const userId = req.user!.id;
-        const body = req.validatedBody as CreateSignup1Body;
-
-        const shopId = await createShopSignup1({ userId, body });
-
-        res.status(200).json({ shopId });
-    } catch (err) {
-        next(err);
-    }
-};
 
 // PATCH /shop-info/:id/rep-name
 // summary 代表者氏名変更

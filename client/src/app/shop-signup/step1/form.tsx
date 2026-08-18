@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { ja } from "date-fns/locale";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
@@ -60,22 +60,9 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const [check, setCheck] = useState(false);
 
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
-
     const router = useRouter();
 
-    useEffect(() => {
-        if (isInitialLoad) {
-            setIsInitialLoad(false);
-            return;
-        }
-
-        if (postNumber && postNumber.length === 7) {
-            handleZipSearch();
-        }
-    }, [postNumber, isInitialLoad]);
-
-    const handleZipSearch = async () => {
+    const handleZipSearch = async (postNumber: string) => {
         if (!postNumber || postNumber.length < 7) {
             toast.error("7桁の郵便番号を入力してください");
             return;
@@ -91,6 +78,14 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 showAddressErrorToast(err.code);
                 return;
             }
+        }
+    };
+
+    const handlePostNumberChange = (value: string) => {
+        setPostNumber(value);
+
+        if (value.length === 7) {
+            void handleZipSearch(value);
         }
     };
 
@@ -180,7 +175,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             toast.success("ショップデータを登録しました");
             await sleep(1500);
 
-            router.push(`/shop-signup/step2/${data.shopId}`);
+            router.push(`/shop-signup/step2/${data.shopSignupId}`);
         } catch (err) {
             if (err instanceof ApiError) {
                 toast.error("データ登録に失敗しました");
@@ -398,7 +393,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
                 title="郵便番号 ※ハイフン無し"
                 type="text"
                 value={postNumber || ""}
-                onChange={setPostNumber}
+                onChange={handlePostNumberChange}
                 placeholder={SITE.inputPostNumber}
                 hissu
                 numeric
