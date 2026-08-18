@@ -36,8 +36,8 @@ type AddressResponse = {
     };
 };
 
-type ShopIdResponse = {
-    shopId: number;
+type ShopSignupIdResponse = {
+    shopSignupId: number;
 };
 
 export const fetchGetAddress = async (postNumber: string) => {
@@ -49,8 +49,8 @@ export const fetchGetAddress = async (postNumber: string) => {
     return data.address;
 };
 
-export const fetchStep1 = async (body: Body): Promise<ShopIdResponse> => {
-    return apiFetch("/shop-info", {
+export const fetchStep1 = async (body: Body): Promise<ShopSignupIdResponse> => {
+    return apiFetch("/shop-signup", {
         method: "POST",
         body: JSON.stringify(body),
     });

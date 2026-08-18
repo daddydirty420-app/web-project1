@@ -64,17 +64,6 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        if (isInitialLoad) {
-            setIsInitialLoad(false);
-            return;
-        }
-
-        if (postNumber && postNumber.length === 7) {
-            handleZipSearch();
-        }
-    }, [postNumber, isInitialLoad]);
-
     const handleZipSearch = async () => {
         if (!postNumber || postNumber.length < 7) {
             toast.error("7桁の郵便番号を入力してください");
@@ -93,6 +82,17 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             }
         }
     };
+
+    useEffect(() => {
+        if (isInitialLoad) {
+            setIsInitialLoad(false);
+            return;
+        }
+
+        if (postNumber && postNumber.length === 7) {
+            handleZipSearch();
+        }
+    }, [postNumber, isInitialLoad]);
 
     const submit = async () => {
         if (!check) {
@@ -180,7 +180,7 @@ export const Form = ({ user, shopInfo, ComOrFreeOption }: Props) => {
             toast.success("ショップデータを登録しました");
             await sleep(1500);
 
-            router.push(`/shop-signup/step2/${data.shopId}`);
+            router.push(`/shop-signup/step2/${data.shopSignupId}`);
         } catch (err) {
             if (err instanceof ApiError) {
                 toast.error("データ登録に失敗しました");
