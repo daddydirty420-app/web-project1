@@ -1,4 +1,10 @@
 import { Transaction } from "sequelize";
+import { ShopSignup } from "../../models/index.js";
+
+export type UserShopSignupIdParams = {
+    userId: number;
+    shopSignupId: number;
+};
 
 export type CreateShopSignupParams = {
     data: {
@@ -17,6 +23,14 @@ export type CreateShopSignupParams = {
         founded_date: Date;
         name_representative_id: number;
         name_contact_id: number;
+    };
+    transaction?: Transaction;
+};
+
+export type UpdateBankAccountParams = {
+    shopSignup: InstanceType<typeof ShopSignup>;
+    data: {
+        account_id: number;
     };
     transaction?: Transaction;
 };

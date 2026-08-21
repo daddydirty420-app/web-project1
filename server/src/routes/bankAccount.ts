@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { bankAccountPostByIdShopController, bankAccountPatchByIdController } from "../controllers/bankAccount.js";
+import { bankAccountPatchByIdController, bankAccountPostShopSignupController } from "../controllers/bankAccount.js";
 import { authenticateToken } from "../middleware/index.js";
 import { bankEditRateLimit } from "../middleware/rateLimit/bankAccountRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
@@ -10,7 +10,7 @@ import { idParamSchema } from "../validators/params/id.js";
 const router = Router();
 
 // POST /bank-account/:id/shop
-// summary: ショップ口座情報作成
+// summary: ショップ口座情報作成（shopSignup）
 // page: /shop-signup/step2
 router.post(
     "/:id/shop",
@@ -18,7 +18,7 @@ router.post(
     validateBody(bankBodySchema),
     authenticateToken,
     bankEditRateLimit,
-    bankAccountPostByIdShopController,
+    bankAccountPostShopSignupController,
 );
 
 // PATCH /bank-account/:id
