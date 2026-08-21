@@ -116,20 +116,14 @@ describe("createShopSignup1", () => {
     it("郵便番号の都道府県が入力値と一致しない場合はエラーになる", async () => {
         const body = { ...createBody(), todouhuken: " 大阪府 " };
 
-        await expectAppError(
-            createShopSignup1({ userId: 1, body }),
-            "NOT_SAME_POSTNUMBER_TODOUHUKEN",
-        );
+        await expectAppError(createShopSignup1({ userId: 1, body }), "NOT_SAME_POSTNUMBER_TODOUHUKEN");
         expect(mocks.transaction).not.toHaveBeenCalled();
     });
 
     it("郵便番号の市区町村が入力値と一致しない場合はエラーになる", async () => {
         const body = { ...createBody(), shikutyouson: " 新宿区 " };
 
-        await expectAppError(
-            createShopSignup1({ userId: 1, body }),
-            "NOT_SAME_POSTNUMBER_SHIKUTYOUSON",
-        );
+        await expectAppError(createShopSignup1({ userId: 1, body }), "NOT_SAME_POSTNUMBER_SHIKUTYOUSON");
         expect(mocks.transaction).not.toHaveBeenCalled();
     });
 
@@ -190,8 +184,13 @@ describe("createShopSignup1", () => {
     });
 
     it("任意項目を省略した個人事業主では既定値を設定する", async () => {
-        const { homepage: _homepage, building: _building, companyNumber: _companyNumber, capital: _capital, ...body } =
-            createBody();
+        const {
+            homepage: _homepage,
+            building: _building,
+            companyNumber: _companyNumber,
+            capital: _capital,
+            ...body
+        } = createBody();
 
         await createShopSignup1({
             userId: 7,

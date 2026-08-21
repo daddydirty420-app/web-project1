@@ -88,11 +88,7 @@ describe("createShopSignupAccount", () => {
     it("入力された銀行が存在しない場合はINVALID_BANKになる", async () => {
         mocks.getBankOne.mockResolvedValueOnce(null);
 
-        await expectAppError(
-            createShopSignupAccount({ shopSignupId: 11, userId: 7, body }),
-            "INVALID_BANK",
-            400,
-        );
+        await expectAppError(createShopSignupAccount({ shopSignupId: 11, userId: 7, body }), "INVALID_BANK", 400);
 
         expect(mocks.getBankOne).toHaveBeenCalledWith({ bankName: "テスト銀行" });
         expect(mocks.getBranchOne).not.toHaveBeenCalled();
@@ -102,11 +98,7 @@ describe("createShopSignupAccount", () => {
     it("入力された支店が銀行に存在しない場合はINVALID_BRANCHになる", async () => {
         mocks.getBranchOne.mockResolvedValueOnce(null);
 
-        await expectAppError(
-            createShopSignupAccount({ shopSignupId: 11, userId: 7, body }),
-            "INVALID_BRANCH",
-            400,
-        );
+        await expectAppError(createShopSignupAccount({ shopSignupId: 11, userId: 7, body }), "INVALID_BRANCH", 400);
 
         expect(mocks.getBranchOne).toHaveBeenCalledWith({ bankCode: "0001", branch: "テスト支店" });
         expect(mocks.transaction).not.toHaveBeenCalled();

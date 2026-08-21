@@ -23,9 +23,9 @@ describe("deleteUserRefund", () => {
             account_number: "1234567",
             meigi: "コウニュウシャ",
         });
-        expect(
-            createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: true }),
-        ).not.toContain(unregisteredMessage);
+        expect(createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: true })).not.toContain(
+            unregisteredMessage,
+        );
     });
 
     it("購入者の口座が未登録の場合は空のスナップショットと登録案内を作成する", () => {
@@ -36,9 +36,9 @@ describe("deleteUserRefund", () => {
             account_number: "",
             meigi: "",
         });
-        expect(
-            createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: false }),
-        ).toContain(unregisteredMessage);
+        expect(createBuyerRefundNotificationMessage({ itemName: "商品", buyerHasAccount: false })).toContain(
+            unregisteredMessage,
+        );
     });
 
     it("複数注文では注文ごとの購入者口座から個別のスナップショットを作成する", () => {
