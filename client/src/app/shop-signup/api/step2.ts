@@ -45,8 +45,8 @@ export const fetchSuggestBranches = async (branchQuery: string, bankCode: string
     });
 };
 
-export const fetchStep2 = async (shopId: string, body: AccountBody) => {
-    return apiFetch(`/bank-account/${shopId}/shop`, {
+export const fetchStep2 = async (shopSignupId: string, body: AccountBody) => {
+    return apiFetch(`/shop-signup/${shopSignupId}/bank-account`, {
         method: "POST",
         body: JSON.stringify(body),
     });

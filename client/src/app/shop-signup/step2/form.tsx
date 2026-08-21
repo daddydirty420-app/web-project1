@@ -17,11 +17,11 @@ import { BankAccount } from "../type";
 import { showStep2ErrorToast } from "./errorToast";
 
 type Props = {
-    shopId: string;
+    shopSignupId: string;
     account: BankAccount;
 };
 
-export const Form = ({ shopId, account }: Props) => {
+export const Form = ({ shopSignupId, account }: Props) => {
     const [bankQuery, setBankQuery] = useState(account.bank_name || "");
     const [bankSuggestions, setBankSuggestions] = useState<
         {
@@ -83,7 +83,7 @@ export const Form = ({ shopId, account }: Props) => {
 
                 setBankSuggestions(suggestions);
                 setShowBankSuggest(suggestions.length > 0);
-            } catch (err) {
+            } catch {
                 setBankSuggestions([]);
                 setShowBankSuggest(false);
             }
@@ -119,7 +119,7 @@ export const Form = ({ shopId, account }: Props) => {
 
                 setBranchSuggestions(suggestions);
                 setShowBranchSuggest(suggestions.length > 0);
-            } catch (err) {
+            } catch {
                 setBranchSuggestions([]);
                 setShowBranchSuggest(false);
             }
@@ -153,12 +153,12 @@ export const Form = ({ shopId, account }: Props) => {
         };
 
         try {
-            await fetchStep2(shopId, body);
+            await fetchStep2(shopSignupId, body);
 
             toast.success("口座情報を登録しました");
             await sleep(1500);
 
-            router.push(`/shop-signup/step3/${shopId}`);
+            router.push(`/shop-signup/step3/${shopSignupId}`);
         } catch (err) {
             if (err instanceof ApiError) {
                 showStep2ErrorToast(err.code);
