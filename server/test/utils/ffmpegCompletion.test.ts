@@ -1,6 +1,5 @@
-import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
-import test from "node:test";
+import { expect, test } from "vitest";
 import { createFfmpegCompletionPromise } from "../../src/utils/ffmpegCompletion.js";
 
 class FakeFfmpeg extends EventEmitter {
@@ -49,9 +48,9 @@ test("getDuration相当の待機中にerrorが発生しても一度だけreject�
         ffmpeg.emit("close", 1);
         await new Promise((resolve) => setImmediate(resolve));
 
-        await assert.rejects(completion, expectedError);
-        assert.deepEqual(callbacks.calls, { close: 0, error: 1, timeout: 0 });
-        assert.deepEqual(unhandledRejections, []);
+        await expect(completion).rejects.toBe(expectedError);
+        expect(callbacks.calls).toEqual({ close: 0, error: 1, timeout: 0 });
+        expect(unhandledRejections).toEqual([]);
     } finally {
         process.removeListener("unhandledRejection", handleUnhandledRejection);
     }
@@ -72,8 +71,8 @@ test("getDuration相当の待機中に非ゼロcloseが発生してもsettleす�
     });
 
     ffmpeg.emit("close", 1);
-    await assert.rejects(completion, /ffmpeg exited with code 1/);
-    assert.deepEqual(callbacks.calls, { close: 1, error: 0, timeout: 0 });
+    await expect(completion).rejects.toThrow(/ffmpeg exited with code 1/);
+    expect(callbacks.calls).toEqual({ close: 1, error: 0, timeout: 0 });
 });
 
 test("正常終了ではclose処理を一度だけ実行してresolveする", async () => {
@@ -89,5 +88,5 @@ test("正常終了ではclose処理を一度だけ実行してresolveする", as
     ffmpeg.emit("close", 0);
 
     await completion;
-    assert.deepEqual(callbacks.calls, { close: 1, error: 0, timeout: 0 });
+    expect(callbacks.calls).toEqual({ close: 1, error: 0, timeout: 0 });
 });

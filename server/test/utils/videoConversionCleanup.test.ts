@@ -1,8 +1,7 @@
-import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import test from "node:test";
+import { expect, test } from "vitest";
 import { cleanupVideoConversionFiles } from "../../src/utils/videoConversionCleanup.js";
 
 test("元動画と変換途中ディレクトリだけを削除する", () => {
@@ -19,9 +18,9 @@ test("元動画と変換途中ディレクトリだけを削除する", () => {
     try {
         cleanupVideoConversionFiles({ originalFilePath, convertedDir });
 
-        assert.equal(fs.existsSync(originalFilePath), false);
-        assert.equal(fs.existsSync(convertedDir), false);
-        assert.equal(fs.existsSync(unrelatedFilePath), true);
+        expect(fs.existsSync(originalFilePath)).toBe(false);
+        expect(fs.existsSync(convertedDir)).toBe(false);
+        expect(fs.existsSync(unrelatedFilePath)).toBe(true);
     } finally {
         fs.rmSync(temporaryRoot, { recursive: true, force: true });
     }
@@ -31,12 +30,12 @@ test("cleanup対象が存在しない場合も正常終了する", () => {
     const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "video-conversion-cleanup-"));
 
     try {
-        assert.doesNotThrow(() => {
+        expect(() => {
             cleanupVideoConversionFiles({
                 originalFilePath: path.join(temporaryRoot, "missing-original"),
                 convertedDir: path.join(temporaryRoot, "missing-converted"),
             });
-        });
+        }).not.toThrow();
     } finally {
         fs.rmSync(temporaryRoot, { recursive: true, force: true });
     }

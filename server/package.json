@@ -12,7 +12,9 @@
         "migration:run": "sequelize-cli db:migrate",
         "migration:revert": "sequelize-cli db:migrate:undo",
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "test": "vitest",
+        "test:run": "vitest run"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.1022.0",
