@@ -1,28 +1,6 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
-import { createShopSignupAccount } from "../usecases/bankAccount/createShopSignup.js";
 import { editAccountUseCase } from "../usecases/bankAccount/editAccount.js";
 import { BankBody } from "../validators/body/bankAccount.js";
-
-// POST /bank-account/:id/shop
-// summary: ショップ口座情報作成（shopSignup）
-// page: /shop-signup/step2
-export const bankAccountPostShopSignupController = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): Promise<void> => {
-    try {
-        const shopSignupId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as BankBody;
-
-        await createShopSignupAccount({ shopSignupId, userId, body });
-
-        res.status(200).json({ message: "口座情報を登録しました。" });
-    } catch (err) {
-        next(err);
-    }
-};
 
 // PATCH /bank-account/:id
 // summary: 口座情報変更

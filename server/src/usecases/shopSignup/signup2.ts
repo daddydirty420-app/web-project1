@@ -12,10 +12,10 @@ type Params = {
     body: BankBody;
 };
 
-// POST /bank-account/:id/shop
-// summary: ショップ口座情報作成（shopSignup）
+// PATCH /shop-signup/:id/bank-account
+// summary: ショップ口座情報作成
 // page: /shop-signup/step2
-export const createShopSignupAccount = async ({ shopSignupId, userId, body }: Params) => {
+export const updateShopSignup2UseCase = async ({ shopSignupId, userId, body }: Params) => {
     // ショップ取得
     const shopSignup = await getMyShopSignup({ shopSignupId, userId });
 
