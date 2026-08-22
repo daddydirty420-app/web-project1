@@ -32,7 +32,7 @@ vi.mock("../../../src/services/shopSignup.js", () => ({
     updateShopSignupBankAccount: mocks.updateShopSignupBankAccount,
 }));
 
-import { createShopSignupAccount } from "../../../src/usecases/bankAccount/createShopSignup.js";
+import { updateShopSignup2UseCase } from "../../../src/usecases/shopSignup/signup2.js";
 
 const transaction = { id: "transaction" };
 const shopSignup = { id: 11 };
@@ -75,7 +75,7 @@ describe("createShopSignupAccount", () => {
         mocks.getMyShopSignup.mockResolvedValueOnce(null);
 
         await expectAppError(
-            createShopSignupAccount({ shopSignupId: 11, userId: 7, body }),
+            updateShopSignup2UseCase({ shopSignupId: 11, userId: 7, body }),
             "SHOP_SIGNUP_NOT_FOUND",
             404,
         );
@@ -88,7 +88,7 @@ describe("createShopSignupAccount", () => {
     it("入力された銀行が存在しない場合はINVALID_BANKになる", async () => {
         mocks.getBankOne.mockResolvedValueOnce(null);
 
-        await expectAppError(createShopSignupAccount({ shopSignupId: 11, userId: 7, body }), "INVALID_BANK", 400);
+        await expectAppError(updateShopSignup2UseCase({ shopSignupId: 11, userId: 7, body }), "INVALID_BANK", 400);
 
         expect(mocks.getBankOne).toHaveBeenCalledWith({ bankName: "テスト銀行" });
         expect(mocks.getBranchOne).not.toHaveBeenCalled();
@@ -98,14 +98,14 @@ describe("createShopSignupAccount", () => {
     it("入力された支店が銀行に存在しない場合はINVALID_BRANCHになる", async () => {
         mocks.getBranchOne.mockResolvedValueOnce(null);
 
-        await expectAppError(createShopSignupAccount({ shopSignupId: 11, userId: 7, body }), "INVALID_BRANCH", 400);
+        await expectAppError(updateShopSignup2UseCase({ shopSignupId: 11, userId: 7, body }), "INVALID_BRANCH", 400);
 
         expect(mocks.getBranchOne).toHaveBeenCalledWith({ bankCode: "0001", branch: "テスト支店" });
         expect(mocks.transaction).not.toHaveBeenCalled();
     });
 
     it("正規化された銀行名と支店名で口座を作成し、ショップ申込へ設定する", async () => {
-        const result = await createShopSignupAccount({ shopSignupId: 11, userId: 7, body });
+        const result = await updateShopSignup2UseCase({ shopSignupId: 11, userId: 7, body });
 
         expect(result).toBeUndefined();
         expect(mocks.transaction).toHaveBeenCalledOnce();
@@ -132,7 +132,7 @@ describe("createShopSignupAccount", () => {
         mocks.getBankOne.mockResolvedValueOnce({ code: "0002", name: "元銀行", normalize: null });
         mocks.getBranchOne.mockResolvedValueOnce({ code: "002", name: "元支店", normalize: null });
 
-        await createShopSignupAccount({ shopSignupId: 11, userId: 7, body });
+        await updateShopSignup2UseCase({ shopSignupId: 11, userId: 7, body });
 
         expect(mocks.createBankAccount).toHaveBeenCalledWith({
             data: expect.objectContaining({
