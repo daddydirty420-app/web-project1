@@ -90,6 +90,13 @@ S3Metadata.init(
         tableName: "s3_metadata",
         freezeTableName: true,
         timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["bucket_name", "object_key"],
+                name: "uq_s_metadata_bucket_name_object_key",
+            },
+        ],
     },
 );
 
