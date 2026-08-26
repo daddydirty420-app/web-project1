@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { s3Domain } from "../../../infra/aws/s3.js";
+import { publicS3Domain } from "../../../infra/aws/s3.js";
 import { updateName } from "../../../services/name.js";
 import { updateShopIdCard } from "../../../services/shopInfo/command.js";
 import { getMyShopHasRepName } from "../../../services/shopInfo/query.js";
@@ -49,7 +49,7 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
 
         frontSignedUrl = await generateSignedUrl({ key, contentType: frontFileType });
 
-        frontUrl = `${s3Domain}/${key}`;
+        frontUrl = `${publicS3Domain}/${key}`;
     }
 
     if (!frontUrl) throw new AppError("FRONT_URL_EMPTY", 400);
@@ -59,7 +59,7 @@ export const updateRepNameUseCase = async ({ shopId, body, userId }: Params) => 
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 
-        rearUrl = `${s3Domain}/${key}`;
+        rearUrl = `${publicS3Domain}/${key}`;
     }
 
     if (!rearUrl) throw new AppError("REAR_URL_EMPTY", 400);

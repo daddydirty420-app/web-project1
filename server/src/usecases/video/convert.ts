@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import crypto from "crypto";
 import fs from "fs";
 import { AppError } from "../../errors.js";
-import { s3Domain } from "../../infra/aws/s3.js";
+import { publicS3Domain } from "../../infra/aws/s3.js";
 import { getMyVideo, updateStatus } from "../../services/video.js";
 import { getDuration } from "../../utils/ffmpeg.js";
 import { createFfmpegCompletionPromise } from "../../utils/ffmpegCompletion.js";
@@ -32,7 +32,7 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
         throw new AppError("ORIGINAL_URL_NOT_FOUND", 400);
     }
 
-    const originalKey = originalUrl.replace(`${s3Domain}/`, "");
+    const originalKey = originalUrl.replace(`${publicS3Domain}/`, "");
 
     // 一時保存先
     const originalFilePath = `tmp/original_${videoId}_${now}_${tempId}`;
@@ -127,13 +127,13 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                         const contentType = f.endsWith(".ts")
                             ? "video/mp2t"
                             : f.endsWith(".m3u8")
-                              ? "application/vnd.apple.mpegurl"
-                              : "application/octet-stream";
+                            ? "application/vnd.apple.mpegurl"
+                            : "application/octet-stream";
 
                         await uploadVideoToS3({ filePath, key, contentType });
                     }
 
-                    const convertedUrl = `${s3Domain}/video/converted/${userId}/${videoId}/${now}_${tempId}_index.m3u8`;
+                    const convertedUrl = `${publicS3Domain}/video/converted/${userId}/${videoId}/${now}_${tempId}_index.m3u8`;
 
                     // video更新
                     await updateStatus({

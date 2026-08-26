@@ -1,4 +1,4 @@
-import { s3Domain } from "../../../../infra/aws/s3.js";
+import { publicS3Domain } from "../../../../infra/aws/s3.js";
 import { SignedUrlWithIndex } from "../../../../infra/aws/type.js";
 import { Item } from "../../../../models/index.js";
 import { createVideoPresignedPost, generateSignedUrl } from "../../../../utils/s3/index.js";
@@ -30,7 +30,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
                 contentLengthRange: 500 * 1024 * 1024,
             })) ?? null;
 
-        videoUrl = `${s3Domain}/${originalKey}`;
+        videoUrl = `${publicS3Domain}/${originalKey}`;
     }
 
     // サムネイル署名付きURL生成
@@ -42,7 +42,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
 
         thumbnailSignedUrl = await generateSignedUrl({ key, contentType: thumbnail.type });
 
-        thumbnailUrl = `${s3Domain}/${key}`;
+        thumbnailUrl = `${publicS3Domain}/${key}`;
     }
 
     // 商品画像署名付きURL生成
@@ -67,7 +67,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
 
             itemImageSignedUrls = itemImageSignedUrls.filter((v): v is SignedUrlWithIndex => v != null);
 
-            newUploadedUrls[index] = `${s3Domain}/${key}`;
+            newUploadedUrls[index] = `${publicS3Domain}/${key}`;
         }),
     );
 
@@ -108,7 +108,7 @@ export const buildSignedUrls = async ({ itemId, userId, item, body }: Params) =>
             const signedUrl = await generateSignedUrl({ key, contentType: v.image?.type });
 
             attributesImageSignedUrls[v.uiId] = signedUrl;
-            attributesImageUrls[v.uiId] = `${s3Domain}/${key}`;
+            attributesImageUrls[v.uiId] = `${publicS3Domain}/${key}`;
         }),
     );
 
