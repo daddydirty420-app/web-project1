@@ -11,7 +11,7 @@ export class IdCard extends Model {
     declare createdAt: Date;
     declare updatedAt: Date;
 
-    static associate () {
+    static associate() {
         IdCard.hasOne(User, {
             foreignKey: "idcard_id",
         });

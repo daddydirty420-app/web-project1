@@ -8,7 +8,7 @@ type PresignedParams = {
 };
 
 export const createVideoPresignedPost = async ({ key, contentType, contentLengthRange }: PresignedParams) => {
-    const bucket = buckets.public
+    const bucket = buckets.public;
     if (!bucket) return;
 
     const presignedUrl = await createPresignedPost(s3, {

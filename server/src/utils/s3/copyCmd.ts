@@ -8,7 +8,7 @@ type Params = {
 
 export const copyCmdS3 = async ({ key, archiveKey }: Params) => {
     const bucket = buckets.public;
-    
+
     await s3.send(
         new CopyObjectCommand({
             Bucket: bucket,

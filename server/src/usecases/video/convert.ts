@@ -127,8 +127,8 @@ export const convertVideoUseCase = async ({ videoId, userId }: Params) => {
                         const contentType = f.endsWith(".ts")
                             ? "video/mp2t"
                             : f.endsWith(".m3u8")
-                            ? "application/vnd.apple.mpegurl"
-                            : "application/octet-stream";
+                              ? "application/vnd.apple.mpegurl"
+                              : "application/octet-stream";
 
                         await uploadVideoToS3({ filePath, key, contentType });
                     }
