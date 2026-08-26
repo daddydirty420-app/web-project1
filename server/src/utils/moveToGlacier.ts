@@ -1,4 +1,4 @@
-import { s3Domain } from "../infra/aws/s3.js";
+import { publicS3Domain } from "../infra/aws/s3.js";
 import { deleteCmdS3 } from "./s3/deleteCmd.js";
 import { copyCmdS3, headCmdS3 } from "./s3/index.js";
 
@@ -27,5 +27,5 @@ export const moveToGlacier = async ({ userId, url }: Params) => {
 
     await deleteCmdS3({ key });
 
-    return `${s3Domain}/${archiveKey}`;
+    return `${publicS3Domain}/${archiveKey}`;
 };

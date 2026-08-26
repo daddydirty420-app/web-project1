@@ -60,6 +60,7 @@ import PointsUriageOverModel from "./points_uriage_over.js";
 import PurchaseSessionModel from "./purchase_session.js";
 import ReferenceCodeModel from "./reference_code.js";
 import RefreshTokensModel from "./refresh_tokens.js";
+import S3MetadataModel from "./s3_metadata.js";
 import SaleModel from "./sale.js";
 import SalesHistoryModel from "./sales_history.js";
 import SearchModel from "./search.js";
@@ -154,6 +155,7 @@ db.PointsUriageOver = PointsUriageOverModel;
 db.PurchaseSession = PurchaseSessionModel;
 db.ReferenceCode = ReferenceCodeModel;
 db.RefreshTokens = RefreshTokensModel;
+db.S3Metadata = S3MetadataModel;
 db.Sale = SaleModel;
 db.SalesHistory = SalesHistoryModel;
 db.Search = SearchModel;
@@ -241,6 +243,7 @@ export const {
     PurchaseSession,
     ReferenceCode,
     RefreshTokens,
+    S3Metadata,
     Sale,
     SalesHistory,
     Search,

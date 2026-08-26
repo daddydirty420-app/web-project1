@@ -1,16 +1,24 @@
 import { S3Client } from "@aws-sdk/client-s3";
 
-const bucket = process.env.AWS_BUCKET;
-const region = process.env.AWS_REGION;
+const region = process.env.AWS_REGION ?? "ap-northeast-1";
 
-const s3Domain = `https://${bucket}.s3.${region}.amazonaws.com`;
+const buckets = {
+    public: process.env.AWS_BUCKET,
+    verificationDocuments: process.env.AWS_VERIFICATION_DOCUMENTS_BUCKET,
+} as const;
+
+if (!buckets.public) {
+    throw new Error("AWS_BUCKET is not defined");
+}
+
+if (!buckets.verificationDocuments) {
+    throw new Error("AWS_VERIFICATION_DOCUMENTS_BUCKET is not defined");
+}
+
+const publicS3Domain = `https://${buckets.public}.s3.${region}.amazonaws.com`;
 
 const s3 = new S3Client({
     region: region || "ap-northeast-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
 });
 
-export { bucket, region, s3, s3Domain };
+export { buckets, region, s3, publicS3Domain };

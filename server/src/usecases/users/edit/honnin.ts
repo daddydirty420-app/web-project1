@@ -1,6 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { s3Domain } from "../../../infra/aws/s3.js";
+import { publicS3Domain } from "../../../infra/aws/s3.js";
 import { updateAddress } from "../../../services/address.js";
 import { createIdCard, updateIdCard } from "../../../services/idCard.js";
 import { updateName } from "../../../services/name.js";
@@ -95,7 +95,7 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
 
         frontSignedUrl = await generateSignedUrl({ key, contentType: frontFileType });
 
-        frontUrl = `${s3Domain}/${key}`;
+        frontUrl = `${publicS3Domain}/${key}`;
     }
 
     if (rearFileName && rearFileType && idRearUpload) {
@@ -103,7 +103,7 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 
-        rearUrl = `${s3Domain}/${key}`;
+        rearUrl = `${publicS3Domain}/${key}`;
     }
 
     // 旧身分証URL削除

@@ -1,6 +1,6 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
-import { bucket, region, s3 } from "../../infra/aws/s3.js";
 import { AppError } from "../../errors.js";
+import { buckets, publicS3Domain, s3 } from "../../infra/aws/s3.js";
 
 type GetFileNameParams = {
     url: string;
@@ -20,6 +20,8 @@ export const copyS3Object = async ({ sourceUrl, destKey }: CopyS3Params) => {
     const sourceKey = sourceUrl.split(".amazonaws.com/")[1];
     if (!sourceKey) throw new AppError("Invalid S3 URL", 400);
 
+    const bucket = buckets.public;
+
     const getCommand = new GetObjectCommand({
         Bucket: bucket,
         Key: sourceKey,
@@ -35,5 +37,5 @@ export const copyS3Object = async ({ sourceUrl, destKey }: CopyS3Params) => {
     });
     await s3.send(putCommand);
 
-    return `https://${bucket}.s3.${region}.amazonaws.com/${destKey}`;
+    return `${publicS3Domain}/${destKey}`;
 };

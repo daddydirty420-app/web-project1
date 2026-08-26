@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { s3Domain } from "../../../infra/aws/s3.js";
+import { publicS3Domain } from "../../../infra/aws/s3.js";
 import { createNotification } from "../../../services/notification.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
 import { getMyShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
@@ -43,7 +43,7 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
 
         frontSignedUrl = await generateSignedUrl({ key, contentType: frontFileType });
 
-        frontUrl = `${s3Domain}/${key}`;
+        frontUrl = `${publicS3Domain}/${key}`;
     }
 
     if (rearFileName && idRearUpload) {
@@ -51,7 +51,7 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 
-        rearUrl = `${s3Domain}/${key}`;
+        rearUrl = `${publicS3Domain}/${key}`;
     }
 
     // 許認可証アップロード
@@ -69,7 +69,7 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
             const signedUrl = await generateSignedUrl({ key: permitKey, contentType: fileType });
 
             permitSignedUrls.push(signedUrl);
-            permitUrls.push(`${s3Domain}/${permitKey}`);
+            permitUrls.push(`${publicS3Domain}/${permitKey}`);
         }
     }
 

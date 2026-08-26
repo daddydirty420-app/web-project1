@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors.js";
-import { s3Domain } from "../../../infra/aws/s3.js";
+import { publicS3Domain } from "../../../infra/aws/s3.js";
 import { updateShopIdPermit } from "../../../services/shopInfo/command.js";
 import { getMyShop } from "../../../services/shopInfo/query.js";
 import { deleteCmdS3 } from "../../../utils/s3/deleteCmd.js";
@@ -43,7 +43,7 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
 
         frontSignedUrl = await generateSignedUrl({ key, contentType: frontFileType });
 
-        frontUrl = `${s3Domain}/${key}`;
+        frontUrl = `${publicS3Domain}/${key}`;
     }
 
     if (rearFileName && idRearUpload) {
@@ -51,7 +51,7 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
 
         rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
 
-        rearUrl = `${s3Domain}/${key}`;
+        rearUrl = `${publicS3Domain}/${key}`;
     }
 
     // 古い身分証削除
@@ -87,7 +87,7 @@ export const updateShopSignup3UseCase = async ({ shopId, userId, body }: Params)
             const signedUrl = await generateSignedUrl({ key: permitKey, contentType: fileType });
 
             permitSignedUrls.push(signedUrl);
-            permitUrls.push(`${s3Domain}/${permitKey}`);
+            permitUrls.push(`${publicS3Domain}/${permitKey}`);
         }
     }
 

@@ -1,5 +1,5 @@
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
-import { bucket, s3 } from "../../infra/aws/s3.js";
+import { buckets, s3 } from "../../infra/aws/s3.js";
 
 type PresignedParams = {
     key: string;
@@ -8,6 +8,7 @@ type PresignedParams = {
 };
 
 export const createVideoPresignedPost = async ({ key, contentType, contentLengthRange }: PresignedParams) => {
+    const bucket = buckets.public;
     if (!bucket) return;
 
     const presignedUrl = await createPresignedPost(s3, {
