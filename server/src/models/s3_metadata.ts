@@ -71,7 +71,7 @@ S3Metadata.init(
         },
         etag: {
             type: DataTypes.STRING(255),
-            allowNull: false,
+            allowNull: true,
         },
         createdAt: {
             type: DataTypes.DATE,
