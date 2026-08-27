@@ -289,3 +289,4 @@ EC2からS3 Gateway VPC Endpoint経由で行う。
 - Amazon CloudFront
 - Amazon CloudWatch
 - AWS Certificate Manager
+- Amazon Recognition
