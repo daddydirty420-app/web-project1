@@ -3,15 +3,26 @@ import sequelize from "../db.js";
 
 import ShopSignup from "./shop_signup.js";
 import User from "./user.js";
+import S3Metadata from "./s3_metadata.js";
 
 export class IdCard extends Model {
     declare id: number;
     declare id_card_front: string | null;
     declare id_card_rear: string | null;
+    declare front_s3_metadata_id: number | null;
+    declare rear_s3_metadata_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
+        IdCard.belongsTo(S3Metadata, {
+            foreignKey: "front_s3_metadata_id",
+            as: "FrontIdCard",
+        });
+        IdCard.belongsTo(S3Metadata, {
+            foreignKey: "rear_s3_metadata_id",
+            as: "RearIdCard",
+        });
         IdCard.hasOne(User, {
             foreignKey: "idcard_id",
         });
@@ -41,6 +52,28 @@ IdCard.init(
         id_card_rear: {
             type: DataTypes.TEXT,
             allowNull: true,
+        },
+        front_s3_metadata_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "s3_metadata",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
+        },
+        rear_s3_metadata_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "s3_metadata",
+                key: "id",
+            },
+            onUpdate: "NO ACTION",
+            onDelete: "NO ACTION",
         },
         createdAt: {
             type: DataTypes.DATE,
