@@ -7,8 +7,6 @@ import S3Metadata from "./s3_metadata.js";
 
 export class IdCard extends Model {
     declare id: number;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null;
     declare front_s3_metadata_id: number | null;
     declare rear_s3_metadata_id: number | null;
     declare createdAt: Date;
@@ -32,6 +30,8 @@ export class IdCard extends Model {
     }
 
     static associations: {
+        FrontIdCard: Association<IdCard, S3Metadata>;
+        RearIdCard: Association<IdCard, S3Metadata>;
         User: Association<IdCard, User>;
         ShopSignup: Association<IdCard, ShopSignup>;
     };
@@ -44,14 +44,6 @@ IdCard.init(
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
-        },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
-            allowNull: true,
         },
         front_s3_metadata_id: {
             type: DataTypes.INTEGER,
