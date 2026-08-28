@@ -4,6 +4,7 @@ import sequelize from "../db.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
+import IdCard from "./id_card.js";
 import Name from "./name.js";
 import Permit from "./permit.js";
 import ShopInfo from "./shop_info.js";
@@ -32,6 +33,7 @@ export class ShopInfoEdit extends Model {
     declare address_id: number | null;
     declare account_id: number | null;
     declare permit_id: number | null;
+    declare idcard_id: number | null;
 
     static associate() {
         ShopInfoEdit.belongsTo(User, {
@@ -60,6 +62,9 @@ export class ShopInfoEdit extends Model {
         ShopInfoEdit.belongsTo(Permit, {
             foreignKey: "permit_id",
         });
+        ShopInfoEdit.belongsTo(IdCard, {
+            foreignKey: "idcard_id",
+        });
     }
 
     static associations: {
@@ -69,8 +74,9 @@ export class ShopInfoEdit extends Model {
         Address: Association<ShopInfoEdit, Address>;
         RepresentativeNameEdit: Association<ShopInfoEdit, Name>;
         ContactNameEdit: Association<ShopInfoEdit, Name>;
-        Permit: Association<ShopInfoEdit, Permit>;
         BankAccount: Association<ShopInfoEdit, BankAccount>;
+        Permit: Association<ShopInfoEdit, Permit>;
+        IdCard: Association<ShopInfoEdit, IdCard>;
     };
 }
 
@@ -206,6 +212,17 @@ ShopInfoEdit.init(
             unique: true,
             references: {
                 model: "permit",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        idcard_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "id_card",
                 key: "id",
             },
             onUpdate: "CASCADE",

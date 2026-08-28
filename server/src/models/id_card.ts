@@ -4,6 +4,8 @@ import sequelize from "../db.js";
 import S3Metadata from "./s3_metadata.js";
 import ShopSignup from "./shop_signup.js";
 import User from "./user.js";
+import ShopInfo from "./shop_info.js";
+import ShopInfoEdit from "./shop_info_edit.js";
 
 export class IdCard extends Model {
     declare id: number;
@@ -27,6 +29,12 @@ export class IdCard extends Model {
         IdCard.hasOne(ShopSignup, {
             foreignKey: "idcard_id",
         });
+        IdCard.hasOne(ShopInfo, {
+            foreignKey: "idcard_id",
+        });
+        IdCard.hasOne(ShopInfoEdit, {
+            foreignKey: "idcard_id",
+        });
     }
 
     static associations: {
@@ -34,6 +42,8 @@ export class IdCard extends Model {
         RearIdCard: Association<IdCard, S3Metadata>;
         User: Association<IdCard, User>;
         ShopSignup: Association<IdCard, ShopSignup>;
+        ShopInfo: Association<IdCard, ShopInfo>;
+        ShopInfoEdit: Association<IdCard, ShopInfoEdit>;
     };
 }
 
