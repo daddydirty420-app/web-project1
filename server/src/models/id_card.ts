@@ -2,10 +2,10 @@ import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 import S3Metadata from "./s3_metadata.js";
-import ShopSignup from "./shop_signup.js";
-import User from "./user.js";
 import ShopInfo from "./shop_info.js";
 import ShopInfoEdit from "./shop_info_edit.js";
+import ShopSignup from "./shop_signup.js";
+import User from "./user.js";
 
 export class IdCard extends Model {
     declare id: number;
