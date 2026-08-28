@@ -5,6 +5,7 @@ import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
 import Name from "./name.js";
+import Permit from "./permit.js";
 import ShopInfo from "./shop_info.js";
 import User from "./user.js";
 
@@ -31,6 +32,7 @@ export class ShopInfoEdit extends Model {
     declare name_contact_id: number | null;
     declare address_id: number | null;
     declare account_id: number | null;
+    declare permit_id: number | null;
 
     static associate() {
         ShopInfoEdit.belongsTo(User, {
@@ -56,6 +58,9 @@ export class ShopInfoEdit extends Model {
         ShopInfoEdit.belongsTo(BankAccount, {
             foreignKey: "account_id",
         });
+        ShopInfoEdit.belongsTo(Permit, {
+            foreignKey: "permit_id",
+        });
     }
 
     static associations: {
@@ -65,6 +70,7 @@ export class ShopInfoEdit extends Model {
         Address: Association<ShopInfoEdit, Address>;
         RepresentativeNameEdit: Association<ShopInfoEdit, Name>;
         ContactNameEdit: Association<ShopInfoEdit, Name>;
+        Permit: Association<ShopInfoEdit, Permit>;
         BankAccount: Association<ShopInfoEdit, BankAccount>;
     };
 }
@@ -201,6 +207,17 @@ ShopInfoEdit.init(
             unique: true,
             references: {
                 model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        permit_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "permit",
                 key: "id",
             },
             onUpdate: "CASCADE",
