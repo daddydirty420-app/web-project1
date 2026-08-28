@@ -2,6 +2,7 @@ import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
 import IdCard from "./id_card.js";
+import PermitFile from "./permit_file.js";
 
 export class S3Metadata extends Model {
     declare id: number;
@@ -29,11 +30,16 @@ export class S3Metadata extends Model {
             foreignKey: "rear_s3_metadata_id",
             as: "RearIdCard",
         });
+        S3Metadata.hasOne(PermitFile, {
+            foreignKey: "s3_metadata_id",
+            as: "RearIdCard",
+        });
     }
 
     static associations: {
         FrontIdCard: Association<S3Metadata, IdCard>;
         RearIdCard: Association<S3Metadata, IdCard>;
+        PermitFile: Association<S3Metadata, PermitFile>;
     };
 }
 
