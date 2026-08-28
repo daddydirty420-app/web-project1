@@ -5,7 +5,9 @@ import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
 import CouponShop from "./coupon_shop.js";
+import IdCard from "./id_card.js";
 import Name from "./name.js";
+import Permit from "./permit.js";
 import User from "./user.js";
 
 export class ShopInfo extends Model {
@@ -19,8 +21,6 @@ export class ShopInfo extends Model {
     declare company_number: string | null;
     declare capital: number | null;
     declare member_count: number | null;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null; // 代わりにidcard_idを作る
     declare request_all: boolean;
     declare verified: boolean;
     declare auto_trans: boolean;
@@ -30,11 +30,12 @@ export class ShopInfo extends Model {
     declare updatedAt: Date;
     declare founded_date: Date | null;
     declare open_info: boolean;
-    declare permit_url: string[] | null;
     declare name_representative_id: number | null;
     declare name_contact_id: number | null;
     declare address_id: number | null;
     declare account_id: number | null;
+    declare permit_id: number | null;
+    declare idcard_id: number | null;
 
     static associate() {
         ShopInfo.belongsTo(User, {
@@ -57,6 +58,12 @@ export class ShopInfo extends Model {
         ShopInfo.belongsTo(BankAccount, {
             foreignKey: "account_id",
         });
+        ShopInfo.belongsTo(Permit, {
+            foreignKey: "permit_id",
+        });
+        ShopInfo.belongsTo(IdCard, {
+            foreignKey: "idcard_id",
+        });
         ShopInfo.hasMany(CouponShop, {
             foreignKey: "shop_info_id",
         });
@@ -69,6 +76,8 @@ export class ShopInfo extends Model {
         RepresentativeName: Association<ShopInfo, Name>;
         ContactName: Association<ShopInfo, Name>;
         BankAccount: Association<ShopInfo, BankAccount>;
+        Permit: Association<ShopInfo, Permit>;
+        IdCard: Association<ShopInfo, IdCard>;
         CouponShop: Association<ShopInfo, CouponShop>;
     };
 }
@@ -117,14 +126,6 @@ ShopInfo.init(
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
         request_all: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -169,17 +170,6 @@ ShopInfo.init(
             allowNull: false,
             defaultValue: false,
         },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
-        },
         name_representative_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -219,6 +209,28 @@ ShopInfo.init(
             unique: true,
             references: {
                 model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        permit_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "permit",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        idcard_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "id_card",
                 key: "id",
             },
             onUpdate: "CASCADE",

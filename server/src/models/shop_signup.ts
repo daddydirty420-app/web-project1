@@ -6,6 +6,7 @@ import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
 import IdCard from "./id_card.js";
 import Name from "./name.js";
+import Permit from "./permit.js";
 import User from "./user.js";
 
 export class ShopSignup extends Model {
@@ -24,7 +25,6 @@ export class ShopSignup extends Model {
     declare request_all: boolean;
     declare auto_trans: boolean;
     declare open_info: boolean;
-    declare permit_url: string[] | null;
     declare user_id: number | null;
     declare com_or_free_id: number | null;
     declare name_representative_id: number | null;
@@ -32,6 +32,7 @@ export class ShopSignup extends Model {
     declare address_id: number | null;
     declare account_id: number | null;
     declare idcard_id: number | null;
+    declare permit_id: number | null;
     declare createdAt: Date;
     declare updatedAt: Date;
 
@@ -59,6 +60,9 @@ export class ShopSignup extends Model {
         ShopSignup.belongsTo(IdCard, {
             foreignKey: "idcard_id",
         });
+        ShopSignup.belongsTo(Permit, {
+            foreignKey: "permit_id",
+        });
     }
 
     static associations: {
@@ -69,6 +73,7 @@ export class ShopSignup extends Model {
         ContactName: Association<ShopSignup, Name>;
         BankAccount: Association<ShopSignup, BankAccount>;
         IdCard: Association<ShopSignup, IdCard>;
+        Permit: Association<ShopSignup, Permit>;
     };
 }
 
@@ -138,17 +143,6 @@ ShopSignup.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
-        },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
         },
         user_id: {
             type: DataTypes.INTEGER,
@@ -220,6 +214,17 @@ ShopSignup.init(
             unique: true,
             references: {
                 model: "id_card",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        permit_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "permit",
                 key: "id",
             },
             onUpdate: "CASCADE",

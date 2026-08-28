@@ -4,7 +4,9 @@ import sequelize from "../db.js";
 import Address from "./address.js";
 import BankAccount from "./bank_account.js";
 import ComOrFreeOption from "./com_or_free_option.js";
+import IdCard from "./id_card.js";
 import Name from "./name.js";
+import Permit from "./permit.js";
 import ShopInfo from "./shop_info.js";
 import User from "./user.js";
 
@@ -12,8 +14,6 @@ export class ShopInfoEdit extends Model {
     declare id: number;
     declare company_name: string | null;
     declare company_number: string | null;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null;
     declare phone_number: string | null;
     declare email: string | null;
     declare founded_date: Date | null;
@@ -24,13 +24,14 @@ export class ShopInfoEdit extends Model {
     declare user_id: number | null;
     declare shop_info_id: number | null;
     declare com_or_free_id: number | null;
-    declare permit_url: string[] | null;
     declare createdAt: Date;
     declare updatedAt: Date;
     declare name_representative_id: number | null;
     declare name_contact_id: number | null;
     declare address_id: number | null;
     declare account_id: number | null;
+    declare permit_id: number | null;
+    declare idcard_id: number | null;
 
     static associate() {
         ShopInfoEdit.belongsTo(User, {
@@ -56,6 +57,12 @@ export class ShopInfoEdit extends Model {
         ShopInfoEdit.belongsTo(BankAccount, {
             foreignKey: "account_id",
         });
+        ShopInfoEdit.belongsTo(Permit, {
+            foreignKey: "permit_id",
+        });
+        ShopInfoEdit.belongsTo(IdCard, {
+            foreignKey: "idcard_id",
+        });
     }
 
     static associations: {
@@ -66,6 +73,8 @@ export class ShopInfoEdit extends Model {
         RepresentativeNameEdit: Association<ShopInfoEdit, Name>;
         ContactNameEdit: Association<ShopInfoEdit, Name>;
         BankAccount: Association<ShopInfoEdit, BankAccount>;
+        Permit: Association<ShopInfoEdit, Permit>;
+        IdCard: Association<ShopInfoEdit, IdCard>;
     };
 }
 
@@ -83,14 +92,6 @@ ShopInfoEdit.init(
         },
         company_number: {
             type: DataTypes.STRING(20),
-            allowNull: true,
-        },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
             allowNull: true,
         },
         phone_number: {
@@ -151,17 +152,6 @@ ShopInfoEdit.init(
             onUpdate: "CASCADE",
             onDelete: "NO ACTION",
         },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
-        },
         name_representative_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -201,6 +191,28 @@ ShopInfoEdit.init(
             unique: true,
             references: {
                 model: "bank_account",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        permit_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "permit",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "SET NULL",
+        },
+        idcard_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true,
+            references: {
+                model: "id_card",
                 key: "id",
             },
             onUpdate: "CASCADE",
