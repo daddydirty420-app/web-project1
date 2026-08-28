@@ -25,7 +25,6 @@ export class ShopInfoEdit extends Model {
     declare user_id: number | null;
     declare shop_info_id: number | null;
     declare com_or_free_id: number | null;
-    declare permit_url: string[] | null;
     declare createdAt: Date;
     declare updatedAt: Date;
     declare name_representative_id: number | null;
@@ -156,17 +155,6 @@ ShopInfoEdit.init(
             },
             onUpdate: "CASCADE",
             onDelete: "NO ACTION",
-        },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
         },
         name_representative_id: {
             type: DataTypes.INTEGER,

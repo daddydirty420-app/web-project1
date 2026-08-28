@@ -25,7 +25,6 @@ export class ShopSignup extends Model {
     declare request_all: boolean;
     declare auto_trans: boolean;
     declare open_info: boolean;
-    declare permit_url: string[] | null;
     declare user_id: number | null;
     declare com_or_free_id: number | null;
     declare name_representative_id: number | null;
@@ -144,17 +143,6 @@ ShopSignup.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
-        },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
         },
         user_id: {
             type: DataTypes.INTEGER,

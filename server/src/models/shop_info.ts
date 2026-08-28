@@ -31,7 +31,6 @@ export class ShopInfo extends Model {
     declare updatedAt: Date;
     declare founded_date: Date | null;
     declare open_info: boolean;
-    declare permit_url: string[] | null;
     declare name_representative_id: number | null;
     declare name_contact_id: number | null;
     declare address_id: number | null;
@@ -174,17 +173,6 @@ ShopInfo.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
-        },
-        permit_url: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
-            validate: {
-                maxArrayLength(value: any[]) {
-                    if (value && value.length > 10) {
-                        throw new Error("画像は最大10枚までです。");
-                    }
-                },
-            },
         },
         name_representative_id: {
             type: DataTypes.INTEGER,
