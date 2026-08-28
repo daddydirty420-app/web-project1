@@ -1,43 +1,37 @@
 import { Association, DataTypes, Model } from "sequelize";
 import sequelize from "../db.js";
 
+import Permit from "./permit.js";
 import S3Metadata from "./s3_metadata.js";
-import ShopSignup from "./shop_signup.js";
-import User from "./user.js";
 
-export class IdCard extends Model {
+export class PermitFile extends Model {
     declare id: number;
-    declare front_s3_metadata_id: number | null;
-    declare rear_s3_metadata_id: number | null;
+
+    declare permit_id: number;
+    declare s3_metadata_id: number | null;
+    declare sort_order: number | null;
+    declare document_name: string | null;
+    declare memo: string | null;
+
     declare createdAt: Date;
     declare updatedAt: Date;
 
     static associate() {
-        IdCard.belongsTo(S3Metadata, {
-            foreignKey: "front_s3_metadata_id",
-            as: "FrontIdCard",
+        PermitFile.belongsTo(Permit, {
+            foreignKey: "permit_id",
         });
-        IdCard.belongsTo(S3Metadata, {
-            foreignKey: "rear_s3_metadata_id",
-            as: "RearIdCard",
-        });
-        IdCard.hasOne(User, {
-            foreignKey: "idcard_id",
-        });
-        IdCard.hasOne(ShopSignup, {
-            foreignKey: "idcard_id",
+        PermitFile.belongsTo(S3Metadata, {
+            foreignKey: "s3_metadata_id",
         });
     }
 
     static associations: {
-        FrontIdCard: Association<IdCard, S3Metadata>;
-        RearIdCard: Association<IdCard, S3Metadata>;
-        User: Association<IdCard, User>;
-        ShopSignup: Association<IdCard, ShopSignup>;
+        Permit: Association<PermitFile, Permit>;
+        S3Metadata: Association<PermitFile, S3Metadata>;
     };
 }
 
-IdCard.init(
+PermitFile.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -45,7 +39,17 @@ IdCard.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        front_s3_metadata_id: {
+        permit_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: "permit",
+                key: "id",
+            },
+            onUpdate: "CASCADE",
+            onDelete: "CASCADE",
+        },
+        s3_metadata_id: {
             type: DataTypes.INTEGER,
             allowNull: true,
             unique: true,
@@ -56,16 +60,17 @@ IdCard.init(
             onUpdate: "NO ACTION",
             onDelete: "NO ACTION",
         },
-        rear_s3_metadata_id: {
+        sort_order: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            unique: true,
-            references: {
-                model: "s3_metadata",
-                key: "id",
-            },
-            onUpdate: "NO ACTION",
-            onDelete: "NO ACTION",
+        },
+        document_name: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        memo: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -80,11 +85,11 @@ IdCard.init(
     },
     {
         sequelize,
-        modelName: "IdCard",
-        tableName: "id_card",
+        modelName: "PermitFile",
+        tableName: "permit_file",
         freezeTableName: true,
         timestamps: true,
-    },
-);
+    }
+)
 
-export default IdCard;
+export default PermitFile;
