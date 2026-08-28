@@ -89,7 +89,7 @@ PermitFile.init(
         tableName: "permit_file",
         freezeTableName: true,
         timestamps: true,
-    }
-)
+    },
+);
 
 export default PermitFile;
