@@ -65,11 +65,11 @@ PermitFile.init(
             allowNull: true,
         },
         document_name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: true,
         },
         memo: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: true,
         },
         createdAt: {
