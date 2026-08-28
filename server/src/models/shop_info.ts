@@ -21,8 +21,6 @@ export class ShopInfo extends Model {
     declare company_number: string | null;
     declare capital: number | null;
     declare member_count: number | null;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null; // 代わりにidcard_idを作る
     declare request_all: boolean;
     declare verified: boolean;
     declare auto_trans: boolean;
@@ -126,14 +124,6 @@ ShopInfo.init(
         },
         member_count: {
             type: DataTypes.INTEGER,
-            allowNull: true,
-        },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
             allowNull: true,
         },
         request_all: {

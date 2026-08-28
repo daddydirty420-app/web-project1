@@ -14,8 +14,6 @@ export class ShopInfoEdit extends Model {
     declare id: number;
     declare company_name: string | null;
     declare company_number: string | null;
-    declare id_card_front: string | null;
-    declare id_card_rear: string | null;
     declare phone_number: string | null;
     declare email: string | null;
     declare founded_date: Date | null;
@@ -94,14 +92,6 @@ ShopInfoEdit.init(
         },
         company_number: {
             type: DataTypes.STRING(20),
-            allowNull: true,
-        },
-        id_card_front: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        id_card_rear: {
-            type: DataTypes.TEXT,
             allowNull: true,
         },
         phone_number: {
