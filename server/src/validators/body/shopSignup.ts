@@ -44,4 +44,18 @@ export const createSignup1BodySchema = z.object({
     capital: z.number().int().optional(),
 });
 
+export const filesSchema = z.object({
+    fileName: z.string(),
+    fileType: z.string().nullable(),
+    size: z.number().int().positive(),
+    buffer: z.instanceof(Buffer),
+});
+
+export const shopSignup3BodySchema = z.object({
+    frontIdCard: filesSchema,
+    rearIdCard: filesSchema,
+    permitFiles: z.array(filesSchema),
+});
+
 export type CreateSignup1Body = z.infer<typeof createSignup1BodySchema>;
+export type ShopSignup3Body = z.infer<typeof shopSignup3BodySchema>;

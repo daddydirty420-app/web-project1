@@ -1,4 +1,4 @@
-import { ShopSignup } from "../models/index.js";
+import { IdCard, Permit, PermitFile, S3Metadata, ShopSignup } from "../models/index.js";
 import {
     CreateShopSignupParams,
     UpdateBankAccountParams,
@@ -11,6 +11,49 @@ export const getMyShopSignup = ({ shopSignupId, userId }: UserShopSignupIdParams
             id: shopSignupId,
             user_id: userId,
         },
+    });
+};
+
+export const getMyShopSignupHasS3Data = ({ shopSignupId, userId }: UserShopSignupIdParams) => {
+    return ShopSignup.findOne({
+        where: {
+            id: shopSignupId,
+            user_id: userId,
+        },
+        include: [
+            {
+                model: IdCard,
+                required: false,
+                include: [
+                    {
+                        model: S3Metadata,
+                        as: "FrontIdCard",
+                        required: false,
+                    },
+                    {
+                        model: S3Metadata,
+                        as: "RearIdCard",
+                        required: false,
+                    },
+                ],
+            },
+            {
+                model: Permit,
+                required: false,
+                include: [
+                    {
+                        model: PermitFile,
+                        required: false,
+                        include: [
+                            {
+                                model: S3Metadata,
+                                required: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     });
 };
 
