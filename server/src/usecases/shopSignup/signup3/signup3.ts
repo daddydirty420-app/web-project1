@@ -117,7 +117,8 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
         await sequelize.transaction(async (t) => {
             let frontIdCardS3MetadataId: number | null = null;
             let rearIdCardS3MetadataId: number | null = null;
-            let permitS3MetadataIds: number[] = [];
+            
+            const permitS3MetadataIds: number[] = [];
 
             for (const uploadedObject of uploadedObjects) {
                 // 新S3Metadata作成
@@ -160,6 +161,11 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             let permitId: number | null = null;
 
             if (permitS3MetadataIds.length > 0) {
+                const permitIds: number[] = [];
+
+                for (const uploadedObject of uploadedObjects) {
+                    if (uploadedObject.type !== "permit") break;
+                }
             }
 
             // shopSignup更新
@@ -171,7 +177,6 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 },
                 transaction: t,
             });
-            // 旧S3Metadata削除
         });
 
         committed = true;
