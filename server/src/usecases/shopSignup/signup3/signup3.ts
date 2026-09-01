@@ -1,16 +1,10 @@
-import sequelize from "../../db.js";
-import { AppError } from "../../errors.js";
-import { buckets } from "../../infra/aws/s3.js";
-import { uploadS3Object } from "../../infra/aws/uploadS3Object.js";
-import { getMyShopSignupHasS3Data } from "../../services/shopSignup.js";
-import { ShopSignup3Body } from "../../validators/body/shopSignup.js";
-
-type UploadedObject = {
-    bucketName: string;
-    objectKey: string;
-    etag: string | null;
-    versionId: string | null;
-};
+import sequelize from "../../../db.js";
+import { AppError } from "../../../errors.js";
+import { buckets } from "../../../infra/aws/s3.js";
+import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
+import { getMyShopSignupHasS3Data } from "../../../services/shopSignup.js";
+import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
+import { UploadedObject } from "./type.js";
 
 type Params = {
     shopSignupId: number;
@@ -58,7 +52,13 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             : null;
 
         if (uploadedFront) {
-            uploadedObjects.push(uploadedFront);
+            uploadedObjects.push({
+                ...uploadedFront,
+                type: "idCardFront",
+                originalFileName: frontIdCard.fileName,
+                contentType: frontIdCard.contentType,
+                fileSize: frontIdCard.size,
+            });
         }
 
         // rearIdCard
@@ -72,12 +72,25 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             : null;
 
         if (uploadedRear) {
-            uploadedObjects.push(uploadedRear);
+            uploadedObjects.push({
+                ...uploadedRear,
+                type: "idCardRear",
+                originalFileName: rearIdCard.fileName,
+                contentType: rearIdCard.contentType,
+                fileSize: rearIdCard.size,
+            });
         }
 
         const uploadedPermitFiles = [];
+        let permitIndex = 0;
 
         for (const file of permitFiles) {
+            permitIndex = permitIndex + 1;
+
+            if (permitIndex > 10) {
+                throw new AppError("OVER_MAX_PERMIT_FILE_COUNT", 400);
+            }
+
             const permitObjectKey = `permit/${shopSignupId}/${now}_${file.fileName}`;
 
             const uploaded = await uploadS3Object({
@@ -88,7 +101,14 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             });
 
             uploadedPermitFiles.push(uploaded);
-            uploadedObjects.push(uploaded);
+            uploadedObjects.push({
+                ...uploaded,
+                type: "permit",
+                originalFileName: file.fileName,
+                contentType: file.contentType,
+                fileSize: file.size,
+                sortOrder: permitIndex,
+            });
         }
 
         // transaction DB更新
