@@ -7,8 +7,8 @@ export type CreateIdFirstParams = {
 
 export type CreateIdParams = {
     data: {
-        id_card_front: string;
-        id_card_rear: string;
+        front_s3_metadata_id: number;
+        rear_s3_metadata_id: number;
     };
     transaction?: Transaction;
 };

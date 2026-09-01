@@ -34,3 +34,12 @@ export type UpdateBankAccountParams = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateSignup3Params = {
+    shopSignup: InstanceType<typeof ShopSignup>;
+    data: {
+        idcard_id: number;
+        permit_id: number | null;
+    };
+    transaction?: Transaction;
+};

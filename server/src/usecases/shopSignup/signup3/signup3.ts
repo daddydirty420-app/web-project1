@@ -2,8 +2,9 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { buckets } from "../../../infra/aws/s3.js";
 import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
+import { createIdCard } from "../../../services/idCard.js";
 import { createS3Metadata } from "../../../services/s3Metadata.js";
-import { getMyShopSignupHasS3Data } from "../../../services/shopSignup.js";
+import { getMyShopSignupHasS3Data, updateSignup3 } from "../../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
 import { UploadedObject } from "./type.js";
 
@@ -114,6 +115,10 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
 
         // transaction DB更新
         await sequelize.transaction(async (t) => {
+            let frontIdCardS3MetadataId: number | null = null;
+            let rearIdCardS3MetadataId: number | null = null;
+            let permitS3MetadataIds: number[] = [];
+
             for (const uploadedObject of uploadedObjects) {
                 // 新S3Metadata作成
                 const s3Metadata = await createS3Metadata({
@@ -130,10 +135,42 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 });
 
                 if (uploadedObject.type === "idCardFront") {
-                    // IdCard更新
-                }
+                    frontIdCardS3MetadataId = s3Metadata.id;
+                } else if (uploadedObject.type === "idCardRear") {
+                    rearIdCardS3MetadataId = s3Metadata.id;
+                } else if (uploadedObject.type === "permit") {
+                    permitS3MetadataIds.push(s3Metadata.id);
+                } else break;
             }
+
+            if (!frontIdCardS3MetadataId || !rearIdCardS3MetadataId) {
+                throw new Error();
+            }
+
+            // idCard作成
+            const newIdCard = await createIdCard({
+                data: {
+                    front_s3_metadata_id: frontIdCardS3MetadataId,
+                    rear_s3_metadata_id: rearIdCardS3MetadataId,
+                },
+                transaction: t,
+            });
+
             // Permit / PermitFile更新
+            let permitId: number | null = null;
+
+            if (permitS3MetadataIds.length > 0) {
+            }
+
+            // shopSignup更新
+            await updateSignup3({
+                shopSignup,
+                data: {
+                    idcard_id: newIdCard.id,
+                    permit_id: permitId,
+                },
+                transaction: t,
+            });
             // 旧S3Metadata削除
         });
 
