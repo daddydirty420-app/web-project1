@@ -2,6 +2,7 @@ import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
 import { buckets } from "../../../infra/aws/s3.js";
 import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
+import { createS3Metadata } from "../../../services/s3Metadata.js";
 import { getMyShopSignupHasS3Data } from "../../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
 import { UploadedObject } from "./type.js";
@@ -113,8 +114,25 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
 
         // transaction DB更新
         await sequelize.transaction(async (t) => {
-            // 新S3Metadata作成
-            // IdCard更新
+            for (const uploadedObject of uploadedObjects) {
+                // 新S3Metadata作成
+                const s3Metadata = await createS3Metadata({
+                    data: {
+                        bucket_name: uploadedObject.bucketName,
+                        object_key: uploadedObject.objectKey,
+                        version_id: uploadedObject.versionId,
+                        original_file_name: uploadedObject.originalFileName,
+                        content_type: uploadedObject.contentType,
+                        file_size: uploadedObject.fileSize,
+                        etag: uploadedObject.etag,
+                    },
+                    transaction: t,
+                });
+
+                if (uploadedObject.type === "idCardFront") {
+                    // IdCard更新
+                }
+            }
             // Permit / PermitFile更新
             // 旧S3Metadata削除
         });
