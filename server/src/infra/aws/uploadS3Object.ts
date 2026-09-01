@@ -1,14 +1,17 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3 } from "./s3.js";
+import { AppError } from "../../errors.js";
 
 type Params = {
-    bucketName: string;
+    bucketName?: string;
     objectKey: string;
     body: Buffer;
     contentType?: string;
 };
 
 export const uploadS3Object = async ({ bucketName, objectKey, body, contentType }: Params) => {
+    if (!bucketName) throw new AppError("S3_BUCKET_NOT_FOUND", 404);
+    
     const result = await s3.send(
         new PutObjectCommand({
             Bucket: bucketName,
@@ -19,6 +22,8 @@ export const uploadS3Object = async ({ bucketName, objectKey, body, contentType 
     );
 
     return {
+        bucketName,
+        objectKey,
         etag: result.ETag ?? null,
         versionId: result.VersionId ?? null,
     };

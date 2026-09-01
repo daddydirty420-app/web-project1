@@ -46,7 +46,7 @@ export const createSignup1BodySchema = z.object({
 
 export const filesSchema = z.object({
     fileName: z.string(),
-    fileType: z.string().nullable(),
+    contentType: z.string().min(1),
     size: z.number().int().positive(),
     buffer: z.instanceof(Buffer),
 });

@@ -1,6 +1,16 @@
+import sequelize from "../../db.js";
 import { AppError } from "../../errors.js";
+import { buckets } from "../../infra/aws/s3.js";
+import { uploadS3Object } from "../../infra/aws/uploadS3Object.js";
 import { getMyShopSignupHasS3Data } from "../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../validators/body/shopSignup.js";
+
+type UploadedObject = {
+    bucketName: string;
+    objectKey: string;
+    etag: string | null;
+    versionId: string | null;
+};
 
 type Params = {
     shopSignupId: number;
@@ -27,18 +37,74 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     const frontS3Metadata = idCard?.FrontIdCard ?? null;
     const rearS3Metadata = idCard?.RearIdCard ?? null;
 
-    // 新しい表面ファイルをアップロード
-    if (frontIdCard) {
-        const objectKey = `idcard/front/${shopSignupId}/${now}_${frontIdCard.fileName}`;
+    const uploadedObjects: UploadedObject[] = [];
+
+    let committed = false;
+
+    try {
+        // 新しいファイルをアップロード
+        const frontObjectKey = `idcard/front/${shopSignupId}/${now}_${frontIdCard.fileName}`;
+        const rearObjectKey = `idcard/rear/${shopSignupId}/${now}_${rearIdCard.fileName}`;
+
         // S3へアップロード
-        // S3Metadata作成
-        // IdCard.front_s3_metadata_id更新
-        // 旧S3オブジェクト削除
-        // 旧S3Metadata削除
+        // frontIdCard
+        const uploadedFront = frontIdCard
+            ? await uploadS3Object({
+                  bucketName: buckets.verificationDocuments,
+                  objectKey: frontObjectKey,
+                  body: frontIdCard.buffer,
+                  contentType: frontIdCard.contentType,
+              })
+            : null;
+
+        if (uploadedFront) {
+            uploadedObjects.push(uploadedFront);
+        }
+
+        // rearIdCard
+        const uploadedRear = rearIdCard
+            ? await uploadS3Object({
+                  bucketName: buckets.verificationDocuments,
+                  objectKey: rearObjectKey,
+                  body: rearIdCard.buffer,
+                  contentType: rearIdCard.contentType,
+              })
+            : null;
+
+        if (uploadedRear) {
+            uploadedObjects.push(uploadedRear);
+        }
+
+        const uploadedPermitFiles = [];
+
+        for (const file of permitFiles) {
+            const permitObjectKey = `permit/${shopSignupId}/${now}_${file.fileName}`;
+
+            const uploaded = await uploadS3Object({
+                bucketName: buckets.verificationDocuments,
+                objectKey: permitObjectKey,
+                body: rearIdCard.buffer,
+                contentType: rearIdCard.contentType,
+            });
+
+            uploadedPermitFiles.push(uploaded);
+            uploadedObjects.push(uploaded);
+        }
+
+        // transaction DB更新
+        await sequelize.transaction(async (t) => {
+            // 新S3Metadata作成
+            // IdCard更新
+            // Permit / PermitFile更新
+            // 旧S3Metadata削除
+        });
+
+        committed = true;
+    } catch (err) {
+        // commit前だけ新S3を補償削除
+        if (!committed) {
+        }
     }
 
-    // 新しい裏面ファイルをアップロード
-    if (rearIdCard) {
-        // 同上
-    }
+    // commit後なので、ここから旧S3削除
 };
