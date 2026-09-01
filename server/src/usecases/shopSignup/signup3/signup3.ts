@@ -3,7 +3,9 @@ import { AppError } from "../../../errors.js";
 import { buckets } from "../../../infra/aws/s3.js";
 import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
 import { createIdCard } from "../../../services/idCard.js";
-import { createS3Metadata } from "../../../services/s3Metadata.js";
+import { createPermit } from "../../../services/permit.js";
+import { createPermitFile } from "../../../services/permitFile.js";
+import { createS3Metadata, getS3Metadata } from "../../../services/s3Metadata.js";
 import { getMyShopSignupHasS3Data, updateSignup3 } from "../../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
 import { UploadedObject } from "./type.js";
@@ -13,6 +15,9 @@ type Params = {
     userId: number;
     body: ShopSignup3Body;
 };
+
+// とりあえず最小構成でpermit系などnullable箇所をnullにしている
+// フロントエンド構成変更によるロジック追加あり
 
 // PATCH /shop-signup/:id/id-card
 // summary: ショップ登録身分証・許認可証追加
@@ -98,8 +103,8 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             const uploaded = await uploadS3Object({
                 bucketName: buckets.verificationDocuments,
                 objectKey: permitObjectKey,
-                body: rearIdCard.buffer,
-                contentType: rearIdCard.contentType,
+                body: file.buffer,
+                contentType: file.contentType,
             });
 
             uploadedPermitFiles.push(uploaded);
@@ -117,8 +122,11 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
         await sequelize.transaction(async (t) => {
             let frontIdCardS3MetadataId: number | null = null;
             let rearIdCardS3MetadataId: number | null = null;
-            
-            const permitS3MetadataIds: number[] = [];
+
+            const permitS3MetadataList: {
+                s3MetadataId: number;
+                sortOrder: number;
+            }[] = [];
 
             for (const uploadedObject of uploadedObjects) {
                 // 新S3Metadata作成
@@ -140,8 +148,11 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 } else if (uploadedObject.type === "idCardRear") {
                     rearIdCardS3MetadataId = s3Metadata.id;
                 } else if (uploadedObject.type === "permit") {
-                    permitS3MetadataIds.push(s3Metadata.id);
-                } else break;
+                    permitS3MetadataList.push({
+                        s3MetadataId: s3Metadata.id,
+                        sortOrder: uploadedObject.sortOrder,
+                    });
+                }
             }
 
             if (!frontIdCardS3MetadataId || !rearIdCardS3MetadataId) {
@@ -158,13 +169,34 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             });
 
             // Permit / PermitFile更新
-            let permitId: number | null = null;
+            let newPermitId: number | null = null;
 
-            if (permitS3MetadataIds.length > 0) {
-                const permitIds: number[] = [];
+            if (permitS3MetadataList.length > 0) {
+                const newPermit = await createPermit({
+                    data: {
+                        permit_number: null,
+                        permit_type: null,
+                        issued_at: null,
+                        expired_at: null,
+                    },
+                    transaction: t,
+                });
 
-                for (const uploadedObject of uploadedObjects) {
-                    if (uploadedObject.type !== "permit") break;
+                newPermitId = newPermit.id;
+
+                if (newPermitId) {
+                    for (const permitFile of permitS3MetadataList) {
+                        await createPermitFile({
+                            data: {
+                                permit_id: newPermitId,
+                                s3_metadata_id: permitFile.s3MetadataId,
+                                sort_order: permitFile.sortOrder,
+                                document_name: null,
+                                memo: null,
+                            },
+                            transaction: t,
+                        });
+                    }
                 }
             }
 
@@ -173,7 +205,7 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 shopSignup,
                 data: {
                     idcard_id: newIdCard.id,
-                    permit_id: permitId,
+                    permit_id: newPermitId,
                 },
                 transaction: t,
             });

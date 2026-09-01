@@ -1,5 +1,9 @@
 import { Transaction } from "sequelize";
 
+export type S3MetadataIdParams = {
+    s3MetadataId: number;
+};
+
 export type CreateS3MetadataParams = {
     data: {
         bucket_name: string;
