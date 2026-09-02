@@ -218,9 +218,7 @@ export const editHonninUserUseCase = async ({ userId, body }: Params) => {
         throw err;
     }
 
-    const replacedS3Metadata = [oldFrontS3Metadata, oldRearS3Metadata].filter(
-        (s3Metadata) => s3Metadata !== null,
-    );
+    const replacedS3Metadata = [oldFrontS3Metadata, oldRearS3Metadata].filter((s3Metadata) => s3Metadata !== null);
 
     if (replacedS3Metadata.length > 0) {
         await sequelize.transaction(async (t) => {

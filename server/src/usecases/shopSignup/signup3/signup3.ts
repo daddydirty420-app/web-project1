@@ -258,9 +258,8 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
 
         if (oldPermitS3Metadata) {
             await Promise.all(
-                oldPermitS3Metadata.map(
-                    (s3Metadata: Parameters<typeof deleteS3Metadata>[0]["s3Metadata"]) =>
-                        deleteS3Metadata({ s3Metadata, transaction: t }),
+                oldPermitS3Metadata.map((s3Metadata: Parameters<typeof deleteS3Metadata>[0]["s3Metadata"]) =>
+                    deleteS3Metadata({ s3Metadata, transaction: t }),
                 ),
             );
         }

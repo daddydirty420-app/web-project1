@@ -11,7 +11,7 @@ type Params = {
 
 export const uploadS3Object = async ({ bucketName, objectKey, body, contentType }: Params) => {
     if (!bucketName) throw new AppError("S3_BUCKET_NOT_FOUND", 404);
-    
+
     const result = await s3.send(
         new PutObjectCommand({
             Bucket: bucketName,
