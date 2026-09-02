@@ -1,5 +1,6 @@
 import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
+import { deleteS3Object } from "../../../infra/aws/deleteS3Object.js";
 import { buckets } from "../../../infra/aws/s3.js";
 import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
 import { createIdCard } from "../../../services/idCard.js";
@@ -215,7 +216,24 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     } catch (err) {
         // commit前だけ今回アップロードした新S3オブジェクトを補償削除
         if (!committed) {
+            const cleanupResults = await Promise.allSettled(
+                uploadedObjects.map((object) =>
+                    deleteS3Object({
+                        bucketName: object.bucketName,
+                        objectKey: object.objectKey,
+                        versionId: object.versionId,
+                    }),
+                ),
+            );
+
+            for (const result of cleanupResults) {
+                if (result.status === "rejected") {
+                    console.error("S3補償削除失敗:", result.reason);
+                }
+            }
         }
+
+        throw err;
     }
 
     // commit後なので、ここから旧S3削除
