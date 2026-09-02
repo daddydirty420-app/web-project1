@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from "express-serve-static-core";
 import { createShopSignup1 } from "../usecases/shopSignup/signup1.js";
 import { updateShopSignup2UseCase } from "../usecases/shopSignup/signup2.js";
+import { updateShopSignup3UseCase } from "../usecases/shopSignup/signup3/signup3.js";
 import { BankBody } from "../validators/body/bankAccount.js";
 import { CreateSignup1Body, ShopSignup3Body } from "../validators/body/shopSignup.js";
-import { updateShopSignup3UseCase } from "../usecases/shopSignup/signup3/signup3.js";
 
 // POST /shop-signup
 // summary: ShopSignup作成 事業者登録
