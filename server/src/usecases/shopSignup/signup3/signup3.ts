@@ -28,6 +28,10 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
 
     const { frontIdCard, rearIdCard, permitFiles } = body;
 
+    if (permitFiles.length > 10) {
+        throw new AppError("OVER_MAX_PERMIT_FILE_COUNT", 400);
+    }
+
     // shopSignup取得
     const shopSignup = await getMyShopSignupHasS3Data({ shopSignupId, userId });
 
@@ -90,14 +94,9 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
         }
 
         const uploadedPermitFiles = [];
-        let permitIndex = 0;
 
-        for (const file of permitFiles) {
-            permitIndex = permitIndex + 1;
-
-            if (permitIndex > 10) {
-                throw new AppError("OVER_MAX_PERMIT_FILE_COUNT", 400);
-            }
+        for (const [index, file] of permitFiles.entries()) {
+            const sortOrder = index + 1;
 
             const permitObjectKey = `permit/${shopSignupId}/${now}_${file.fileName}`;
 
@@ -115,7 +114,7 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 originalFileName: file.fileName,
                 contentType: file.contentType,
                 fileSize: file.size,
-                sortOrder: permitIndex,
+                sortOrder,
             });
         }
 
