@@ -5,7 +5,7 @@ import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
 import { createIdCard } from "../../../services/idCard.js";
 import { createPermit } from "../../../services/permit.js";
 import { createPermitFile } from "../../../services/permitFile.js";
-import { createS3Metadata, getS3Metadata } from "../../../services/s3Metadata.js";
+import { createS3Metadata } from "../../../services/s3Metadata.js";
 import { getMyShopSignupHasS3Data, updateSignup3 } from "../../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
 import { UploadedObject } from "./type.js";
@@ -213,7 +213,7 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
 
         committed = true;
     } catch (err) {
-        // commit前だけ新S3を補償削除
+        // commit前だけ今回アップロードした新S3オブジェクトを補償削除
         if (!committed) {
         }
     }
