@@ -1,4 +1,5 @@
 import { Transaction } from "sequelize";
+import S3Metadata from "../../models/s3_metadata.js";
 
 export type S3MetadataIdParams = {
     s3MetadataId: number;
@@ -14,5 +15,10 @@ export type CreateS3MetadataParams = {
         file_size: number;
         etag: string | null;
     };
+    transaction?: Transaction;
+};
+
+export type S3MetadataTransactionParams = {
+    s3Metadata: InstanceType<typeof S3Metadata>;
     transaction?: Transaction;
 };

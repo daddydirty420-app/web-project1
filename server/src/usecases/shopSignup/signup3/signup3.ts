@@ -6,7 +6,7 @@ import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
 import { createIdCard } from "../../../services/idCard.js";
 import { createPermit } from "../../../services/permit.js";
 import { createPermitFile } from "../../../services/permitFile.js";
-import { createS3Metadata } from "../../../services/s3Metadata.js";
+import { createS3Metadata, deleteS3Metadata } from "../../../services/s3Metadata.js";
 import { getMyShopSignupHasS3Data, updateSignup3 } from "../../../services/shopSignup.js";
 import { ShopSignup3Body } from "../../../validators/body/shopSignup.js";
 import { UploadedObject } from "./type.js";
@@ -40,8 +40,8 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     // 既存の身分証S3Metadata
     const idCard = shopSignup?.IdCard;
 
-    const frontS3Metadata = idCard?.FrontIdCard ?? null;
-    const rearS3Metadata = idCard?.RearIdCard ?? null;
+    const frontS3Metadata = idCard?.FrontIdCard.FrontS3Metadata ?? null;
+    const rearS3Metadata = idCard?.RearIdCard.RearS3Metadata ?? null;
 
     const uploadedObjects: UploadedObject[] = [];
 
@@ -236,4 +236,13 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     }
 
     // commit後なので、ここから旧S3削除
+    await sequelize.transaction(async (t) => {
+        if (frontS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: frontS3Metadata, transaction: t });
+        }
+
+        if (rearS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: rearS3Metadata, transaction: t });
+        }
+    });
 };
