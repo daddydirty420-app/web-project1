@@ -38,11 +38,6 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     if (!shopSignup) throw new AppError("SHOP_SIGNUP_NOT_FOUND", 404);
 
     // 既存の身分証S3Metadata
-    const idCard = shopSignup?.IdCard;
-
-    const frontS3Metadata = idCard?.FrontIdCard.FrontS3Metadata ?? null;
-    const rearS3Metadata = idCard?.RearIdCard.RearS3Metadata ?? null;
-
     const uploadedObjects: UploadedObject[] = [];
 
     let committed = false;
@@ -236,13 +231,26 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
     }
 
     // commit後なので、ここから旧S3削除
+    const idCard = shopSignup.IdCard;
+
+    const oldFrontS3Metadata = idCard?.FrontIdCard?.FrontS3Metadata ?? null;
+    const oldRearS3Metadata = idCard?.RearIdCard?.RearS3Metadata ?? null;
+
+    const oldPermitS3Metadata = shopSignup.Permit?.PermitFile?.S3Metadata ?? null;
+
     await sequelize.transaction(async (t) => {
-        if (frontS3Metadata) {
-            await deleteS3Metadata({ s3Metadata: frontS3Metadata, transaction: t });
+        if (oldFrontS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: oldFrontS3Metadata, transaction: t });
         }
 
-        if (rearS3Metadata) {
-            await deleteS3Metadata({ s3Metadata: rearS3Metadata, transaction: t });
+        if (oldRearS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: oldRearS3Metadata, transaction: t });
+        }
+
+        if (oldPermitS3Metadata) {
+            for (const s3Metadata of oldPermitS3Metadata) {
+                await deleteS3Metadata({ s3Metadata, transaction: t });
+            }
         }
     });
 };
