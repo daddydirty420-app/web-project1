@@ -2,7 +2,6 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
-import { updateShopSignup3UseCase } from "../usecases/shopInfo/edit/signup3.js";
 import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
 import { updateShopSignup5UseCase } from "../usecases/shopInfo/edit/signup5.js";
 import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
@@ -19,7 +18,7 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
-import type { RepNameBody, ShopIdCardBody, ShopOptionBody, ShopSignupEditBody } from "../validators/body/shopInfo.js";
+import type { RepNameBody, ShopOptionBody, ShopSignupEditBody } from "../validators/body/shopInfo.js";
 import type { PhoneNumberBody } from "../validators/body/users.js";
 
 // PATCH /shop-info/:id/rep-name
@@ -84,36 +83,6 @@ export const shopInfoPatchByIdOptionController = async (
         await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
 
         res.status(200).json({ message: "オプションを更新しました。" });
-    } catch (err) {
-        next(err);
-    }
-};
-
-// PATCH /shop-info/:id/signup/3
-// summary: ショップ登録身分証・許認可証追加
-// page: /shop-signup/step3/[id]
-export const shopInfoPatchByIdSignup3Controller = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): Promise<void> => {
-    try {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const body = req.validatedBody as ShopIdCardBody;
-
-        const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopSignup3UseCase({
-            shopId,
-            userId,
-            body,
-        });
-
-        res.status(200).json({
-            message: "身分証・許認可証のDB登録が完了しました。",
-            frontSignedUrl,
-            rearSignedUrl,
-            permitSignedUrls,
-        });
     } catch (err) {
         next(err);
     }

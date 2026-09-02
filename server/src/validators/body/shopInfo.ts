@@ -1,11 +1,5 @@
 import z from "zod";
 
-const permitFilesSchema = z.object({
-    fileName: z.string(),
-    fileType: z.string().nullable(),
-    uploaded: z.boolean(),
-});
-
 export const repNameBodySchema = z.object({
     sei: z.string().trim().min(1),
     mei: z.string().trim().min(1),
@@ -17,16 +11,6 @@ export const repNameBodySchema = z.object({
     rearFileType: z.string().optional(),
     idFrontUpload: z.boolean().optional(),
     idRearUpload: z.boolean().optional(),
-});
-
-export const shopIdCardBodySchema = z.object({
-    frontFileName: z.string().optional(),
-    frontFileType: z.string().optional(),
-    rearFileName: z.string().optional(),
-    rearFileType: z.string().optional(),
-    idFrontUpload: z.boolean(),
-    idRearUpload: z.boolean(),
-    permitFiles: z.array(permitFilesSchema),
 });
 
 export const shopOptionBodySchema = z.object({
@@ -63,6 +47,5 @@ export const shopSignupEditBodySchema = z.union([
 ]);
 
 export type RepNameBody = z.infer<typeof repNameBodySchema>;
-export type ShopIdCardBody = z.infer<typeof shopIdCardBodySchema>;
 export type ShopOptionBody = z.infer<typeof shopOptionBodySchema>;
 export type ShopSignupEditBody = z.infer<typeof shopSignupEditBodySchema>;
