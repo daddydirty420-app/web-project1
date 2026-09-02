@@ -88,30 +88,31 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
             });
         }
 
-        const uploadedPermitFiles = [];
+        const permitUploadResults = await Promise.allSettled(
+            permitFiles.map(async (file, index) => {
+                const sortOrder = index + 1;
+                const permitObjectKey = `permit/${shopSignupId}/${now}_${file.fileName}`;
 
-        for (const [index, file] of permitFiles.entries()) {
-            const sortOrder = index + 1;
+                const uploaded = await uploadS3Object({
+                    bucketName: buckets.verificationDocuments,
+                    objectKey: permitObjectKey,
+                    body: file.buffer,
+                    contentType: file.contentType,
+                });
 
-            const permitObjectKey = `permit/${shopSignupId}/${now}_${file.fileName}`;
+                uploadedObjects.push({
+                    ...uploaded,
+                    type: "permit",
+                    originalFileName: file.fileName,
+                    contentType: file.contentType,
+                    fileSize: file.size,
+                    sortOrder,
+                });
+            }),
+        );
 
-            const uploaded = await uploadS3Object({
-                bucketName: buckets.verificationDocuments,
-                objectKey: permitObjectKey,
-                body: file.buffer,
-                contentType: file.contentType,
-            });
-
-            uploadedPermitFiles.push(uploaded);
-            uploadedObjects.push({
-                ...uploaded,
-                type: "permit",
-                originalFileName: file.fileName,
-                contentType: file.contentType,
-                fileSize: file.size,
-                sortOrder,
-            });
-        }
+        const failedPermitUpload = permitUploadResults.find((result) => result.status === "rejected");
+        if (failedPermitUpload?.status === "rejected") throw failedPermitUpload.reason;
 
         // transaction DB更新
         await sequelize.transaction(async (t) => {
@@ -123,21 +124,25 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 sortOrder: number;
             }[] = [];
 
-            for (const uploadedObject of uploadedObjects) {
-                // 新S3Metadata作成
-                const s3Metadata = await createS3Metadata({
-                    data: {
-                        bucket_name: uploadedObject.bucketName,
-                        object_key: uploadedObject.objectKey,
-                        version_id: uploadedObject.versionId,
-                        original_file_name: uploadedObject.originalFileName,
-                        content_type: uploadedObject.contentType,
-                        file_size: uploadedObject.fileSize,
-                        etag: uploadedObject.etag,
-                    },
-                    transaction: t,
-                });
+            const s3MetadataList = await Promise.all(
+                uploadedObjects.map(async (uploadedObject) => ({
+                    uploadedObject,
+                    s3Metadata: await createS3Metadata({
+                        data: {
+                            bucket_name: uploadedObject.bucketName,
+                            object_key: uploadedObject.objectKey,
+                            version_id: uploadedObject.versionId,
+                            original_file_name: uploadedObject.originalFileName,
+                            content_type: uploadedObject.contentType,
+                            file_size: uploadedObject.fileSize,
+                            etag: uploadedObject.etag,
+                        },
+                        transaction: t,
+                    }),
+                })),
+            );
 
+            for (const { uploadedObject, s3Metadata } of s3MetadataList) {
                 if (uploadedObject.type === "idCardFront") {
                     frontIdCardS3MetadataId = s3Metadata.id;
                 } else if (uploadedObject.type === "idCardRear") {
@@ -180,18 +185,22 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
                 newPermitId = newPermit.id;
 
                 if (newPermitId) {
-                    for (const permitFile of permitS3MetadataList) {
-                        await createPermitFile({
-                            data: {
-                                permit_id: newPermitId,
-                                s3_metadata_id: permitFile.s3MetadataId,
-                                sort_order: permitFile.sortOrder,
-                                document_name: null,
-                                memo: null,
-                            },
-                            transaction: t,
-                        });
-                    }
+                    const permitId = newPermitId;
+
+                    await Promise.all(
+                        permitS3MetadataList.map((permitFile) =>
+                            createPermitFile({
+                                data: {
+                                    permit_id: permitId,
+                                    s3_metadata_id: permitFile.s3MetadataId,
+                                    sort_order: permitFile.sortOrder,
+                                    document_name: null,
+                                    memo: null,
+                                },
+                                transaction: t,
+                            }),
+                        ),
+                    );
                 }
             }
 
@@ -248,9 +257,12 @@ export const updateShopSignup3UseCase = async ({ shopSignupId, userId, body }: P
         }
 
         if (oldPermitS3Metadata) {
-            for (const s3Metadata of oldPermitS3Metadata) {
-                await deleteS3Metadata({ s3Metadata, transaction: t });
-            }
+            await Promise.all(
+                oldPermitS3Metadata.map(
+                    (s3Metadata: Parameters<typeof deleteS3Metadata>[0]["s3Metadata"]) =>
+                        deleteS3Metadata({ s3Metadata, transaction: t }),
+                ),
+            );
         }
     });
 };
