@@ -16,7 +16,6 @@ import {
     shopInfoPatchByIdOptionController,
     shopInfoPatchByIdPhoneNumberController,
     shopInfoPatchByIdRepNameController,
-    shopInfoPatchByIdSignup3Controller,
     shopInfoPatchByIdSignup4Controller,
     shopInfoPatchByIdSignup5Controller,
     shopInfoPatchByIdSignupEditController,
@@ -39,19 +38,13 @@ import {
     shopOptionEditRateLimit,
     shopPhoneNumberEditRateLimit,
     shopRepNameEditRateLimit,
-    shopSignup3RateLimit,
     shopSignup4RateLimit,
     shopSignup5EditRateLimit,
     shopSignup5RateLimit,
 } from "../middleware/rateLimit/shopInfoRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import {
-    repNameBodySchema,
-    shopIdCardBodySchema,
-    shopOptionBodySchema,
-    shopSignupEditBodySchema,
-} from "../validators/body/shopInfo.js";
+import { repNameBodySchema, shopOptionBodySchema, shopSignupEditBodySchema } from "../validators/body/shopInfo.js";
 import { phoneNumberBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
 
@@ -91,18 +84,6 @@ router.patch(
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
     shopInfoPatchByIdOptionController,
-);
-
-// PATCH /shop-info/:id/signup/3
-// summary: ショップ登録身分証・許認可証追加
-// page: /shop-signup/step3/[id]
-router.patch(
-    "/:id/signup/3",
-    authenticateToken,
-    shopSignup3RateLimit,
-    validateParams(idParamSchema),
-    validateBody(shopIdCardBodySchema),
-    shopInfoPatchByIdSignup3Controller,
 );
 
 // PATCH /shop-info/:id/signup/4

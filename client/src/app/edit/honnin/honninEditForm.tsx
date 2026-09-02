@@ -108,20 +108,8 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             return;
         }
 
-        let frontFileName: string | undefined;
-        let frontFileType: string | undefined;
-        let rearFileName: string | undefined;
-        let rearFileType: string | undefined;
-
-        if (idFrontUpload && idCardFront instanceof File) {
-            frontFileName = idCardFront.name;
-            frontFileType = idCardFront.type;
-        }
-
-        if (idRearUpload && idCardRear instanceof File) {
-            rearFileName = idCardRear.name;
-            rearFileType = idCardRear.type;
-        }
+        const hasFrontFile = idFrontUpload && idCardFront instanceof File;
+        const hasRearFile = idRearUpload && idCardRear instanceof File;
 
         const body = {
             sei,
@@ -136,12 +124,8 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             building,
             phoneNumber,
             selectedGender,
-            frontFileName,
-            frontFileType,
-            rearFileName,
-            rearFileType,
-            idFrontUpload,
-            idRearUpload,
+            frontIdCard: hasFrontFile ? idCardFront : undefined,
+            rearIdCard: hasRearFile ? idCardRear : undefined,
         };
 
         const requiredBody = [
@@ -156,50 +140,15 @@ export const HonninEditForm = ({ user, genderOptions, campaign }: Props) => {
             banchi,
             phoneNumber,
             selectedGender,
-            idFrontUpload,
-            idRearUpload,
         ];
 
-        const hasFrontImage = !!(idCardFront || frontFileName);
-        const hasRearImage = !!(idCardRear || rearFileName);
-
-        if (requiredBody.some((v) => v === "" || v === undefined || v === null) || !hasFrontImage || !hasRearImage) {
+        if (requiredBody.some((v) => v === "" || v === undefined || v === null) || !hasFrontFile || !hasRearFile) {
             toast.error("未入力の必須項目があります");
             return;
         }
 
         try {
-            const data = await fetchHonninSubmit(body);
-
-            if (idFrontUpload && data.frontSignedUrl && idCardFront instanceof File) {
-                const uploadFrontRes = await fetch(data.frontSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": idCardFront.type,
-                    },
-                    body: idCardFront,
-                });
-
-                if (!uploadFrontRes.ok) {
-                    toast.error("身分証（表面）のアップロードに失敗しました");
-                    return;
-                }
-            }
-
-            if (idRearUpload && data.rearSignedUrl && idCardRear instanceof File) {
-                const uploadFrontRes = await fetch(data.rearSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": idCardRear.type,
-                    },
-                    body: idCardRear,
-                });
-
-                if (!uploadFrontRes.ok) {
-                    toast.error("身分証（裏面）のアップロードに失敗しました");
-                    return;
-                }
-            }
+            await fetchHonninSubmit(body);
 
             toast.success("本人確認情報を送信しました");
             await sleep(1500);

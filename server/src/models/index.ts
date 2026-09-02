@@ -53,6 +53,8 @@ import NotificationModel from "./notification.js";
 import OrderDeletedSystemsModel from "./order_deleted.js";
 import OrdersModel from "./orders.js";
 import PaymentMethodOptionModel from "./payment_method_option.js";
+import PermitModel from "./permit.js";
+import PermitFileModel from "./permit_file.js";
 import PointLotsModel from "./point_lots.js";
 import PointReasonOptionModel from "./point_reason_option.js";
 import PointsHistoryModel from "./points_history.js";
@@ -148,6 +150,8 @@ db.Notification = NotificationModel;
 db.OrderDeletedSystems = OrderDeletedSystemsModel;
 db.Orders = OrdersModel;
 db.PaymentMethodOption = PaymentMethodOptionModel;
+db.Permit = PermitModel;
+db.PermitFile = PermitFileModel;
 db.PointReasonOption = PointReasonOptionModel;
 db.PointLots = PointLotsModel;
 db.PointsHistory = PointsHistoryModel;
@@ -236,6 +240,8 @@ export const {
     OrderDeleted,
     Orders,
     PaymentMethodOption,
+    Permit,
+    PermitFile,
     PointReasonOption,
     PointLots,
     PointsHistory,
@@ -269,4 +275,5 @@ export const {
     Video,
     WatchHistory,
 } = db;
+
 export default db;

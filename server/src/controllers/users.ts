@@ -17,7 +17,7 @@ import { getUserStarUseCase } from "../usecases/users/get/getStar.js";
 import { getUserTransferPointsUseCase } from "../usecases/users/get/getTransferPoints.js";
 import { getUserTransferRequestUseCase } from "../usecases/users/get/getTransferRequest.js";
 import { getMeUriagekinUseCase } from "../usecases/users/get/getUriagekin.js";
-import { HonninBody, PhoneNumberBody, ProfileEditBody } from "../validators/body/users.js";
+import { HonninBody, HonninFile, PhoneNumberBody, ProfileEditBody } from "../validators/body/users.js";
 import { GetProfileQuery, ProfileEditQuery } from "../validators/query/users.js";
 
 // PATCH /user/profile?imageEdit=boolean
@@ -68,14 +68,27 @@ export const usersPatchPhoneNumberController = async (
 export const usersPatchHonninController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const userId = req.user!.id;
-        const body = req.validatedBody as HonninBody;
+        const validatedBody = req.validatedBody as HonninBody;
+        const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+        const frontFile = files?.frontIdCard?.[0];
+        const rearFile = files?.rearIdCard?.[0];
 
-        const { frontSignedUrl, rearSignedUrl } = await editHonninUserUseCase({ userId, body });
-
-        res.status(200).json({
-            frontSignedUrl,
-            rearSignedUrl,
+        const toHonninFile = (file: Express.Multer.File): HonninFile => ({
+            fileName: file.originalname,
+            contentType: file.mimetype,
+            size: file.size,
+            buffer: file.buffer,
         });
+
+        const body: HonninBody = {
+            ...validatedBody,
+            frontIdCard: frontFile ? toHonninFile(frontFile) : undefined,
+            rearIdCard: rearFile ? toHonninFile(rearFile) : undefined,
+        };
+
+        await editHonninUserUseCase({ userId, body });
+
+        res.status(200).json({ message: "本人確認情報を送信しました。" });
     } catch (err) {
         next(err);
     }

@@ -35,16 +35,22 @@ export const honninBodySchema = z.object({
         .min(1)
         .transform((val) => val.replace(/[^0-9]/g, ""))
         .pipe(z.string().regex(/^0[0-9]{9,10}$/)),
-    frontFileName: z.string().optional(),
-    frontFileType: z.string().optional(),
-    rearFileName: z.string().optional(),
-    rearFileType: z.string().optional(),
-    idFrontUpload: z.boolean(),
-    idRearUpload: z.boolean(),
-    birthday: z.date().max(new Date()),
-    selectedGender: z.number().int().positive().min(1).max(3),
+    idFrontUpload: z.preprocess((val) => val === true || val === "true", z.boolean()),
+    idRearUpload: z.preprocess((val) => val === true || val === "true", z.boolean()),
+    birthday: z.coerce.date().max(new Date()),
+    selectedGender: z.coerce.number().int().positive().min(1).max(3),
 });
+
+export type HonninFile = {
+    fileName: string;
+    contentType: string;
+    size: number;
+    buffer: Buffer;
+};
 
 export type PhoneNumberBody = z.infer<typeof phoneNumberBodySchema>;
 export type ProfileEditBody = z.infer<typeof profileEditBodySchema>;
-export type HonninBody = z.infer<typeof honninBodySchema>;
+export type HonninBody = z.infer<typeof honninBodySchema> & {
+    frontIdCard?: HonninFile;
+    rearIdCard?: HonninFile;
+};
