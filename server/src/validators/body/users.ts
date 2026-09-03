@@ -1,4 +1,5 @@
 import z from "zod";
+import { filesSchema } from "./shopSignup.js";
 
 export const phoneNumberBodySchema = z.object({
     phoneNumber: z
@@ -39,18 +40,10 @@ export const honninBodySchema = z.object({
     idRearUpload: z.preprocess((val) => val === true || val === "true", z.boolean()),
     birthday: z.coerce.date().max(new Date()),
     selectedGender: z.coerce.number().int().positive().min(1).max(3),
+    frontIdCard: filesSchema.optional(),
+    rearIdCard: filesSchema.optional(),
 });
-
-export type HonninFile = {
-    fileName: string;
-    contentType: string;
-    size: number;
-    buffer: Buffer;
-};
 
 export type PhoneNumberBody = z.infer<typeof phoneNumberBodySchema>;
 export type ProfileEditBody = z.infer<typeof profileEditBodySchema>;
-export type HonninBody = z.infer<typeof honninBodySchema> & {
-    frontIdCard?: HonninFile;
-    rearIdCard?: HonninFile;
-};
+export type HonninBody = z.infer<typeof honninBodySchema>;

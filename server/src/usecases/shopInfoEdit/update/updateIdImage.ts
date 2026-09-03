@@ -1,91 +1,226 @@
+import sequelize from "../../../db.js";
 import { AppError } from "../../../errors.js";
-import { publicS3Domain } from "../../../infra/aws/s3.js";
+import { deleteS3Object } from "../../../infra/aws/deleteS3Object.js";
+import { buckets } from "../../../infra/aws/s3.js";
+import { uploadS3Object } from "../../../infra/aws/uploadS3Object.js";
+import { createIdCard } from "../../../services/idCard.js";
 import { createNotification } from "../../../services/notification.js";
+import { createPermit } from "../../../services/permit.js";
+import { createPermitFile } from "../../../services/permitFile.js";
+import { createS3Metadata, deleteS3Metadata } from "../../../services/s3Metadata.js";
 import { UpdateShopEditIdPermit } from "../../../services/shopInfoEdit/command.js";
 import { getMyShopEditHasShop } from "../../../services/shopInfoEdit/query.js";
-import { generateSignedUrl } from "../../../utils/s3/signedUrl.js";
-import { ShopIdCardBody } from "../../../validators/body/shopInfo.js";
+import type { ShopInfoEditIdImageBody } from "../../../validators/body/shopInfoEdit.js";
+import { UploadedObject } from "./idImageType.js";
 
 type Params = {
     shopEditId: number;
     userId: number;
-    body: ShopIdCardBody;
+    body: ShopInfoEditIdImageBody;
 };
 
 // PATCH /shop-info-edit/:id/id-image-upload
 // summary: 事業者登録 代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
-export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }: Params) => {
+export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }: Params): Promise<void> => {
     const now = Date.now();
+    const { frontIdCard, rearIdCard, permitFiles } = body;
 
-    const { frontFileName, frontFileType, rearFileName, rearFileType, idFrontUpload, idRearUpload, permitFiles } = body;
-
-    // 空チェック
-    if (!frontFileName || !frontFileType || !rearFileName || !rearFileType) {
-        throw new AppError("INVALID_BODY", 400);
+    if (permitFiles.length > 10) {
+        throw new AppError("OVER_MAX_PERMIT_FILE_COUNT", 400);
     }
 
-    // shopEdit取得
     const shopEdit = await getMyShopEditHasShop({ shopEditId, userId });
 
     if (!shopEdit) throw new AppError("SHOP_EDIT_NOT_FOUND", 404);
 
     const shopId = shopEdit.ShopInfo.id;
+    const uploadedObjects: UploadedObject[] = [];
+    let committed = false;
 
-    // 身分証アップロード
-    let frontSignedUrl: string | null = null;
-    let rearSignedUrl: string | null = null;
-    let frontUrl: string | null = null;
-    let rearUrl: string | null = null;
+    try {
+        const uploadedFront = await uploadS3Object({
+            bucketName: buckets.verificationDocuments,
+            objectKey: `idcard/shop/front/${shopId}/${now}_${frontIdCard.fileName}`,
+            body: frontIdCard.buffer,
+            contentType: frontIdCard.contentType,
+        });
+        uploadedObjects.push({
+            ...uploadedFront,
+            type: "idCardFront",
+            originalFileName: frontIdCard.fileName,
+            contentType: frontIdCard.contentType,
+            fileSize: frontIdCard.size,
+        });
 
-    if (frontFileName && idFrontUpload) {
-        const key = `idcard/shop/front/${shopId}/${now}_${frontFileName}`;
+        const uploadedRear = await uploadS3Object({
+            bucketName: buckets.verificationDocuments,
+            objectKey: `idcard/shop/rear/${shopId}/${now}_${rearIdCard.fileName}`,
+            body: rearIdCard.buffer,
+            contentType: rearIdCard.contentType,
+        });
+        uploadedObjects.push({
+            ...uploadedRear,
+            type: "idCardRear",
+            originalFileName: rearIdCard.fileName,
+            contentType: rearIdCard.contentType,
+            fileSize: rearIdCard.size,
+        });
 
-        frontSignedUrl = await generateSignedUrl({ key, contentType: frontFileType });
+        const permitUploadResults = await Promise.allSettled(
+            permitFiles.map(async (file, index) => {
+                const uploaded = await uploadS3Object({
+                    bucketName: buckets.verificationDocuments,
+                    objectKey: `permit/${shopId}/${now}_${file.fileName}`,
+                    body: file.buffer,
+                    contentType: file.contentType,
+                });
 
-        frontUrl = `${publicS3Domain}/${key}`;
-    }
+                uploadedObjects.push({
+                    ...uploaded,
+                    type: "permit",
+                    originalFileName: file.fileName,
+                    contentType: file.contentType,
+                    fileSize: file.size,
+                    sortOrder: index + 1,
+                });
+            }),
+        );
 
-    if (rearFileName && idRearUpload) {
-        const key = `idcard/shop/rear/${shopId}/${now}_${rearFileName}`;
+        const failedPermitUpload = permitUploadResults.find((result) => result.status === "rejected");
+        if (failedPermitUpload?.status === "rejected") throw failedPermitUpload.reason;
 
-        rearSignedUrl = await generateSignedUrl({ key, contentType: rearFileType });
+        await sequelize.transaction(async (transaction) => {
+            let frontIdCardS3MetadataId: number | null = null;
+            let rearIdCardS3MetadataId: number | null = null;
+            const permitS3MetadataList: Array<{ s3MetadataId: number; sortOrder: number }> = [];
 
-        rearUrl = `${publicS3Domain}/${key}`;
-    }
+            const s3MetadataList = await Promise.all(
+                uploadedObjects.map(async (uploadedObject) => ({
+                    uploadedObject,
+                    s3Metadata: await createS3Metadata({
+                        data: {
+                            bucket_name: uploadedObject.bucketName,
+                            object_key: uploadedObject.objectKey,
+                            version_id: uploadedObject.versionId,
+                            original_file_name: uploadedObject.originalFileName,
+                            content_type: uploadedObject.contentType,
+                            file_size: uploadedObject.fileSize,
+                            etag: uploadedObject.etag,
+                        },
+                        transaction,
+                    }),
+                })),
+            );
 
-    // 許認可証アップロード
-    const permitSignedUrls: string[] = [];
-    const permitUrls: string[] = [];
+            for (const { uploadedObject, s3Metadata } of s3MetadataList) {
+                if (uploadedObject.type === "idCardFront") {
+                    frontIdCardS3MetadataId = s3Metadata.id;
+                } else if (uploadedObject.type === "idCardRear") {
+                    rearIdCardS3MetadataId = s3Metadata.id;
+                } else {
+                    permitS3MetadataList.push({
+                        s3MetadataId: s3Metadata.id,
+                        sortOrder: uploadedObject.sortOrder,
+                    });
+                }
+            }
 
-    if (Array.isArray(permitFiles) && permitFiles.length > 0) {
-        for (const file of permitFiles) {
-            const { fileName, fileType } = file;
+            if (!frontIdCardS3MetadataId || !rearIdCardS3MetadataId) {
+                throw new AppError("INVALID_BODY", 400);
+            }
 
-            if (!fileName || !fileType) continue;
+            const newIdCard = await createIdCard({
+                data: {
+                    front_s3_metadata_id: frontIdCardS3MetadataId,
+                    rear_s3_metadata_id: rearIdCardS3MetadataId,
+                },
+                transaction,
+            });
 
-            const permitKey = `permit/${shopId}/${now}_${fileName}`;
+            let newPermitId: number | null = null;
 
-            const signedUrl = await generateSignedUrl({ key: permitKey, contentType: fileType });
+            if (permitS3MetadataList.length > 0) {
+                const newPermit = await createPermit({
+                    data: {
+                        permit_number: null,
+                        permit_type: null,
+                        issued_at: null,
+                        expired_at: null,
+                    },
+                    transaction,
+                });
+                newPermitId = newPermit.id;
 
-            permitSignedUrls.push(signedUrl);
-            permitUrls.push(`${publicS3Domain}/${permitKey}`);
+                await Promise.all(
+                    permitS3MetadataList.map((permitFile) =>
+                        createPermitFile({
+                            data: {
+                                permit_id: newPermit.id,
+                                s3_metadata_id: permitFile.s3MetadataId,
+                                sort_order: permitFile.sortOrder,
+                                document_name: null,
+                                memo: null,
+                            },
+                            transaction,
+                        }),
+                    ),
+                );
+            }
+
+            await UpdateShopEditIdPermit({
+                shopEdit,
+                data: {
+                    idcard_id: newIdCard.id,
+                    permit_id: newPermitId,
+                },
+                transaction,
+            });
+        });
+
+        committed = true;
+    } catch (err) {
+        if (!committed) {
+            await Promise.allSettled(
+                uploadedObjects.map((object) =>
+                    deleteS3Object({
+                        bucketName: object.bucketName,
+                        objectKey: object.objectKey,
+                        versionId: object.versionId,
+                    }),
+                ),
+            );
         }
+
+        throw err;
     }
 
-    // shopInfoEdit更新
-    await UpdateShopEditIdPermit({
-        shopEdit,
-        data: {
-            id_card_front: frontUrl,
-            id_card_rear: rearUrl,
-            permit_url: permitUrls,
-        },
+    const oldFrontS3Metadata = shopEdit.IdCard?.FrontIdCard ?? null;
+    const oldRearS3Metadata = shopEdit.IdCard?.RearIdCard ?? null;
+    const oldPermitFiles = shopEdit.Permit?.PermitFile ?? [];
+    type S3MetadataInstance = Parameters<typeof deleteS3Metadata>[0]["s3Metadata"];
+    const oldPermitS3Metadata = oldPermitFiles
+        .map((permitFile: { S3Metadata?: S3MetadataInstance | null }) => permitFile.S3Metadata)
+        .filter((s3Metadata: S3MetadataInstance | null | undefined): s3Metadata is S3MetadataInstance =>
+            Boolean(s3Metadata),
+        );
+
+    await sequelize.transaction(async (transaction) => {
+        if (oldFrontS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: oldFrontS3Metadata, transaction });
+        }
+
+        if (oldRearS3Metadata) {
+            await deleteS3Metadata({ s3Metadata: oldRearS3Metadata, transaction });
+        }
+
+        await Promise.all(
+            oldPermitS3Metadata.map((s3Metadata: S3MetadataInstance) =>
+                deleteS3Metadata({ s3Metadata, transaction }),
+            ),
+        );
     });
 
-    // メール送信機能
-
-    // お知らせ作成
     createNotification({
         data: {
             read_user_id: userId,
@@ -96,6 +231,4 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
     }).catch((err) => {
         console.error("service createNotification error:", err);
     });
-
-    return { frontSignedUrl, rearSignedUrl, permitSignedUrls };
 };

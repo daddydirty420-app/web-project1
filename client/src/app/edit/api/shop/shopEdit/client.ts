@@ -1,30 +1,15 @@
 import { apiFetch } from "../../../../../lib/api/client";
+import { ApiError } from "../../../../../lib/api/apiError";
+import { getAccessToken } from "../../../../../lib/getAccessToken";
 
 type IdUploadBody = {
-    frontFileName?: string;
-    frontFileType?: string;
-    rearFileName?: string;
-    rearFileType?: string;
-    idFrontUpload: boolean;
-    idRearUpload: boolean;
-    permitFiles: (
-        | {
-              fileName: string;
-              fileType: string | null;
-              uploaded: boolean;
-          }
-        | undefined
-    )[];
+    frontIdCard: File;
+    rearIdCard: File;
+    permitFiles: File[];
 };
 
 type ComFreeResponse = {
     editId: number;
-};
-
-type IdUploadResponse = {
-    frontSignedUrl: string | null;
-    rearSignedUrl: string | null;
-    permitSignedUrls: string[];
 };
 
 export const fetchCompanyNameEdit = async (shopId: string, companyName: string) => {
@@ -41,11 +26,28 @@ export const fetchComFreeEdit = async (shopId: string, selectOption: number): Pr
     });
 };
 
-export const fetchShopEditIdUpload = async (shopEditId: string, body: IdUploadBody): Promise<IdUploadResponse> => {
-    return apiFetch(`/shop-info-edit/${shopEditId}/id-image-upload`, {
+export const fetchShopEditIdUpload = async (shopEditId: string, body: IdUploadBody): Promise<void> => {
+    const accessToken = await getAccessToken();
+
+    if (!accessToken) {
+        throw new ApiError("UNAUTHORIZED");
+    }
+
+    const formData = new FormData();
+    formData.append("frontIdCard", body.frontIdCard);
+    formData.append("rearIdCard", body.rearIdCard);
+    body.permitFiles.forEach((file) => formData.append("permitFiles", file));
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/shop-info-edit/${shopEditId}/id-image-upload`, {
         method: "PATCH",
-        body: JSON.stringify(body),
+        headers: { Authorization: `Bearer ${accessToken}` },
+        body: formData,
     });
+
+    if (!res.ok) {
+        const data = await res.json();
+        throw new ApiError(data.code ?? "API Error");
+    }
 };
 
 export const fetchUpdateField = async (shopEditId: string, field: string, value: string | number | Date) => {

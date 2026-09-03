@@ -5,6 +5,7 @@ import {
     updateShopSignup3Controller,
 } from "../controllers/shopSignup.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
+import { parseMultipartBody } from "../middleware/multipart.js";
 import { createShopSignupRateLimit, signup2RateLimit, signup3RateLimit } from "../middleware/rateLimit/shopSignup.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
@@ -43,6 +44,11 @@ router.patch(
 router.patch(
     "/:id/id-card",
     validateParams(idParamSchema),
+    ...parseMultipartBody([
+        { name: "frontIdCard", maxCount: 1 },
+        { name: "rearIdCard", maxCount: 1 },
+        { name: "permitFiles", maxCount: 10 },
+    ]),
     validateBody(shopSignup3BodySchema),
     authenticateToken,
     signup3RateLimit,

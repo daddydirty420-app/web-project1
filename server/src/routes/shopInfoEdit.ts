@@ -1,19 +1,20 @@
 import { Router } from "express";
 import {
-    shopInfoEditPostByIdAddressController,
-    shopInfoEditPostByIdBankAccountController,
-    shopInfoEditPostByIdRepNameController,
-    shopInfoEditPostByIdCompanyNameController,
-    shopInfoEditPostByIdComFreeController,
-    shopInfoEditPatchByIdController,
-    shopInfoEditPatchByIdIdImageUploadController,
     shopInfoEditGetByIdAddressController,
     shopInfoEditGetByIdBankAccountController,
-    shopInfoEditGetByIdRepNameController,
-    shopInfoEditGetByIdConNameController,
     shopInfoEditGetByIdComFreeConfirmController,
+    shopInfoEditGetByIdConNameController,
+    shopInfoEditGetByIdRepNameController,
+    shopInfoEditPatchByIdController,
+    shopInfoEditPostByIdAddressController,
+    shopInfoEditPostByIdBankAccountController,
+    shopInfoEditPostByIdComFreeController,
+    shopInfoEditPostByIdCompanyNameController,
+    shopInfoEditPostByIdRepNameController,
+    updateShopInfoEditIdImageController,
 } from "../controllers/shopInfoEdit.js";
 import { authenticateToken } from "../middleware/index.js";
+import { parseMultipartBody } from "../middleware/multipart.js";
 import {
     getShopEditAddressRateLimit,
     getShopEditComFreeConfirmRateLimit,
@@ -31,10 +32,11 @@ import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { addressBodySchema } from "../validators/body/address.js";
 import { bankBodySchema } from "../validators/body/bankAccount.js";
-import { repNameBodySchema, shopIdCardBodySchema } from "../validators/body/shopInfo.js";
+import { repNameBodySchema } from "../validators/body/shopInfo.js";
 import {
     comFreeIdBodySchema,
     createCompanyNameBodySchema,
+    shopInfoEditIdImageBodySchema,
     shopInfoEditUpdateBodySchema,
 } from "../validators/body/shopInfoEdit.js";
 import { idParamSchema } from "../validators/params/id.js";
@@ -121,8 +123,13 @@ router.patch(
     authenticateToken,
     shopEditIdUploadRateLimit,
     validateParams(idParamSchema),
-    validateBody(shopIdCardBodySchema),
-    shopInfoEditPatchByIdIdImageUploadController,
+    ...parseMultipartBody([
+        { name: "frontIdCard", maxCount: 1 },
+        { name: "rearIdCard", maxCount: 1 },
+        { name: "permitFiles", maxCount: 10 },
+    ]),
+    validateBody(shopInfoEditIdImageBodySchema),
+    updateShopInfoEditIdImageController,
 );
 
 // GET /shop-info-edit/:id/address

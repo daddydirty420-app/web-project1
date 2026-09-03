@@ -2,7 +2,11 @@ import {
     Address,
     BankAccount,
     ComOrFreeOption,
+    IdCard,
     Name,
+    Permit,
+    PermitFile,
+    S3Metadata,
     ShopInfo,
     ShopInfoEdit,
     TodouhukenOption,
@@ -34,7 +38,41 @@ export const getMyShopEditHasShop = ({ shopEditId, userId }: ShopEditUserIdParam
             id: shopEditId,
             user_id: userId,
         },
-        include: [{ model: ShopInfo }],
+        include: [
+            { model: ShopInfo },
+            {
+                model: IdCard,
+                required: false,
+                include: [
+                    {
+                        model: S3Metadata,
+                        as: "FrontIdCard",
+                        required: false,
+                    },
+                    {
+                        model: S3Metadata,
+                        as: "RearIdCard",
+                        required: false,
+                    },
+                ],
+            },
+            {
+                model: Permit,
+                required: false,
+                include: [
+                    {
+                        model: PermitFile,
+                        required: false,
+                        include: [
+                            {
+                                model: S3Metadata,
+                                required: false,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     });
 };
 

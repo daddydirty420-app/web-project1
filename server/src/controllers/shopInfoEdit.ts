@@ -13,8 +13,13 @@ import { updateShopEditAnyUseCase } from "../usecases/shopInfoEdit/update/update
 import { updateShopEditIdImageUseCase } from "../usecases/shopInfoEdit/update/updateIdImage.js";
 import type { AddressBody } from "../validators/body/address.js";
 import type { BankBody } from "../validators/body/bankAccount.js";
-import type { RepNameBody, ShopIdCardBody } from "../validators/body/shopInfo.js";
-import type { ComFreeIdBody, CreateCompanyNameBody, ShopInfoEditUpdateBody } from "../validators/body/shopInfoEdit.js";
+import type { RepNameBody } from "../validators/body/shopInfo.js";
+import type {
+    ComFreeIdBody,
+    CreateCompanyNameBody,
+    ShopInfoEditIdImageBody,
+    ShopInfoEditUpdateBody,
+} from "../validators/body/shopInfoEdit.js";
 
 // POST /shop-info-edit/:id/address
 // summary: 会社所在地変更リクエスト
@@ -159,7 +164,7 @@ export const shopInfoEditPatchByIdController = async (
 // PATCH /shop-info-edit/:id/id-image-upload
 // summary: 事業者登録 代表者身分証アップロード
 // page: edit/shop/com-free/upload/[id]
-export const shopInfoEditPatchByIdIdImageUploadController = async (
+export const updateShopInfoEditIdImageController = async (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -167,19 +172,16 @@ export const shopInfoEditPatchByIdIdImageUploadController = async (
     try {
         const shopEditId = Number(req.params.id);
         const userId = req.user!.id;
-        const body = req.validatedBody as ShopIdCardBody;
+        const body = req.validatedBody as ShopInfoEditIdImageBody;
 
-        const { frontSignedUrl, rearSignedUrl, permitSignedUrls } = await updateShopEditIdImageUseCase({
+        await updateShopEditIdImageUseCase({
             shopEditId,
             userId,
             body,
         });
 
         res.status(200).json({
-            message: "身分証・許認可証のDB登録が完了しました。",
-            frontSignedUrl,
-            rearSignedUrl,
-            permitSignedUrls,
+            message: "身分証・許認可証を登録しました。",
         });
     } catch (err) {
         next(err);
