@@ -94,106 +94,21 @@ export default function Client({ shopEditId }: Props) {
             return;
         }
 
-        let frontFileName: string | undefined;
-        let frontFileType: string | undefined;
-        let rearFileName: string | undefined;
-        let rearFileType: string | undefined;
-
-        if (idFrontUpload && idCardFront instanceof File) {
-            frontFileName = idCardFront.name;
-            frontFileType = idCardFront.type;
+        if (!idFrontUpload || !(idCardFront instanceof File) || !idRearUpload || !(idCardRear instanceof File)) {
+            toast.error("身分証がアップロードされていません。");
+            return;
         }
 
-        if (idRearUpload && idCardRear instanceof File) {
-            rearFileName = idCardRear.name;
-            rearFileType = idCardRear.type;
-        }
-
-        let permitFiles: ({ fileName: string; fileType: string | null; uploaded: boolean } | undefined)[] = [];
-        if (checked) {
-            permitFiles = permitImages.map((img) => {
-                if (img.uploaded && img.file instanceof File) {
-                    return {
-                        fileName: img.file!.name,
-                        fileType: img.file!.type,
-                        uploaded: true,
-                    };
-                }
-
-                const fileName = (img.preview ?? "").split("/").pop() || "unknown";
-
-                return {
-                    fileName,
-                    fileType: null,
-                    uploaded: false,
-                };
-            });
-        }
-
-        const body = {
-            frontFileName,
-            frontFileType,
-            rearFileName,
-            rearFileType,
-            idFrontUpload,
-            idRearUpload,
-            permitFiles,
-        };
+        const permitFiles = checked
+            ? permitImages.flatMap((image) => (image.uploaded && image.file instanceof File ? [image.file] : []))
+            : [];
 
         try {
-            const data = await fetchShopEditIdUpload(shopEditId, body);
-
-            if (data.frontSignedUrl && idCardFront instanceof File) {
-                const uploadFrontRes = await fetch(data.frontSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": idCardFront.type,
-                    },
-                    body: idCardFront,
-                });
-
-                if (!uploadFrontRes.ok) {
-                    toast.error("身分証（表面）のアップロードに失敗しました");
-                    return;
-                }
-            }
-
-            if (data.rearSignedUrl && idCardRear instanceof File) {
-                const uploadFrontRes = await fetch(data.rearSignedUrl, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": idCardRear.type,
-                    },
-                    body: idCardRear,
-                });
-
-                if (!uploadFrontRes.ok) {
-                    toast.error("身分証（裏面）のアップロードに失敗しました");
-                    return;
-                }
-            }
-
-            if (checked) {
-                const uploadImages = permitImages.filter((img) => img.uploaded && img.file instanceof File);
-
-                for (let i = 0; i < data.permitSignedUrls.length; i++) {
-                    const file = uploadImages[i].file!;
-                    const signedUrl = data.permitSignedUrls[i];
-
-                    const upload = await fetch(signedUrl, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": file.type,
-                        },
-                        body: file,
-                    });
-
-                    if (!upload.ok) {
-                        toast.error("許認可証のアップロードに失敗しました");
-                        return;
-                    }
-                }
-            }
+            await fetchShopEditIdUpload(shopEditId, {
+                frontIdCard: idCardFront,
+                rearIdCard: idCardRear,
+                permitFiles,
+            });
 
             toast.success("画像のアップロードが完了しました！");
             await sleep(1500);

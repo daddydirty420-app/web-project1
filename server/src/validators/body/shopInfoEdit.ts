@@ -1,5 +1,12 @@
 import z from "zod";
 import { shopConfirmUpdateFieldSchemas } from "./shopInfo.js";
+import { filesSchema } from "./shopSignup.js";
+
+export const shopInfoEditIdImageBodySchema = z.object({
+    frontIdCard: filesSchema,
+    rearIdCard: filesSchema,
+    permitFiles: z.array(filesSchema).max(10),
+});
 
 export const createCompanyNameBodySchema = z.object({
     companyName: z.string().min(1),
@@ -23,4 +30,5 @@ export const shopInfoEditUpdateBodySchema = z.union([
 
 export type CreateCompanyNameBody = z.infer<typeof createCompanyNameBodySchema>;
 export type ComFreeIdBody = z.infer<typeof comFreeIdBodySchema>;
+export type ShopInfoEditIdImageBody = z.infer<typeof shopInfoEditIdImageBodySchema>;
 export type ShopInfoEditUpdateBody = z.infer<typeof shopInfoEditUpdateBodySchema>;

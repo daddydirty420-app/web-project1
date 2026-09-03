@@ -54,7 +54,7 @@ export const filesSchema = z.object({
 export const shopSignup3BodySchema = z.object({
     frontIdCard: filesSchema,
     rearIdCard: filesSchema,
-    permitFiles: z.array(filesSchema),
+    permitFiles: z.array(filesSchema).max(10),
 });
 
 export type CreateSignup1Body = z.infer<typeof createSignup1BodySchema>;

@@ -1,28 +1,28 @@
 import { Router } from "express";
-import multer from "multer";
 import {
-    usersPatchProfileController,
-    usersPatchPhoneNumberController,
-    usersPatchHonninController,
     usersGetByIdProfileController,
-    usersGetByIdStarController,
     usersGetByIdProfileMetadataController,
-    usersGetMyPageController,
-    usersGetInquiryController,
-    usersGetPhoneNumberController,
-    usersGetProfileEditDataController,
-    usersGetHonninController,
-    usersGetTransferPointsController,
-    usersGetTransferRequestController,
+    usersGetByIdStarController,
     usersGetCurrentPointsController,
     usersGetCurrentUriagekinController,
-    usersGetMyaddressController,
-    usersGetMyaccountController,
-    usersGetMynameController,
-    usersGetMeController,
+    usersGetHonninController,
+    usersGetInquiryController,
     usersGetMeAdminController,
+    usersGetMeController,
+    usersGetMyaccountController,
+    usersGetMyaddressController,
+    usersGetMynameController,
+    usersGetMyPageController,
+    usersGetPhoneNumberController,
+    usersGetProfileEditDataController,
+    usersGetTransferPointsController,
+    usersGetTransferRequestController,
+    usersPatchHonninController,
+    usersPatchPhoneNumberController,
+    usersPatchProfileController,
 } from "../controllers/users.js";
 import { authenticateOptional, authenticateToken } from "../middleware/index.js";
+import { parseMultipartBody } from "../middleware/multipart.js";
 import {
     editPhoneNumberRateLimit,
     getAccountRateLimit,
@@ -51,10 +51,6 @@ import { idParamSchema } from "../validators/params/id.js";
 import { getProfileQuerySchema, profileEditQuerySchema } from "../validators/query/users.js";
 
 const router = Router();
-const honninUpload = multer({
-    storage: multer.memoryStorage(),
-    limits: { fileSize: 10 * 1024 * 1024 },
-});
 
 // PATCH /user/profile?imageEdit=boolean
 // summary: プロフィール編集
@@ -86,7 +82,7 @@ router.patch(
     "/honnin",
     authenticateToken,
     requestHonninRateLimit,
-    honninUpload.fields([
+    ...parseMultipartBody([
         { name: "frontIdCard", maxCount: 1 },
         { name: "rearIdCard", maxCount: 1 },
     ]),

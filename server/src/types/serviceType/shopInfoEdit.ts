@@ -82,9 +82,8 @@ export type UpdateShopEditAnyParams = {
 export type UpdateShopEditIdPermitParams = {
     shopEdit: InstanceType<typeof ShopInfoEdit>;
     data: {
-        id_card_front: string | null;
-        id_card_rear: string | null;
-        permit_url: string[];
+        idcard_id: number;
+        permit_id: number | null;
     };
     transaction?: Transaction;
 };
