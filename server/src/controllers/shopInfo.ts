@@ -2,7 +2,6 @@ import type { NextFunction, Request, Response } from "express-serve-static-core"
 import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
-import { updateShopSignup4UseCase } from "../usecases/shopInfo/edit/signup4.js";
 import { updateShopSignup5UseCase } from "../usecases/shopInfo/edit/signup5.js";
 import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
@@ -83,29 +82,6 @@ export const shopInfoPatchByIdOptionController = async (
         await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
 
         res.status(200).json({ message: "オプションを更新しました。" });
-    } catch (err) {
-        next(err);
-    }
-};
-
-// PATCH /shop-info/:id/signup/4
-// summary: ショップ登録オプション選択
-// page: /shop-signup/step4/[id]
-export const shopInfoPatchByIdSignup4Controller = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): Promise<void> => {
-    try {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-
-        const body = req.validatedBody as ShopOptionBody;
-        const { autoTrans, openInfo } = body;
-
-        await updateShopSignup4UseCase({ shopId, userId, autoTrans, openInfo });
-
-        res.status(200).json({ message: "データ更新完了" });
     } catch (err) {
         next(err);
     }
