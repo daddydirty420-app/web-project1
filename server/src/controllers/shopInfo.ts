@@ -3,7 +3,6 @@ import { editShopOptionUseCase } from "../usecases/shopInfo/edit/option.js";
 import { editShopPhoneNumberUseCase } from "../usecases/shopInfo/edit/phoneNumber.js";
 import { updateRepNameUseCase } from "../usecases/shopInfo/edit/repName.js";
 import { updateShopSignup5UseCase } from "../usecases/shopInfo/edit/signup5.js";
-import { updateShopSignupEditUseCase } from "../usecases/shopInfo/edit/signupEdit.js";
 import { getAddressShopUseCase } from "../usecases/shopInfo/get/getAddress.js";
 import { getBankAccountUseCase } from "../usecases/shopInfo/get/getBankAccount.js";
 import { getShopComFreeUseCase } from "../usecases/shopInfo/get/getComFree.js";
@@ -17,7 +16,7 @@ import { getShopSignup1UseCase } from "../usecases/shopInfo/get/signup1.js";
 import { getShopSignup2UseCase } from "../usecases/shopInfo/get/signup2.js";
 import { getShopSignup3UseCase } from "../usecases/shopInfo/get/signup3.js";
 import { getShopSignup5UseCase } from "../usecases/shopInfo/get/signup5.js";
-import type { RepNameBody, ShopOptionBody, ShopSignupEditBody } from "../validators/body/shopInfo.js";
+import type { RepNameBody, ShopOptionBody } from "../validators/body/shopInfo.js";
 import type { PhoneNumberBody } from "../validators/body/users.js";
 
 // PATCH /shop-info/:id/rep-name
@@ -82,27 +81,6 @@ export const shopInfoPatchByIdOptionController = async (
         await editShopOptionUseCase({ shopId, userId, autoTrans, openInfo });
 
         res.status(200).json({ message: "オプションを更新しました。" });
-    } catch (err) {
-        next(err);
-    }
-};
-
-// PATCH /shop-info/:id/signup/edit
-// summary: ショップ登録確認ページ インプット編集
-// page: /shop-signup/step5/[id]
-export const shopInfoPatchByIdSignupEditController = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-): Promise<void> => {
-    try {
-        const shopId = Number(req.params.id);
-        const userId = req.user!.id;
-        const updateData = req.validatedBody as ShopSignupEditBody;
-
-        await updateShopSignupEditUseCase({ shopId, userId, updateData });
-
-        res.status(200).json({ message: "更新しました。", updated: updateData });
     } catch (err) {
         next(err);
     }
