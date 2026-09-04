@@ -2,6 +2,7 @@ import { IdCard, Permit, PermitFile, S3Metadata, ShopSignup } from "../models/in
 import {
     CreateShopSignupParams,
     UpdateBankAccountParams,
+    UpdateOptionParams,
     UpdateSignup3Params,
     UserShopSignupIdParams,
 } from "../types/serviceType/shopSignup.js";
@@ -67,5 +68,9 @@ export const updateShopSignupBankAccount = async ({ shopSignup, data, transactio
 };
 
 export const updateSignup3 = async ({ shopSignup, data, transaction }: UpdateSignup3Params) => {
+    await shopSignup.update(data, { transaction });
+};
+
+export const updateShopSignupOption = async ({ shopSignup, data, transaction }: UpdateOptionParams) => {
     await shopSignup.update(data, { transaction });
 };

@@ -43,3 +43,12 @@ export type UpdateSignup3Params = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateOptionParams = {
+    shopSignup: InstanceType<typeof ShopSignup>;
+    data: {
+        auto_trans: boolean;
+        open_info: boolean;
+    };
+    transaction?: Transaction;
+};
