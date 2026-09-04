@@ -215,9 +215,7 @@ export const updateShopEditIdImageUseCase = async ({ shopEditId, userId, body }:
         }
 
         await Promise.all(
-            oldPermitS3Metadata.map((s3Metadata: S3MetadataInstance) =>
-                deleteS3Metadata({ s3Metadata, transaction }),
-            ),
+            oldPermitS3Metadata.map((s3Metadata: S3MetadataInstance) => deleteS3Metadata({ s3Metadata, transaction })),
         );
     });
 

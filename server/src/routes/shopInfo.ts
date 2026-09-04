@@ -16,9 +16,7 @@ import {
     shopInfoPatchByIdOptionController,
     shopInfoPatchByIdPhoneNumberController,
     shopInfoPatchByIdRepNameController,
-    shopInfoPatchByIdSignup4Controller,
     shopInfoPatchByIdSignup5Controller,
-    shopInfoPatchByIdSignupEditController,
 } from "../controllers/shopInfo.js";
 import { authenticateToken } from "../middleware/index.js";
 import {
@@ -38,13 +36,11 @@ import {
     shopOptionEditRateLimit,
     shopPhoneNumberEditRateLimit,
     shopRepNameEditRateLimit,
-    shopSignup4RateLimit,
-    shopSignup5EditRateLimit,
     shopSignup5RateLimit,
 } from "../middleware/rateLimit/shopInfoRateLimit.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
-import { repNameBodySchema, shopOptionBodySchema, shopSignupEditBodySchema } from "../validators/body/shopInfo.js";
+import { repNameBodySchema, shopOptionBodySchema } from "../validators/body/shopInfo.js";
 import { phoneNumberBodySchema } from "../validators/body/users.js";
 import { idParamSchema } from "../validators/params/id.js";
 
@@ -84,30 +80,6 @@ router.patch(
     validateParams(idParamSchema),
     validateBody(shopOptionBodySchema),
     shopInfoPatchByIdOptionController,
-);
-
-// PATCH /shop-info/:id/signup/4
-// summary: ショップ登録オプション選択
-// page: /shop-signup/step4/[id]
-router.patch(
-    "/:id/signup/4",
-    authenticateToken,
-    shopSignup4RateLimit,
-    validateParams(idParamSchema),
-    validateBody(shopOptionBodySchema),
-    shopInfoPatchByIdSignup4Controller,
-);
-
-// PATCH /shop-info/:id/signup/edit
-// summary: ショップ登録確認ページ インプット編集
-// page: /shop-signup/step5/[id]
-router.patch(
-    "/:id/signup/edit",
-    authenticateToken,
-    shopSignup5EditRateLimit,
-    validateParams(idParamSchema),
-    validateBody(shopSignupEditBodySchema),
-    shopInfoPatchByIdSignupEditController,
 );
 
 // PATCH /shop-info/:id/signup/5

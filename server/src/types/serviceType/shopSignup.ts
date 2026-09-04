@@ -43,3 +43,33 @@ export type UpdateSignup3Params = {
     };
     transaction?: Transaction;
 };
+
+export type UpdateOptionParams = {
+    shopSignup: InstanceType<typeof ShopSignup>;
+    data: {
+        auto_trans: boolean;
+        open_info: boolean;
+    };
+    transaction?: Transaction;
+};
+
+export type ShopSignupUpdateData =
+    | { com_or_free_id: number }
+    | { company_name: string }
+    | { shop_name: string }
+    | { phone_number: string }
+    | { email: string }
+    | { open_date_time: string }
+    | { founded_date: Date }
+    | { member_count: number }
+    | { homepage_url: string }
+    | { company_number: string }
+    | { capital: number }
+    | { auto_trans: boolean }
+    | { open_info: boolean };
+
+export type UpdateShopSignupAnyParams = {
+    shopSignup: InstanceType<typeof ShopSignup>;
+    data: ShopSignupUpdateData;
+    transaction?: Transaction;
+};

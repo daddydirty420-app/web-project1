@@ -1,16 +1,15 @@
 import { AppError } from "../../../errors.js";
-import { updateShopAny } from "../../../services/shopInfo/command.js";
-import { getMyShop } from "../../../services/shopInfo/query.js";
-import type { ShopInfoUpdateData } from "../../../types/serviceType/shopInfo.js";
-import type { ShopSignupEditBody } from "../../../validators/body/shopInfo.js";
+import { getMyShopSignup, updateShopSignupAny } from "../../../services/shopSignup.js";
+import { ShopSignupUpdateData } from "../../../types/serviceType/shopSignup.js";
+import { ShopSignupEditBody } from "../../../validators/body/shopSignup.js";
 
 type Params = {
-    shopId: number;
+    shopSignupId: number;
     userId: number;
     updateData: ShopSignupEditBody;
 };
 
-const buildUpdateData = (updateData: ShopSignupEditBody): ShopInfoUpdateData => {
+const buildUpdateData = (updateData: ShopSignupEditBody): ShopSignupUpdateData => {
     if ("com_or_free_id" in updateData) return { com_or_free_id: updateData.com_or_free_id };
     if ("company_name" in updateData) return { company_name: updateData.company_name };
     if ("shop_name" in updateData) return { shop_name: updateData.shop_name };
@@ -27,20 +26,20 @@ const buildUpdateData = (updateData: ShopSignupEditBody): ShopInfoUpdateData => 
     return { open_info: updateData.open_info === "true" };
 };
 
-// PATCH /shop-info/:id/signup/edit
+// PATCH /shop-signup/:id/edit
 // summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
-export const updateShopSignupEditUseCase = async ({ shopId, userId, updateData }: Params) => {
+export const updateShopSignupEditUseCase = async ({ shopSignupId, userId, updateData }: Params) => {
     // shop取得
-    const shop = await getMyShop({ shopId, userId });
+    const shopSignup = await getMyShopSignup({ shopSignupId, userId });
 
-    if (!shop) throw new AppError("SHOP_NOT_FOUND", 404);
+    if (!shopSignup) throw new AppError("SHOP_SIGNUP_NOT_FOUND", 404);
 
     const data = buildUpdateData(updateData);
 
     // db更新
-    await updateShopAny({
-        shopInfo: shop,
+    await updateShopSignupAny({
+        shopSignup,
         data,
     });
 };
