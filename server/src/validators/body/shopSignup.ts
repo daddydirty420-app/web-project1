@@ -57,5 +57,11 @@ export const shopSignup3BodySchema = z.object({
     permitFiles: z.array(filesSchema).max(10),
 });
 
+export const shopSignupOptionBodySchema = z.object({
+    autoTrans: z.boolean().default(false),
+    openInfo: z.boolean().default(false),
+});
+
 export type CreateSignup1Body = z.infer<typeof createSignup1BodySchema>;
 export type ShopSignup3Body = z.infer<typeof shopSignup3BodySchema>;
+export type ShopSignupOptionBody = z.infer<typeof shopSignupOptionBodySchema>;

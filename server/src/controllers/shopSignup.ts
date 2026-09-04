@@ -3,7 +3,8 @@ import { createShopSignup1 } from "../usecases/shopSignup/signup1.js";
 import { updateShopSignup2UseCase } from "../usecases/shopSignup/signup2.js";
 import { updateShopSignup3UseCase } from "../usecases/shopSignup/signup3/signup3.js";
 import { BankBody } from "../validators/body/bankAccount.js";
-import { CreateSignup1Body, ShopSignup3Body } from "../validators/body/shopSignup.js";
+import { CreateSignup1Body, ShopSignup3Body, ShopSignupOptionBody } from "../validators/body/shopSignup.js";
+import { updateShopSignup4UseCase } from "../usecases/shopSignup/signup4.js";
 
 // POST /shop-signup
 // summary: ShopSignup作成 事業者登録
@@ -50,6 +51,29 @@ export const updateShopSignup3Controller = async (req: Request, res: Response, n
         await updateShopSignup3UseCase({ shopSignupId, userId, body });
 
         res.status(200).json({ message: "身分証および営業許可証を登録しました。" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// PATCH /shop-signup/:id/option
+// summary: ショップ登録オプション選択
+// page: /shop-signup/step4/[id]
+export const updateShopSignupOptionController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+): Promise<void> => {
+    try {
+        const shopSignupId = Number(req.params.id);
+        const userId = req.user!.id;
+
+        const body = req.validatedBody as ShopSignupOptionBody;
+        const { autoTrans, openInfo } = body;
+
+        await updateShopSignup4UseCase({ shopSignupId, userId, autoTrans, openInfo });
+
+        res.status(200).json({ message: "オプションを更新しました。" });
     } catch (err) {
         next(err);
     }
