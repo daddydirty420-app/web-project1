@@ -3,14 +3,15 @@ import {
     shopSignupPostRootController,
     updateShopSignup2Controller,
     updateShopSignup3Controller,
+    updateShopSignupOptionController,
 } from "../controllers/shopSignup.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { parseMultipartBody } from "../middleware/multipart.js";
-import { createShopSignupRateLimit, signup2RateLimit, signup3RateLimit } from "../middleware/rateLimit/shopSignup.js";
+import { createShopSignupRateLimit, shopSignup4RateLimit, signup2RateLimit, signup3RateLimit } from "../middleware/rateLimit/shopSignup.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { bankBodySchema } from "../validators/body/bankAccount.js";
-import { createSignup1BodySchema, shopSignup3BodySchema } from "../validators/body/shopSignup.js";
+import { createSignup1BodySchema, shopSignup3BodySchema, shopSignupOptionBodySchema } from "../validators/body/shopSignup.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
@@ -53,6 +54,18 @@ router.patch(
     authenticateToken,
     signup3RateLimit,
     updateShopSignup3Controller,
+);
+
+// PATCH /shop-signup/:id/option
+// summary: ショップ登録オプション選択
+// page: /shop-signup/step4/[id]
+router.patch(
+    "/:id/option",
+    authenticateToken,
+    shopSignup4RateLimit,
+    validateParams(idParamSchema),
+    validateBody(shopSignupOptionBodySchema),
+    updateShopSignupOptionController,
 );
 
 export default router;
