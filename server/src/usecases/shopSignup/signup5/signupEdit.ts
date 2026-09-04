@@ -26,7 +26,7 @@ const buildUpdateData = (updateData: ShopSignupEditBody): ShopSignupUpdateData =
     return { open_info: updateData.open_info === "true" };
 };
 
-// PATCH /shop-info/:id/signup/edit
+// PATCH /shop-signup/:id/edit
 // summary: ショップ登録確認ページ インプット編集
 // page: /shop-signup/step5/[id]
 export const updateShopSignupEditUseCase = async ({ shopSignupId, userId, updateData }: Params) => {
