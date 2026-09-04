@@ -1,5 +1,5 @@
 import z from "zod";
-import { shopConfirmUpdateFieldSchemas } from "./shopInfo.js";
+import { shopConfirmUpdateFieldSchemas } from "./shopSignup.js";
 import { filesSchema } from "./shopSignup.js";
 
 export const shopInfoEditIdImageBodySchema = z.object({

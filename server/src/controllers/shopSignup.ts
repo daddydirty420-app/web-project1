@@ -3,7 +3,12 @@ import { createShopSignup1 } from "../usecases/shopSignup/signup1.js";
 import { updateShopSignup2UseCase } from "../usecases/shopSignup/signup2.js";
 import { updateShopSignup3UseCase } from "../usecases/shopSignup/signup3/signup3.js";
 import { BankBody } from "../validators/body/bankAccount.js";
-import { CreateSignup1Body, ShopSignup3Body, ShopSignupEditBody, ShopSignupOptionBody } from "../validators/body/shopSignup.js";
+import {
+    CreateSignup1Body,
+    ShopSignup3Body,
+    ShopSignupEditBody,
+    ShopSignupOptionBody,
+} from "../validators/body/shopSignup.js";
 import { updateShopSignup4UseCase } from "../usecases/shopSignup/signup4.js";
 import { updateShopSignupEditUseCase } from "../usecases/shopSignup/signup5/signupEdit.js";
 

@@ -129,16 +129,14 @@ describe("updateShopEditIdImageUseCase", () => {
         mocks.uploadS3Object.mockImplementation(async ({ objectKey }: { objectKey: string }) =>
             uploadedObject(objectKey),
         );
-        mocks.createS3Metadata.mockImplementation(
-            async ({ data }: { data: { original_file_name: string } }) => ({
-                id: {
-                    "front.jpg": 101,
-                    "rear.png": 102,
-                    "permit-1.pdf": 201,
-                    "permit-2.jpg": 202,
-                }[data.original_file_name],
-            }),
-        );
+        mocks.createS3Metadata.mockImplementation(async ({ data }: { data: { original_file_name: string } }) => ({
+            id: {
+                "front.jpg": 101,
+                "rear.png": 102,
+                "permit-1.pdf": 201,
+                "permit-2.jpg": 202,
+            }[data.original_file_name],
+        }));
         mocks.createIdCard.mockResolvedValue({ id: 301 });
         mocks.createPermit.mockResolvedValue({ id: 401 });
         mocks.createPermitFile.mockResolvedValue(undefined);
@@ -259,9 +257,9 @@ describe("updateShopEditIdImageUseCase", () => {
             return uploadedObject(objectKey);
         });
 
-        await expect(
-            updateShopEditIdImageUseCase({ shopEditId: 11, userId: 7, body: createBody() }),
-        ).rejects.toThrow("permit upload failed");
+        await expect(updateShopEditIdImageUseCase({ shopEditId: 11, userId: 7, body: createBody() })).rejects.toThrow(
+            "permit upload failed",
+        );
 
         expect(mocks.transaction).not.toHaveBeenCalled();
         expect(mocks.deleteS3Object).toHaveBeenCalledTimes(3);
@@ -279,9 +277,9 @@ describe("updateShopEditIdImageUseCase", () => {
     it("DB更新に失敗した場合は今回アップロードした全S3オブジェクトを補償削除する", async () => {
         mocks.createIdCard.mockRejectedValueOnce(new Error("database failed"));
 
-        await expect(
-            updateShopEditIdImageUseCase({ shopEditId: 11, userId: 7, body: createBody() }),
-        ).rejects.toThrow("database failed");
+        await expect(updateShopEditIdImageUseCase({ shopEditId: 11, userId: 7, body: createBody() })).rejects.toThrow(
+            "database failed",
+        );
 
         expect(mocks.deleteS3Object).toHaveBeenCalledTimes(4);
         expect(mocks.UpdateShopEditIdPermit).not.toHaveBeenCalled();

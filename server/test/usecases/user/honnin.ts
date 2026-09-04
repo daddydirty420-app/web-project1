@@ -306,9 +306,7 @@ describe("editHonninUserUseCase", () => {
         };
         const userWithOldIdCard = { ...user, IdCard: oldIdCard };
         mocks.getUserWithAddressNameId.mockResolvedValueOnce(userWithOldIdCard);
-        mocks.getS3Metadata
-            .mockResolvedValueOnce(oldFrontS3Metadata)
-            .mockResolvedValueOnce(oldRearS3Metadata);
+        mocks.getS3Metadata.mockResolvedValueOnce(oldFrontS3Metadata).mockResolvedValueOnce(oldRearS3Metadata);
 
         await editHonninUserUseCase({ userId: 7, body });
 

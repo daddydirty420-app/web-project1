@@ -8,11 +8,22 @@ import {
 } from "../controllers/shopSignup.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 import { parseMultipartBody } from "../middleware/multipart.js";
-import { createShopSignupRateLimit, shopSignup4RateLimit, shopSignup5EditRateLimit, signup2RateLimit, signup3RateLimit } from "../middleware/rateLimit/shopSignup.js";
+import {
+    createShopSignupRateLimit,
+    shopSignup4RateLimit,
+    shopSignup5EditRateLimit,
+    signup2RateLimit,
+    signup3RateLimit,
+} from "../middleware/rateLimit/shopSignup.js";
 import { validateBody } from "../middleware/validate/validateBody.js";
 import { validateParams } from "../middleware/validate/validateParams.js";
 import { bankBodySchema } from "../validators/body/bankAccount.js";
-import { createSignup1BodySchema, shopSignup3BodySchema, shopSignupEditBodySchema, shopSignupOptionBodySchema } from "../validators/body/shopSignup.js";
+import {
+    createSignup1BodySchema,
+    shopSignup3BodySchema,
+    shopSignupEditBodySchema,
+    shopSignupOptionBodySchema,
+} from "../validators/body/shopSignup.js";
 import { idParamSchema } from "../validators/params/id.js";
 
 const router = Router();
